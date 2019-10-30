@@ -6,4 +6,4 @@
 
 Olej Lorenza :P
 
-Zajrzyj [tutaj](http//wrolkizausmiech.pl)
+Zajrzyj [tutaj](http://rolkizausmiech.pl/)
