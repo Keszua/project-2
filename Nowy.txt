@@ -2,3 +2,4 @@ Robie sobie pierwsza linijke. I taka bedzei w poczekalni
  
  Dopisuje soebie druga linijkę której nie powinnno być w repzytorium.
  jakas zmiana
+ Dodam sobie jakaś zmianę i zobacze czy ją zaktualizuje
