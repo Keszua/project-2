@@ -12,7 +12,7 @@ npm -v 		// sprawdzanie wersji.
 //Wchodzimy w tryb REPL
 //Aby w konsoli wpisać instrukcje/polecenia więcej niz 1 linijkowe, trzeba wywołać:
     .editor
-//Wyjście z editora: Ctrl+D
+//Wyjście z edytora: Ctrl+D
 
 //Polecenia REPL:
 os.totalmem()	//pokazuje ilość zainstalowanej pamięci RAM na kompie
