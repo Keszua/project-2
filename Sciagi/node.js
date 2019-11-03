@@ -3,7 +3,7 @@ node -v  	// sprawdzanie wersji.
 npm -v 		// sprawdzanie wersji. 
 
 //odpalenie skryptu: 
-    node nazwaPliku.js
+//    node nazwaPliku.js
 
 //Gdy odpalimy serwer, zatrzymujemy go Ctrl+C
 

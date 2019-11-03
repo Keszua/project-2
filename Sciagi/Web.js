@@ -1189,6 +1189,9 @@ window.onload = function() {
     createIntro();
 }
 
+
+
+
 //------------------------------------------------------------
 //------------------------------------------------------------
 //------------------------------------------------------------
@@ -2141,14 +2144,19 @@ console.log(ctaBtn.handleClick()); //= Klik!
 
 
 //------------------------------------------------------------
-//Klasy 
+/* NPM
 
 
+*/
 
+//nodemon - program automatycznie wywołuje npm nazwaPliku.js  - czyli uruchomienie pliku 
+npm install -g nodemon
 
+//Aby z niego skorzytać:
+Normalnie, jednorazowo trzeba wpisywać: node nawaPliku.js
+A żeby był aktywny nodemon - trzeba wpisać: nodemon nazwaPliku.js
 
-
-
+Wyjścei z procesu: Ctrl+C
 
 
 

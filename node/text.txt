@@ -1,0 +1,2 @@
+Tekst z pliku tekstowego.
+Kolejna linijka.
