@@ -61,23 +61,34 @@ git commit -a -m "Opis zmiany"  	//zrobienie add i od razu komitu (snapshota)
 git commit --all -m "Opis zmiany"  	//zrobienie add i od razu komitu (snapshota) 
 git commit nazwaPliku  	//komitowaie tylko jednego pliku
 
-git log   				//informacje o komitach
-git log --oneline  		//skrócone informacje o komitach (tylko najważniejsze informacje)
-git log --oneline -10 	//skrócone informacje o komitach - ile linii
-git log --since "2019"  //od 2019
+git log   					//informacje o komitach
+git log --oneline  			//skrócone informacje o komitach (tylko najważniejsze informacje)
+git log --oneline -10 		//skrócone informacje o komitach - ile linii
+git log --since "2019"  	//od 2019
 git log --since="5.4.2019"  //od konkretnej daty
-git log --since=2.weeks	// zmiany w ostatnich dwóch tygodniach
-git log --after			// to samo co since
-git log --until			// do
-git log --before		// to samo co until
-git log --author		// tylko rewizja danego autora
+git log --since=2.weeks		// zmiany w ostatnich dwóch tygodniach
+git log --after				// to samo co since
+git log --until				// do
+git log --before			// to samo co until
+git log --author="Adam"		// tylko rewizja danego autora
+git log --oneline --author="Adam"	// tylko rewizja danego autora
 git log --grep "tresc w opisie"   //szukanie tylko tych komitów, co zawierają w opisie (wielkośc liter ma znaczenie)
-git log --stat  		//skrócone statystyki każdej z zatwierdzonych zmian
-git log -p 				//Pokazuje ona różnice wprowadzone z każdą rewizją.
-git log --pretty=format:"%h - %an, %ar : %s"	//ozwala ona określić własny wygląd i format informacji. Szcegóły na https://git-scm.com/book/pl/v1/Podstawy-Gita-Podgl%C4%85d-historii-rewizji
+git log --stat  			//skrócone statystyki każdej z zatwierdzonych zmian
+git log -p 					//Pokazuje ona różnice wprowadzone z każdą rewizją.
+git log --format:"%h - %an, %ar : %s"	//pozwala ona określić własny wygląd i format informacji. Szcegóły na https://git-scm.com/book/pl/v1/Podstawy-Gita-Podgl%C4%85d-historii-rewizji
+git log --pretty=format:"%h - %an, %ar : %s"	//pozwala ona określić własny wygląd i format informacji. Szcegóły na https://git-scm.com/book/pl/v1/Podstawy-Gita-Podgl%C4%85d-historii-rewizji
 //przykład:
 git log --pretty="%h - %s" --author=gitster --since="2008-10-01" \
    --before="2008-11-01" --no-merges -- t/
+git log --patch --nazwaPliku	// szczegółowe informacje, co konkretnie zostało zmienione
+git log --oneline --patch -- nazwaPliku	//
+git log --summary -- nazwaPliku	// skrucona informacja, co zostało zrobione z plikiem
+git log --stat -- nazwaPliku	// statystyki zmian konkretnych plików
+//łączenie wyszukiwania:
+git log --oneline --stat --summary -3 --author="Adam"
+git log --graph --decorate --all --oneline //do podglądu grafów z gałęziami
+git shortlog					//do podglądu, kto nad czym pracuje
+
 
 git show 				//pokaz szczegóły najnowszego komitu
 git show 5d8d8d0  		//pokaz szczegóły konkretnego komitu
@@ -99,7 +110,11 @@ git hash-object nazwaPliku.txt  	//zwraca kod pliku.
 git checkout -- nazwaPliku  //cofnięcie zmin z "stage". Przywrócenie skasowanego pliku
 git checkout -- *.txt  		//Przywróci wszytkie pliki tekstowe
 git checkout HEAD -- nazwaPliku  //cofnięcie zmin z ostatniego comitu
-git checkout 5a33dd3 -- nazwaPliku  //cofnięcie zmin ze wskazanego comitu (pierwsze 7 znaków)
+git checkout 5a33dd3        //cofnięcie zmin ze wskazanego comitu (pierwsze 7 znaków)
+git checkout 5a33dd3 -- nazwaPliku  //cofnięcie zmin pliku ze wskazanego comitu (pierwsze 7 znaków)
+//Jeśli jednak nie che przywracać jakiejś kopii, tylko wrócić do aktulanej, wywołuje: git checkout master
+//poleenia checkout modyfikują historię comitów. Można stracić dane
+git revert 5a33dd3			//tworzy nowy commit na bazie wskazanego z historii. W ten sposób nic nie tracimy.
 git checkout id-commita  	//ustawienei HEAD na tym komicie
 git checkout nazwa-brancha  //przełączenie na inną gałąź
 
@@ -107,10 +122,14 @@ git restore nazwaPliku  	//cofnięcie zmina (chyba to samo co 'checkout' ??)
 rm nazwaPliku  				//usówanie pliku (tylko z katalogu roboczego)
 git rm nazwaPliku  			//usówanie pliku z indeksu (staging) i z katalogu roboczego
 git rm --cached nazwaPliku  //usunięcie pliku z poczekalni (uzyskuje status: nieśledzony)
-git reset  					//chyba cofanie do ostatniego comita i usuwa pliki ze staging.
+git reset  					//tak jak by odwrotność polecenia "add" (usuwa pliki ze staging)
 git reset HEAD 				//aby upewnić się do jakeigo stanu wrócić (do ostatniego comitu)
 git reset -- plik   
 git reset HEAD plik   		//aby usunąć konkretny plik z poczekalni
+//UWAGA pniższymi poleceniami reset usuwamy trwale najmłodsze gałęzie
+git reset --mixed 5a33dd3	//Przywracamy podany commit a pliki ze zmianami trafią do folderu roboczego
+git reset --soft 5a33dd3	//Przywracamy podany commit a pliki ze zmianami trafią do poczekalni (stage)
+git reset --hard 5a33dd3	//Przywracamy podany commit a zmiany zostana całkowicie usunięte
 git commit --amend   		//mozliwia poparkę osatniego komitu (zwykle gdy zrobimy błąd w opisie)
 git commit --amend -m "Nowy opis"  	//umozliwia poparkę osatniego komitu
 
@@ -139,13 +158,46 @@ Jeżeli jakiś plik jest śledzony i chcemy go przestac śledzić: git rm --cach
 
 
 // GAŁĘZIE
+//branch - to wskaźnik na odpowiedni commit (nie tworzy jakiś kopii...)
+//HEAD - pokazuje, na którym jestesmy branchu, czyli na którym wskaźniku
+//stosuje się zwykle: master -jako główny, stabilny program.  develop -jako kopia. feature.  feature_user1. 
 git branch  					//pokazuje, na jakiej jesteśmy gałęzi i lista wszystkich branchów. Domyslnie jest "master"
 git branch nazwaNowegoBrancha  	//tworzy nową gałąź
 git checkout nazwaIstniejącegoBrancha //przełaczenie się na inną galąź
 git merge nazwaBrancha  -łączenie (scalanie) gałęzi na której jestesmy ze wskazaną gałęzią
+//aby połączyć develop z masterem, musze być na gałęzi master i "pochłonąć" zmiany z develop
+git merge develop
+//po połączeniu gałęzi, gdy już nie bezie potrzebna, można ją usunąć poelceniam:
+git branch -D develop
+
+
+//STOS
+git stash 					//Dodaje zmiany na stos.
+git stash push -m "Opis zmian w pliku na stosie"
+git stash list 				//wyświetla listę zmian odłożonych na stos
+git stash show (-p —patch) 	//pokazuje jakie zmiany znajdują się na stosie
+//na stos można dodać tylko zmiamy plików które są śledzone przez git
+git stash push -m "Opis zmian w pliku nie śledzonym" -u
+git stash apply stash@{1}  	//przywrócenie do katalogu roboczego i zmiany cały czas pozostają na stosie
+git stash pop stash@{1}		//przywrócenie do katalogu roboczego i usunięcie ze stosu. Bez identyfikatora, zostaną zwrócone ostatnie zmiany
+git stash drop stash@{1}	//usówanie zmian ze stosu bez przywracania ich do folderu roboczego
+git stash clear				//czyszczenie całego stosu (bez przywracania zmian do folderu roboczego)
+git stash branch nazwaNowejGalezi  //stworzenie nowej gałęzi na bazie plików na stosie
+
+//Przykład 1
+//May dwie gałęzie: master i views
+//Nie zauwarzyliśmy, ze jestesmy w złej gałęzi i zaczeliśmy robić zmiany.
+//Przełączenie się na właściwą gałąź nie jest możliwe, bo zrobiliśmy zmiany... trzeba zrobić commit albo odłożyć zmiany na stos poleceniem:
+git stash 				//zmiany odkładam na stos (nie robie commita)
+git checkout views 		//mozna teraz przełaczyć się na odpowiednią gałąź
+git stash pop			//przywróć zmiany odłożone na stos.
+
+
+
 
 // ZAKŁADANIE REPOZYTORIUM 
 git remote add origin https://github.com/Keszua/nazwa-projektu   -podłączenie repozytorium zdalnego (jeszcze nie wypchnięcie, trzeba wywołąć push)
+//origin - zastępuje man adres repozytorium (żeby nie wpisywać za każdym razem pełnego adresu)
 git remote -v   			//sprawdzenie ścieżki na serwer
 git remote show 			//wyswietli dostępne repozytoria
 git remote show origin 		//wyswietli informacje o wpisanym repozytorium
@@ -153,14 +205,21 @@ git remote rename pb paul	//zmiana nazwy pb na paul
 git remote rm paul			//usówanie odnośnika
 git push -u origin master   //pierwsze wypchnięcie projektu po podłączeniu z serwerem.
 git push  					//kolejne wypchnięcia projektu an serwer
+
+git fetch 					//pobieramy informacje ze zdalnego repozytorium
+//w lokalnym repozytorium pojawi się informacja o nowym commicie
+
 git pull  					//my pobieramy zmiany z zdalnego repozytorium do naszego lokalnego. Nasze repo jest aktualizowane
+
+git fetch [nazwa-zdalengo-repozytorium]	//aby uzyskać dane ze zdalnego projektu
+
+
 
 // ETYKIETOWANIE
 git tag 					//wyświetlenie dostępnych etykiet
 git tag -l 'v1.4.2.*'		//wyszukanie konkretnej serii etykiet
 
 
-git fetch [nazwa-zdalengo-repozytorium]	//aby uzyskać dane ze zdalnego projektu
 
 
 // REACT i GitHub
