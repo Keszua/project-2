@@ -40,13 +40,13 @@ code index.html 		//otwieranie pliku w Visula Studio Code
 Polecenia Gita
 git init 				//będac w wybranym folderze, tworzymy repozytorium
 git init d:/apps/go  	//tworzenie repozytorium w podanej ścieżce
-git status 				//pokazuje jakie poliki są śledzone, dodane lub nie dodane do repozytorium
+git status 				//pokazuje jakie pliki są śledzone, dodane lub nie dodane do repozytorium
 //Konfiguracja gita: (bez wartości w cudzysłowiu - oznacza tylko odczyt)
 git config --global user.name "kmichalczyk" 
 git config --global user.email "k.michalczyk@radwag.pl" 
 git config --global core.editor  	//pokaze ścieżkę do Visual Studio Code
 git config --unset user.email  		//usówanie danych z pliku konfiguracyjnym (będąc w folderze głównym ~)
-git config --global --unset user.email //usówanie danych z pliku konfiguracyjnym
+git config --global --unset user.email //usówanie danych z pliku konfiguracyjnego
 
 notepad .gitconfig  	//aby podejżeć plik konfiguracyjny w notatniku (będąc w folderze głównym ~)
 cat .gitconfig  		//aby podejżeć plik konfiguracyjny w konsoli (będąc w folderze głównym ~)
@@ -57,33 +57,45 @@ git add -A  			//dodanie wszystkich plików
 git add .  				//dodanie wszystkich plików
 git commit  			//zrobienie komitu (snapshota). Potym poleceniu, otworzy sie edytir i trzeba tam wpisać komentarz, co zrobiliśmy
 git commit -m "Opis zmiany"  //zrobienie komitu (snapshota) bez otwierania edytora
-git commit -a -m "Opis zmiany"  	//przenosi wszystkie śledzone pliki (zrobione add) i komitu (snapshota) 
-git commit --all -m "Opis zmiany"  	//zrobienie add i komitu (snapshota) 
+git commit -a -m "Opis zmiany"  	//zrobienie add i od razu komitu (snapshota) 
+git commit --all -m "Opis zmiany"  	//zrobienie add i od razu komitu (snapshota) 
 git commit nazwaPliku  	//komitowaie tylko jednego pliku
 
 git log   				//informacje o komitach
 git log --oneline  		//skrócone informacje o komitach (tylko najważniejsze informacje)
-git log --oneline 10 	//skrócone informacje o komitach - ile linii
+git log --oneline -10 	//skrócone informacje o komitach - ile linii
 git log --since "2019"  //od 2019
 git log --since="5.4.2019"  //od konkretnej daty
-git log --grep "tresc w opisie"   //szukanei tylko tych komitów, co zawierają w opisie (wielkośc liter ma znaczenie)
-git log --stat  		//jakieś dodatkowe informacje
+git log --since=2.weeks	// zmiany w ostatnich dwóch tygodniach
+git log --after			// to samo co since
+git log --until			// do
+git log --before		// to samo co until
+git log --author		// tylko rewizja danego autora
+git log --grep "tresc w opisie"   //szukanie tylko tych komitów, co zawierają w opisie (wielkośc liter ma znaczenie)
+git log --stat  		//skrócone statystyki każdej z zatwierdzonych zmian
+git log -p 				//Pokazuje ona różnice wprowadzone z każdą rewizją.
+git log --pretty=format:"%h - %an, %ar : %s"	//ozwala ona określić własny wygląd i format informacji. Szcegóły na https://git-scm.com/book/pl/v1/Podstawy-Gita-Podgl%C4%85d-historii-rewizji
+//przykład:
+git log --pretty="%h - %s" --author=gitster --since="2008-10-01" \
+   --before="2008-11-01" --no-merges -- t/
+
 git show 				//pokaz szczegóły najnowszego komitu
 git show 5d8d8d0  		//pokaz szczegóły konkretnego komitu
 
-git diff  				//pokazuje zmiamy zwzgledem ostatniego commitu
+git diff  				//pokazuje zmiamy zwzgledem katalogu roboczego a plikami w poczekalni
+git diff --cached  		//pokazuje zmiamy zwzgledem pliki w poczekalni z ostatim comitem
+git diff --staged 		// to samo co "--cached" (dodana nazwa, która może być łatwiejsza do zapamietania)
 git diff nazwaPiku 		//pokazuje zmiamy zwzgledem konkretnego pliku
-git diff --cached  		//porównuje pliki w poczekalni z ostatim komitem
 git diff 852ff1d nazwaPliku  //porównanie wersji z komitów
 
-git mv nazwa1 nazwa 2  	//zmiana nazwy pliku
+git mv nazwa1 nazwa2  	//zmiana nazwy pliku
 
 git cat-file -p 3d_kod_z_folderu_3d //do rozszyfrowania co kryje sie w kodzie
 git cat-file -t 3d_kod_z_folderu_3d //do rozszyfrowania typu
 git hash-object nazwaPliku.txt  	//zwraca kod pliku.
 
 
-KASOWANIE I PRZYWRACANIE
+//KASOWANIE I PRZYWRACANIE
 git checkout -- nazwaPliku  //cofnięcie zmin z "stage". Przywrócenie skasowanego pliku
 git checkout -- *.txt  		//Przywróci wszytkie pliki tekstowe
 git checkout HEAD -- nazwaPliku  //cofnięcie zmin z ostatniego comitu
@@ -98,9 +110,14 @@ git rm --cached nazwaPliku  //usunięcie pliku z poczekalni (uzyskuje status: ni
 git reset  					//chyba cofanie do ostatniego comita i usuwa pliki ze staging.
 git reset HEAD 				//aby upewnić się do jakeigo stanu wrócić (do ostatniego comitu)
 git reset -- plik   
-git reset HEAD plik   
+git reset HEAD plik   		//aby usunąć konkretny plik z poczekalni
 git commit --amend   		//mozliwia poparkę osatniego komitu (zwykle gdy zrobimy błąd w opisie)
 git commit --amend -m "Nowy opis"  	//umozliwia poparkę osatniego komitu
+
+git clean 					//służy do usuwanie plików które nie są sledzone (takie polecenie wywali błąd, trzeba podać )
+git clean -n 				//polecenie testowe, pokaże, jakie pliki zostały by usunięte
+git clean -nd				//polecenie testowe, pokaże, jakie pliki i foldery zostały by usunięte
+git clean -idf				//wyświetli się lista z możliwymi wyborami.
 
 
 // KLONOWANIE
@@ -130,9 +147,20 @@ git merge nazwaBrancha  -łączenie (scalanie) gałęzi na której jestesmy ze w
 // ZAKŁADANIE REPOZYTORIUM 
 git remote add origin https://github.com/Keszua/nazwa-projektu   -podłączenie repozytorium zdalnego (jeszcze nie wypchnięcie, trzeba wywołąć push)
 git remote -v   			//sprawdzenie ścieżki na serwer
+git remote show 			//wyswietli dostępne repozytoria
+git remote show origin 		//wyswietli informacje o wpisanym repozytorium
+git remote rename pb paul	//zmiana nazwy pb na paul
+git remote rm paul			//usówanie odnośnika
 git push -u origin master   //pierwsze wypchnięcie projektu po podłączeniu z serwerem.
 git push  					//kolejne wypchnięcia projektu an serwer
 git pull  					//my pobieramy zmiany z zdalnego repozytorium do naszego lokalnego. Nasze repo jest aktualizowane
+
+// ETYKIETOWANIE
+git tag 					//wyświetlenie dostępnych etykiet
+git tag -l 'v1.4.2.*'		//wyszukanie konkretnej serii etykiet
+
+
+git fetch [nazwa-zdalengo-repozytorium]	//aby uzyskać dane ze zdalnego projektu
 
 
 // REACT i GitHub
