@@ -159,7 +159,7 @@ console.log( newTableBig2 ); //= ["Pies", "Kot", "Słoń", "Wieloryb", "Chomik n
 3 - tablica na której my pracujemy
 //Przykad:
 	const usersAge = [20, 21, 23, 43];
-	const section = document.createElement('sectin')
+	const section = document.createElement('section')
 	
 usersAge.forEach((age, index, array) => {
     section.innerHTML += (
