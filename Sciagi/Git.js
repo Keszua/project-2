@@ -37,6 +37,10 @@ notepad index.html 		//otwieranie pliku w notatniku
 code index.html 		//otwieranie pliku w Visula Studio Code
 
 
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+
 Polecenia Gita
 git init 				//będac w wybranym folderze, tworzymy repozytorium
 git init d:/apps/go  	//tworzenie repozytorium w podanej ścieżce
@@ -161,14 +165,18 @@ Jeżeli jakiś plik jest śledzony i chcemy go przestac śledzić: git rm --cach
 //branch - to wskaźnik na odpowiedni commit (nie tworzy jakiś kopii...)
 //HEAD - pokazuje, na którym jestesmy branchu, czyli na którym wskaźniku
 //stosuje się zwykle: master -jako główny, stabilny program.  develop -jako kopia. feature.  feature_user1. 
-git branch  					//pokazuje, na jakiej jesteśmy gałęzi i lista wszystkich branchów. Domyslnie jest "master"
-git branch nazwaNowegoBrancha  	//tworzy nową gałąź
-git checkout nazwaIstniejącegoBrancha //przełaczenie się na inną galąź
-git merge nazwaBrancha  -łączenie (scalanie) gałęzi na której jestesmy ze wskazaną gałęzią
-//aby połączyć develop z masterem, musze być na gałęzi master i "pochłonąć" zmiany z develop
-git merge develop
-//po połączeniu gałęzi, gdy już nie bezie potrzebna, można ją usunąć poelceniam:
-git branch -D develop
+git branch  						//pokazuje, na jakiej jesteśmy gałęzi i lista wszystkich branchów. Domyslnie jest "master"
+git branch nazwaNowegoBrancha  		//tworzy nową gałąź
+git branch -D develop 				//po połączeniu gałęzi, gdy już nie bezie potrzebna, można ją usunąć.
+git push origin --delete develop	//usunięcie gałęzi na zdalnym repozytorium
+
+git checkout istniejącyBrancha 		//przełaczenie się na inną galąź
+git checkout -b nowyBrancha			// tworzy nowy branch i przełacza sie na niego
+git merge nazwaBrancha  			//łączenie (scalanie) gałęzi na której jestesmy ze wskazaną gałęzią
+//aby POŁACZYĆ develop z masterem, musze być na gałęzi master i "pochłonąć" zmiany z develop
+git merge develop  					//łaczenie gałęzi
+
+
 
 
 //STOS
@@ -194,6 +202,9 @@ git stash pop			//przywróć zmiany odłożone na stos.
 
 
 
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
 
 // ZAKŁADANIE REPOZYTORIUM 
 git remote add origin https://github.com/Keszua/nazwa-projektu   -podłączenie repozytorium zdalnego (jeszcze nie wypchnięcie, trzeba wywołąć push)
@@ -208,17 +219,51 @@ git push  					//kolejne wypchnięcia projektu an serwer
 
 git fetch 					//pobieramy informacje ze zdalnego repozytorium
 //w lokalnym repozytorium pojawi się informacja o nowym commicie
+git merge origin/master 	//synchronizacja ściągniętego commita (polecenim fetch) z naszymi lokalnymi plikami.
 
-git pull  					//my pobieramy zmiany z zdalnego repozytorium do naszego lokalnego. Nasze repo jest aktualizowane
-
+git pull  					//my pobieramy zmiany z zdalnego repozytorium do naszego lokalnego. Nasze repo jest automatycznie aktualizowane
 git fetch [nazwa-zdalengo-repozytorium]	//aby uzyskać dane ze zdalnego projektu
 
 
 
 // ETYKIETOWANIE
 git tag 					//wyświetlenie dostępnych etykiet
+git tag v1.0.0				//stworzyłem tag
+git tag v1.0.0 -a -m "opis"	//flaga -a: informacje o autorze; -m: komentarz
+git tag v1.0.0 -s -m "opis"	//flaga -s: podpis prywatnym kluczem używając GPG. Sczegóły na https://git-scm.com/book/pl/v1/Podstawy-Gita-Tagowanie-etykietowanie
+git tag v1.0.0 5a33dd3		//przypisanie etykiety do konkretnego commita
+git tag v1.0.0 5a33dd3	-a -m "opis"	//przypisanie etykiety do konkretnego commita
+git tag -d v1.0.0			//usunięcie tag
 git tag -l 'v1.4.2.*'		//wyszukanie konkretnej serii etykiet
+git show v1.0				//wyświetla informacje o komicie 
+git push --tags				//wysłane informacji otagach na serwer
+git push origin v1.0.0 		//wysłanie informacji o tylko jednym tagu
 
+git push origin -d v1.0.0 	//usuwanie tagów z repozytorium
+
+
+
+//KONFLIKTY
+//Przykład 1:
+//Mam dwie gałęzie: master i feature. Oba mają zmiany w tym samym pliku index.html. Jestem obecnie na gałęzi master i chce scalić ze soba gałąź feature:
+git merge feature
+//dostaje informacje o konflikcie: CONFLICT (content): Merge conflict in index.html
+//muszę otworzyć pokazane pliki w jakimś edytorze tekstowym. Linijki z gałęzi na której jesteśmy, sa oznaczone znacznikiem "<<<<<<<HEAD"
+//Po rozwiazaniu konfliktów, dodaje plik (pliki) do kolejki:
+git add -A
+//tworze nowy comit:
+git commit -m "Merge feature branch"
+//moge usunąć neipotrzebna gałąż:
+git branch -D future
+
+//Przykład 2:
+//W lokalnym repozytorium usuneliśmy plik. A w zdalnym repozytorium ten plik cały czas jest...
+//Po wywołaniu komunikatu:
+git merge feature
+//otrzymujemy informacje: CONFLICT (modify/delete): index.html delete in HEAD...
+//podejmujemy decyzje:
+a) zachowujemy go poleceniem: git add index.html
+b) usuwamy go poleceniem:     git rm index.html
 
 
 
@@ -243,7 +288,7 @@ git tag -l 'v1.4.2.*'		//wyszukanie konkretnej serii etykiet
 
 /* Aby wstawić projekt React:
   1. Mamy projekt React, który chcemy wysłąć na serwer GitHub. Jesteśmy w tym pliku.
-  2. W konsoli wpisujemy
+  2. W konsoli wpisujemy:
    λ npm install gh-pages
   3. Wchodzimy do pliku package.json i dopisujemy tuż za pierwszym nawiasem ścieżkę projektu:
 	Scieżkę projektu pobireamy z GitHuba -> Setings -> GitHub Pages -> Your site is published at [tutaj ten adres]
