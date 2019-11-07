@@ -102,6 +102,7 @@ git diff --cached  		//pokazuje zmiamy zwzgledem pliki w poczekalni z ostatim co
 git diff --staged 		// to samo co "--cached" (dodana nazwa, która może być łatwiejsza do zapamietania)
 git diff nazwaPiku 		//pokazuje zmiamy zwzgledem konkretnego pliku
 git diff 852ff1d nazwaPliku  //porównanie wersji z komitów
+git diff HEAD  			//pokazuje zmiamy zwzgledem pliku roboczego a aktualnego wskaźnika HEAD (?? hyba)
 
 git mv nazwa1 nazwa2  	//zmiana nazwy pliku
 
@@ -110,31 +111,62 @@ git cat-file -t 3d_kod_z_folderu_3d //do rozszyfrowania typu
 git hash-object nazwaPliku.txt  	//zwraca kod pliku.
 
 
+/*
+                     ---------------------
+                     |                   |   git checkout HEAD -- files
+      -------------->|      HISTORY      |---------------------
+    /                |                   |                     \
+   /                 ---------------------                      \
+   |                   ^              |                          |
+   |        git commit |              | git reset -- files       |
+   |                   |              V                          |
+   |                 ---------------------                       |
+   |                 |                   |                       |
+   |                 |   STAGE (Index)   |                       |
+   |                 |                   |                       |
+   |                 ---------------------                       |
+   |                   ^              |                          |
+   |     git add files |              | git checkout -- files    |
+   |                   |              V                          |
+    \                ---------------------                      /
+     \               |                   |                     /
+       --------------| Working Directory |<-------------------
+      git commit -a  |                   |
+                     ---------------------
+   
+*/
+
+
+
+
 //KASOWANIE I PRZYWRACANIE
 git checkout -- nazwaPliku  //cofnięcie zmin z "stage". Przywrócenie skasowanego pliku
 git checkout -- *.txt  		//Przywróci wszytkie pliki tekstowe
 git checkout HEAD -- nazwaPliku  //cofnięcie zmin z ostatniego comitu
+							// dokładniej: kopiuje pliki z przechowalki (stage) do katalogu roboczego (working directory)
 git checkout 5a33dd3        //cofnięcie zmin ze wskazanego comitu (pierwsze 7 znaków)
 git checkout 5a33dd3 -- nazwaPliku  //cofnięcie zmin pliku ze wskazanego comitu (pierwsze 7 znaków)
 //Jeśli jednak nie che przywracać jakiejś kopii, tylko wrócić do aktulanej, wywołuje: git checkout master
-//poleenia checkout modyfikują historię comitów. Można stracić dane
+//polecenia checkout modyfikują historię comitów. Można stracić dane
 git revert 5a33dd3			//tworzy nowy commit na bazie wskazanego z historii. W ten sposób nic nie tracimy.
-git checkout id-commita  	//ustawienei HEAD na tym komicie
+git checkout id-commita  	//ustawienie HEAD na tym komicie
 git checkout nazwa-brancha  //przełączenie na inną gałąź
+git checkout -b nowyBrancha	// tworzy nowy branch i przełacza sie na niego
 
 git restore nazwaPliku  	//cofnięcie zmina (chyba to samo co 'checkout' ??)
 rm nazwaPliku  				//usówanie pliku (tylko z katalogu roboczego)
 git rm nazwaPliku  			//usówanie pliku z indeksu (staging) i z katalogu roboczego
 git rm --cached nazwaPliku  //usunięcie pliku z poczekalni (uzyskuje status: nieśledzony)
 git reset  					//tak jak by odwrotność polecenia "add" (usuwa pliki ze staging)
-git reset HEAD 				//aby upewnić się do jakeigo stanu wrócić (do ostatniego comitu)
+							// dokładniej, kopiuje pliki z ostatniego commita do przechowalni (stage), nadpisując jej stan
+git reset HEAD 				//aby upewnić się do jakiego stanu wrócić (do ostatniego comitu)
 git reset -- plik   
 git reset HEAD plik   		//aby usunąć konkretny plik z poczekalni
 //UWAGA pniższymi poleceniami reset usuwamy trwale najmłodsze gałęzie
 git reset --mixed 5a33dd3	//Przywracamy podany commit a pliki ze zmianami trafią do folderu roboczego
 git reset --soft 5a33dd3	//Przywracamy podany commit a pliki ze zmianami trafią do poczekalni (stage)
-git reset --hard 5a33dd3	//Przywracamy podany commit a zmiany zostana całkowicie usunięte
-git commit --amend   		//mozliwia poparkę osatniego komitu (zwykle gdy zrobimy błąd w opisie)
+git reset --hard 5a33dd3	//Przywracamy podany commit a zmiany zostaną całkowicie usunięte
+git commit --amend   		//umozliwia poprawkę osatniego commitu (zwykle gdy zrobimy błąd w opisie)
 git commit --amend -m "Nowy opis"  	//umozliwia poparkę osatniego komitu
 
 git clean 					//służy do usuwanie plików które nie są sledzone (takie polecenie wywali błąd, trzeba podać )
@@ -157,25 +189,25 @@ git clone https://github.com/Codeinwp/Ideal-Image-Slider-JS.git . 	//(z kropką)
 plik1.txt
 /folder
 # wszystko z tym znaczkiem to komentarz
-Do tej listy można dodac TYLKO pliki i foldery nie śledzone. 
-Jeżeli jakiś plik jest śledzony i chcemy go przestac śledzić: git rm --cached nazwaPliku
+//Do tej listy można dodac TYLKO pliki i foldery nie śledzone. 
+//Jeżeli jakiś plik jest śledzony i chcemy go przestac śledzić: git rm --cached nazwaPliku
 
 
 // GAŁĘZIE
 //branch - to wskaźnik na odpowiedni commit (nie tworzy jakiś kopii...)
 //HEAD - pokazuje, na którym jestesmy branchu, czyli na którym wskaźniku
-//stosuje się zwykle: master -jako główny, stabilny program.  develop -jako kopia. feature.  feature_user1. 
+//stosuje się zwykle: master -jako główny, stabilny program;  develop -jako kopia; feature;  feature_user1; 
 git branch  						//pokazuje, na jakiej jesteśmy gałęzi i lista wszystkich branchów. Domyslnie jest "master"
 git branch nazwaNowegoBrancha  		//tworzy nową gałąź
 git branch -D develop 				//po połączeniu gałęzi, gdy już nie bezie potrzebna, można ją usunąć.
-git push origin --delete develop	//usunięcie gałęzi na zdalnym repozytorium
+git push origin --delete develop	//usunięcie gałęzi na zdalnym repozytorium (oczywiście develop to gałąź której raczej nie chcemy usówać)
 
-git checkout istniejącyBrancha 		//przełaczenie się na inną galąź
-git checkout -b nowyBrancha			// tworzy nowy branch i przełacza sie na niego
+git checkout istniejącyBrancha 		//przełaczenie się na inną gałąź
+git checkout -b nowyBrancha			// tworzy nowy branch i przełącza sie na niego
 git merge nazwaBrancha  			//łączenie (scalanie) gałęzi na której jestesmy ze wskazaną gałęzią
 //aby POŁACZYĆ develop z masterem, musze być na gałęzi master i "pochłonąć" zmiany z develop
 git merge develop  					//łaczenie gałęzi
-
+git merge master					//gdy jestem na innej gałęzi i chce do swojej gałęzi doać zmiany ze "stabilnego programu", który ktoś "w miedzyczasie" wprowadził poprawkę.
 
 
 
