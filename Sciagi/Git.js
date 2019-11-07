@@ -102,7 +102,7 @@ git diff --cached  		//pokazuje zmiamy zwzgledem pliki w poczekalni z ostatim co
 git diff --staged 		// to samo co "--cached" (dodana nazwa, która może być łatwiejsza do zapamietania)
 git diff nazwaPiku 		//pokazuje zmiamy zwzgledem konkretnego pliku
 git diff 852ff1d nazwaPliku  //porównanie wersji z komitów
-git diff HEAD  			//pokazuje zmiamy zwzgledem pliku roboczego a aktualnego wskaźnika HEAD (?? hyba)
+git diff HEAD nazwaGalezi	//pokazuje zmiamy zwzgledem HEAD a wybraną gałęzią
 
 git mv nazwa1 nazwa2  	//zmiana nazwy pliku
 
@@ -337,7 +337,6 @@ b) usuwamy go poleceniem:     git rm index.html
     λ npm run deploy
   6. Pojawi się nowa gałąź gita. GitHub domyślnie ustawi, żeby wyświetlanie strony było z wersji public
 */
-//istotna zmiana w master, która musi być we wszystkich aktualnych wersjach
 
 // Są 4 stany pliku:
 U -plik nieśledzony
