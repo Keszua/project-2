@@ -204,6 +204,9 @@ git push origin --delete develop	//usunięcie gałęzi na zdalnym repozytorium (
 
 git checkout istniejącyBrancha 		//przełaczenie się na inną gałąź
 git checkout -b nowyBrancha			// tworzy nowy branch i przełącza sie na niego
+git switch istniejącyBrancha 		//przełaczenie się na inną gałąź
+git switch -c nowyBrancha			// tworzy nowy branch i przełącza sie na niego
+
 git merge nazwaBrancha  			//łączenie (scalanie) gałęzi na której jestesmy ze wskazaną gałęzią
 //aby POŁACZYĆ develop z masterem, musze być na gałęzi master i "pochłonąć" zmiany z develop
 git merge develop  					//łaczenie gałęzi
