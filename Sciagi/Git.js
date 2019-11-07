@@ -337,7 +337,7 @@ b) usuwamy go poleceniem:     git rm index.html
     λ npm run deploy
   6. Pojawi się nowa gałąź gita. GitHub domyślnie ustawi, żeby wyświetlanie strony było z wersji public
 */
-
+//istotna zmiana w master, która musi być we wszystkich aktualnych wersjach
 
 // Są 4 stany pliku:
 U -plik nieśledzony
