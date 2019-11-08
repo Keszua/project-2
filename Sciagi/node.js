@@ -131,6 +131,31 @@ fs.readFile('names.txt', (err, data) => {       //odczyt w formacie HEX
     })
 })
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+const path = require('path');
+
+const pathToFile = path.join(__dirname, 'indeks.js');
+const pathToFile2 =__dirname + '\\' + 'indeks.js' //to samo co wyżej
+//console.log(pathToFile2);    //wyświetli całą śceiżkę gdzie jesteśmy
+
+const anotherPath = path.join('/users/pl', 'active', 'user.json') //ręczne układnaie śceizki
+//console.log(anotherPath);
+
+const parse = path.parse(__filename);   //śceizka w postaci obiektu z kilkoma danymi
+//console.log(parse); 
+
+const parse2 = path.parse(path.join(__filename, 'index.js'));
+//console.log(parse2);
+//console.log(parse2.ext); //tylko rozszeżenie
+//console.log(path.extname('jakisPlik.js')); //tylko rozszeżenie
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+
 
 
 
