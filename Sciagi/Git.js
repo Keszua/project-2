@@ -254,7 +254,7 @@ git push  					//kolejne wypchnięcia projektu an serwer
 
 git fetch 					//pobieramy informacje ze zdalnego repozytorium
 //w lokalnym repozytorium pojawi się informacja o nowym commicie
-git merge origin/master 	//synchronizacja ściągniętego commita (polecenim fetch) z naszymi lokalnymi plikami.
+git merge origin/master 	//synchronizacja ściągniętego commita (poleceniem fetch) z naszymi lokalnymi plikami.
 
 git pull  					//my pobieramy zmiany z zdalnego repozytorium do naszego lokalnego. Nasze repo jest automatycznie aktualizowane
 git fetch [nazwa-zdalengo-repozytorium]	//aby uzyskać dane ze zdalnego projektu

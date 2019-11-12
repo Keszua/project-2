@@ -96,16 +96,38 @@ fetch(`http://numbersapi.com/${number}/${type}?json`)
 
 // żeby to działało, trzebz zaistalować: npm i request
 const request = require('request');
-
+const fs = require('fs');
 //Zapytania o pojedynczą walutę:
 //http://api.nbp.pl/api/exchangerates/rates/{table}/{code}/
 //http://api.nbp.pl/api/exchangerates/rates/a/${code}/
 
-const vaildCodes = ['usd', 'eur', 'gbp', 'chf'];
+const validCodes = ['usd', 'eur', 'gbp', 'chf'];
 
 const code = process.argv[2];
 
+const isValid = validCodes.find(currency => currency === code) ? true : false;
+console.log(`Checkt params: ${code}`);
+if(!isValid) process.exit();
+
+
+
 const url = `http://api.nbp.pl/api/exchangerates/rates/a/${code}/?format=json`
 
-console.log(url);
+//console.log(url);
 
+request(url, {json:true}, (err, response, body) => { // w preciwieństwie do fetch, nie urzywamy: then, tylo prekazujemy: 
+                                                // url; obiekt z parametrami;  funkcje (urzywamay calback)
+    if(err) {
+        return console.log("Błąd ", err);
+    }
+    if(response.statusCode !== 200) {
+        return console.log("Poszło coś nie tak, sprawdz url");
+    }
+    const message = `Średnia cena ${body.currency} w dniu ${body.rates[0].effectiveDate} wynosi ${body.rates[0].mid} złotych`
+    
+    fs.appendFile('curriencies.txt', message + '\n', (err) => {
+        console.log('dane dodane do pliku');    
+    })
+    
+    console.log(message);
+})
