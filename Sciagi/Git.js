@@ -198,9 +198,13 @@ plik1.txt
 //HEAD - pokazuje, na którym jestesmy branchu, czyli na którym wskaźniku
 //stosuje się zwykle: master -jako główny, stabilny program;  develop -jako kopia; feature;  feature_user1; 
 git branch  						//pokazuje, na jakiej jesteśmy gałęzi i lista wszystkich branchów. Domyslnie jest "master"
+git branch -v						//pokazuje informacje, o ostatnich zmianach na każdej z gałęzi
 git branch nazwaNowegoBrancha  		//tworzy nową gałąź
 git branch -D develop 				//po połączeniu gałęzi, gdy już nie bezie potrzebna, można ją usunąć.
 git push origin --delete develop	//usunięcie gałęzi na zdalnym repozytorium (oczywiście develop to gałąź której raczej nie chcemy usówać)
+git branch --merged 				//Aby zobaczyć, które gałęzie zostały już scalone z bieżąc
+git branch --no-merged 				//Aby zobaczyć, które gałęzie nie zostały jeszcze scalone z bieżąc
+
 
 git checkout istniejącyBrancha 		//przełaczenie się na inną gałąź
 git checkout -b nowyBrancha			// tworzy nowy branch i przełącza sie na niego
@@ -279,6 +283,10 @@ git push origin -d v1.0.0 	//usuwanie tagów z repozytorium
 
 
 //KONFLIKTY
+//jest jakieś narzędzie graficzne do rozwiązwna konfliktów, uruchamiane poleceniam:
+git mergetool
+
+
 //Przykład 1:
 //Mam dwie gałęzie: master i feature. Oba mają zmiany w tym samym pliku index.html. Jestem obecnie na gałęzi master i chce scalić ze soba gałąź feature:
 git merge feature
