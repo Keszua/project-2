@@ -31,6 +31,9 @@ os.userInfo()	//informacje o urzytkowniku
 Przykłady:
 200 "OK"
 301 "Move Permanently" trwałe przeniesienie zasobu na nowy adres url
+302 przekierowanie niestałe. (należy prejść na podany adres, ale to może się jeszcze zmienić)
+303 zobacz gdzie indziej - przy metodzie HTTP innej niż GET, ale ma przekierownie na GET
+307 przekierowanei tymczasowe - przy metodzie HTTP innej niż GET
 403 "Forbidden" - "ja wiem, że chcesz, ale nie mamsz dostępu"
 404 "Not Found" - odebrałem Twoje zapytanie ale nie ma zasobu dla Twojego URL
 500 "Internal Server Error" - "Coś u mnie nie tak"
