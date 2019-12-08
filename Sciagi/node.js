@@ -20,7 +20,23 @@ os.type()  		//jaki system operacyjny -> 'Windows_NT'
 os.platform()	//jaki system operacyjny -> 'win32' 
 os.cpus()		//informacje o procesorach
 os.userInfo()	//informacje o urzytkowniku
+//-----------------------------------------------------------------------------
+//Statusy odpowiedzi 
+1-- kody informacyjne
+2-- kody sukcesu
+3-- kody przekierowania
+4-- kody błędu klienta
+5-- kody błędu serwera
 
+Przykłady:
+200 "OK"
+301 "Move Permanently" trwałe przeniesienie zasobu na nowy adres url
+302 przekierowanie niestałe. (należy prejść na podany adres, ale to może się jeszcze zmienić)
+303 zobacz gdzie indziej - przy metodzie HTTP innej niż GET, ale ma przekierownie na GET
+307 przekierowanei tymczasowe - przy metodzie HTTP innej niż GET
+403 "Forbidden" - "ja wiem, że chcesz, ale nie mamsz dostępu"
+404 "Not Found" - odebrałem Twoje zapytanie ale nie ma zasobu dla Twojego URL
+500 "Internal Server Error" - "Coś u mnie nie tak"
 
 //-----------------------------------------------------------------------------
 //Prosty serer:

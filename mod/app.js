@@ -115,7 +115,7 @@ const url = `http://api.nbp.pl/api/exchangerates/rates/a/${code}/?format=json`
 
 //console.log(url);
 
-request(url, {json:true}, (err, response, body) => { // w preciwieństwie do fetch, nie urzywamy: then, tylo prekazujemy: 
+request(url, {json:true}, (err, response, body) => { // w przeciwieństwie do fetch, nie urzywamy: then, tylo prekazujemy: 
                                                 // url; obiekt z parametrami;  funkcje (urzywamay calback)
     if(err) {
         return console.log("Błąd ", err);

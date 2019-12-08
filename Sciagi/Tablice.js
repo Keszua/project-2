@@ -13,6 +13,11 @@ console.log(tab); //[blank x 10]
 const tab = new Array(10, "Ala", "Bala", "Cala");
 console.log(tab); //["Ala", "Bala", "Cala", blank x 7]
 
+//zamiana stringa na tablicę:
+const text = "Jakiś tekst";
+const parts = text.split(" "); 	//split dzieli tekst, kryterium dzielenia to: spacja.  parts będzie tablicą
+parts //= ["Jakiś", "tekst"]
+
 //odwołąnie się do danego lementu
 alert(myArray);  //= 56, tekst, true, 90
 alert(myArray[0]);  //= 56
