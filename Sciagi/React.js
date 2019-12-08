@@ -3,12 +3,12 @@
 // #   # #     #   # #        #
 // ####  ####  ##### #        #
 // #  #  #     #   #  #   #   #
-// #   # ##### #   #   ###    #
+// #   # ##### #   #   ###    #		
 //                           
 //                          
-/ Tworzenie nowego projektu
+// TWORZENIE NOWEGO PROJEKTU
 // Trzeba byc w danym pustym folderze i wywołać polecenie:
-create-react-app
+npx create-react-app
 
 //Instaluje CRA globalnie poleceniem:
 λ npm install create-react-app --global
@@ -19,7 +19,7 @@ create-react-app
 //Po pomyslnej instalacji można ten prjekt uruchomić poleceniem:
 λ npm start
 
-//Wyświetli się adres strony: http://localhost:3000/ i można ją otworzyć ją w przegądarce
+//Wyświetli się adres strony: http://localhost:3000/ i można otworzyć ją w przegądarce
 
 //Tworzenie wersji produkcyjnej:
 λ npm run build

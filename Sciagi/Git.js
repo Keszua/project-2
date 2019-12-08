@@ -312,15 +312,15 @@ b) usuwamy go poleceniem:     git rm index.html
 
 // REACT i GitHub
 // React jest podszykowany aby działać na Git. Ma wszystko skonfigurowane.
-/* Aby nowy projekt wstawić do GitHuba, trzeba złożyć sobie nowe repozytorium poprzez:
-  1. pusik -> New Repository -> 
+/* Aby nowy projekt wstawić do GitHuba, trzeba założyć sobie nowe repozytorium poprzez:
+  1. plusik -> New Repository -> 
   2. Wstawić nazę. Można wpisać jakiś "Description". Nie zaznaczać "Initialize this repository"
   3. W konsoli wpisać komendy które wygenerował GitHub, czyli:
     λ git remote add origin https://github.com/Keszua/nazwa-projektu   -podłączenie repozytorium zdalnego (jeszcze nie wypchnięcie, trzeba wywołąć push)
     λ git remote -v 
 */
 
-/* Aby pobrać projekt z GitHuba tzeba to zrogić przez "Clone or download"
+/* Aby pobrać projekt z GitHuba trzeba to zrogić przez "Clone or download"
   1. Po zdobyciu linku, np:  https://github.com/Keszua/nazwa-projektu 
   2. Robimy klon w folderze w którym jestśmy z apomoca polecenia ( z kropką):
 	λ git clone https://github.com/Keszua/nazwa-projektu .
