@@ -197,7 +197,7 @@ plik1.txt
 
 
 // GAŁĘZIE
-//branch - to wskaźnik na odpowiedni commit (nie tworzy jakiś kopii...)
+//branch - to wskaźnik na odpowiedni commit (nie tworzy jakiś kopii...) 
 //HEAD - pokazuje, na którym jestesmy branchu, czyli na którym wskaźniku
 //stosuje się zwykle: master -jako główny, stabilny program;  develop -jako kopia; feature;  feature_user1; 
 git branch  						//pokazuje, na jakiej jesteśmy gałęzi i lista wszystkich branchów. Domyslnie jest "master"
@@ -316,8 +316,8 @@ b) usuwamy go poleceniem:     git rm index.html
 
 // REACT i GitHub
 // React jest podszykowany aby działać na Git. Ma wszystko skonfigurowane.
-/* Aby nowy projekt wstawić do GitHuba, trzeba założyć sobie nowe repozytorium poprzez:
-  1. plusik -> New Repository -> 
+/* Aby nowy projekt wstawić do GitHuba, trzeba złożyć sobie nowe repozytorium poprzez:
+  1. pusik -> New Repository -> 
   2. Wstawić nazę. Można wpisać jakiś "Description". Nie zaznaczać "Initialize this repository"
   3. W konsoli wpisać komendy które wygenerował GitHub, czyli:
     λ git remote add origin https://github.com/Keszua/nazwa-projektu   -podłączenie repozytorium zdalnego (jeszcze nie wypchnięcie, trzeba wywołąć push)
