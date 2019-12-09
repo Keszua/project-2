@@ -2,7 +2,7 @@
 //Zakładanie nowego projektu:
 //Na początku tworzę paczkę. Będąc w folderze pliku, wywołuje polecenie
  npm init  
-//aby pozostawić ustawienia defaultowe, naiskamy enetery.
+//aby pozostawić ustawienia defaultowe, naciskamy enetery.
 
 //Nastepnie instalujemy Express.js poleceniam
  npm install express --save  //aby skrócic komendę, można wpisac: npm i express -S

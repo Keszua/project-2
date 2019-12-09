@@ -59,8 +59,9 @@ git add nazwaPliku 		//dodawanie pliku do indeksu
 git add --all  			//dodanie wszystkich plików
 git add -A  			//dodanie wszystkich plików
 git add .  				//dodanie wszystkich plików
-git commit  			//zrobienie komitu (snapshota). Potym poleceniu, otworzy sie edytir i trzeba tam wpisać komentarz, co zrobiliśmy
+git commit  			//zrobienie komitu (snapshota). Otworzy sie edytor w którym trzeba wpisać opis zmina.
 git commit -m "Opis zmiany"  //zrobienie komitu (snapshota) bez otwierania edytora
+                             // Tytół opisu zrobic do 50 znaków. Zawijanie wierszy po 72 znakach.
 git commit -a -m "Opis zmiany"  	//zrobienie add i od razu komitu (snapshota) 
 git commit --all -m "Opis zmiany"  	//zrobienie add i od razu komitu (snapshota) 
 git commit nazwaPliku  	//komitowaie tylko jednego pliku
@@ -79,8 +80,10 @@ git log --oneline --author="Adam"	// tylko rewizja danego autora
 git log --grep "tresc w opisie"   //szukanie tylko tych komitów, co zawierają w opisie (wielkośc liter ma znaczenie)
 git log --stat  			//skrócone statystyki każdej z zatwierdzonych zmian
 git log -p 					//Pokazuje ona różnice wprowadzone z każdą rewizją.
-git log --format:"%h - %an, %ar : %s"	//pozwala ona określić własny wygląd i format informacji. Szcegóły na https://git-scm.com/book/pl/v1/Podstawy-Gita-Podgl%C4%85d-historii-rewizji
-git log --pretty=format:"%h - %an, %ar : %s"	//pozwala ona określić własny wygląd i format informacji. Szcegóły na https://git-scm.com/book/pl/v1/Podstawy-Gita-Podgl%C4%85d-historii-rewizji
+git log --format:"%h - %an, %ar : %s"	//pozwala ona określić własny wygląd i format informacji. 
+                            // Szcegóły na https://git-scm.com/book/pl/v1/Podstawy-Gita-Podgl%C4%85d-historii-rewizji
+git log --pretty=format:"%h - %an, %ar : %s"	//pozwala ona określić własny wygląd i format informacji. 
+                            // Szcegóły na https://git-scm.com/book/pl/v1/Podstawy-Gita-Podgl%C4%85d-historii-rewizji
 //przykład:
 git log --pretty="%h - %s" --author=gitster --since="2008-10-01" \
    --before="2008-11-01" --no-merges -- t/
@@ -183,7 +186,7 @@ git clone https://github.com/Codeinwp/Ideal-Image-Slider-JS.git . 	//(z kropką)
 
 
 // GITIGNORE
-.gitgnore  -plik z ignorowanymi elementami
+.gitignore  -plik z ignorowanymi elementami
 //Dodajemy nazwę pliku bez żadnych cudzsłowiów, przykład:
 //jeden plik w jednej linijce:
 plik1.txt
@@ -214,7 +217,8 @@ git switch -c nowyBrancha			// tworzy nowy branch i przełącza sie na niego
 git merge nazwaBrancha  			//łączenie (scalanie) gałęzi na której jestesmy ze wskazaną gałęzią
 //aby POŁACZYĆ develop z masterem, musze być na gałęzi master i "pochłonąć" zmiany z develop
 git merge develop  					//łaczenie gałęzi
-git merge master					//gdy jestem na innej gałęzi i chce do swojej gałęzi doać zmiany ze "stabilnego programu", który ktoś "w miedzyczasie" wprowadził poprawkę.
+git merge master					//gdy jestem na innej gałęzi i chce do swojej gałęzi doać zmiany ze "stabilnego programu", 
+                                    // który ktoś "w miedzyczasie" wprowadził poprawkę.
 
 
 
@@ -320,7 +324,7 @@ b) usuwamy go poleceniem:     git rm index.html
     λ git remote -v 
 */
 
-/* Aby pobrać projekt z GitHuba tzeba to zrogić przez "Clone or download"
+/* Aby pobrać projekt z GitHuba trzeba to zrogić przez "Clone or download"
   1. Po zdobyciu linku, np:  https://github.com/Keszua/nazwa-projektu 
   2. Robimy klon w folderze w którym jestśmy z apomoca polecenia ( z kropką):
 	λ git clone https://github.com/Keszua/nazwa-projektu .
