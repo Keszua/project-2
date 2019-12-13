@@ -2,6 +2,10 @@
 Pogranie i instalowanie GIT:
 https://git-scm.com/
 
+Link z opisami komend:
+https://github.com/chajr/commands/blob/master/git/commands.md
+
+
 Aby sprawdzić, czy mamy zinstalowanego Git'a trzeba w wierszy poleceń spisać: git
 jeżeli wyświetlą sie jakies informacje inne niż błąd, to znaczy że git zainstalował sie na naszym kompie.
 
@@ -316,7 +320,8 @@ b) usuwamy go poleceniem:     git rm index.html
 
 // REACT i GitHub
 // React jest podszykowany aby działać na Git. Ma wszystko skonfigurowane.
-/* Aby nowy projekt wstawić do GitHuba, trzeba złożyć sobie nowe repozytorium poprzez:
+/* Wstawianie projektu na GitHub
+Aby nowy projekt wstawić do GitHuba, trzeba złożyć sobie nowe repozytorium poprzez:
   1. pusik -> New Repository -> 
   2. Wstawić nazę. Można wpisać jakiś "Description". Nie zaznaczać "Initialize this repository"
   3. W konsoli wpisać komendy które wygenerował GitHub, czyli:
@@ -326,29 +331,59 @@ b) usuwamy go poleceniem:     git rm index.html
 
 /* Aby pobrać projekt z GitHuba trzeba to zrogić przez "Clone or download"
   1. Po zdobyciu linku, np:  https://github.com/Keszua/nazwa-projektu 
-  2. Robimy klon w folderze w którym jestśmy z apomoca polecenia ( z kropką):
-	λ git clone https://github.com/Keszua/nazwa-projektu .
+  2. Robimy klon w folderze w którym jestśmy z apomoca polecenia:
+	λ git clone https://github.com/Keszua/nazwa-projektu
   3. Trzeba doinstalować cały folder "node_modules". Informacje o wersjach do instalowania są w "package.json"
 	wywołuje polecenie:
 	λ npm install
 */
 
 /* Aby wstawić projekt React:
-  1. Mamy projekt React, który chcemy wysłąć na serwer GitHub. Jesteśmy w tym pliku.
-  2. W konsoli wpisujemy:
+  1. Jesteśmy już po operacji wstawienia projektu na GitHuba, tak jak w punkcie: "Wstawianie projektu na GitHub"
+  2. Konsolą jesteśmy w projekcie React, który chcemy wysłać na serwer GitHub.
+  3. W konsoli wpisujemy:
    λ npm install gh-pages
-  3. Wchodzimy do pliku package.json i dopisujemy tuż za pierwszym nawiasem ścieżkę projektu:
-	Scieżkę projektu pobireamy z GitHuba -> Setings -> GitHub Pages -> Your site is published at [tutaj ten adres]
-	"homepage": "https://github.com/Keszua/nazwa-projektu",
-  4. w "scripts": {
-	  tutaj dopisać:
-	  "predeploy": "npm run build",
-	  "deploy": "gh-pages -d build",
+  4. Na serwerze wchodzimy do:  GitHuba -> Setings -> GitHub Pages -> Source -> ustawiamy master branch. 
+    Pojawi sie link, który kopiujemy.
+    Na razie pod tym linkiem wyświetla się zawartość pliku README.md
+    Musimy stworzyć wersję publiczną projektu (poprzez polecenie: npm install gh-pages)
+
+  5. Scieżkę projektu pobireamy z GitHuba -> Setings -> GitHub Pages -> Your site is published at [tutaj ten adres]
+    Wchodzimy do pliku package.json i dopisujemy tuż za pierwszym nawiasem ścieżkę projektu:	
+    "homepage": "https://github.com/Keszua/nazwa-projektu/",
+  6. W "scripts" doisac dwie linijki:
+	"scripts": {
+	  "predeploy": "npm run build",	//to dopisane
+	  "deploy": "gh-pages -d build", //to dopisane
+      "start": "react-scripts start", //to powinno byc już w tym pliku
+      ...
 	zapisać plik
-  5. W konsoli wywołać polecenie:
+  7. W konsoli wywołać polecenie:
     λ npm run deploy
-  6. Pojawi się nowa gałąź gita. GitHub domyślnie ustawi, żeby wyświetlanie strony było z wersji public
+    Jest to komilowanie wersji produkcyjnej. Czyli za kazdym razem, gdy chemy zaktualizowac stronę, to trzeba to wywołać.
+    Po kolejnym (nie pierwszym) kompilowaniu wersji produkcyjnej, trzeba to wypchnac na serwer poleceniem: git push 
+  8. Na GitHub pojawi się nowa gałąź gita. GitHub domyślnie ustawi, żeby wyświetlanie strony było z wersji public
+    Teraz w GitHuba -> Setings -> GitHub -> Source, Pages powinno samo zmieniać sie na "gh-pages branch".
+    Jesli sie nie zmieni, to rzeba ręcznie to zrobić.
+	Nowy link wskaże już na działającą stronę.
+	Nowy link wygląda juz inaczej:
+    https://keszua.github.io/nazwa-projektu/
+	W lokalnym projekcie w pliku package.json w "homepage" link sam się podmienił.
+  9. Aby wstawić link do naszej strony, dla odwiedzających nasze repozytoium, trzeba prześć do okna głónego projektu (czyli <>code )
+    Po prawo jest przycisk "Edit". W okienku "Website" wklejamy adres.
 */
+
+/* AKTUALIZOWANIE wstawionej już strony:
+  1. Jestesmy w projekcie i konsola ustawiona na nasz projekt.
+  2. W konsoli wywołać polecenie:
+    λ npm run deploy
+  3. wypchnąć na serwer za pomocą polecenia:
+    λ git push
+	UWAGA! Ostatnio samo mi się to wypchnęło na serwer i zaktualizowało.
+
+*/
+
+
 
 // Są 4 stany pliku:
 U -plik nieśledzony

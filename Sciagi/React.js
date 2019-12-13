@@ -7,16 +7,17 @@
 //                           
 //                          
 // TWORZENIE NOWEGO PROJEKTU
-// Trzeba byc w danym pustym folderze i wywołać polecenie:
-npx create-react-app
+// Trzeba byc w folderze z projektami i wywołać polecenie:
+create-react-app nazwa-katalogu
+//Powstanie nowy katalog.
 
 //Instaluje CRA globalnie poleceniem:
 λ npm install create-react-app --global
 
 //Tworze nowy projekt poleceniem:
-λ create-react-app nazwa-katalogu
+λ npx create-react-app nazwa-katalogu
 
-//Po pomyslnej instalacji można ten prjekt uruchomić poleceniem:
+//Po pomyslnej instalacji można ten projekt uruchomić poleceniem:
 λ npm start
 
 //Wyświetli się adres strony: http://localhost:3000/ i można otworzyć ją w przegądarce
@@ -24,6 +25,12 @@ npx create-react-app
 //Tworzenie wersji produkcyjnej:
 λ npm run build
 
+
+
+
+//Miałem sytuację, ze po wywołaniu npx create-react-app nazwa-katalogu, projekt zawiirał tylko: node_modules, package.json, package-lock.json
+// Oraz komunikat o przestarzałej wersji polecenia.
+//Pomogło wywołanie polecenia: npm install -g create-react-app
 
 
 //Pierwsza stronka zrobiona na React:
@@ -298,7 +305,7 @@ ReactDOM.render(<App2 />, document.getElementById('root2'))
 
 //------------------------------------------------------------
 //Etap 4
-//Wyświetlany tekst umieszcam w odzielym panelu
+//Wyświetlany tekst umieszczam w odzielym panelu
 
 class App2 extends React.Component { 
     constructor(props) {    
@@ -374,7 +381,7 @@ ReactDOM.render(<App2 />, document.getElementById('root2'))
 
 
 //------------------------------------------------------------
-//Etap 5
+//Etap 6
 // nazwę przycisku przekazuje z obiektu props
 class App2 extends React.Component {
     constructor(props) {  

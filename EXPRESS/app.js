@@ -2,7 +2,7 @@
 
 //Aby z tego skorzystać, trzeba zianstalwoać: npm install express --save
 
-const express = require('express')
+const express = require('./node_modules/express')
 
 const app = express()
 
@@ -116,7 +116,8 @@ app.get('/home/about/company', (req, res) => {
 
 //--------------------------------------------------------------------------------------
 //filmik 71 
-const patch = require('path');
+const patch = require('path')
+
 
 app.get('/', (req, res) => {
   
@@ -131,16 +132,20 @@ app.get('/', (req, res) => {
         </head>
         <body>
             <img src="/logo">
+            Witaj, hejka
         
         </body>
         </html>
-    `)
+    `);
 });
 
 app.get('/logo', (req, res) => {
     
-     const fileName = path.join(__dirname, '/plik.png');
-     res.sendFile(fileName);
+    //const fileName = path.join(__dirname, 'EXPRESS/plik.png');
+    //const fileName =  `D:\Klamoty\Web\Git\book\express\plik.png`;
+    //console.warn(fileName);
+    console.warn(__dirname);
+    //res.sendFile(fileName);
     //res.send("Hejka");
 
 });
