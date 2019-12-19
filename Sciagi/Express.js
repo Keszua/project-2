@@ -22,6 +22,21 @@ http://www.phoneshop.com?product=iphone&size=32gb&color=white
 //                   String         Separator
 
 
+//-----------------------------------------------------------------------------
+//Serwer, który obsługuje pliki statyczne, czyli odeśle stronę w pliku index.html
+// Oczywiście musze mieć plik index.html w folderze public
+
+
+
+
+//-----------------------------------------------------------------------------
+
+
+
+
+
+
+//-----------------------------------------------------------------------------
 
 
 

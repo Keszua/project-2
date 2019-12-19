@@ -293,7 +293,7 @@ git push origin -d v1.0.0 	//usuwanie tagów z repozytorium
 //KONFLIKTY
 //jest jakieś narzędzie graficzne do rozwiązwna konfliktów, uruchamiane poleceniam:
 git mergetool
-
+//Miros wspomniał coś o rebase
 
 //Przykład 1:
 //Mam dwie gałęzie: master i feature. Oba mają zmiany w tym samym pliku index.html. Jestem obecnie na gałęzi master i chce scalić ze soba gałąź feature:
@@ -304,7 +304,7 @@ git merge feature
 git add -A
 //tworze nowy comit:
 git commit -m "Merge feature branch"
-//moge usunąć neipotrzebna gałąż:
+//moge usunąć niepotrzebną gałąź:
 git branch -D future
 
 //Przykład 2:
