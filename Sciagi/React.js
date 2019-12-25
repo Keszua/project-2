@@ -28,7 +28,7 @@ create-react-app nazwa-katalogu
 
 
 
-//Miałem sytuację, ze po wywołaniu npx create-react-app nazwa-katalogu, projekt zawiirał tylko: node_modules, package.json, package-lock.json
+//Miałem sytuację, ze po wywołaniu npx create-react-app nazwa-katalogu, projekt zawierał tylko: node_modules, package.json, package-lock.json
 // Oraz komunikat o przestarzałej wersji polecenia.
 //Pomogło wywołanie polecenia: npm install -g create-react-app
 

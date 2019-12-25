@@ -172,7 +172,7 @@ const parse2 = path.parse(path.join(__filename, 'index.js'));
 //-----------------------------------------------------------------------------
 
 /*Zakładnie nowego projektu:
-1. Musze mieć zainstalowany node na kompie. Można to sprawdzić poeceniem w konsoli:
+1. Musze mieć zainstalowany node na kompie. Można to sprawdzić poleceniem w konsoli:
 	node -v
 2. W pustym folderze, tworze sobie plik "app.js"
 3. W konsoli wywłuje polecenie 	
