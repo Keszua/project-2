@@ -24,7 +24,7 @@ MongoDB jest nierelacyjną bazą danych.
 
 	
 //Korzystanie z MongoDB w node:
-1. Zainstaować
+1. Zainstalować
 	λ npm install mongodb --save	
 	
 	
@@ -70,7 +70,7 @@ Kolekcja: to zbiór dokumentów
 	> db.clients.update({age: {$lt:30}}, {$set: {active:true}}, {multi: true})	
 	> db.clients.updateMany({age: {$lt:30}}, {$set: {active:true}}) //to samo co wyżej		
 	
-//USÓWANIE
+//USUWANIE
 //usunięcie jednego wpisu o danym _id
 	> db.clients.deleteOne({_id: ObjectId('5e04a518a273d3cf92ccd3fb')}) 
 //usunięcie kilku, spełniajacych podane warunki:
@@ -79,7 +79,17 @@ Kolekcja: to zbiór dokumentów
 	
 	
 	
-	
+// Zakładanie nowego projektu:
+1. Tworze nowy,pusty folder.
+2. W tym folderze, w konsoli wywołuje polecenie:
+	> npm init
+3. Instaluje paczkę z mongo:
+	> npm install mongodb --save	
+4. Tworzymy plik index.js i tworzymy najporstszą bazę:
+	const mongo = require('mongodb');
+	const client = new mongo.MongoClient('mongodb://localhost:27017', {userNewUrlParser: true});
+	client.connect();
+
 	
 	
 	
