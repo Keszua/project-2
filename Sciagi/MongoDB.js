@@ -88,7 +88,39 @@ Kolekcja: to zbiór dokumentów
 4. Tworzymy plik index.js i tworzymy najporstszą bazę:
 	const mongo = require('mongodb');
 	const client = new mongo.MongoClient('mongodb://localhost:27017', {userNewUrlParser: true});
-	client.connect();
+	client.connect(err => {
+		if(err) {
+			console.log("Błąd połącznia1", err);
+		} else {
+			console.log("Połaczenie udane");
+		
+			const db = client.db('test'); //wybieramy bazę
+
+			const clients = db.collection('client'); // pobranie konkretnej kolekcji
+
+			//clients.insertOne({brand: 'Infinity', model: 'Q50'}); //dodanie elementu do istniejącej bazy
+			//clients.deleteOne({_id: mongo.ObjectId('5e07479389aca311bce52fbb')}); //usuwanie elementu
+
+			clients.find({}).toArray((err, clientList) => {     //wyświetlanie bazy w posataci tablicy
+				if(err) {
+					console.log("Błędne zapytanie!");
+				} else {
+					console.log('clientList', clientList);
+
+				}
+			});
+
+			clients.updateOne( {age: {$gt:18}, }, {$set: {active: true}}, err => {  //aktualizacja jednego albo 'updateMany'
+				if(err) {
+					console.log("Nie udało się zaktualizować");
+				} else {
+					console.log("Aktualizacja udana.");
+				}
+			}); //aktualizacja danych jednego dokumentu
+
+			client.close(); // kończenie połączenia
+		}
+	});
 
 	
 	
