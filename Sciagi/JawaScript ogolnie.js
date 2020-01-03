@@ -3,6 +3,7 @@ Ostatnia zmiana 2019.10.10
 //kurs ze strony: https://kursjs.pl/index.php
 // kurs o samym debagowaniu: https://developers.google.com/web/tools/chrome-devtools/javascript/
 
+//Piotrek pracuje w Acaisoft
 
 
 Znaki specjalne dla printf 
