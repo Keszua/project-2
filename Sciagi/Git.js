@@ -334,7 +334,7 @@ Aby nowy projekt wstawić do GitHuba, trzeba złożyć sobie nowe repozytorium p
   2. Robimy klon w folderze w którym jestśmy z apomoca polecenia:
 	λ git clone https://github.com/Keszua/nazwa-projektu
   3. Trzeba doinstalować cały folder "node_modules". Informacje o wersjach do instalowania są w "package.json"
-	wywołuje polecenie:
+	Wywołaj polecenie:
 	λ npm install
 */
 
@@ -351,7 +351,7 @@ Aby nowy projekt wstawić do GitHuba, trzeba złożyć sobie nowe repozytorium p
   5. Scieżkę projektu pobireamy z GitHuba -> Setings -> GitHub Pages -> Your site is published at [tutaj ten adres]
     Wchodzimy do pliku package.json i dopisujemy tuż za pierwszym nawiasem ścieżkę projektu:	
     "homepage": "https://github.com/Keszua/nazwa-projektu/",
-  6. W "scripts" doisac dwie linijki:
+  6. W "scripts" dopisac dwie linijki:
 	"scripts": {
 	  "predeploy": "npm run build",	//to dopisane
 	  "deploy": "gh-pages -d build", //to dopisane
