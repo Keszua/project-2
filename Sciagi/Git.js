@@ -293,7 +293,7 @@ git push origin -d v1.0.0 	//usuwanie tagów z repozytorium
 //KONFLIKTY
 //jest jakieś narzędzie graficzne do rozwiązwna konfliktów, uruchamiane poleceniam:
 git mergetool
-
+//Miros wspomniał coś o rebase
 
 //Przykład 1:
 //Mam dwie gałęzie: master i feature. Oba mają zmiany w tym samym pliku index.html. Jestem obecnie na gałęzi master i chce scalić ze soba gałąź feature:
@@ -304,7 +304,7 @@ git merge feature
 git add -A
 //tworze nowy comit:
 git commit -m "Merge feature branch"
-//moge usunąć neipotrzebna gałąż:
+//moge usunąć niepotrzebną gałąź:
 git branch -D future
 
 //Przykład 2:
@@ -361,7 +361,7 @@ Aby nowy projekt wstawić do GitHuba, trzeba złożyć sobie nowe repozytorium p
   7. W konsoli wywołać polecenie:
     λ npm run deploy
     Jest to komilowanie wersji produkcyjnej. Czyli za kazdym razem, gdy chemy zaktualizowac stronę, to trzeba to wywołać.
-    Po kolejnym (nie pierwszym) kompilowaniu wersji produkcyjnej, trzeba to wypchnac na serwer poleceniem: git push 
+    Po kolejnym (nie pierwszym) kompilowaniu wersji produkcyjnej, trzeba to wypchnąć na serwer poleceniem: git push 
   8. Na GitHub pojawi się nowa gałąź gita. GitHub domyślnie ustawi, żeby wyświetlanie strony było z wersji public
     Teraz w GitHuba -> Setings -> GitHub -> Source, Pages powinno samo zmieniać sie na "gh-pages branch".
     Jesli sie nie zmieni, to rzeba ręcznie to zrobić.

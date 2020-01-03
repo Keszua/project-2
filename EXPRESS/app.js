@@ -2,7 +2,8 @@
 
 //Aby z tego skorzystać, trzeba zianstalwoać: npm install express --save
 
-const express = require('./node_modules/express')
+//const express = require('./node_modules/express')
+const express = require('express')
 
 const app = express()
 

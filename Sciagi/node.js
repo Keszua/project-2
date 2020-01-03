@@ -171,8 +171,38 @@ const parse2 = path.parse(path.join(__filename, 'index.js'));
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
+/*Zakładnie nowego projektu:
+1. Musze mieć zainstalowany node na kompie. Można to sprawdzić poleceniem w konsoli:
+	node -v
+2. W pustym folderze, tworze sobie plik "app.js"
+3. W konsoli wywłuje polecenie 	
+	npm init
+4. Konsola będzie czekała na wpisanie kilku informacji: nazwa projektu itd...
+	Aby zostawić domyślne, trzeba ponaciskać Enter.
+5. Aby korzystać z Expres, to trzeba go zainstalować:
+	npm i express -S
+6. W pliku app.js tworze prosty serwer:
+	const express = require('express')
+	const app = express();
+	app.listen(3000, () => {
+		console.log('Server is listening at http://localhost:3000');
+	});
 
 
+	
+	
+	
+
+*/
+
+//-----------------------------------------------------------------------------
 
 
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+
+
+
+
