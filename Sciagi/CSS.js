@@ -1,4 +1,15 @@
+
+//    ###    ###    ###       
+//   #   #  #   #  #   #    
+//   #      #      #     
+//   #       ###    ###    
+//   #          #      #    
+//   #   #  #   #  #   #
+//    ###    ###    ###  
+
+
 //Style CSS
+
 
 //Przykład, aby przycisk zmieniła sam siebie (swój wygląd):
 	const btn = document.querySelector(".button");
@@ -131,5 +142,22 @@ contains("nazwa-klasy")		sprawdza czy element ma taką klasę
 
 //przykład z pieskiem obserwujący kursor:
 http://domanart.pl/dema/super-szamson/super-szamson.html
+
+
+
+
+//   ###    ###    ###    ###       
+//  #   #  #   #  #   #  #   #    
+//  #      #      #      #     
+//   ###   #       ###    ###    
+//      #  #          #      #    
+//  #   #  #   #  #   #  #   #
+//   ###    ###    ###    ###  
+
+// Konwersacja Sass na CSS
+
+// Trzeba mieć "Live Server"
+// Trzeba doinstalować "Live Sass Compiler" (taki z okiem)
+
 
 

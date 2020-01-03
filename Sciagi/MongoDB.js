@@ -79,7 +79,7 @@ Kolekcja: to zbiór dokumentów
 	
 	
 	
-// Zakładanie nowego projektu:
+// Zakładanie nowego projektu (baza lokalna):
 1. Tworze nowy,pusty folder.
 2. W tym folderze, w konsoli wywołuje polecenie:
 	> npm init
@@ -124,6 +124,39 @@ Kolekcja: to zbiór dokumentów
 
 	
 	
+// Zakładanie nowego projektu (baza w chmórze):
+1. Wchodzimy na https://www.mongodb.com/cloud/atlas i wybieramy "Start free"
+	(filmik 97)
 	
+	Stworzyłem nowy Cluster
+	W Security -> Database Acess  tworze urzytkownika "keszua" i generuje hasło 51WfhXK3bGZaXt1t 
 	
+2. Instaluje mongoose ze strony: 	https://mongoosejs.com/
+Aby korzystć z bazy danych trzeba wkleić  do app.js (za importem ./config.js)
+	var mongoose = require('mongoose');
+	mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true});
+Tą druga linijkę linijkę przerabiam na:
+	mongoose.connect(config.db, {useNewUrlParser: true});
+
+Aby sprawdzić, czy połaczenie nsastąpiło porawnie, wpisjue:
+	var db = mongoose.connection;
+	db.on('error', console.error.bind(console, 'connection error:'));
+	db.once('open', function() {
+	  console.log('db conect OK');
+	});
+
+Jeśli poprawnie jest wszystko skonfigurowane, to w konsoli pownno sie pojawić: 'db conect OK'
+
+link na moją bazę danych:
+https://cloud.mongodb.com/v2/5e0a3e9b79358e1d9f0a3b0a#clusters
+
+3. Tworze modele, czyli schematy danych które będe przechowywał dla wprowadanych danych.
+Np: Artykół będzie skałdał się z:
+- tytułu (String)
+- opisu (String)
+- daty utworzenia (Date)
+
+Modele będe przechowywał w oddzielnym folderze models i kazdy model w oddzielnym pliku.
+
+
 	
