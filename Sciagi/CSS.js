@@ -181,6 +181,7 @@ http://domanart.pl/dema/super-szamson/super-szamson.html
     ]
 
 
+//-----------------------------------------------------------------------------
 //Zmienne w SCSS
 $nazwa-zmiennej: wartosc;
 
@@ -191,7 +192,7 @@ p {
 	font-size: $text-medium-size;
 }
 
-//Przykład drugi:
+//Przykład 2:
 $one: 100px;
 $two: 200px;
 div {
@@ -253,6 +254,7 @@ $sizes: 1200px, 800px, 400px;
 $shadow: 2px 3px 2px 2px #ccc;
 $box-margins: 20px 10px 1em, 400px 200px 5em, 5rem 2rem 100px;	//lista z zagnieżdzoenymi listami
 
+//-----------------------------------------------------------------------------
 //mapa (map)
 $fonts: (
 	main: 'roboto',
@@ -281,6 +283,7 @@ $example3: 300px;
 }
 //Uwaga, ta operacja zostanie skompilowana, ale zignorowana przez przeglądarkę. Używamy tego dla faukcji warunkowych.
 
+//-----------------------------------------------------------------------------
 //KOMENTARZE
 /*! */ - wielowierszowe, widoczen po każdej kompilacji
 /* */ - wielowierszowe, widoczen po kompilacji (nie widoczne w kompilacji skompresowanej)
@@ -411,6 +414,7 @@ h1 {
 	@include title(2.2rem) {
 		line-height: 150%;
 		color: blue;
+		{ color: red; }
 	}
 }
 //da wynik:
@@ -418,6 +422,7 @@ h1 {
 	font-size: 2.2rem;
 	line-height: 150%;
 	color: blue;
+	color: red;
 }
 //-----------------------------------------------------------------------------
 // DZIEDZICZENIE  @extend  -bardziej określa ROZSZERZENIE
@@ -471,7 +476,7 @@ ul {
 	border: 2px solid gray;
 }
 //-----------------------------------------------------------------------------
-// INTERPOLACJA #{$zmienna}
+// INTERPOLACJA #{$zmienna}  //wstawianie tekstu w miejsce "zmiennej"
 $default-size: 10;
 $class-large-font: 'xxl';
 
@@ -484,12 +489,221 @@ p.xxl {
 }
 
 //-----------------------------------------------------------------------------
+// FUNKCJE KOLORÓW
+$font-color: rgb(12,122,222);
+$second-color: #ee44ee;
+.box{
+	color: $font-color;
+	h1 {
+		color: lighten($font-color, 25%);	//rozjaśni kolor
+		border-bottom: 2px solid darken($font-color, 10%); //przyciemni kolor
+		color: darken(lighten($font-color, 25%), 25%);  //w rezultacie wyjdzie ten sam kolor.
+		color: mix($font-color, $second-color);	//połaczy te dwa kolory
+	}
+}
+//-----------------------------------------------------------------------------
+// @if INSTRUKCJE WARUNKOWE 
+$box-width: 180px;
+p {
+	@if ($box-width < 200) {
+		border-color: red;
+	}
+	@else if ($box-width != 100 and $border-size == large) {
+		border-color: yellow;
+	}
+	@else if (type-of($box-width) == number and $box-width > 0) {
+		border-color: red;
+	}
+	@else {
+		border-color: green;
+	}
+	color: red;
+}
+//rezultat:
+p {
+	border-color: red;
+	color: red;
+}
+//-----------------------------------------------------------------------------
+// WŁASNE FUNKCJE
+@function nazwa-funkcji($parametr1, $parametr1) {
+	//ciało funkcji
+	@return zwracna-wartość;
+};
 
+div {
+	właściwość: nazwa-funkcji();
+}
+//-----------------------------------------------------------------------------
+@media   MEDIA QUERIES
 
+	.menu__item {
+		@media (min-width: 640px) {
+			//wykna się tylko dla szerokości większej niż 640
+		}
+	}
+	
+	
+//Przykład z wykorzystniem mapy:
+
+$breakpoints: (
+	xsmall: (min-width: 460px),
+	small: (min-width: 640px),
+	medium: (min-width: 800px),
+	large: (min-width: 1024px),
+	xlarge: (min-width: 1200px),
+	xxlarge: (min-width: 1440px)
+);	
+
+//wykorzystujemy tą tablicę do domieszki:
+@mixin mq($breakpoint) {  //tu podamy, przykładowo: medium 
+	$size: map-get($breakpoints, $breakpoint);		//pobieranie z mapy
+	@if($size) {
+		@media #{$size} {
+			@content;
+		}
+	}
+	@else {
+		@error '"#{$breakpoint}" - Nie rozpoznaje tej wielkości';
+	}
+}
+
+//teraz uzywam tego w stylowaniu box'a:
+.box{
+	.title {
+		font-size: 20px;
+		@include mq(xsmall) {		//tutaj urzywam domieszki (konieczne nawiasy dla @content)
+			font-size:18px;
+		}
+		@include mq(medium) {		
+			font-size:16px;
+		}
+	}
+}
+
+//Po kompilacji:
+.box .title {
+	font-size: 20px;
+}
+@media (min-width: 460px) {
+	.box .title { 
+		font-size: 18px;
+	}
+}
+@media (min-width: 800) {
+	.box .title { 
+		font-size: 16px;
+	}
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+FLEXBOX
+//pozycjonowanie elementów w elemencie
+
+Przydatne narzędzie, to firefox w wersji developer:
+https://www.mozilla.org/pl/firefox/developer/
+
+Aby ustawić otwieranie projektów w tej wersji firefoxa:
+1. w Visual Stusio Code Wejść w File -> Preerences -> Setings
+2. Wkleić właściwości:
+    "liveServer.settings.AdvanceCustomBrowserCmdLine":
+    "C:\\Program Files\\Firefox Developer Edition\\firefox.exe",
+
+    "liveSassCompile.settings.autoprefix": [
+        "> 1%",
+        "last 2 versions"
+    ],
+    "liveSassCompile.settings.formats":[
+        {
+            "format": "expanded",		// rodzaj kompresji: nested, expanded, compact, compressed
+            "extensionName": ".css",	// do wyboru: .css or .min.css
+            "savePath": "~/../css/"		//okresla się ścieżkę z plikiem wynikowym (domyślenie null)
+        }
+    ],
+3. Aby uruchomić index.html w Live Server, należy na plik PM i nacisnąć 
+	Open with Live Server 
 
 //-----------------------------------------------------------------------------
 
+W kursie wykorzystane są: Font Awesome
+1. Wpisać w przeglądarkę: cdn font awesome 4.7
+	Lub wejśc na stronę: https://www.bootstrapcdn.com/fontawesome/
+2. Skopiować link: https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css
+3. Wkleić do pliku index.html 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+Przed <link rel="stylesheet" href="css/main.css">
+4. Wchodzimy na stronę https://fontawesome.com/v4.7.0/get-started/
+5. Zakładka Icons
+6. Po wybraniu ikony, otrzymujemy kod, który wklejamy do kodu w pliku .html
 
 
 //-----------------------------------------------------------------------------
+Logo generowane w "Hatchful"
+Dodatkowe czcionki w: Google Fonts
+1. Wejśc na stronę: https://fonts.google.com
+2. W wyszukiwanie wpisać szykaną czcionkę, np: pt sans
+3. Gdy odszukamy, naciksamy czerwony plusik
+4. Możemy szukać kolejne i dodać kolejne
+5. Na dole strony pojawi się czarna listwa z ilością wybrancyh. Naciskamy ją.
+6. W zakładce CUSTOMIZE mozemy zanzacyć dodatkowe opcje, np: Pogróbienia
+7. W zakładce EMBED kopiujemy link z importem.
+Aby wkleić to do pliku .scss trzeba przejść do @IMPORT i zanaczyć 
+to co jest pomiedzy znacznikami <style>
+
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//WŁAŚCIWOŚCI KONTENERA:  (filmik 35  Minuta 5:25 )
+//tworzymy kontener: 	flex zajmuje 100% rodzica; 
+//						inline-flex zajmuje tyle ile potrzebują jego dzieci
+	display: flex; /* inline-flex */  
+//oś; row to pozioma	
+	flex-direction:row; /* column, row-reverse, column-reverse */
+//zawijanie elementów	
+	flex-wrap: nowrap; /* wrap, wrap-reverse */
+	flex-flow: row nowrap; /* skrót dla flex-direction i flex-wrap */
+//pozwala układać elementy na osi głównej. start: do lewej;	
+// 		space-around: delikatna przestrzeń między elementami
+	justify-content: flex-start; /* flex-end, center, space-around, space-between, space-evenly */
+//definiuje oś prostopadłą
+	align-items: stretch; /* flex-start, flex-end, center, baseline */
+//gdy mamy wiele lini, opisujemy zachowanie poszczególnych wierszy
+// stretch - rozciąganie się elementów; flex-start: upakowane do góry strony
+// center: upakowane do środka
+	align-content: stretch; /* flex-start, flex-end, center, space-between, space-around */
+
+//WŁAŚCIWOŚCI ELEMENTU
+//w jakiej kolejności mają wyświetlać się elemnty
+	order: 0; /* liczba całkowita (wartosci dodatnie i ujemne) */
+//czy ma rosnąć? 0: nie ma rosnąć;  1: ma rosnąć	
+	flex-grow: 0; /* wartosć bezwzględna (od 0 w górę) */
+//czy ma sie zmniejszać? 1: tak;  0:nie;	
+	flex-shrink: 1; /* wartosć bezwzględna (od 0 w górę) */
+//odnosi się do długości osi głównej	
+	flex-basis: auto; /* wielkości elementu (z różymi jednostkami) */
+	flex: 0 1 auto; /* skrót do flex-grow, flex-shrink, flex-basis */
+//	robi to co align-items, ale dotyczy pojedyńczego elementu (czy ma sie rozciągać)
+	align-self: auto; /* strech, center, flex-start, flex-end, baseline */
+
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+
 
