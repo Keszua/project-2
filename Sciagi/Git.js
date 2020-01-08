@@ -45,7 +45,7 @@ code index.html 		//otwieranie pliku w Visula Studio Code
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
 
-Polecenia Gita
+//Polecenia Gita
 git init 				//będac w wybranym folderze, tworzymy repozytorium
 git init d:/apps/go  	//tworzenie repozytorium w podanej ścieżce
 git status 				//pokazuje jakie pliki są śledzone, dodane lub nie dodane do repozytorium
@@ -68,7 +68,7 @@ git commit -m "Opis zmiany"  //zrobienie komitu (snapshota) bez otwierania edyto
                              // Tytół opisu zrobic do 50 znaków. Zawijanie wierszy po 72 znakach.
 git commit -a -m "Opis zmiany"  	//zrobienie add i od razu komitu (snapshota) 
 git commit --all -m "Opis zmiany"  	//zrobienie add i od razu komitu (snapshota) 
-git commit nazwaPliku  	//komitowaie tylko jednego pliku
+git commit nazwaPliku  	//komitowanie tylko jednego pliku
 
 git log   					//informacje o komitach
 git log --oneline  			//skrócone informacje o komitach (tylko najważniejsze informacje)
@@ -150,7 +150,7 @@ git hash-object nazwaPliku.txt  	//zwraca kod pliku.
 git checkout -- nazwaPliku  //cofnięcie zmin z "stage". Przywrócenie skasowanego pliku
 git checkout -- *.txt  		//Przywróci wszytkie pliki tekstowe
 git checkout HEAD -- nazwaPliku  //cofnięcie zmin z ostatniego comitu
-							// dokładniej: kopiuje pliki z przechowalki (stage) do katalogu roboczego (working directory)
+							// dokładniej: kopiuje pliki z przechowalni (stage) do katalogu roboczego (working directory)
 git checkout 5a33dd3        //cofnięcie zmin ze wskazanego comitu (pierwsze 7 znaków)
 git checkout 5a33dd3 -- nazwaPliku  //cofnięcie zmin pliku ze wskazanego comitu (pierwsze 7 znaków)
 //Jeśli jednak nie che przywracać jakiejś kopii, tylko wrócić do aktulanej, wywołuje: git checkout master

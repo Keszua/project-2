@@ -700,57 +700,68 @@ to co jest pomiedzy znacznikami <style>
 //  #   #  #  #    #    #   #   
 //   ###   #   #  ###  #####     
 
+//-----------------------------------------------------------------------------
 //WŁASCIWOŚCI KONTENERA
 display: grid; // zadeklarowanie struktóry dla siatki (trzeba dac na początku)
 grid-template-columns 100px 2fr auto;	// ilość kolumn: ile wartości, tyle kolumn
-grid-template-rows 80px 100px 50px;		// ilośc wierszy: ile wartości, tyle kolumn 
-grid-template-areas
-grid-auto-columns: auto; // auto (domyślnie):
-grid-auto-rows: auto;	// auto (domyślnie); wartość jaką ma miec wielkość następna, automatycznie dodany wiersz
+grid-template-rows 80px 100px 1fr;		// ilośc wierszy: ile wartości, tyle kolumn 
+grid-template 80px 1fr / 100px 2fr;	//połaczenie dwóch powyzszych. (w pierw weirsze, później kolumny)
+grid-template-areas	  	// do nazywania komurek. Zobacz przykład poniżej.
+grid 					//połączenie dwóch powyższych. Zobacz przykład poniżej.
+grid-auto-columns: auto; /* auto (domyślnie) wielkoścKomórki */ //Wielkość automatycznie dodawanych kolumn
+grid-auto-rows: auto;	 /* auto (domyślnie) wielkoścKomórki */ // Wielkość automatycznie dodawanych wierszy
 grid-auto-flow: row;	// row (domyślnie): gdy brak miejsca, twórz nowy wiersz.  
 						// row dense: gdy są obiekty większe niż "span 1", to zezwala na uzupełnianie wolnych komórek, nastepnym mieszczącym się elementem.
 						// column: gdy brak miejsca, dodaje nową kolumnę (zamiast wiersza), oraz rozmieszcenie elementów od góry
-column-gap (grid-column-gap)
-row-gap (grid-row-gap)
-gap (grid-gap) //przerwa dla wiersza i kolumny
+column-gap (grid-column-gap) //przerwa dla kolumny (przerwa robiona kosztem frakcji)
+row-gap (grid-row-gap)		//przerwa dla wiersza
+gap (grid-gap) 				//przerwa dla wiersza i kolumny
 
-justify-items
-align-items
-place-items
-justify-content
-align-content
-place-content
+justify-items: stetch;	/* stetch, start, center, end, left, right */ //wyrównanie wewnątrz komórki (szczegoly w filmie 57)
+align-items: stetch; 	/* stetch, start, center, end */ //wyrównanie wewnątrz komórki (szczegoly w filmie 57)
+place-items	end right;	//zastępuje align-items i justify-items
+justify-content: stetch; /* stretch (domyslna), left, right, center, start, end, space-between */ 
+						//wyrównanie obszaru kolumn, gdy będzie wolna przestrzeń
+align-content		/* stretch (domyslna), center, start, end, space-between */ //wyrównanie obszaru wierszy, gdy bedzie wolna przestrzeń
+place-content		//skrót dla align-content i justify-content
 
 overflow: hidden; //ucinanie wierszy "wystających" po za określony "height" (to nie jest metoda tylko dla grid)
 
+//-----------------------------------------------------------------------------
 //WŁASCIWOŚCI ELEMENTU
-grid-column-start
-grid-column-end
+grid-column-start 	// od której linii pionowej zaczyna się powierzchnia elementu (definiujemy kolumnę)
+grid-column-end		// na której linni pionowej kończy  się powierzchnia danego elemntu (definiujemy kolumnę)
 grid-column: 2;		// zajmij kolume 2 to samo co: grid-column-start: 2; grid-column-end: auto;
 grid-column: 1/-1;	// zajmij kolumny od 1 do ostatniej (pierwszej od końca)
-grid-row-start
-grid-row-end
+
+grid-row-start		// od której linii poziomej zaczyna się powierzchnia elementu (definiujemy wiersz)
+grid-row-end		// od której linii poziomej kończy  się powierzchnia elementu (definiujemy wiersz)
 grid-row: 1;		// bądz w wierszu 1 
 grid-row: 2/3;		// bądz między linią 2 a 3 (drugi wiersz). To samo co grid-row-start: 2; grid-row-end: 3;
 grid-row: 2/span 2; // drugi wiersz i zajmuj 2 komórki
-
 grid-area: 2/3/3/4; //zastępuje grid-row-start/grid-column-start/grid-row-end/grid-column-end
 
-justify-self
-align-self
+justify-self	//podobnie jak justify-items ale tylko do jednego elemntu
+align-self		//podobnie jak align-items ale tylko do jednego elemntu
 place-self
-order
-z-index 
+z-index: 1;		//pozycjonowanie elementów (gdy nachodza na siebie) im wieksza wartość, tym wyżej jest element (filmik 58)
+order: -1;		//domyślnie: 0;  pozycjonowanie elementów (przesuwanie, który m awyższy priorytet) im mniejsza wartość tym wyżej
+				//order wymusi przesunięcie alementu pomiędzy komórkami. Mozna ostatni element wymusić na sam przód.
 
+//-----------------------------------------------------------------------------
 //FUNKCJE I WARTOSCI
-fr
-repeat()
-minmax()
-auto-fit
-auto-fill
-main-contentmax-constent
-span
-dense
+fr  //wypełnienie wolnejprzestrzeni domysłnie 1fr
+span	//ile komórek ma wypełniać, np. grid-column: 2/span3
+dense	// Gdy urzywamy obiektów zajmujących kilka komórek, to zezwalamy, aby mniejsze się wpasowały w wolne miejsce.
+repeat()	//głównie do tworzenia wiersyz albo kolumn, np. grid-template-columns: repeat(4, 1fr); - argument 1: ilośc powtórzeń, agrument 2: co powtarzamy, np: 1fr 80px
+			//można ją wstawić pomiedzy inne wartosci, np. grid-template-columns: auto 100px repeat(4, 1fr) 80px;
+minmax()	//określmy minimalną i max wartość, np. minmax(50px, 200px) lub minmax(200px, auto), czyli min 200px a w góre bez ograniczeń.   
+auto-fill	//Do automatyczego generowania kolumn. Generuj tyle, ile jesteś w stanie. Chyba trzeba podać width
+			// grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); Przy width: 600px, zrobi 10 kolumn po 60px
+auto-fit	// wygeneruje tyle kolumn, ile jest elementów do rozdysponowania
+			// grid-template-columns: repeat(auto-fit, minmax(55px, 1fr)); Przy width: 600px, i 7 elemntach, zrobi 7 kolumn po 85px
+main-content	// obiekt ma zając minimalną wartość, jaką potrzebuje (głównie dla obrazków)
+max-constent	// wypełnia całą dostepną szerokość.
 
 //-----------------------------------------------------------------------------
 //Siatkę można tworzyć:
@@ -816,8 +827,31 @@ dense
 
 }
 //-----------------------------------------------------------------------------
-
+// nazywanie komórek
+	.grid {
+		display: grid;
+		grid-template-columns: 100px 1fr 3fr;	//definiuje 3 kolumny
+		grid-template-rows:	100px auto auto auto;	//definiuje 4 wiersze
+		grid-template-areas:
+			"logo		navigtion	article"
+			"info		info		article"
+			".			.			article"
+			"footer		footer		footer"
+	//powyżej nazywam wsyzstkie komorki. jak nei che dawac nwzy, daje kropke. Musze tworzyc prostokoty
+	}
+	.e1{ grid-area: article; } //umieszczam element, który ma zając wszystkie komórki "article"
+	.e3{ grid-area: footer; } //umieszczam element, który ma zając wszystkie komórki "footer"
 //-----------------------------------------------------------------------------
+grid - łaczy grid-areas, grid-template-rows i grid-auto-columns
+	.grid {
+		display: grid;
+		grid: "e5 e5 e1" 100px "e3 e3 e3" auto "e4 e2 e2" 70px / 140px 1fr 50px
+	//nazwy wierszy i wielkośc wiersza / wielkość kolumn
+	}
+	.e1 {
+		grid-column: 1/3
+	}
+
 
 //-----------------------------------------------------------------------------
 
