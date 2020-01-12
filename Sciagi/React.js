@@ -62,6 +62,121 @@ ReactDOM.render(app, document.getElementById('root'))
 //------------------------------------------------------------
 //komponenty
 
+
+
+
+
+
+//komponent daty
+<time>{(new Date()).toString()}</time>
+
+KOMPONENTY
+* stateless functional component, - SFC, komponent bezstanowy
+* stateful functional component - komponent stanowy
+
+
+W strefie kursów jest:
+ var UserTable = React.createClass({
+ 	render: function() {
+ 		return (
+ 		<h2>To jest komponent userTable</h2>
+ 		);
+ 	}
+ });
+ReactDOM.render( <UserTable /> , document.getElementById('content')); 
+// A powinno być:
+const UserTable = () => (
+	<div>
+		<h2>To jest komponent userTable</h2>
+	</div>
+ )
+ReactDOM.render( <UserTable /> , document.getElementById('content')); 
+
+//Wewnątrz tego komponentu mozna wlosyc kolejne komponenty:
+const UserTable = () => (
+	<div>
+		<h2>To jest komponent userTable</h2>
+		<KolejnyKomponent />
+	</div>
+ )
+
+const UserTable = () => (
+	<div>
+		<h2>To jest kolejny komponent</h2>
+		<TutajJeszczeKoejnyKomponent />
+	</div>
+ )
+
+//Nie wiem dla czego, ale Szczecinski zaproponował taką składnię zamiast wstawaiana komponentu:
+ReactDOM.render( React.createElement(Tweet, null), document.getElementById('Komponent_SFC'));
+// wynik ten sam co ten:
+ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
+
+
+Komponenty stanowe - posiadają one stan, czyli mogą przechowywać dane odnośnie 
+swojej reprezentacji (przykładowo komponent na wprowadzanie tekstu - <input> zawierałby
+informacje o aktualnie wpisanym tekście), ale posiadają też funkcje cyklu życia.
+
+class Tweet2 extends React.Component {
+	render(){
+		const date = (new Date());
+		return(
+			<div>
+				Element Tweet2 Stanowy
+				<time>{date.toLocaleString()}</time>
+				<p> Siemka </p>
+
+			</div>
+		) 
+	}
+}  
+ReactDOM.render( <Tweet2 /> , document.getElementById('Komponent_Stanowy'));
+
+//Można od razy załadowac kilka "Tweetów"
+ReactDOM.render( 
+	<div>
+		<Tweet2 /> 
+		<Tweet2 /> 
+		<Tweet2 /> 
+	</div>	
+	, document.getElementById('Komponent_Stanowy'));
+
+
+props - Parametry przekazywane od rodzica do dziecka
+
+Wartości dynamiczne otaczamy znacznikami {}
+
+//Tworze sobie jakas "strukture" z danymi wejsciowymi:
+const TweetData = {
+  user: {
+    name: "Bartosz Szczeciński",
+    handle: "btmpl"
+  },
+  date: new Date(),
+  text: "Witaj świecie!"
+}
+// w 
+ReactDOM.render( <Tweet2 />, document.getElementById('Komponent_Stanowy'));
+//Doisuje sobie skad beda pobierane dane:
+ReactDOM.render( <Tweet2 tweet={TweetData}/>, document.getElementById('Komponent_Stanowy'));
+
+//do klasy Tweet, pod "render(){" dodaje sobie linjke:
+const { user, text, date } = this.props.tweet;
+//przerabaim "TweetUser" z:
+ const TweetUser = () => ( <span> Imie: <b>Karol</b> </span> ) //bez nawiasow i srednika tez zadzialalo
+//na:
+const TweetUser = ({name, handle}) => ( <span> Imie <b>{name}</b>{handle}</span> );
+
+
+//Teraz do <TweetUser /> wewnatrz "Tweet" moge przekazac dane
+// szczegóły na : https://szczecinski.eu/docs/react/komponenty/pass-props
+
+
+
+
+
+
+
 //------------------------------------------------------------
 //komponent funkcyjny, bezstanowy
 	const App1 = () => {  

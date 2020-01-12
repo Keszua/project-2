@@ -1,5 +1,235 @@
 //Obiekty w JavaScript
 
+Definowanie na dwa sposby:
+* Literał obiektowy
+* słowo kluczowe "new"
+
+operacje na obiektach przez metodę "Object":
+Object.getOwnPropertyDescriptor(nazwaObiektu, "właściwość" ); // wyswietla właściwości dla podanego obiektu
+Object.defineProperty(nazwaObiektu, "właściwość", { value: 10 }); // zmiana wskazanej, w tym przypadku vartosci w danym obiekcie.
+																// można też na tej samej zasadzie dodać kolejną właściwość
+var newObj = Object.assign({}, Obj); 	//tworzy duplikat obiektu. Pierwszy argument to nowy (pusty) obiekt, adrugi argument to obiekt do skopiowania
+										// cechy właściwości nie są kopiowane, tylko maja ustawienia domyslne (czyli writable i tp.)
+Object.preventExtensions(obj);			// blokuje możliwość rozszerzania objektu. Ale możliwe jest usównie przez: delete obj.a;
+Object.isExtensible(obj)				// sprawdza, czy obiekt jest rozszeżalny (true albo false)
+Object.seal(obj); //zapieczetowanie objektu. Nie można dodawać ani usówać właściwości
+Object.freeze(obj); //zamrożenie, nie można zmieniać wartości we wwłaściwosciach obiektu
+
+
+
+
+
+
+Literał obiektowy:
+var obj = {
+	właściwość : wartosć,
+	właściwość : wartosć,
+}
+
+
+//przykład pokzujący, że nie ma rozdzielenia między funkcją a metodą
+var user = {
+    name: "Uzytkownik",
+    showMsg: function() {
+        return "Witaj "+ this.name;
+    }
+}
+console.log(user.showMsg());  //= Witaj Uzytkownik
+// poniżej ten sam efekt z funkcją która jet zewnętrzna:
+function pokazywanieNapisu() {
+    return "Witaj "+ this.name;
+}
+var user = {
+    name: "Uzytkownik",
+    showMsg: pokazywanieNapisu,
+}
+console.log(user.showMsg());   //= Witaj Uzytkownik
+console.log(Object.getOwnPropertyDescriptor(user, "name")); // wyswietla właściwości dla podanego obiektu, czyli: 
+	//{ value: 'Uzytkownik',
+	//  writable: true,
+	//  enumerable: true,
+	//  configurable: true }
+console.log(user.name); //= Uzytkownik	
+user.name = "nowa wartosc";
+console.log(user.name); //= nowa wartosc
+Object.defineProperty(user, "name", {
+    value: 10,
+	writable: false
+});
+console.log(user.name); //= 10
+user.name = "Nowsza wartosc"; // tutaj zmiana nie jest możliwa, ponieważ zmieniona została właściwość "writable"
+console.log(user.name); //= 10  
+
+
+//Duplikowanie obiektów
+var newUser = Object.assign({}, user);
+console.log(user);  	//= { name: 'Uzytkownik', showMsg: [Function: pokazywanieNapisu] }
+console.log(newUser);	//= { name: 'Uzytkownik', showMsg: [Function: pokazywanieNapisu] }
+var nowszy = user;		// ten sam efekt co przez Object.assign...
+console.log(nowszy);	//= { name: 'Uzytkownik', showMsg: [Function: pokazywanieNapisu] }
+
+if(obj.hasOwnProperty("name")) {  //sprawdzenie czy właściwość o takiej nazwie istnieje.
+    console.log(obj.name);
+} else {
+    console.log("Nic z tego");
+}
+
+
+//Własny getter oraz setter
+var obj = {
+    _id_: 1, //tego mozna nie podawac, ale do puki nie urzyjemy "set" to bedzie jako "undefined"
+    get id() { return this._id_ ;},  // "id()" to akcesor 
+    set id(v) { this._id_ = v;},
+};
+
+
+//this
+
+var obj = {
+    id: 1,
+    getId: function() {
+        console.log(this.id);
+    } 
+};
+
+obj.getId();  //= 1
+//to samo ale  inaczej:
+var obj = {
+    id: 1,
+    getId: Get_ID
+};
+
+function Get_ID() {
+    console.log(this.id);
+} 
+
+obj.getId();  //= 1
+
+//------------------------------------------------------------
+function fn() {
+    console.log(this.a);
+}
+
+var obj1 = {
+    a: 2
+};
+
+fn.call(obj1); //= 2  wywołuje funkcje na rzecz obiektu "obj1". Jest to "jawne wiązanie"
+fn.apply(obj1); //= 2
+//------------------------------------------------------------
+//poniższy porzykład działa tylko w przeglądare, nie działa w "Visual Studio Codeę
+function fn() {
+    console.log(this.a);
+}
+
+var obj1 = {
+    a: 2,
+	fn: fn
+};
+
+var a =99;
+fn();  //= 99  funkcja odwołuje się do globalnego "a"
+
+var b = obj1.fn;  
+b(); //UWAGA! płapka, tutaj wynikiem będzie 99, pomimo że wychodziło by, że wywołujemy fn na żecz obj1
+obj1.fn(); //=2 
+//------------------------------------------------------------
+function Point(x, y) {
+    this.x = x;
+    this.y = y;
+}
+
+var p1 = new Point(2, 4);
+
+console.log(p1); //= Point { x: 2, y: 4 }
+console.log(p1.x); //= 0
+
+//------------------------------------------------------------
+//etap I
+var counter = {
+    count: 0,
+    increment: function() {
+        setTimeout(function() {
+            this.count++; //UWAGA! tutaj płapka, this odwołuje się do jakiegoś globalnego elementu (ale nie wiem jakiego)
+            console.log(this.count);
+        }, 1000);
+    }
+};
+counter.increment(); //= NaN
+
+//etap II
+var counter = {
+    count: 0,
+    increment: function() {
+        setTimeout((function() {  //otwarcie nawiasu
+            this.count++;
+            console.log(this.count);
+        }).bind(this), 1000); // wywołanie metody "bind" i powiązanie z "this".
+    }							// do funkcji setTimeout przekazuje funkcje z powiązanym this, wskaujący na obiekt "counter"
+};
+
+counter.increment(); //= 1
+
+//etap III
+//zamiast .bind, stosuje zmienną wewnątrz funkcji. ta zmienna wskazuje na 
+var counter = {
+    count: 0,
+    increment: function() {
+        var self = this;
+        setTimeout(function() {
+            self.count++;
+            console.log(self.count);
+        }, 1000);
+    }
+};
+counter.increment(); //= 1
+
+//etap IV
+//to samo za pomocą arrow function
+var counter = {
+    count: 0,
+    increment: function() {
+        setTimeout(() => {
+            this.count++;
+            console.log(this.count);
+        }, 1000);
+    }
+};
+counter.increment(); //= 1
+
+//etap V
+//kilkukrotne wywołanie odliczania:
+var counter = {
+    count: 0,
+    increment: function() {
+        setTimeout(() => {
+            this.count++;
+            console.log(this.count);
+            if(this.count<10)
+                counter.increment();
+        }, 1000);
+    }
+};
+
+counter.increment(); //= 1, 2, 3...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-----------------------------------------------------------------------------
 //Dodawanie nowych właściwości
 
 const car = {

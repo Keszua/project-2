@@ -346,7 +346,7 @@ itd...
 	background-color: rgb(200,200,100);
 	@include position(absolute, auto, 200px);
 }
-//wunik:
+//wynik:
 .modal {
 	background-color: rgb(200,200,100);
 	position: absolute;

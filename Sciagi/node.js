@@ -1,11 +1,39 @@
+// #   #           #          
+// ##  #           #   ##       #   ###     
+// # # #   ##    ###  #  #         #             
+// #  ##  #  #  #  #  ####     ##   ##       
+// #   #  #  #  #  #  #         #     #
+// #   #   ##    ###   ###  #   #  ###  
+//                              #
+//                            ##
+Node.js  - jest to środowisko uruchomieniwe do odpalania JS bez przeglądarki. Np na serwerze
+//Aby go zainstalować, trzeba ściagnać instalkę z https://nodejs.org/en/ i zainstlować jak kazdy windowsowy program
+
+
 // Node.js
 node -v  	// sprawdzanie wersji. 
 npm -v 		// sprawdzanie wersji. 
 
-//odpalenie skryptu: 
+//Aby z niego skorzystać ogólnie przez wiersz poleceń, w wierszu poleceń wpisać:
+λ node 
+//pojawi się znaczek ">" to oznacza że już działa node.
+//Przykład:
+> var x = 2 + 6; CR
+undefined
+> x; CR
+8		//wyswietli wynik zmiennej "x"
+>
+//Aby wyjść, trzeba dwukrotnie: Ctrl+C 
+
+
+//Aby pisać kod w pliku, trzba zrobić plik .js i wnim pisac.
+//Odpalenie skryptu: 
 //    node nazwaPliku.js
 
 //Gdy odpalimy serwer, zatrzymujemy go Ctrl+C
+
+
+
 
 //Po wpisanu polecenia:
     node   
@@ -40,17 +68,26 @@ Przykłady:
 
 //-----------------------------------------------------------------------------
 //Prosty serer:
+//Tworze plik app.js (dowolna nazwa)
+//zawartość pliku:
 const http = require('http');
 
 const server = http.createServer((request, response) => {
     console.log(request.url);
-    response.writeHead(200, {'Content-Type':'text/html'})
-    response.end('<h1>Hello Node!<h1>')
+    response.writeHead(200, {'Content-Type':'text/html'}) // 200 to zwrucenie wartosci OK
+    response.end('<h1>Hello Node!<h1>') // tresc odpowiedzi
 })
 
-server.listen(5500, '127.0.0.1', () => console.log("serwer wystartował"));
+server.listen(3000, '127.0.0.1', () => console.log("Serwer wystartował")); //nasłuchiwanie na porcie 3000
 
-
+//Następnie w cmder (albo wierszu poleceń) wejść do folderu z tym plikiem
+//i uruchomić ten plik przez node poleceniem:
+λ node app.js
+//Cały czas będzie migał kursor, to oznacza że prawdopodobnie już działa serwer,
+//Za pomocą przeglądarki wejść an stronę: 
+localhost:3000
+//W przeglądarce powiniśmy zobaczyć treść odpowiedzi, czyli: Hello Node!
+//Aby zatrzymać serwer, urzyć Ctrl+C
 
 //-----------------------------------------------------------------------------
 // #####   ####                   
@@ -196,6 +233,121 @@ const parse2 = path.parse(path.join(__filename, 'index.js'));
 */
 
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+Bibioteki do node:
+
+Express.js - tworzenie dynamicznych aplikacji webowych
+
+Socket.io - tworzenie aplikacji czasu rzeczywistego
+
+Meteor - kompletny framework do tworzenia webowych aplikacji
+
+
+Instalację NPM można zrobić:
+- lokalnie tylko dla danego projektu (folderu)
+- globalnie z parametrem -g czyli wszystkie projekty będą mogły z niego korzystać
+
+Przykładowa instalacja programu ze ztrony: 
+https://www.npmjs.com/package/http-server
+w wierszu poleceń wpisujemy:
+npm install http-server -g
+Powino być widać proces instalacji
+
+Aby go uruchomić, trzeba w wierszu poleceń wpisać:
+http-server
+Pojawi się adres IP 
+Ten adres trzeba wkleić w przeglądarekę i odpali się plik "index.html" folderu z ktrurego 
+uruchomiliśmy polecenie "http-server"
+
+Z jakiegos powodu na moim lapku nie ładuje sie strona
+
+BROWSERIFY
+http://browserify.org/
+Tworzy jakieś pakiety po stronie klienta 
+Instalacja:
+λ npm install -g browserify
+
+Przykład:
+Tworze sobie jakieś pliki, np add.js z zawartością:
+module.exports = function(a, b) {  // jest to eksport w formie modulu
+	return a + b;
+}
+oraz divide.js z zawartością:
+module.exports = function(a, b) {
+	return a / b;
+}
+
+w pliku script.js
+var add = require('./functions/add.js'); //importowanie funkcji z pliku
+var divide = require('./functions/divide.js');
+
+w wierszu poleceń trzeba prejść do folderu z projektem i wpisać:
+λ browserify script.js -o bundle.js // plik wejściowy z parametrem -o czyli Output i plik wyjściowy (bundle to pakiet)
+
+w pliku index.html zamiast pliku script.js podpinam bundle.js
+
+Plik bundle.js zawiera zawartosc trzech plikow. Jak zrobie zmiany w script.js, to trzeba na nowo wywołać browserify
+
+Można zaimportowac całą bibliotekę:
+var u = require('underscore');
+var array = [1,2,3,4,5];
+//teraz moge urzyć tej bibloteki ale z poziomu utworzonej 
+var arrayShufle = u._.shuffle(array);
+console.log(x); // wypisze tablice pomieszana
+
+
+
+WEBPACK
+
+instalacja globalna:
+λ npm install webpack -g
+
+Podobnie jak dla browserify, mam pliki z "module.exports" w "script.js importuje funkcje:
+var func = require('./functions/add.js');
+var x = func(2, 10);
+console.log(x); 
+
+tworzymy plik "bundle.js" za pomocą polecenia:
+λ webpack ./script.js bundle.js //tak, bez parametru
+w pliku index.html zamiast pliku script.js podpinam bundle.js
+
+Po każdej zminie trzeba wywołąć ponowne polecenie "λ webpack..."
+Lub, gdy stworzony jest już plik webpack.config.js 
+to w wierszu poleceń wywołać komendę która bedzie śledziła zmiany:
+λ webpack --watch 
+Teraz cały czas trwa "sledzenie" tych zmian, ale konsola jest zajęta.
+Aby zakończyć proces śledzenia trzeba Ctrl+C i potwierdzić 'Y'
+
+Wykonujący podobną czynność, developerski serwer narzędzia webpack:
+λ npm install webpack-dev-server -g
+
+uruchamiam go poleceniem:
+λ webpack-dev-server   // bez podawania plików, czyli chyab musi byc już plik webpack.config.js ??
+Wyświetli się adres serwera, np: http://localhost:8080/webpack-dev-server/
+Tym adresem uruchamiamy stronę
+
+
+System numerownia wersji:
+Numerowanie semantyczne
+2.3.6
+gdzie 2 to główna wersja
+gdzie 3 to nowe funkcjonalności w ramach głównej wersji
+gdzie 6 to drobne poprawki (błędy itp.)
+
+
+Automatyczne tworzenie pliku konfiguracyjnego packet.json:
+W konsoli polecenie:
+λ npm init
+
+Dodanie i dopisanie do tego pliku "underscore"
+λ npm install underscore --save
+
+Gdy beda dodane te zaleznosci i skasowane zostana pliki albo foldery
+To mozna szybko je odzyskac wywołując:
+λ npm install
+i pobrane zostaną brakujące pliki
 
 
 //-----------------------------------------------------------------------------
