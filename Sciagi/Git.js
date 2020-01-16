@@ -84,6 +84,7 @@ git log --oneline --author="Adam"	// tylko rewizja danego autora
 git log --grep "tresc w opisie"   //szukanie tylko tych komitów, co zawierają w opisie (wielkośc liter ma znaczenie)
 git log --stat  			//skrócone statystyki każdej z zatwierdzonych zmian
 git log -p 					//Pokazuje ona różnice wprowadzone z każdą rewizją.
+git log -p -3  				//Pokazuje ona różnice wprowadzone z ostatnimi trzema rewizjami.
 git log --format:"%h - %an, %ar : %s"	//pozwala ona określić własny wygląd i format informacji. 
                             // Szcegóły na https://git-scm.com/book/pl/v1/Podstawy-Gita-Podgl%C4%85d-historii-rewizji
 git log --pretty=format:"%h - %an, %ar : %s"	//pozwala ona określić własny wygląd i format informacji. 
@@ -103,13 +104,23 @@ git shortlog					//do podglądu, kto nad czym pracuje
 
 git show 				//pokaz szczegóły najnowszego komitu
 git show 5d8d8d0  		//pokaz szczegóły konkretnego komitu
+git show HEAD:{plik} 	//pokazuje zmiany tylko w konkretnym pliku
+git show {commit} --name-only -p -5 //pokazuje 5 poprzednich comitów od podanego
 
 git diff  				//pokazuje zmiamy zwzgledem katalogu roboczego a plikami w poczekalni
-git diff --cached  		//pokazuje zmiamy zwzgledem pliki w poczekalni z ostatim comitem
+git diff --cached  		//pokazuje zmiamy zwzgledem plików w poczekalni z ostatim comitem
 git diff --staged 		// to samo co "--cached" (dodana nazwa, która może być łatwiejsza do zapamietania)
 git diff nazwaPiku 		//pokazuje zmiamy zwzgledem konkretnego pliku
 git diff 852ff1d nazwaPliku  //porównanie wersji z komitów
 git diff HEAD nazwaGalezi	//pokazuje zmiamy zwzgledem HEAD a wybraną gałęzią
+git diff --name-only {gałąź 1} {gałąź 2} // porównanie dwóch gałęzi
+git diff --name-only HEAD HEAD~14 // pokazuje zmieniony pliki z 14 ostatnich commitów
+git diff {commit1}..{commit2} // pokazuje różnicę między 2 commitami
+git diff {commit1}..{commit2} {plik} // pokazuje różnicę między 2 commitami dla podanego pliku
+git diff {gałąź 1} {gałąź 2} -- {plik} // dif dla pojedynczego pliku między gałęziami
+
+
+git difftool //gdy mamy zainstalowany program do rozwiazywania konfliktów, np kdiff3 (opis instaliacji umieszczony dalej)
 
 git mv nazwa1 nazwa2  	//zmiana nazwy pliku
 
@@ -207,23 +218,31 @@ plik1.txt
 git branch  						//pokazuje, na jakiej jesteśmy gałęzi i lista wszystkich branchów. Domyslnie jest "master"
 git branch -v						//pokazuje informacje, o ostatnich zmianach na każdej z gałęzi
 git branch nazwaNowegoBrancha  		//tworzy nową gałąź
-git branch -D develop 				//po połączeniu gałęzi, gdy już nie bezie potrzebna, można ją usunąć.
+git branch -D nazwaGalezi 				//po połączeniu gałęzi, gdy już nie będzie potrzebna, można ją usunąć.
 git push origin --delete develop	//usunięcie gałęzi na zdalnym repozytorium (oczywiście develop to gałąź której raczej nie chcemy usówać)
 git branch --merged 				//Aby zobaczyć, które gałęzie zostały już scalone z bieżąc
 git branch --no-merged 				//Aby zobaczyć, które gałęzie nie zostały jeszcze scalone z bieżąc
 
 
 git checkout istniejącyBrancha 		//przełaczenie się na inną gałąź
-git checkout -b nowyBrancha			// tworzy nowy branch i przełącza sie na niego
+git checkout -b nowyBrancha			//tworzy nowy branch i przełącza sie na niego
 git switch istniejącyBrancha 		//przełaczenie się na inną gałąź
-git switch -c nowyBrancha			// tworzy nowy branch i przełącza sie na niego
+git switch -c nowyBrancha			//tworzy nowy branch i przełącza sie na niego
 
+//MERGE - ŁĄCZENIE GAŁĘZI
 git merge nazwaBrancha  			//łączenie (scalanie) gałęzi na której jestesmy ze wskazaną gałęzią
-//aby POŁACZYĆ develop z masterem, musze być na gałęzi master i "pochłonąć" zmiany z develop
-git merge develop  					//łaczenie gałęzi
-git merge master					//gdy jestem na innej gałęzi i chce do swojej gałęzi doać zmiany ze "stabilnego programu", 
-                                    // który ktoś "w miedzyczasie" wprowadził poprawkę.
+git merge {nazwa remota}/{nazwa gałęzi} // dołączenie zmian ze wskazanego remota i gałęzi
+git merge --abort 					// przerywa łączenie (możliwe, gdy wystąpią konflikty)
+git merge --continue 				// po rozwiązaniu konfliktów zapisuje zmiany
+git merge --revert 					// cofa wszystkie wprowadzone zmiany
 
+//Przykład: Chce POŁĄCZYĆ develop z masterem, musze być na gałęzi develop i "pochłonąć" zmiany z master
+git switch develop		//przełaczam się na gałąź, do której chce pochłaniać zmiany.
+git merge master		//teraz jestem na gałęzi "master" i chce do swojej gałęzi doać zmiany ze "stabilnego programu", 
+                        //który ktoś "w miedzyczasie" wprowadził poprawkę.
+	//Jeśli otrzymam informacje o konflikcie: "Automatic merge failed; fix conflicts and then commit the result."
+	//To najlepiej rozwiązać te koflikty narzędziem git mergetool (gdy jet zainstalowany np: kdiff3)
+	//Na koniec musimy tylko zapisać zmiany i to by było na tyle.
 
 
 //STOS
@@ -240,7 +259,7 @@ git stash clear				//czyszczenie całego stosu (bez przywracania zmian do folder
 git stash branch nazwaNowejGalezi  //stworzenie nowej gałęzi na bazie plików na stosie
 
 //Przykład 1
-//May dwie gałęzie: master i views
+//Mamy dwie gałęzie: master i views
 //Nie zauwarzyliśmy, ze jestesmy w złej gałęzi i zaczeliśmy robić zmiany.
 //Przełączenie się na właściwą gałąź nie jest możliwe, bo zrobiliśmy zmiany... trzeba zrobić commit albo odłożyć zmiany na stos poleceniem:
 git stash 				//zmiany odkładam na stos (nie robie commita)
@@ -382,6 +401,34 @@ Aby nowy projekt wstawić do GitHuba, trzeba złożyć sobie nowe repozytorium p
 	UWAGA! Ostatnio samo mi się to wypchnęło na serwer i zaktualizowało.
 
 */
+
+//Instalacja i konfiguracja kdiff3
+//Opis poniższego procesu jest na stronie: https://poznajgita.pl/git-szybsze-rozwiazywanie-konfliktow-z-narzedziem-kdiff3/
+//Program ściągamy stąd: https://sourceforge.net/projects/kdiff3/files/.
+//Po zainstalowaniu programu trzeba go skonfigurować w gicie.
+//Jeżeli zainstalowany jest w standardowej lokalizacji, to konfugurujemu go poleceniami:
+git config --global merge.tool kdiff3
+//W drugim poleceniu trzeba podać ścieżkę, gdzie zainstalowana została aplikacja. 
+git config --global mergetool.kdiff3.path "C:/Program Files/KDiff3/kdiff3.exe"
+//Teraz zamiast git diff, wystarczy wpisać git difftool
+//Dodatkowo, żeby git nie pytał się za każdym razem czy uruchomić kdiff3, wystarczy jeszcze dodać do konfiguracji:
+git config --global difftool.prompt false
+
+//Załużmy teraz, że robimy jakąś synchronizację, np: git pull i otrzymamy informacje o konflikcie.
+//Wpisuje polecenie:
+git mergetool
+//Na starcie dostaniemy informacje o konfliktach.
+//W oknie programu bedą trzy panele:
+A – czyli to jest nasz plik przed zmianami.
+B – tutaj są pokazane nasze zmiany lokalne.
+C – tutaj widać zmiany popełnione przez kogoś (remote)
+//Poniżej tych 3 paneli mamy dużo szerszy panel pokazujący kod po rozwiązaniu konfliktu. 
+//Podświetlona linia oznacza miejsce aktualnie rozwiązywanego konfliktu.
+//Jak rozwiązać konflikt?
+1. Kliknąć prawym klawiszem myszy w tę linię. Pojawi się menu kontekstowe, w którym wybieramy, którą zmianę chcemy zachować.
+2. Wybranie odpowiedniej opcji z menu głównego: A, B lub C. Można wybrać obie zmiany.
+//Między kolejnymi konfliktami możemy przechodzić używając skrótów klawiszowych CTRL+PgUp / CTRL+PgDown.
+//Na koniec musimy tylko zapisać zmiany i to by było na tyle.
 
 
 
