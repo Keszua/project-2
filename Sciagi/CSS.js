@@ -542,6 +542,20 @@ div {
 			//wykna się tylko dla szerokości większej niż 640
 		}
 	}
+//-----------------------------------------------------------------------------
+//wykonanie animacji
+.div {
+	//jakeiś właśicowści
+	animation: dowolnaNazwa 1s infinite linear;	// jak długo ma trwać, ile razy powtarzana, rodzaj animacji (linear to płynny)
+}
+
+@keyframes dowolnaNazwa {
+	100% {
+        transform: rotate(360deg);
+    }
+}
+
+
 	
 	
 //Przykład z wykorzystniem mapy:

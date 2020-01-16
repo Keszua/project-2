@@ -310,15 +310,15 @@ git push origin -d v1.0.0 	//usuwanie tagów z repozytorium
 
 
 //KONFLIKTY
-//jest jakieś narzędzie graficzne do rozwiązwna konfliktów, uruchamiane poleceniam:
-git mergetool
-//Miros wspomniał coś o rebase
+//Miros wspomniał coś o rebase do rozwiązywnia konfliktów
 
 //Przykład 1:
 //Mam dwie gałęzie: master i feature. Oba mają zmiany w tym samym pliku index.html. Jestem obecnie na gałęzi master i chce scalić ze soba gałąź feature:
 git merge feature
 //dostaje informacje o konflikcie: CONFLICT (content): Merge conflict in index.html
 //muszę otworzyć pokazane pliki w jakimś edytorze tekstowym. Linijki z gałęzi na której jesteśmy, sa oznaczone znacznikiem "<<<<<<<HEAD"
+//lub urzyć narzędzia kdiff3, wywoływany komendą: 
+git mergetool
 //Po rozwiazaniu konfliktów, dodaje plik (pliki) do kolejki:
 git add -A
 //tworze nowy comit:
