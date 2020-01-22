@@ -218,7 +218,7 @@ plik1.txt
 git branch  						//pokazuje, na jakiej jesteśmy gałęzi i lista wszystkich branchów. Domyslnie jest "master"
 git branch -v						//pokazuje informacje, o ostatnich zmianach na każdej z gałęzi
 git branch nazwaNowegoBrancha  		//tworzy nową gałąź
-git branch -D nazwaGalezi 				//po połączeniu gałęzi, gdy już nie będzie potrzebna, można ją usunąć.
+git branch -D nazwaGalezi 			//po połączeniu gałęzi, gdy już nie będzie potrzebna, można ją usunąć.
 git push origin --delete develop	//usunięcie gałęzi na zdalnym repozytorium (oczywiście develop to gałąź której raczej nie chcemy usówać)
 git branch --merged 				//Aby zobaczyć, które gałęzie zostały już scalone z bieżąc
 git branch --no-merged 				//Aby zobaczyć, które gałęzie nie zostały jeszcze scalone z bieżąc
@@ -246,17 +246,28 @@ git merge master		//teraz jestem na gałęzi "master" i chce do swojej gałęzi 
 
 
 //STOS
-git stash 					//Dodaje zmiany na stos.
+git stash 					//Dodaje zmiany na stos. Zapisuje nowe i zmodyfikowane pliki do pamięci podręcznej
+git stash save "{tekst komentarza}" //Zapisuje stash z komentarzem
+git stash pop				//Przywraca zapisane pliki z pamięci podręcznej
+git stash pop --index 1
+git stash pop --index 454aa619
+git stash pop --index stash@{1}
+git stash pop 1
+git stash pop 454aa619
+git stash pop stash@{1}		//przywrócenie do katalogu roboczego i usunięcie ze stosu. Bez identyfikatora, zostaną zwrócone ostatnie zmiany
 git stash push -m "Opis zmian w pliku na stosie"
 git stash list 				//wyświetla listę zmian odłożonych na stos
 git stash show (-p —patch) 	//pokazuje jakie zmiany znajdują się na stosie
+git stash show stash@{x} 	//pozkazujezmiany. 0,1,2,..,x, gdzie 0 to ostatnio dodane zmiany do schowka.
 //na stos można dodać tylko zmiamy plików które są śledzone przez git
 git stash push -m "Opis zmian w pliku nie śledzonym" -u
+git stash apply				//Nakładanie zmian ze schowka na obecny stan HEAD
 git stash apply stash@{1}  	//przywrócenie do katalogu roboczego i zmiany cały czas pozostają na stosie
-git stash pop stash@{1}		//przywrócenie do katalogu roboczego i usunięcie ze stosu. Bez identyfikatora, zostaną zwrócone ostatnie zmiany
 git stash drop stash@{1}	//usówanie zmian ze stosu bez przywracania ich do folderu roboczego
 git stash clear				//czyszczenie całego stosu (bez przywracania zmian do folderu roboczego)
 git stash branch nazwaNowejGalezi  //stworzenie nowej gałęzi na bazie plików na stosie
+git stash push -m {message} {plik} // stashuje z komentarzem wskazany plik
+
 
 //Przykład 1
 //Mamy dwie gałęzie: master i views
@@ -266,6 +277,27 @@ git stash 				//zmiany odkładam na stos (nie robie commita)
 git checkout views 		//mozna teraz przełaczyć się na odpowiednią gałąź
 git stash pop			//przywróć zmiany odłożone na stos.
 
+//Przykład 2: 
+//Probiłem za dużo zmian (podzieliłem pliki) a teraz stwierdzam,
+//że to za duże zmiany, bo ogarne je innym sposobem (kompilacją warunkową).
+//Ale już zrobiłem kilka commitów.
+//1. Robie commit, aby mieć czystą sytuację.
+//2. Cofam się na intereujący comit, poleceniem:
+	git checkout id-commita
+//3. Porównuje sobie różnicę i ręcznie nanosze intereujące mnie poprawki
+	git diff id-commita
+//lub
+	git diff {commit1}..{commit2} // pokazuje różnicę między 2 commitami
+	git difftool {commit1}..{commit2} // gdy zainstalownay jest kdiff3 (albo inne narzędzie)
+//4. Zmiany wkładam na stos:
+	git stash
+	//Powinny mi zniknąć zmiany "modyfikowane".
+	//Po wpisaniu git log --oneline --all  pojawi się stash(niby commit)
+//5. Wskaźnik Head przestawiam na szczyt gałęzi:
+	git checkout id-commita
+//6. W programie "Git Extensions". PM nacisnałem na comit do którego chce się sofnąć i wybrałem "Reset current branch to here"
+//7. Zniknęły niepotrzebne commity. Teraz nakładam zmiany ze stash. 
+	// Nie pamietam kiedy (przed czy po "stash"), ale trzeba zrobić commit.
 
 
 //--------------------------------------------------------------------------------------
@@ -309,6 +341,9 @@ git push origin -d v1.0.0 	//usuwanie tagów z repozytorium
 
 
 
+
+
+
 //KONFLIKTY
 //Miros wspomniał coś o rebase do rozwiązywnia konfliktów
 
@@ -334,6 +369,10 @@ git merge feature
 //podejmujemy decyzje:
 a) zachowujemy go poleceniem: git add index.html
 b) usuwamy go poleceniem:     git rm index.html
+
+
+
+
 
 
 
