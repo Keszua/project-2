@@ -1,10 +1,12 @@
 
-Pogranie i instalowanie GIT:
+//Pogranie i instalowanie GIT:
 https://git-scm.com/
 
-Link z opisami komend:
+//Link z opisami komend:
 https://github.com/chajr/commands/blob/master/git/commands.md
 
+//Bitbucket z C32
+http://bitbucket.radwag.net:7990/projects/PRVNLIS/repos/pue_c32/commits?fbclid=IwAR3MRSWxdHifVd4tKjUNKUmRdl986UjnfiDeb12hypKlacprWppBeOfeaTc
 
 Aby sprawdzić, czy mamy zinstalowanego Git'a trzeba w wierszy poleceń spisać: git
 jeżeli wyświetlą sie jakies informacje inne niż błąd, to znaczy że git zainstalował sie na naszym kompie.
@@ -143,8 +145,8 @@ git hash-object nazwaPliku.txt  	//zwraca kod pliku.
    |                 |   STAGE (Index)   |                       |
    |                 |                   |                       |
    |                 ---------------------                       |
-   |                   ^              |                          |
-   |     git add files |              | git checkout -- files    |
+   |                   ^              | git checkout -- files    |
+   |     git add files |              | git restore files        |
    |                   |              V                          |
     \                ---------------------                      /
      \               |                   |                     /
@@ -171,7 +173,7 @@ git checkout id-commita  	//ustawienie HEAD na tym komicie
 git checkout nazwa-brancha  //przełączenie na inną gałąź
 git checkout -b nowyBrancha	// tworzy nowy branch i przełacza sie na niego
 
-git restore nazwaPliku  	//cofnięcie zmina (chyba to samo co 'checkout' ??)
+git restore nazwaPliku  	//cofnięcie zmina (Gdy zrobie jakieś zmiany i che wrocic do czystego comita )
 rm nazwaPliku  				//usówanie pliku (tylko z katalogu roboczego)
 git rm nazwaPliku  			//usówanie pliku z indeksu (staging) i z katalogu roboczego
 git rm --cached nazwaPliku  //usunięcie pliku z poczekalni (uzyskuje status: nieśledzony)
@@ -191,6 +193,31 @@ git clean 					//służy do usuwanie plików które nie są sledzone (takie pole
 git clean -n 				//polecenie testowe, pokaże, jakie pliki zostały by usunięte
 git clean -nd				//polecenie testowe, pokaże, jakie pliki i foldery zostały by usunięte
 git clean -idf				//wyświetli się lista z możliwymi wyborami.
+
+
+//ŁĄCZENIE COMMITÓW - w celu połaczenia cząstkowych commitów w jeden główny.
+//Opis i przykałd wzięty z: 
+// http://yarpo.pl/2015/10/12/git-rebase-scalanie-wielu-commitow-do-jednego-przed-mergem/?fbclid=IwAR34Sghb53bHCf11s3vJSmtblgVoLpP40-e2OioZKgodgdbB4pzdMk90It4
+//Uwaga! Robić to tylko na lokalnych, nie wypchniętych commitach.
+//Załużmy że chcemy scalić w jeden, 4 ostatnie commity typu "Drobna zmina"
+	git rebase -i HEAD~4
+//Otworzy się edytor tekstu z 4-roma ostatnimi comitami
+// pick - niczego nie zmienia.
+// fixup - wcielić ten commit do pierwszego i odrzucić jego opis
+// reword - zmień opis
+// Chyba najlepiej zeby ten w pierwszej linijce od góry, żeby miał pick lub reword a pozostałe fixup
+// Zapisanie i wyjście z edytora, powinno zakończyć się komuniaktem: "Successfully rebased and updated refs/heads/nazwa-galezi."
+//Jeżeli chcemy zmienić wiadomosc ostatniego comita, wpisujemy:
+	git rebase -i HEAD~1
+//  zmien “pick” na “reword” - po zamknięciu edytora, pojawi się edutor, który bedzie zekał na nowy opis.
+
+//Jeżeli omyłkowo zrobiony został push i historia na serwerze różni się od historii lokalnej, to $git push origin nazwa-galezi  nie powiedzie się.
+//Trzeba ustawic flagę -f, która wymusi uznanie naszych zmian
+	git push origin nazwa-galezi -f
+
+//Jeszce się boje, ale chyba podobny efekt można uzyskac poleceniami:
+git rebase --interactive {commit} // pozwala wybrać commity które zostaną dołączone (lub modyfikować)
+git rebase --interactive '{hash}^' // umożliwia edycję commitów do podanego hasha
 
 
 // KLONOWANIE
@@ -296,6 +323,11 @@ git stash pop			//przywróć zmiany odłożone na stos.
 //5. Wskaźnik Head przestawiam na szczyt gałęzi:
 	git checkout id-commita
 //6. W programie "Git Extensions". PM nacisnałem na comit do którego chce się sofnąć i wybrałem "Reset current branch to here"
+	//Prawdopodobnie ten efekt wyzska się poleceniem 
+	git reset --hard komit_do_którego_chce_wrocic
+	//lub
+	git reset HEAD~ -- cofnie cię do commita, na któryprzed chwilą wskazywał HEAD
+	//na spokojnie w domu trzeba to sprawdzić
 //7. Zniknęły niepotrzebne commity. Teraz nakładam zmiany ze stash. 
 	// Nie pamietam kiedy (przed czy po "stash"), ale trzeba zrobić commit.
 
@@ -345,8 +377,6 @@ git push origin -d v1.0.0 	//usuwanie tagów z repozytorium
 
 
 //KONFLIKTY
-//Miros wspomniał coś o rebase do rozwiązywnia konfliktów
-
 //Przykład 1:
 //Mam dwie gałęzie: master i feature. Oba mają zmiany w tym samym pliku index.html. Jestem obecnie na gałęzi master i chce scalić ze soba gałąź feature:
 git merge feature
