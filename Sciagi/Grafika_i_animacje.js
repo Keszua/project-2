@@ -94,7 +94,63 @@ rotate5();
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
+Efekt dyskotekowy (podejżany na stronei Radwag)
 
+//----- html: 
+<div class="wag1_promienie">
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+</div>
+
+//----- script: 
+.wag1_promienie{
+position:absolute;
+width: 100%;
+height: 90%;
+margin: 0 auto;
+border:0 solid red;transform: rotateX(75deg);perspective: 1000px;
+z-index:-1;
+} 
+.promien{
+position:absolute;
+width:100%;
+height:100vh;
+background-image: url(https://radwag.com/nowybanner/promien.png);
+background-position: center;
+background-repeat: no-repeat;
+border:0 solid red;
+}
+.promien:nth-child(1){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;}
+.promien:nth-child(2){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:0.2s}
+.promien:nth-child(3){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:0.4s}
+.promien:nth-child(4){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:0.6s}
+.promien:nth-child(5){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:0.8s}
+.promien:nth-child(6){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1s}
+.promien:nth-child(7){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1s}
+.promien:nth-child(8){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1.2s}
+.promien:nth-child(9){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1.4s}
+.promien:nth-child(10){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1.6s}
+.promien:nth-child(11){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1.8s}
+.promien:nth-child(12){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:2s}
+@keyframes promienie {
+0% { transform: rotate(-360deg); }
+50% { transform: rotate(0deg); }
+100% { transform: rotate(-360deg); }
+}
+@keyframes promienie_od {
+0% { transform: rotate(180deg); }
+100% { transform: rotate(0deg); }
+}
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
