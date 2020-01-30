@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    SVG skałda sie z 3 części:
+    1. Canvas SVG - czyli "cała mapa poziomu"
+    2. element SVG
+    3. viewBox - czyli obszar widoczny na ekranie
+
+    <!-- Dodawanie SVG jako "zwykły" obrazek: -->
+    <!-- <img src="img/sun.svg" alt="słońce"> -->
+
+    <!-- Trzeba doać atrybut xmlns, aby korzystać z SVG w wersji edytowalnej -->
+    <svg id="Obrazki" xmlns="http://www.w3.org/2000/svg"
+        width = "600" height="600" viewBox="0 0 600 600">  
+        <title>Obrazki</title>
+
+        <!-- Kaształty: -->
+        <rect class="clips" x="150" y="250" width="100" height="20" fill="white" stroke="red" stroke-width="8" />
+        <!-- Domyślnie jedneostki sa w px. Pozycja x i y domyślnie jest 0 0. Stroke to obramowanie. -->
+        <circle cx="200" cy="200" r="20" fill="#333" stroke="black" stroke-width="8" />
+        <ellipse cx="300" cy="100" rx="50" ry="70" fill="#eee" stroke="rgba(200, 200, 100, 0.5)" stroke-width="4" />
+        
+        <!-- Linia
+        Polygon (wielokąt)
+        Polyline (linia łamana) -->
+        <polyline points="10,40 50,40 30,200" fill="white" stroke="yellow" stroke-width="8" />
+
+        
+        <path d="M200 200 L350 200 L275 250 Z" fill="white" stroke="yellow" stroke-width="8" />
+        <!--  d - ścieżka M- moveTo  L - lineTo  Z - closepatch (łączy pierwszy z ostatnim) -->
+
+        <!-- Grupowanie -->
+        <g id="face" fill="white">
+            <circle cx="150" cy="150" r="60" fill="#333" stroke="black" stroke-width="8" />
+            <rect class="clips" x="100" y="100" width="100" height="100" fill="none" stroke="blue" stroke-width="8" />
+        </g>
+
+    </svg>
+
+
+    <style>
+        .image-head {
+            width: 50%;
+        }
+    </style>
+    <!-- Gdy podamy tylko "viewBox" (bez width i height) to obrazek bedzie cały czas responsywny -->
+    <svg class="image-head" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 400 400">
+        <g class="head">
+            <circle class="face" cx="200" cy="200" r="150" fill="#f0f000" 
+                stroke="white" stroke-width="4" />
+            <rect class="lips" x="150" y="250" width="100" height="20" 
+                stroke="#ff0505" stroke-width="4" />
+            <circle class="eye" cx="130" cy="160" r="20" fill="darkblue" />
+            <circle class="eye" cx="260" cy="160" r="20" fill="darkblue" />
+        </g>
+    </svg>
+
+
+    <!-- Edycja parametrów za pomocą GSock -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js" ></script>
+    <script>
+        TweenMax.set('.lips', {fill: "red"})
+        TweenMax.to('.lips', 3, {height: "+=40", repeat: -1, yoyo: true, fill: "yellow"}) 
+    </script>
+
+</body>
+</html>
