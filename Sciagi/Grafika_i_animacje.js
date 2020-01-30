@@ -1,20 +1,20 @@
 //Serwis z grafikami: http://pixabay.com/pl
 
-http://placeimg.com/  aby z tego korzystaÄ‡, wystarczy w mijece grafiki wkleiÄ‡ link:
+http://placeimg.com/  aby z tego korzystaæ, wystarczy w mijece grafiki wkleiæ link:
 http://placeimg.com/240/360/any - losowa grafika
 
 
-Jako ÅºrÃ³do wiedz o canvasie: mdn?
+Jako Ÿródo wiedz o canvasie: mdn?
 
 
 //Ciekawa stronka z o Canvas:
  https://developer.mozilla.org/pl/docs/Web/API/Canvas_API/Tutorial/Optymalizacja_canvas
  
-// Kurs canvy, jak naryswaÄ‡ kartezjaÅ„ski ukÅ‚Ä…d wspÃ³Å‚Å¼Ä™dnych:
+// Kurs canvy, jak naryswaæ kartezjañski uk³ad wspó³¿êdnych:
 http://shebang.pl/kursy/html5-rzeczowo/r5-canvas/ 
 
 //-----------------------------------------------------------------------------
-//Wykonanie prostego spinera (krÄ™cÄ…ce kÃ³Å‚ko) w scc (bez javaScript)
+//Wykonanie prostego spinera (krêc¹ce kó³ko) w scc (bez javaScript)
 //plik: index.html
 	<div class="spinner v1"></div>
 //Plik .css
@@ -37,31 +37,31 @@ http://shebang.pl/kursy/html5-rzeczowo/r5-canvas/
 			transform: rotate(360deg);
 		}
 	}
-//to samo, tylko za pomocÄ… js. w pliku css musi pozostaÄ‡ zdefinowany ".spinner" 
-//ale juÅ¼ nie koszytamy z ".v1" ani z @keyframes  
+//to samo, tylko za pomoc¹ js. w pliku css musi pozostaæ zdefinowany ".spinner" 
+//ale ju¿ nie koszytamy z ".v1" ani z @keyframes  
 //filmik 239 (Zaawansowane projekty w CSS i JavaScript)
 //plik .js
 const spinner = document.querySelector('.v2');
 
-const fps = (1000 / 60).toFixed(2); // wartoÅ›Ä‡ zaokrÄ…glona do 2 miejsc
+const fps = (1000 / 60).toFixed(2); // wartoœæ zaokr¹glona do 2 miejsc
 let deg = 0; //aktuana pozycja (stopnie)
 const degChange = 6;
 
 const rotate = () => {
     deg += degChange;
     spinner.style.transform = `rotate(${deg}deg)`;
-    setTimeout(rotate, fps) //ponowne wywoÅ‚anie tej funkcji po wskaznym czasie
+    setTimeout(rotate, fps) //ponowne wywo³anie tej funkcji po wskaznym czasie
 }
-rotate(); // piewsze wywoÅ‚anie funkcji
+rotate(); // piewsze wywo³anie funkcji
 //-------------------------------------
-//to samo, tylko inaczej wywoÅ‚ywana funkcja przerysowywania przez: setInterval(fn, time)
+//to samo, tylko inaczej wywo³ywana funkcja przerysowywania przez: setInterval(fn, time)
 const rotate = () => {
     deg += degChange;
     spinner.style.transform = `rotate(${deg}deg)`;
 }
 setInterval(rotate, fps)
 //-------------------------------------
-//to samo, tylko wywoÅ‚ywana funkcja dedykowana do grafiki. WywoÅ‚ywana przez odÅ›wierzanie przeglÄ…darki (60fps)
+//to samo, tylko wywo³ywana funkcja dedykowana do grafiki. Wywo³ywana przez odœwierzanie przegl¹darki (60fps)
 const rotate = () => {
     deg += degChange;
     spinner.style.transform = `rotate(${deg}deg)`;
@@ -69,7 +69,7 @@ const rotate = () => {
 }
 rotate(); 
 //-------------------------------------
-//to samo, ale regulujemy czÄ™stotliwoÅ›Ä‡ wywoÅ‚ywania. 
+//to samo, ale regulujemy czêstotliwoœæ wywo³ywania. 
 const spinner5 = document.querySelector('.v5');
 let deg5 = 0; //aktualna pozycja (stopnie)
 const degChange5 = 6;
@@ -88,121 +88,220 @@ rotate5();
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-//Pobieranie i zmiana danych z pliku .CSS
+//-----------------------------------------------------------------------------
+SVG
+//   ###   #   #   ###              
+//  #   #  #   #  #   #           
+//  #      #   #  #            
+//   ###   #   #  #  ##          
+//      #  #   #  #   #           
+//  #   #   # #   #   #       
+//   ###     #     ###         
 
-//aby dobraÄ‡ siÄ™ do zmiennnej w CSS
-    document.documentElement.style.setProperty("--power-x", `${20 + progresPercent * 70}%`);
 
-// alternatywa do powyÅ¼szego:
-// w filmiku 248 (Zaawansowane projekty w CSS i JavaScript) jest jak przerobiÄ‡ 
-	@keyframes fly-ball-x {
-		100% {
-			left: var(--power-x, 300px);
+Przed rozpoczêciem pracy w Visual Studio Code, proponowany jest doatek "SVG"  (SVG Language Support)
+Dodatek ten podpowiada sk³adnie i tworzy okienko z podgl¹dem (PM na plik .svg i "Preview SVG" ) 
+
+INKSCAPE - Jakiœ darmowy program do tworzenia grafiki SVG
+
+
+
+
+//    SVG ska³da sie z 3 czêœci:
+//    1. Canvas SVG - czyli "ca³a mapa poziomu"
+//    2. element SVG
+//    3. viewBox - czyli obszar widoczny na ekranie
+
+//Dodawanie SVG jako "zwyk³y" obrazek: (w pliku .html)
+	<img src="img/sun.svg" alt="s³oñce">
+
+//Dodawnaie SVG jako obrazek w wersji edytowalnej (w pliku .html)
+    <!-- Trzeba doaæ atrybut xmlns, aby korzystaæ z SVG w wersji edytowalnej -->
+    <svg id="sun" xmlns="http://www.w3.org/2000/svg"
+        width = "600" height="600" viewBox="0 0 600 600">  
+        <!-- Kaszta³ty: -->
+        <rect class="clips" x="150" y="250" width="100" height="20" fill="white" stroke="red" stroke-width="8" />
+        <!-- Domyœlnie jedneostki sa w px. Pozycja x i y domyœlnie jest 0 0. Stroke to obramowanie. -->
+        <circle cx="200" cy="200" r="20" fill="#333" stroke="black" stroke-width="8" />
+        <ellipse cx="300" cy="100" rx="50" ry="70" fill="#eee" stroke="rgba(200, 200, 100, 0.5)" stroke-width="4" />
+        
+        <!-- Linia
+        Polygon (wielok¹t)
+        Polyline (linia ³amana) -->
+        <polyline points="10,40 50,40 30,200" fill="white" stroke="yellow" stroke-width="8" />
+
+        
+        <path d="M200 200 L350 200 L275 250 Z" fill="white" stroke="yellow" stroke-width="8" />
+        <!--  d - œcie¿ka M- moveTo  L - lineTo  Z - closepatch (³¹czy pierwszy z ostatnim) -->
+
+        <!-- Grupowanie -->
+        <g id="face" fill="white">
+            <circle cx="150" cy="150" r="60" fill="#333" stroke="black" stroke-width="8" />
+            <rect class="clips" x="100" y="100" width="100" height="100" fill="none" stroke="blue" stroke-width="8" />
+        </g>
+
+    </svg>
+
+//mo¿liwoœæ edycji parametrów przez CSS (nie polecane)
+// mo¿na stylowaæ gruboœc linii itp. ale nie mo¿na edytowac wspó³¿êdnych
+	<style>
+		#Obrazki .clips {
+			fill: red;
 		}
-	}
+    </style>
 
-//Aby sterowaÄ‡ nim z poziomu .js
-	const myRules = document.styleSheets[0].cssRules;
-	console.log(myRules);
-	or(const i of myRules) {
-		if(i.name === "fly-ball-x") {
-			i.appendRule(
-				`100% {
-					left: ${20 + progresPercent * 70}%
-				}`       
-			);
-		}
-	}
+//Edycja parametrów za pomoc¹ GSock
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js" ></script>
+    <script>
+        TweenMax.set('.clips', {fill: "red"})
+        TweenMax.to('.clips', .3, {height: "+=40", repeat: -1, yoyo: true, fill: "yellow"}) 
+    </script>
+
+
+</body>
+</html>
+
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+//Stronka, z efektami do SVG
+https://www.w3schools.com/graphics/svg_grad_radial.asp
 GSAP 
 //filmik 257 (Zaawansowane projekty w CSS i JavaScript)
-//obejÅ¼aÅ‚em pobierznie.
-//Link pobiera siÄ™ ze strony GreenSock.com/docs/
+//obej¿a³em pobierznie.
+//Link pobiera siê ze strony GreenSock.com/docs/
 //Samuraj pobiera "TweenMax"
-//Aby z niego skorzystaÄ‡, trzeba w pliku .html w sekcji body wstawiÄ‡:
+//Aby z niego skorzystaæ, trzeba w pliku .html w sekcji body wstawiæ:
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
 //najnowszy:
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.1.1/gsap.min.js"></script>
 
 
-// rÃ³Å¼ne przejscia w czasie moÅ¼na zmieniÄ‡ i ustawiÄ‡ w:
+// ró¿ne przejscia w czasie mo¿na zmieniæ i ustawiæ w:
 https://greensock.com/docs/v3/Eases
 
 
-TweenMax.to(element, 1, {}) - do jakich wÅ‚aÅ›ciwoÅ›ci ma dojÅ›Ä‡ animacja
-TweenMax.from(element, 1, {}) - od jakich wÅ‚aÅ›ciwoÅ›ci animowaÄ‡ (koÅ„cowe w CSS)
-TweenMax.fromTo(element, 1, {}, {}) -skÄ…d do kÄ…d
+TweenMax.to(element, 1, {}) - do jakich w³aœciwoœci ma dojœæ animacja
+TweenMax.from(element, 1, {}) - od jakich w³aœciwoœci animowaæ (koñcowe w CSS)
+TweenMax.fromTo(element, 1, {}, {}) -sk¹d do k¹d
 
 Metody:  // https://greensock.com/docs/v3/GSAP/Tween
-x: 10 // to samo co "transform: translateX(10px)", czyli przesuniÄ™cie po pÅ‚aszczyÅºnie x
-y: 10 // to samo co "transform: translateY(10px)", czyli przesuniÄ™cie po pÅ‚aszczyÅºnie y
+x: 10 // to samo co "transform: translateX(10px)", czyli przesuniêcie po p³aszczyŸnie x
+y: 10 // to samo co "transform: translateY(10px)", czyli przesuniêcie po p³aszczyŸnie y
 rotation: 240, //transform:rotate(240deg);
 scale: 2, //transform:scale(2)
 scaleY: 2, //transform:scaleY(2)
 ease: Bounce.easeOut // rodzaj animacji
-delay: 2 // pouÅºnienie (sek)
+delay: 2 // pouŸnienie (sek)
 repeat: 1, //powtarzanie
-repeatDelay //opuÅºnienie miÄ™dzy kolejnymi iteracjami
+repeatDelay //opuŸnienie miêdzy kolejnymi iteracjami
 yoyo: true, //wracanie
 backgroundColor: "yellow", //zmian koloru obiektu
 boxShadow: "0 0 120px 0 rgb(251, 255, 0)", //nadanie cienia
-onComplete //funkcja wywoÅ‚ywana po zakoÅ„czenu aniamcji
-onStart //funkcja wywoÅ‚ywana po starcie animacji
-onRepeat // funkcja wywoÅ‚ywana przy akÅ¼dej interakcji
+onComplete //funkcja wywo³ywana po zakoñczenu aniamcji
+onStart //funkcja wywo³ywana po starcie animacji
+onRepeat // funkcja wywo³ywana przy ak¿dej interakcji
 paused: true, 
-x: '+=200' // wzglÄ™dem stanu poprzedniego
-y: () => {} //przypisane zostanie to, co zwrÃ³ci funkcja
+x: '+=200' // wzglêdem stanu poprzedniego
+y: () => {} //przypisane zostanie to, co zwróci funkcja
+
 
 //-----------------------------------------------------------------------------
-TweenMax.set() //pzwala nadac poczÄ…tkowe wÅ‚aÅ›ciwoÅ›ci tuÅ¼ przed rozpoczÄ™ciem animacji
-//PrzykaÅ‚d: w obiekcie (css) dajmy niewidoczoÅ›Ä‡: visibility: hidden;
-//A w skrypcie wywoÅ‚ujemy:
-TweenMax.set('div', {visibility: "visible" });
-
-TweenMax.killTweensOf('div')} //WyÅ‚Ä…czenie animacji
-//PrzykÅ‚ad:
-setTimeout( () => {TweenMax.killTweensOf('div')}, 2000) //wyÅ‚Ä…cz animacje po 2 sek
 //-----------------------------------------------------------------------------
-FUNKCJE
+//-----------------------------------------------------------------------------
+Programy online do rysowanie SVG:
+https://editor.method.ac/#copy
+http://www.clker.com/inc/svgedit/svg-editor.html
 
-const color = (index, target) => {  //indeks elementu od 0, 
-									//target to element, np: <div class="elo"></div>
-...
-return red;
+Przyk³ad robota ruszaj¹cego nozkami, wykorzystanei "TimelineMax()" w filmie 275 (Zaawansowane projekty w CSS i JavaScript)
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//Efekt dyskotekowy (podej¿any na stronei Radwag)
+
+//----- html: 
+<div class="wag1_promienie">
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+</div>
+
+//----- script: 
+.wag1_promienie{
+position:absolute;
+width: 100%;
+height: 90%;
+margin: 0 auto;
+border:0 solid red;transform: rotateX(75deg);perspective: 1000px;
+z-index:-1;
+} 
+.promien{
+position:absolute;
+width:100%;
+height:100vh;
+background-image: url(https://radwag.com/nowybanner/promien.png);
+background-position: center;
+background-repeat: no-repeat;
+border:0 solid red;
 }
-
-TweenMax.to('.div', 1, {backgroundColor: color }) 
+.promien:nth-child(1){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;}
+.promien:nth-child(2){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:0.2s}
+.promien:nth-child(3){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:0.4s}
+.promien:nth-child(4){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:0.6s}
+.promien:nth-child(5){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:0.8s}
+.promien:nth-child(6){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1s}
+.promien:nth-child(7){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1s}
+.promien:nth-child(8){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1.2s}
+.promien:nth-child(9){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1.4s}
+.promien:nth-child(10){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1.6s}
+.promien:nth-child(11){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1.8s}
+.promien:nth-child(12){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:2s}
+@keyframes promienie {
+0% { transform: rotate(-360deg); }
+50% { transform: rotate(0deg); }
+100% { transform: rotate(-360deg); }
+}
+@keyframes promienie_od {
+0% { transform: rotate(180deg); }
+100% { transform: rotate(0deg); }
+}
 //-----------------------------------------------------------------------------
 TweenMax.staggerTo()	//Animujemy wszsytkie wskazane elementy, ale nie jednoczesnie.
 TweenMax.staggerFrom()
 TweenMax.staggerFromTo()
-TweenMax.staggerTo(element, 1, {}, .6) //dochodzi 4-ty element, opuÅºnienie kaÅ¼dej animacji
+TweenMax.staggerTo(element, 1, {}, .6) //dochodzi 4-ty element, opuŸnienie ka¿dej animacji
 
 //-----------------------------------------------------------------------------
-TimelineMax() - pozwala na sekwencjonowanie animacji. Tworzy oÅ› czasu i uÅ‚Ä…twia tworzenia i modyfikowanie animaji
+TimelineMax() - pozwala na sekwencjonowanie animacji. Tworzy oœ czasu i u³¹twia tworzenia i modyfikowanie animaji
 
 const rocket = document.querySelector('.rocket');
 
 TweenMax.to(rocket, 2, {x:100});
 TweenMax.to(rocket, 1.5, {rotation:90, delay: 2});
-TweenMax.to(rocket, 1, {y:100, delay: 3.5}); //trzeba sumowaÄ‡ delay'e
+TweenMax.to(rocket, 1, {y:100, delay: 3.5}); //trzeba sumowaæ delay'e
 
-//Lub to samo co powyÅ¼ej:
+//Lub to samo co powy¿ej:
 let tl = new TimelineMax();
 tl.to(rocket, 2, {x:100});
-tl.to(rocket, 1.5, {rotation:90}); //juÅ¼ bez delay
+tl.to(rocket, 1.5, {rotation:90}); //ju¿ bez delay
 tl.to(rocket, 1, {y: 100});
-//Lub to samo co powyÅ¼ej:
+//Lub to samo co powy¿ej:
 tl
-	.to(rocket, 2, {x:100})	//bez Å›rednikÃ³w
+	.to(rocket, 2, {x:100})	//bez œredników
 	.to(rocket, 1.5, {rotation:90})
 	.to(rocket, 1, {y: 100});
 
 
-//Przy tworzeniu instancji, moÅ¼na od razu przekazaÄ‡ obiekt z wÅ‚aÅ›ciwoÅ›ciami:
+//Przy tworzeniu instancji, mo¿na od razu przekazaæ obiekt z w³aœciwoœciami:
 const gtl = new TimelineMax({
 	repaet: -1, 	//infinity
 	dealy: 1,
@@ -215,7 +314,7 @@ const gtl = new TimelineMax({
 tl.
 	.to(rocket, 2, {x:100})	
 	.to(rocket, 1.5, {rotation:90})
-	.add("half-way") //tutaj juÅ¼ zacznie wykonywaÄ‡ siÄ™ grafika, kÃ³ra jest 3 linijki niÅ¼ej
+	.add("half-way") //tutaj ju¿ zacznie wykonywaæ siê grafika, kóra jest 3 linijki ni¿ej
 	.to(rocket, 1, {y: 100});
 	.to(rocket, 1.5, {rotation:180})
 	.to(rocket, 1, {y: 200}, "half-way");
@@ -223,8 +322,8 @@ tl.
 	
 	
 //-----------------------------------------------------------------------------
-//PrzykaÅ‚d piÅ‚ki spadajÄ…cej w dÃ³Å‚ i odbijajÄ…cej siÄ™.
-//CaÅ‚y plik .html
+//Przyka³d pi³ki spadaj¹cej w dó³ i odbijaj¹cej siê.
+//Ca³y plik .html
 
 <!DOCTYPE html>
 <html lang="en">
@@ -269,9 +368,9 @@ tl.
 </body>
 </html>
 //-----------------------------------------------------------------------------
-//PrzykaÅ‚d kwadracika porudszajÄ…cego siÄ™ w pÄ™tli (UWAGA Nowsza biblioteka niÅ¼ powyÅ¼ej)
-//Przycisk rozpoczynajacy i zatrzymujÄ…cy animacjÄ™
-//CaÅ‚y plik .html
+//Przyka³d kwadracika porudszaj¹cego siê w pêtli (UWAGA Nowsza biblioteka ni¿ powy¿ej)
+//Przycisk rozpoczynajacy i zatrzymuj¹cy animacjê
+//Ca³y plik .html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -300,8 +399,8 @@ tl.
         const timeline = new TimelineMax({
             repeat: 2, //-1 w nieskonczonosc
             yoyo: true,
-            delay: .1,   //opuÅºnienie animacji po zaÅ‚adownaiu
-            repeatDelay: 1, //opuÅºnienie po kazdym powturzeniu
+            delay: .1,   //opuŸnienie animacji po za³adownaiu
+            repeatDelay: 1, //opuŸnienie po kazdym powturzeniu
             onStart: () => console.log("poczatek animacji"),
             onComplete: () => console.log("koniec animacji"),
             paused: true,

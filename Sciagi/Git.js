@@ -249,6 +249,7 @@ git branch -D nazwaGalezi 			//po połączeniu gałęzi, gdy już nie będzie po
 git push origin --delete develop	//usunięcie gałęzi na zdalnym repozytorium (oczywiście develop to gałąź której raczej nie chcemy usówać)
 git branch --merged 				//Aby zobaczyć, które gałęzie zostały już scalone z bieżąc
 git branch --no-merged 				//Aby zobaczyć, które gałęzie nie zostały jeszcze scalone z bieżąc
+git branch -m "Nowa-zanzwa"			//Zmiana nazwy gałęzi, na której jesteśmy
 
 
 git checkout istniejącyBrancha 		//przełaczenie się na inną gałąź
