@@ -88,8 +88,148 @@ rotate5();
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+//Pobieranie i zmiana danych z pliku .CSS
+
+//Aby dobraæ siê do zmiennnej w CSS
+    document.documentElement.style.setProperty(--power-x, `${20 + progresPercent  70}%`);
+
+// Alternatywa do powy¿szego
+// W filmiku 248 (Zaawansowane projekty w CSS i JavaScript) jest jak przerobiæ 
+	@keyframes fly-ball-x {
+		100% {
+			left var(--power-x, 300px);
+		}
+	}
+
+//Aby sterowaæ nim z poziomu .js
+	const myRules = document.styleSheets[0].cssRules;
+	console.log(myRules);
+	or(const i of myRules) {
+		if(i.name === fly-ball-x) {
+			i.appendRule(
+				`100% {
+					left ${20 + progresPercent  70}%
+				}`       
+			);
+		}
+	}
+
+
 //-----------------------------------------------------------------------------
-SVG
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+GSAP 
+//filmik 257 (Zaawansowane projekty w CSS i JavaScript)
+//obej¿a³em pobierznie.
+//Link pobiera siê ze strony GreenSock.com/docs/
+//Samuraj pobiera "TweenMax"
+//Aby z niego skorzystaæ, trzeba w pliku .html w sekcji body wstawiæ:
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+//najnowszy:
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.1.1/gsap.min.js"></script>
+
+
+// ró¿ne przejscia w czasie mo¿na zmieniæ i ustawiæ w:
+https://greensock.com/docs/v3/Eases
+
+
+TweenMax.to(element, 1, {}) - do jakich w³aœciwoœci ma dojœæ animacja
+TweenMax.from(element, 1, {}) - od jakich w³aœciwoœci animowaæ (koñcowe w CSS)
+TweenMax.fromTo(element, 1, {}, {}) -sk¹d do k¹d
+
+Metody:  // https://greensock.com/docs/v3/GSAP/Tween
+x: 10 // to samo co "transform: translateX(10px)", czyli przesuniêcie po p³aszczyŸnie x
+y: 10 // to samo co "transform: translateY(10px)", czyli przesuniêcie po p³aszczyŸnie y
+rotation: 240, //transform:rotate(240deg);
+scale: 2, //transform:scale(2)
+scaleY: 2, //transform:scaleY(2)
+ease: Bounce.easeOut // rodzaj animacji
+delay: 2 // pouŸnienie (sek)
+repeat: 1, //powtarzanie
+repeatDelay //opuŸnienie miêdzy kolejnymi iteracjami
+yoyo: true, //wracanie
+backgroundColor: "yellow", //zmian koloru obiektu
+boxShadow: "0 0 120px 0 rgb(251, 255, 0)", //nadanie cienia
+onComplete //funkcja wywo³ywana po zakoñczenu aniamcji
+onStart //funkcja wywo³ywana po starcie animacji
+onRepeat // funkcja wywo³ywana przy ak¿dej interakcji
+paused: true, 
+x: '+=200' // wzglêdem stanu poprzedniego
+y: () => {} //przypisane zostanie to, co zwróci funkcja
+
+//-----------------------------------------------------------------------------
+TweenMax.set() pzwala nadac pocz¹tkowe w³aœciwoœci tu¿ przed rozpoczêciem animacji
+//Przyka³d w obiekcie (css) dajmy niewidoczoœæ visibility hidden;
+//A w skrypcie wywo³ujemy
+	TweenMax.set('div', {visibility visible });
+
+	TweenMax.killTweensOf('div')} Wy³¹czenie animacji
+//Przyk³ad
+setTimeout( () = {TweenMax.killTweensOf('div')}, 2000) wy³¹cz animacje po 2 sek
+//-----------------------------------------------------------------------------
+FUNKCJE
+
+const color = (index, target) = {  indeks elementu od 0, 
+									target to element, np div class=elodiv
+...
+return red;
+}
+
+TweenMax.to('.div', 1, {backgroundColor color }) 
+
+TweenMax.staggerTo()	Animujemy wszsytkie wskazane elementy, ale nie jednoczesnie.
+TweenMax.staggerFrom()
+TweenMax.staggerFromTo()
+TweenMax.staggerTo(element, 1, {}, .6) dochodzi 4-ty element, opuŸnienie ka¿dej animacji
+
+-----------------------------------------------------------------------------
+TimelineMax() - pozwala na sekwencjonowanie animacji. Tworzy oœ czasu i u³¹twia tworzenia i modyfikowanie animaji
+
+const rocket = document.querySelector('.rocket');
+
+TweenMax.to(rocket, 2, {x100});
+TweenMax.to(rocket, 1.5, {rotation90, delay 2});
+TweenMax.to(rocket, 1, {y100, delay 3.5}); trzeba sumowaæ delay'e
+
+Lub to samo co powy¿ej
+let tl = new TimelineMax();
+tl.to(rocket, 2, {x100});
+tl.to(rocket, 1.5, {rotation90}); ju¿ bez delay
+tl.to(rocket, 1, {y 100});
+Lub to samo co powy¿ej
+tl
+	.to(rocket, 2, {x100})	bez œredników
+	.to(rocket, 1.5, {rotation90})
+	.to(rocket, 1, {y 100});
+
+
+//Przy tworzeniu instancji, mo¿na od razu przekazaæ obiekt z w³aœciwoœciami
+const gtl = new TimelineMax({
+	repaet -1, 	infinity
+	dealy 1,
+	repeatDelay 1,
+	onStart () = console.log('start')
+	}
+);
+
+//Ustalanie miejsca animacji 
+tl.
+	.to(rocket, 2, {x100})	
+	.to(rocket, 1.5, {rotation90})
+	.add(half-way) tutaj ju¿ zacznie wykonywaæ siê grafika, kóra jest 3 linijki ni¿ej
+	.to(rocket, 1, {y 100});
+	.to(rocket, 1.5, {rotation180})
+	.to(rocket, 1, {y 200}, half-way);
+	
+	
+
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+SVG Scalable Vector Graphics
+
 //   ###   #   #   ###              
 //  #   #  #   #  #   #           
 //  #      #   #  #            
@@ -104,7 +244,8 @@ Dodatek ten podpowiada sk³adnie i tworzy okienko z podgl¹dem (PM na plik .svg i 
 
 INKSCAPE - Jakiœ darmowy program do tworzenia grafiki SVG
 
-
+//Stronka, z efektami do SVG
+https://www.w3schools.com/graphics/svg_grad_radial.asp
 
 
 //    SVG ska³da sie z 3 czêœci:
@@ -161,52 +302,6 @@ INKSCAPE - Jakiœ darmowy program do tworzenia grafiki SVG
 </body>
 </html>
 
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//Stronka, z efektami do SVG
-https://www.w3schools.com/graphics/svg_grad_radial.asp
-GSAP 
-//filmik 257 (Zaawansowane projekty w CSS i JavaScript)
-//obej¿a³em pobierznie.
-//Link pobiera siê ze strony GreenSock.com/docs/
-//Samuraj pobiera "TweenMax"
-//Aby z niego skorzystaæ, trzeba w pliku .html w sekcji body wstawiæ:
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
-//najnowszy:
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.1.1/gsap.min.js"></script>
-
-
-// ró¿ne przejscia w czasie mo¿na zmieniæ i ustawiæ w:
-https://greensock.com/docs/v3/Eases
-
-
-TweenMax.to(element, 1, {}) - do jakich w³aœciwoœci ma dojœæ animacja
-TweenMax.from(element, 1, {}) - od jakich w³aœciwoœci animowaæ (koñcowe w CSS)
-TweenMax.fromTo(element, 1, {}, {}) -sk¹d do k¹d
-
-Metody:  // https://greensock.com/docs/v3/GSAP/Tween
-x: 10 // to samo co "transform: translateX(10px)", czyli przesuniêcie po p³aszczyŸnie x
-y: 10 // to samo co "transform: translateY(10px)", czyli przesuniêcie po p³aszczyŸnie y
-rotation: 240, //transform:rotate(240deg);
-scale: 2, //transform:scale(2)
-scaleY: 2, //transform:scaleY(2)
-ease: Bounce.easeOut // rodzaj animacji
-delay: 2 // pouŸnienie (sek)
-repeat: 1, //powtarzanie
-repeatDelay //opuŸnienie miêdzy kolejnymi iteracjami
-yoyo: true, //wracanie
-backgroundColor: "yellow", //zmian koloru obiektu
-boxShadow: "0 0 120px 0 rgb(251, 255, 0)", //nadanie cienia
-onComplete //funkcja wywo³ywana po zakoñczenu aniamcji
-onStart //funkcja wywo³ywana po starcie animacji
-onRepeat // funkcja wywo³ywana przy ak¿dej interakcji
-paused: true, 
-x: '+=200' // wzglêdem stanu poprzedniego
-y: () => {} //przypisane zostanie to, co zwróci funkcja
-
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -217,65 +312,8 @@ http://www.clker.com/inc/svgedit/svg-editor.html
 Przyk³ad robota ruszaj¹cego nozkami, wykorzystanei "TimelineMax()" w filmie 275 (Zaawansowane projekty w CSS i JavaScript)
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-//Efekt dyskotekowy (podej¿any na stronei Radwag)
 
-//----- html: 
-<div class="wag1_promienie">
-<div class="promien"></div>
-<div class="promien"></div>
-<div class="promien"></div>
-<div class="promien"></div>
-<div class="promien"></div>
-<div class="promien"></div>
-<div class="promien"></div>
-<div class="promien"></div>
-<div class="promien"></div>
-<div class="promien"></div>
-<div class="promien"></div>
-<div class="promien"></div>
-</div>
-
-//----- script: 
-.wag1_promienie{
-position:absolute;
-width: 100%;
-height: 90%;
-margin: 0 auto;
-border:0 solid red;transform: rotateX(75deg);perspective: 1000px;
-z-index:-1;
-} 
-.promien{
-position:absolute;
-width:100%;
-height:100vh;
-background-image: url(https://radwag.com/nowybanner/promien.png);
-background-position: center;
-background-repeat: no-repeat;
-border:0 solid red;
-}
-.promien:nth-child(1){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;}
-.promien:nth-child(2){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:0.2s}
-.promien:nth-child(3){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:0.4s}
-.promien:nth-child(4){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:0.6s}
-.promien:nth-child(5){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:0.8s}
-.promien:nth-child(6){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1s}
-.promien:nth-child(7){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1s}
-.promien:nth-child(8){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1.2s}
-.promien:nth-child(9){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1.4s}
-.promien:nth-child(10){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1.6s}
-.promien:nth-child(11){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1.8s}
-.promien:nth-child(12){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:2s}
-@keyframes promienie {
-0% { transform: rotate(-360deg); }
-50% { transform: rotate(0deg); }
-100% { transform: rotate(-360deg); }
-}
-@keyframes promienie_od {
-0% { transform: rotate(180deg); }
-100% { transform: rotate(0deg); }
-}
-//-----------------------------------------------------------------------------
-TweenMax.staggerTo()	//Animujemy wszsytkie wskazane elementy, ale nie jednoczesnie.
+TweenMax.staggerTo()	//Animujemy wszystkie wskazane elementy, ale nie jednoczeœnie.
 TweenMax.staggerFrom()
 TweenMax.staggerFromTo()
 TweenMax.staggerTo(element, 1, {}, .6) //dochodzi 4-ty element, opuŸnienie ka¿dej animacji
@@ -429,12 +467,69 @@ tl.
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-SVG Scalable Vector Graphics
+
 
 
 
 //-----------------------------------------------------------------------------
+//Efekt dyskotekowy (podej¿any na stronei Radwag)
 
+//----- html: 
+<div class="wag1_promienie">
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+<div class="promien"></div>
+</div>
+
+//----- script: 
+.wag1_promienie{
+position:absolute;
+width: 100%;
+height: 90%;
+margin: 0 auto;
+border:0 solid red;transform: rotateX(75deg);perspective: 1000px;
+z-index:-1;
+} 
+.promien{
+position:absolute;
+width:100%;
+height:100vh;
+background-image: url(https://radwag.com/nowybanner/promien.png);
+background-position: center;
+background-repeat: no-repeat;
+border:0 solid red;
+}
+.promien:nth-child(1){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;}
+.promien:nth-child(2){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:0.2s}
+.promien:nth-child(3){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:0.4s}
+.promien:nth-child(4){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:0.6s}
+.promien:nth-child(5){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:0.8s}
+.promien:nth-child(6){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1s}
+.promien:nth-child(7){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1s}
+.promien:nth-child(8){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1.2s}
+.promien:nth-child(9){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1.4s}
+.promien:nth-child(10){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1.6s}
+.promien:nth-child(11){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:1.8s}
+.promien:nth-child(12){animation: promienie 4s ease;animation-iteration-count:infinite;transform-origin:center bottom;animation-delay:2s}
+@keyframes promienie {
+0% { transform: rotate(-360deg); }
+50% { transform: rotate(0deg); }
+100% { transform: rotate(-360deg); }
+}
+@keyframes promienie_od {
+0% { transform: rotate(180deg); }
+100% { transform: rotate(0deg); }
+}
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
