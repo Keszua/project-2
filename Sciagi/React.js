@@ -7,7 +7,7 @@
 //                           
 //                          
 // TWORZENIE NOWEGO PROJEKTU
-// Trzeba byc w folderze z projektami i wywołać polecenie:
+// Trzeba byc w folderze z projektami i wywołać polecenie: (nazwa folderu z malej litery)
 create-react-app nazwa-katalogu
 //Powstanie nowy katalog.
 
@@ -219,6 +219,63 @@ const TweetUser = ({name, handle}) => ( <span> Imie <b>{name}</b>{handle}</span>
 	}
 
 	ReactDOM.render(<ZebraneApp />, document.getElementById('root'))
+
+//------------------------------------------------------------
+//------------------------------------------------------------
+//------------------------------------------------------------
+React router
+//Filmik 102 (React od podstaw)
+//Instalujemy go poleceniem:
+	npm install react-router-dom
+//Po zainstalowaniu, trzeba zaimportować kilka komponentów:
+	import { BrowserRouter, Link } from 'react-router-dom';
+//Następnie w komponent BrowserRouter "owijamy" jednodziecko (najlepiej jeden <div>)
+	<BrowserRouter> 
+		<div>
+			...
+		</div
+	</BrowserRouter> 
+//Teraz zamist tradycyjnych linków: <a href="/start">Start</a>
+//Wprowadzamy: <Link to="/start">Start</Link>
+//Od tej pory, prejście na inny link, nie odświerza strony
+//Mozna urzyac skróconej nazwy BrowserRouter, deklarując to w imporcie:
+	import { BrowserRouter as Router, Link } from 'react-router-dom';
+	<Router> 
+		<div>
+			...
+		</div
+	</Router> 
+//------------------------------------------------------------
+//Przykład prostego SPA (calutki plik App.js)
+	import React from 'react';
+	import './App.css';
+	import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+	const Home = () => <h1>Strona startowa</h1>
+	const News = () => <h1>Aktualności</h1>
+	const Contact = () => <h1>Kontakt</h1>
+	function App() {
+	  return (
+		<Router>
+		  <div className="App">
+			<header className="App-header">
+			<nav>
+			  <ul>
+				<li><Link to="/">Start</Link> </li>
+				<li><Link to="/news">Aktualnosci</Link> </li>
+				<li><Link to="/contact">Kontakt</Link> </li>
+			  </ul>
+			</nav>
+			</header>
+			<section>
+			  <Route path="/" exact component={Home}/>
+			  <Route path="/news" component={News}/>
+			  <Route path="/contact" component={Contact}/>
+			</section>
+		  </div>
+		</Router>
+	  );
+	}
+	export default App;
 
 
 //------------------------------------------------------------

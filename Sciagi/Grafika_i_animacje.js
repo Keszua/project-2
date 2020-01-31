@@ -192,7 +192,7 @@ TweenMax.to(rocket, 2, {x100});
 TweenMax.to(rocket, 1.5, {rotation90, delay 2});
 TweenMax.to(rocket, 1, {y100, delay 3.5}); trzeba sumowaæ delay'e
 
-Lub to samo co powy¿ej
+//Lub to samo co powy¿ej
 let tl = new TimelineMax();
 tl.to(rocket, 2, {x100});
 tl.to(rocket, 1.5, {rotation90}); ju¿ bez delay
@@ -308,57 +308,17 @@ https://www.w3schools.com/graphics/svg_grad_radial.asp
 Programy online do rysowanie SVG:
 https://editor.method.ac/#copy
 http://www.clker.com/inc/svgedit/svg-editor.html
+https://boxy-svg.com/app
 
 Przyk³ad robota ruszaj¹cego nozkami, wykorzystanei "TimelineMax()" w filmie 275 (Zaawansowane projekty w CSS i JavaScript)
+
+
+
+
+
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-
-TweenMax.staggerTo()	//Animujemy wszystkie wskazane elementy, ale nie jednoczeœnie.
-TweenMax.staggerFrom()
-TweenMax.staggerFromTo()
-TweenMax.staggerTo(element, 1, {}, .6) //dochodzi 4-ty element, opuŸnienie ka¿dej animacji
-
-//-----------------------------------------------------------------------------
-TimelineMax() - pozwala na sekwencjonowanie animacji. Tworzy oœ czasu i u³¹twia tworzenia i modyfikowanie animaji
-
-const rocket = document.querySelector('.rocket');
-
-TweenMax.to(rocket, 2, {x:100});
-TweenMax.to(rocket, 1.5, {rotation:90, delay: 2});
-TweenMax.to(rocket, 1, {y:100, delay: 3.5}); //trzeba sumowaæ delay'e
-
-//Lub to samo co powy¿ej:
-let tl = new TimelineMax();
-tl.to(rocket, 2, {x:100});
-tl.to(rocket, 1.5, {rotation:90}); //ju¿ bez delay
-tl.to(rocket, 1, {y: 100});
-//Lub to samo co powy¿ej:
-tl
-	.to(rocket, 2, {x:100})	//bez œredników
-	.to(rocket, 1.5, {rotation:90})
-	.to(rocket, 1, {y: 100});
-
-
-//Przy tworzeniu instancji, mo¿na od razu przekazaæ obiekt z w³aœciwoœciami:
-const gtl = new TimelineMax({
-	repaet: -1, 	//infinity
-	dealy: 1,
-	repeatDelay: 1,
-	onStart: () => console.log('start')
-	}
-);
-
-//Ustalanie miejsca animacji 
-tl.
-	.to(rocket, 2, {x:100})	
-	.to(rocket, 1.5, {rotation:90})
-	.add("half-way") //tutaj ju¿ zacznie wykonywaæ siê grafika, kóra jest 3 linijki ni¿ej
-	.to(rocket, 1, {y: 100});
-	.to(rocket, 1.5, {rotation:180})
-	.to(rocket, 1, {y: 200}, "half-way");
-	
-	
-	
 //-----------------------------------------------------------------------------
 //Przyka³d pi³ki spadaj¹cej w dó³ i odbijaj¹cej siê.
 //Ca³y plik .html

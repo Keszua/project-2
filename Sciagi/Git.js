@@ -246,11 +246,12 @@ git branch  						//pokazuje, na jakiej jesteśmy gałęzi i lista wszystkich br
 git branch -v						//pokazuje informacje, o ostatnich zmianach na każdej z gałęzi
 git branch nazwaNowegoBrancha  		//tworzy nową gałąź
 git branch -D nazwaGalezi 			//po połączeniu gałęzi, gdy już nie będzie potrzebna, można ją usunąć.
+						//wysłanie gałezi na serwer: git push --all origin
 git push origin --delete develop	//usunięcie gałęzi na zdalnym repozytorium (oczywiście develop to gałąź której raczej nie chcemy usówać)
 git branch --merged 				//Aby zobaczyć, które gałęzie zostały już scalone z bieżąc
 git branch --no-merged 				//Aby zobaczyć, które gałęzie nie zostały jeszcze scalone z bieżąc
 git branch -m "Nowa-zanzwa"			//Zmiana nazwy gałęzi, na której jesteśmy
-
+git -m oldbranch newbranch			//Zmaina nazwy gałęzi, której nas nie ma. Nie testowałe, wydaje mi się, że działac powinno: git branch -m oldbranch newbranch
 
 git checkout istniejącyBrancha 		//przełaczenie się na inną gałąź
 git checkout -b nowyBrancha			//tworzy nowy branch i przełącza sie na niego
@@ -411,14 +412,15 @@ b) usuwamy go poleceniem:     git rm index.html
 // React jest podszykowany aby działać na Git. Ma wszystko skonfigurowane.
 /* Wstawianie projektu na GitHub
 Aby nowy projekt wstawić do GitHuba, trzeba złożyć sobie nowe repozytorium poprzez:
-  1. pusik -> New Repository -> 
+  1. plusik -> New Repository -> 
   2. Wstawić nazę. Można wpisać jakiś "Description". Nie zaznaczać "Initialize this repository"
   3. W konsoli wpisać komendy które wygenerował GitHub, czyli:
-    λ git remote add origin https://github.com/Keszua/nazwa-projektu   -podłączenie repozytorium zdalnego (jeszcze nie wypchnięcie, trzeba wywołąć push)
-    λ git remote -v 
+    git remote add origin https://github.com/Keszua/nazwa-projektu   -podłączenie repozytorium zdalnego (jeszcze nie wypchnięcie, trzeba wywołąć push)
+    git remote -v 		//lista repozytoriów, aby sprawdzić czy się podłączyło
+	git push -u origin master
 */
 
-/* Aby pobrać projekt z GitHuba trzeba to zrogić przez "Clone or download"
+/* Aby pobrać projekt z GitHuba trzeba to zrobić przez "Clone or download"
   1. Po zdobyciu linku, np:  https://github.com/Keszua/nazwa-projektu 
   2. Robimy klon w folderze w którym jestśmy z apomoca polecenia:
 	λ git clone https://github.com/Keszua/nazwa-projektu

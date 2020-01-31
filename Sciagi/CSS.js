@@ -159,9 +159,13 @@ http://domanart.pl/dema/super-szamson/super-szamson.html
 
 // Trzeba mieć "Live Server"
 // Trzeba doinstalować "Live Sass Compiler" (taki z okiem)
+//Filmik: 11 (Zaawansowane projekty w CSS i JavaScript)
 
-
-
+//Aby przełaczyć sie na pisanei w .scss:
+//Trzeba załozyć sobie folder sass  (w projekcie react, zrobić to w folderze src)
+// w filderze założyć plik style.scss
+//Gdy coś w nim napiszemy i zapiszemy, to wtyczka zama powinna to wykryć, zrobić folder i plik: css/style.css
+//Trzba oczywiście ustawić ściezkę dostepu do pliku .css aby przeglądarka z nich korzystała
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
