@@ -789,7 +789,7 @@ auto-fill	//Do automatyczego generowania kolumn. Generuj tyle, ile jesteś w sta
 auto-fit	// wygeneruje tyle kolumn, ile jest elementów do rozdysponowania
 			// grid-template-columns: repeat(auto-fit, minmax(55px, 1fr)); Przy width: 600px, i 7 elemntach, zrobi 7 kolumn po 85px
 main-content	// obiekt ma zając minimalną wartość, jaką potrzebuje (głównie dla obrazków)
-max-constent	// wypełnia całą dostepną szerokość.
+max-content	// wypełnia całą dostepną szerokość.
 
 //-----------------------------------------------------------------------------
 //Siatkę można tworzyć:
@@ -803,8 +803,8 @@ max-constent	// wypełnia całą dostepną szerokość.
 //Przykład JAWNIE:
 .grid {
 	display: grid; /* jawnie deklarowana struktura */
-	grid-template-columns: 100px 2fr auto;	/* ilość kolumn: ile wartości, tyle kolumn, czyli 100px, dwie frakcje,  */
-	grid-template-rows: 80px 100px 50px;	/* ilośc wierszy: ile wartości, tyle kolumn */
+	grid-template-columns: 100px 2fr   auto;	/* ilość kolumn: ile wartości, tyle kolumn, czyli 100px, dwie frakcje,  */
+	grid-template-rows:    80px  100px 50px;	/* ilośc wierszy: ile wartości, tyle kolumn */
 }
 
 //Wymuszenie, aby element znalzał sie w 5-tej kolumnie
@@ -825,7 +825,7 @@ max-constent	// wypełnia całą dostepną szerokość.
 	grid-template-columns: 20% 100px auto 1fr;	// procenty odnosza sie do wielkości rodzica; 
 												// auto: minimalnie tyle, ile potrzebuje; 
 												// 1fr: dzieli wolną przestrzeń na tyle, ile wskarzemy 
-	grid-template-rows: 5em auto;				// 5em: podobnie jak fr, tylko do wysokości
+	grid-template-rows: 5em auto;				// 5em: Związany z wysokością czcionki
 }
 
 .e1 {
@@ -864,8 +864,8 @@ max-constent	// wypełnia całą dostepną szerokość.
 			"logo		navigtion	article"
 			"info		info		article"
 			".			.			article"
-			"footer		footer		footer"
-	//powyżej nazywam wsyzstkie komorki. jak nei che dawac nwzy, daje kropke. Musze tworzyc prostokoty
+			"footer		footer		footer" ;
+	//powyżej nazywam wsyzstkie komorki. jak nie che dawać nazwy, daje kropkę. Muszę tworzyć prostokoty
 	}
 	.e1{ grid-area: article; } //umieszczam element, który ma zając wszystkie komórki "article"
 	.e3{ grid-area: footer; } //umieszczam element, który ma zając wszystkie komórki "footer"

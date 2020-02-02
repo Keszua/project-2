@@ -189,7 +189,7 @@ git reset --hard 5a33dd3	//Przywracamy podany commit a zmiany zostaną całkowic
 git commit --amend   		//umozliwia poprawkę osatniego commitu (zwykle gdy zrobimy błąd w opisie)
 git commit --amend -m "Nowy opis"  	//umozliwia poparkę osatniego komitu
 
-git clean 					//służy do usuwanie plików które nie są sledzone (takie polecenie wywali błąd, trzeba podać )
+git clean 					//służy do usuwanie plików które nie są śledzone (takie polecenie wywali błąd, trzeba podać )
 git clean -n 				//polecenie testowe, pokaże, jakie pliki zostały by usunięte
 git clean -nd				//polecenie testowe, pokaże, jakie pliki i foldery zostały by usunięte
 git clean -idf				//wyświetli się lista z możliwymi wyborami.
@@ -215,7 +215,7 @@ git clean -idf				//wyświetli się lista z możliwymi wyborami.
 //Trzeba ustawic flagę -f, która wymusi uznanie naszych zmian
 	git push origin nazwa-galezi -f
 
-//Jeszce się boje, ale chyba podobny efekt można uzyskac poleceniami:
+//Jeszcze się boje, ale chyba podobny efekt można uzyskac poleceniami:
 git rebase --interactive {commit} // pozwala wybrać commity które zostaną dołączone (lub modyfikować)
 git rebase --interactive '{hash}^' // umożliwia edycję commitów do podanego hasha
 
@@ -237,8 +237,12 @@ plik1.txt
 //Do tej listy można dodac TYLKO pliki i foldery nie śledzone. 
 //Jeżeli jakiś plik jest śledzony i chcemy go przestac śledzić: git rm --cached nazwaPliku
 
-
 // GAŁĘZIE
+//         ----*-----*--------                --*----*-----------*------------*------
+//        /                   \              /                                       
+//     --*----------------*----*------------*------------*---------        ----------
+//   /                                                             \      /          
+//--*--------*---------------------*----*--------------------*------*----*-----------
 //branch - to wskaźnik na odpowiedni commit (nie tworzy jakiś kopii...) 
 //HEAD - pokazuje, na którym jestesmy branchu, czyli na którym wskaźniku
 //stosuje się zwykle: master -jako główny, stabilny program;  develop -jako kopia; feature;  feature_user1; 
@@ -246,7 +250,11 @@ git branch  						//pokazuje, na jakiej jesteśmy gałęzi i lista wszystkich br
 git branch -v						//pokazuje informacje, o ostatnich zmianach na każdej z gałęzi
 git branch nazwaNowegoBrancha  		//tworzy nową gałąź
 git branch -D nazwaGalezi 			//po połączeniu gałęzi, gdy już nie będzie potrzebna, można ją usunąć.
-						//wysłanie gałezi na serwer: git push --all origin
+						//wysłanie wszytkich gałezi na serwer: git push --all origin
+	git push origin nazwaGalezi // jednorazowe wysłanie na serwer podanej gałęzi (sparawdzone polecenie)
+	git push –u origin nazwaGalezi // przypisanie i wysłanie na serwer podanej gałęzi
+	git push --set-upstream origin nazwaGalezi //polecenie sugerowane przez gita
+	git pull origin nazwaGalezi //pobranie gałęzi z serwera 
 git push origin --delete develop	//usunięcie gałęzi na zdalnym repozytorium (oczywiście develop to gałąź której raczej nie chcemy usówać)
 git branch --merged 				//Aby zobaczyć, które gałęzie zostały już scalone z bieżąc
 git branch --no-merged 				//Aby zobaczyć, które gałęzie nie zostały jeszcze scalone z bieżąc
@@ -259,11 +267,14 @@ git switch istniejącyBrancha 		//przełaczenie się na inną gałąź
 git switch -c nowyBrancha			//tworzy nowy branch i przełącza sie na niego
 
 //MERGE - ŁĄCZENIE GAŁĘZI
-git merge nazwaBrancha  			//łączenie (scalanie) gałęzi na której jestesmy ze wskazaną gałęzią
+git merge nazwaGalezi  			//łączenie (scalanie) gałęzi na której jestesmy ze wskazaną gałęzią
 git merge {nazwa remota}/{nazwa gałęzi} // dołączenie zmian ze wskazanego remota i gałęzi
 git merge --abort 					// przerywa łączenie (możliwe, gdy wystąpią konflikty)
 git merge --continue 				// po rozwiązaniu konfliktów zapisuje zmiany
 git merge --revert 					// cofa wszystkie wprowadzone zmiany
+
+git rebase nazwaGalezi 				//Zaciągnięcie zmian z "nazwaGalezi" do aktywnej gałęzi
+
 
 //Przykład: Chce POŁĄCZYĆ develop z masterem, musze być na gałęzi develop i "pochłonąć" zmiany z master
 git switch develop		//przełaczam się na gałąź, do której chce pochłaniać zmiany.
@@ -429,11 +440,11 @@ Aby nowy projekt wstawić do GitHuba, trzeba złożyć sobie nowe repozytorium p
 	λ npm install
 */
 
-/* Aby wstawić projekt React:
+/* Aby wstawić projekt React:  (firlm 125 (React od podstaw))
   1. Jesteśmy już po operacji wstawienia projektu na GitHuba, tak jak w punkcie: "Wstawianie projektu na GitHub"
   2. Konsolą jesteśmy w projekcie React, który chcemy wysłać na serwer GitHub.
   3. W konsoli wpisujemy:
-   λ npm install gh-pages
+   λ npm install gh-pages   (Na filmie 125, to polecenie wywołuje dopiero po punkcie 6)
   4. Na serwerze wchodzimy do:  GitHuba -> Setings -> GitHub Pages -> Source -> ustawiamy master branch. 
     Pojawi sie link, który kopiujemy.
     Na razie pod tym linkiem wyświetla się zawartość pliku README.md
@@ -442,7 +453,7 @@ Aby nowy projekt wstawić do GitHuba, trzeba złożyć sobie nowe repozytorium p
   5. Scieżkę projektu pobireamy z GitHuba -> Setings -> GitHub Pages -> Your site is published at [tutaj ten adres]
     Wchodzimy do pliku package.json i dopisujemy tuż za pierwszym nawiasem ścieżkę projektu:	
     "homepage": "https://github.com/Keszua/nazwa-projektu/",
-  6. W "scripts" dopisac dwie linijki:
+  6. W "scripts" dopisac dwie linijki (plik package.json):
 	"scripts": {
 	  "predeploy": "npm run build",	//to dopisane
 	  "deploy": "gh-pages -d build", //to dopisane

@@ -247,6 +247,11 @@ INKSCAPE - Jakiœ darmowy program do tworzenia grafiki SVG
 //Stronka, z efektami do SVG
 https://www.w3schools.com/graphics/svg_grad_radial.asp
 
+Programy online do rysowanie SVG:
+https://editor.method.ac/#copy
+http://www.clker.com/inc/svgedit/svg-editor.html
+https://boxy-svg.com/app
+
 
 //    SVG ska³da sie z 3 czêœci:
 //    1. Canvas SVG - czyli "ca³a mapa poziomu"
@@ -305,10 +310,6 @@ https://www.w3schools.com/graphics/svg_grad_radial.asp
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-Programy online do rysowanie SVG:
-https://editor.method.ac/#copy
-http://www.clker.com/inc/svgedit/svg-editor.html
-https://boxy-svg.com/app
 
 Przyk³ad robota ruszaj¹cego nozkami, wykorzystanei "TimelineMax()" w filmie 275 (Zaawansowane projekty w CSS i JavaScript)
 

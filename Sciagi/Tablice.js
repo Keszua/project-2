@@ -37,7 +37,7 @@ console.log('imię: ' + tab[1][0] + ', wzrost: ' + tab[1][1]); //= imię: Ania, 
     console.log('imię: ' + user[0] + ', wzrost: ' + user[1]); //= imię: Ania, wzrost: 173
 }
 
-//tablica wieo wymiarowa;
+//tablica wielo wymiarowa;
 const tab = [
     1,
     [2,3],
@@ -82,7 +82,8 @@ console.log(arr5.find(x => x<4)); //= 1
 	const userString = users.join(" "); //w nawiasie - jaki separtaor
 	consloe.log(userString); //= "adam bogdan czarek darek"
 
-//.join(separator) służy do łączenia kolejnych elementów w jeden wspólny string. Jak nie podamy separatora, to wstawi przecinki
+//.join(separator) służy do łączenia kolejnych elementów w jeden wspólny string. 
+//Jak nie podamy separatora, to wstawi przecinki
 const ourTable = ["Marcin", "Ania", "Agnieszka"];
 console.log(ourTable.join()); //wypisze się "Marcin,Ania,Agnieszka"
 console.log(ourTable.join(" - ")); //wypisze się "Marcin - Ania - Agnieszka"
@@ -183,6 +184,8 @@ document.body.appendChild(section);
 	const users = ["adam", "bogdan", "czarek", "darek"];
 	const NameWith6Letter =  users.filter(user => user.length === 6)
 	console.log(NameWith6Letter); //= ["bogdan", "czarek"]
+//Składnia:
+	const newArray = arr.filter(callback(element[, index[, array]])[, thisArg])
 
 //Przykład 2:
 	const ourTable = [1, 2, 3, 4, 5, 6];
@@ -313,7 +316,8 @@ const tab.sort((a, b) => a - b);
 //inne metody sortowania: https://kursjs.pl/kurs/super-podstawy/tablice.php
 
 
-//.slice(od, do*) tak samo jak przy stringach, zwraca nową tablicę zawierającą elementy z tablicy na której została wywołana.
+//.slice(od, do*) tak samo jak przy stringach, 
+//zwraca nową tablicę zawierającą elementy z tablicy na której została wywołana.
 const tab = ['Marcin', 'Ania', 'Agnieszka', 'Monika', 'Magda'];
 const tab2 = tab.slice(0, 1);
 console.log(tab2); //[Marcin]
