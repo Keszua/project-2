@@ -243,10 +243,20 @@ plik1.txt
 //     --*----------------*----*------------*------------*---------        ----------
 //   /                                                             \      /          
 //--*--------*---------------------*----*--------------------*------*----*-----------
+
+//	       A---B---C master on origin
+//	      /
+//    D---E---F---G master
+//	      ^
+//	      origin/master in your repository
+
 //branch - to wskaźnik na odpowiedni commit (nie tworzy jakiś kopii...) 
 //HEAD - pokazuje, na którym jestesmy branchu, czyli na którym wskaźniku
 //stosuje się zwykle: master -jako główny, stabilny program;  develop -jako kopia; feature;  feature_user1; 
 git branch  						//pokazuje, na jakiej jesteśmy gałęzi i lista wszystkich branchów. Domyslnie jest "master"
+git branch -r 						//pokazuje jakiej gałęzie są na serwerze
+git branch -a 						//pokazuje gałezie lokalne i zdalne
+git remote show origin	            //pokazuje informacje o gałęziach oraz która gałąź jest podpięta pod "pull"
 git branch -v						//pokazuje informacje, o ostatnich zmianach na każdej z gałęzi
 git branch nazwaNowegoBrancha  		//tworzy nową gałąź
 git branch -D nazwaGalezi 			//po połączeniu gałęzi, gdy już nie będzie potrzebna, można ją usunąć.
@@ -254,17 +264,21 @@ git branch -D nazwaGalezi 			//po połączeniu gałęzi, gdy już nie będzie po
 	git push origin nazwaGalezi // jednorazowe wysłanie na serwer podanej gałęzi (sparawdzone polecenie)
 	git push –u origin nazwaGalezi // przypisanie i wysłanie na serwer podanej gałęzi
 	git push --set-upstream origin nazwaGalezi //polecenie sugerowane przez gita
-	git pull origin nazwaGalezi //pobranie gałęzi z serwera 
 git push origin --delete develop	//usunięcie gałęzi na zdalnym repozytorium (oczywiście develop to gałąź której raczej nie chcemy usówać)
 git branch --merged 				//Aby zobaczyć, które gałęzie zostały już scalone z bieżąc
 git branch --no-merged 				//Aby zobaczyć, które gałęzie nie zostały jeszcze scalone z bieżąc
 git branch -m "Nowa-zanzwa"			//Zmiana nazwy gałęzi, na której jesteśmy
-git -m oldbranch newbranch			//Zmaina nazwy gałęzi, której nas nie ma. Nie testowałe, wydaje mi się, że działac powinno: git branch -m oldbranch newbranch
+git -m oldbranch newbranch			//Zmiana nazwy gałęzi, której nas nie ma. Nie testowałe, wydaje mi się, że działac powinno: git branch -m oldbranch newbranch
 
 git checkout istniejącyBrancha 		//przełaczenie się na inną gałąź
 git checkout -b nowyBrancha			//tworzy nowy branch i przełącza sie na niego
 git switch istniejącyBrancha 		//przełaczenie się na inną gałąź
 git switch -c nowyBrancha			//tworzy nowy branch i przełącza sie na niego
+
+//POBIERANIE GAŁĘZI
+git  fetch origin nazwaZdalejGalezi:nazwaLokalnejGalezi //pobiera informacje o gałezi z repozytorium 
+git pull origin nazwaGalezi //UWAGA pobranie danych na aktywną gałąź (na której jestesmy lokalnie) z gałęzi z serwera (nastąpi połączenie commitów)
+	//aby sprawdzić, jakie są gałezie zdalene: git branch -r  (lub -a, pokaze lokalne i zdalne)
 
 //MERGE - ŁĄCZENIE GAŁĘZI
 git merge nazwaGalezi  			//łączenie (scalanie) gałęzi na której jestesmy ze wskazaną gałęzią
@@ -350,11 +364,12 @@ git stash pop			//przywróć zmiany odłożone na stos.
 //--------------------------------------------------------------------------------------
 
 // ZAKŁADANIE REPOZYTORIUM 
-git remote add origin https://github.com/Keszua/nazwa-projektu   -podłączenie repozytorium zdalnego (jeszcze nie wypchnięcie, trzeba wywołąć push)
+git remote add origin https://github.com/Keszua/nazwa-projektu   -podłączenie repozytorium zdalnego (jeszcze 
+                                                               // nie wypchnięcie, trzeba wywołąć push)
 //origin - zastępuje man adres repozytorium (żeby nie wpisywać za każdym razem pełnego adresu)
 git remote -v   			//sprawdzenie ścieżki na serwer
 git remote show 			//wyswietli dostępne repozytoria
-git remote show origin 		//wyswietli informacje o wpisanym repozytorium
+git remote show origin	    //pokazuje informacje o gałęziach oraz która gałąź jest podpięta pod "pull"
 git remote rename pb paul	//zmiana nazwy pb na paul
 git remote rm paul			//usówanie odnośnika
 git push -u origin master   //pierwsze wypchnięcie projektu po podłączeniu z serwerem.
@@ -364,7 +379,11 @@ git fetch 					//pobieramy informacje ze zdalnego repozytorium
 //w lokalnym repozytorium pojawi się informacja o nowym commicie
 git merge origin/master 	//synchronizacja ściągniętego commita (poleceniem fetch) z naszymi lokalnymi plikami.
 
-git pull  					//my pobieramy zmiany z zdalnego repozytorium do naszego lokalnego. Nasze repo jest automatycznie aktualizowane
+git pull  					// My pobieramy zmiany z zdalnego repozytorium do naszego lokalnego. 
+                            // Nasze repo jest automatycznie aktualizowane
+git pull origin nazwaGalezi //UWAGA pobranie danych na aktywną gałąź (na której jestesmy lokalnie)
+                            // z gałęzi z serwera (nastąpi połączenie commitów)
+
 git fetch [nazwa-zdalengo-repozytorium]	//aby uzyskać dane ze zdalnego projektu
 
 

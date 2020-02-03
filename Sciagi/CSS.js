@@ -882,10 +882,157 @@ grid - łaczy grid-areas, grid-template-rows i grid-auto-columns
 
 
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//BOOTSTRAP
+
+1. wczhodzimy na https://getbootstrap.com/
+Dokładniej: Geting started -> introduction https://getbootstrap.com/docs/4.4/getting-started/introduction/
+Aby szybko rozpoczać pracę, jest tam gotowy "Starter template"
+
+// Kiedy zadziała responsywność:
+-sm <576px
+-md >=720px
+-lg >=960px
+-xl >=1140px
+-fluid  powyżej 
 
 //-----------------------------------------------------------------------------
+//Bootstrap bazuje na klasach.
+//Aby zrobić szablon responsyjny, trzeba owinąc strone w kontener:
+    <div class="container">
+        <h1>Hello, world!</h1>
+    </div>
+
+
+display:
+	d-flex	
+	d-inline
+	d-block
+	d-inline-block
+
+//GRID:
+// najprostszy grid, skłądający wie z 3 kolumn:
+        <div class="row">  <!-- wiersz -->
+            <div class="col">Kolumna 1</div>
+            <div class="col">Kolumna 2</div>
+            <div class="col">Kolumna 3</div>
+        </div>
+//Domyślnie jest 12 jednostek na kolumny. Jak chcemy miec jakieś szerokości, to dodaje wartość:
+            <div class="col-1">Lp. </div>
+            <div class="col-6">Tresc glowna</div>
+            <div class="col-2">Kolumna 3</div>
+
+//Aby wiersze wyświetlały isę jedeno pod drógim, przy rozdzielczości mniejsej niż 720px
+            <div class="col-md-1">Lp. </div>
+            <div class="col-md-6">Tresc glowna</div>
+            <div class="col-md-2">Kolumna 3</div>
+
+//Aby "złamac" klumnę, mozna wstawić obiekt zajmujący 100% przestrzeni:
+            <div class="w-100"></div>
+//Wyrówanie elemnu (przesunięcie w prawo)
+	<div class="col-2 offset-1">Obiekt B</div>
+
+//Parac ze zdjeciami:
+//Obraz, który dopauje sie do rodzica (gdy siedzi w <div class="container"> )
+    <img src="img/obrazek.jpg" alt="" class="img-fluid">
+//Zaokrąglanie rogów:
+    <img src="img/obrazek.jpg" alt="" class="rounded">
+//Zaokrąglona ramka:
+    <img src="img/obrazek.jpg" alt="" class="img-thumbnail">
 
 //-----------------------------------------------------------------------------
+//Tabele
+	<div class="container">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Imie</th>
+                    <th>Nazwisko</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th> Tester </th>
+                    <td> Testowy </td>
+                </tr>
+                <tr>
+                    <th> Jan </th>
+                    <td> Kowalski </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+//Rodzaje tabel:
+    <table class="table">
+    <table class="table-dark">
+    <table class="table table-striped">  //tabela w paski
+    <table class="table table-hover"> //podświetla się cała linijka po najechaniu
+	<table class="table-sm">	//tabelka "ścieśniona"
+	<table class="table-responsive"> //tabela "ściesniona" i doda się scroll, gdy przestanie się mieścić
+	<table class="table-responsive-md"> //to co wyżej 
+//-----------------------------------------------------------------------------
+//KOMPONENTY
+//kompnenty kolorowane sa w kolorach:
+badge-primary
+badge-secondary
+badge-success
+badge-danger
+badge-warning
+badge-info
+badge-light
+badge-dark
+btn-link 		//tylko dla przycisków
+
+
+//Komunikaty, zjamujące całą szerokość strony:
+    <div class="alert alert-primary"> Komunikat niebieski</div>	// niebieski
+    <div class="alert alert-secondary"> Komunikat szary</div>	// szary
+    <div class="alert alert-success"> OK</div>					// zielony
+    <div class="alert alert-danger"> Błąd</div>					// czerwony
+    <div class="alert alert-warning"> Jestes pewien?</div>		// żółty
+
+
+//Małe ikonki/komunikaty
+    Brawo <span class="badge badge-primary">Wygrałeś</span>
+
+//Button
+	<button class="btn btn-primary">Naciśni mnie</button>
+	<button class="btn btn-outline-primary">Naciśni mnie</button>	//przycisk w formie ramki (bezbarwne tło)
+	<button class="btn btn-primary" disabled>Nie aktywny przycisk </button>
+//grupa przycisków
+	<div class="btn-group">
+		<button class="btn btn-primary" disabled >OK</button>
+		<button class="btn btn-warning" disabled >Anuluj</button>
+	</div>
+	btn-lg  //powiększenie przycisku
+	btn-sm  //mniejszy przycisk
+//link - korzysta ze stylów przycisków
+	<a href="#" class="btn btn-primary">Link</a>
+
+//Card
+//Grupowaniej obrazków, teści itp w grupę:
+//filmik 183 (Zaawansowane projekty w CSS i JavaScript)
+//lub dokumantacja: https://getbootstrap.com/docs/4.4/components/card/
+	<div class="card" style="width: 18rem;">
+		<img src="..\SVG\smile.svg" alt="" class="card-img-top">
+		<div class="card-body">
+			<h5 class="card-title">Tytuł</h5>
+			<p class="card-text">
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+				Repudiandae distinctio pariatur laborum modi aperiam vitae enim, 
+			</p>
+		</div>
+		<button class="btn btn-primary" >Zapisz</button>
+	</div>
+//Można karty umiesaczać w gridzie (tym bootstrapowym), lub w:
+	<div class="card-deck"> 
+	<div class="list-group"> 
+	<div class="list-group-flash"> 
+//itp.
+
+
+
 
 //-----------------------------------------------------------------------------
 
