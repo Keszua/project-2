@@ -276,7 +276,7 @@ $fonts: (main: 'roboto', second: 'arial', theme-ld: 'verdana');  //to samo, tylk
 }
 
 
-//jak oczytac typ zmiennej?
+//jak odczytac typ zmiennej?
 $example1: coś;
 $example2: #ccc;
 $example3: 300px;
@@ -546,18 +546,100 @@ div {
 			//wykna się tylko dla szerokości większej niż 640
 		}
 	}
+	
+	/* MEDIA QUERIES */
+
+@media (orientation: portrait) { /* zapytanie, czy urządzenie jest w trybie portretowym?  landscape - horyzontalne (poziome) i portrait */
+    /* odwołanie się do pseudoklasy after (czyli po) i jest jeszcze before (przed), hover - to link */
+    /* after - czyli na końcu linijki doda, czyli tuż przed </span>  */
+    h3 span::after {
+        content: '\A';    /* '\A' oznacza: zrób enter w tym miejscu */
+        white-space: pre; /*  to trzeba wywołać, żeby zrobił się powyższy enter.  */
+    } 
+
+}
+
+/* ustawienia dla pozycji poziomej */
+@media (orientation: landscape) {
+    header img {
+        position: absolute;
+    }
+
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    h1 {font-size: 2rem}
+}
+
+@media (min-width: 576px) and (orientation: portrait) {
+
+}
+
+@media (min-width: 768px) {
+    h1 {font-size: 3rem} /*tego nie trzeba powtarzac */
+}
+
+@media (min-width: 1024px) {
+    h1 {font-size: 3rem}
+}
+
+@media (min-width: 1280px) {
+    h1 {font-size: 3rem}
+}
+
+@media (min-width: 1600px) {
+    h1 {font-size: 3rem}
+}
+
+
+
+@media (max-width: 320px) {  /* na ekran do szerokości max 320pixeli) */
+    header h3 {
+        font-size: 2.4rem;
+    }
+    header hgroup {
+        transform: rotate(-15deg);  /* obrót tekstu o 15 stopni */
+    }
+}
+
+
+@supports (display: grid) { /* jeśli dana przeglądarka wspiera "grida" */
+
+}
+
+@supports (display: flex) { /* jeśli dana przeglądarka wspiera "flexa" */
+
+}
+
+@supports (display: grid) and (display: flex) { /* jeśli dana przeglądarka wspiera "grida" i "flexa" */
+
+}
+
+
+
 //-----------------------------------------------------------------------------
-//wykonanie animacji
+/* ANIMACJE SCC */
+
 .div {
-	//jakeiś właśicowści
+	//jakieś właściwości
 	animation: dowolnaNazwa 1s infinite linear;	// jak długo ma trwać, ile razy powtarzana, rodzaj animacji (linear to płynny)
 }
 
-@keyframes dowolnaNazwa {
-	100% {
-        transform: rotate(360deg);
-    }
+@keyframes dowolnaNazwa { /* animacje. Trzeba nadać swoją nazwę.  Wywołuje się animation: arrow */
+    0% {  /* lub from */
+        transform: translateY(-80px)
+    }  
+    50% {
+        transform: translateY(0px)
+    } 
+    100% { /* lub to */
+        transform: translateY(80px)
+    } 
+
 }
+	
+	
+
 
 
 	
