@@ -222,7 +222,7 @@ $color-text-main: $red;	//tutaj definiuje kolor, który jest już zdefiniowany w
 	background-color: var(--main-bgc); //ten zapis zostanie przeniesiony i nie zmieniony do CSS
 }
 
-//zagniezdzona zmienne (zasięg lokalny)
+//zagnieżdżona zmienne (zasięg lokalny)
 .article {
 	$color-text: #98a1109  !global;		//od teraz zmienna lokalna staje sie zmeinną globalną
 	color: $color-text;
@@ -706,15 +706,23 @@ to co jest pomiedzy znacznikami <style>
 //WŁAŚCIWOŚCI ELEMENTU
 //w jakiej kolejności mają wyświetlać się elemnty
 	order: 0; /* liczba całkowita (wartosci dodatnie i ujemne) */
-//czy ma rosnąć? 0: nie ma rosnąć;  1: ma rosnąć	
-	flex-grow: 0; /* wartosć bezwzględna (od 0 w górę) */
-//czy ma sie zmniejszać? 1: tak;  0:nie;	
-	flex-shrink: 1; /* wartosć bezwzględna (od 0 w górę) */
-//odnosi się do długości osi głównej	
-	flex-basis: auto; /* wielkości elementu (z różymi jednostkami) */
-	flex: 0 1 auto; /* skrót do flex-grow, flex-shrink, flex-basis */
+	flex-grow: 1; 		// Wypełnienie wolnej przestrzeni  ( wartosć bezwzględna (od 0 w górę) )
+	flex-shrink: 1; 	// Ściśnięcie ( wartosć bezwzględna (od 0 w górę) )
+	flex-basis: auto; 	// domyślna wielkości elementu (z różymi jednostkami) 
+	flex: 0 1 auto; 	// skrót do flex-grow, flex-shrink, flex-basis 
 //	robi to co align-items, ale dotyczy pojedyńczego elementu (czy ma sie rozciągać)
 	align-self: auto; /* strech, center, flex-start, flex-end, baseline */
+
+
+	column-width: 150px;
+    column-count: 2;
+	column-gap // definiuje odstęp pomiędzy kolumnami tekstu
+	column-rule-color 	// pozwala ustalić kolor linii rozdzielającej kolumny tekstu; 
+	column-rule-width 	// szerokość linii rozdzielającej kolumny;
+	column-rule-style 	// styl linii rozdzielającej kolumny; 
+	column-rule 		// skrót dla trzech powyższych wartości;
+
+//fajny opis: http://www.artax.krakow.pl/flex-box-rozmieszczenie.1,14.html
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -886,6 +894,15 @@ grid - łaczy grid-areas, grid-template-rows i grid-auto-columns
 //-----------------------------------------------------------------------------
 //BOOTSTRAP
 
+//  ####   ###   ###  #####  #### ##### ####    #   ####
+//  #   # #   # #   #   #   #       #   #   #  # #  #   #
+//  #   # #   # #   #   #   #       #   #   #  # #  #   #
+//  ####  #   # #   #   #    ###    #   ####  #   # ####
+//  #   # #   # #   #   #       #   #   # #   ##### #
+//  #   # #   # #   #   #       #   #   #  #  #   # #
+//  ####   ###   ###    #   ####    #   #   # #   # #
+
+
 1. wczhodzimy na https://getbootstrap.com/
 Dokładniej: Geting started -> introduction https://getbootstrap.com/docs/4.4/getting-started/introduction/
 Aby szybko rozpoczać pracę, jest tam gotowy "Starter template"
@@ -1028,7 +1045,7 @@ btn-link 		//tylko dla przycisków
 //Można karty umiesaczać w gridzie (tym bootstrapowym), lub w:
 	<div class="card-deck"> 
 	<div class="list-group"> 
-	<div class="list-group-flash"> 
+	<div class="list-group-flush"> 
 //itp.
 
 

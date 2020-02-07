@@ -53,7 +53,7 @@ git init d:/apps/go  	//tworzenie repozytorium w podanej ścieżce
 git status 				//pokazuje jakie pliki są śledzone, dodane lub nie dodane do repozytorium
 //Konfiguracja gita: (bez wartości w cudzysłowiu - oznacza tylko odczyt)
 git config --global user.name "kmichalczyk" 
-git config --global user.email "k.michalczyk@radwag.pl" 
+git config --global user.email "keszua@gmail.com" 
 git config --global core.editor  	//pokaze ścieżkę do Visual Studio Code
 git config --unset user.email  		//usówanie danych z pliku konfiguracyjnym (będąc w folderze głównym ~)
 git config --global --unset user.email //usówanie danych z pliku konfiguracyjnego
@@ -433,8 +433,10 @@ a) zachowujemy go poleceniem: git add index.html
 b) usuwamy go poleceniem:     git rm index.html
 
 
-
-
+//USUWANIE COMITÓW z wrażliwymi danymi
+//opisany na stronie: https://devenv.pl/usuwanie-hasel-z-repozytorium-git/
+// oraz : https://help.github.com/en/github/authenticating-to-github/removing-sensitive-data-from-a-repository
+git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch src/pages/GamePage.js' --prune-empty --tag-name-filter cat -- --all
 
 
 
@@ -481,10 +483,10 @@ Aby nowy projekt wstawić do GitHuba, trzeba złożyć sobie nowe repozytorium p
 	zapisać plik
   7. W konsoli wywołać polecenie:
     λ npm run deploy
-    Jest to komilowanie wersji produkcyjnej. Czyli za kazdym razem, gdy chemy zaktualizowac stronę, to trzeba to wywołać.
-    Po kolejnym (nie pierwszym) kompilowaniu wersji produkcyjnej, trzeba to wypchnąć na serwer poleceniem: git push 
+    Jest to komilowanie wersji produkcyjnej. Czyli za każdym razem, gdy chcemy zaktualizować stronę, to trzeba to wywołać.
+    Powinno samo się wypchnąć. Jeśli nie, to trzeba wywołać polecenie: git push 
   8. Na GitHub pojawi się nowa gałąź gita. GitHub domyślnie ustawi, żeby wyświetlanie strony było z wersji public
-    Teraz w GitHuba -> Setings -> GitHub -> Source, Pages powinno samo zmieniać sie na "gh-pages branch".
+    Teraz w GitHuba -> Setings -> GitHub Pages -> Source, Pages powinno samo zmieniać sie na "gh-pages branch".
     Jesli sie nie zmieni, to rzeba ręcznie to zrobić.
 	Nowy link wskaże już na działającą stronę.
 	Nowy link wygląda juz inaczej:

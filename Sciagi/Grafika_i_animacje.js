@@ -206,7 +206,7 @@ tl
 
 //Przy tworzeniu instancji, mo¿na od razu przekazaæ obiekt z w³aœciwoœciami
 const gtl = new TimelineMax({
-	repaet -1, 	infinity
+	repeat -1, 	infinity
 	dealy 1,
 	repeatDelay 1,
 	onStart () = console.log('start')
@@ -262,7 +262,7 @@ https://boxy-svg.com/app
 	<img src="img/sun.svg" alt="s³oñce">
 
 //Dodawnaie SVG jako obrazek w wersji edytowalnej (w pliku .html)
-    <!-- Trzeba doaæ atrybut xmlns, aby korzystaæ z SVG w wersji edytowalnej -->
+    <!-- Trzeba dodaæ atrybut xmlns, aby korzystaæ z SVG w wersji edytowalnej -->
     <svg id="sun" xmlns="http://www.w3.org/2000/svg"
         width = "600" height="600" viewBox="0 0 600 600">  
         <!-- Kaszta³ty: -->
