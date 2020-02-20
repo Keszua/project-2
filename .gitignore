@@ -6,3 +6,4 @@ mod/curriencies.txt
 #katalogi
 /src
 /node_modules
+/test_jest/node_modules

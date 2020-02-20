@@ -10,6 +10,11 @@
 
 //Style CSS
 
+margin:		// margines
+border:  // ramka
+padding: 0 30px 30px 0; // "otoczka" (góra, prawo, dol, lewo)
+
+
 
 //Przykład, aby przycisk zmieniła sam siebie (swój wygląd):
 	const btn = document.querySelector(".button");

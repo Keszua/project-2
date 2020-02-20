@@ -8,14 +8,14 @@
 //                          
 // TWORZENIE NOWEGO PROJEKTU
 // Trzeba byc w folderze z projektami i wywołać polecenie: (nazwa folderu z malej litery)
-create-react-app nazwa-katalogu
-//Powstanie nowy katalog.
+
 
 //Instaluje CRA globalnie poleceniem:
 λ npm install create-react-app --global
 
 //Tworze nowy projekt poleceniem:
 λ npx create-react-app nazwa-katalogu
+//Powstanie nowy katalog.
 
 //Po pomyslnej instalacji można ten projekt uruchomić poleceniem:
 λ npm start

@@ -366,13 +366,13 @@ git stash pop			//przywróć zmiany odłożone na stos.
 // ZAKŁADANIE REPOZYTORIUM 
 git remote add origin https://github.com/Keszua/nazwa-projektu   -podłączenie repozytorium zdalnego (jeszcze 
                                                                // nie wypchnięcie, trzeba wywołąć push)
+git push -u origin master   //pierwsze wypchnięcie projektu po podłączeniu z serwerem.
 //origin - zastępuje man adres repozytorium (żeby nie wpisywać za każdym razem pełnego adresu)
 git remote -v   			//sprawdzenie ścieżki na serwer
 git remote show 			//wyswietli dostępne repozytoria
 git remote show origin	    //pokazuje informacje o gałęziach oraz która gałąź jest podpięta pod "pull"
 git remote rename pb paul	//zmiana nazwy pb na paul
 git remote rm paul			//usówanie odnośnika
-git push -u origin master   //pierwsze wypchnięcie projektu po podłączeniu z serwerem.
 git push  					//kolejne wypchnięcia projektu an serwer
 
 git fetch 					//pobieramy informacje ze zdalnego repozytorium
