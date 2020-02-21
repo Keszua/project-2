@@ -197,7 +197,7 @@ console.log(text); 					//= Ala ma kota, a kot ma Alê, Ala go kocha, a Kot j¹ wc
 console.log(parts); 				//= ["Ala ma kota", "a kot ma Alê", "Ala go kocha", "a Kot j¹ wcale ;("]
 const textChanged = text.replace("Ala", "Ola"); // wyszukanie i zamiana tekstu
 console.log(textChanged); 			//= Ola ma kota, a kot ma Alê, Ala go kocha, a Kot j¹ wcale ;(
-//Aby zamienic wszysskti "Ale" na "Ole", trzeba zastsowac wyra¿enie regularne:
+//Aby zamienic wszysktie "Ale" na "Ole", trzeba zastsowac wyra¿enie regularne:
 const textChangedAll = text.replace(/Al/g,"Ol");
 console.log(textChangedAll); 		//= Ola ma kota, a kot ma Olê, Ola go kocha, a Kot j¹ wcale ;(
 
