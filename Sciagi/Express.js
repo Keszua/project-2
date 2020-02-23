@@ -157,14 +157,72 @@ Application -> Clear storage -> Clear site data
 
 
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//Przykład bazowy obsługi podstawowych poleeń serwera oraz podstawowych dwuch testów jednostkowych
+//Materiał z filmiku 111 (Node.js, Express i MongoDB)
+//Beda 2 pliki serwerowe i jeden plik testu.
+//uruchomienie testu:
+	npx jest			//jednorazowe uruchomienie
+	npx jest --watch	// 
+// uruchominie srwera:
+	node index 
+	
+//Plik index.js
+	const { app } = require('./app');
+	const port = process.env.PORT || 3000; //pobieranie numeru portu ze zmiennej środowiskowej
+	app.listen(port, () => {  //nasłuchujemy na porcie 3000
+		console.log(`Listening on port ${port}`);
+	});
+
+//Plik app.js
+	const express = require('express');
+	const app = express(); //tworzymy aplikacje expresową
+	app.set('x-powered-by', false); //wyłączenie informacji o serwerze
+	app.get('/', (req, res) => {				// /get-all     GET     /
+		res.send('List');
+	});
+	app.post('/', (req, res) => {				// /add         POST    /
+		res.send('Create');
+	});
+	app.put('/:id', (req, res) => {				// /change      PUT     /:id
+		res.send(`Change: ${req.params.id}`);
+	});
+	app.delete('/:id', (req, res) => {			// /delete      DELETE  /:id
+		res.send(`Delete: ${req.params.id}`);
+	});
+	app.post('/:id/toggle ', (req, res) => {	// /toggle      POST    /:id/toggle
+		res.send(`Toggle ${req.params.id}`);
+	})
+	app.get('*', (req, res) => {
+		res.status(404);
+		res.send('Not found');
+	})
+	app.use((error, req, res, next) => {
+		//console.log('HERE');
+		res.status(500);
+		//res.send(error.stack); //szczegółowe informacje o błędzie
+		res.send('Error!');
+	});
+	exports.app = app;
+
+//Plik testu app.test.js
+	const request = require('supertest');
+	const { app } = require('./app');
+	it('works', async () => {
+		const response = await request(app).get('/')
+		expect(response.status).toEqual(200); 
+		expect(response.text).toEqual('List'); 
+	})
+	it('handle pages that are not found', async () => {
+		const response = await request(app).get('/whatever');
+		expect(response.status).toEqual(404);
+		expect(response.text).toEqual('Not found');
+	})
 
 
-
-
-
-
-
-
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
 

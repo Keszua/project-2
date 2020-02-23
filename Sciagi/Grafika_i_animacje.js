@@ -178,26 +178,26 @@ return red;
 
 TweenMax.to('.div', 1, {backgroundColor color }) 
 
-TweenMax.staggerTo()	Animujemy wszsytkie wskazane elementy, ale nie jednoczesnie.
+TweenMax.staggerTo()	//Animujemy wszsytkie wskazane elementy, ale nie jednoczesnie.
 TweenMax.staggerFrom()
 TweenMax.staggerFromTo()
-TweenMax.staggerTo(element, 1, {}, .6) dochodzi 4-ty element, opuŸnienie ka¿dej animacji
+TweenMax.staggerTo(element, 1, {}, .6) //dochodzi 4-ty element, opuŸnienie ka¿dej animacji
 
 -----------------------------------------------------------------------------
-TimelineMax() - pozwala na sekwencjonowanie animacji. Tworzy oœ czasu i u³¹twia tworzenia i modyfikowanie animaji
+TimelineMax() - pozwala na sekwencjonowanie animacji. Tworzy oœ czasu i u³atwia tworzenia i modyfikowanie animaji
 
 const rocket = document.querySelector('.rocket');
 
 TweenMax.to(rocket, 2, {x100});
 TweenMax.to(rocket, 1.5, {rotation90, delay 2});
-TweenMax.to(rocket, 1, {y100, delay 3.5}); trzeba sumowaæ delay'e
+TweenMax.to(rocket, 1, {y100, delay 3.5}); //trzeba sumowaæ delay'e
 
 //Lub to samo co powy¿ej
 let tl = new TimelineMax();
 tl.to(rocket, 2, {x100});
 tl.to(rocket, 1.5, {rotation90}); ju¿ bez delay
 tl.to(rocket, 1, {y 100});
-Lub to samo co powy¿ej
+//Lub to samo co powy¿ej
 tl
 	.to(rocket, 2, {x100})	bez œredników
 	.to(rocket, 1.5, {rotation90})
@@ -313,8 +313,7 @@ https://boxy-svg.com/app
 
 Przyk³ad robota ruszaj¹cego nozkami, wykorzystanei "TimelineMax()" w filmie 275 (Zaawansowane projekty w CSS i JavaScript)
 
-
-
+Metoda przerabiania zwyk³ego SVG na React
 
 
 

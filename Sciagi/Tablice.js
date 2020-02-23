@@ -18,7 +18,7 @@ const text = "Jakiś tekst";
 const parts = text.split(" "); 	//split dzieli tekst, kryterium dzielenia to: spacja.  parts będzie tablicą
 parts //= ["Jakiś", "tekst"]
 
-//odwołąnie się do danego lementu
+//odwołanie się do danego lementu
 alert(myArray);  //= 56, tekst, true, 90
 alert(myArray[0]);  //= 56
 alert(myArray.length); //= 4 

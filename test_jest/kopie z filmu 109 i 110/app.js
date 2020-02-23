@@ -1,26 +1,17 @@
-//kontynuacja 
 const express = require('express');
-const todo= require('./todo.js');
+
 const app = express(); //tworzymy aplikacje expresową
 
 app.set('x-powered-by', false); //wyłączenie informacji o serwerze
 
-// /get-all     GET     /
-// /add         POST    /
-// /change      PUT     /:id
-// /delete      DELETE  /:id
-// /toggle      POST    /:id/toggle
 
-app.get('/', todo.list);
+app.get('/', (req, res) => {
+    res.send('Hello world 2!');
+});
 
-app.post('/', todo.create);
-
-app.put('/:id', todo.change);
-
-app.delete('/:id', todo.delete);
-
-app.post('/:id/toggle ', todo.toogle);
-
+app.get('/error', (req, res) => {
+    throw new Error('Cos poszlo nie tak!');
+});
 
 
 app.get('*', (req, res) => {

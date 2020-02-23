@@ -34,8 +34,47 @@ it('ads 2 and 2', () => {
 //uruchomienie testu:
 	npx jest			//jednorazowe uruchomienie
 	npx jest --watch	// 
+
+//-----------------------------------------------------------------------------
+it('', () => {}) // 
+
 	
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//Sprawdzenie wykonania się pliku app.js:
+it('works', async () => {
+    const response = await request(app).get('/')
+    console.log(response);
+})
+
+//Przygotowanie snapshota z wykonania aplikacji:
+it('works', async () => {
+    const response = await request(app).get('/')
+    expect(response).toMatchSnapshot(); // tworzy katalog z plikiem .snap  ponowne wywołanie, trzeba zrobić z flaga '-u' aby usunąc i nadpisać
+})	
+
+//Sprawdzenie, czy dostaliśmy odpowiedni status i czy treść strony jest taka jak oczekiwaliśmy:
+it('works', async () => {
+    const response = await request(app).get('/')
+    expect(response.status).toEqual(200); 
+    expect(response.text).toEqual('Hello world !'); 
+})
 	
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 
 
+
+
+//-----------------------------------------------------------------------------
+
+
+
+
+
+
+
+//-----------------------------------------------------------------------------

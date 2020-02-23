@@ -166,7 +166,7 @@ console.log(text.substr(0, 3)); 	//= Ala  od indeksu 0 pobiera 3 znaki
 console.log(text.substring(0, 3)); 	//= Ala  od indeksu 0 do indeksu 3
 console.log("Ala ma kota".slice(4, 6)); //= ma  od indeksu 4 do indeksu 6
 console.log("Ala ma kota".substring(6, 4)); //= ma  od indeksu 4 do indeksu 6 tak jak slice, ale potrafi odwrocic mijecami indeksy
-console.log(encodeURI(text)); 		//= Ala%20ma%20kota%2C%20a%20kot%20ma%20Al%u0119...  kodowanei wszystkich znaków specjalnych
+console.log(encodeURI(text)); 		//= Ala%20ma%20kota%2C%20a%20kot%20ma%20Al%u0119...  kodowanie wszystkich znaków specjalnych
 let textkodowany = encodeUrl(text);
 console.log(decodeURI(text)); 		//=Ala ma kota, a kot ma Alê...  odkodowanie
 
