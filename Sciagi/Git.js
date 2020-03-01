@@ -308,7 +308,8 @@ git merge master		//teraz jestem na gałęzi "master" i chce do swojej gałęzi 
 //STOS
 git stash 					//Dodaje zmiany na stos. Zapisuje nowe i zmodyfikowane pliki do pamięci podręcznej
 git stash save "{tekst komentarza}" //Zapisuje stash z komentarzem
-git stash pop				//Przywraca zapisane pliki z pamięci podręcznej
+git stash apply				//Przywraca zapisane pliki z pamięci podręcznej BEZ KASOWANIA
+git stash pop				//Przywraca zapisane pliki z pamięci podręcznej i kasuje stash
 git stash pop --index 1
 git stash pop --index 454aa619
 git stash pop --index stash@{1}
@@ -324,6 +325,7 @@ git stash push -m "Opis zmian w pliku nie śledzonym" -u
 git stash apply				//Nakładanie zmian ze schowka na obecny stan HEAD
 git stash apply stash@{1}  	//przywrócenie do katalogu roboczego i zmiany cały czas pozostają na stosie
 git stash drop stash@{1}	//usówanie zmian ze stosu bez przywracania ich do folderu roboczego
+git stash drop 1			//to samo co wyżej
 git stash clear				//czyszczenie całego stosu (bez przywracania zmian do folderu roboczego)
 git stash branch nazwaNowejGalezi  //stworzenie nowej gałęzi na bazie plików na stosie
 git stash push -m {message} {plik} // stashuje z komentarzem wskazany plik
