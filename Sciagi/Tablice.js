@@ -205,12 +205,22 @@ document.body.appendChild(section);
 //3 iteracja => prev = 6, next = 4
 //wynik = 10
 
+//według Samuraja, było by prawdą, gdybyśmy podali initialValue = 0:
+//1 iteracja => prev = 0, next = 1   czyli 0+1=1
+//2 iteracja => prev = 1, next = 2   czyli 1+2=3
+//3 iteracja => prev = 3, next = 3   czyli 3+3=6
+//4 iteracja => prev = 6, next = 4   czyli 6+4=10
+
 //Można dodać parametr "wartosć poczatkową", np:
 	const sum2 = [1, 2, 3].reduce(function(a, b) {
 		return a + b;
 	}, "");
 //sum1 = "123"
 
+//pełna składnia:
+[0, 1, 2, 3, 4].reduce(function(previousValue, currentValue, index, array) {
+  return previousValue + currentValue;
+}, 10); //dzie 10 to 'initialValue'
 
 
 .find()

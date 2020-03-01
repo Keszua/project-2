@@ -43,6 +43,7 @@ undefined
 //Wyjście z edytora: Ctrl+D
 
 //Polecenia REPL:
+os.  +Tab		//wyświetli listę poleceń (taki help)
 os.totalmem()	//pokazuje ilość zainstalowanej pamięci RAM na kompie
 os.type()  		//jaki system operacyjny -> 'Windows_NT'
 os.platform()	//jaki system operacyjny -> 'win32' 
@@ -65,6 +66,28 @@ Przykłady:
 403 "Forbidden" - "ja wiem, że chcesz, ale nie mamsz dostępu"
 404 "Not Found" - odebrałem Twoje zapytanie ale nie ma zasobu dla Twojego URL
 500 "Internal Server Error" - "Coś u mnie nie tak"
+
+
+//-----------------------------------------------------------------------------
+//funkcje czasowe:
+setTimeout(
+    () => { console.log("Wykonalo sie!"); },
+    1000
+)
+
+//-----------------------------------------------------------------------------
+// MODUŁY 
+// Moduły, to mini programy. Dostęp lokalny, prywatny (chyba że zdefinujemy inaczej)
+
+
+
+
+
+
+
+
+
+
 
 //-----------------------------------------------------------------------------
 //Prosty serer:
@@ -191,7 +214,7 @@ const path = require('path');
 
 const pathToFile = path.join(__dirname, 'indeks.js');
 const pathToFile2 =__dirname + '\\' + 'indeks.js' //to samo co wyżej
-//console.log(pathToFile2);    //wyświetli całą śceiżkę gdzie jesteśmy
+//console.log(pathToFile2);    //wyświetli całą ścieżkę gdzie jesteśmy
 
 const anotherPath = path.join('/users/pl', 'active', 'user.json') //ręczne układnaie śceizki
 //console.log(anotherPath);
@@ -208,7 +231,7 @@ const parse2 = path.parse(path.join(__filename, 'index.js'));
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
-/*Zakładnie nowego projektu:
+/*Zakładnie nowego projektu (serwera):
 1. Musze mieć zainstalowany node na kompie. Można to sprawdzić poleceniem w konsoli:
 	node -v
 2. W pustym folderze, tworze sobie plik "app.js"
@@ -225,12 +248,16 @@ const parse2 = path.parse(path.join(__filename, 'index.js'));
 		console.log('Server is listening at http://localhost:3000');
 	});
 
-
-	
-	
-	
-
 */
+
+//proponowana struktura plików:
+docs
+edu
+imagesmodules
+node-exapmles
+work
+
+
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -313,7 +340,7 @@ tworzymy plik "bundle.js" za pomocą polecenia:
 λ webpack ./script.js bundle.js //tak, bez parametru
 w pliku index.html zamiast pliku script.js podpinam bundle.js
 
-Po każdej zminie trzeba wywołąć ponowne polecenie "λ webpack..."
+Po każdej zmianie trzeba wywołąć ponowne polecenie "λ webpack..."
 Lub, gdy stworzony jest już plik webpack.config.js 
 to w wierszu poleceń wywołać komendę która bedzie śledziła zmiany:
 λ webpack --watch 

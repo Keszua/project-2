@@ -94,7 +94,7 @@ fetch(`http://numbersapi.com/${number}/${type}?json`)
 // API będziemy pobierać z api.nbp.pl  - to kórsy walut oraz kurs złota
 
 
-// żeby to działało, trzebz zaistalować: npm i request
+// żeby to działało, trzeba zaistalować: npm i request
 const request = require('request');
 const fs = require('fs');
 //Zapytania o pojedynczą walutę:
@@ -115,7 +115,7 @@ const url = `http://api.nbp.pl/api/exchangerates/rates/a/${code}/?format=json`
 
 //console.log(url);
 
-request(url, {json:true}, (err, response, body) => { // w przeciwieństwie do fetch, nie urzywamy: then, tylo prekazujemy: 
+request(url, {json:true}, (err, response, body) => { // w przeciwieństwie do fetch, nie urzywamy: then, tylo przekazujemy: 
                                                 // url; obiekt z parametrami;  funkcje (urzywamay calback)
     if(err) {
         return console.log("Błąd ", err);

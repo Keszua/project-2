@@ -20,28 +20,34 @@ W - to bedzie komenda Windowsowa
 L - komenda Linuxowa
 WL - wspólne polecenia
 
-cls 		-W- czyści ekran
-clear 		-WL- czyści ekran
-cd ściezka 	-W- przejście do katalogu. Np: cd D:\Klamoty\Web
-cd ściezka 	-L- przejście do katalogu. Np: cd /d/Klamoty/Web
-cd..  		-W- przejście katalog wyżej (jak tutaj damy spacje, to też rozpozna)
-cd .. 		-L- przejście katalog wyżej (kropki po spacji)
-cd ~		-L- powrót do katalogu podstawowego (zwykle /c/Users/user)
-pwd 		-WL- sprawdza ścieżkę, w której jesteś
-ls 			-WL- wyswietlanie zawartości folderu
-dir			-WL- wyswietlanie zawartości folderu
+get-help polecenie	//-W-Pobiera help dla polecenia
+polecenie --help	//-L-Pobiera help dla polecenia
+cls 			//-W- czyści ekran
+clear 			//-WL- czyści ekran
+cd ściezka 		//-W- przejście do katalogu. Np: cd D:\Klamoty\Web
+cd ściezka 		//-L- przejście do katalogu. Np: cd /d/Klamoty/Web
+cd..  			//-W- przejście katalog wyżej (jak tutaj damy spacje, to też rozpozna)
+cd .. 			//-L- przejście katalog wyżej (kropki po spacji)
+cd ~			//-L- powrót do katalogu podstawowego (zwykle /c/Users/user)
+pwd 			//-WL- sprawdza ścieżkę, w której jesteś
+ls 				//-WL- wyswietlanie zawartości folderu
+dir				//-WL- wyswietlanie zawartości folderu
 
-mkdir nazwa -WL- tworzenie folderu
-touch nazwa	-L- tworzenie pliku. Np: touch index.html
->> nazwa	-L- tworzenie pliku. Np: touch index.html
-echo "przykładowy" >> about.html -L- tworze plik z zawartością (dodawanie zawartości do już istniejącego)
-echo przykładowy >> about.html -W- tworze plik z zawartością (dodawanie zawartości do już istniejącego)
-rm nazwa	-WL- usuwanie pliku
-rm *.txt	-WL- usunie wszystkie pliki .txt
+mkdir nazwa 	//-WL- tworzenie folderu
+touch nazwa		//-L- tworzenie pliku. Np: touch index.html
+>> nazwa		//-L- tworzenie pliku. Np: touch index.html
+echo "przykładowy" >> about.html //-L- tworze plik z zawartością (dodawanie zawartości do już istniejącego)
+echo przykładowy >> about.html //-W- tworze plik z zawartością (dodawanie zawartości do już istniejącego)
+rm nazwa		//-WL- usuwanie pliku lub folderu
+rm *.txt		//-WL- usunie wszystkie pliki .txt
+
+cat nazwa		// pokazuje zawartość pliku
+
 
 notepad index.html 		//otwieranie pliku w notatniku
 code index.html 		//otwieranie pliku w Visula Studio Code
 
+get-command polecenie // sprawdzam, jak kryje się funkcja 
 
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------

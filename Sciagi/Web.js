@@ -3,7 +3,6 @@ Ostatnia aktualizacja 10-07-2019
 Piorek poleca ES6
 Potrek poleca Redux
 Zobaczyć co to: 
-- Fetch
 - Redux Thunk
 
 Django podobno lepszy od React
