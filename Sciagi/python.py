@@ -17,11 +17,11 @@ proponowane IDE: PyCharm - wersje darmową Community
 
 //-----------------------------------------------------------------------------
 
-print(type(x))	//wypisze typ zmiennej
-x = input() // czeka na wpisanie danej w konsoli (zawsze traktuje to jako ciąg znaków)
-x = int(x) 	//konwersja na int
-x = float(x) 	//konwersja na float  10.5
-
+print(type(x))	# wypisze typ zmiennej
+x = input() 	# czeka na wpisanie danej w konsoli (zawsze traktuje to jako ciąg znaków)
+x = int(x) 		# konwersja na int
+x = float(x) 	# konwersja na float  10.5
+type(x)			# sprawdzamy jaki to typ
 
 x = "Ala ma kota a kot ma Alę :)"
 print(x[0])		//= A
@@ -39,15 +39,50 @@ else:
     print("Nie zgadza sie")
 
 #-----------------------------------------------------------------------------
+#lista
+produkty = ["mleko", "ser", "parówki"]
+produkty.append("mleko") 	# dodanie elementu
+produkty.insert(1,"mleko") 	# dodanie elementu na wskazewnej pozycji
+produkty.pop(1)				# usówanie elementu z podanej pozycji
+produkty.remove("mleko") 	# usówanie konkretnego elementu
+x = produkty.count("mleko")	# zwróci, ile jest "mleko" w tej liście
+produkty.extend(inna_lista)	# sklejanie list (dodawanie kilku  elementów)
+x = produkty.index("mleko")	#=0  zwróci pozycje podanego elementu
+
+#tuple - nie edytowalna lista
+produkty = ("mleko", "ser", "parówki")
+
+#słowniki -  analogicznie do obiektu w JS albo json
+person = {  "wiek" : 20, "imie" : "Anna" }
+print(person)           # wypisze cały obiekt
+print(person["imie"])   #= Anna
+
+
+
+#-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #kurs RestAPIPython
 W kursie korzyta z narzedzi:
-
-docker-compose
+pyenv 				#version 1.2.11
+docker 				#version 18.09.6    coś do baz danych, uruchomi jakieś kontenery
+docker-compose    	#version 1.24.0		uruchomienie bazy danych
+nvim  				#v0.4.4				jakiś edytor tekstowy
 
 
 #-----------------------------------------------------------------------------
+//Jak skonfigurować pythona z VSC
+//Filmik z instrukcjami: https://www.youtube.com/watch?v=dNFgRUD2w68
+
+
+
+Po stwworzeniu pliku np: hello.py
+Wpisujemy teść:
+print("Hejka")
+uruchamiamy zieloną strzałką
+
+
+
 
 #-----------------------------------------------------------------------------
 
