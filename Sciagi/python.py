@@ -164,6 +164,32 @@ from modul import *
 from modul import test as test_external
 test_external("elo") 	#= Tekst z pliku zewnętrznego: elo
 
+
+
+#-----------------------------------------------------------------------------
+Operacje na plikach:
+f = open("plik.txt", mode="a+")     # otwarcie pliku, w modzie otwórz lub stwórz i otwórz jeśli go nie ma
+f.write("Ddoany tekst ")            # wpisanie tekstu
+f.close()                           # zamknij plik
+
+f = open("plik.txt", mode="r")      # tyko odczyt
+x= f.read()							# odczytaj całą zawartość pliku
+f.close()
+print(x)							# wypisze zawartość pliku
+
+
+x= f.read(5)						# odczytaj pięć znaków. Uwaga! 
+									# Dla mode="r" kursor na poczatku, więc odczyta pierwze 5 znaków
+									# Dla mode="a+" kursor na końcu, więc nie odczyta pierwze 5 znaków
+f.seek(2)							# przesun kursor na konkretną pozycję
+y= f.readline()						# odczytuje jedną linijkę i przechodz do nastepnej, 
+									# następne wywołanie tej samej funkcji, pooduje odczyt kolejnej linijki
+y= f.readlines()					# czytamy plik w formie tablicy, gdzie każdya linijka to jeden element tablicy
+									#= ['Cos_z_pliku\n', 'Druga linijka\n', 'Trzecia linijka\n', 'Czwarta linijka']
+for line in f.readlines():			# wypisze wszsytkie linijki z pliku
+    print(line.rstrip())			# .rstrip() usówa białe znaki (efekt jak z end="") jest też .strip() i .lstrip() 
+
+
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
@@ -195,6 +221,97 @@ print(teraz.strftime("%d.%m.%y"))									#= 16.03.20
 %p - wypisze AM albo PM
 %b - miesiąc skrucona nazwa
 %B - miesiąc pełna nazwa
+
+#-----------------------------------------------------------------------------
+# biblioteka os
+import os
+
+lista = os.listdir("D:/Klamoty/Web/Git/book/python")	#= ['main.py', 'modul.py', 'plik.txt', '__pycache__']
+lista = os.listdir(".")									#= ['main.py', 'modul.py', 'plik.txt', '__pycache__'] 
+														#= to samo, ponieważ wypisało zawartość folderu ze skryptem	
+
+for el in os.listdir("."):
+    if os.path.isfile(el): 						#= wnajduje pliki
+        print("{} jest plikiem".format(el))
+    if os.path.isdir(el): 						#= wnajduje foldery
+        print("{} jest folderem".format(el))
+
+os.mkdir("New folder")						# tworzy nowy folder
+os.rename("pliki", "folder")				# zmiana nazwy pliku lub folderu
+os.remove("nowy plik.txt")					# usuwanie pliku lub folderu (krzyczy o jakiś dostęp)
+os.rmdir("folder")							# usuwanie folderu
+os.makedirs(path, "pliki/01")				# tworzy ścieżkę folderów
+
+path = "pliki/01/dane.txt"
+print(os.path.dirname(path))				#= pliki/01   Wypisze tylko foldery
+print(os.path.basename(path))				#= dane.txt   Wypisze tylko plik
+print(os.path.abspath(path))				#= D:\Klamoty\Web\Git\book\python\pliki\01\dane.txt  ściezka absolutna
+
+# tworzenie pliku na podstawie podanej śecieżki (trzeba odrużnić foldery od plików)
+path = "pliki/01/dane.txt"
+dir_path = os.path.dirname(path)		# odziela same foldery
+os.makedirs(dir_path)					# tworzy same foldery 
+open(path, "w").close()					# torzy i zamyka plik
+
+#-----------------------------------------------------------------------------
+wyjątki
+
+#proba otwarcia nieistniejącego pliku
+try:
+    plik = open("plik.txt", "r+").close()
+    plik.write("Hello")
+    plik.close()
+except FileNotFoundError:
+    print("Plik nie istnieje, utworz plik")
+except:
+    print("Nieznany blad")
+
+#to samo rozbudowane
+try:
+    plik = open("plik.txt", "r").close()
+    plik.write("Hello")
+    plik.close()
+except FileNotFoundError as e:
+    print("Plik nie istnieje, utworz plik")
+    print(e)
+except Exception as e:
+    print("Nieznany blad")
+    print(e)
+
+
+
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+Klasy
+
+class Calculator():
+    def __init__(self):
+        print("Init calc")
+		self.liczba = 10
+    def __del__(sef):
+        print("Del calc")
+    def __str__(self):  	# wykonuje się, gdy wywołamy print(str(obiekt))
+        return "Metoda str"
+    def __int__(self):  	# wykonuje się, gdy wywołamy print(int(obiekt))
+        return 10
+    def __len__(self):  	# wykonuje się, gdy wywołamy print(len(obiekt))
+        return 5
+
+    def dodaj(self, a, b):
+        wynik = a + b
+        print("Wynik dodawania: ", wynik)
+    def odejmij(self, a, b):
+        wynik = a - b
+        print("Wnik odejmowania: ", wynik)
+
+calc = Calculator() 	# tworzenie instancji
+del calc 				# ręczne usówanie obiektu (po zakończeniu programu, albo po wyjściu
+						# z zakresu funkcji w której były stworzone, obiekty same się usuwają)
+
+
+
+
 
 
 

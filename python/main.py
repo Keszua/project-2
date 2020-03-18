@@ -2,19 +2,46 @@
 
 #import datetime
 
+class Calculator():
+    
+    def __init__(self): # konstruktor
+        print("Init calc")
+        self.liczba = 10
 
-print("--- Start ---")
+    def __del__(sef):   # destruktor
+        print("Del calc")
+
+    def __str__(self):  # wykonuje się, gdy wywołamy print(str(obiekt))
+        return "Metoda str"
+
+    def __int__(self):  # wykonuje się, gdy wywołamy print(int(obiekt))
+        return 10
+
+    def __len__(self):  # wykonuje się, gdy wywołamy print(len(obiekt))
+        return 5
 
 
-# f = open("plik.txt", mode="a+")     # otwarcie pliku, w modzie otwórz lub stwórz i otwórz jeśli go nie ma
-# f.write("Ddoany tekst ")            # wpisanie tekstu
-# f.close()                           # zamknij plik
 
-f = open("plik.txt", mode="r")        # tyko odczyt
-x= f.read()
-f.close()
-print(x)
+    def dodaj(self, a, b):
+        wynik = a + b
+        print("Wynik dodawania: ", wynik)
 
-skończyłem na połowie filmiku 15
+    def odejmij(self, a, b):
+        wynik = a - b
+        print("Wnik odejmowania: ", wynik)
 
-print(" . - End - . ")
+
+
+calc = Calculator() 
+calc.dodaj(2,3)
+
+# calc.liczba += 5
+
+print(calc.liczba)
+
+
+# print("--- Start ---")
+
+# skończyłem na  filmiku 20
+
+# print(" --- End --- ")
