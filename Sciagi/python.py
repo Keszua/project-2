@@ -24,12 +24,15 @@ x = float(x) 	# konwersja na float  10.5
 type(x)			# sprawdzamy jaki to typ
 
 x = "Ala ma kota a kot ma Alę :)"
-print(x[0])		//= A
-print(x[-1])	//= )						    -1 to ostatni znak
-print(x[0:3])	//= Ala  	od którego znaku do którego (gdzie 3-ciego już nie drukuje)
-print(x[5:])	//= a kota a kot ma Alę :)    	od 5 do końca
-print(x[:5])	//= Ala m						od 0 do 5-tego 
-print(x[-5:])	//= lę :)						-1 to ostatni znak
+print(x[0])		#= A
+print(x[-1])	#= )						    -1 to ostatni znak
+print(x[0:3])	#= Ala  	od którego znaku do którego (gdzie 3-ciego już nie drukuje)
+print(x[5:])	#= a kota a kot ma Alę :)    	od 5 do końca
+print(x[:5])	#= Ala m						od 0 do 5-tego 
+print(x[-5:])	#= lę :)						-1 to ostatni znak
+print(len(x))	#= 27  zwróci długość tablicy
+print( "a" in x)	#= True  	Jest taki element w tablicy (przy różnych typach krzyczy: TypeError)
+
 
 .format  #doklejanie elemenów w miejsce "klamerek"
 print("Tekst bazowy + {} {}".format("dolejony1", 7)) #=  Tekst bazowy + dolejony1 7
@@ -53,14 +56,34 @@ x = produkty.count("mleko")	# zwróci, ile jest "mleko" w tej liście
 produkty.extend(inna_lista)	# sklejanie list (dodawanie kilku  elementów)
 x = produkty.index("mleko")	#=0  zwróci pozycje podanego elementu
 
+#-----------------------------------------------------------------------------
 #tuple - nie edytowalna lista
 produkty = ("mleko", "ser", "parówki")
+tup = 1, 2, 3 # totez jest tuple
+produkty = produkty + tup	# można robić konkatenacje, następuje stworzenie nowego tupla
 
+
+#-----------------------------------------------------------------------------
+# set (zbiór)
+s = {1, 2, 3, 1, 1, 2, 3}   #ignoruje powtarzające sie elemeny
+print(s) 					#= {1, 2, 3}
+s2 = set([3, 4, 5])			# tablice zamieniam na set
+print(s.intersection(s2))	#= {3}		Wypisze tylko elemeny wspólne
+print(s.symmetric_difference(s2))   #{1, 2, 4, 5}  wypisze elementy nie wspólne
+print(s.difference(s2))     #= {1, 2}  elementy ze zbioru s, których nie ma w s2
+print(s2.difference(s))     #= {4, 5}  elementy ze zbioru s2, których nie ma w s
+s = s.union(s2)				# łączenie zbiorów
+s3 = list(s)				# zamiana zbioru na listę (na tablicę)
+
+
+#-----------------------------------------------------------------------------
 #dict (słowniki) -  analogicznie do obiektu w JS albo json
 person = {  "wiek" : 20, "imie" : "Anna" }
 print(person)           # wypisze cały obiekt
 print(person["imie"])   #= Anna
 print(person.get("wiek", 5) ) #= zwróci 20 (gdy znajdzie) lub 5 gdy nie znajdzie
+
+
 
 
 #-----------------------------------------------------------------------------
@@ -139,6 +162,11 @@ print(odejmij(4, 2))		#= 2
 print(odejmij(b=4, a=2))	#= -2 		mogę podawać argumenty nie pokolei
 
 
+def pobierz_2tuple():
+    return(1, "x")		# lub return[1, "x"] dla listy
+
+a, b = pobierz_2tuple()
+print(a, b )			#= 1 x
 
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
@@ -384,8 +412,8 @@ File -> Settings - >	(otworzy się okienko)
 Jeżeli nie mamy dostepu admnistratora, to trzeba to zrobić przez konsolę:
 	pip install pygame
 
-Jeżeli nadal nei mamy dostępu, to PM na mój koputer -> Właściwości -> Zaawansowane ustawienia systemu ->
--> Zaawqnsowane -> Zmienne środowiskowe... -> Path -> Edytuj -> Nowy ->
+Jeżeli nadal nie mamy dostępu, to PM na mój koputer -> Właściwości -> Zaawansowane ustawienia systemu ->
+-> Zaawansowane -> Zmienne środowiskowe... -> Path -> Edytuj -> Nowy ->
 C:\Users\user\AppData\Local\Programs\Python\Python38-32\Scripts\
 C:\Users\user\AppData\Local\Programs\Python\Python38-32\
 Teraz wyszukaj programu IDLE -> uruchomi się konsola
