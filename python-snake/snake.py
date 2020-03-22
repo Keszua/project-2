@@ -33,7 +33,7 @@ my_direction = LEFT
 clock = pygame.time.Clock()
 
 while True:
-    clock.tick(10)
+    clock.tick(5)
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
@@ -47,8 +47,13 @@ while True:
 
     # Kolizja z jablkiem
     if collision(snake[0], apple_pos):
-         apple_pos = on_grid_random()
-         snake.append((1000,1000))
+        apple_pos = on_grid_random()
+        snake.append((0,0))
+        snake.append((0,0))
+        snake.append((0,0))
+        snake.append((0,0))
+        snake.append((0,0))
+        snake.append((0,0))
 
 
 
@@ -81,9 +86,9 @@ while True:
         snake[i] = (snake[i-1][0], snake[i-1][1])
 
     screen.fill((0, 0, 0))
-    screen.blit(apple, apple_pos)
     for pos in snake:
         screen.blit(snake_skin, pos)
+    screen.blit(apple, apple_pos)
 
 
 

@@ -1,7 +1,12 @@
 
 
-srodowisko mozna ściagnąc z https://www.python.org/  zakałdka Download.
+Srodowisko mozna ściagnąc z https://www.python.org/  zakałdka Download.
+Dokumentacja: https://docs.python.org/3/
+Moduły: https://docs.python.org/3/py-modindex.html
 Koles poleca zaznaczenie "Add python 3.8 to PATH" pozwoli to na dostęp z CMD
+
+
+
 
 proponowane IDE: PyCharm - wersje darmową Community 
 
@@ -17,32 +22,85 @@ proponowane IDE: PyCharm - wersje darmową Community
 
 //-----------------------------------------------------------------------------
 
-print(type(x))	# wypisze typ zmiennej
-x = input() 	# czeka na wpisanie danej w konsoli (zawsze traktuje to jako ciąg znaków)
-x = int(x) 		# konwersja na int
-x = float(x) 	# konwersja na float  10.5
-type(x)			# sprawdzamy jaki to typ
+print(type(x))				# wypisze typ zmiennej
+x = input() 				# czeka na wpisanie danej w konsoli (zawsze traktuje to jako ciąg znaków)
+x = input('Podaj liczbe:') 	# czeka na wpisanie danej w konsoli z informacją
+x = int(x) 					# konwersja na int
+x = float(x) 				# konwersja na float  10.5
+type(x)						# sprawdzamy jaki to typ
 
 x = "Ala ma kota a kot ma Alę :)"
-print(x[0])		#= A
-print(x[-1])	#= )						    -1 to ostatni znak
-print(x[0:3])	#= Ala  	od którego znaku do którego (gdzie 3-ciego już nie drukuje)
-print(x[5:])	#= a kota a kot ma Alę :)    	od 5 do końca
-print(x[:5])	#= Ala m						od 0 do 5-tego 
-print(x[-5:])	#= lę :)						-1 to ostatni znak
-print(len(x))	#= 27  zwróci długość tablicy
-print( "a" in x)	#= True  	Jest taki element w tablicy (przy różnych typach krzyczy: TypeError)
+print(x[0])				#= A
+print(x[-1])			#= )						    -1 to ostatni znak
+print(x[0:3])			#= Ala  	od którego znaku do którego (gdzie 3-ciego już nie drukuje)
+print(x[5:])			#= a kota a kot ma Alę :)    	od 5 do końca
+print(x[:5])			#= Ala m						od 0 do 5-tego 
+print(x[-5:])			#= lę :)						-1 to ostatni znak
+print(len(x))			#= 27  zwróci długość tablicy
+print( "a" in x)		#= True  	Jest taki element w tablicy (przy różnych typach krzyczy: TypeError)
+print(x.count("a")) 	#= 5  ile razy dany element się znajduje się w stringu
+print(x.lower()) 		#= ala ma kota a kot ma alę :)
+print(x.upper()) 		#= ALA MA KOTA A KOT MA ALĘ :)
+print(x.capitalize()) 	#= Ala ma kota a kot ma alę :) Pierwsza litera zawsze duża
+print(x.find("a")) 		#= 2     indeks pierwszej znalezionej literki. gdy nie znajdzie, zwróci -1
+print(x.index("a")) 	#= 2    indeks pierwszej znalezionej literki. gdy nie znajdzie, zwróci ValueError
+print(x.startswith("Ala")) #= True  Czy zaczyna się danym ciągiem
+print(x.endswith(":)")) #= True  Czy kończy się danym ciągiem
+print(x.strip()) 		# Usówa białe znaki z początku i końca
+print(x.lstrip()) 		# Usówa białe znaki z początku
+print(x.rstrip()) 		# Usówa białe znaki z końca
+print(x.strip('*')) 	# Usówa znaki podane w argumencie z początku i końca
+print(x.center(50))		# Wycentruje tekst. Podajemy szerokość wiersza
+y = x.split(" ")		# Rozdziela według podanego argumetu
+print(y)            	#= ['Ala', 'ma', 'kota', 'a', 'kot', 'ma', 'Alę', ':)']
+print(', '.join(y)) 	#= Ala, ma, kota, a, kot, ma, Alę, :)   Łączy tablicę
+print(' '.join(x)) 		#= A l a   m a   k o t a   a   k o t   m a   A l ę   : )
 
+print("Moja funkcja", end='')	# aby nie przenosić na następną linię
+print(" dalszy tekst")
 
+#-----------------------------------------------------------------------------
 .format  #doklejanie elemenów w miejsce "klamerek"
-print("Tekst bazowy + {} {}".format("dolejony1", 7)) #=  Tekst bazowy + dolejony1 7
+print("Tekst bazowy + {} {}".format("doklejony1", 7)) #=  Tekst bazowy + doklejony1 7
+# to samo co wyżej, bardziej prawidłowy (okreslam tyly jakie wklejam:
+print("Tekst bazowy + {:s} {:d}".format("doklejony1", 7)) #=  Tekst bazowy + doklejony1 7
+# to samo co wyżej:
+print("Tekst bazowy + %s %d" % ("doklejony1", 7)) #=  Tekst bazowy + doklejony1 7
+%a - asci
+%r - utf
+%s - string
+%d - digital (dziesiętne)
 # to samo co wyżej:
 x = "Tekst bazowy  + {} {}"
 y = x.format("dolejony1", 7)
 print(y)		#= Tekst bazowy  + dolejony1 7
+print("Tekst bazowy + {1} {0}".format("doklejony1", 7)) #=  Tekst bazowy +  7 doklejony1
 
-print("Moja funkcja", end='')	# aby nie przenosić na następną linię
-print(" dalszy tekst")
+print("OLD: ->%10s<-" % ('test',))  			#= OLD: ->      test<-		Align right
+print("NEW: ->{:>10}<-".format('test')) 		#= NEW: ->      test<-
+print("NEW: ->{:.>10}<-".format('test')) 		#= NEW: ->......test<-
+print("OLD: ->%-10s<-" % ('test',))  			#= OLD: ->test      <-      Align left
+print("NEW: ->{:10}<-".format('test'))  		#= NEW: ->test      <-
+print("NEW: ->{:.<10}<-".format('test'))  		#= NEW: ->test......<-
+print("NEW: ->{:^10}<-".format('test')) 		#= NEW: ->   test   <-      Alighn center
+print("NEW: ->{:.^10}<-".format('test')) 		#= NEW: ->...test...<-
+print("OLD: %.4s" % ('testtesttest',))  		#= OLD: test        Wycina pierwsze 4 znaki
+print("NEW: {:.4}".format('testtesttest'))  	#= NEW: test    
+print("OLD: ->%-10.4s<-" % ('testtesttest',))  	#= OLD: ->test      <-       Wycina pierwsze 4 znaki i wyrównuje
+print("OLD: ->%10.4s<-" % ('testtesttest',))  	#= OLD: ->      test<-       Wycina pierwsze 4 znaki i wyrównuje
+print("NEW: ->{:10.4}<-".format('testtesttest'))#= NEW: ->test      <-  
+print("NEW: ->{:>10.4}<-".format('testtesttes'))#= NEW: ->      test<-  
+print("NEW: {:04d}".format(42)) 				#= NEW: 0042
+print("NEW: {:4d}".format(42)) 					#= NEW:   42
+print("NEW: {:+d}".format(42)) 					#= NEW: +42
+print("NEW: {:=+5d}".format(42))  				#= NEW: +  42     zajmuje zawsze 5 znaków
+print("NEW: {:=+5d}".format(-42)) 				#= NEW: -  42     zajmuje zawsze 5 znaków
+print("NEW: {:f}".format(3.141592653589793)) 	#= NEW: 3.141593
+print("NEW: {:.3f}".format(3.141592653589793))	#= NEW: 3.14
+print("NEW: {:6.1f}".format(3.141592653589793)) #= NEW:    3.1
+print("NEW: {:06.1f}".format(3.141592653589793))#= NEW: 0003.1
+print("NEW: {:{width}.{prec}f}".format(3.141592653589793, width=6, prec=2)) #= NEW:   3.14
+print("NEW: {:{}.{}f}".format(3.141592653589793, 6, 2))         			#= NEW:   3.14
 
 
 #-----------------------------------------------------------------------------
@@ -55,6 +113,8 @@ produkty.remove("mleko") 	# usówanie konkretnego elementu
 x = produkty.count("mleko")	# zwróci, ile jest "mleko" w tej liście
 produkty.extend(inna_lista)	# sklejanie list (dodawanie kilku  elementów)
 x = produkty.index("mleko")	#=0  zwróci pozycje podanego elementu
+print('NEW: {d[0]}, lat: {d[2]}'.format(d=produkty)) #= NEW: mleko, lat: parówki
+
 
 #-----------------------------------------------------------------------------
 #tuple - nie edytowalna lista
@@ -81,7 +141,25 @@ s3 = list(s)				# zamiana zbioru na listę (na tablicę)
 person = {  "wiek" : 20, "imie" : "Anna" }
 print(person)           # wypisze cały obiekt
 print(person["imie"])   #= Anna
-print(person.get("wiek", 5) ) #= zwróci 20 (gdy znajdzie) lub 5 gdy nie znajdzie
+print(person.get("wiek")) 	 #= zwróci 20 (gdy znajdzie) lub None gdy nie znajdzie
+print(person.get("wiek", 5)) #= zwróci 20 (gdy znajdzie) lub 5 gdy nie znajdzie
+print('NEW: {imie}, lat: {wiek}'.format(**person)) 					#= NEW: Anna, lat: 20
+print('NEW: {quote[wiek]}, lat: {quote[imie]}'.format(quote=person))#= NEW: Anna 20
+print('OLD: %(imie)s, lat: %(wiek)s' % person) 						#= OLD: Anna, lat: 20
+print('NEW: {imie}, lat: {wiek}'.format(imie='Frenek', wiek='33'))	#= NEW: Frenek, lat: 33
+
+for i in person.keys():     # wypisze klucze, gdy chemy po koleji: for i in sorted(person.keys()):
+    print(i)                #= wiek  imie
+
+for i in person.values():   # wypisze wartości
+    print(i)                #= 20  Anna
+
+for i in person.items():    #= wypisze w formie tuple
+    print(i)                #= ('wiek', 20)  ('imie', 'Anna')
+
+for k, v in person.items(): #= 
+    print(k, v)             #= wiek 20    imie Anna
+
 
 
 
@@ -177,7 +255,7 @@ print(a, b )			#= 1 x
 def test(tekst):
     print("Tekst z pliku zewnętrznego:", tekst )
 
-#treśc pliku "main.py"
+#treść pliku "main.py"
 import modul
 modul.test("elo")		#= Tekst z pliku zewnętrznego: elo
 
@@ -197,6 +275,8 @@ test_external("elo") 	#= Tekst z pliku zewnętrznego: elo
 #-----------------------------------------------------------------------------
 Operacje na plikach:
 f = open("plik.txt", mode="a+")     # otwarcie pliku, w modzie otwórz lub stwórz i otwórz jeśli go nie ma
+									# "r" - tylko do odczytu, "w" - można zapisywać, "a" - tylko do zapisu 
+print 
 f.write("Ddoany tekst ")            # wpisanie tekstu
 f.close()                           # zamknij plik
 
@@ -214,6 +294,7 @@ y= f.readline()						# odczytuje jedną linijkę i przechodz do nastepnej,
 									# następne wywołanie tej samej funkcji, pooduje odczyt kolejnej linijki
 y= f.readlines()					# czytamy plik w formie tablicy, gdzie każdya linijka to jeden element tablicy
 									#= ['Cos_z_pliku\n', 'Druga linijka\n', 'Trzecia linijka\n', 'Czwarta linijka']
+y= f.readlines()[1]					# czytamy tylko 2-gą linijkę
 for line in f.readlines():			# wypisze wszsytkie linijki z pliku
     print(line.rstrip())			# .rstrip() usówa białe znaki (efekt jak z end="") jest też .strip() i .lstrip() 
 
@@ -240,7 +321,11 @@ while True:
  
 #-----------------------------------------------------------------------------
 # biblioteka datetime
-teraz = datetime.datetime.now()
+teraz = datetime.datetime.now() # nie zawsze działa
+
+from datetime import datetime
+teraz = datetime.now()
+
 print(teraz)	#= 2020-03-16 14:24:38.447862
 print(str(teraz.hour)+":"+str(teraz.minute)+":"+str(teraz.second))	#= 14:24:38
 print(teraz.strftime("%H:%M:%S"))									#= 14:24:38
@@ -249,6 +334,10 @@ print(teraz.strftime("%d.%m.%y"))									#= 16.03.20
 %p - wypisze AM albo PM
 %b - miesiąc skrucona nazwa
 %B - miesiąc pełna nazwa
+%Y - rok 2020 (cztery znaki)
+%y - rok 20   (dwa znaki)
+
+
 
 #-----------------------------------------------------------------------------
 # biblioteka os
@@ -307,7 +396,7 @@ except Exception as e:
     print(e)
 
 
-# Właśny wyjątek w swojej funkcji:
+# Własny wyjątek w swojej funkcji:
 # Etam 1:
 class TooColdException(Exception):
     pass
@@ -396,6 +485,37 @@ print(em.name, em.positon)  		#= Tomek Programista
 
 cl = Client()
 print("Name: {}, Ordered: {}".format(cl.name, cl.ordered)) #= Name: Person: undefined name, ordered: Website
+
+
+#-----------------------------------------------------------------------------
+class Data(object):
+    def __str__(self):
+        return 'str'
+    def __repr__(self):
+        return 'repr'
+	def __format__(self, format):
+		if format == 'dawaj-maila':
+			return 'Mail do {u.name}: {u.email}'.format(u=self)
+	return self.name
+
+    name = 'John Doe'
+    email = 'hejka@cos.com'
+    adress = {
+        'street' : {
+            'Name' : 'Ceglana',
+            'Nr' :  34,
+            },
+        'city': 'Radom',
+        'postall' : 'Ramomska'
+    }
+	
+print("OLD: %s %r" % (Data(), Data()))  									#= OLD: str repr
+print("NEW: {0!s} {0!r}".format(Data()))  									#= NEW: str repr
+print('NEW: {us.name}, Adres: {us.adress[city]}'.format(us=Data())) 		#= NEW: John Doe, Adres: Radom
+print('NEW: {us.name}, Adres nr: {us.adress[street][Nr]}'.format(us=Data()))#= NEW: John Doe, Adres nr: 34
+print("NEW: {} ".format(Data()))  											# = NEW: John Doe
+print("NEW: {:dawaj-maila} ".format(Data()))  								#= NEW: Mail do John Doe: hejka@cos.com 
+
 
 
 
