@@ -21,13 +21,14 @@ proponowane IDE: PyCharm - wersje darmową Community
 6. Wynik zobaczymy w konsoli
 
 //-----------------------------------------------------------------------------
-
+x = '2'
 print(type(x))				# wypisze typ zmiennej
 x = input() 				# czeka na wpisanie danej w konsoli (zawsze traktuje to jako ciąg znaków)
 x = input('Podaj liczbe:') 	# czeka na wpisanie danej w konsoli z informacją
 x = int(x) 					# konwersja na int
 x = float(x) 				# konwersja na float  10.5
 type(x)						# sprawdzamy jaki to typ
+id(x)						# wyświetli adres zmiennej w pamięci
 
 x = "Ala ma kota a kot ma Alę :)"
 print(x[0])				#= A
@@ -36,7 +37,11 @@ print(x[0:3])			#= Ala  	od którego znaku do którego (gdzie 3-ciego już nie d
 print(x[5:])			#= a kota a kot ma Alę :)    	od 5 do końca
 print(x[:5])			#= Ala m						od 0 do 5-tego 
 print(x[-5:])			#= lę :)						-1 to ostatni znak
+print(x[:20:2])			#= Aam oaaktm     Od poczatku do 20-go co drugi znak
+print(x[-1:0:-1])		#= ): ęlA am tok a atok am al   Odwraca, ale zjada pierwszy element
+print(x[-1::-1])		#= ): ęlA am tok a atok am alA
 print(len(x))			#= 27  zwróci długość tablicy
+x = x[:-2]				# tą operacją skrócimy x o dwa znaki (ma teraz długość 25)
 print( "a" in x)		#= True  	Jest taki element w tablicy (przy różnych typach krzyczy: TypeError)
 print(x.count("a")) 	#= 5  ile razy dany element się znajduje się w stringu
 print(x.lower()) 		#= ala ma kota a kot ma alę :)
@@ -58,6 +63,13 @@ print(' '.join(x)) 		#= A l a   m a   k o t a   a   k o t   m a   A l ę   : )
 
 print("Moja funkcja", end='')	# aby nie przenosić na następną linię
 print(" dalszy tekst")
+
+myvar = "Siemka!"
+myvar2 = myvar
+print('Is value the same?', myvar == myvar2)       #= Is value the same? True   Czy ta sama wartość występuje w obu zmiennych?
+print('Are the variables the same?', myvar is myvar2)       #= Are the variables the same? True  Czy wskazują na ten sam obszar pamięci?
+print(id(myvar), id(myvar2))    #= 13609408 13609408
+
 
 #-----------------------------------------------------------------------------
 .format  #doklejanie elemenów w miejsce "klamerek"
@@ -115,6 +127,19 @@ produkty.extend(inna_lista)	# sklejanie list (dodawanie kilku  elementów)
 x = produkty.index("mleko")	#=0  zwróci pozycje podanego elementu
 print('NEW: {d[0]}, lat: {d[2]}'.format(d=produkty)) #= NEW: mleko, lat: parówki
 
+produkty2 = produkty.copy() # kopiowanie i tworzenie nowej tablicy
+produkty2 = produkty[:] 	# kopiowanie i tworzenie nowej tablicy
+
+workDay = [19, 21, 22, 21, 20, 22]
+workDayEn = list(enumerate(workDay)) #-> [(0, 19), (1, 21), (2, 22), (3, 21), (4, 20), (5, 22)]
+months = ['I', 'II', 'III', 'IV', 'V', 'VI']
+monthsDay = list(zip(months, workDay)) #-> [('I', 19), ('II', 21), ('III', 22), ('IV', 21), ('V', 20), ('VI', 22)]
+for mon, day in monthsDay:
+    print('Miesiac:', mon, 'dni:', day) #= Miesiac: I dni: 19 \ Miesiac: II dni: 21...
+for pos, (m, d) in enumerate(zip(months, workDay)):
+    print('Pozycja:', pos, 'Miesiac:', m, 'dni:', d)	#= Pozycja: 0 Miesiac: I dni: 19 ...
+
+
 
 #-----------------------------------------------------------------------------
 #tuple - nie edytowalna lista
@@ -148,6 +173,7 @@ print('NEW: {quote[wiek]}, lat: {quote[imie]}'.format(quote=person))#= NEW: Anna
 print('OLD: %(imie)s, lat: %(wiek)s' % person) 						#= OLD: Anna, lat: 20
 print('NEW: {imie}, lat: {wiek}'.format(imie='Frenek', wiek='33'))	#= NEW: Frenek, lat: 33
 
+
 for i in person.keys():     # wypisze klucze, gdy chemy po koleji: for i in sorted(person.keys()):
     print(i)                #= wiek  imie
 
@@ -160,14 +186,24 @@ for i in person.items():    #= wypisze w formie tuple
 for k, v in person.items(): #= 
     print(k, v)             #= wiek 20    imie Anna
 
+workDay = [19, 21, 22, 21, 20, 22]
+months = ['I', 'II', 'III', 'IV', 'V', 'VI']
+monthsDay = dict(zip(months, workDay)) 		#-> {'I': 19, 'II': 21, 'III': 22, 'IV': 21, 'V': 20, 'VI': 22}
 
+for i in monthsDay:
+    print('Key:', i, 'val:', monthsDay[i]) 	#= Key: I val: 19...
+
+instructions = {}
+instructions['first name'] = 'john'
+instructions['last name'] = 'walker'
+print(instructions)						#= {'first name': 'john', 'last name': 'walker'}
 
 
 
 #-----------------------------------------------------------------------------
 #Operatory logiczne:
-and  	# oraz, czyli &&
-or		# lub,  czyli ||
+and  	# oraz, czyli && , iloczyn, koniunkcja
+or		# lub,  czyli || , suma, 	alternatywa
 not 	# negacja, np:  if not 5 in lista : print("Lista nie zawiera elementu")
 
 
@@ -211,8 +247,8 @@ for i, produkt in enumerate(produkty):
 
 
 # generator:  
-for el in range(10):		# wygeneruje 10 elementów
-    print(el)
+for i in range(10):			# wygeneruje 10 elementów od 0 do 9
+    print(i)
 
 for el in range(10, 20):	# wygeneruje liste od 10 do 19
     print(el)
@@ -275,7 +311,7 @@ test_external("elo") 	#= Tekst z pliku zewnętrznego: elo
 #-----------------------------------------------------------------------------
 Operacje na plikach:
 f = open("plik.txt", mode="a+")     # otwarcie pliku, w modzie otwórz lub stwórz i otwórz jeśli go nie ma
-									# "r" - tylko do odczytu, "w" - można zapisywać, "a" - tylko do zapisu 
+									# "r" - tylko do odczytu, "w" - można zapisywać, "a" - tylko do zapisu, "x" - zgłosi głąd, gdy plik istnieje 
 print 
 f.write("Ddoany tekst ")            # wpisanie tekstu
 f.close()                           # zamknij plik
@@ -343,12 +379,16 @@ print(teraz.strftime("%d.%m.%y"))									#= 16.03.20
 # biblioteka os
 import os
 
+print(os.getcwd())				# pobiera ścieżkę do miejsca gdzie jest plik ze skryptem
+
 lista = os.listdir("D:/Klamoty/Web/Git/book/python")	#= ['main.py', 'modul.py', 'plik.txt', '__pycache__']
+lista = os.listdir(r"D:\Klamoty\Web\Git\book\python")
 lista = os.listdir(".")									#= ['main.py', 'modul.py', 'plik.txt', '__pycache__'] 
 														#= to samo, ponieważ wypisało zawartość folderu ze skryptem	
 
+
 for el in os.listdir("."):
-    if os.path.isfile(el): 						#= wnajduje pliki
+    if os.path.isfile(el): 						#= wynajduje pliki
         print("{} jest plikiem".format(el))
     if os.path.isdir(el): 						#= wnajduje foldery
         print("{} jest folderem".format(el))
@@ -358,17 +398,30 @@ os.rename("pliki", "folder")				# zmiana nazwy pliku lub folderu
 os.remove("nowy plik.txt")					# usuwanie pliku lub folderu (krzyczy o jakiś dostęp)
 os.rmdir("folder")							# usuwanie folderu
 os.makedirs(path, "pliki/01")				# tworzy ścieżkę folderów
-
+path = os.path.join(data_dir, file_name)	# łączenie ścieżek
 path = "pliki/01/dane.txt"
 print(os.path.dirname(path))				#= pliki/01   Wypisze tylko foldery
 print(os.path.basename(path))				#= dane.txt   Wypisze tylko plik
 print(os.path.abspath(path))				#= D:\Klamoty\Web\Git\book\python\pliki\01\dane.txt  ściezka absolutna
 
-# tworzenie pliku na podstawie podanej śecieżki (trzeba odrużnić foldery od plików)
+# tworzenie pliku na podstawie podanej śecieżki (trzeba odrożnić foldery od plików)
 path = "pliki/01/dane.txt"
 dir_path = os.path.dirname(path)		# odziela same foldery
 os.makedirs(dir_path)					# tworzy same foldery 
 open(path, "w").close()					# torzy i zamyka plik
+
+#warunek na tworzenie pliku:
+sciezka = r'D:\Karolek\Web\Treningi\python\mydata.txt'
+result = os.path.isfile(sciezka) or open(sciezka, 'x').close()  #zwraca None gdy nie było pliku albo True gdy był
+
+
+#-----------------------------------------------------------------------------
+# biblioteka urllib
+import urllib.request
+url = 'http://www.mobilo24.eu/'
+path = D:\Karolek\Web\Treningi\python\mobilo.html
+urllib.request.urlretrieve(url, path)	# polecenie to, wywoła ściągnięcie i zapisanie zawartości strony do wskazanego pliku
+
 
 #-----------------------------------------------------------------------------
 Wyjątki
