@@ -110,6 +110,7 @@ produkty.append("mleko") 	# dodanie elementu
 produkty.insert(1,"mleko") 	# dodanie elementu na wskazewnej pozycji
 produkty.pop(1)				# usówanie elementu z podanej pozycji
 produkty.remove("mleko") 	# usówanie konkretnego elementu
+produkty.clear()			# wyczyści całą tablicę
 x = produkty.count("mleko")	# zwróci, ile jest "mleko" w tej liście
 produkty.extend(inna_lista)	# sklejanie list (dodawanie kilku  elementów)
 x = produkty.index("mleko")	#=0  zwróci pozycje podanego elementu
@@ -192,6 +193,12 @@ elif "ser" in produkty:				# else if
 elif True:							# else lub elif True
     print("Nie znaleziono")
 
+x = 1
+dayDescription = 'weekend' if x == 1 else 'workday'		# dayDescription uzależnione od 'x'
+dayDescription = 'weekend' if x == 1 else 'workday' if x == 2 else 'holiday'
+# to samo co wyżej:
+print('weekend') if x == 1 else print('workday') if x == 2 else print('holiday')
+
 
 
 #-----------------------------------------------------------------------------
@@ -224,7 +231,8 @@ for i, produkt in enumerate(produkty):
     if i == 2: continue 	# continue: pomija jeden elenet. break - kończy pętle
     print(i)				# zwróci numer, czyli od 0
     print(produkt)			# zwróci elementy listy, czyli od "mleko"
-
+else:
+	print("przerwana petla")	#wywoła sie ZAWSZE, chyba że zastosujemy break
 
 #-----------------------------------------------------------------------------
 funkcje
@@ -321,7 +329,13 @@ while True:
  
 #-----------------------------------------------------------------------------
 # biblioteka datetime
-teraz = datetime.datetime.now() # nie zawsze działa
+# W PyCharm dzialaja ponizsze 3 rozne sposoby: 
+import datetime as dt
+today_weekday = dt.date.today().strftime("%A")	# aktualny dzien tygodnia - nazwy
+today_weekday = dt.date.today().strftime("%w")	# aktualny dzien tygodnia - cyfry, gdzie: 0-niedziela, 1-pon
+
+import datetime
+teraz = datetime.datetime.now()
 
 from datetime import datetime
 teraz = datetime.now()
@@ -336,7 +350,7 @@ print(teraz.strftime("%d.%m.%y"))									#= 16.03.20
 %B - miesiąc pełna nazwa
 %Y - rok 2020 (cztery znaki)
 %y - rok 20   (dwa znaki)
-
+# więcej na: https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
 
 
 #-----------------------------------------------------------------------------
