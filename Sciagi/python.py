@@ -170,10 +170,10 @@ print(person["imie"])   #= Anna
 print(person.get("wiek")) 	 #= zwróci 20 (gdy znajdzie) lub None gdy nie znajdzie
 print(person.get("wiek", 5)) #= zwróci 20 (gdy znajdzie) lub 5 gdy nie znajdzie
 print('NEW: {imie}, lat: {wiek}'.format(**person)) 					#= NEW: Anna, lat: 20
-print('NEW: {quote[wiek]}, lat: {quote[imie]}'.format(quote=person))#= NEW: Anna 20
+print('NEW: {quote[wiek]}, lat: {quote[imie]}'.format(quote=person))#= NEW: 20, lat: Anna
 print('OLD: %(imie)s, lat: %(wiek)s' % person) 						#= OLD: Anna, lat: 20
 print('NEW: {imie}, lat: {wiek}'.format(imie='Frenek', wiek='33'))	#= NEW: Frenek, lat: 33
-
+del person['wiek'] 			#-> {'imie': 'Anna'}
 
 for i in person.keys():     # wypisze klucze, gdy chemy po koleji: for i in sorted(person.keys()):
     print(i)                #= wiek  imie
@@ -253,7 +253,8 @@ for i, produkt in enumerate(produkty):
     print("Produkt: {}, o indeksie: {}".format(produkt, i) )
 
 
-# generator:  
+listaA = list(range(10))	#-> [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]	
+
 for i in range(10):			# wygeneruje 10 elementów od 0 do 9
     print(i)
 
@@ -269,6 +270,37 @@ for i, produkt in enumerate(produkty):
     print(produkt)			# zwróci elementy listy, czyli od "mleko"
 else:
 	print("przerwana petla")	#wywoła sie ZAWSZE, chyba że zastosujemy break
+
+#Jak stworzyć 36-cio elementowa tablicę tupli, majac do dyspycji dwie 6 elemenowe tablice:
+listaA = list(range(6))
+listaB = list(range(6))
+product = []
+for a in listaA:
+    for b in listaB:
+        product.append((a, b))
+#werjsa skrucona wykonująca to samo:
+product2 = [(a,b) for a in listaA for b in listaB]	# wygeneruje listę tupli
+product2 = [[a,b] for a in listaA for b in listaB]	# wygeneruje lstę list 
+product2 = [{a:b} for a in listaA for b in listaB]	# wygeneruje listę słowników
+#generuje nową tablicę, z warunkiem, że a musi być nie parzyste, b musi być parzyste
+product3 = [(a, b) for a in listaA for b in listaB if a % 2 == 1 and b % 2 == 0]
+product4 = {a: b for a in listaA for b in listaB}	#-> {0: 5, 1: 5, 2: 5, 3: 5, 4: 5, 5: 5}
+
+# generator:  
+gen = ((a,b) for a in listaA for b in listaB if a % 2 == 1 and b % 2 == 0)
+print(gen)			#= <generator object <genexpr> at 0x016879C8>
+print(next(gen))	#= (1, 0)		Wypisywanie po 1 elemencie
+print(next(gen))	#= (1, 2)
+for x in gen:		#	Wypisywanie całej zawartości (po za tymi już wypisanymi poleceniem next() )
+    print(x)
+
+#Ręczna petla, do wypisania generatora:
+while True:
+    try:
+        print(next(gen))
+    except StopIteration:
+        print('To już wszystkie elementy')
+        break
 
 #-----------------------------------------------------------------------------
 funkcje
@@ -289,6 +321,72 @@ def pobierz_2tuple():
 
 a, b = pobierz_2tuple()
 print(a, b )			#= 1 x
+
+def printArgs(*args):
+    print(args)
+printArgs("kot", "pies", "inny parametr") #= ('kot', 'pies', 'inny parametr')  Dowolan ilość parametrów
+
+def printKeyArgs(**kwargs):
+    print(kwargs)
+printKeyArgs( zwierz1="kot",  zwierz2= "pies", any="inny parametr") #= {'zwierz1': 'kot', 'zwierz2': 'pies', 'any': 'inny parametr'}
+
+def GetAll(arg1, arg2="domyslny", *args, **kwargs):
+    print(args)
+    print(kwargs)
+GetAll( 1, "drugi", zwierz1="kot",  zwierz2= "pies", any="inny parametr")
+
+#przykład:
+products = ['milk', 'bread', 'flakes']
+parameters = {'price':'low', 'time':'now'}
+GetAll('buy me', *products, **parameters)
+
+
+
+#-----------------------------------------------------------------------------
+eval()
+# eval umozliwia "wstrzyknięcie kodu", na przykład przez użytkownika. 
+# kod ten ma pełne prawa jak reszta kodu. cyzli ma dostęp do wszystkich zmiennych (nawet haseł)
+var_x = 10
+source = ' print("Hejka, wynik to:", var_x/2) '
+eval(source) 	#= Hejka, wynik to: 5.0
+
+#-----------------------------------------------------------------------------
+exec()
+# bardziej rozbudowana metoda "wstrzykiwania" kodu do naszego programu
+a = 10
+surce = '''
+a = 30
+b = 45
+'''
+exec(surce)
+print(a, b)	# środowisko podkreśli, że nie ma zdefinowanej zmiennej "b", a pomimo tego, program się wykona prawidłowo
+
+#przykład:
+# budownaie uniwersalnego kalkulatora, który zwraca funkcję, która wykona odpowiednie działanie
+def CreateFunction(kind = '+'):
+    source = '''
+def f(*args):
+    result = 0
+    for a in args:
+        result {}= a
+    return result
+'''.format(kind)
+    exec(source, globals())
+    return f
+
+f_add = CreateFunction('+')
+print(f_add(1, 2, 3, 4))		#= 10
+
+
+
+#-----------------------------------------------------------------------------
+compile()
+source = 'a = 1'
+sourceCompile = compile(source, 'sciezka do pliku', 'exec')
+exec(sourceCompile)
+print(a)	#= 1	Przed kmpilacja, zmienna "a" jest nie znana
+
+
 
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
@@ -361,7 +459,11 @@ while True:
         timer1 = time.time()
         print("1 sek")
     if time.time() - timer5 > 5: break
-        
+
+#jak zmierzyć czas wykonania się programu?
+start = time.time()        
+for i in range(1000): jakieś operacje...
+czasWykonania = time.time() - start       
  
 #-----------------------------------------------------------------------------
 # biblioteka datetime
