@@ -387,6 +387,31 @@ exec(sourceCompile)
 print(a)	#= 1	Przed kmpilacja, zmienna "a" jest nie znana
 
 
+#-----------------------------------------------------------------------------
+wraper i dekorowanie funkcji:  -filmik 60 (Python dla średnio zaawansowanych)
+import time
+import functools	# to urzywamy gdy dekorujemy 
+
+def wrapper_time(a_function):
+    def a_wrapped_function(*args, **kwargs):
+        time_start = time.time()
+        v = a_function(*args, **kwargs)
+        time_stop = time.time()
+        print('Funkcja {} wykonana w czasie {:.2f}sek'.format(a_function.__name__, time_stop - time_start))
+        return v
+    return a_wrapped_function
+
+@wrapper_time		# to urzywamy gdy dekorujemy 
+def get_sequence(n):
+	# ciało funkcji...
+    return 1
+
+print(get_sequence(2))
+
+#wrapper_get_sequence = wrapper_time(get_sequence) # !!!to urzyć gdy nie dekorujemy!!!
+#print(wrapper_get_sequence(17))
+
+
 
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
@@ -490,6 +515,14 @@ print(teraz.strftime("%d.%m.%y"))									#= 16.03.20
 %y - rok 20   (dwa znaki)
 # więcej na: https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
 
+#Przykład: Obliczanie różnic w czasie:
+start = datetime(2019, 1, 1, 0, 0, 0)
+end  = datetime.now()
+duration = end - start  					#-> 84 days, 19:26:32.285230
+duration_in_s = duration.total_seconds()	#-> 7327592.28523
+min = divmod(duration_in_s, 60)[0]			#-> 122126.0  czas w minutach
+hour = divmod(duration_in_s, 3600)[0]		#-> 2035.0    czas w godzinach
+day = divmod(duration_in_s, 86400)[0]		#-> 84.0      czas w dniach
 
 #-----------------------------------------------------------------------------
 # biblioteka os
