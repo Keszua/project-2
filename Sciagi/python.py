@@ -362,7 +362,7 @@ exec(surce)
 print(a, b)	# środowisko podkreśli, że nie ma zdefinowanej zmiennej "b", a pomimo tego, program się wykona prawidłowo
 
 #przykład:
-# budownaie uniwersalnego kalkulatora, który zwraca funkcję, która wykona odpowiednie działanie
+# budowanie uniwersalnego kalkulatora, który zwraca funkcję, która wykona odpowiednie działanie
 def CreateFunction(kind = '+'):
     source = '''
 def f(*args):
@@ -392,6 +392,38 @@ wraper i dekorowanie funkcji:  -filmik 60 (Python dla średnio zaawansowanych)
 import time
 import functools	# to urzywamy gdy dekorujemy 
 
+# przykład 1:	--------------------------------------------------------------------
+import datetime
+import functools
+import os
+
+def CreateFunctionWithWrapper(func):
+    def func_with_wrapper(*args, **kwargs):
+        print('Function "{}" started at {}'.format(func.__name__, datetime.datetime.now().isoformat()))
+        print('Parameters: {} {}'.format(args, kwargs))
+        result = func(*args, **kwargs)
+        print('Function returned: {}'.format(result))
+        return result
+    return func_with_wrapper
+
+@CreateFunctionWithWrapper  # krok 3: dodanie dekoratora
+def ChangeSalary(emp_name, new_salary, is_bonus=True):
+    print('Imie: {} dostal {} {}'.format(emp_name, new_salary, 'Jednorazowy bonus' if is_bonus else 'stałej podwyżki '))
+    return new_salary
+
+print(ChangeSalary('Karol', 2000))	#przed dodaniem dekoratora, bedzie to zwykłe wywołanie
+
+# krok 1:
+ChangeSalaryWithLog = CreateFunctionWithWrapper(ChangeSalary) 
+print(ChangeSalaryWithLog('Marek', 500, is_bonus=False))		#tutaj wywoła się "owijanie"
+
+# krok 2:
+ChangeSalary = CreateFunctionWithWrapper(ChangeSalary)
+print(ChangeSalary('Tomek', 600, is_bonus=False))				#tutaj wywoła się "owijanie"
+
+
+
+# przykład 2:	--------------------------------------------------------------------
 def wrapper_time(a_function):
     def a_wrapped_function(*args, **kwargs):
         time_start = time.time()
@@ -411,6 +443,28 @@ print(get_sequence(2))
 #wrapper_get_sequence = wrapper_time(get_sequence) # !!!to urzyć gdy nie dekorujemy!!!
 #print(wrapper_get_sequence(17))
 
+# przykład 3:  Niemal to samo co w przykładzie 1, ale wraper zapisujący do pliku i dodatkowo owinięty jest funkcją, do której przekazujemy jako argument: nazwę pliku
+def CreateFunctionWithWraper_LogToFile(logFileName):
+    def CreateFunctionWithWrapper(func):
+        def func_with_wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            # logPath = os.path.join(os.getcwd(), 'function_log.txt')
+            logPath = os.path.join(os.getcwd(), logFileName)
+            f = open(logPath, 'a')
+            f.write('\n' + '-'*20 + '\n')
+            f.write('{} with start: '.format(datetime.datetime.now().isoformat()))
+            f.write('Function: "{}('.format(func.__name__))
+            f.write(", ".join("{}".format(x) for x in args))
+            f.write("{}".format(', ' if args else '') + ", ".join("{}={}".format(k, v) for (k, v) in kwargs.items()) + ') "')
+            f.write(' return: {}'.format(result))
+            f.close()
+            return result
+        return func_with_wrapper
+    return CreateFunctionWithWrapper
+
+@CreateFunctionWithWraper_LogToFile('function_log.txt')
+def JakasFunkcja():
+    print('Co kolwiek')
 
 
 #-----------------------------------------------------------------------------
