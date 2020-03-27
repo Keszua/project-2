@@ -466,6 +466,81 @@ def CreateFunctionWithWraper_LogToFile(logFileName):
 def JakasFunkcja():
     print('Co kolwiek')
 
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+Wysyłanie maila
+1. W wyszukuwartkę wpisz: gmail less secure apps,  aby uzyskać pomoc.
+2. Po zalogowaniu na swoje konto, trzeba wejsć w "Security"
+3. Odnajdz: "Less secure app access" (lub "Dostęp mniej bezpiecznych aplikacji")
+4. Trzeba "Włączyć" dostęp
+
+import smtplib
+
+mailFrom = 'Automatyczny mailing od Karola'
+mailTo = ['k.michalczyk@radwag.pl']
+mailSubject = 'Witaj. To ja, twój system powiadomień'
+mailBody = '''Witaj
+Korzystasz  autoamtycznego systemu powiadomień
+'''
+
+message = '''From: {}
+Subject: {}
+
+{}'''.format(mailFrom, mailSubject, mailBody)
+
+user = 'keszua@gmail.com'
+password = '   '
+
+try:
+    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    server.ehlo()
+    server.login(user, password)
+    server.sendmail(user, mailTo, message)
+    server.close()
+    print('Wyslano maila')
+except:
+    print('error sending maila')
+
+
+# podobnie do tego co wyżej, tylko wciśnięte do funkcji:
+import functools
+import smtplib
+
+def SendInfoEmail(user, password, mailFrom, mailTo, mailSubject, mailBody):
+
+    message = '''From: {}
+Subject: {}
+
+{}'''.format(mailFrom, mailSubject, mailBody)
+
+    try:
+        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        server.ehlo()
+        server.login(user, password)
+        server.sendmail(user, mailTo, message)
+        server.close()
+        print('Wyslano maila')
+        return True
+    except:
+        print('error sending mail')
+        return False
+
+mailFrom = 'Automatyczny mailing od Karola'
+mailTo = ['k.michalczyk@radwag.pl']
+mailSubject = 'Witaj. To ja, twój system powiadomień'
+mailBody = '''Witaj
+Korzystasz  autoamtycznego systemu powiadomień
+'''
+
+user = 'keszua@gmail.com'
+password = 'your_password_here'
+SendInfoFromGmail = functools.partial(SendInfoEmail, user, password, mailSubject='Tresc tematu')
+
+#SendInfoEmail(user, password, mailFrom, mailTo, mailSubject, mailBody)
+SendInfoFromGmail(mailFrom=mailFrom, mailTo=mailTo, mailBody=mailBody)
+
+
 
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
