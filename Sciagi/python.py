@@ -475,7 +475,7 @@ Wysyłanie maila
 3. Odnajdz: "Less secure app access" (lub "Dostęp mniej bezpiecznych aplikacji")
 4. Trzeba "Włączyć" dostęp
 
-import smtplib
+import smtplib, ssl
 
 mailFrom = 'Automatyczny mailing od Karola'
 mailTo = ['k.michalczyk@radwag.pl']
@@ -492,15 +492,35 @@ Subject: {}
 user = 'keszua@gmail.com'
 password = '   '
 
+context = ssl.create_default_context()
+
 try:
-    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    server = smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context)
     server.ehlo()
     server.login(user, password)
     server.sendmail(user, mailTo, message)
     server.close()
     print('Wyslano maila')
-except:
+except Exception as e:
     print('error sending maila')
+    print(e)
+
+
+
+# Druga wersja, znaleziona na: https://realpython.com/python-send-email/
+
+try:
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.ehlo()
+    server.starttls(context=context)
+    server.ehlo()
+    server.login(sender_email, password)
+    server.sendmail(sender_email, mailTo, message)
+    server.close()
+    print('Wyslano maila')
+except Exception as e:
+    print('error sending maila')
+    print(e)
 
 
 # podobnie do tego co wyżej, tylko wciśnięte do funkcji:
@@ -541,11 +561,86 @@ SendInfoFromGmail = functools.partial(SendInfoEmail, user, password, mailSubject
 SendInfoFromGmail(mailFrom=mailFrom, mailTo=mailTo, mailBody=mailBody)
 
 
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+CACHE
+# Optymalizacja funkcji deterministycznych, które zawsze zwaracają taki sam wynik.
+import functools
+
+@functools.lru_cache()
+def Factorial(n):
+    if n == 1:
+        return 1
+    else:
+        return n * Factorial(n-1)
+
+time_start = time.time()
+
+for i in range(1, 11):
+    print('{}! = {}'.format(i, Factorial(i)))
+print('Trwało to:', time.time() - time_start)
+print(Factorial.cache_info())
+
+#-----------------------------------------------------------------------------
+LAMBDA
+#przykład 1 bez lambda:
+def double(x):
+    return x * 2
+
+x = 10
+x = double(x)
+print(x)					#= 20
+# to samo, z lambda:
+x = 10
+f = lambda x: x * 2
+print(f(x))					#= 20
+#----------------------------------
+#przykład 2 bez lambda:
+def power(x, y):
+    return x ** y
+
+x = 5
+y = 3
+print(power(x, y))			#= 125
+# to samo, z lambda:
+x = 5
+y = 3
+f = lambda x, y: x ** y
+print(f(x,y))				#= 125
+#----------------------------------
+#przykład 3 bez lambda:
+lit_numbers = [1, 2, 3, 4, 11, 14, 15, 20, 21]
+
+def is_odd(x):
+    return x % 2 != 0
+
+fliterList = list(filter(is_odd, lit_numbers))
+print(fliterList)					#= [1, 3, 11, 15, 21]
+# to samo, z lambda:
+lit_numbers = [1, 2, 3, 4, 11, 14, 15, 20, 21]
+fliterListLambda = list(filter(lambda x: x %2 != 0, lit_numbers))
+print(fliterListLambda)				#= [1, 3, 11, 15, 21]
+# lub:
+lit_numbers = [1, 2, 3, 4, 11, 14, 15, 20, 21]
+print(list(filter(lambda x: x %2 != 0, lit_numbers)))
+#----------------------------------
+#przykład 4 z tworzeniem funkcji, zwarającej funkcję:
+def generatte_multiply_fun(n):
+    return lambda x: n * x
+
+mul_2 = generatte_multiply_fun(2)	# definiuje funkcję mnożącą x2
+mul_3 = generatte_multiply_fun(3)	# definiuje funkcję mnożącą x3
+
+print(mul_2(13))    	#= 26  
+print(mul_3(8))     	#= 24 
+
+
 
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
-#moduły zewnętrzne (odział programu na pliki)
+#moduły zewnętrzne (podział programu na pliki)
 
 #treść pliku "modul.py"  (nazwa ma znaczenie)
 def test(tekst):
@@ -765,11 +860,15 @@ class TooColdException(Exception):
     pass
 
 class Calculator():
-    def __init__(self): 	# konstruktor
+	iliscKalkulatorow = 0					#zmienna statyczna
+    def __init__(self): 					# konstruktor
 		self.ostatni_wynik = 0
         print("Init calc")
 		self.liczba = 10
-    def __del__(sef): 		# destruktor
+		self.__zwiekszonaPrecyzja = False	#zmienna ukryta
+		Calculator.iliscKalkulatorow += 1	
+    def __del__(sef): 						# destruktor
+		Calculator.iliscKalkulatorow -= 1
         print("Del calc")
     def __str__(self):  	# wykonuje się, gdy wywołamy print(str(obiekt))
         return "Metoda str"
@@ -785,11 +884,37 @@ class Calculator():
     def odejmij(self, a, b):
         wynik = a - b
 		self.ostatni_wynik = wynik
-        print("Wnik odejmowania: ", wynik)
+        print("Wynik odejmowania: ", wynik)
+
+    def __GetZwiekszonaPrecyzja(self):
+        return self.__zwiekszonaPrecyzja
+
+    def __SetZwiekszonaPrecyzja(self, newVal):
+        self.__zwiekszonaPrecyzja = newVal
+        print('Zmiana precyzji')
+	
+	#argumenty: 1-do pobierania, 2-do modyfikowania, 3-do usuwania, 4-Opis paramtru
+    zwiekszonaPrecyzja = property(__GetZwiekszonaPrecyzja, __SetZwiekszonaPrecyzja, None, 'Jakiś opis')
+
+
 
 calc = Calculator() 	# tworzenie instancji
+calc.zwiekszonaPrecyzja = True 	#wywołanie metody d omiany ukrytej zmiennej
 del calc 				# ręczne usówanie obiektu (po zakończeniu programu, albo po wyjściu
 						# z zakresu funkcji w której były stworzone, obiekty same się usuwają)
+del calc.ostatni_wynik 	# usuwanie atrybutów
+delattr(Calculator, Calculator.ostatni_wynik) # usuwanie atrybutów
+
+# metody, na sprawdzenie, czy instancja powstała na podstawie klasy:
+print('Object belongs to class:', isinstance(calc, Calculator) )	#= True
+print('Object belongs to class:', type(calc) is Calculator )		#= True
+print('Object belongs to class:', calc.__class__) 					#= <class '__main__.Calculator'>
+print(vars(calc)) 													#= {'ostatni_wynik': 0, 'liczba': 10}
+print(dir(calc))	#zwraca właściwości klasy lub instancji
+
+setattr(calc, "Pierwiastkowanie", True )    # dodawanie atrybutów
+print(hasattr(calc, 'Pierwiastkowanie'))    #= true  sprawdanie czy istrnije taki atrybut
+
 
 
 Dziedziczenie
