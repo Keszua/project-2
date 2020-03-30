@@ -466,6 +466,39 @@ def CreateFunctionWithWraper_LogToFile(logFileName):
 def JakasFunkcja():
     print('Co kolwiek')
 
+
+#-----------------------------------------------------------------------------
+# dekorowanie za pomcoą klasy: film 108 (Python dla średnio zaawansowanych)
+# chcemy lsować auta, ale nei chemy żeby losowanie sie powtórzyło, dla tego kontroluje to wszystko klasa
+import random
+
+class MemoryClass:
+    list_of_alredy_selected_items = []
+    def __init__(self, funct):
+        self.funct = funct
+
+    def __call__(self, list):
+        item_not_selected = [i for i in list if i not in MemoryClass.list_of_alredy_selected_items] #budowanie nowej listy
+        item = self.funct(item_not_selected)
+        MemoryClass.list_of_alredy_selected_items.append(item)
+        return item
+
+cars = ['Opel', 'Toyota', 'Fiat', 'Ford', 'BMW']
+
+@MemoryClass
+def SelectTodatyPromotion(llist_of_cars):
+    return random.choice(llist_of_cars)
+
+@MemoryClass
+def SelectTodatyShow(llist_of_cars):
+    return random.choice(llist_of_cars)
+
+print("Promotion:", SelectTodatyPromotion(cars))
+print("Show:", SelectTodatyShow(cars))
+
+# więcej o dekorowani:
+https://www.codementor.io/sheena/advanced-use-python-decorators-class-function-du107nxsv
+
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
@@ -690,6 +723,110 @@ for line in f.readlines():			# wypisze wszsytkie linijki z pliku
     print(line.rstrip())			# .rstrip() usówa białe znaki (efekt jak z end="") jest też .strip() i .lstrip() 
 
 
+# do operacji na pikach zerknac tez na:
+https://pl.wikibooks.org/wiki/Zanurkuj_w_Pythonie/Praca_z_katalogami
+import glob
+
+Krótka dokumentacja modułu pickle ze strony:
+https://pl.python.org/docs/tut/node9.html
+
+os.listdir("c:\\music\\_singles\\") zwruci tablicę z plikami:
+['a_time_long_forgotten_con.mp3', 'hellraiser.mp3','spinning.mp3']
+
+glob.glob('c:\\music\\_singles\\*.mp3')	można filtrować, i zwrócone zostana pełne ścieżki: 
+['c:\\music\\_singles\\a_time_long_forgotten_con.mp3',
+'c:\\music\\_singles\\hellraiser.mp3',
+'c:\\music\\_singles\\spinning.mp3']
+
+# do zapisywania i odczytywania "marynowanych" danych:
+# zastosowanie w filmiku 98 (Python dla srednio zaawansowanych)
+import pickle
+
+	#przykąłdowe metosy zawarte w klasie Cake: 
+	def save_to_file(self, path):
+			with open(path,'wb') as f:
+				pickle.dump(self, f)
+ 
+    @classmethod
+    def read_from_file(cls, path):
+        with open(path,'rb') as f:
+            new_cake = pickle.load(f)
+        cls.bakery_offer.append(new_cake)
+        return new_cake
+ 
+    @staticmethod
+    def get_bakery_files(catalog):
+        return glob.glob(catalog+'/*.bakery')
+
+
+cake01 = Cake('Vanilla Cake','cake', 'vanilla', [], 'cream', False, '')
+cake01.save_to_file('c:/temp/cake01.bakery')
+cake05 = Cake.read_from_file('c:/temp/cake01.bakery')
+print(Cake.get_bakery_files('c:/temp'))
+
+
+import csv		# zapis do EXCELA
+def exportToFile_Static(path, header, data):    #header - to lista nagłówków
+    with open(path, mode="w") as file:
+        writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL) # wartosci z przecinkiem owijaj cudzysłowiem
+        writer.writerow(header)
+        writer.writerow(data)
+    print(">>> This is function exportToFole - statis method")
+
+#przykładowe wywołanie:
+exportToFile_Static(r'D:\Klamoty\Python\PyGame\export_stat.csv',
+                     ['Brand', 'Model', 'Cos tam'], [car01.brand, car01.model, car01.isAirBagOK])
+
+# w filmie 102 jest opis, jak przerobić i przypisać funkcję do klasy, poprzez dynamiczne dodanie metody
+# załużmy, że mamy klase Car i chcemy dodać do niej zewnętrzną funkcję.
+# musze przerobić i przygotować funkcję:
+def exportToFile_Class(cls, path):
+    with open(path, mode="w") as file:
+        writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL) # wartosci z przecinkiem owijaj cudzysłowiem
+        writer.writerow(['Brand', 'Model', 'Cos tam'])
+        for c in cls.listOfCars:
+            writer.writerow([c.brand, c.model, c.isAirBagOK])
+    print(">>> This is function exportToFole - class method")
+
+#teraz dodaje nowa funkcje, ale w pierw za pomocą type.MiethodType dodaje, żeby samo dodawało się "self" na klasę
+import types
+Car.ExportToFile_Class = types.MethodType(exportToFile_Class, Car)
+Car.ExportToFile_Class(path=r'D:\Klamoty\Python\PyGame\export_cls.csv')
+
+#podobnie, ale dodawanie funkcji do instancji.
+#Wymaga to koeljnego przygotownaia funkcji:
+def exportToFile_Instance(self, path):
+    with open(path, mode="w") as file:
+        writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL) # wartosci z przecinkiem owijaj cudzysłowiem
+        writer.writerow(['Brand', 'Model', 'Cos tam'])
+        writer.writerow([self.brand, self.model, self.isAirBagOK])
+    print(">>> This is function exportToFole - instance method")
+
+#podobnie, jak wcześniej, dodajemy funkcję do instancji
+car01.ExportToFile_Instance = types.MethodType(exportToFile_Instance, car01)
+car01.ExportToFile_Instance(path=r'D:\Klamoty\Python\PyGame\export_instance.csv')
+
+
+#Przykład zapisania pliku w formie HTML: filmik 104 (Python dla średnio zaawansowanych)
+def export_1_cake_to_html(obj, path):
+    template = """
+<table border=1>
+     <tr>
+       <th colspan=2>{}</th>
+     </tr>
+       <tr>
+         <td>Kind</td>
+         <td>{}</td>
+       </tr>
+</table>"""
+ 
+    with open(path, "w") as f:
+        content = template.format(obj.name, obj.kind)
+        f.write(content)
+
+export_1_cake_to_html(cake01, 'c:/temp/cake01.html')
+
+
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
@@ -860,12 +997,13 @@ class TooColdException(Exception):
     pass
 
 class Calculator():
-	iliscKalkulatorow = 0					#zmienna statyczna
+	iliscKalkulatorow = 0					# zmienna statyczna
     def __init__(self): 					# konstruktor
 		self.ostatni_wynik = 0
         print("Init calc")
 		self.liczba = 10
-		self.__zwiekszonaPrecyzja = False	#zmienna ukryta
+		self.__zwiekszonaPrecyzja = False	# zmienna ukryta
+        self.__zwiekszonaPrecyzja2 = False  # druga zminenan ukryta
 		Calculator.iliscKalkulatorow += 1	
     def __del__(sef): 						# destruktor
 		Calculator.iliscKalkulatorow -= 1
@@ -876,6 +1014,9 @@ class Calculator():
         return 10
     def __len__(self):  	# wykonuje się, gdy wywołamy print(len(obiekt))
         return 5
+    def __call__(self, a, b):
+        wynik = a + b
+        print("Domyślna operacja: ", wynik)
 
     def dodaj(self, a, b):
         wynik = a + b
@@ -886,6 +1027,7 @@ class Calculator():
 		self.ostatni_wynik = wynik
         print("Wynik odejmowania: ", wynik)
 
+	#----------------------------------------------
     def __GetZwiekszonaPrecyzja(self):
         return self.__zwiekszonaPrecyzja
 
@@ -895,11 +1037,42 @@ class Calculator():
 	
 	#argumenty: 1-do pobierania, 2-do modyfikowania, 3-do usuwania, 4-Opis paramtru
     zwiekszonaPrecyzja = property(__GetZwiekszonaPrecyzja, __SetZwiekszonaPrecyzja, None, 'Jakiś opis')
+	
+	#----------------------------------------------
+	#druga metoda, podobny efekt, aby zarządzać ukrytymi zmiennymi:
+    @property
+    def zwiekszonaPrecyzja2(self):
+        return self.__zwiekszonaPrecyzja2
+
+    @zwiekszonaPrecyzja2.setter		#metody dla powyższej property. nazwa funkcji musi byc taka sama jak pierwsza udekorowana funkcja
+    def zwiekszonaPrecyzja2(self, newValue):
+        self.__zwiekszonaPrecyzja2 = newValue
+        print('Udana zmiana precyzji2 na: {}'.format(newValue))
+
+    @zwiekszonaPrecyzja2.deleter
+    def zwiekszonaPrecyzja2(self):  #metoda do usuwania parametru
+        self.zwiekszonaPrecyzja2 = None
+
+	#----------------------------------------------
+    @classmethod        # metoda klasy - z lekcji 96 (Python dla średnio zaawansowanych)
+    def ReadFromText(cls, aText):	#Poniżej przykłas, jak można taką metodę worzystac do tworzenia nowej instancji
+        aNewCar = cls(*aText.split(':'))
+        return aNewCar
+
+    @staticmethod       # metoda statyczna
+    def Convert_KM_KW(KM):
+        return KM * 0.735
+
+    @staticmethod       # metoda statyczna
+    def Convert_KW_KM(KW):
+        return KW * 1.36
 
 
 
 calc = Calculator() 	# tworzenie instancji
-calc.zwiekszonaPrecyzja = True 	#wywołanie metody d omiany ukrytej zmiennej
+calc.dodaj(3,5)			#= Wynik dodawania:  8
+calc.(3,5)				#= Domyślna operacja:  6
+calc.zwiekszonaPrecyzja = True 	#wywołanie metody do zmiany ukrytej zmiennej
 del calc 				# ręczne usówanie obiektu (po zakończeniu programu, albo po wyjściu
 						# z zakresu funkcji w której były stworzone, obiekty same się usuwają)
 del calc.ostatni_wynik 	# usuwanie atrybutów
@@ -914,6 +1087,16 @@ print(dir(calc))	#zwraca właściwości klasy lub instancji
 
 setattr(calc, "Pierwiastkowanie", True )    # dodawanie atrybutów
 print(hasattr(calc, 'Pierwiastkowanie'))    #= true  sprawdanie czy istrnije taki atrybut
+print(hasattr(calc, 'Pierwiastkowanie') and callable(calc.Pierwiastkowanie) ) # test, czy jest to metoda
+
+
+lineOfText = 'Renault:Megane:True:True:False:False'	# do przykładu z "metody klasy"
+car_03 = Car.ReadFromText(lineOfText)
+
+print('Convert 120 KM to KW: ', Calculator.Convert_KM_KW(120))
+print('Convert  90 KW to KM: ', Calculator.Convert_KW_KM(90))
+
+
 
 
 
