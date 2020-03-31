@@ -469,7 +469,7 @@ def JakasFunkcja():
 
 #-----------------------------------------------------------------------------
 # dekorowanie za pomcoą klasy: film 108 (Python dla średnio zaawansowanych)
-# chcemy lsować auta, ale nei chemy żeby losowanie sie powtórzyło, dla tego kontroluje to wszystko klasa
+# chcemy lsować auta, ale nie chemy żeby losowanie sie powtórzyło, dla tego kontroluje to wszystko klasa
 import random
 
 class MemoryClass:
@@ -935,6 +935,20 @@ urllib.request.urlretrieve(url, path)	# polecenie to, wywoła ściągnięcie i z
 
 #-----------------------------------------------------------------------------
 Wyjątki
+#krótki przykład, sprawdzający, czy wprowadziliśmy element z listy:
+clients = { "INFO" : 0.5, "SOFT" : 0.3, "OMEGA" : 0.2 }
+totalCost = 7200
+myClient = input("Podaj klienta:")
+try:
+    print("The % ratio for {} is {}".format(myClient, clients[myClient]))
+except:
+    print('Sprry we have an error...')
+else:	# wykonuje sie TYLKO, gdy nie ma błędów
+    print('The cost for {} is {}'.format(myClient, clients[myClient] * totalCost))
+finally:    #wykona się zawsze
+    print('-= Calculation finished =-')
+
+
 
 #proba otwarcia nieistniejącego pliku
 try:
@@ -1009,7 +1023,7 @@ class Calculator():
 		Calculator.iliscKalkulatorow -= 1
         print("Del calc")
     def __str__(self):  	# wykonuje się, gdy wywołamy print(str(obiekt))
-        return "Metoda str"
+        return "Metoda str. Ostatni wynik: {}".format(self.ostatni_wynik)
     def __int__(self):  	# wykonuje się, gdy wywołamy print(int(obiekt))
         return 10
     def __len__(self):  	# wykonuje się, gdy wywołamy print(len(obiekt))
@@ -1099,17 +1113,23 @@ print('Convert  90 KW to KM: ', Calculator.Convert_KW_KM(90))
 
 
 
-
+#-----------------------------------------------------------------------------
 Dziedziczenie
 class Person():
     def __init__(self, name = "Person: undefined name", surname = "Person: undefined surname"):
         self.name = name
         self.surname = surname
+    def GetInfo(self):
+        print("Name: {}, Surname: {}".format(self.name, self.surname))
+		if self.__class__.__name__ == 'Person': print('-' * 20)	# wydrukuje tylko gdy nie dziedziczone
 
 class Employee(Person):
     def __init__(self, name = "name = ?", surname = "surname = ?", positon = "Undefined positon" ):
-        super().__init__(name, surname)
+        super().__init__(name, surname)	# lub: Person.__init__(self, name, surname)  to sie przydaje, przy dziedziczeniu z kilku klas
         self.positon = positon
+    def GetInfo(self):
+        super().GetInfo()
+        print("Pozycja: {}".format(self.positon))
 
 class Client(Person):
     def __init__(self, ordered = "Website"):
@@ -1118,12 +1138,56 @@ class Client(Person):
 
 p = Person("Krzysiek", "Nowak") 
 print(p.name, p.surname)           	#= Krzysiek Nowak
+p.GetInfo() #= Name: Krzysiek, Surname: Nowak
 
 em = Employee("Tomek", positon="Programista")
 print(em.name, em.positon)  		#= Tomek Programista
+em.GetInfo()    #= Name: Tomek, Surname: surname = ?  \ Pozycja: Programista
 
 cl = Client()
 print("Name: {}, Ordered: {}".format(cl.name, cl.ordered)) #= Name: Person: undefined name, ordered: Website
+
+#-----------------------------------------------------------------------------
+Dziedziczenie po kilku rodzicach:
+
+class Car:
+    listOfCars = []
+    def __init__(self, brand, model, isOnSale):
+        self.brand = brand
+        self.model = model
+        self.isOnSale = isOnSale
+        self.name = '{} {}'.format(brand, model)
+        Car.listOfCars.append(self)
+    def getInfo(self):
+        print('Info Car')
+        super().getInfo()
+        print("{} {}".format(self.brand, self.model))
+        print("Is ON SALE: {}".format(self.isOnSale))
+        print("Name: {}".format(self.name))
+        if self.__class__.__name__ == 'Car': print('-'*30)
+
+class Specjalist:
+    def __init__(self, firstName, lastName, brand):
+        self.firstName = firstName
+        self.lastName = lastName
+        self.name = '{} {}'.format(firstName, lastName)
+        self.brand = brand
+    def getInfo(self):
+        print('Info specjalisty')
+
+class CarSpecjalist(Car, Specjalist):
+    def __init__(self, brand, model, isOnSale, firstName, lastName, nowyparametr):
+        Car.__init__(self, brand, model, isOnSale)			# UWAGA! Juz nie przez super(), tylko przez nazwę rodzica
+        Specjalist.__init__(self, firstName, lastName, brand.upper())	# "brand" zostanei tutaj nadpisany
+        self.nowyparametr = nowyparametr
+    def getInfo(self):
+        print('Info CarSpecjalisty')
+        super().getInfo()
+
+spec = CarSpecjalist('Ford', 'Transit', True, 'Jan', 'Nowak', 'nowy parametr')
+spec.getInfo()
+print(CarSpecjalist.__mro__) # zwruci informacje, w jakiej kolejności będa wywoływane klasy
+help(Car) # wyświetli dokumentacje razem z komentarzami. Skrót do opisów: Ctrl+Q
 
 
 #-----------------------------------------------------------------------------

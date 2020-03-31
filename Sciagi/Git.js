@@ -293,7 +293,7 @@ git merge --abort 					// przerywa łączenie (możliwe, gdy wystąpią konflikt
 git merge --continue 				// po rozwiązaniu konfliktów zapisuje zmiany
 git merge --revert 					// cofa wszystkie wprowadzone zmiany
 
-git rebase nazwaGalezi 				//Zaciągnięcie zmian z "nazwaGalezi" do aktywnej gałęzi
+git rebase nazwaGalezi 				//Zaciągnięcie zmian z "nazwaGalezi" do aktywnej gałęzi (jeszce nie do końca rozgryzłem to polecenie)
 
 
 //Przykład: Chce POŁĄCZYĆ develop z masterem, musze być na gałęzi develop i "pochłonąć" zmiany z master
