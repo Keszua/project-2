@@ -286,6 +286,7 @@ product2 = [{a:b} for a in listaA for b in listaB]	# wygeneruje listę słownik�
 product3 = [(a, b) for a in listaA for b in listaB if a % 2 == 1 and b % 2 == 0]
 product4 = {a: b for a in listaA for b in listaB}	#-> {0: 5, 1: 5, 2: 5, 3: 5, 4: 5, 5: 5}
 
+
 # generator:  
 gen = ((a,b) for a in listaA for b in listaB if a % 2 == 1 and b % 2 == 0)
 print(gen)			#= <generator object <genexpr> at 0x016879C8>
@@ -294,13 +295,53 @@ print(next(gen))	#= (1, 2)
 for x in gen:		#	Wypisywanie całej zawartości (po za tymi już wypisanymi poleceniem next() )
     print(x)
 
-#Ręczna petla, do wypisania generatora:
+#Ręczna petla, do wypisania generatora, lub zawartosci pliku:
 while True:
     try:
         print(next(gen))
     except StopIteration:
         print('To już wszystkie elementy')
         break
+
+# przykład stworzenia własnego iteratora:
+
+class MilonDays:
+    def __init__(self, year, month, day, maxdays):
+        self.date = dt.date(year, month, day)
+        self.maxdays = maxdays
+    def __next__(self):
+        if self.maxdays <= 0:
+            raise StopIteration()
+        ret = self.date
+        self.date += dt.timedelta(days=1) # po kazdym wywołaniu, zwiększam datę na następną
+        self.maxdays -= 1
+        return ret
+    def __getitem__(self, item):
+        if item <= self.maxdays:
+            return self.date + dt.timedelta(days=item)
+        else:
+            raise StopIteration()
+    def __iter__(self):
+        return self
+
+md = MilonDays(2000, 1, 1, 2500000)
+for d in md:
+    pass
+print(md[0], md[1])
+print(next(md))
+# gdybym nie miał zdefiniowanego "__next__", to mogę zrobić sztuczkę:
+it = iter(md)	#ale jest to nie zabezpieczone przed wywołaneim nie istniejącego elemenu
+print(next(it))
+
+#inna (krótsza) metoda na stworzenie generatorów 
+def MilonDays2(year, month, day, maxdays):
+    date = dt.date(year, month, day)
+    for i in range(maxdays):
+        yield(date + dt.timedelta(days=i))  # yield zamraża wartość "i"
+
+
+
+
 
 #-----------------------------------------------------------------------------
 funkcje
@@ -700,15 +741,13 @@ test_external("elo") 	#= Tekst z pliku zewnętrznego: elo
 Operacje na plikach:
 f = open("plik.txt", mode="a+")     # otwarcie pliku, w modzie otwórz lub stwórz i otwórz jeśli go nie ma
 									# "r" - tylko do odczytu, "w" - można zapisywać, "a" - tylko do zapisu, "x" - zgłosi głąd, gdy plik istnieje 
-print 
 f.write("Ddoany tekst ")            # wpisanie tekstu
 f.close()                           # zamknij plik
 
 f = open("plik.txt", mode="r")      # tyko odczyt
-x= f.read()							# odczytaj całą zawartość pliku
+data= f.read()						# odczytaj CAŁĄ zawartość pliku
 f.close()
-print(x)							# wypisze zawartość pliku
-
+print(data)							# wypisze zawartość pliku
 
 x= f.read(5)						# odczytaj pięć znaków. Uwaga! 
 									# Dla mode="r" kursor na poczatku, więc odczyta pierwze 5 znaków
@@ -721,6 +760,18 @@ y= f.readlines()					# czytamy plik w formie tablicy, gdzie każdya linijka to j
 y= f.readlines()[1]					# czytamy tylko 2-gą linijkę
 for line in f.readlines():			# wypisze wszsytkie linijki z pliku
     print(line.rstrip())			# .rstrip() usówa białe znaki (efekt jak z end="") jest też .strip() i .lstrip() 
+
+
+#metoda na przeglądanie pliku i wyciągnięcie z niego, tylko tego, co nas interesuje (bez wczytwyania zawartości do RAM)
+file = open("plik.txt")
+for line in file:
+    if line.startswith('ERROR'):
+        print(line)		# lub print(line.replace('\n',''))   aby pozbyć się enterów
+file.close()
+
+
+
+
 
 
 # do operacji na pikach zerknac tez na:
@@ -935,7 +986,7 @@ urllib.request.urlretrieve(url, path)	# polecenie to, wywoła ściągnięcie i z
 
 #-----------------------------------------------------------------------------
 Wyjątki
-#krótki przykład, sprawdzający, czy wprowadziliśmy element z listy:
+#krótki przykład, sprawdzający, czy wprowadziliśmy element z listy: film 123 (Python dla średnio zaawansowanych)
 clients = { "INFO" : 0.5, "SOFT" : 0.3, "OMEGA" : 0.2 }
 totalCost = 7200
 myClient = input("Podaj klienta:")
@@ -980,7 +1031,7 @@ class TooColdException(Exception):
 
 def celcius_to_kelvin(temp):
     if temp < -273.15:
-        raise TooColdException()     #wywołanie wyjątku
+        raise TooColdException('Błąd funkcji: celcius_to_kelvin(temp)')     #wywołanie wyjątku z komunikatem
     return temp + 273.15
 
 try:
@@ -999,6 +1050,21 @@ def celcius_to_kelvin(temp):
     return temp + 273.15
 
 print(celcius_to_kelvin(-300))
+
+# więcej o własnych wyjątkach w filmie 135 (Python dla średnio zaawansowanych)
+#-----------------------------------------------------------------------------
+netto = 1230
+brutto = 1300
+assert netto <= brutto, "Netto cannot be greter than brutto"  # może być bez komentarza
+
+# można zdefinowac zmienną środowiskową z poziomu konsoli:
+SET PYTHONOPTIMIZE=TRUE
+# po takim zabiegu, ignorowane sa polecenia assert
+
+
+
+
+
 
 
 #-----------------------------------------------------------------------------
@@ -1218,6 +1284,17 @@ print('NEW: {us.name}, Adres: {us.adress[city]}'.format(us=Data())) 		#= NEW: Jo
 print('NEW: {us.name}, Adres nr: {us.adress[street][Nr]}'.format(us=Data()))#= NEW: John Doe, Adres nr: 34
 print("NEW: {} ".format(Data()))  											# = NEW: John Doe
 print("NEW: {:dawaj-maila} ".format(Data()))  								#= NEW: Mail do John Doe: hejka@cos.com 
+
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+import sys
+sys.getsizeof(dates) # pokazuje, ile miejsca zajmuje obiekt 
+
+
+
+
+
 
 
 

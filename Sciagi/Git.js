@@ -164,7 +164,6 @@ git hash-object nazwaPliku.txt  	//zwraca kod pliku.
 
 
 
-
 //KASOWANIE I PRZYWRACANIE
 git checkout -- nazwaPliku  //cofnięcie zmin z "stage". Przywrócenie skasowanego pliku
 git checkout -- *.txt  		//Przywróci wszytkie pliki tekstowe
@@ -446,6 +445,10 @@ b) usuwamy go poleceniem:     git rm index.html
 // oraz : https://help.github.com/en/github/authenticating-to-github/removing-sensitive-data-from-a-repository
 git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch src/pages/GamePage.js' --prune-empty --tag-name-filter cat -- --all
 
+//opis ze strony: https://greywizard.com/pl/blog/article/20-hackowanie-gita
+git filter-branch --index-filter 'git rm --cached --ignore-unmatch ${UNSAFE_FILE}' ${FIRST_COMMIT}..HEAD
+git filter-branch --index-filter 'git rm --cached --ignore-unmatch comm/*.cpp.orig' d99a492..HEAD
+coś nie zadzaiłało
 
 
 // REACT i GitHub
