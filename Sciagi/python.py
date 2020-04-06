@@ -84,8 +84,8 @@ print("Tekst bazowy + %s %d" % ("doklejony1", 7)) #=  Tekst bazowy + doklejony1 
 %d - digital (dziesiętne)
 # to samo co wyżej:
 x = "Tekst bazowy  + {} {}"
-y = x.format("dolejony1", 7)
-print(y)		#= Tekst bazowy  + dolejony1 7
+y = x.format("doklejony1", 7)
+print(y)		#= Tekst bazowy  + doklejony1 7
 print("Tekst bazowy + {1} {0}".format("doklejony1", 7)) #=  Tekst bazowy +  7 doklejony1
 
 print("OLD: ->%10s<-" % ('test',))  			#= OLD: ->      test<-		Align right
@@ -135,6 +135,8 @@ workDay = [19, 21, 22, 21, 20, 22]
 workDayEn = list(enumerate(workDay)) #-> [(0, 19), (1, 21), (2, 22), (3, 21), (4, 20), (5, 22)]
 months = ['I', 'II', 'III', 'IV', 'V', 'VI']
 monthsDay = list(zip(months, workDay)) #-> [('I', 19), ('II', 21), ('III', 22), ('IV', 21), ('V', 20), ('VI', 22)]
+#gdy mamy róznej długości tablice, można skorzystac z bibioteki: import itertools  i wykonać:
+monthsDay = itertools.zip(months, workDay, fillvalue = 'unknown')
 for mon, day in monthsDay:
     print('Miesiac:', mon, 'dni:', day) #= Miesiac: I dni: 19 \ Miesiac: II dni: 21...
 for pos, (m, d) in enumerate(zip(months, workDay)):
@@ -145,7 +147,7 @@ for pos, (m, d) in enumerate(zip(months, workDay)):
 #-----------------------------------------------------------------------------
 #tuple - nie edytowalna lista
 produkty = ("mleko", "ser", "parówki")
-tup = 1, 2, 3 # totez jest tuple
+tup = 1, 2, 3 # to też jest tuple
 produkty = produkty + tup	# można robić konkatenacje, następuje stworzenie nowego tupla
 
 
@@ -165,9 +167,9 @@ s3 = list(s)				# zamiana zbioru na listę (na tablicę)
 #-----------------------------------------------------------------------------
 #dict (słowniki) -  analogicznie do obiektu w JS albo json
 person = {  "wiek" : 20, "imie" : "Anna" }
-print(person)           # wypisze cały obiekt
-print(person["imie"])   #= Anna
-print(person.get("wiek")) 	 #= zwróci 20 (gdy znajdzie) lub None gdy nie znajdzie
+print(person)           	# wypisze cały obiekt
+print(person["imie"])   	#= Anna
+print(person.get("wiek")) 	#= zwróci 20 (gdy znajdzie) lub None gdy nie znajdzie
 print(person.get("wiek", 5)) #= zwróci 20 (gdy znajdzie) lub 5 gdy nie znajdzie
 print('NEW: {imie}, lat: {wiek}'.format(**person)) 					#= NEW: Anna, lat: 20
 print('NEW: {quote[wiek]}, lat: {quote[imie]}'.format(quote=person))#= NEW: 20, lat: Anna
@@ -303,7 +305,7 @@ while True:
         print('To już wszystkie elementy')
         break
 
-# przykład stworzenia własnego iteratora:
+# Przykład stworzenia własnego iteratora:
 
 class MilonDays:
     def __init__(self, year, month, day, maxdays):
@@ -338,6 +340,32 @@ def MilonDays2(year, month, day, maxdays):
     date = dt.date(year, month, day)
     for i in range(maxdays):
         yield(date + dt.timedelta(days=i))  # yield zamraża wartość "i"
+
+#-----------------------------------------------------------------------------
+import itertools as it
+
+mylist = ['a', 'b', 'c', 'd']
+
+# kombinacje bez powtórzeń:
+for combination in it.combinations(mylist, 3): # przekazje listę, i  iloelementowe mają być kombinacje
+    print(combination)  # zacznie od ('a', 'b', 'c') i powstanei 4 tuple
+
+#wszystkie kombinacje z powtórzeniami
+for combination in it.combinations_with_replacement(mylist, 3): # przekazje listę, i  iloelementowe mają być kombinacje
+    print(combination)  # zacznie od ('a', 'a', 'a') i powstanie 20 tupli  [nie ma ('b', 'a', 'c')]
+
+#wszystkie permutacje z powtórzeniami (Kolejność się LICZY)
+for combination in it.permutations(mylist, 3): # przekazje listę, i  iloelementowe mają być kombinacje
+    print(combination)  # zacznie od ('a', 'b', 'c') i powstanie 24 tupli	[ jest ('b', 'a', 'c') ]
+
+#łączenie dwóch tablic. Każdy element z każdym:
+mylist = ['a', 'b', 'c', 'd']
+mylist2 = ['1', '2']
+for combination in it.product(mylist, mylist2): # przekazje listę, i  iloelementowe mają być kombinacje
+    print(combination)  # ('a', '1'), ('a', '2'), ('b', '1')...
+
+
+#więcej na filmiku 165 (Python dla średnio zaawansowanych)
 
 
 
@@ -769,7 +797,32 @@ for line in file:
         print(line)		# lub print(line.replace('\n',''))   aby pozbyć się enterów
 file.close()
 
+# przykałd 2 : Gdy mamy w pliku alarmy zapisane, rozdzielne dwukropkiem, np:  "ERROR: Not enough data invoices 2020"
+records = []
+file = open("plik.txt")
+for line in file:
+    if ':' in line:
+        type, action = line.rstrip("\n").split(':',1) # jednokrotne rozbicie ze wzgędu na znak dwukropka
+        record = (type, action)
+        records.append(record)
+file.close()
+print(records)		#= [('ERROR', ' Not enough data invoices 2020'), ('ERROR', ' Not enough data invoices 2020')]
 
+# przykałd 3 : to co wyżej, ale w formie generatora:
+def get_records(filepath):
+    print('--- opening file ---')
+    file = open(filepath)
+
+    for line in file:
+        if ':' in line:
+            type, action = line.rstrip("\n").split(':', 1)
+            record = (type, action)
+            yield record
+    print('--- closing file ---')
+    file.close()
+
+for record in get_records("plik.txt"):
+    print("The type is {} and the action is {}".format(record[0], record[1]))
 
 
 
@@ -974,6 +1027,18 @@ open(path, "w").close()					# torzy i zamyka plik
 #warunek na tworzenie pliku:
 sciezka = r'D:\Karolek\Web\Treningi\python\mydata.txt'
 result = os.path.isfile(sciezka) or open(sciezka, 'x').close()  #zwraca None gdy nie było pliku albo True gdy był
+
+#usuwanie pliku, zabespieczone, że gdy go nie ma, to nie wywala błędu: tez ma zawierać: import os
+from contextlib import suppress
+with suppress(FileNotFoundError):
+    os.remove('not_used-file.txt')
+
+# przechwycenie tego co ma się wyświetlać w konsoli i zapis wyników do pliku:
+from contextlib import redirect_stdout
+f = open(r'log.txt', 'w')
+with redirect_stdout(f):
+    print('Hello')
+
 
 
 #-----------------------------------------------------------------------------
@@ -1286,6 +1351,64 @@ print("NEW: {} ".format(Data()))  											# = NEW: John Doe
 print("NEW: {:dawaj-maila} ".format(Data()))  								#= NEW: Mail do John Doe: hejka@cos.com 
 
 #-----------------------------------------------------------------------------
+# Context manager
+# Na wzór:
+with open("plik2*.txt", 'w+') as file:
+    file.writelines("Sucess")
+
+# Własna, prosta klasa with: film 168 (Python dla średnio zaawansowanych)
+class time_measure:
+	def __init__(self):
+		pass
+    def __enter__(self):
+        print('entering...')
+        self.__start = time.time()
+        return self
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print('exiting...')
+        self.__stop = time.time()
+        self.__difference = self.__stop - self.__start
+        print("Execute time: {}".format(self.__difference))
+
+with time_measure() as my_timer:
+    time.sleep(3)
+
+# inny sposób za pomocą biblioteki contextlib:
+from contextlib import contextmanager
+
+class Door:
+    def __init__(self, where):
+        self.where = where
+    def open(self):
+        print("Open door to the {}".format(self.where))
+    def close(self):
+        print("Closing door to hte {}".format(self.where))
+
+@contextmanager
+def OpenAndClose(obj):
+    obj.open()
+    yield obj
+    obj.close()
+
+with OpenAndClose(Door('next room')) as door:
+    print("The dore is to the {}".format(door.where))
+# uzyskany efekt:
+# Open door to the next room
+# The dore is to the next room
+# Closing door to hte next room
+
+#podobny efekt, uzyskamy przez bibloekę:
+from urllib.request import urlopen
+from contextlib import closing
+
+with closing(urlopen('http://www.kursyonline24.eu')) as page:
+	for line in page:
+		print(line)
+
+
+
+
+#-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 import sys
@@ -1375,6 +1498,17 @@ while True:
 
 
 
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+PANDAS
+#   ####    #   #   # #####    #    ####
+#   #   #  # #  ##  #  #   #  # #  #    
+#   #   #  # #  ##  #  #   #  # #  #    
+#   ####  #   # # # #  #   # #   #  ### 
+#   #     ##### #  ##  #   # #####     #
+#   #     #   # #  ##  #   # #   #     #
+#   #     #   # #   # #####  #   # #### 
 
 
 
@@ -1396,7 +1530,7 @@ nvim  				#v0.4.4				jakiś edytor tekstowy
 
 
 
-Po stwworzeniu pliku np: hello.py
+Po stworzeniu pliku np: hello.py
 Wpisujemy teść:
 print("Hejka")
 uruchamiamy zieloną strzałką
@@ -1405,4 +1539,25 @@ uruchamiamy zieloną strzałką
 
 
 #-----------------------------------------------------------------------------
+#Mój skrypcik do generowania napisów:
+tab = [
+{'A': '  #  ', 'B': '#### ', 'C': ' ### ', 'D': '##### ', 'E': '#####', 'P': '#### ', 'N': '#   #', 'S': ' ####'},
+{'A': ' # # ', 'B': '#   #', 'C': '#   #', 'D': ' #   #', 'E': '#    ', 'P': '#   #', 'N': '##  #', 'S': '#    '},
+{'A': ' # # ', 'B': '#   #', 'C': '#    ', 'D': ' #   #', 'E': '#    ', 'P': '#   #', 'N': '##  #', 'S': '#    '},
+{'A': '#   #', 'B': '#### ', 'C': '#    ', 'D': ' #   #', 'E': '#### ', 'P': '#### ', 'N': '# # #', 'S': ' ### '},
+{'A': '#####', 'B': '#   #', 'C': '#    ', 'D': ' #   #', 'E': '#    ', 'P': '#    ', 'N': '#  ##', 'S': '    #'},
+{'A': '#   #', 'B': '#   #', 'C': '#   #', 'D': ' #   #', 'E': '#    ', 'P': '#    ', 'N': '#  ##', 'S': '    #'},
+{'A': '#   #', 'B': '#### ', 'C': ' ### ', 'D': '##### ', 'E': '#####', 'P': '#    ', 'N': '#   #', 'S': '#### '},
+]
 
+def wypisz(napis):
+    indeks = list(napis)
+    print(indeks)
+    for t in tab:
+        line = ['#  ']
+        for i in indeks:
+            line.append(t[i])
+        line2 = ' '.join(line)
+        print(line2)
+
+wypisz('PANDAS')

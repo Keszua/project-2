@@ -990,7 +990,7 @@ grid - łaczy grid-areas, grid-template-rows i grid-auto-columns
 //  ####   ###   ###    #   ####    #   #   # #   # #
 
 
-1. wczhodzimy na https://getbootstrap.com/
+1. wchodzimy na https://getbootstrap.com/
 Dokładniej: Geting started -> introduction https://getbootstrap.com/docs/4.4/getting-started/introduction/
 Aby szybko rozpoczać pracę, jest tam gotowy "Starter template"
 
