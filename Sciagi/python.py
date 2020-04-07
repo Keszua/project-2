@@ -166,6 +166,51 @@ s3 = list(s)				# zamiana zbioru na listę (na tablicę)
 
 #-----------------------------------------------------------------------------
 #dict (słowniki) -  analogicznie do obiektu w JS albo json
++----------------------+---------------------------+
+| Operacja             | Znaczenie                 |
++----------------------+---------------------------+
+| D = {} ; D = dict()  | pusty słownik             |
+| D = {1: "a", 5: "e"} | słownik (dwa klucze)      |
+| len(D)               | liczebność                |
+| D[key] = value       | dodanie pozycji           |
+| D[key]               | dostęp do wartości        |
+| D = dict(T)          | tworzenie z krotki (pary) |
+| D2 = dict(D1)        | kopiowanie słownika       |
+| D2 = D1.copy()       | stary sposób kopiowania   |
+| key in D             | zawieranie (bool)         |
+| key not in D         |                           |
+| D.has_key(key)       | dawny sposób (2.x)        |
+| for key in D: pass   | iteracja po kluczach      |
+| del D[key]           | usuwanie klucza           |
+| del D                | usuwanie słownika         |
++----------------------+---------------------------+
+
+D = {}                    # pusty słownik - inicjalizacja
+D['one'] = 'jeden'        # dodawanie kluczy
+D['two'] = 'dwa'
+D['three'] = 'trzy'
+
+# Metody słownika bez parametrów.
+D.keys()            # [k1, k2, k3]
+D.values()          # [v1, v2, v3]
+D.items()           # [(k1, v1), (k2, v2), (k3, v3)]
+
+# Metody słownika z parametrami.
+D.has_key('one')    # obecnie zalecane: 'one' in D
+
+# Kopiowanie słownika (shallow copy).
+D_alias = D                   # tylko kopiowanie adresu
+D_copy1 = D.copy()            # metoda słowników do kopiowania
+D_copy2 = dict(D)             # najprostszy sposób
+id(D), id(D_alias), id(D_cp), id(D_cp2)
+
+# Usuwanie elementu ze słownika.
+del D['two']
+
+# Konwersja listy krotek do dict.
+D = dict([("a", 1), ("b", 2), ("c", 3), ("d", 4)])
+
+
 person = {  "wiek" : 20, "imie" : "Anna" }
 print(person)           	# wypisze cały obiekt
 print(person["imie"])   	#= Anna
@@ -196,11 +241,7 @@ monthsDay = dict(zip(months, workDay)) 		#-> {'I': 19, 'II': 21, 'III': 22, 'IV'
 for i in monthsDay:
     print('Key:', i, 'val:', monthsDay[i]) 	#= Key: I val: 19...
 
-instructions = {}
-instructions['first name'] = 'john'
-instructions['last name'] = 'walker'
-print(instructions)						#= {'first name': 'john', 'last name': 'walker'}
-
+Ciekawa ściaga o słownikach: http://users.uj.edu.pl/~ufkapano/algorytmy/lekcja02/dict.html
 
 
 #-----------------------------------------------------------------------------
@@ -457,6 +498,17 @@ print(a)	#= 1	Przed kmpilacja, zmienna "a" jest nie znana
 
 
 #-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+#####          #                                                             
+ #   #         #                                                    #        
+ #   #   ###   #   #   ###   # ###   ###   #     #   ####   ####         ### 
+ #   #  #   #  # #    #   #  ##     #   #  #     #       #  #   #  ##   #   #
+ #   #  #####  ##     #   #  #      #   #  #  #  #   #####  #   #   #   #####
+ #   #  #      # #    #   #  #      #   #  # # # #  #    #  #   #   #   #    
+#####    ###   #   #   ###   #       ###    #   #    ### #  #   #  ###   ### 
+
+
 wraper i dekorowanie funkcji:  -filmik 60 (Python dla średnio zaawansowanych)
 import time
 import functools	# to urzywamy gdy dekorujemy 
@@ -571,6 +623,14 @@ https://www.codementor.io/sheena/advanced-use-python-decorators-class-function-d
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
+   #     #               #                       
+   ##   ##           #   #       #               
+   # # # #   ####        #           ####    ####
+   #  #  #       #  ##   #      ##   #   #  #   #
+   #     #   #####   #   #       #   #   #  #   #
+   #     #  #    #   #   #   #   #   #   #   ####
+   #     #   ### #  ###   ###   ###  #   #      #
+                                            #### 
 Wysyłanie maila
 1. W wyszukuwartkę wpisz: gmail less secure apps,  aby uzyskać pomoc.
 2. Po zalogowaniu na swoje konto, trzeba wejsć w "Security"
@@ -766,10 +826,27 @@ test_external("elo") 	#= Tekst z pliku zewnętrznego: elo
 
 
 #-----------------------------------------------------------------------------
+   ####   #           #         
+   #   #  #       #   #       # 
+   #   #  #           #   #     
+   ####   #      ##   # #    ## 
+   #      #       #   ##      # 
+   #      #   #   #   # #     # 
+   #       ###   ###  #   #  ###
 Operacje na plikach:
 f = open("plik.txt", mode="a+")     # otwarcie pliku, w modzie otwórz lub stwórz i otwórz jeśli go nie ma
-									# "r" - tylko do odczytu, "w" - można zapisywać, "a" - tylko do zapisu, "x" - zgłosi głąd, gdy plik istnieje 
-f.write("Ddoany tekst ")            # wpisanie tekstu
+									# "x" - zgłosi głąd, gdy plik istnieje 
+									# "r" (czytanie), tylko do odczytu
+									# "w" (pisanie; kasowanie poprzedniej zawartości; utworzy plik, gdy nie istniał),
+									# "a" (dopisywanie; poprzednia zawartość pozostaje),  tylko do zapisu
+									# "r+" (czytanie i pisanie; poprzednia zawartość pozostaje),
+									# "w+" (czytanie i pisanie; kasowanie poprzedniej zawartości),
+									# "a+" (czytanie i pisanie; poprzednia zawartość pozostaje),
+									# "b" (dodatek do poprzednich, tryb binarny, Windows, Macintosh),
+									# "U" (dodatek do poprzednich, uniwersalny translator nowych wierszy).
+									# "x" - zgłosi głąd, gdy plik istnieje 
+
+f.write("Dodany tekst ")            # wpisanie tekstu
 f.close()                           # zamknij plik
 
 f = open("plik.txt", mode="r")      # tyko odczyt
@@ -788,6 +865,9 @@ y= f.readlines()					# czytamy plik w formie tablicy, gdzie każdya linijka to j
 y= f.readlines()[1]					# czytamy tylko 2-gą linijkę
 for line in f.readlines():			# wypisze wszsytkie linijki z pliku
     print(line.rstrip())			# .rstrip() usówa białe znaki (efekt jak z end="") jest też .strip() i .lstrip() 
+
+# ciekawa ściaga: http://users.uj.edu.pl/~ufkapano/algorytmy/lekcja02/file.html
+
 
 
 #metoda na przeglądanie pliku i wyciągnięcie z niego, tylko tego, co nas interesuje (bez wczytwyania zawartości do RAM)
@@ -931,123 +1011,6 @@ def export_1_cake_to_html(obj, path):
 export_1_cake_to_html(cake01, 'c:/temp/cake01.html')
 
 
-#-----------------------------------------------------------------------------
-#-----------------------------------------------------------------------------
-#-----------------------------------------------------------------------------
-# biblioteka time
-import time
-
-time.sleep(5)   # zawiesza program na 5 sekund
-time.time()		# aktualny czas ( w sekundach )
-
-
-# przykładowy program, który wypisze 5 razy napis i wyjdzie z petli:
-timer1 = time.time()
-timer5 = time.time()
-while True:
-    if time.time() - timer1 > 1:
-        timer1 = time.time()
-        print("1 sek")
-    if time.time() - timer5 > 5: break
-
-#jak zmierzyć czas wykonania się programu?
-start = time.time()        
-for i in range(1000): jakieś operacje...
-czasWykonania = time.time() - start       
- 
-#-----------------------------------------------------------------------------
-# biblioteka datetime
-# W PyCharm dzialaja ponizsze 3 rozne sposoby: 
-import datetime as dt
-today_weekday = dt.date.today().strftime("%A")	# aktualny dzien tygodnia - nazwy
-today_weekday = dt.date.today().strftime("%w")	# aktualny dzien tygodnia - cyfry, gdzie: 0-niedziela, 1-pon
-
-import datetime
-teraz = datetime.datetime.now()
-
-from datetime import datetime
-teraz = datetime.now()
-
-print(teraz)	#= 2020-03-16 14:24:38.447862
-print(str(teraz.hour)+":"+str(teraz.minute)+":"+str(teraz.second))	#= 14:24:38
-print(teraz.strftime("%H:%M:%S"))									#= 14:24:38
-print(teraz.strftime("%d.%m.%y"))									#= 16.03.20
-%I - godzina w systemie 12 godzinnym
-%p - wypisze AM albo PM
-%b - miesiąc skrucona nazwa
-%B - miesiąc pełna nazwa
-%Y - rok 2020 (cztery znaki)
-%y - rok 20   (dwa znaki)
-# więcej na: https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
-
-#Przykład: Obliczanie różnic w czasie:
-start = datetime(2019, 1, 1, 0, 0, 0)
-end  = datetime.now()
-duration = end - start  					#-> 84 days, 19:26:32.285230
-duration_in_s = duration.total_seconds()	#-> 7327592.28523
-min = divmod(duration_in_s, 60)[0]			#-> 122126.0  czas w minutach
-hour = divmod(duration_in_s, 3600)[0]		#-> 2035.0    czas w godzinach
-day = divmod(duration_in_s, 86400)[0]		#-> 84.0      czas w dniach
-
-#-----------------------------------------------------------------------------
-# biblioteka os
-import os
-
-print(os.getcwd())				# pobiera ścieżkę do miejsca gdzie jest plik ze skryptem
-
-lista = os.listdir("D:/Klamoty/Web/Git/book/python")	#= ['main.py', 'modul.py', 'plik.txt', '__pycache__']
-lista = os.listdir(r"D:\Klamoty\Web\Git\book\python")
-lista = os.listdir(".")									#= ['main.py', 'modul.py', 'plik.txt', '__pycache__'] 
-														#= to samo, ponieważ wypisało zawartość folderu ze skryptem	
-
-
-for el in os.listdir("."):
-    if os.path.isfile(el): 						#= wynajduje pliki
-        print("{} jest plikiem".format(el))
-    if os.path.isdir(el): 						#= wnajduje foldery
-        print("{} jest folderem".format(el))
-
-os.mkdir("New folder")						# tworzy nowy folder
-os.rename("pliki", "folder")				# zmiana nazwy pliku lub folderu
-os.remove("nowy plik.txt")					# usuwanie pliku lub folderu (krzyczy o jakiś dostęp)
-os.rmdir("folder")							# usuwanie folderu
-os.makedirs(path, "pliki/01")				# tworzy ścieżkę folderów
-path = os.path.join(data_dir, file_name)	# łączenie ścieżek
-path = "pliki/01/dane.txt"
-print(os.path.dirname(path))				#= pliki/01   Wypisze tylko foldery
-print(os.path.basename(path))				#= dane.txt   Wypisze tylko plik
-print(os.path.abspath(path))				#= D:\Klamoty\Web\Git\book\python\pliki\01\dane.txt  ściezka absolutna
-
-# tworzenie pliku na podstawie podanej śecieżki (trzeba odrożnić foldery od plików)
-path = "pliki/01/dane.txt"
-dir_path = os.path.dirname(path)		# odziela same foldery
-os.makedirs(dir_path)					# tworzy same foldery 
-open(path, "w").close()					# torzy i zamyka plik
-
-#warunek na tworzenie pliku:
-sciezka = r'D:\Karolek\Web\Treningi\python\mydata.txt'
-result = os.path.isfile(sciezka) or open(sciezka, 'x').close()  #zwraca None gdy nie było pliku albo True gdy był
-
-#usuwanie pliku, zabespieczone, że gdy go nie ma, to nie wywala błędu: tez ma zawierać: import os
-from contextlib import suppress
-with suppress(FileNotFoundError):
-    os.remove('not_used-file.txt')
-
-# przechwycenie tego co ma się wyświetlać w konsoli i zapis wyników do pliku:
-from contextlib import redirect_stdout
-f = open(r'log.txt', 'w')
-with redirect_stdout(f):
-    print('Hello')
-
-
-
-#-----------------------------------------------------------------------------
-# biblioteka urllib
-import urllib.request
-url = 'http://www.mobilo24.eu/'
-path = D:\Karolek\Web\Treningi\python\mobilo.html
-urllib.request.urlretrieve(url, path)	# polecenie to, wywoła ściągnięcie i zapisanie zawartości strony do wskazanego pliku
-
 
 #-----------------------------------------------------------------------------
 Wyjątki
@@ -1136,6 +1099,14 @@ SET PYTHONOPTIMIZE=TRUE
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 Klasy
+   #   #  #                          
+   #  #   #                          
+   # #    #       ####    ###   #   #
+   ##     #           #  #      #   #
+   # #    #       #####   ###    # # 
+   #  #   #   #  #    #      #    #  
+   #   #   ###    ### #   ###    #   
+                                #  
 
 Pusta klasa:
 class TooColdException(Exception):
@@ -1351,6 +1322,14 @@ print("NEW: {} ".format(Data()))  											# = NEW: John Doe
 print("NEW: {:dawaj-maila} ".format(Data()))  								#= NEW: Mail do John Doe: hejka@cos.com 
 
 #-----------------------------------------------------------------------------
+  ###                #                 #                                                      
+ #   #               #                 #                                                      
+ #      ###  ####  #####  ###  #   # #####       ### ##   ####  ####   ####   ####  ###  # ###
+ #     #   # #   #   #   #   #  # #    #         #  #  #      # #   #      # #   # #   # ##   
+ #     #   # #   #   #   #####   #     #         #  #  #  ##### #   #  ##### #   # ##### #    
+ #   # #   # #   #   #   #      # #    #         #  #  # #    # #   # #    #  #### #     #    
+  ###   ###  #   #    ##  ###  #   #    ##       #  #  #  ### # #   #  ### #     #  ###  #    
+                                                                             ####              
 # Context manager
 # Na wzór:
 with open("plik2*.txt", 'w+') as file:
@@ -1408,11 +1387,145 @@ with closing(urlopen('http://www.kursyonline24.eu')) as page:
 
 
 
+
+
+
+
+
+
+
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+   ####        #      #                    #           #         
+   #   #   #   #      #       #            #           #       # 
+   #   #       ###    #            ###   #####   ###   #   #     
+   ####   ##   #   #  #      ##   #   #    #    #   #  # #    ## 
+   #   #   #   #   #  #       #   #   #    #    #####  ##      # 
+   #   #   #   #   #  #   #   #   #   #    #    #      # #     # 
+   ####   ###  ####    ###   ###   ###      ##   ###   #   #  ###
+# biblioteka time
+import time
+
+time.sleep(5)   # zawiesza program na 5 sekund
+time.time()		# aktualny czas ( w sekundach )
+
+
+# przykładowy program, który wypisze 5 razy napis i wyjdzie z petli:
+timer1 = time.time()
+timer5 = time.time()
+while True:
+    if time.time() - timer1 > 1:
+        timer1 = time.time()
+        print("1 sek")
+    if time.time() - timer5 > 5: break
+
+#jak zmierzyć czas wykonania się programu?
+start = time.time()        
+for i in range(1000): jakieś operacje...
+czasWykonania = time.time() - start       
+ 
+#-----------------------------------------------------------------------------
+# biblioteka datetime
+# W PyCharm dzialaja ponizsze 3 rozne sposoby: 
+import datetime as dt
+today_weekday = dt.date.today().strftime("%A")	# aktualny dzien tygodnia - nazwy
+today_weekday = dt.date.today().strftime("%w")	# aktualny dzien tygodnia - cyfry, gdzie: 0-niedziela, 1-pon
+
+import datetime
+teraz = datetime.datetime.now()
+
+from datetime import datetime
+teraz = datetime.now()
+
+print(teraz)	#= 2020-03-16 14:24:38.447862
+print(str(teraz.hour)+":"+str(teraz.minute)+":"+str(teraz.second))	#= 14:24:38
+print(teraz.strftime("%H:%M:%S"))									#= 14:24:38
+print(teraz.strftime("%d.%m.%y"))									#= 16.03.20
+%I - godzina w systemie 12 godzinnym
+%p - wypisze AM albo PM
+%b - miesiąc skrucona nazwa
+%B - miesiąc pełna nazwa
+%Y - rok 2020 (cztery znaki)
+%y - rok 20   (dwa znaki)
+# więcej na: https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
+
+#Przykład: Obliczanie różnic w czasie:
+start = datetime(2019, 1, 1, 0, 0, 0)
+end  = datetime.now()
+duration = end - start  					#-> 84 days, 19:26:32.285230
+duration_in_s = duration.total_seconds()	#-> 7327592.28523
+min = divmod(duration_in_s, 60)[0]			#-> 122126.0  czas w minutach
+hour = divmod(duration_in_s, 3600)[0]		#-> 2035.0    czas w godzinach
+day = divmod(duration_in_s, 86400)[0]		#-> 84.0      czas w dniach
+
+#-----------------------------------------------------------------------------
+# biblioteka os
+import os
+
+print(os.getcwd())				# pobiera ścieżkę do miejsca gdzie jest plik ze skryptem
+
+lista = os.listdir("D:/Klamoty/Web/Git/book/python")	#= ['main.py', 'modul.py', 'plik.txt', '__pycache__']
+lista = os.listdir(r"D:\Klamoty\Web\Git\book\python")
+lista = os.listdir(".")									#= ['main.py', 'modul.py', 'plik.txt', '__pycache__'] 
+														#= to samo, ponieważ wypisało zawartość folderu ze skryptem	
+
+
+for el in os.listdir("."):
+    if os.path.isfile(el): 						#= wynajduje pliki
+        print("{} jest plikiem".format(el))
+    if os.path.isdir(el): 						#= wnajduje foldery
+        print("{} jest folderem".format(el))
+
+os.mkdir("New folder")						# tworzy nowy folder
+os.rename("pliki", "folder")				# zmiana nazwy pliku lub folderu
+os.remove("nowy plik.txt")					# usuwanie pliku lub folderu (krzyczy o jakiś dostęp)
+os.rmdir("folder")							# usuwanie folderu
+os.makedirs(path, "pliki/01")				# tworzy ścieżkę folderów
+path = os.path.join(data_dir, file_name)	# łączenie ścieżek
+path = "pliki/01/dane.txt"
+print(os.path.dirname(path))				#= pliki/01   Wypisze tylko foldery
+print(os.path.basename(path))				#= dane.txt   Wypisze tylko plik
+print(os.path.abspath(path))				#= D:\Klamoty\Web\Git\book\python\pliki\01\dane.txt  ściezka absolutna
+
+# tworzenie pliku na podstawie podanej śecieżki (trzeba odrożnić foldery od plików)
+path = "pliki/01/dane.txt"
+dir_path = os.path.dirname(path)		# odziela same foldery
+os.makedirs(dir_path)					# tworzy same foldery 
+open(path, "w").close()					# torzy i zamyka plik
+
+#warunek na tworzenie pliku:
+sciezka = r'D:\Karolek\Web\Treningi\python\mydata.txt'
+result = os.path.isfile(sciezka) or open(sciezka, 'x').close()  #zwraca None gdy nie było pliku albo True gdy był
+
+#usuwanie pliku, zabespieczone, że gdy go nie ma, to nie wywala błędu: tez ma zawierać: import os
+from contextlib import suppress
+with suppress(FileNotFoundError):
+    os.remove('not_used-file.txt')
+
+# przechwycenie tego co ma się wyświetlać w konsoli i zapis wyników do pliku:
+from contextlib import redirect_stdout
+f = open(r'log.txt', 'w')
+with redirect_stdout(f):
+    print('Hello')
+
+
+
+#-----------------------------------------------------------------------------
+# biblioteka urllib
+import urllib.request
+url = 'http://www.mobilo24.eu/'
+path = D:\Karolek\Web\Treningi\python\mobilo.html
+urllib.request.urlretrieve(url, path)	# polecenie to, wywoła ściągnięcie i zapisanie zawartości strony do wskazanego pliku
+
+
 #-----------------------------------------------------------------------------
 import sys
 sys.getsizeof(dates) # pokazuje, ile miejsca zajmuje obiekt 
+
+
+
+
 
 
 
@@ -1426,6 +1539,14 @@ sys.getsizeof(dates) # pokazuje, ile miejsca zajmuje obiekt
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 PyGame na postawie filmiku: https://www.youtube.com/watch?v=tnq0whNwhZE&t=159s
+   ####           ###                         
+   #   #         #   #                        
+   #   #  #   #  #       ####   ### ##    ### 
+   ####   #   #  #           #  #  #  #  #   #
+   #       # #   #  ##   #####  #  #  #  #####
+   #        #    #   #  #    #  #  #  #  #    
+   #       #      ###    ### #  #  #  #   ### 
+          #                                   
 
 Trzeba zainstalować PyGame:
 W PyCharm trzeba wejść: 
@@ -1502,13 +1623,55 @@ while True:
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 PANDAS
-#   ####    #   #   # #####    #    ####
-#   #   #  # #  ##  #  #   #  # #  #    
-#   #   #  # #  ##  #  #   #  # #  #    
-#   ####  #   # # # #  #   # #   #  ### 
-#   #     ##### #  ##  #   # #####     #
-#   #     #   # #  ##  #   # #   #     #
-#   #     #   # #   # #####  #   # #### 
+ ####     #    #   #  #####     #     ### 
+ #   #   # #   ##  #   #   #   # #   #   #
+ #   #   # #   ##  #   #   #   # #   #    
+ ####   #   #  # # #   #   #  #   #   ### 
+ #      #####  #  ##   #   #  #####      #
+ #      #   #  #  ##   #   #  #   #  #   #
+ #      #   #  #   #  #####   #   #   ### 
+
+Aby korzystać z pandas, potrzebne jest wiele bibliotek, takich jak:
+- https://pandas.pydata.org/
+- https://numpy.org/
+- https://matplotlib.org/
+
+To wszystko jest zawarte w jednej dystrybucji: 
+https://anaconda.org/
+Pobieranie ze strony: https://www.anaconda.com/distribution/
+
+Po zainstalowaniu, odpalam Jupyter Notebook.
+Uruchomi się lokalny serwer i odpali się strona: http://localhost:8888/tree
+Aby uruchomić pierwszy skrypt: New -> Python 3
+
+
+
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+WEB
+
+#kurs z filmiku: https://www.youtube.com/watch?v=zuxzE7--RYM
+Uruchomienie jakiejś tronki z biblioteki django
+1. Po stworzeniu nowego projektu: File -> New project...
+2. Instaluje przez konsolę: pip install django
+	W cmd powinno działać polecenie: python -m django --version
+3. W konsoli (w PyCharm) wpisuje: django-admin startproject DEMOPROJECT
+4. wejsć do folderu: cd DEMOPROJECT
+5. Wpisać komendę: python manage.py runserver
+6. Powinien uruchomić się lokalny serwer. Mozna na neigo wejść, naciskając http://127.0.0.1:8000/
+7. Kończymy pracę lokalnego serwera. I tworzymy swój projekt poleceniem:
+	python manage.py startapp DEMOAPP
+8. Pojawi się nowy, stworzony folder.
+9. W dalszej cześci, program jest pisany w pliku views.py ...
+
+
+
+
+
+
+
+
 
 
 
@@ -1517,7 +1680,7 @@ PANDAS
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #kurs RestAPIPython
-W kursie korzyta z narzedzi:
+W kursie korzyta z narzędzi:
 pyenv 				#version 1.2.11
 docker 				#version 18.09.6    coś do baz danych, uruchomi jakieś kontenery
 docker-compose    	#version 1.24.0		uruchomienie bazy danych
@@ -1538,26 +1701,128 @@ uruchamiamy zieloną strzałką
 
 
 
+#fajna stronak ze ściagami: http://users.uj.edu.pl/~ufkapano/algorytmy/
+#jakiś przykład prostego czata na pythonie: https://mmazurek.dev/python-na-frontendzie/
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #Mój skrypcik do generowania napisów:
 tab = [
-{'A': '  #  ', 'B': '#### ', 'C': ' ### ', 'D': '##### ', 'E': '#####', 'P': '#### ', 'N': '#   #', 'S': ' ####'},
-{'A': ' # # ', 'B': '#   #', 'C': '#   #', 'D': ' #   #', 'E': '#    ', 'P': '#   #', 'N': '##  #', 'S': '#    '},
-{'A': ' # # ', 'B': '#   #', 'C': '#    ', 'D': ' #   #', 'E': '#    ', 'P': '#   #', 'N': '##  #', 'S': '#    '},
-{'A': '#   #', 'B': '#### ', 'C': '#    ', 'D': ' #   #', 'E': '#### ', 'P': '#### ', 'N': '# # #', 'S': ' ### '},
-{'A': '#####', 'B': '#   #', 'C': '#    ', 'D': ' #   #', 'E': '#    ', 'P': '#    ', 'N': '#  ##', 'S': '    #'},
-{'A': '#   #', 'B': '#   #', 'C': '#   #', 'D': ' #   #', 'E': '#    ', 'P': '#    ', 'N': '#  ##', 'S': '    #'},
-{'A': '#   #', 'B': '#### ', 'C': ' ### ', 'D': '##### ', 'E': '#####', 'P': '#    ', 'N': '#   #', 'S': '#### '},
+{'A': '  #  ', 'B': '#### ', 'C': ' ### ', 'D': '##### ', 'E': '#####', 'F': '#####', 'G': ' ### ', 'H': '#   #'},
+{'A': ' # # ', 'B': '#   #', 'C': '#   #', 'D': ' #   #', 'E': '#    ', 'F': '#    ', 'G': '#   #', 'H': '#   #'},
+{'A': ' # # ', 'B': '#   #', 'C': '#    ', 'D': ' #   #', 'E': '#    ', 'F': '#    ', 'G': '#    ', 'H': '#   #'},
+{'A': '#   #', 'B': '#### ', 'C': '#    ', 'D': ' #   #', 'E': '#### ', 'F': '#### ', 'G': '#    ', 'H': '#####'},
+{'A': '#####', 'B': '#   #', 'C': '#    ', 'D': ' #   #', 'E': '#    ', 'F': '#    ', 'G': '#  ##', 'H': '#   #'},
+{'A': '#   #', 'B': '#   #', 'C': '#   #', 'D': ' #   #', 'E': '#    ', 'F': '#    ', 'G': '#   #', 'H': '#   #'},
+{'A': '#   #', 'B': '#### ', 'C': ' ### ', 'D': '##### ', 'E': '#####', 'F': '#    ', 'G': ' ### ', 'H': '#   #'},
+{'A': '     ', 'B': '     ', 'C': '     ', 'D': '      ', 'E': '     ', 'F': '     ', 'G': '     ', 'H': '     '},
+]
+tab2 = [
+{'I': '###', 'J': '#####', 'K': '#   #', 'L': '#    ', 'M': '#     #', 'N': '#   #', 'O': ' ### ', 'P': '#### '},
+{'I': ' # ', 'J': '    #', 'K': '#  # ', 'L': '#    ', 'M': '##   ##', 'N': '##  #', 'O': '#   #', 'P': '#   #'},
+{'I': ' # ', 'J': '    #', 'K': '# #  ', 'L': '#    ', 'M': '# # # #', 'N': '##  #', 'O': '#   #', 'P': '#   #'},
+{'I': ' # ', 'J': '    #', 'K': '##   ', 'L': '#    ', 'M': '#  #  #', 'N': '# # #', 'O': '#   #', 'P': '#### '},
+{'I': ' # ', 'J': '    #', 'K': '# #  ', 'L': '#    ', 'M': '#     #', 'N': '#  ##', 'O': '#   #', 'P': '#    '},
+{'I': ' # ', 'J': '#   #', 'K': '#  # ', 'L': '#    ', 'M': '#     #', 'N': '#  ##', 'O': '#   #', 'P': '#    '},
+{'I': '###', 'J': ' ### ', 'K': '#   #', 'L': '#####', 'M': '#     #', 'N': '#   #', 'O': ' ### ', 'P': '#    '},
+{'I': '   ', 'J': '     ', 'K': '     ', 'L': '     ', 'M': '       ', 'N': '     ', 'O': '     ', 'P': '     '},
+]
+tab3 = [
+{'R': '#### ', 'S': ' ### ', 'T': '#####', 'U': '#    #', 'W': '#     #', 'Y': '#   #', 'Z': '#####'},
+{'R': '#   #', 'S': '#   #', 'T': '  #  ', 'U': '#    #', 'W': '#     #', 'Y': '#   #', 'Z': '    #'},
+{'R': '#   #', 'S': '#    ', 'T': '  #  ', 'U': '#    #', 'W': '#     #', 'Y': ' # # ', 'Z': '   # '},
+{'R': '#### ', 'S': ' ### ', 'T': '  #  ', 'U': '#    #', 'W': '#     #', 'Y': ' # # ', 'Z': '  #  '},
+{'R': '# #  ', 'S': '    #', 'T': '  #  ', 'U': '#    #', 'W': '#  #  #', 'Y': '  #  ', 'Z': ' #   '},
+{'R': '#  # ', 'S': '#   #', 'T': '  #  ', 'U': '#    #', 'W': '# # # #', 'Y': '  #  ', 'Z': '#    '},
+{'R': '#   #', 'S': ' ### ', 'T': '  #  ', 'U': ' #### ', 'W': ' #   # ', 'Y': '  #  ', 'Z': '#####'},
+{'R': '     ', 'S': '     ', 'T': '     ', 'U': '      ', 'W': '       ', 'Y': '     ', 'Z': '     '},
+]
+tab4 = [
+{' ': '     ', 'X': '#     #'},
+{' ': '     ', 'X': ' #   # '},
+{' ': '     ', 'X': '  # #  '},
+{' ': '     ', 'X': '   #   '},
+{' ': '     ', 'X': '  # #  '},
+{' ': '     ', 'X': ' #   # '},
+{' ': '     ', 'X': '#     #'},
+{' ': '     ', 'X': '       '},
+]
+tab5 = [
+{'a': '      ', 'b': '#    ', 'c': '     ', 'd': '     #', 'e': '     ', 'f': '  ###', 'g': '     ', 'h': '#    '},
+{'a': '      ', 'b': '#    ', 'c': '     ', 'd': '     #', 'e': '     ', 'f': ' #   ', 'g': '     ', 'h': '#    '},
+{'a': ' #### ', 'b': '###  ', 'c': ' ### ', 'd': ' #####', 'e': ' ### ', 'f': ' #   ', 'g': ' ####', 'h': '#    '},
+{'a': '     #', 'b': '#   #', 'c': '#   #', 'd': '#    #', 'e': '#   #', 'f': '#### ', 'g': '#   #', 'h': '#### '},
+{'a': ' #####', 'b': '#   #', 'c': '#    ', 'd': '#    #', 'e': '#####', 'f': ' #   ', 'g': '#   #', 'h': '#   #'},
+{'a': '#    #', 'b': '#   #', 'c': '#   #', 'd': '#    #', 'e': '#    ', 'f': ' #   ', 'g': ' ####', 'h': '#   #'},
+{'a': ' ### #', 'b': '#### ', 'c': ' ### ', 'd': ' #####', 'e': ' ### ', 'f': ' #   ', 'g': '    #', 'h': '#   #'},
+{'a': '      ', 'b': '     ', 'c': '     ', 'd': '      ', 'e': '     ', 'f': '     ', 'g': '#### ', 'h': '     '},
+]
+tab6 = [
+{'i': '   ', 'j': '     ', 'k': '#    ', 'l': '#    ', 'm': '       ', 'n': '     ', 'o': '     ', 'p': '     '},
+{'i': ' # ', 'j': '    #', 'k': '#    ', 'l': '#    ', 'm': '       ', 'n': '     ', 'o': '     ', 'p': '     '},
+{'i': '   ', 'j': '     ', 'k': '#   #', 'l': '#    ', 'm': '### ## ', 'n': '#### ', 'o': ' ### ', 'p': '#### '},
+{'i': '## ', 'j': '   ##', 'k': '# #  ', 'l': '#    ', 'm': '#  #  #', 'n': '#   #', 'o': '#   #', 'p': '#   #'},
+{'i': ' # ', 'j': '    #', 'k': '##   ', 'l': '#    ', 'm': '#  #  #', 'n': '#   #', 'o': '#   #', 'p': '#   #'},
+{'i': ' # ', 'j': '    #', 'k': '# #  ', 'l': '#   #', 'm': '#  #  #', 'n': '#   #', 'o': '#   #', 'p': '#### '},
+{'i': '###', 'j': '#   #', 'k': '#   #', 'l': ' ### ', 'm': '#  #  #', 'n': '#   #', 'o': ' ### ', 'p': '#    '},
+{'i': '   ', 'j': ' ### ', 'k': '     ', 'l': '     ', 'm': '       ', 'n': '     ', 'o': '     ', 'p': '#    '},
+]
+tab7 = [
+{'r': '     ', 's': '     ', 't': '  #  ', 'u': '      ', 'w': '       ', 'y': '     ', 'z': '     '},
+{'r': '     ', 's': '     ', 't': '  #  ', 'u': '      ', 'w': '       ', 'y': '     ', 'z': '     '},
+{'r': '# ###', 's': ' ### ', 't': '#####', 'u': '#    #', 'w': '#     #', 'y': '#   #', 'z': '#####'},
+{'r': '##   ', 's': '#    ', 't': '  #  ', 'u': '#    #', 'w': '#     #', 'y': '#   #', 'z': '   # '},
+{'r': '#    ', 's': ' ### ', 't': '  #  ', 'u': '#    #', 'w': '#  #  #', 'y': ' # # ', 'z': '  #  '},
+{'r': '#    ', 's': '    #', 't': '  #  ', 'u': '#    #', 'w': '# # # #', 'y': '  #  ', 'z': ' #   '},
+{'r': '#    ', 's': ' ### ', 't': '   ##', 'u': ' #####', 'w': ' #   # ', 'y': ' #   ', 'z': '#####'},
+{'r': '     ', 's': '     ', 't': '     ', 'u': '      ', 'w': '       ', 'y': '#    ', 'z': '     '},
+]
+tab8 = [
+{'x': '     '},
+{'x': '     '},
+{'x': '#   #'},
+{'x': ' # # '},
+{'x': '  #  '},
+{'x': ' # # '},
+{'x': '#   #'},
+{'x': '     '},
 ]
 
-def wypisz(napis):
+for i in range(len(tab)):
+    tab[i].update(tab2[i])
+
+for i in range(len(tab)):
+    tab[i].update(tab3[i])
+
+for i in range(len(tab)):
+    tab[i].update(tab4[i])
+
+for i in range(len(tab)):
+    tab[i].update(tab5[i])
+
+for i in range(len(tab)):
+    tab[i].update(tab6[i])
+
+for i in range(len(tab)):
+    tab[i].update(tab7[i])
+
+for i in range(len(tab)):
+    tab[i].update(tab8[i])
+
+def wypisz(napis, spacje=1):
     indeks = list(napis)
     print(indeks)
+
+    space = ' '
+    if spacje > 1:
+        for i in range(spacje-1):
+            space += ' '
+
     for t in tab:
-        line = ['#  ']
+        line = [' ']
         for i in indeks:
             line.append(t[i])
-        line2 = ' '.join(line)
+        line2 = space.join(line)
         print(line2)
 
-wypisz('PANDAS')
+wypisz('Context manager', 2)
