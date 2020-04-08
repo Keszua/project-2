@@ -3,8 +3,9 @@
 Srodowisko mozna ściagnąc z https://www.python.org/  zakałdka Download.
 Dokumentacja: https://docs.python.org/3/
 Moduły: https://docs.python.org/3/py-modindex.html
-Koles poleca zaznaczenie "Add python 3.8 to PATH" pozwoli to na dostęp z CMD
+Koleś poleca zaznaczenie "Add python 3.8 to PATH" pozwoli to na dostęp z CMD
 
+Dokumentacja do funkcji: https://docs.python.org/3/library/functions.html
 
 
 
@@ -450,7 +451,7 @@ products = ['milk', 'bread', 'flakes']
 parameters = {'price':'low', 'time':'now'}
 GetAll('buy me', *products, **parameters)
 
-
+# Dokumentacja do wbudowanych funkcji: https://docs.python.org/3/library/functions.html
 
 #-----------------------------------------------------------------------------
 eval()
@@ -1616,6 +1617,22 @@ while True:
     pygame.draw.rect(screen, (0, 150, 255), box)
     pygame.display.flip()
 #-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+BRYTHON
+   ####                   #    #
+   #   #                  #    #
+   #   #  # ###  #   #  #####  #       ###   ####
+   ####   ##     #   #    #    ####   #   #  #   #
+   #   #  #       # #     #    #   #  #   #  #   #
+   #   #  #        #      #    #   #  #   #  #   #
+   ####   #       #        ##  #   #   ###   #   #
+                 #
+
+uruchamianie: 
+python -m http.server
+nastepnei wejsc an stronę: http://localhost:8000/
+
 
 
 
