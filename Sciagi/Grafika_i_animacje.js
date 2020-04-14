@@ -261,7 +261,7 @@ https://boxy-svg.com/app
 //Dodawanie SVG jako "zwyk³y" obrazek: (w pliku .html)
 	<img src="img/sun.svg" alt="s³oñce">
 
-//Dodawnaie SVG jako obrazek w wersji edytowalnej (w pliku .html)
+//Dodawanie SVG jako obrazek w wersji edytowalnej (w pliku .html)
     <!-- Trzeba dodaæ atrybut xmlns, aby korzystaæ z SVG w wersji edytowalnej -->
     <svg id="sun" xmlns="http://www.w3.org/2000/svg"
         width = "600" height="600" viewBox="0 0 600 600">  

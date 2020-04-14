@@ -61,6 +61,7 @@ y = x.split(" ")		# Rozdziela według podanego argumetu
 print(y)            	#= ['Ala', 'ma', 'kota', 'a', 'kot', 'ma', 'Alę', ':)']
 print(', '.join(y)) 	#= Ala, ma, kota, a, kot, ma, Alę, :)   Łączy tablicę
 print(' '.join(x)) 		#= A l a   m a   k o t a   a   k o t   m a   A l ę   : )
+x = x.replace(old, new [, max]) #Zamienia wszystkie wystąpienia ciagu old na ciąg new lub jeśli jest podane max – podmiana zostanie wykonana o wskazaną liczbę wystąpień
 
 print("Moja funkcja", end='')	# aby nie przenosić na następną linię
 print(" dalszy tekst")
@@ -136,7 +137,7 @@ workDay = [19, 21, 22, 21, 20, 22]
 workDayEn = list(enumerate(workDay)) #-> [(0, 19), (1, 21), (2, 22), (3, 21), (4, 20), (5, 22)]
 months = ['I', 'II', 'III', 'IV', 'V', 'VI']
 monthsDay = list(zip(months, workDay)) #-> [('I', 19), ('II', 21), ('III', 22), ('IV', 21), ('V', 20), ('VI', 22)]
-#gdy mamy róznej długości tablice, można skorzystac z bibioteki: import itertools  i wykonać:
+#gdy mamy różnej długości tablice, można skorzystać z bibioteki: import itertools  i wykonać:
 monthsDay = itertools.zip(months, workDay, fillvalue = 'unknown')
 for mon, day in monthsDay:
     print('Miesiac:', mon, 'dni:', day) #= Miesiac: I dni: 19 \ Miesiac: II dni: 21...
