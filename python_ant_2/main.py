@@ -30,17 +30,21 @@ def run(document):
     strokeWidth = 1
 
     
+    # testMrowki = 'mrowa100Q'
+    testMrowki = 'mrowa3R00'
+    # 'mrowa8'
+
     aktualna = {}
-    aktualna['czolka'] =     morowka['mrowa8']['czolka']
-    aktualna['glowa'] =      morowka['mrowa8']['glowa']
-    aktualna['cialo'] =      morowka['mrowa8']['cialo']
+    aktualna['czolka'] =     morowka[testMrowki]['czolka']
+    aktualna['glowa'] =      morowka[testMrowki]['glowa']
+    aktualna['cialo'] =      morowka[testMrowki]['cialo']
     
-    aktualna['polaczenie'] = morowka['mrowa8']['polaczenie']
+    aktualna['polaczenie'] = morowka[testMrowki]['polaczenie']
     aktualna['polaczenie_width'] = 2
     aktualna['polaczenie_stroke'] = kolorStroke[1]
     aktualna['polaczenie_fill'] = kolorFill[0]
     
-    aktualna['odwlok'] =     morowka['mrowa8']['odwlok']
+    aktualna['odwlok'] =     morowka[testMrowki]['odwlok']
 
     # print(morowka)
 
