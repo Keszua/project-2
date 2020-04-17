@@ -865,7 +865,7 @@ y= f.readline()						# odczytuje jedną linijkę i przechodz do nastepnej,
 y= f.readlines()					# czytamy plik w formie tablicy, gdzie każdya linijka to jeden element tablicy
 									#= ['Cos_z_pliku\n', 'Druga linijka\n', 'Trzecia linijka\n', 'Czwarta linijka']
 y= f.readlines()[1]					# czytamy tylko 2-gą linijkę
-for line in f.readlines():			# wypisze wszsytkie linijki z pliku
+for line in f.readlines():			# wypisze wszystkie linijki z pliku
     print(line.rstrip())			# .rstrip() usówa białe znaki (efekt jak z end="") jest też .strip() i .lstrip() 
 
 # ciekawa ściaga: http://users.uj.edu.pl/~ufkapano/algorytmy/lekcja02/file.html
