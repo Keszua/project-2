@@ -18,7 +18,7 @@ def run(document):
     polecenia = document['polecenia']
 
     aktulanaAkcja = {
-        'krok' : '3R2', # 1,  2Q, 2R,  (3R1), 3R2, 3R3   3Q1, 3Q2, 3Q3...
+        'krok' : '1', # 1,  2Q, 2R,  (3R1), 3R2, 3R3   3Q1, 3Q2, 3Q3...
         'opcja' : 0,
         'przesPolaczenieX': 0,
         'przesPolaczenieY': 0,
@@ -31,8 +31,8 @@ def run(document):
     strokeWidth = 1
 
     
-    testMrowki = 'mrowa8R00'
-    # testMrowki = 'mrowa6R00'
+    testMrowki = 'mrowa8R00'    # domyslna mrowka na start
+    # testMrowki = 'mrowa1Q00_'
 
     aktualna = {}
     aktualna['czolka'] =     morowka[testMrowki]['czolka']
@@ -145,13 +145,14 @@ def run(document):
             panelC <= ramkaA2w if aktulanaAkcja['opcja'] == 2 else panelC <= ramkaA2 
             
             element1 = svg.text("Tak", x=100, y=35, font_size='1rem', text_anchor="middle", style={"stroke": "black"})
-            for i in range(8):
-                element1 += svg.path( d=f"M{'-190, -20'} {morowka['mrowa1Q00']['cialo']['d'][i]}", stroke_width=1, stroke=kolorStroke[0], fill=kolorFill[0])
-            element1 += svg.path( d=f"M{'-190, -20'} {morowka['mrowa1Q00']['cialo']['d'][6]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[0])
+            for el in morowka['mrowa1Q00_']['cialo']['d']:
+                element1 += svg.path( d=f"M{'-190, -20'} {el}", stroke_width=1, stroke=kolorStroke[0], fill=kolorFill[0])
+            element1 += svg.path( d=f"M{'-190, -20'} {morowka['mrowa1Q00_']['cialo']['d'][7]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[0])
+            element1 += svg.path( d=f"M{'-190, -20'} {morowka['mrowa1Q00_']['cialo']['d'][9]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[0])
             panelC <= element1
             element2 = svg.text("Nie", x=300, y=35, font_size='1rem', text_anchor="middle", style={"stroke": "black"})
-            for i in range(3):
-                element2 += svg.path( d=f"M{'-1, -40'} {morowka['mrowa8R00']['cialo']['d'][i]}", fill_opacity="null", stroke_opacity="null", stroke_width=strokeWidth, stroke=kolorStroke[0], fill=kolorFill[0])
+            for el in morowka['mrowa8R00']['cialo']['d']:
+                element2 += svg.path( d=f"M{'-1, -40'} {el}", stroke_width=1, stroke=kolorStroke[0], fill=kolorFill[0])
             panelC <= element2
 
 
@@ -213,10 +214,18 @@ def run(document):
                 aktulanaAkcja['przesOdwlokX'] = 8
                 aktulanaAkcja['przesPolaczenieX'] = 8
                 rysujMrowke()
-                for i in range(8):
-                    panelA <= svg.path( d=f"M{'4, -5'} {morowka['mrowa1Q00']['cialo']['d'][i]}", stroke_width=1, stroke=kolorStroke[0], fill=kolorFill[0])
-                panelA <= svg.path( d=f"M{'4, -5'} {morowka['mrowa1Q00']['cialo']['d'][6]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[0])
-            if ev.srcElement.id == "opcja2":  # blizna po skrzydlach
+                # for i in range(8):
+                #     panelA <= svg.path( d=f"M{'4, -5'} {morowka['mrowa1Q00_']['cialo']['d'][i]}", stroke_width=1, stroke=kolorStroke[0], fill=kolorFill[0])
+                # panelA <= svg.path( d=f"M{'4, -5'} {morowka['mrowa1Q00_']['cialo']['d'][6]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[0])
+            
+                for el in morowka['mrowa1Q00_']['cialo']['d']:
+                    panelA <= svg.path( d=f"M{'4, -5'} {el}", stroke_width=1, stroke=kolorStroke[0], fill=kolorFill[0])
+                panelA <= svg.path( d=f"M{'4, -5'} {morowka['mrowa1Q00_']['cialo']['d'][7]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[0])
+                panelA <= svg.path( d=f"M{'4, -5'} {morowka['mrowa1Q00_']['cialo']['d'][9]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[0])
+                
+            
+            
+            if ev.srcElement.id == "opcja2":  # brak blizny po skrzydlach
                 aktulanaAkcja['opcja'] = 2
                 aktulanaAkcja['przesOdwlokX'] = 0
                 aktulanaAkcja['przesPolaczenieX'] = 0
@@ -275,7 +284,7 @@ def run(document):
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
-# OBSLOGA PRZYCISKU WYBIERZ
+# OBSLOGA PRZYCISKU DALEJ
     # def nextStep():
     #     print("krok", krok) 
     #     krok +=1 
@@ -295,6 +304,9 @@ def run(document):
         aktualna['cialo_width'] = 1
         aktualna['cialo_stroke'] = kolorStroke[2]
         aktualna['cialo_fill'] = kolorFill[1]
+        aktualna['nogi_width'] = 1
+        aktualna['nogi_stroke'] = kolorStroke[2]
+        aktualna['nogi_fill'] = kolorFill[1]
         aktualna['polaczenie_width'] = 1
         aktualna['polaczenie_stroke'] = kolorStroke[2]
         aktualna['polaczenie_fill'] = kolorFill[1]
@@ -337,8 +349,7 @@ def run(document):
         if aktulanaAkcja['krok'] == '2R':
             if aktulanaAkcja['opcja'] == 1 or aktulanaAkcja['opcja'] == 2 or aktulanaAkcja['opcja'] == 3 :
                 if aktulanaAkcja['opcja'] == 1: # wybrano ukryty (Tapinoma sp.)
-                    aktulanaAkcja['krok'] = '0'
-                    # aktulanaAkcja['krok'] = '3R1'
+                    aktulanaAkcja['krok'] = '0' # '3R1'
                     print("Wybrano 3R1")
                     wypelnijCalaMrowke()
                 if aktulanaAkcja['opcja'] == 2: # wybrano pojedynczy
@@ -357,13 +368,14 @@ def run(document):
         #-----------------------------------------------------------------------------
         if aktulanaAkcja['krok'] == '3R2': #tułów 
             if aktulanaAkcja['opcja'] == 1 or aktulanaAkcja['opcja'] == 2:
-                if aktulanaAkcja['opcja'] == 1: #tułów zaokrąglony
-                    aktulanaAkcja['krok'] = '2Q'
+                if aktulanaAkcja['opcja'] == 1: #tułów: linia łagodna
+                    aktulanaAkcja['krok'] = '0' # 4R1
                     print("Wybrano królową")
-                if aktulanaAkcja['opcja'] == 2: # tułów z "garbem"
-                    aktulanaAkcja['krok'] = '2R'
+                if aktulanaAkcja['opcja'] == 2: # tułów: linia złamana
+                    aktulanaAkcja['krok'] = '4R2'
                     print("Wybrano robotnice")
                 aktulanaAkcja['opcja'] = 0
+
 
         if aktulanaAkcja['krok'] == '3R3': # kolce na plecach
             if aktulanaAkcja['opcja'] == 1 or aktulanaAkcja['opcja'] == 2:
