@@ -21,10 +21,9 @@ morowka['mrowa0'] = {   # pierwsze, domyślne wartości
     },
 
     'polaczenie' : {
-        'rodzaj': "ukryty", # ukryty, pojedynczy, podwojny
+        'rodzaj': "ukryty", # null, ukryty, pojedynczy, podwojny
         'd': ["m230,68c0,0 5.901638,0 5.737646,-0.148595c0.163992,0.148595 0.163992,15.230557 0,15.081963c0.163992,0.148594 -6.065515,0.804332 -6.229506,0.655738c0.163992,0.148594 0.49186,-15.589106 0.49186,-15.589106z"],
         'len': 0,
-        'strokeWidth': 1,
     },
     'odwlok'    : {
         'd': ["m236.5,81.132178c0,0 1.967212,-23.60655 7.540981,-27.868844c5.573769,-4.262294 26.885238,-7.540982 36.393432,-3.278688c9.508194,4.262294 28.85245,12.131143 38.688513,31.803269c9.836063,19.672126 5.901638,29.508188 1.311475,36.721301c-4.590163,7.213112 -17.049175,16.721306 -52.131132,2.62295c-35.081957,-14.098356 -31.803269,-28.196713 -31.803324,-28.345307c0.000055,0.148594 0.000055,-11.654681 0.000055,-11.654681z"],
@@ -35,13 +34,46 @@ morowka['mrowa0'] = {   # pierwsze, domyślne wartości
 
 morowka['mrowa_wzor'] = {
     'id' : 'm4',
-    'Podrodzina': '??', # Myrmicinae, Aenictinae, Aenictogitoninae, Agroecomyrmecinae, Amblyoponinae, Aneuretinae, Apomyrminae, Armaniinae, Brownimeciinae, Cerapachyinae 
+    # 'podrodzina': '??', # Myrmicinae, Aenictinae, Aenictogitoninae, Agroecomyrmecinae, Amblyoponinae, Aneuretinae, Apomyrminae, Armaniinae, Brownimeciinae, Cerapachyinae 
                         # Dolichoderinae, Dorylinae, Ecitoninae, Ectatomminae, Formicinae, Formiciinae, Heteroponerinae, Leptanillinae, Leptanilloidinae, Martialinae, Myrmeciinae
                         # Myrmicinae, Nothomyrmeciinae, Paleosminthurinae, Paraponerinae, Ponerinae, Proceratiinae, Pseudomyrmecinae, Sphecomyrminae
-    'Rodzaj' : '??',
-    'Gatunek': '??',
-    'name'     : '?? sp.',
-    'namePL'   : "??",
+    'podrodzina'    : '??',
+    'rodzaj'        : '??',
+    'gatunek'       : 'sp.',
+    'namePL'        : "??",
+    'kasta'         : 'R',   # Q / R
+    'rozmiar'       : 0,
+    'rozmiarMin'    : 0,
+    'rozmiarMax'    : 0,
+    'rozmiar_px'    : 300,  #rozmiar narysowanej mrowki w okienku (w px)
+    'pomostekTyp' : "podwojny", # ukryty, pojedynczy, podwojny
+    'rojPocz'       : "null",
+    'rojKoni'       : "null",
+    'kolor'         : "null", # rozbic na kolor: głowy, ciała, odwłoka
+    'liniaTulowia'  : "nieDotczy",   # lagodnia, zlamana
+
+    'opis'     : '...',
+    'opisDod'  : '''
+                <b>Rójka:</b> od ... do ... \
+                <br><b>Zakładanie gniazda:</b> ... \
+                <br><b>Miejsce gniazdowania:</b> Najczęściej zakłada kolonie w... \
+                <br><b>Żywienie:</b> ... \
+                <br><b>Zachowanie</b> ... \
+                <br><b>Polimorfizm:</b> ... \
+                <br><b>Adopcja:</b> ... \
+                <br><b>Metody obrony:</b> ... \
+                <br><b>Posiada żądło:</b> ... \
+                <br><b>Ochrona gatunkowa</b> ... \
+                <br><b>Trudność hodowli</b> ... \
+                <br><b>Liczebność:</b> ... \
+                <br><b>Ciekawostki:</b> ...
+                ''' ,
+
+
+
+
+
+
 
     'czolka' : {
         'd': [
@@ -66,13 +98,11 @@ morowka['mrowa_wzor'] = {
         ],
     },
     'polaczenie' : {
-        'rodzaj' : "podwojny", # ukryty, pojedynczy, podwojny
         'd': [
             
         ],
        
         'len': 0,
-        'strokeWidth': 1,
     },
     'odwlok' : {
         'd': [
@@ -91,16 +121,22 @@ morowka['mrowa_wzor'] = {
    #  #  #  #       ###    #   #    ### #   ###   #   #   ####    ####
 morowka['mrowa1R00'] = {
     'id'       : 'm1',
-    'name'     : 'Solenopsis fugax',
+    'rodzaj'   : 'Solenopsis',
+    'gatunek'  : 'fugax',
     'namePL'   : "Mrówka złodziejka",
+    
     'rojPocz'  : 34, # 21-IVmaja, 16 polowa kwietnia , 18 maj, 22 czerwiec, 27 lipiec, 31 sierpień
     'rojKoni'  : 39, # 39-IVwrześnia
-    'rozmQmin' : 5,
-    'rozmQmax' : 7,
-    'rozmRmin' : 2,
-    'rozmRmax' : 2,
     'kolorQ'   : ["Czarny"], #["Czarny", "Czarno-brązowy", "Brązowy", "Bursztynowy", "Rudy", "Czerwony", "Pomarańczowy", "Żółty"] 
-    'KolorR'   : ["Pomarańczowy", "Żółty"], #["Czarny", "Czerwony", "Pomarańczowy", "Żółty"]
+
+    'rozmiar'       : 2,
+    'rozmiarMin'    : 2,
+    'rozmiarMax'    : 2.5,
+
+    'rozmiar_px'    : 300,  #rozmiar narysowanej mrowki w okienku (w px)
+    'kasta'         : 'R',   # Q / R
+    'pomostekTyp' : "podwojny", # ukryty, pojedynczy, podwojny
+    'kolor'         : ["Pomarańczowy", "Żółty"], #["Czarny", "Czerwony", "Pomarańczowy", "Żółty"]
     'opis'     : 'Czarny, błyszczący; żółtawy spód odwłoka. Tułów i głowa dużo węższe od odwłoka. Jasne odnóża.',
     'opisDod'  : '''
                 <b>Rójka:</b> połowa sierpnia – koniec września \
@@ -180,7 +216,6 @@ morowka['mrowa1R00'] = {
 
             ],
         'len': 0,
-        'strokeWidth': 1,
     },
     'odwlok'    : {
         'd': ["m 386.8,114.3 c -2.1,-12.8 5.1,-16.28 9.7,-19.87 26.8,-13.56 38.9,-7.96 68.4,-3.78 28.9,12.85 49.7,22.55 48,49.75 1.8,12.1 -0.8,9.9 10.1,14.6 -9.5,2.1 -16.2,-1 -25,-4.3 -19.6,6.4 -40.1,3.4 -60.4,2.8 -17.9,-8.8 -41.7,-21.1 -50.8,-39.2 z"],
@@ -196,17 +231,21 @@ morowka['mrowa1R00'] = {
    #  #  #  #       ###    #   #    ### #   ###    #####    ####    ####  ######
                                                        ##
 morowka['mrowa1Q00_'] = {
-    'id'       : 'm1_',
-    'name'     : 'Solenopsis fugax',
-    'namePL'   : "Mrówka złodziejka",
+    'id'        : 'm1_',
+    'podrodzina'    : '??',
+    'rodzaj'        : 'Solenopsis',
+    'gatunek'       : 'fugax',
+    'namePL'        : "Mrówka złodziejka",
+    'rozmiar'       : 6,
+    'rozmiarMin'    : 5,
+    'rozmiarMax'    : 7,
+    'rozmiar_px'    : 300,  #rozmiar narysowanej mrowki w okienku (w px)
+    'kasta'         : 'Q',   # Q / R
+    'pomostekTyp' : "podwojny", # ukryty, pojedynczy, podwojny
     'rojPocz'  : 34, # 21-IVmaja, 16 polowa kwietnia , 18 maj, 22 czerwiec, 27 lipiec, 31 sierpień
     'rojKoni'  : 39, # 39-IVwrześnia
-    'rozmQmin' : 5,
-    'rozmQmax' : 7,
-    'rozmRmin' : 2,
-    'rozmRmax' : 2,
-    'kolorQ'   : ["Czarny"], #["Czarny", "Czarno-brązowy", "Brązowy", "Bursztynowy", "Rudy", "Czerwony", "Pomarańczowy", "Żółty"] 
-    'KolorR'   : ["Pomarańczowy", "Żółty"], #["Czarny", "Czerwony", "Pomarańczowy", "Żółty"]
+    'kolor'   : ["Czarny"], #["Czarny", "Czarno-brązowy", "Brązowy", "Bursztynowy", "Rudy", "Czerwony", "Pomarańczowy", "Żółty"] 
+
     'opis'     : 'Czarny, błyszczący; żółtawy spód odwłoka. Tułów i głowa dużo węższe od odwłoka. Jasne odnóża.',
     'opisDod'  : '<b>Rójka:</b> połowa sierpnia – koniec września \
                 <br><b>Zakładanie gniazda:</b> Klasztorny. \
@@ -277,13 +316,11 @@ morowka['mrowa1Q00_'] = {
         ],
     },
     'polaczenie' : {
-        'rodzaj' : "podwojny", # ukryty, pojedynczy, podwojny
         'd': [
             "m 343.2,153.7 c 0.2,-3.7 1.7,-6.9 4.3,-9.6 3.7,3.1 10.5,-9.6 13.9,-16.1 6.6,-14.7 11.6,-9.5 14.9,3.6 1.1,6.7 -1.2,10.9 -4,16.8 -7.3,2.2 -14.6,4.4 -21.6,7.5 -1.4,-1.1 -2.8,-2.3 -7.5,-1.6 z",
             "m 374.8,126.4 c 6.9,-6.7 16,-8.7 23.1,-6.2 -9.1,15.8 -7.6,25.8 -5.3,29.8 l -4.4,-3.6 -3.6,1.3 -1.9,-4 c -3.3,3.4 -5.4,4.6 -9.5,2.7 2.5,-4.8 6,-8.8 1.6,-20 z",
             ],
         'len': 0,
-        'strokeWidth': 1,
     },
     'odwlok'    : {
         'd': [
@@ -305,16 +342,19 @@ morowka['mrowa1Q00_'] = {
                                                        ##
 morowka['mrowa1Q00'] = {
     'id'       : 'm1Q00',
-    'name'     : 'Solenopsis fugax',
-    'namePL'   : "Mrówka złodziejka",
+    'podrodzina'    : '??',
+    'rodzaj'        : 'Solenopsis',
+    'gatunek'       : 'fugax',
+    'namePL'        : "Mrówka złodziejka",
+    'kasta'         : 'R',   # Q / R
+    'rozmiar'       : 6,
+    'rozmiarMin'    : 5,
+    'rozmiarMax'    : 7,
+    'rozmiar_px'    : 300,  #rozmiar narysowanej mrowki w okienku (w px)
     'rojPocz'  : 34, # 21-IVmaja, 16 polowa kwietnia , 18 maj, 22 czerwiec, 27 lipiec, 31 sierpień
     'rojKoni'  : 39, # 39-IVwrześnia
-    'rozmQmin' : 5,
-    'rozmQmax' : 7,
-    'rozmRmin' : 2,
-    'rozmRmax' : 2,
-    'kolorQ'   : ["Czarny"], #["Czarny", "Czarno-brązowy", "Brązowy", "Bursztynowy", "Rudy", "Czerwony", "Pomarańczowy", "Żółty"] 
-    'KolorR'   : ["Pomarańczowy", "Żółty"], #["Czarny", "Czerwony", "Pomarańczowy", "Żółty"]
+    'kolor'   : ["Czarny"], #["Czarny", "Czarno-brązowy", "Brązowy", "Bursztynowy", "Rudy", "Czerwony", "Pomarańczowy", "Żółty"] 
+
     'opis'     : 'Czarny, błyszczący; żółtawy spód odwłoka. Tułów i głowa dużo węższe od odwłoka. Jasne odnóża.',
     'opisDod'  : '<b>Rójka:</b> połowa sierpnia – koniec września \
                 <br><b>Zakładanie gniazda:</b> Klasztorny. \
@@ -402,7 +442,6 @@ morowka['mrowa1Q00'] = {
         ],
        
         'len': 0,
-        'strokeWidth': 1,
     },
     'odwlok' : {
         'd': [
@@ -429,6 +468,20 @@ morowka['mrowa2R00'] = {
     'id' : 'm2',
     'name'     : 'Myrmica',
     'namePL'   : "Wścieklica",
+
+    'podrodzina'    : '??',
+    'rodzaj'        : 'Myrmica',
+    'gatunek'       : 'rubra',
+    'namePL'        : "Wścieklica zwyczajna",
+    'kasta'         : 'R',   # Q / R
+    'rozmiar'       : 4,
+    'rozmiarMin'    : 3,
+    'rozmiarMax'    : 5,
+    'rozmiar_px'    : 300,  #rozmiar narysowanej mrowki w okienku (w px)
+    'pomostekTyp' : "podwojny", # ukryty, pojedynczy, podwojny
+    'kolorR'        : ["Czerwony", "Bursztynowy"],
+    'rojPocz'       : 31, # 31-Isierpień
+    'rojKoni'       : 39, # 39-IVwrzesień
 
     'czolka' : {
         'd': [
@@ -507,7 +560,6 @@ morowka['mrowa2R00'] = {
 
             ],
         'len': 0,
-        'strokeWidth': 1,
     },
     'odwlok' : {
         'd': ["m 391.2,109.3 c -1.4,-8.1 -0.6,-10.67 3.6,-19.88 5.5,-3.62 12.2,-7.39 32.4,-2.7 38.1,13.28 46.7,34.28 48.6,57.98 0.1,7.1 -1.8,12.9 -7.8,14.6 l 2,6.1 -8.1,-3.3 c -18.8,-2.3 -24.1,0.9 -45.4,-13.1 -7.8,-0.8 -19.7,-18.8 -21.7,-31 -1.7,-10 -3.7,-7.4 -3.6,-8.7 z"]
@@ -524,8 +576,36 @@ morowka['mrowa2R00'] = {
 
 morowka['mrowa3R00'] = {
     'id' : 'm7',
-    'name'     : 'Tetramorium sp.',
-    'namePL'   : "??",
+    'podrodzina'    : 'Myrmicinae',
+    'rodzaj'        : 'Tetramorium',
+    'gatunek'       : 'caespitum',
+    'namePL'        : "Murawka darniowiec",
+    'kasta'         : 'R',   # Q / R
+    'rozmiar'       : 2.5,
+    'rozmiarMin'    : 2,
+    'rozmiarMax'    : 4,
+    'rozmiar_px'    : 300,  #rozmiar narysowanej mrowki w okienku (w px)
+    'pomostekTyp' : "podwojny", # ukryty, pojedynczy, podwojny
+    'rojPocz'       : 22, # 22 czerwiec, 27 lipiec, 31 sierpień
+    'rojKoni'       : 35, # 35-IVsierpnia
+    'kolor'         : "null", # rozbic na kolor: głowy, ciała, odwłoka
+
+    'opis'     : 'ciało czarnobrunatne lub brunatne',
+    'opisDod'  : '''
+                <b>Rójka:</b> od ... do ... \
+                <br><b>Zakładanie gniazda:</b> ... \
+                <br><b>Miejsce gniazdowania:</b> Gniazduje przeważnie w piaszczystej glebie (gniazda często z ziemnymi kopczykami), pod kamieniami ale także w próchniejących pniach. \
+                <br><b>Żywienie:</b> Mrówki drapieżne i padlinożerne, korzystają też ze spadzi mszyc, głównie korzeniowych, a ich dietę uzupełniają nasiona, zwłaszcza roślin zielnych \
+                <br><b>Zachowanie</b> Mrówki sąsiadujących ze sobą gniazd często toczą bitwy terytorialne \
+                <br><b>Polimorfizm:</b> W gnieździe może być więcej niż jedna królowa, ale najczęściej tworzy kolonie monoginiczne \
+                <br><b>Adopcja:</b> ... \
+                <br><b>Metody obrony:</b> ... \
+                <br><b>Posiada żądło:</b> ... \
+                <br><b>Ochrona gatunkowa</b> ... \
+                <br><b>Trudność hodowli</b> ... \
+                <br><b>Liczebność:</b> 50 000 \
+                <br><b>Ciekawostki:</b> ...
+                ''' ,
 
     'czolka' : {
         'd': [
@@ -584,14 +664,13 @@ morowka['mrowa3R00'] = {
         ],
     },
     'polaczenie' : {
-        'rodzaj' : "podwojny", # ukryty, pojedynczy, podwojny
+        
         'd': [
             "m 333.2,107.5 6.1,15.4 9.6,-2.9 c 0,-5.9 2.6,-8.6 6.1,-12.9 4.8,-2.6 9.6,-5.4 14.3,-8.17 -5.7,-3.05 -5.5,-7.3 -6.8,-13.22 -10.7,-10.07 -13.8,-8.9 -22.9,1.79 0.5,7.89 5.2,8.63 1.5,15 -2.3,2.2 -5.1,3.5 -7.9,5 z",
             "m 363.6,85.71 c -1.3,6.71 2,9.71 5,13.22 2,-2.62 4.5,1.17 2.8,4.67 2.2,0.2 5.5,-0.4 8.6,-0.2 1.4,-1.9 5.8,-2.9 10.4,-3.76 -1.5,-6.46 -0.6,-11.09 3.5,-13.93 1.3,-2.66 1.1,-5.31 1.1,-8.21 -6.2,0.17 -8.1,-3.79 -12.3,-6.43 -11.6,-1.84 -15.9,5.64 -19.1,14.64 z",
         ],
        
         'len': 0,
-        'strokeWidth': 1,
     },
     'odwlok' : {
         'd': [
@@ -614,8 +693,22 @@ morowka['mrowa3R00'] = {
 
 morowka['mrowa4R00'] = {
     'id' : 'm4',
-    'name'     : 'Temnothorax sp.',
-    'namePL'   : "??",
+
+    'podrodzina'    : '??',
+    'rodzaj'        : 'Temnothorax',
+    'gatunek'       : 'sp.',
+    'namePL'        : "wysmuklica",
+    'kasta'         : 'R',   # Q / R
+    'rozmiar'       : 2.5,
+    'rozmiarMin'    : 2,
+    'rozmiarMax'    : 3,
+    'rozmiar_px'    : 300,  #rozmiar narysowanej mrowki w okienku (w px)
+    'pomostekTyp' : "podwojny", # ukryty, pojedynczy, podwojny
+    'rojPocz'       : "null",
+    'rojKoni'       : "null",
+    'kolor'         : "null", # rozbic na kolor: głowy, ciała, odwłoka
+
+
 
     'czolka' : {
         'd': [
@@ -686,7 +779,6 @@ morowka['mrowa4R00'] = {
         ],
        
         'len': 0,
-        'strokeWidth': 1,
     },
     'odwlok' : {
         'd': [
@@ -709,8 +801,20 @@ morowka['mrowa4R00'] = {
 
 morowka['mrowa5R00'] = {
     'id' : 'm4',
-    'name'     : 'Lasius sp.',
-    'namePL'   : "??",
+    'podrodzina'    : '??',
+    'rodzaj'        : 'Lasius',
+    'gatunek'       : 'sp.',
+    'namePL'        : "Hurtnica",
+    'kasta'         : 'R',   # Q / R
+    'rozmiar'       : 4,
+    'rozmiarMin'    : 3,
+    'rozmiarMax'    : 5,
+    'rozmiar_px'    : 300,  #rozmiar narysowanej mrowki w okienku (w px)
+    'pomostekTyp' : "pojedynczy", # ukryty, pojedynczy, podwojny
+    'rojPocz'       : "null",
+    'rojKoni'       : "null",
+    'kolor'         : "null", # rozbic na kolor: głowy, ciała, odwłoka
+
 
     'czolka' : {
         'd': [
@@ -782,13 +886,11 @@ morowka['mrowa5R00'] = {
     },
 
     'polaczenie' : {
-        'rodzaj' : "podwojny", # ukryty, pojedynczy, podwojny
         'd': [
             "m 340.2,131.6 -1.2,-7.3 c -0.3,-6.3 0.5,-3.9 3.7,-17.5 1,-3.7 2.4,-4.7 2.9,-0.4 0.7,8.9 0,13.4 5.7,15.1 l 3.8,13.8 -4.1,2.1 c -4.6,0.6 -7.4,-3.2 -10.8,-5.8 z",
         ],
        
         'len': 0,
-        'strokeWidth': 1,
     },
     'odwlok' : {
         'd': [
@@ -813,8 +915,22 @@ morowka['mrowa5R00'] = {
 
 morowka['mrowa6R00'] = {
     'id' : 'm4',
-    'name'     : 'Formica sp.',
-    'namePL'   : "??",
+
+    'podrodzina'    : '??',
+    'rodzaj'        : 'Formica',
+    'gatunek'       : 'sp.',
+    'namePL'        : "??",
+    'kasta'         : 'R',   # Q / R
+    'rozmiar'       : 6,
+    'rozmiarMin'    : 5,
+    'rozmiarMax'    : 9,
+    'rozmiar_px'    : 300,  #rozmiar narysowanej mrowki w okienku (w px)
+    'pomostekTyp' : "podwojny", # ukryty, pojedynczy, podwojny
+    'rojPocz'       : "null",
+    'rojKoni'       : "null",
+    'kolor'         : "null", # rozbic na kolor: głowy, ciała, odwłoka
+
+
 
     'czolka' : {
         'd': [
@@ -880,7 +996,6 @@ morowka['mrowa6R00'] = {
         ],
        
         'len': 0,
-        'strokeWidth': 1,
     },
     'odwlok' : {
         'd': [
@@ -907,8 +1022,20 @@ morowka['mrowa6R00'] = {
 
 morowka['mrowa7R00'] = {
     'id' : 'm4',
-    'name'     : 'Camponotus sp.',
-    'namePL'   : "??",
+    'podrodzina'    : '??',
+    'rodzaj'        : 'Camponotus',
+    'gatunek'       : 'sp.',
+    'namePL'        : "Gmachówka",
+    'kasta'         : 'R',   # Q / R
+    'rozmiar'       : 3,
+    'rozmiarMin'    : 7,
+    'rozmiarMax'    : 14,
+    'rozmiar_px'    : 300,  #rozmiar narysowanej mrowki w okienku (w px)
+    'pomostekTyp' : "pojedynczy", # ukryty, pojedynczy, podwojny
+    'rojPocz'       : "null",
+    'rojKoni'       : "null",
+    'kolor'         : "null", # rozbic na kolor: głowy, ciała, odwłoka
+
 
     'czolka' : {
         'd': [
@@ -966,7 +1093,6 @@ morowka['mrowa7R00'] = {
         ],
        
         'len': 0,
-        'strokeWidth': 1,
     },
     'odwlok' : {
         'd': [
@@ -994,8 +1120,35 @@ morowka['mrowa7R00'] = {
 
 morowka['mrowa8R00'] = {
     'id' : 'm8',
-    'name'     : 'Tapinoma sp.',
-    'namePL'   : "??",
+    'podrodzina'    : 'Dolichoderinae',
+    'rodzaj'        : 'Tapinoma',
+    'gatunek'       : 'sp.',
+    'namePL'        : "Koczowniczka",
+    'rozmiar'       : 2.5,
+    'rozmiarMin'    : 2,
+    'rozmiarMax'    : 3,
+    'rozmiar_px'    : 295,  #rozmiar narysowanej mrowki w okienku (w px)
+    'kasta'         : 'R',   # Q / R
+    'pomostekTyp' : "podwojny", # ukryty, pojedynczy, podwojny
+    'rojPocz'       : "null",
+    'rojKoni'       : "null",
+    'kolor'         : "null", # rozbic na kolor: głowy, ciała, odwłoka
+    'opis'     : 'Czarna',
+    'opisDod'  : '''
+                <b>Rójka:</b> odbywa się w czerwcu, a w zimniejszych latach w lipcu. \
+                <br><b>Zakładanie gniazda:</b> ... \
+                <br><b>Miejsce gniazdowania:</b> Najczęściej zakłada kolonie w... \
+                <br><b>Żywienie:</b> ... \
+                <br><b>Zachowanie</b> ... \
+                <br><b>Polimorfizm:</b> ... \
+                <br><b>Adopcja:</b> ... \
+                <br><b>Metody obrony:</b> ... \
+                <br><b>Posiada żądło:</b> ... \
+                <br><b>Ochrona gatunkowa</b> ... \
+                <br><b>Trudność hodowli</b> ... \
+                <br><b>Liczebność:</b> ... \
+                <br><b>Ciekawostki:</b> Jest termofilem (lubi ciepło), preferuje suche wystawione na słońce miejsca: góry, stepy.
+                ''' ,
 
     'czolka' : {
         'd': [
@@ -1075,7 +1228,6 @@ morowka['mrowa8R00'] = {
         'd': ["m339 141l5 2c2,10 8,13 16,17 -8,1 -11,-2 -19,-5l-2 -14z"],
        
         'len': 0,
-        'strokeWidth': 1,
     },
     'odwlok' : {
         'd': ["m390 101c15,16 26,52 7,64 -12,3 -25,-2 -35,-6 -11,-1 -15,-8 -18,-17 0,-35 26,-39 46,-41l0 0z",

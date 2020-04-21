@@ -16,9 +16,16 @@ def run(document):
     panelC = document['panelC']
     drzewo = document['drzewo']
     polecenia = document['polecenia']
+    pole_wielkosc = document['pole_wielkosc']
+    pole_wyboru1 = document['pole_wyboru1']
+    pole_wyboru2 = document['pole_wyboru2']
+    pole_wyboru3 = document['pole_wyboru3']
+    pole_wyboru4 = document['pole_wyboru4']
+    pole_wyboru5 = document['pole_wyboru5']
+
 
     aktulanaAkcja = {
-        'krok' : '1', # 1,  2Q, 2R,  (3R0), 3R1, 3R2   3Q0, 3Q1, 3Q2...
+        'krok' : '0', # pole_wyboru_1,  2Q, 2R,  (3R0), 3R1, 3R2   3Q0, 3Q1, 3Q2...
         'opcja' : 0,
         'przesPolaczenieX': 0,
         'przesPolaczenieY': 0,
@@ -26,93 +33,62 @@ def run(document):
         'przesOdwlokY': 0,
     }
 
-    tabPoszukiwan = {
+    wzorzecWyszukiwania = {
+        'rozmiar'       : "---",
+        'kasta'         : "null", # Q, R      
+        'pomostekTyp'   : "null", # ukryty, pojedynczy, podwojny
+        'liniaTulowia'  : "null",
+        'kolcePozatulowia': "null",
+        'rojka'         : "null",
+        'kolor'         : "null",  # rozbic na kolor: głowy, ciała, odwłoka
+    }
 
-    } 
+    
 
-    # drzewoPoszukiwan = {
-    #     k1kasta : {
-    #         Q: {
-
-    #         },
-    #         R: {
-    #             petiole: {
-    #                 P0: {
-    #                     Genus: "Tapinoma sp.",
-    #                     }
-    #                 },
-    #                 P1: {
-    #                     Thorax: {
-    #                         Rounded: {
-    #                             Genus: "Camponotus",
-    #                         },
-    #                         NoRounded: {
-    #                             BodySize: {
-    #                                 Small: {
-    #                                     Genus: "Lasius",
-    #                                 },
-    #                                 Large: {
-    #                                     Genus: "Formica",
-    #                                 }
-    #                             }
-    #                         }
-    #                     }
-    #                 },
-    #                 P2: {
-    #                     Genus: {
-    #                         NoSpines: {
-    #                             Species: "Solenopsis fugax",
-    #                         },
-    #                         Spines: {
-
-    #                         }                            
-    #                     }
-    #                 }
-    #             }
-    #         }
-    #     }
-    # }
-
-    kolorFill = ["#AAA", "#FFF", "#FFF"]    # szary, biały
-    kolorStroke = ["#AAA", "#D00", "#000"]  # szary, czerwony, czarny
+    kolorFill = ["#AAA", "#FFF", "#FFF", "#0F9"]    # szary, biały, 
+    kolorStroke = ["#AAA", "#D00", "#000", "#0F5"]  # szary, czerwony, czarny, zielony
     strokeWidth = 1
 
     
+    #-----------------------------------------------------------------------------
     testMrowki = 'mrowa8R00'    # domyslna mrowka na start
     # testMrowki = 'mrowa1Q00_'
 
     aktualna = {}
     aktualna['czolka'] =     morowka[testMrowki]['czolka']
+    aktualna['czolka_fill'] = kolorFill[0]
     aktualna['czolka_width'] = 1
     aktualna['czolka_stroke'] = kolorStroke[0]
-    aktualna['czolka_fill'] = kolorFill[0]
 
     aktualna['glowa'] =      morowka[testMrowki]['glowa']
+    aktualna['glowa_fill'] = kolorFill[0]
     aktualna['glowa_width'] = 1
     aktualna['glowa_stroke'] = kolorStroke[0]
-    aktualna['glowa_fill'] = kolorFill[0]
 
     aktualna['cialo'] =      morowka[testMrowki]['cialo']
+    aktualna['cialo_fill'] = kolorFill[0]
     aktualna['cialo_width'] = 1
     aktualna['cialo_stroke'] = kolorStroke[0]
-    aktualna['cialo_fill'] = kolorFill[0]
     
     aktualna['nogi'] =      morowka[testMrowki]['nogi']
+    aktualna['nogi_fill'] = kolorFill[0]
     aktualna['nogi_width'] = 1
     aktualna['nogi_stroke'] = kolorStroke[0]
-    aktualna['nogi_fill'] = kolorFill[0]
 
     aktualna['polaczenie'] = morowka[testMrowki]['polaczenie']
+    aktualna['polaczenie_fill'] = kolorFill[0]
     aktualna['polaczenie_width'] = 1
     aktualna['polaczenie_stroke'] = kolorStroke[0]
-    aktualna['polaczenie_fill'] = kolorFill[0]
     
     aktualna['odwlok'] =     morowka[testMrowki]['odwlok']
+    aktualna['odwlok_fill'] = kolorFill[0]
     aktualna['odwlok_width'] = 1
     aktualna['odwlok_stroke'] = kolorStroke[0]
-    aktualna['odwlok_fill'] = kolorFill[0]
 
-    # print(morowka)
+    aktualna['rozmiar']    = morowka[testMrowki]['rozmiar']
+    aktualna['rozmiar_px'] = morowka[testMrowki]['rozmiar_px']
+    #-----------------------------------------------------------------------------
+
 
     # ramki do dokonywania wyboru:
     ramkaA1 = svg.path( id="opcja1", d="m10,10 0,180 180,0, 0,-180 -180,0",  stroke_width=1, stroke="#533", fill="#FFF" )
@@ -134,8 +110,49 @@ def run(document):
  
  
 
+
+
+
+
+
+
+   ####                                                                     #
+   #   #                            #                                       #
+   #   #  #   #   ###   #    #              ### ##   # ###   ###   #     #  #   #   ### 
+   ####   #   #  #      #    #     ##       #  #  #  ##     #   #  #     #  # #    #   #
+   # #     # #    ###   #    #      #       #  #  #  #      #   #  #  #  #  ##     #####
+   #  #     #        #  #    #      #       #  #  #  #      #   #  # # # #  # #    #    
+   #   #   #      ###    #####  #   #       #  #  #  #       ###    #   #   #   #   ### 
+          #                      ###
     def rysujMrowke():
         panelA.clear()
+
+        # rozmiar    = aktualna['rozmiar']
+        rozmiar   = wzorzecWyszukiwania['rozmiar']
+        if rozmiar != '---':
+            rozmiar = rozmiar[:-2]
+            rozmiar_px = aktualna['rozmiar_px']
+            podzialka = rozmiar_px / float(rozmiar)
+            podzialka = int(podzialka)
+            print("rysujemy linie", podzialka)
+
+            line = svg.line(x1="-5",y1="50", x2="-5", y2="150", stroke="brown",stroke_width="1")
+            pogrubiona = pogrubiona2 = 3
+            for el in range(-5, 601, podzialka):
+                if pogrubiona == 5: 
+                    if pogrubiona2 == 10:
+                        pogrubiona2 = 0
+                        line += svg.line(x1=f"{el}",y1="0", x2=f"{el}", y2="300", stroke="#FA7",stroke_width="3")
+                    else:
+                        # line += svg.line(x1=f"{el}",y1="0", x2=f"{el}", y2="300", stroke="#D60",stroke_width="3")
+                        line += svg.line(x1=f"{el}",y1="0", x2=f"{el}", y2="300", stroke="#FA7",stroke_width="2")
+                    pogrubiona = 0
+                else:
+                    line += svg.line(x1=f"{el}",y1="0", x2=f"{el}", y2="300", stroke="#FA7",stroke_width="1")
+                pogrubiona +=1
+                pogrubiona2 +=1
+            panelA <= line
+
         x = aktulanaAkcja['przesOdwlokX']
         y = aktulanaAkcja['przesOdwlokY']
         for el in aktualna['odwlok']['d']:
@@ -143,9 +160,9 @@ def run(document):
         x = aktulanaAkcja['przesPolaczenieX']
         y = aktulanaAkcja['przesPolaczenieY']
         for el in aktualna['polaczenie']['d']:
-            panelA <= svg.path( id="połączenie", d=f"M{x},{y} {el}",  stroke_width=aktualna['polaczenie_width'], stroke=aktualna['polaczenie_stroke'], fill=aktualna['polaczenie_fill'], fill_opacity="null", stroke_opacity="null")
+            panelA <= svg.path( id="pomostek", d=f"M{x},{y} {el}",  stroke_width=aktualna['polaczenie_width'], stroke=aktualna['polaczenie_stroke'], fill=aktualna['polaczenie_fill'], fill_opacity="null", stroke_opacity="null")
         for el in aktualna['cialo']['d']:
-            panelA <= svg.path( id="ciało",      d=f"{el}", stroke_width=aktualna['cialo_width'], stroke=aktualna['cialo_stroke'], fill=aktualna['cialo_fill'], fill_opacity="null", stroke_opacity="null")
+            panelA <= svg.path( id="tułów",      d=f"{el}", stroke_width=aktualna['cialo_width'], stroke=aktualna['cialo_stroke'], fill=aktualna['cialo_fill'], fill_opacity="null", stroke_opacity="null")
         for el in aktualna['nogi']['d']:
             panelA <= svg.path( id="nogi",      d=f"{el}", stroke_width=aktualna['nogi_width'], stroke=aktualna['nogi_stroke'], fill=aktualna['nogi_fill'], fill_opacity="null", stroke_opacity="null")
         for el in aktualna['glowa']['d']:
@@ -174,7 +191,35 @@ def run(document):
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
+
+  ####                                           #                             #
+  #   #                        #                 #                             #
+  #   # #   #  ###  #    #           ####   ###  #      ###      #     # #   # ###    ###  # ### #    #
+  ####  #   # #     #    #    ##     #   # #   # #     #   #     #     # #   # #   # #   # ##    #    #
+  # #    # #   ###  #    #     #     #   # #   # #     #####     #  #  #  # #  #   # #   # #     #    #
+  #  #    #       # #    #     #     ####  #   # #   # #         # # # #   #   #   # #   # #     #    #
+  #   #  #     ###   ##### #   #     #      ###   ###   ###       #   #   #    ####   ###  #      #####
+        #                   ###      #                                   #
 # RYSOWANIE POLA WYBORU
+
+    def rysuj_pole_wyboru1_tulow():
+        aktulanaAkcja['krok'] = 'pole_wyboru_1'
+        polecenia <= f"Krok {aktulanaAkcja['krok']}:" + html.B("Czy rozbudowany tułów oraz po bokach znajdują się miejsca przyczepu 2 par skrzydeł?")
+        panelC <= ramkaA1w if aktulanaAkcja['opcja'] == 1 else panelC <= ramkaA1 
+        panelC <= ramkaA2w if aktulanaAkcja['opcja'] == 2 else panelC <= ramkaA2 
+        
+        element1 = svg.text("Tak", x=100, y=35, font_size='1rem', text_anchor="middle", style={"stroke": "black"})
+        for el in morowka['mrowa1Q00_']['cialo']['d']:
+            element1 += svg.path( d=f"M{'-190, -20'} {el}", stroke_width=1, stroke=kolorStroke[0], fill=kolorFill[0])
+        element1 += svg.path( d=f"M{'-190, -20'} {morowka['mrowa1Q00_']['cialo']['d'][7]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[0])
+        element1 += svg.path( d=f"M{'-190, -20'} {morowka['mrowa1Q00_']['cialo']['d'][9]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[0])
+        panelC <= element1
+        element2 = svg.text("Nie", x=300, y=35, font_size='1rem', text_anchor="middle", style={"stroke": "black"})
+        for el in morowka['mrowa8R00']['cialo']['d']:
+            element2 += svg.path( d=f"M{'-1, -40'} {el}", stroke_width=1, stroke=kolorStroke[0], fill=kolorFill[0])
+        panelC <= element2
+
+
 
     def rysujPoleWyboru():
         panelC.clear()
@@ -183,22 +228,8 @@ def run(document):
             print("Zero")
             return
 
-        if aktulanaAkcja['krok'] == '1': # Q / R
-            polecenia <= f"Krok {aktulanaAkcja['krok']}:" + html.B("Czy rozbudowany tułów oraz po bokach znajdują się miejsca przyczepu 2 par skrzydeł?")
-            panelC <= ramkaA1w if aktulanaAkcja['opcja'] == 1 else panelC <= ramkaA1 
-            panelC <= ramkaA2w if aktulanaAkcja['opcja'] == 2 else panelC <= ramkaA2 
-            
-            element1 = svg.text("Tak", x=100, y=35, font_size='1rem', text_anchor="middle", style={"stroke": "black"})
-            for el in morowka['mrowa1Q00_']['cialo']['d']:
-                element1 += svg.path( d=f"M{'-190, -20'} {el}", stroke_width=1, stroke=kolorStroke[0], fill=kolorFill[0])
-            element1 += svg.path( d=f"M{'-190, -20'} {morowka['mrowa1Q00_']['cialo']['d'][7]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[0])
-            element1 += svg.path( d=f"M{'-190, -20'} {morowka['mrowa1Q00_']['cialo']['d'][9]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[0])
-            panelC <= element1
-            element2 = svg.text("Nie", x=300, y=35, font_size='1rem', text_anchor="middle", style={"stroke": "black"})
-            for el in morowka['mrowa8R00']['cialo']['d']:
-                element2 += svg.path( d=f"M{'-1, -40'} {el}", stroke_width=1, stroke=kolorStroke[0], fill=kolorFill[0])
-            panelC <= element2
-
+        if aktulanaAkcja['krok'] == 'pole_wyboru_1': # Q / R
+            rysuj_pole_wyboru1_tulow()
 
         if aktulanaAkcja['krok'] == '2R':
             polecenia.text = ""
@@ -253,6 +284,15 @@ def run(document):
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
+
+  #   #                                #                                #                            #
+  ##  #            #                   #                                #                            #
+  ##  #  ####         ####  #####  #####    ####   ####     ####   ###  #      ###     #     # #   # ###    ###  # ### #    #
+  # # #      #    ##      #    #  #    #    #   #      #    #   # #   # #     #   #    #     # #   # #   # #   # ##    #    #
+  #  ##  #####     #  #####   #   #    #    #   #  #####    #   # #   # #     #####    #  #  #  # #  #   # #   # #     #    #
+  #  ## #    #     # #    #  #    #    #    #   # #    #    ####  #   # #   # #        # # # #   #   #   # #   # #     #    #
+  #   #  ### # #   #  ### # #####  #####    #   #  ### #    #      ###   ###   ###      #   #   #    ####   ###  #      #####
+                ###                                         #                                  #
 # WYBIERANIE ODPOWIEDNICH ELEMENTOW MROWKI po najechaniu
     # pole wyboru elementow
     def mouseOverWybor(ev):
@@ -261,7 +301,7 @@ def run(document):
         #global opcja
         
 
-        if aktulanaAkcja['krok'] == '1':
+        if aktulanaAkcja['krok'] == 'pole_wyboru_1':
             if ev.srcElement.id == "opcja1":  # blizna po skrzydlach
                 aktulanaAkcja['opcja'] = 1
                 aktulanaAkcja['przesOdwlokX'] = 8
@@ -385,6 +425,14 @@ def run(document):
 
     drzewoDane = {'kasta': "", 'rodzaj': "", 'gatunek': "" }
 
+   #####           #
+    #   #          #                 #
+    #   #   ####   #       ###        
+    #   #       #  #      #   #     ##
+    #   #   #####  #      #####      #
+    #   #  #    #  #   #  #          #
+   #####    ### #   ###    ###   #   #
+                                  ### 
     def bind_click_dalej(ev):
         # nextStep
         #global krok
@@ -397,10 +445,12 @@ def run(document):
                     aktulanaAkcja['krok'] = '2Q'
                     print("Wybrano królową")
                     drzewoDane['kasta'] = "królową"
+                    wzorzecWyszukiwania['kasta'] = 'Q'
                 if aktulanaAkcja['opcja'] == 2: # wybrano robotnicę
                     aktulanaAkcja['krok'] = '2R'
                     print("Wybrano robotnice")
                     drzewoDane['kasta'] = "robotnicę"
+                    wzorzecWyszukiwania['kasta'] = 'Q'
                 aktulanaAkcja['opcja'] = 0
                 aktualna['polaczenie_width'] = 2    # grubość linii
                 aktualna['polaczenie_stroke'] = kolorStroke[1]  # kolor czerwony
@@ -495,24 +545,44 @@ def run(document):
                 drzewo.text += " sp."
             else:
                 drzewo.text += f", gatunek: {drzewoDane['gatunek']}"
-
 #-----------------------------------------------------------------------------
 
 
 
-
-
 #-----------------------------------------------------------------------------
-
     document["buttonDalej"].bind("click",  bind_click_dalej)
 
 
 
-    # document <= html.text("Balakdljfajf")
+
+
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
 
 
 
+    def mouseClick(ev):
+        # print(f"kliknieto:{ev.x} {ev.srcElement.id}")
+        pole = document["pole_wyboru2"] 
+        pole.style={"border": "3px solid #0F9" }
 
+    panelA.bind("click", mouseClick) 
+
+
+
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+
+    ###            ###
+   #   #          #             #       #
+   #       ###    #     ####
+   #      #   #  ####   #   #  ##      ##
+   #      #   #   #     #   #   #       #
+   #   #  #   #   #     #   #   #       #
+    ###    ###    #     #   #  ###  #   #
+                                     ###
 
 
 
@@ -522,7 +592,7 @@ def run(document):
 #-----------------------------------------------------------------------------
     # przez przypadek, znalazłem, po najechaniu na konkretny svn.path
     def mousemoveOpis(ev):
-        # drzewo.text= f"coordinates : {ev.x}, {ev.y} {ev.srcElement.id} "
+        # print(f"coordinates :{ev.x} {ev.srcElement.id}")
         legenda.text = ev.srcElement.id
 
     def mouseoverOpis(ev):
@@ -535,6 +605,95 @@ def run(document):
     panelA.bind("mouseover", mouseoverOpis) # mousemove
     panelA.bind("mouseout", mouseoutOpis)
     panelA.bind("mousemove", mousemoveOpis) # mousemove
+
+
+
+#-----------------------------------------------------------------------------
+    def odznaczeniePrzyciskowWyboru():
+        if wzorzecWyszukiwania['rozmiar'] == "---":
+            pole_wielkosc.style={"border": "3px solid #000" }
+        else:
+            pole_wielkosc.style={"border": f"3px solid {kolorStroke[3]}" }
+
+        if wzorzecWyszukiwania['kasta'] == "null":
+            pole_wyboru1.style={"border": "3px solid #000" }
+        else:
+            pole_wyboru1.style={"border": f"3px solid {kolorStroke[3]}" }
+
+        if wzorzecWyszukiwania['pomostekTyp'] == "null":
+            pole_wyboru2.style={"border": "3px solid #000" }
+        else:
+            pole_wyboru2.style={"border": f"3px solid {kolorStroke[3]}" }
+        
+        if wzorzecWyszukiwania['liniaTulowia'] == "null":
+            pole_wyboru3.style={"border": "3px solid #000" }
+        else:
+            pole_wyboru3.style={"border": f"3px solid {kolorStroke[3]}" }
+
+        if wzorzecWyszukiwania['kolcePozatulowia'] == "null":
+            pole_wyboru4.style={"border": "3px solid #000" }
+        else:
+            pole_wyboru4.style={"border": f"3px solid {kolorStroke[3]}" }
+
+        if wzorzecWyszukiwania['kolor'] == "null":
+            pole_wyboru5.style={"border": "3px solid #000" }
+        else:
+            pole_wyboru5.style={"border": f"3px solid {kolorStroke[3]}" }
+
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
+    def show(event):
+        dropdown = event.target
+        num = dropdown.selectedIndex
+        wzorzecWyszukiwania['rozmiar'] = dropdown.options[num].value
+        if wzorzecWyszukiwania['rozmiar'] == "---":
+            pole_wielkosc.style={"border": "3px solid #000" }
+        else:
+            pole_wielkosc.style={"border": f"3px solid {kolorStroke[3]}" }
+        rysujMrowke()
+
+    def insert_dropdown():
+        document["pole_wielkosc"] <= "Wielkość mrówki: "
+        option = html.OPTION("---")
+        option += html.OPTION("2mm")
+        option += html.OPTION("2.5mm")
+        for i in range(3, 21):
+            option += html.OPTION(f"{i}mm")
+        dropdown = html.SELECT(option)
+        dropdown.bind("change", show)
+        document["pole_wielkosc"] <= dropdown
+
+    insert_dropdown()
+#-----------------------------------------------------------------------------
+    def mouseClick_wybor1(ev):
+        odznaczeniePrzyciskowWyboru()
+        pole_wyboru1.style={"border": "3px solid #F00" }
+        rysuj_pole_wyboru1_tulow()
+    pole_wyboru1.bind("click", mouseClick_wybor1) 
+
+    def mouseClick_wybor2(ev):
+        odznaczeniePrzyciskowWyboru()
+        pole_wyboru2.style={"border": "3px solid #F00" }
+    pole_wyboru2.bind("click", mouseClick_wybor2) 
+
+    def mouseClick_wybor3(ev):
+        odznaczeniePrzyciskowWyboru()
+        pole_wyboru3.style={"border": "3px solid #F00" }
+    pole_wyboru3.bind("click", mouseClick_wybor3) 
+
+    def mouseClick_wybor4(ev):
+        odznaczeniePrzyciskowWyboru()
+        pole_wyboru4.style={"border": "3px solid #F00" }
+    pole_wyboru4.bind("click", mouseClick_wybor4) 
+
+    def mouseClick_wybor5(ev):
+        odznaczeniePrzyciskowWyboru()
+        pole_wyboru5.style={"border": "3px solid #F00" }
+    pole_wyboru5.bind("click", mouseClick_wybor5) 
+
+
+
 
 
 
