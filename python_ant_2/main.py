@@ -64,7 +64,7 @@ def run(document):
 
     #-----------------------------------------------------------------------------
     # testMrowki = 'mrowa6R00'    # domyslna mrowka na start
-    testMrowki = 'mrowa4R00'
+    testMrowki = 'mrowa7Q00'
 
     aktualna = {}
     aktualna['czolka'] =     morowka[testMrowki]['czolka']
