@@ -9,6 +9,10 @@ from mrowki import morowka
 # 
 
 
+ 
+ # dobre są: 1, , 3, 4, 5, 6, 7, 8
+ # do sprawdzenia: 2
+
 def run(document):
 
     panelA = document['panelA']
@@ -64,7 +68,7 @@ def run(document):
 
     #-----------------------------------------------------------------------------
     # testMrowki = 'mrowa6R00'    # domyslna mrowka na start
-    testMrowki = 'mrowa5Q00'
+    testMrowki = 'mrowa7Q00'
 
     aktualna = {}
     aktualna['czolka'] =     morowka[testMrowki]['czolka']
@@ -775,6 +779,46 @@ def run(document):
     pole_wyboru5.bind("click", mouseClick_wybor5) 
 
 
+
+    def buttonQ1_click(ev):
+        podmienMrowke('mrowa1Q00')
+        rysujMrowke()
+    document["buttonQ1"].bind("click", buttonQ1_click)
+
+    def buttonQ2_click(ev):
+        podmienMrowke('mrowa2Q11')
+        rysujMrowke()
+    document["buttonQ2"].bind("click", buttonQ2_click)
+
+    def buttonQ3_click(ev):
+        podmienMrowke('mrowa3Q00')
+        rysujMrowke()
+    document["buttonQ3"].bind("click", buttonQ3_click)
+
+    def buttonQ4_click(ev):
+        podmienMrowke('mrowa4Q00')
+        rysujMrowke()
+    document["buttonQ4"].bind("click", buttonQ4_click)
+
+    def buttonQ5_click(ev):
+        podmienMrowke('mrowa5Q00')
+        rysujMrowke()
+    document["buttonQ5"].bind("click", buttonQ5_click)
+
+    def buttonQ6_click(ev):
+        podmienMrowke('mrowa6Q00')
+        rysujMrowke()
+    document["buttonQ6"].bind("click", buttonQ6_click)
+
+    def buttonQ7_click(ev):
+        podmienMrowke('mrowa7Q00')
+        rysujMrowke()
+    document["buttonQ7"].bind("click", buttonQ7_click)
+
+    def buttonQ8_click(ev):
+        podmienMrowke('mrowa8Q00')
+        rysujMrowke()
+    document["buttonQ8"].bind("click", buttonQ8_click)
 
 
 
