@@ -3,16 +3,6 @@ from mrowki import morowka
 
 
 
-# krok: 1 - Q / R
-# krok: 2Q - polaczenie
-# krok: 2R - polaczenie (Ilość segmentów pomostka)
-# 
-
-
- 
- # dobre są: 1, , 3, 4, 5, 6, 7, 8
- # do sprawdzenia: 2
-
 def run(document):
 
     panelA = document['panelA']
@@ -31,6 +21,7 @@ def run(document):
     aktulanaAkcja = {
         'krok' : '0', # pole_wyboru_1,  pole_wyboru_2,  pole_wyboru_3, 
         'opcja' : 0,
+        'opcjaPoprzednia' : 0,
         'przesPolaczenieX': 0,
         'przesPolaczenieY': 0,
         'przesOdwlokX': 0,
@@ -67,8 +58,8 @@ def run(document):
 
 
     #-----------------------------------------------------------------------------
-    # testMrowki = 'mrowa6R00'    # domyslna mrowka na start
-    testMrowki = 'mrowa7Q00'
+    testMrowki = 'mrowa6R00'    # domyslna mrowka na start
+    # testMrowki = 'mrowa2Q11'
 
     aktualna = {}
     aktualna['czolka'] =     morowka[testMrowki]['czolka']
@@ -345,10 +336,9 @@ def run(document):
     def mouseOverWybor(ev):
         # drzewo.text= f"coordinates :{ev.x} {ev.srcElement.id}"
         # print(f"{ev.srcElement.id}")
-        #global opcja
         #kasujKoloryTymczasowe()
 
-        if aktulanaAkcja['krok'] == 'pole_wyboru_1':
+        if aktulanaAkcja['krok'] == 'pole_wyboru_1':   # tułów Q / R
             aktualna['cialo_width_z'] = 1
             aktualna['cialo_stroke_z'] = kolorStroke[2]
             aktualna['cialo_fill_z'] = kolorFill[2]
@@ -368,7 +358,7 @@ def run(document):
                 aktulanaAkcja['przesPolaczenieX'] = 0
                 rysujMrowke()
 
-        if aktulanaAkcja['krok'] == 'pole_wyboru_2': 
+        if aktulanaAkcja['krok'] == 'pole_wyboru_2': # pomostek
             aktualna['polaczenie_width_z'] = 1
             aktualna['polaczenie_stroke_z'] = kolorStroke[2]
             aktualna['polaczenie_fill_z'] = kolorFill[2]
@@ -376,25 +366,37 @@ def run(document):
             aktulanaAkcja['przesPolaczenieY'] = 0
             aktulanaAkcja['przesOdwlokX'] = 0
             aktulanaAkcja['przesOdwlokY'] = 0
-            if ev.srcElement.id == "opcja1":  # połączenie: ukryty
+            if ev.srcElement.id == "opcja1":  # pomostek: ukryty
                 aktulanaAkcja['opcja'] = 1
-                aktualna['polaczenie'] = morowka['mrowa8R00']['polaczenie']
-                aktualna['odwlok'] = morowka['mrowa8R00']['odwlok']
-                # aktulanaAkcja['przesOdwlokX'] = -8
+                if wzorzecWyszukiwania['kasta'] == 'Q':
+                    aktualna['polaczenie'] = morowka['mrowa8Q00']['polaczenie']
+                    aktualna['odwlok'] = morowka['mrowa8Q00']['odwlok']
+                else:
+                    aktualna['polaczenie'] = morowka['mrowa8R00']['polaczenie']
+                    aktualna['odwlok'] = morowka['mrowa8R00']['odwlok']
+                    # aktulanaAkcja['przesOdwlokX'] = -8
                 rysujMrowke()
-            elif ev.srcElement.id == "opcja2": # połączenie: pojedynczy
+            elif ev.srcElement.id == "opcja2": # pomostek: pojedynczy
                 aktulanaAkcja['opcja'] = 2
-                aktualna['polaczenie'] = morowka['mrowa7R00']['polaczenie']
-                aktualna['odwlok'] = morowka['mrowa7R00']['odwlok']
+                if wzorzecWyszukiwania['kasta'] == 'Q':
+                    aktualna['polaczenie'] = morowka['mrowa7Q00']['polaczenie']
+                    aktualna['odwlok'] = morowka['mrowa7Q00']['odwlok']
+                else:
+                    aktualna['polaczenie'] = morowka['mrowa7R00']['polaczenie']
+                    aktualna['odwlok'] = morowka['mrowa7R00']['odwlok']
                 aktulanaAkcja['przesPolaczenieY'] = 0
                 aktulanaAkcja['przesOdwlokX'] = 0
                 rysujMrowke()
-            elif ev.srcElement.id == "opcja3": # połączenie: podwojny
+            elif ev.srcElement.id == "opcja3": # pomostek: podwojny
                 aktulanaAkcja['opcja'] = 3
-                aktualna['polaczenie'] = morowka['mrowa1R00']['polaczenie']
-                aktualna['odwlok'] = morowka['mrowa1R00']['odwlok']
-                aktulanaAkcja['przesPolaczenieY'] = 30
-                aktulanaAkcja['przesOdwlokY'] = 30
+                if wzorzecWyszukiwania['kasta'] == 'Q':
+                    aktualna['polaczenie'] = morowka['mrowa2Q11']['polaczenie']
+                    aktualna['odwlok'] = morowka['mrowa2Q11']['odwlok']
+                else:
+                    aktualna['polaczenie'] = morowka['mrowa1R00']['polaczenie']
+                    aktualna['odwlok'] = morowka['mrowa1R00']['odwlok']
+                    aktulanaAkcja['przesPolaczenieY'] = 30
+                    aktulanaAkcja['przesOdwlokY'] = 30
                 # aktulanaAkcja['przesPolaczenieX'] = 3
                 # aktulanaAkcja['przesOdwlokX'] = 23
                 rysujMrowke()
@@ -420,9 +422,9 @@ def run(document):
                 rysujMrowke()
 
 
-
-
-        rysujPoleWyboru()        
+        if aktulanaAkcja['opcjaPoprzednia'] != aktulanaAkcja['opcja']:
+            aktulanaAkcja['opcjaPoprzednia'] = aktulanaAkcja['opcja']
+            rysujPoleWyboru()        
 #-----------------------------------------------------------------------------
 
     panelC.bind("mouseover", mouseOverWybor)
@@ -539,7 +541,6 @@ def run(document):
     def bind_click_dalej(ev):
         # nextStep
         #global krok
-        #global opcja
         # global aktualna
         #-----------------------------------------------------------------------------
         if aktulanaAkcja['krok'] == 'pole_wyboru_1': # tułów
@@ -547,6 +548,7 @@ def run(document):
                 if aktulanaAkcja['opcja'] == 1: #wybrano królową
                     print("Wybrano królową")
                     wzorzecWyszukiwania['kasta'] = 'Q'
+                    podmienMrowke('mrowa6Q00')
                 if aktulanaAkcja['opcja'] == 2: # wybrano robotnicę
                     print("Wybrano robotnice")
                     wzorzecWyszukiwania['kasta'] = 'R'
@@ -738,8 +740,8 @@ def run(document):
         pole_wyboru1.style={"border": "3px solid #F00" }
         kasujKoloryTymczasowe()
         aktualna['cialo_fill_z'] = kolorFill[1]
-        aktualna['cialo_width_z'] = 2
-        aktualna['cialo_stroke_z'] = kolorFill[4]
+        aktualna['cialo_width_z'] = 1
+        aktualna['cialo_stroke_z'] = kolorStroke[2]
         rysuj_pole_wyboru1_tulow()
         rysujMrowke()
     pole_wyboru1.bind("click", mouseClick_wybor1) 
@@ -750,7 +752,7 @@ def run(document):
         kasujKoloryTymczasowe()
         aktualna['polaczenie_fill_z'] = kolorFill[1]
         aktualna['polaczenie_width_z'] = 2
-        aktualna['polaczenie_stroke_z'] = kolorFill[4]
+        aktualna['polaczenie_stroke_z'] = kolorStroke[1]
         rysuj_pole_wyboru2_pomostek()
         rysujMrowke()
     pole_wyboru2.bind("click", mouseClick_wybor2) 
@@ -819,6 +821,48 @@ def run(document):
         podmienMrowke('mrowa8Q00')
         rysujMrowke()
     document["buttonQ8"].bind("click", buttonQ8_click)
+
+
+
+    def buttonR1_click(ev):
+        podmienMrowke('mrowa1R00')
+        rysujMrowke()
+    document["buttonR1"].bind("click", buttonR1_click)
+
+    def buttonR2_click(ev):
+        podmienMrowke('mrowa2R00')
+        rysujMrowke()
+    document["buttonR2"].bind("click", buttonR2_click)
+
+    def buttonR3_click(ev):
+        podmienMrowke('mrowa3R00')
+        rysujMrowke()
+    document["buttonR3"].bind("click", buttonR3_click)
+
+    def buttonR4_click(ev):
+        podmienMrowke('mrowa4R00')
+        rysujMrowke()
+    document["buttonR4"].bind("click", buttonR4_click)
+
+    def buttonR5_click(ev):
+        podmienMrowke('mrowa5R00')
+        rysujMrowke()
+    document["buttonR5"].bind("click", buttonR5_click)
+
+    def buttonR6_click(ev):
+        podmienMrowke('mrowa6R00')
+        rysujMrowke()
+    document["buttonR6"].bind("click", buttonR6_click)
+
+    def buttonR7_click(ev):
+        podmienMrowke('mrowa7R00')
+        rysujMrowke()
+    document["buttonR7"].bind("click", buttonR7_click)
+
+    def buttonR8_click(ev):
+        podmienMrowke('mrowa8R00')
+        rysujMrowke()
+    document["buttonR8"].bind("click", buttonR8_click)
 
 
 

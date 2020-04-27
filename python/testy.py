@@ -55,11 +55,20 @@
 
 
 
-f = open("plik.txt", mode="r")      # tyko odczyt
-print(f.readable())                 # True - gdy odczytany?
-x= f.read()							# odczytaj całą zawartość pliku
-f.close()
-print(x)							# wypisze zawartość pliku
 
 
+class User(object):
 
+    name = 'John Doe'
+    email = 'hejka@cos.com'
+    adress = {
+        'street': 'Ceglana',
+        'city': 'Radom',
+    }
+
+    def __format__(self, format):
+        if format =='getAll' :
+            return "Nazwa: {u.name}, adres email: {u.email}".format(u=self)
+        return "Nie podałeś argumentu!!!"
+
+print('Cos: {}'.format(User()))
