@@ -58,7 +58,7 @@ def run(document):
 
 
     #-----------------------------------------------------------------------------
-    testMrowki = 'mrowa6R00'    # domyslna mrowka na start
+    testMrowki = 'mrowa7R00'    # domyslna mrowka na start
     # testMrowki = 'mrowa2Q11'
 
     aktualna = {}
@@ -226,11 +226,11 @@ def run(document):
         element1 = svg.text("Tak", x=100, y=35, font_size='1rem', text_anchor="middle", style={"stroke": "black"})
         for el in morowka['mrowa1Q00_']['cialo']['d']:
             element1 += svg.path( d=f"M{'-190, -20'} {el}", stroke_width=1, stroke=kolorStroke[2], fill=kolorFill[2])
-        element1 += svg.path( d=f"M{'-190, -20'} {morowka['mrowa1Q00_']['cialo']['d'][7]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[2])
+        element1 += svg.path( d=f"M{'-190, -20'} {morowka['mrowa1Q00_']['cialo']['d'][11]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[2])
         element1 += svg.path( d=f"M{'-190, -20'} {morowka['mrowa1Q00_']['cialo']['d'][9]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[2])
         panelC <= element1
         element2 = svg.text("Nie", x=300, y=35, font_size='1rem', text_anchor="middle", style={"stroke": "black"})
-        for el in morowka['mrowa8R00']['cialo']['d']:
+        for el in morowka['mrowa7R00']['cialo']['d']:
             element2 += svg.path( d=f"M{'-1, -40'} {el}", stroke_width=1, stroke=kolorStroke[2], fill=kolorFill[2])
         panelC <= element2
 
@@ -349,7 +349,7 @@ def run(document):
                 rysujMrowke()
                 for el in morowka['mrowa1Q00_']['cialo']['d']:
                     panelA <= svg.path( d=f"M{'4, -5'} {el}", stroke_width=1, stroke=kolorStroke[2], fill=kolorFill[2])
-                panelA <= svg.path( d=f"M{'4, -5'} {morowka['mrowa1Q00_']['cialo']['d'][7]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[2])
+                panelA <= svg.path( d=f"M{'4, -5'} {morowka['mrowa1Q00_']['cialo']['d'][11]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[2])
                 panelA <= svg.path( d=f"M{'4, -5'} {morowka['mrowa1Q00_']['cialo']['d'][9]}", stroke_width=2, stroke=kolorStroke[1], fill=kolorFill[2])
             
             if ev.srcElement.id == "opcja2":  # brak blizny po skrzydlach
@@ -395,8 +395,8 @@ def run(document):
                 else:
                     aktualna['polaczenie'] = morowka['mrowa1R00']['polaczenie']
                     aktualna['odwlok'] = morowka['mrowa1R00']['odwlok']
-                    aktulanaAkcja['przesPolaczenieY'] = 30
-                    aktulanaAkcja['przesOdwlokY'] = 30
+                    # aktulanaAkcja['przesPolaczenieY'] = 30
+                    # aktulanaAkcja['przesOdwlokY'] = 30
                 # aktulanaAkcja['przesPolaczenieX'] = 3
                 # aktulanaAkcja['przesOdwlokX'] = 23
                 rysujMrowke()
@@ -569,16 +569,26 @@ def run(document):
             if aktulanaAkcja['opcja'] == 1 or aktulanaAkcja['opcja'] == 2 or aktulanaAkcja['opcja'] == 3 :
                 if aktulanaAkcja['opcja'] == 1: # wybrano ukryty (Tapinoma sp.)
                     wzorzecWyszukiwania['pomostekTyp'] = 'ukryty'
+                    if wzorzecWyszukiwania['kasta'] == 'Q':
+                        podmienMrowke('mrowa8Q00')
+                    else:
+                        podmienMrowke('mrowa8R00')
                     pole_wyboru3.style={ "display": "none" }
                 if aktulanaAkcja['opcja'] == 2: # wybrano pojedynczy
                     wzorzecWyszukiwania['pomostekTyp'] = 'pojedynczy'
-                    podmienMrowke('mrowa7R00')
+                    if wzorzecWyszukiwania['kasta'] == 'Q':
+                        podmienMrowke('mrowa7Q00')
+                    else:
+                        podmienMrowke('mrowa7R00')
                     pole_wyboru3.style={ "display": "inline" }
                 if aktulanaAkcja['opcja'] == 3: # wybrano podwojny
                     wzorzecWyszukiwania['pomostekTyp'] = 'podwojny'
-                    podmienMrowke('mrowa1R00')
-                    pole_wyboru4.style={ "display": "inline" }
-                    pole_wyboru3.style={ "display": "none" }
+                    if wzorzecWyszukiwania['kasta'] == 'Q':
+                        podmienMrowke('mrowa2Q11')
+                    else:
+                        podmienMrowke('mrowa1R00')
+                        pole_wyboru4.style={ "display": "inline" }
+                        pole_wyboru3.style={ "display": "none" }
                 aktulanaAkcja['krok'] = '0'
                 aktulanaAkcja['opcja'] = 0
                 aktualna['polaczenie_width'] = 1
@@ -659,7 +669,7 @@ def run(document):
 #-----------------------------------------------------------------------------
     # przez przypadek, znalazłem, po najechaniu na konkretny svn.path
     def mousemoveOpis(ev):
-        # print(f"coordinates :{ev.x} {ev.srcElement.id}")
+        print(f"coordinates :{ev.x} {ev.srcElement.id}")
         legenda.text = ev.srcElement.id
 
     def mouseoverOpis(ev):
