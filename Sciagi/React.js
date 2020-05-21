@@ -1700,12 +1700,33 @@ class Wrozba extends React.Component {
 
 ReactDOM.render(<Wrozba />, document.getElementById("root4"));
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+// Kurs "React dla średnio zaawansowanych"
 
+// Koleś pisze proste aplikacje w https://codesandbox.io/
+// Poleca urzywanie  https://styled-components.com/
 
+// W codesandbox trzeba dodać to przez Add dependency (wpisać styled-component 
+// i wybrac pierwszy jaki sie pojawi).
+// Do projektu dodajemy:
+import styled from 'styled-components'
 
+//Definicja najprostrego przycisku:
+const Button = styled.button`
+  background: red;
+  color: white;
+`
 
+//Który urzywam po prostu tak:
+<Button>Przycisk</Button>
 
 //------------------------------------------------------------
+// REDUX
+Filmik nr 4
+Aby w sandboxie skorzystać z Redux, trzeba go dodac w dependensis, wpisując react-redux
+oraz redux
+
 
 
 

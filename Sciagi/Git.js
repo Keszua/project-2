@@ -13,7 +13,7 @@ jeżeli wyświetlą sie jakies informacje inne niż błąd, to znaczy że git za
 
 git --version //zwraca wersję programu
 
-W konsoli CMD albo Cmder działają poleenia windowsowe
+W konsoli CMD albo Cmder działają polecenia windowsowe
 W konsoli Git Bash dziłaja polecenia Linuxowe
 
 W - to bedzie komenda Windowsowa
@@ -60,12 +60,17 @@ git status 				//pokazuje jakie pliki są śledzone, dodane lub nie dodane do re
 //Konfiguracja gita: (bez wartości w cudzysłowiu - oznacza tylko odczyt)
 git config --global user.name "kmichalczyk" 
 git config --global user.email "keszua@gmail.com" 
-git config --global core.editor  	//pokaze ścieżkę do Visual Studio Code
+git config --global core.editor  	//pokaze ścieżkę do Visual Studio Code (lub innego edytora)
+git config --global core.editor notepad //aby przestawić domyślny edytor
 git config --unset user.email  		//usówanie danych z pliku konfiguracyjnym (będąc w folderze głównym ~)
 git config --global --unset user.email //usówanie danych z pliku konfiguracyjnego
+git config --list 		//wyświetli pełną konfigurację
 
 notepad .gitconfig  	//aby podejżeć plik konfiguracyjny w notatniku (będąc w folderze głównym ~)
 cat .gitconfig  		//aby podejżeć plik konfiguracyjny w konsoli (będąc w folderze głównym ~)
+cat .git/config			//bieżące repozytorium
+/etc/gitconfig 			//wartości zmiennych widoczne dla każdego użytkownika w systemie
+~/.gitconfig 			//Lokalizacja specyficzna dla danego użytkownika
 
 git add nazwaPliku 		//dodawanie pliku do indeksu
 git add --all  			//dodanie wszystkich plików
@@ -273,7 +278,7 @@ git push origin --delete develop	//usunięcie gałęzi na zdalnym repozytorium (
 git branch --merged 				//Aby zobaczyć, które gałęzie zostały już scalone z bieżąc
 git branch --no-merged 				//Aby zobaczyć, które gałęzie nie zostały jeszcze scalone z bieżąc
 git branch -m "Nowa-zanzwa"			//Zmiana nazwy gałęzi, na której jesteśmy
-git -m oldbranch newbranch			//Zmiana nazwy gałęzi, której nas nie ma. Nie testowałe, wydaje mi się, że działac powinno: git branch -m oldbranch newbranch
+git -m oldbranch newbranch			//Zmiana nazwy gałęzi, na której nas nie ma. Nie testowałem, wydaje mi się, że działac powinno: git branch -m oldbranch newbranch
 
 git checkout istniejącyBrancha 		//przełaczenie się na inną gałąź
 git checkout -b nowyBrancha			//tworzy nowy branch i przełącza sie na niego
@@ -301,7 +306,8 @@ git merge master		//teraz jestem na gałęzi "master" i chce do swojej gałęzi 
                         //który ktoś "w miedzyczasie" wprowadził poprawkę.
 	//Jeśli otrzymam informacje o konflikcie: "Automatic merge failed; fix conflicts and then commit the result."
 	//To najlepiej rozwiązać te koflikty narzędziem git mergetool (gdy jet zainstalowany np: kdiff3)
-	//Na koniec musimy tylko zapisać zmiany i to by było na tyle.
+	//Na koniec musimy tylko zapisać zmiany (i to by było na tyle).
+	//Zwykle trzebz stworzyć nowy commit 
 
 
 //STOS
@@ -397,9 +403,10 @@ git fetch [nazwa-zdalengo-repozytorium]	//aby uzyskać dane ze zdalnego projektu
 
 // ETYKIETOWANIE
 git tag 					//wyświetlenie dostępnych etykiet
-git tag v1.0.0				//stworzyłem tag
-git tag v1.0.0 -a -m "opis"	//flaga -a: informacje o autorze; -m: komentarz
+git tag v1.0.0				//stworzyłem tag (ETYKEITA LEKKA)
+git tag v1.0.0 -a -m "opis"	//flaga -a: informacje o autorze; -m: komentarz (ETYKIETA OPISOWA)
 git tag v1.0.0 -s -m "opis"	//flaga -s: podpis prywatnym kluczem używając GPG. Sczegóły na https://git-scm.com/book/pl/v1/Podstawy-Gita-Tagowanie-etykietowanie
+git show v1.4				//zobacz dane etykiety wraz z tagowaną rewizją
 git tag v1.0.0 5a33dd3		//przypisanie etykiety do konkretnego commita
 git tag v1.0.0 5a33dd3	-a -m "opis"	//przypisanie etykiety do konkretnego commita
 git tag -d v1.0.0			//usunięcie tag
@@ -411,7 +418,20 @@ git push origin v1.0.0 		//wysłanie informacji o tylko jednym tagu
 git push origin -d v1.0.0 	//usuwanie tagów z repozytorium
 
 
-
+//ALIASY 
+//Aliasy - czyli definiowanie skrutów
+//Oto kilka przykładów, które mogą ci się przydać:
+$ git config --global alias.co checkout
+$ git config --global alias.br branch
+$ git config --global alias.ci commit
+$ git config --global alias.st status
+//Oznacza to, że na przykład, zamiast wpisywać git commit, wystarczy, że wpiszesz git ci. 
+//definicja poelcenia z argumentem:
+$ git config --global alias.unstage 'reset HEAD --'
+//teraz dwa poniższe polecenia są sobie równe:
+$ git unstage fileA
+$ git reset HEAD fileA
+// trochę więcej na ten temat: https://git-scm.com/book/pl/v2/Podstawy-Gita-Aliasy
 
 
 
