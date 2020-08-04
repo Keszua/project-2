@@ -92,7 +92,7 @@ const UserTable = () => (
  )
 ReactDOM.render( <UserTable /> , document.getElementById('content')); 
 
-//Wewnątrz tego komponentu mozna wlosyc kolejne komponenty:
+//Wewnątrz tego komponentu mozna włozc kolejne komponenty:
 const UserTable = () => (
 	<div>
 		<h2>To jest komponent userTable</h2>
@@ -157,13 +157,13 @@ const TweetData = {
 }
 // w 
 ReactDOM.render( <Tweet2 />, document.getElementById('Komponent_Stanowy'));
-//Doisuje sobie skad beda pobierane dane:
+//Dopisuje sobie skąd będą pobierane dane:
 ReactDOM.render( <Tweet2 tweet={TweetData}/>, document.getElementById('Komponent_Stanowy'));
 
 //do klasy Tweet, pod "render(){" dodaje sobie linjke:
 const { user, text, date } = this.props.tweet;
-//przerabaim "TweetUser" z:
- const TweetUser = () => ( <span> Imie: <b>Karol</b> </span> ) //bez nawiasow i srednika tez zadzialalo
+//przerabiam "TweetUser" z:
+ const TweetUser = () => ( <span> Imie: <b>Karol</b> </span> ) //bez nawiasów i średnika też zadziałało
 //na:
 const TweetUser = ({name, handle}) => ( <span> Imie <b>{name}</b>{handle}</span> );
 
@@ -229,7 +229,7 @@ React router
 	npm install react-router-dom
 //Po zainstalowaniu, trzeba zaimportować kilka komponentów:
 	import { BrowserRouter, Link } from 'react-router-dom';
-//Następnie w komponent BrowserRouter "owijamy" jednodziecko (najlepiej jeden <div>)
+//Następnie w komponent BrowserRouter "owijamy" jedno dziecko (najlepiej jeden <div>)
 	<BrowserRouter> 
 		<div>
 			...
@@ -237,8 +237,8 @@ React router
 	</BrowserRouter> 
 //Teraz zamist tradycyjnych linków: <a href="/start">Start</a>
 //Wprowadzamy: <Link to="/start">Start</Link>
-//Od tej pory, prejście na inny link, nie odświerza strony
-//Mozna urzyac skróconej nazwy BrowserRouter, deklarując to w imporcie:
+//Od tej pory, przejście na inny link, nie odświerza strony
+//Mozna urzyać skróconej nazwy BrowserRouter, deklarując to w imporcie:
 	import { BrowserRouter as Router, Link } from 'react-router-dom';
 	<Router> 
 		<div>
@@ -352,7 +352,7 @@ ReactDOM.render(<ShoppingList />, document.getElementById('root2'))
 
 
 //------------------------------------------------------------
-//Przycisk - po kliknięciu dodawna jest litera do tekstu
+//Przycisk - po kliknięciu dodawana jest litera do tekstu
 //Etap 1:
 
 class App2 extends React.Component { //klasa dziedziczaca z React
@@ -1723,18 +1723,42 @@ const Button = styled.button`
 
 //------------------------------------------------------------
 // REDUX
-Filmik nr 4
+Filmik nr 4 - React dla średnio zaawansowanych
 Aby w sandboxie skorzystać z Redux, trzeba go dodac w dependensis, wpisując react-redux
 oraz redux
 
 
 
+Redux MIDDLEWARES - takie wstrzyknięcie pomiędzy wykonanie akcji a reduserem,
+  funkcje w których możemy dodać logikę.
 
+//------------------------------------------------------------
+HOOKS
+// Polecane zajżenie na dokumentację:
+	https://reactjs.org/docs/hooks-intro.html
+//oraz stronę:
+	https://wattenberger.com/blog/react-hooks
+
+Do Hooks należą funkcje:
+useState, useEffect, które pobieram z biblioteki "react":
+	import React, { useState, useEffect } from "react";
+
+
+Zamiast komponentu stanowego, tworze komponent bezstanowy:
+ClassComponentExample extends React.Component | 
+                                              |
+                                              |
+
+Zamiast 
+	this.setState({ data }); 
+używam:
+	setData({ data });
 
 
 
 //------------------------------------------------------------
-
+.trim()  // usówa białe znaki na końcu. tak jak strip() w Pythonie
+const value = input.value.trim();
 
 
 

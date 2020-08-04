@@ -866,7 +866,7 @@ y= f.readlines()					# czytamy plik w formie tablicy, gdzie każdya linijka to j
 									#= ['Cos_z_pliku\n', 'Druga linijka\n', 'Trzecia linijka\n', 'Czwarta linijka']
 y= f.readlines()[1]					# czytamy tylko 2-gą linijkę
 for line in f.readlines():			# wypisze wszystkie linijki z pliku
-    print(line.rstrip())			# .rstrip() usówa białe znaki (efekt jak z end="") jest też .strip() i .lstrip() 
+    print(line.rstrip())			# .rstrip() usówa białe znaki (efekt jak z end="") jest też .strip() i .lstrip()   tak jak .trim() w React
 
 # ciekawa ściaga: http://users.uj.edu.pl/~ufkapano/algorytmy/lekcja02/file.html
 

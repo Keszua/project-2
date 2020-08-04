@@ -185,8 +185,8 @@ git checkout -b nowyBrancha	// tworzy nowy branch i przełacza sie na niego
 
 git restore nazwaPliku  	//cofnięcie zmina (Gdy zrobie jakieś zmiany i che wrocic do czystego comita )
 rm nazwaPliku  				//usówanie pliku (tylko z katalogu roboczego)
-git rm nazwaPliku  			//usówanie pliku z indeksu (staging) i z katalogu roboczego
-git rm --cached nazwaPliku  //usunięcie pliku z poczekalni (uzyskuje status: nieśledzony)
+git rm nazwaPliku  			//usówanie pliku z indeksu (staging) i z katalogu roboczego (nie bedzie pliku na dysku)
+git rm --cached nazwaPliku  //przestań śledzić plik (usunięcie pliku z poczekalni, uzyskuje status: nieśledzony). Plik bedzie cały czas na dysku w flderze roboczym. 
 git reset  					//tak jak by odwrotność polecenia "add" (usuwa pliki ze staging)
 							// dokładniej, kopiuje pliki z ostatniego commita do przechowalni (stage), nadpisując jej stan
 git reset HEAD 				//aby upewnić się do jakiego stanu wrócić (do ostatniego comitu)
@@ -196,8 +196,9 @@ git reset HEAD plik   		//aby usunąć konkretny plik z poczekalni
 git reset --mixed 5a33dd3	//Przywracamy podany commit a pliki ze zmianami trafią do folderu roboczego
 git reset --soft 5a33dd3	//Przywracamy podany commit a pliki ze zmianami trafią do poczekalni (stage)
 git reset --hard 5a33dd3	//Przywracamy podany commit a zmiany zostaną całkowicie usunięte
-git commit --amend   		//umozliwia poprawkę osatniego commitu (zwykle gdy zrobimy błąd w opisie)
-git commit --amend -m "Nowy opis"  	//umozliwia poparkę osatniego komitu
+git commit --amend   		//umozliwia poprawkę osatniego commitu (zwykle gdy zrobimy błąd w opisie) (Otworzy sie edytor, nie strace starego opisu)
+							//Gdy zapomne dodać pliku, czyli po commicie, dodaje plik (git add plik) i wywoluje git commit --ammend. Zakonczy sie to jedna rewizją.
+git commit --amend -m "Nowy opis"  	//umozliwia poparkę opisu osatniego komitu 
 
 git clean 					//służy do usuwanie plików które nie są śledzone (takie polecenie wywali błąd, trzeba podać )
 git clean -n 				//polecenie testowe, pokaże, jakie pliki zostały by usunięte
@@ -245,7 +246,9 @@ plik1.txt
 /folder
 # wszystko z tym znaczkiem to komentarz
 //Do tej listy można dodac TYLKO pliki i foldery nie śledzone. 
-//Jeżeli jakiś plik jest śledzony i chcemy go przestac śledzić: git rm --cached nazwaPliku
+//Jeżeli jakiś plik jest śledzony i chcemy go przestać śledzić: git rm --cached nazwaPliku
+
+
 
 // GAŁĘZIE
 //         ----*-----*--------                --*----*-----------*------------*------
@@ -283,10 +286,10 @@ git -m oldbranch newbranch			//Zmiana nazwy gałęzi, na której nas nie ma. Nie
 git checkout istniejącyBrancha 		//przełaczenie się na inną gałąź
 git checkout -b nowyBrancha			//tworzy nowy branch i przełącza sie na niego
 git switch istniejącyBrancha 		//przełaczenie się na inną gałąź
-git switch -c nowyBrancha			//tworzy nowy branch i przełącza sie na niego
+git switch -c "nowyBrancha"			//tworzy nowy branch i przełącza sie na niego
 
 //POBIERANIE GAŁĘZI
-git  fetch origin nazwaZdalejGalezi:nazwaLokalnejGalezi //pobiera informacje o gałezi z repozytorium 
+git fetch origin nazwaZdalejGalezi:nazwaLokalnejGalezi //pobiera informacje o gałezi z repozytorium 
 git pull origin nazwaGalezi //UWAGA pobranie danych na aktywną gałąź (na której jestesmy lokalnie) z gałęzi z serwera (nastąpi połączenie commitów)
 	//aby sprawdzić, jakie są gałezie zdalene: git branch -r  (lub -a, pokaze lokalne i zdalne)
 
