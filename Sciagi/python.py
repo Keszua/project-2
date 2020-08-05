@@ -74,6 +74,10 @@ print(id(myvar), id(myvar2))    #= 13609408 13609408
 
 
 #-----------------------------------------------------------------------------
+quit()  # przerywa wykonywanie się skryptu
+
+
+#-----------------------------------------------------------------------------
 .format  #doklejanie elemenów w miejsce "klamerek"
 print("Tekst bazowy + {} {}".format("doklejony1", 7)) #=  Tekst bazowy + doklejony1 7
 # to samo co wyżej, bardziej prawidłowy (okreslam tyly jakie wklejam:
@@ -1526,12 +1530,40 @@ import sys
 sys.getsizeof(dates) # pokazuje, ile miejsca zajmuje obiekt 
 
 
+#-----------------------------------------------------------------------------
+# biblioteka, umożliwiająca uruchamianie skrypty z argumentami
+from sys import argv  
+# po uruchomieniu skryptu, np: python main.py setup   
+# [0] - ścierzka do pliku.  [1] pierwszy argument
+if len(argv) >1 and argv[1] == 'setup':
+    print('argv:', argv[1])  #= argv: setup
 
 
 
 
+#-----------------------------------------------------------------------------
+# biblioteka sqlite3  (baza danych) wbudowana w pythona
+import sqlite3 
+from sys import argv 
 
+db = sqlite3.connect('dane.db')  	# tworzenie połączenia z bazą danych
+cursor = db.cursor()  				# służy do poruszania się po bazie
+# stworze nowa bazę danych (nową tabelę) gdy uruchomie skrypt z parametrem setup, czyli:
+# python main.py setup
+if len(argv) >1 and argv[1] == 'setup':
+    cursor.execute('''CREATE TABLE offers (name TEXT, price REAL, city TEXT)''')
+    quit()
 
+# dodawanie rekordów do bazy:
+cursor.execute('INSERT INTO offers VALUES (?, ?, ?)', (title, price, location))
+# trzeba co jakiś czas "zapisać" to w bazie
+db.commit()
+	
+# na końcu pliku, koniecznie trzeba zamknąć bazę:
+db.close()
+	
+	
+# Przykładowy darmowy klient do podglądania sqlite3 to DBeaver 7.1.0
 
 
 
