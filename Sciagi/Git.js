@@ -170,8 +170,9 @@ git hash-object nazwaPliku.txt  	//zwraca kod pliku.
 
 
 //KASOWANIE I PRZYWRACANIE
-git checkout -- nazwaPliku  //cofnięcie zmin z "stage". Przywrócenie skasowanego pliku
+git checkout -- nazwaPliku  //kopiuje pliki z przechowalki (stage) do katalogu roboczego (working directory).
 git checkout -- *.txt  		//Przywróci wszytkie pliki tekstowe
+git checkout -- .  		    //Przywróci wszytkie pliki
 git checkout HEAD -- nazwaPliku  //cofnięcie zmin z ostatniego comitu
 							// dokładniej: kopiuje pliki z przechowalni (stage) do katalogu roboczego (working directory)
 git checkout 5a33dd3        //cofnięcie zmin ze wskazanego comitu (pierwsze 7 znaków)
@@ -182,15 +183,15 @@ git revert 5a33dd3			//tworzy nowy commit na bazie wskazanego z historii. W ten 
 git checkout id-commita  	//ustawienie HEAD na tym komicie
 git checkout nazwa-brancha  //przełączenie na inną gałąź
 git checkout -b nowyBrancha	// tworzy nowy branch i przełacza sie na niego
+git checkout user -- User.cs // jesteśmy na gałęzi 'master' i chcemy z innej gałęzi 'user' zaktualizować TYLKO JEDN PLIK o nazwie "User.cs"
 
 git restore nazwaPliku  	//cofnięcie zmina (Gdy zrobie jakieś zmiany i che wrocic do czystego comita )
 rm nazwaPliku  				//usówanie pliku (tylko z katalogu roboczego)
 git rm nazwaPliku  			//usówanie pliku z indeksu (staging) i z katalogu roboczego (nie bedzie pliku na dysku)
 git rm --cached nazwaPliku  //przestań śledzić plik (usunięcie pliku z poczekalni, uzyskuje status: nieśledzony). Plik bedzie cały czas na dysku w flderze roboczym. 
-git reset  					//tak jak by odwrotność polecenia "add" (usuwa pliki ze staging)
-							// dokładniej, kopiuje pliki z ostatniego commita do przechowalni (stage), nadpisując jej stan
+git reset  					//kopiuje pliki z ostatniego commita do przechowalni (stage), nadpisując jej stan
 git reset HEAD 				//aby upewnić się do jakiego stanu wrócić (do ostatniego comitu)
-git reset -- plik   
+git reset -- plik           // usuwa pliki z przechowalni (stage); oznacza to, że komenda ta kopiuje pliki z ostatniego commita do przechowalni (stage), nadpisując jej stan.
 git reset HEAD plik   		//aby usunąć konkretny plik z poczekalni
 //UWAGA pniższymi poleceniami reset usuwamy trwale najmłodsze gałęzie
 git reset --mixed 5a33dd3	//Przywracamy podany commit a pliki ze zmianami trafią do folderu roboczego
@@ -198,7 +199,7 @@ git reset --soft 5a33dd3	//Przywracamy podany commit a pliki ze zmianami trafią
 git reset --hard 5a33dd3	//Przywracamy podany commit a zmiany zostaną całkowicie usunięte
 git commit --amend   		//umozliwia poprawkę osatniego commitu (zwykle gdy zrobimy błąd w opisie) (Otworzy sie edytor, nie strace starego opisu)
 							//Gdy zapomne dodać pliku, czyli po commicie, dodaje plik (git add plik) i wywoluje git commit --ammend. Zakonczy sie to jedna rewizją.
-git commit --amend -m "Nowy opis"  	//umozliwia poparkę opisu osatniego komitu 
+git commit --amend -m "Nowy opis"  	//umozliwia poprawkę opisu osatniego komitu 
 
 git clean 					//służy do usuwanie plików które nie są śledzone (takie polecenie wywali błąd, trzeba podać )
 git clean -n 				//polecenie testowe, pokaże, jakie pliki zostały by usunięte
@@ -220,7 +221,7 @@ git clean -idf				//wyświetli się lista z możliwymi wyborami.
 // Zapisanie i wyjście z edytora, powinno zakończyć się komuniaktem: "Successfully rebased and updated refs/heads/nazwa-galezi."
 //Jeżeli chcemy zmienić wiadomosc ostatniego comita, wpisujemy:
 	git rebase -i HEAD~1
-//  zmien “pick” na “reword” - po zamknięciu edytora, pojawi się edutor, który bedzie zekał na nowy opis.
+//  zmien “pick” na “reword” - po zamknięciu edytora, pojawi się edytor, który bedzie zekał na nowy opis.
 
 //Jeżeli omyłkowo zrobiony został push i historia na serwerze różni się od historii lokalnej, to $git push origin nazwa-galezi  nie powiedzie się.
 //Trzeba ustawic flagę -f, która wymusi uznanie naszych zmian
@@ -273,18 +274,21 @@ git remote show origin	            //pokazuje informacje o gałęziach oraz któ
 git branch -v						//pokazuje informacje, o ostatnich zmianach na każdej z gałęzi
 git branch nazwaNowegoBrancha  		//tworzy nową gałąź
 git branch -D nazwaGalezi 			//po połączeniu gałęzi, gdy już nie będzie potrzebna, można ją usunąć.
-						//wysłanie wszytkich gałezi na serwer: git push --all origin
-	git push origin nazwaGalezi // jednorazowe wysłanie na serwer podanej gałęzi (sparawdzone polecenie)
-	git push –u origin nazwaGalezi // przypisanie i wysłanie na serwer podanej gałęzi
-	git push --set-upstream origin nazwaGalezi //polecenie sugerowane przez gita
+
+git push origin nazwaGalezi 		// jednorazowe wysłanie na serwer podanej gałęzi (sparawdzone polecenie)
+git push –u origin nazwaGalezi 		// przypisanie i wysłanie na serwer podanej gałęzi
+git push --set-upstream origin nazwaGalezi //polecenie sugerowane przez gita
+git push --all origin				//wysłanie wszytkich gałezi na serwer
+
 git push origin --delete develop	//usunięcie gałęzi na zdalnym repozytorium (oczywiście develop to gałąź której raczej nie chcemy usówać)
-git branch --merged 				//Aby zobaczyć, które gałęzie zostały już scalone z bieżąc
+git branch --merged 				//Aby zobaczyć, które gałęzie zostały już scalone z bieżącą
 git branch --no-merged 				//Aby zobaczyć, które gałęzie nie zostały jeszcze scalone z bieżąc
 git branch -m "Nowa-zanzwa"			//Zmiana nazwy gałęzi, na której jesteśmy
 git -m oldbranch newbranch			//Zmiana nazwy gałęzi, na której nas nie ma. Nie testowałem, wydaje mi się, że działac powinno: git branch -m oldbranch newbranch
 
 git checkout istniejącyBrancha 		//przełaczenie się na inną gałąź
 git checkout -b nowyBrancha			//tworzy nowy branch i przełącza sie na niego
+git checkout user -- User.cs        // jesteśmy na gałęzi 'master' i chcemy z innej gałęzi 'user' zaktualizować TYLKO JEDN PLIK o nazwie "User.cs"
 git switch istniejącyBrancha 		//przełaczenie się na inną gałąź
 git switch -c "nowyBrancha"			//tworzy nowy branch i przełącza sie na niego
 
@@ -305,10 +309,10 @@ git rebase nazwaGalezi 				//Zaciągnięcie zmian z "nazwaGalezi" do aktywnej ga
 
 //Przykład: Chce POŁĄCZYĆ develop z masterem, musze być na gałęzi develop i "pochłonąć" zmiany z master
 git switch develop		//przełaczam się na gałąź, do której chce pochłaniać zmiany.
-git merge master		//teraz jestem na gałęzi "master" i chce do swojej gałęzi doać zmiany ze "stabilnego programu", 
+git merge master		//teraz jestem na gałęzi "develop" i chce do swojej gałęzi doać zmiany ze "stabilnego programu", 
                         //który ktoś "w miedzyczasie" wprowadził poprawkę.
 	//Jeśli otrzymam informacje o konflikcie: "Automatic merge failed; fix conflicts and then commit the result."
-	//To najlepiej rozwiązać te koflikty narzędziem git mergetool (gdy jet zainstalowany np: kdiff3)
+	//To najlepiej rozwiązać te koflikty narzędziem git mergetool (gdy jest zainstalowany np: kdiff3)
 	//Na koniec musimy tylko zapisać zmiany (i to by było na tyle).
 	//Zwykle trzebz stworzyć nowy commit 
 
