@@ -157,7 +157,7 @@ git hash-object nazwaPliku.txt  	//zwraca kod pliku.
    |                 |                   |                       |
    |                 ---------------------                       |
    |                   ^              | git checkout -- files    |
-   |     git add files |              | git restore files        |
+   |     git add files |              | git restore files        |     use "git restore --staged <file>..." to unstage
    |                   |              V                          |
     \                ---------------------                      /
      \               |                   |                     /

@@ -379,7 +379,7 @@ for d in md:
 print(md[0], md[1])
 print(next(md))
 # gdybym nie miał zdefiniowanego "__next__", to mogę zrobić sztuczkę:
-it = iter(md)	#ale jest to nie zabezpieczone przed wywołaneim nie istniejącego elemenu
+it = iter(md)	#ale jest to nie zabezpieczone przed wywołaniem nie istniejącego elemenu
 print(next(it))
 
 #inna (krótsza) metoda na stworzenie generatorów 
@@ -395,7 +395,7 @@ mylist = ['a', 'b', 'c', 'd']
 
 # kombinacje bez powtórzeń:
 for combination in it.combinations(mylist, 3): # przekazje listę, i  iloelementowe mają być kombinacje
-    print(combination)  # zacznie od ('a', 'b', 'c') i powstanei 4 tuple
+    print(combination)  # zacznie od ('a', 'b', 'c') i powstanie 4 tuple
 
 #wszystkie kombinacje z powtórzeniami
 for combination in it.combinations_with_replacement(mylist, 3): # przekazje listę, i  iloelementowe mają być kombinacje
@@ -404,6 +404,15 @@ for combination in it.combinations_with_replacement(mylist, 3): # przekazje list
 #wszystkie permutacje z powtórzeniami (Kolejność się LICZY)
 for combination in it.permutations(mylist, 3): # przekazje listę, i  iloelementowe mają być kombinacje
     print(combination)  # zacznie od ('a', 'b', 'c') i powstanie 24 tupli	[ jest ('b', 'a', 'c') ]
+
+
+#kombinacje z powtórzeniami + odwrócona kolejność (wszystkie możliwe)
+domains = set()
+for combination in combinations_with_replacement(argList, 3):  # wyszło 36
+	domains.add(''.join(combination))
+	domains.add(''.join(reversed(combination)))
+print(domains)  # zacznie od ('a', 'a', 'a') i powstanie 36 tupli  [jest ('b', 'a', 'c') i ('c', 'a', 'c')]
+
 
 #łączenie dwóch tablic. Każdy element z każdym:
 mylist = ['a', 'b', 'c', 'd']
@@ -515,9 +524,64 @@ print(a)	#= 1	Przed kmpilacja, zmienna "a" jest nie znana
 #####    ###   #   #   ###   #       ###    #   #    ### #  #   #  ###   ### 
 
 
+# najprostszy wzór dekoratora, który robi "nic" (wedłg filmiku Kacpra S. https://www.youtube.com/watch?v=7fIpdbEtqW4 )
+def dekorator(func):
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+    return wrapper
+
+#zastosowanie:
+@dekorator
+def hello(name):
+    return f'Hello {name}'
+
+hello('Karol')                      # tutaj zadziała tylko dekorator (nie wypisze na ekranie)
+print(hello('Karol'))               # wywołanie funkcji hello. Tutaj wypisze i zadziała dekorator
+print(uppercase(hello)('Karol'))    # to samo co wyżej. Akurat w tym przypadku, dekorator wywoła się 2 razy.
+
+
+# przykład dekroatora, który wykonuje się kilka razy (na razie ustawiam na sztywno:
+def repeat(func):
+    def wrapper(*args, **kwargs):
+        response = []
+        for _ in range(2):
+            response.append(func(*args, **kwargs))
+        return response
+    return wrapper
+
+@repeat
+def hello(name):
+    return f'Hello {name}'
+
+print(hello("Karol"))               #= ['Hello Karol', 'Hello Karol']
+
+# To samo co wyżej, tylko przekazuje w argumencie, ile ma zrobić powtórzeń
+# coś chce osiągnąć coś w tym stylu:
+# print(repeat(3)(hello)("Karol"))
+
+def repeat(times):                           # zmiana argumentu z funkcji na liczbę
+    def wrapper(func):                       # tutaj przenosze funkcję
+        def inner_wrapper(*args, **kwargs):
+            print('Dziala wraper repeat')
+            response = []
+            for _ in range(times):           # teraz tutaj moge przekazać argument (zamiast sztywnej liczby)
+                response.append(func(*args, **kwargs))
+            return response
+        return inner_wrapper
+    return wrapper
+
+@repeat(3)
+def hello(name):
+    return f'Hello {name}'
+
+print(hello("Karol"))               #= ['Hello Karol', 'Hello Karol', 'Hello Karol']
+
+
+
+#---------------------------------------------------------------------------------
 wraper i dekorowanie funkcji:  -filmik 60 (Python dla średnio zaawansowanych)
 import time
-import functools	# to urzywamy gdy dekorujemy 
+import functools	         # to urzywamy gdy dekorujemy 
 
 # przykład 1:	--------------------------------------------------------------------
 import datetime

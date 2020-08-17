@@ -108,7 +108,21 @@ PD8 x2
 
 
 
+// Fajny algorytm do sortowania elementów tablicy od najmniejszego do najwiekszego:
+// Tutaj akurat zamienia miejscami wskaźniki tablicy, według wybranego atrybutu.
 
 
-
+  void insertionSort(Krol* a[], int wymiar) {
+      if ( wymiar <= 1 ) return;
+  
+      for ( int i = 1 ; i < wymiar ; ++i ) {
+          int j = i;
+          Krol* v = a[i];
+          while ( j >= 1 && v->ur < a[j-1]->ur ) {
+              a[j] = a[j-1];                      
+              j--;
+          }
+          a[j] = v;
+      }
+  }
 
