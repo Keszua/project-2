@@ -32,9 +32,27 @@ TIME - GG-MM-SS
 
 //klucz ID powinien byc tylu: INT, Indeks: PRIMARY oraz zaznaczone A_I (Auto Increment)
 //Dla wszystkich Typów TEXT ustawić Metodę porównywania napisów utf8_polish_ci
-// Na dole, struktórę i sortowanie równeiż ustawić na utf8_polish_ci
+// Na dole, struktórę i sortowanie również ustawić na utf8_polish_ci
 
 
+
+
+
+
+// SQL = Structured Query Language (strukturalny język zapytań)
+Rodzaje komend:
+- wstawiające
+- wyszukujące
+- zmieniające
+- usuwające
+- zmieniajace strukturę tabel lub bazy
+
+//WYSZUKUJĄCE:
+SELECT * FROM pytania  //wybierz wszystkie z bazy "pytania" (wyświetl wszystko)
+SELECT tresc, odpa, odpb, odpc FROM pytania  //wyberz wymienione
+SELECT * FROM pytania WHERE id=15  //wyjmij tylko wiersz o id=15
+SELECT * FROM pytania WHERE answer="a"   //wybierz tylko wiersze z odpowiedzią "a"
+SELECT * FROM pytania WHERE rok=2012 AND kategoria="programowanie"  //wybierz kategorię i rok
 
 
 
