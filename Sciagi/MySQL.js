@@ -24,6 +24,8 @@ chmod 777 xamp.run
 // 1.id   2.treść   3.A   4.B   5.C   6.D   7.Poprawna odpowiedz
 
 //Podstawowe typy danych:
+CHAR[x] - przehowyje x znaków (max 255)
+VARCHAR[x] - Pole tekstowe o zmiennej długości
 INT - liczby całkowite (4B)
 FLOAT - zmiennoprzecinkowe ()
 TEXT - napis (do 65535 znaków)
@@ -48,11 +50,36 @@ Rodzaje komend:
 - zmieniajace strukturę tabel lub bazy
 
 //WYSZUKUJĄCE:
-SELECT * FROM pytania  //wybierz wszystkie z bazy "pytania" (wyświetl wszystko)
-SELECT tresc, odpa, odpb, odpc FROM pytania  //wyberz wymienione
-SELECT * FROM pytania WHERE id=15  //wyjmij tylko wiersz o id=15
-SELECT * FROM pytania WHERE answer="a"   //wybierz tylko wiersze z odpowiedzią "a"
+SELECT * FROM pytania                                       //wybierz wszystkie z bazy "pytania" (wyświetl wszystko)
+SELECT tresc, odpa, odpb, odpc FROM pytania                 //wyberz wymienione
+SELECT * FROM pytania WHERE id=15                           //wyjmij tylko wiersz o id=15
+SELECT * FROM pytania WHERE answer="a"                      //wybierz tylko wiersze z odpowiedzią "a"
 SELECT * FROM pytania WHERE rok=2012 AND kategoria="programowanie"  //wybierz kategorię i rok
+SELECT tresc, odpa, odpb, odpc FROM pytania WHERE rok=2010  //wyberz wymienione, ale tylko z roku 2010
+SELECT * FROM pytania ORDER BY tresc ASC                    // uporządkuj rosnąco
+SELECT * FROM pytania ORDER BY tresc DESC                   // uporządkuj malejąco
+SELECT * FROM ksiazki ORDER BY cena DESC LIMIT 1            // uporządkuj malejąco i wypisz tylko jedną (najdroższą)
+SELECT id, tresc FROM pytania WHERE id>=10 AND id<=12       // wybierz pytania tylko z zakresu
+SELECT id, tresc FROM pytania WHERE id BETWEEN 10 AND 12    // to samo co wyżej, wybierz pytania gdzie id pomiędzy 10 a 12
+SELECT * FROM pytania WHERE tresc LIKE "Jak%"               // wybierz wszystkei z bazy, gdzie treść "jest podobna" do napisu "Jak%". Proc zatepuje każdy znak (bo gwiazdka zajęta)  
+SELECT * FROM pytania WHERE tresc LIKE "%C++%"				// Wyciagamy z bazy pytania zawierające frazę "C++"
+SELECT * FROM pytania WHERE tresc LIKE "%C++%" OR odpa LIKE "%C++%" OR odpb LIKE "%C++%"  // co wyżej, ale szukaj też w pytaniach
+SELECT * FROM pytania WHERE (kategoria="programowanie" OR kategoria="systemy operacyjne i sieci") AND rok=2012 // wybierz okreslone kategorie z roku 2012
+
+POLECENIA ZŁOŻONE:
+SELECT klienci.imie, klienci.nazwisko, zamowienia.idzamowienia, zamowienia.data FROM klienci, zamowienia WHERE klienci.idklienta = zamowienia.idklienta
+//wjmij dla wszystkich zamówień: imię i nazwisko klienta, id zamówienia, datę zamówienia.
+//po klauzuli WHERE trzeba wypisać wszsytkie relacje, jakie zachodza w tabelach urzytych w naszym zapytaniu
+
+SELECT k.imie, k.nazwisko, z.idzamowienia, z.data FROM klienci AS k, zamowienia AS z WHERE k.idklienta = z.idklienta
+//to samo co wyżej, tylko urzyte aliasy
+
+
+
+
+
+
+
 
 
 
