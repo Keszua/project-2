@@ -43,9 +43,9 @@ TIME - GG-MM-SS
 
 // SQL = Structured Query Language (strukturalny język zapytań)
 Rodzaje komend:
-- wstawiające
-- wyszukujące
-- zmieniające
+- wyszukujące						SELECT ... FROM
+- wstawiające						INSERT INTO ... VALUES
+- zmieniające (aktualizacja)		UPDATE ... SET
 - usuwające
 - zmieniajace strukturę tabel lub bazy
 
@@ -67,12 +67,58 @@ SELECT * FROM pytania WHERE tresc LIKE "%C++%" OR odpa LIKE "%C++%" OR odpb LIKE
 SELECT * FROM pytania WHERE (kategoria="programowanie" OR kategoria="systemy operacyjne i sieci") AND rok=2012 // wybierz okreslone kategorie z roku 2012
 
 POLECENIA ZŁOŻONE:
+//mam do dyspozycji 3 tabele: klienci, ksiazki i zamowienia. 
+// na podstawie filmiku: https://www.youtube.com/watch?v=P2YT9PvflUM&list=PLOYHgt8dIdoymv-Wzvs8M-OsKFD31VTVZ&index=2
 SELECT klienci.imie, klienci.nazwisko, zamowienia.idzamowienia, zamowienia.data FROM klienci, zamowienia WHERE klienci.idklienta = zamowienia.idklienta
 //wjmij dla wszystkich zamówień: imię i nazwisko klienta, id zamówienia, datę zamówienia.
 //po klauzuli WHERE trzeba wypisać wszsytkie relacje, jakie zachodza w tabelach urzytych w naszym zapytaniu
 
 SELECT k.imie, k.nazwisko, z.idzamowienia, z.data FROM klienci AS k, zamowienia AS z WHERE k.idklienta = z.idklienta
 //to samo co wyżej, tylko urzyte aliasy
+
+#Imiona i nazwiska osób, które zmaówiły kiedykolwiek książke nr2
+SELECT k.imie, k.nazwisko, z.idksiazki FROM klienci AS k, zamowienia AS z WHERE k.idklienta = z.idklienta AND z.idksiazki=2
+
+#jakie książki (tytuł, autor) zamówiła osoba Jan Nowak?
+SELECT ksiazki.tytul, ksiazki.imieautora, ksiazki.nazwiskoautora FROM ksiazki, zamowienia WHERE ksiazki.idksiazki =zamowienia.idksiazki AND zamowienia.idklienta=2
+
+#----------------------------------------------------------------------------------------------
+#zmien nazwisko 
+UPDATE klienci SET nazwisko="Psikuta" WHERE idklienta=4
+
+#zwiększ cenę wszystkich książek w bazie o 10% i zaokrągl wynik
+UPDATE ksiazki SET cena=ROUND(cena*1.1, 2)
+
+#zmniejsz cenę najdroższej książki o 10zł
+UPDATE ksiazki SET cena=cena-10 ORDER BY cena DESC LIMIT 1 
+
+#zmień imie i nazwisko Anny Kareniny (idklienta=10) na wartość: Joanna Dostojewska
+UPDATE klienci SET imie="Joanna", nazwisko="Dostojewska" WHERE idklienta=10
+
+#zmeiń status znamówienia 4 i 5 na wysłano
+UPDATE zamowienia SET status="wyslano" WHERE idzamowienia BETWEEN 4 AND 5
+
+
+#----------------------------------------------------------------------------------------------
+#Dodaj nowego klienta: Franciszek Janowski z Chorzowa
+INSERT INTO klienci VALUES (NULL, "Franciszek", "Janowski", "Chorzow")
+
+#Dodaj nowe zamówienie: Artur Rutkowski kupił książkę "HTML5. Tworzenie witryn"
+#Czyli klient nr 7 zamówił książkę nr 3, z dzisejsza datą i status "oczekiwanie"
+#dodatkowo, wstawiamy "szablon" do zmiany kolejnosci wstawiania danych
+INSERT INTO zamowienia (idzamowienia, data, status, idklienta, idksiazki) VALUES (NULL, "2016-01-01", "oczekiwanie", 7, 3)
+
+#wstaw do bazy książkę o tytule: "Symfonia C++" Autor: "Grębosz"
+INSERT INTO ksiazki (idksiazki, nazwiskoautora, tytul ) VALUES (NULL, "Grębosz", "Symfonia C++")
+INSERT INTO ksiazki VALUES (NULL, "", "Grębosz", "Symfonia C++", 0)
+
+#dodaj dwóch klientów za pomocą jednego zapytania
+INSERT INTO klienci VALUES (NULL, "Marlin", "Monroe", "Los Angeles"), (NULL, "John", "Wayne", "Los Angeles")
+
+#Wstaw do bazy osobe za pomocą SET
+INSERT INTO klienci SET idklienta=NULL, imie="Steve", nazwisko="McQueen", miejscowosc="Los Angeles"
+
+
 
 
 
