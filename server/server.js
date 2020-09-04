@@ -1,5 +1,5 @@
 
-//Dwa przykłądy na założenie serwera.
+//Dwa przykłady na założenie serwera.
 // Ten sam efekt:
 
 /*

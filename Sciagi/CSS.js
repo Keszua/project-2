@@ -1016,7 +1016,7 @@ display:
 	d-inline-block
 
 //GRID:
-// najprostszy grid, skłądający wie z 3 kolumn:
+// najprostszy grid, składający się z 3 kolumn:
         <div class="row">  <!-- wiersz -->
             <div class="col">Kolumna 1</div>
             <div class="col">Kolumna 2</div>
@@ -1027,7 +1027,7 @@ display:
             <div class="col-6">Tresc glowna</div>
             <div class="col-2">Kolumna 3</div>
 
-//Aby wiersze wyświetlały isę jedeno pod drógim, przy rozdzielczości mniejsej niż 720px
+//Aby wiersze wyświetlały się jedeno pod drógim, przy rozdzielczości mniejsej niż 720px
             <div class="col-md-1">Lp. </div>
             <div class="col-md-6">Tresc glowna</div>
             <div class="col-md-2">Kolumna 3</div>
