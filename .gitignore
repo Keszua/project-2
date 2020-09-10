@@ -7,3 +7,6 @@ mod/curriencies.txt
 /src
 /node_modules
 /test_jest/node_modules
+
+#inne pliki
+*.stackdump
