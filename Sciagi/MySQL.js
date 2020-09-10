@@ -129,10 +129,10 @@ INSERT INTO klienci SET idklienta=NULL, imie="Steve", nazwisko="McQueen", miejsc
 # usuń cały wiersz z id=2
 DELETE FROM zamowienia WHERE idzamowienia=2  #UWAGA bez podania WHERE, usunięta zostanie cała tabela
 
-# 
-TRUNCATE 
+# to samo co wczesniej, ale mega szybko
+TRUNCATE TABLE zamowienia   #szybkie polecenie, któe nie usówa rekord po rekordzie, tylko usówa tabelę z bazy i tworzy nową, taką samą, pustą tabelę.
 
-
+#do DELETE najlepiej dodawać ORDER BY  oraz  LIMIT 
 
 
 

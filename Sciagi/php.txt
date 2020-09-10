@@ -1,0 +1,67 @@
+Sugeroway edytor php to VSC. 
+
+/*
+Sugerowana wtyczka: PHP IntelliSense
+Ta wtyczka wymaga wy³¹czenia "azowych sugestii" 
+You need at least PHP 7 installed for the extension to work. You can either add it to your PATH or set the php.executablePath setting.
+I recommend to disable VS Code's built-in PHP IntelliSense by setting php.suggest.basic to false to avoid duplicate suggestions.
+*/
+
+W Xampie nale¿y skonfigurowaæ "Configure Virtual Hosts". Wchodzi sie w niego przez wpisanie w okno przegl¹darki adresu:
+http://localhost/dashboard/docs/configure-vhosts.html
+W panelu Xampa naciskamy "Config" dla Apache -> <Browse> [Apache]
+Przechodzimy do œcie¿ki: C:\xampp\apache\conf\extra  otwieramy plik  httpd-vhosts.conf
+
+Do pliku doklejamy:
+<VirtualHost *:80>
+       DocumentRoot "C:/xampp/htdocs/"
+       ServerName localhost
+</VirtualHost>
+<VirtualHost *:80>
+       DocumentRoot "F:/Karolek/Web/Treningi/PHP"
+       ServerName notes.localhost
+	   <Directory "F:/Karolek/Web/Treningi/PHP">
+	    Require all granted
+	   </Directory>
+</VirtualHost>
+
+Dodatkowo w Windowsie, w pliku:
+C:\windows\system32\drivers\etc\hosts
+trzeba dodaæ:
+127.0.0.1           notes.localhost
+
+Aby dzia³a³ terminal, nale¿y dodaæ œcie¿kê do zmiennych œrodowiskowych.
+W wyszukiwaniu windowsoym po wpisaniu "zmienne", wybieramy "Edytuj zmienne œrodowiskow systemu"
+Klikamy na klawisz "zmienne rodowiskowe" -> w oknie "zmienne suystemowe" szukamy Path i go edytujemy. trzeba dodaæ "C:\xampp\php"
+
+
+//Wyœwietlanie ci¹gów znaków:
+	echo "Witaj";
+	echo ("Witaj");
+	echo 'Witaj </br>';
+
+//Zmienne
+	$zmiennaTekstowa = 'tekst';  //utf8
+	$zmiennaLiczbowa = 23;
+	$zmiennaUjemna = -23;
+	$zmiennaFloat = 2.3;
+	$zmiennaBoolean = true;
+	$zmiennaArray = [];
+	$zmiennaArray = array();
+	$objekt = new stdClass();
+//null - gdy nie przypiszemy wartoœci
+	$nullVariable;
+//resource - przechowuje odwo³¹nia do zasobu zewnêtrznego, np bazy danych
+
+//sta³e  (bez znaku dolara)
+	define('NAZWA', 10);
+	const LICZNA_PI = 3.14
+
+//sprawdzanie typu zmiennej
+	var_dump($zmiennaTekstowa);  //= string(5) "tekst"
+	var_dump($zmiennaLiczbowa);  //= int(23) 
+
+
+
+
+
