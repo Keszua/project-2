@@ -250,6 +250,14 @@ plik1.txt
 //Jeżeli jakiś plik jest śledzony i chcemy go przestać śledzić: git rm --cached nazwaPliku
 
 
+//na https://porady-it.pl/programowanie/git-jak-wstrzymac-sledzenie-zmian-w-pliku-np-konfiguracyjnym/
+//znalazłem inny sposób na "nie śledzenie" pliku:
+git update-index --assume-unchanged nazwa_pliku     // wstrzyma śledzenie zmian w pliku
+git update-index --no-assume-unchanged nazwa_pliku  // wstrzymanie wstrzymania :)
+git ls-files -v | grep "^[[:lower:]]"               // listę plików w których zmiany są ignorowane przez GIT-a.
+git config --global alias.ignored '!git ls-files -v | grep "^[[:lower:]]"'  //proponowany alisa do powyższego polecenia
+
+
 
 // GAŁĘZIE
 //         ----*-----*--------                --*----*-----------*------------*------
@@ -304,7 +312,7 @@ git merge --abort 					// przerywa łączenie (możliwe, gdy wystąpią konflikt
 git merge --continue 				// po rozwiązaniu konfliktów zapisuje zmiany
 git merge --revert 					// cofa wszystkie wprowadzone zmiany
 
-git rebase nazwaGalezi 				//Zaciągnięcie zmian z "nazwaGalezi" do aktywnej gałęzi (jeszce nie do końca rozgryzłem to polecenie)
+git rebase nazwaGalezi 				//Zaciągnięcie zmian z "nazwaGalezi" do aktywnej gałęzi (jeszcze nie do końca rozgryzłem to polecenie)
 
 
 //Przykład: Chce POŁĄCZYĆ develop z masterem, musze być na gałęzi develop i "pochłonąć" zmiany z master
@@ -388,6 +396,7 @@ git remote add origin https://github.com/Keszua/nazwa-projektu   -podłączenie 
                                                                // nie wypchnięcie, trzeba wywołąć push)
 git push -u origin master   //pierwsze wypchnięcie projektu po podłączeniu z serwerem.
 //origin - zastępuje man adres repozytorium (żeby nie wpisywać za każdym razem pełnego adresu)
+git remote      			//pokaże skrócone nazwy repozytoriów do których jesteśmy podłączeni
 git remote -v   			//sprawdzenie ścieżki na serwer
 git remote show 			//wyswietli dostępne repozytoria
 git remote show origin	    //pokazuje informacje o gałęziach oraz która gałąź jest podpięta pod "pull"
@@ -492,7 +501,7 @@ Aby nowy projekt wstawić do GitHuba, trzeba złożyć sobie nowe repozytorium p
 
 /* Aby pobrać projekt z GitHuba trzeba to zrobić przez "Clone or download"
   1. Po zdobyciu linku, np:  https://github.com/Keszua/nazwa-projektu 
-  2. Robimy klon w folderze w którym jestśmy z apomoca polecenia:
+  2. Robimy klon w folderze w którym jestśmy za pomoca polecenia:
 	λ git clone https://github.com/Keszua/nazwa-projektu
   3. Trzeba doinstalować cały folder "node_modules". Informacje o wersjach do instalowania są w "package.json"
 	Wywołaj polecenie:
