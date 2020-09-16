@@ -1,10 +1,11 @@
 //Kurs Zelenta: https://www.youtube.com/watch?v=99JAI24Zd24&list=PLOYHgt8dIdoymv-Wzvs8M-OsKFD31VTVZ
 
 
-// Rekord (krotka) - to pojedynczy wiersz w tabeli (np: zestaw cech danego ucznia) - def2: to pojedyńczy obiekt wraz z wartosciami wszsytkich opisujących go cech
-// Pole (atrybut) - cześć, przechowyjąca jednostkowe dane
+// Rekord (krotka) - to pojedynczy wiersz w tabeli (np: zestaw cech danego ucznia) - def2: to pojedyńczy obiekt wraz z wartosciami wszystkich opisujących go cech
+// Pole (atrybut) - część, przechowyjąca jednostkowe dane
 // Relacja - to powiązanie logiczne wystepujące pomiędzy tabelami, realizowane za pomoca klócza podstawowego i tzw. klucza obcego.
 //           Tabela z informacją, zawierająca np: który uczeń wyporzyczył która książkę. Zawiera zwykle samo ID ksiażki z ID ucznia
+// Relacja (tabela) [definicja matematyczna] = podzbiór iloczynu kartezjańskiego
 // DBMS - (DataBase managment System) - system zarządzania bazą danych
 // Przykłady DBMS:  MySQL, PostgreSQL, Firebird, Oracle database. 
 
@@ -36,17 +37,23 @@ TIME - GG-MM-SS
 //Dla wszystkich Typów TEXT ustawić Metodę porównywania napisów utf8_polish_ci
 // Na dole, struktórę i sortowanie również ustawić na utf8_polish_ci
 
+klasa = encja      obiekt = instancja
+encja - zestaw atrybutów i metod obiektu
+instancja - jeden z reprezentantów klasy
 
 
-
+Jak wczytać bazę danych w konsoli, minuta 11 filmu: https://www.youtube.com/watch?v=SZD9_TtLtLE&t=193s
 
 
 // SQL = Structured Query Language (strukturalny język zapytań)
 Rodzaje komend:
-- wyszukujące						SELECT ... FROM
-- wstawiające						INSERT INTO ... VALUES
-- zmieniające (aktualizacja)		UPDATE ... SET
-- usuwające
+- wyszukujące					                SELECT ... FROM
+- wstawiające					                INSERT INTO ... VALUES
+- zmieniające (aktualizacja)	                UPDATE ... SET
+- usuwające   
+     - kasowanie jednego lub wielu rekordów  =  DELETE FROM
+     - kasowanie wszsytkich REKORDÓW         =  TRUNCATE
+     - kasowanie STRUKTURY w bazie           =  DROP
 - zmieniajace strukturę tabel lub bazy
 
 //WYSZUKUJĄCE:
@@ -118,12 +125,14 @@ INSERT INTO klienci VALUES (NULL, "Marlin", "Monroe", "Los Angeles"), (NULL, "Jo
 #Wstaw do bazy osobe za pomocą SET
 INSERT INTO klienci SET idklienta=NULL, imie="Steve", nazwisko="McQueen", miejscowosc="Los Angeles"
 
+#----------------------------------------------------------------------------------------------
+# usuń cały wiersz z id=2
+DELETE FROM zamowienia WHERE idzamowienia=2  #UWAGA bez podania WHERE, usunięta zostanie cała tabela
 
+# to samo co wczesniej, ale mega szybko
+TRUNCATE TABLE zamowienia   #szybkie polecenie, któe nie usówa rekord po rekordzie, tylko usówa tabelę z bazy i tworzy nową, taką samą, pustą tabelę.
 
-
-
-
-
+#do DELETE najlepiej dodawać ORDER BY  oraz  LIMIT 
 
 
 
