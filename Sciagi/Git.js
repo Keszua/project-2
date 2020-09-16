@@ -62,6 +62,7 @@ git config --global user.name "kmichalczyk"
 git config --global user.email "keszua@gmail.com" 
 git config --global core.editor  	//pokaze ścieżkę do Visual Studio Code (lub innego edytora)
 git config --global core.editor notepad //aby przestawić domyślny edytor
+           --local lub --system //poziomy zmian	
 git config --unset user.email  		//usówanie danych z pliku konfiguracyjnym (będąc w folderze głównym ~)
 git config --global --unset user.email //usówanie danych z pliku konfiguracyjnego
 git config --list 		//wyświetli pełną konfigurację
@@ -112,6 +113,9 @@ git log --stat -- nazwaPliku	// statystyki zmian konkretnych plików
 //łączenie wyszukiwania:
 git log --oneline --stat --summary -3 --author="Adam"
 git log --graph --decorate --all --oneline //do podglądu grafów z gałęziami
+git log -S main.py --author zgredek --before="2015-08-15 00:00" --after="2015-08-01"   //wypisze wszystkie commity, 
+                        //utworzone między 1 a 15 sierpnia 2015 roku, autorstwa zgredka, w których zmienia się ilość wystąpień słowa „main.py”, 
+                        //czyli zostaje dodana linijka np. import main.py, albo usunięta. 
 git shortlog					//do podglądu, kto nad czym pracuje
 
 
@@ -135,11 +139,16 @@ git diff {gałąź 1} {gałąź 2} -- {plik} // dif dla pojedynczego pliku międ
 
 git difftool //gdy mamy zainstalowany program do rozwiazywania konfliktów, np kdiff3 (opis instaliacji umieszczony dalej)
 
-git mv nazwa1 nazwa2  	//zmiana nazwy pliku
+git mv stara_nazwa nowa_nazwa       //zmiana nazwy pliku
+git mv stara_lokalizacja_pliku nazwa_lokalizacja  //zmiana nazwy pliku
 
 git cat-file -p 3d_kod_z_folderu_3d //do rozszyfrowania co kryje sie w kodzie
 git cat-file -t 3d_kod_z_folderu_3d //do rozszyfrowania typu
 git hash-object nazwaPliku.txt  	//zwraca kod pliku.
+
+git blame <nazwa_pliku>             //Sprawdzenie, kto i kiedy wprowadził zmiany w pliku
+
+
 
 
 /*
@@ -148,7 +157,7 @@ git hash-object nazwaPliku.txt  	//zwraca kod pliku.
       -------------->|      HISTORY      |---------------------
     /                |                   |                     \
    /                 ---------------------                      \
-   |                   ^              |                          |
+   |                   ^              | git reset                |
    |        git commit |              | git reset -- files       |
    |                   |              V                          |
    |                 ---------------------                       |
@@ -179,7 +188,7 @@ git checkout 5a33dd3        //cofnięcie zmin ze wskazanego comitu (pierwsze 7 z
 git checkout 5a33dd3 -- nazwaPliku  //cofnięcie zmin pliku ze wskazanego comitu (pierwsze 7 znaków)
 //Jeśli jednak nie che przywracać jakiejś kopii, tylko wrócić do aktulanej, wywołuje: git checkout master
 //polecenia checkout modyfikują historię comitów. Można stracić dane
-git revert 5a33dd3			//tworzy nowy commit na bazie wskazanego z historii. W ten sposób nic nie tracimy.
+git revert 5a33dd3			//tworzy nowy commit na bazie wskazanego z historii. W ten sposób nic nie tracimy co było robione pomiędzy tymi comitami.
 git checkout id-commita  	//ustawienie HEAD na tym komicie
 git checkout nazwa-brancha  //przełączenie na inną gałąź
 git checkout -b nowyBrancha	// tworzy nowy branch i przełacza sie na niego
@@ -216,12 +225,13 @@ git clean -idf				//wyświetli się lista z możliwymi wyborami.
 //Otworzy się edytor tekstu z 4-roma ostatnimi comitami
 // pick - niczego nie zmienia.
 // fixup - wcielić ten commit do pierwszego i odrzucić jego opis
+// squash - ściska dany commit z poprzednim.
 // reword - zmień opis
 // Chyba najlepiej zeby ten w pierwszej linijce od góry, żeby miał pick lub reword a pozostałe fixup
 // Zapisanie i wyjście z edytora, powinno zakończyć się komuniaktem: "Successfully rebased and updated refs/heads/nazwa-galezi."
 //Jeżeli chcemy zmienić wiadomosc ostatniego comita, wpisujemy:
 	git rebase -i HEAD~1
-//  zmien “pick” na “reword” - po zamknięciu edytora, pojawi się edytor, który bedzie zekał na nowy opis.
+//  zmien “pick” na “reword” - po zamknięciu edytora, pojawi się edytor, który bedzie czekał na nowy opis.
 
 //Jeżeli omyłkowo zrobiony został push i historia na serwerze różni się od historii lokalnej, to $git push origin nazwa-galezi  nie powiedzie się.
 //Trzeba ustawic flagę -f, która wymusi uznanie naszych zmian
@@ -230,6 +240,9 @@ git clean -idf				//wyświetli się lista z możliwymi wyborami.
 //Jeszcze się boje, ale chyba podobny efekt można uzyskac poleceniami:
 git rebase --interactive {commit} // pozwala wybrać commity które zostaną dołączone (lub modyfikować)
 git rebase --interactive '{hash}^' // umożliwia edycję commitów do podanego hasha
+
+git rebase nazwaGalezi 				//Prawdopodobnie zaciągnięcie zmian z "nazwaGalezi" do aktywnej gałęzi (jeszcze nie do końca rozgryzłem to polecenie)
+
 
 
 // KLONOWANIE
@@ -308,11 +321,12 @@ git pull origin nazwaGalezi //UWAGA pobranie danych na aktywną gałąź (na kt�
 //MERGE - ŁĄCZENIE GAŁĘZI
 git merge nazwaGalezi  			//łączenie (scalanie) gałęzi na której jestesmy ze wskazaną gałęzią
 git merge {nazwa remota}/{nazwa gałęzi} // dołączenie zmian ze wskazanego remota i gałęzi
+git merge --no-ff                   // merge bez fast-forward, który wymusi na git’cie stworzenie oddzielnego commita, opisującego co, skąd zostało zmergowane. 
 git merge --abort 					// przerywa łączenie (możliwe, gdy wystąpią konflikty)
 git merge --continue 				// po rozwiązaniu konfliktów zapisuje zmiany
 git merge --revert 					// cofa wszystkie wprowadzone zmiany
 
-git rebase nazwaGalezi 				//Zaciągnięcie zmian z "nazwaGalezi" do aktywnej gałęzi (jeszcze nie do końca rozgryzłem to polecenie)
+git cherry-pick 5a33dd3             // Cherry pick kopiuje tylko commit, który mu wskażemy, na początek brancha nad którym pracujemy.
 
 
 //Przykład: Chce POŁĄCZYĆ develop z masterem, musze być na gałęzi develop i "pochłonąć" zmiany z master
@@ -321,14 +335,20 @@ git merge master		//teraz jestem na gałęzi "develop" i chce do swojej gałęzi
                         //który ktoś "w miedzyczasie" wprowadził poprawkę.
 	//Jeśli otrzymam informacje o konflikcie: "Automatic merge failed; fix conflicts and then commit the result."
 	//To najlepiej rozwiązać te koflikty narzędziem git mergetool (gdy jest zainstalowany np: kdiff3)
-	//Na koniec musimy tylko zapisać zmiany (i to by było na tyle).
-	//Zwykle trzebz stworzyć nowy commit 
+	//Edytujemy pliki. Zapisujemy zmiany z poprawną wersją.
+	//Wywołujemy git merge --continue
+	//Tworzony jest wtedy nowy commit.
 
 
 //STOS
 git stash 					//Dodaje zmiany na stos. Zapisuje nowe i zmodyfikowane pliki do pamięci podręcznej
-git stash save "{tekst komentarza}" //Zapisuje stash z komentarzem
-git stash apply				//Przywraca zapisane pliki z pamięci podręcznej BEZ KASOWANIA
+                            // -u lub –include-untracked dodaje również pliki nie śledzone
+                            // -a lub -all dodaje wszystkie edytowane plik łącznie z ignorowanymi
+git stash save "tekst komentarza" //Zapisuje stash z komentarzem
+git stash apply				//Nakładanie zmian ze schowka na obecny stan HEAD (BEZ KASOWANIA)
+git stash apply --index 1
+git stash apply --index 454aa619
+git stash apply --index stash@{1}
 git stash pop				//Przywraca zapisane pliki z pamięci podręcznej i kasuje stash
 git stash pop --index 1
 git stash pop --index 454aa619
@@ -338,13 +358,15 @@ git stash pop 454aa619
 git stash pop stash@{1}		//przywrócenie do katalogu roboczego i usunięcie ze stosu. Bez identyfikatora, zostaną zwrócone ostatnie zmiany
 git stash push -m "Opis zmian w pliku na stosie"
 git stash list 				//wyświetla listę zmian odłożonych na stos
-git stash show (-p —patch) 	//pokazuje jakie zmiany znajdują się na stosie
+git stash show             	//pokazuje jakie zmiany znajdują się na stosie  
+                            // -p lub —patch  szczegółowe informacje o zmianach
 git stash show stash@{x} 	//pozkazujezmiany. 0,1,2,..,x, gdzie 0 to ostatnio dodane zmiany do schowka.
 //na stos można dodać tylko zmiamy plików które są śledzone przez git
 git stash push -m "Opis zmian w pliku nie śledzonym" -u
 git stash apply				//Nakładanie zmian ze schowka na obecny stan HEAD
 git stash apply stash@{1}  	//przywrócenie do katalogu roboczego i zmiany cały czas pozostają na stosie
-git stash drop stash@{1}	//usówanie zmian ze stosu bez przywracania ich do folderu roboczego
+git stash drop              //usówanie zmian ze stosu nr 0, bez przywracania ich do folderu roboczego (Czyszczenie stasch'a)
+git stash drop stash@{1}	//usówanie zmian ze stosu nr 1, bez przywracania ich do folderu roboczego (Czyszczenie stasch'a)
 git stash drop 1			//to samo co wyżej
 git stash clear				//czyszczenie całego stosu (bez przywracania zmian do folderu roboczego)
 git stash branch nazwaNowejGalezi  //stworzenie nowej gałęzi na bazie plików na stosie
@@ -418,7 +440,7 @@ git fetch [nazwa-zdalengo-repozytorium]	//aby uzyskać dane ze zdalnego projektu
 
 
 // ETYKIETOWANIE
-git tag 					//wyświetlenie dostępnych etykiet
+git tag 					//wyświetla listę dostępnych etykiet
 git tag v1.0.0				//stworzyłem tag (ETYKEITA LEKKA)
 git tag v1.0.0 -a -m "opis"	//flaga -a: informacje o autorze; -m: komentarz (ETYKIETA OPISOWA)
 git tag v1.0.0 -s -m "opis"	//flaga -s: podpis prywatnym kluczem używając GPG. Sczegóły na https://git-scm.com/book/pl/v1/Podstawy-Gita-Tagowanie-etykietowanie
