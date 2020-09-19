@@ -1,5 +1,9 @@
 Sugeroway edytor php to VSC. 
 
+link do dokumentacji PHP:
+https://www.php.net/manual/en/ref.array.php
+
+
 /*
 Sugerowana wtyczka: PHP IntelliSense
 Ta wtyczka wymaga wy³¹czenia "azowych sugestii" 
@@ -61,7 +65,279 @@ Klikamy na klawisz "zmienne rodowiskowe" -> w oknie "zmienne suystemowe" szukamy
 	var_dump($zmiennaTekstowa);  //= string(5) "tekst"
 	var_dump($zmiennaLiczbowa);  //= int(23) 
 
+OPERATORY
+//przypisania
+$pierwsza = 1;
+$pierwsza = $druga = 13; //obie zmienne otrzymaj¹ wartosæ 13
++ dodawanie;  - odejmowanie;  * mno¿enie;  / dzielenie;  % modulo;  ** potêgowanie
+
+//Operatory konkatenacji (³¹czenia stringów), tym operatorem jest kropka
+$firstName = "Jan";
+$lastName = "Kowalski";
+echo $firstName.$lastName;                    //= JanKowalski
+echo $firstName." ".$lastName;                //= Jan Kowalski
+$tekst = 'PHP';
+echo $tekst .= "1.4";                         //= PHP1.4
+
+$age = 11;
+$age++;  //postinkrementacja
+$++age;  //preinkrementacja
+$age++;  //postdekrementacja
+$++age;  //predekrementacja
+
+== porównuje wartoœci             echo 9 == '9';  //= true
+=== porównuje wartoœci i TYPY     echo 9 == '9';  //= false
+!=                                echo 'foo' != 'bar' //= true
+!=                                echo 9 != '9' //= false
+!==                               echo 9 !== 9  //= false
+!==                               echo 3 !== 1  //= true
+<=> spaceship - urzywany do funkcji sortuj¹ych. 
+Zwaraca 0:gdy obie wartosci sa równe; -1:gdy lew wartosæ jest mniejsza; 1:gdy lewa wartoœæ jest wiêksza
+echo(92<=>92);  //= 0
+echo(92<=>2);   //= 1
+echo(82<=>92);  //= -1
+echo('a'<=>'d'); //= -1
+
+$age = 12;
+$string1 = 'Kot Ali ma $age lat';  // po prostu wypisuje znak po znaku
+echo $string1;                     //= Kot Ali ma $age lat
+$string2 = "Kot Ali ma $age lat";  // string parsowany
+echo $string2;                     //= Kot Ali ma 12 lat
+$string3 = 'Kot Ali ma '.$age.' lat';
+echo $string3;                     //= Kot Ali ma 12 lat
 
 
+TABLICE
+$tablicaTestowa = ['Ala', 3, 3.14, "Elo"];
+var_dump($tablicaTestowa); //= array(4) { [0]=> string(3) "Ala" [1]=> int(3) [2]=> float(3.14) [3]=> string(3) "Elo" } 
+print_r($tablicaTestowa);  //= Array ( [0] => Ala [1] => 3 [2] => 3.14 [3] => Elo ) 
+$tablicaTestowa[] = 'Nowy element';  // dodawanie nowego elmentu
+unset($tablicaTestowa[3], $tablicaTestowa[1],);  // usówanie konkretnych elementów
+
+$tablicaTestowa = [4 => 'Ala', 6 => "Ola", "Elo"];
+$tablicaTestowa[] = "Nowy";
+print_r($tablicaTestowa);  //= Array ( [4] => Ala [6] => Ola [7] => Elo [8] => Nowy ) 
+var_dump(count($tablicaTestowa));  //= int(4)   zwróci iloœæ elementów nie zale¿nie od numerowania indeksów
+
+TABLICE ASOCJACYJNE
+- indeksami noga byæ stringi
+$user = [
+    'firstName' =>'Jan',
+    'lastName' => "Kowalski",
+    'age' => 22,
+	25 => 'Rambo'
+];
+print_r($user);  //= Array ( [firstName] => Jan [lastName] => Kowalski [age] => 22 [25] => Rambo )
+echo($user['age']);  //= 22
+
+$users = [
+    [   'firstName' =>'Jan',    'lastName' => "Kowalski",  ],
+    [   'firstName' =>'Karol',  'lastName' => "Nowak",     ]
+];
+echo($users[0]['lastName']);  //= Kowalski
+
+array_map()   przyjmuje: funkcjê, tablicê
+//Przyk³ad, z doklejaniem s³owa Hello do ka¿dego elemntu z tablicy:
+$users = [4 => 'Ala', 6 => "Ola", "Elo"];
+$hello = array_map(
+    fn($value) => "Hello ".$value,
+    $users
+);
+print_r($hello);   //= Array ( [4] => Hello Ala [6] => Hello Ola [7] => Hello Elo ) 
 
 
+INSTRUKCJE WARUNKOWE
+$age = 20;
+if ($age >= 17) {
+	echo "Warunek spe³niony";
+} else {
+	echo "Warunek NIE spe³niony";
+}
+
+Wartosci false:  0, -0, 0.0, -0.0,  "",  "0",  [],  null
+
+$age = 20;
+if ($age >= 17) {
+	echo "Warunek spe³niony";
+} elseif (($age >= 13)) {
+    echo "Warunek dla przedzia³u 13-16";
+} else {
+    echo "Wszystkie pozosta³e";
+}
+
+Ternary operator
+$mood = $age >=7 ? 'OK' : 'NIE';
+
+Operatory logiczne:  &&  ||  xor
+
+
+switch ($age) {
+    case 15:
+        echo "wykona³o siê $age";
+        break;
+    default:
+        echo 'pozosta³e';
+        break;
+}
+
+
+PÊTLE
+- for
+- foreach
+- while
+- do-while
+
+for ($i =0; $i<10; $i++) {
+    echo "Wykonanie nr $i </br>";
+}
+
+for ($i =0; naszaFunkcja(); $i++) {
+    echo "Wykonanie nr $i </br>";
+}
+
+$names = [ 'Ala', "Ola", "Elo"];
+for ($i =0; $i < count($names); $i++) {
+    echo "$names[$i] </br>";               // wyœwietli wszystkie elementy
+}
+
+$count = 0;
+while ($count < 10) {
+    $count++;
+    if($count==5) continue;
+    echo "Wykonanie  $count </br>";
+}
+
+$count = 0;
+do {
+	$count++;
+	if($count==6) continue;
+	echo "Wykonanie  $count </br>";
+} while ($count < 10);
+
+$arrayNames = [ 'Ala', "Ola", "Elo"];
+foreach($arrayNames as $el) {
+    echo "Wypisz: $el </br>";
+}
+
+$arrayNames = [ 'Ala', "Ola", "Elo"];
+foreach($arrayNames as $index => $value) {
+    echo "Wypisz: $index - $value </br>";  //= Wypisz: 0 - Ala 
+}                                          //= Wypisz: 1 - Ola 
+                                           //= Wypisz: 2 - Elo 
+
+$movieDetalis = [ 'title' => "Joker", 'directory' => 'Todd Phillips', 'cast' => 'Joaquin Phoenix'];
+foreach($movieDetalis as $index => $value) {
+    echo "$index: $value </br>";           //= title: Joker 
+}	                                       //= directory: Todd Phillips 
+                                           //= cast: Joaquin Phoenix 
+
+// W przypadku tablic zagnie¿dzonych
+$movieDetalis = [ 'title' => "Joker", 'directory' => 'Todd Phillips', 'cast' => ['actor1' =>'Joaquin Phoenix', 'actor2' =>'Robert de niro'] ];
+foreach($movieDetalis as $key => $value) {
+    if(is_array($value)) {
+        foreach($value as $insideKey => $insideValue) {
+            echo "$key - $insideKey: $insideValue </br>";        
+        }
+    } 
+    else echo "$key: $value </br>";
+}
+										//= title: Joker
+											directory: Todd Phillips
+											cast - actor1: Joaquin Phoenix
+											cast - actor2: Robert de niro 
+
+FUNKCJE
+Nie mo¿na przeci¹¿aæ funkcji
+function nazwaFunkcji(argumenty): typWartoœciZwracanej
+{
+	cia³oFunkcji
+}
+
+function sayHello($name = 'Karol') :void
+{
+    echo "Witaj {$name}";
+}
+sayHello();				//= Witaj Karol							
+											
+function sayHello(?string $arg1 ) :void   //nadawanie typów. Znak zapytania umo¿liwia przekazanie null'a
+{
+    echo "Witaj $arg1 </br>";
+}
+sayHello('Edek');   //= Witaj Edek 
+sayHello(null);		//= Witaj									
+											
+function sayHello(?string $arg1 ) : int
+{
+    echo "Witaj $arg1 </br>";
+    return ($arg1!=null) ? strlen($arg1) : 0;
+}
+$len = sayHello('Edek');
+sayHello(null);
+echo "Liczba liter: $len";											
+											
+FUNKCJE ANONIMOWE:							
+function (argumenty): typWartoœciZwracanej    //brak nazwy funkcji
+{
+	cia³oFunkcji
+};   //œrednik na koñcu
+
+$myFunction = function (string $arg1 ) : void
+{
+    echo "Witaj $arg1 </br>";
+};
+$myFunction("Tom");
+
+CALLABLE
+//przekazanie funkcji jako argument
+function myCall(callable $func) : void
+{
+    $func();
+}
+
+myCall(function() {
+    echo "co kolwiek <br/>";
+});
+//lub:
+$myFunction = function() {
+    echo "co kolwiek <br/>";
+};
+myCall($myFunction);           //= co kolwiek
+
+//callable z argumentem
+function myCall(string $name, callable $func) : void {
+    $func($name);
+}
+
+$myFunction = function($name) : void {
+    echo "co kolwiek $name <br/>";
+};
+
+myCall("Karol", $myFunction);  //= 	co kolwiek Karol 					
+											
+fn($value) => $value *2;   //funkcje strza³kowe zawsze coœ zwracaj¹
+//zamiast
+function ($value) {
+    return $value *2;
+};											
+
+//Przyk³ad:											
+$myFun = fn(int $value): int => $value *2;
+$result = $myFun(20);
+echo $result;   //=40
+											
+											
+											
+											
+											
+											
+											
+											
+tryby:
+ - coercive - trym domyœlny, dopuszczaj¹cy rzutowanie
+ - strict - œcis³y, który nie dopuszcza rzutowania		
+Tryb œcis³y uruchamiamy za pomoca komendy, umieszczonej na pocz¹tku pliku:
+declare(strict_types=1);
+ 
+
+losowanie liczby:
+	rand(0, 1)

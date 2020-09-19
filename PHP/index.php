@@ -1,18 +1,12 @@
 <?php
+ declare(strict_types=1);
 echo "<h1>Hejka </h1></br>";
-echo "Hejka2 </br>";
 
-$zmiennaTekstowa = 'tekst';
-$zmiennaLiczbowa = 23;
+$users = [4 => 'Ala', 6 => "Ola", "Elo"];
 
-//echo $zmiennaTekstowa;
-//echo $zmiennaLiczbowa;
+$hello = array_map(
+    fn($value) => "Hello ".$value,
+    $users
+);
 
-
-
-var_dump($zmiennaTekstowa);
-
-var_dump($zmiennaLiczbowa);
-
-
-?>
+print_r($hello);
