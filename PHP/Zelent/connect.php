@@ -1,0 +1,5 @@
+<?php
+
+// twoje ustawienia
+
+?>
