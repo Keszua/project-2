@@ -101,6 +101,17 @@ tab10 = [
 {'6': '     ', '7': '     ', '8': '     ', '9': '     ', '0': '      ' },
 ]
 
+tab11 = [
+{'ą': '      ',  'ć': '     ',  'ę': '     ', },
+{'ą': '      ',  'ć': '   # ',  'ę': '     ', },
+{'ą': ' #### ',  'ć': ' ### ',  'ę': ' ### ', },
+{'ą': '     #',  'ć': '#   #',  'ę': '#   #', },
+{'ą': ' #####',  'ć': '#    ',  'ę': '#####', },
+{'ą': '#    #',  'ć': '#   #',  'ę': '#    ', },
+{'ą': ' #####',  'ć': ' ### ',  'ę': ' ### ', },
+{'ą': '   ## ',  'ć': '     ',  'ę': '   ##', },
+]
+
 for i in range(len(tab)):
     tab[i].update(tab2[i])
 
@@ -128,6 +139,9 @@ for i in range(len(tab)):
 for i in range(len(tab)):
     tab[i].update(tab10[i])
 
+for i in range(len(tab)):
+    tab[i].update(tab11[i])
+
 
 def wypisz(napis, spacje=1):
     indeks = list(napis)
@@ -145,4 +159,4 @@ def wypisz(napis, spacje=1):
         line2 = space.join(line)
         print(line2)
 
-wypisz('mrowa5R00 - Lasius', 2)
+wypisz('Class', 3)

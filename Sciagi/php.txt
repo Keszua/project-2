@@ -3,6 +3,7 @@ Sugeroway edytor php to VSC.
 link do dokumentacji PHP:
 https://www.php.net/manual/en/ref.array.php
 
+PSR-12  -styl formatowania tekstu (taki "czysty kod")
 
 /*
 Sugerowana wtyczka: PHP IntelliSense
@@ -39,6 +40,37 @@ W wyszukiwaniu windowsoym po wpisaniu "zmienne", wybieramy "Edytuj zmienne œrodo
 Klikamy na klawisz "zmienne rodowiskowe" -> w oknie "zmienne suystemowe" szukamy Path i go edytujemy. trzeba dodaæ "C:\xampp\php"
 
 
+Tryby:
+ - coercive - trym domyœlny, dopuszczaj¹cy rzutowanie
+ - strict - œcis³y, który nie dopuszcza rzutowania		
+Tryb œcis³y uruchamiamy za pomoca komendy, umieszczonej na pocz¹tku pliku:
+declare(strict_types=1);
+
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+
+include("srcdebug.php");      //drugie inkludowanie tego samego pliku wygeneruje ostrze¿enie (nie przerywa skryptu)
+include_once("src/ebug.php"); //pilnuje, ¿eby tylko raz dodaæ plik (mo¿na wywo³ac kilka razy)
+require("src/debug.php");      //jeœli plik nie istnieje, to skrypt przerywa dzia³anie (wywala ERROR)
+require_once("src/debug.php"); 
+
+
+htmlentities(); //zabezpiecza, aby przegladarka nie wykonywa³a ego kodu
+
+
+
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+
+
 //Wyœwietlanie ci¹gów znaków:
 	echo "Witaj";
 	echo ("Witaj");
@@ -65,8 +97,22 @@ Klikamy na klawisz "zmienne rodowiskowe" -> w oknie "zmienne suystemowe" szukamy
 	var_dump($zmiennaTekstowa);  //= string(5) "tekst"
 	var_dump($zmiennaLiczbowa);  //= int(23) 
 
-OPERATORY
-//przypisania
+
+
+
+
+	
+	
+     ####                                       #
+    #    #                                      #
+    #    #   ####     ###    # ###    ####    #####    ###    # ###   #   #
+    #    #   #   #   #   #   ##           #     #     #   #   ##      #   #
+    #    #   #   #   #####   #        #####     #     #   #   #        # #
+    #    #   ####    #       #       #    #     #     #   #   #         #
+     ####    #        ###    #        ### #      ##    ###    #        #
+             #                                                        #
+
+			 //przypisania
 $pierwsza = 1;
 $pierwsza = $druga = 13; //obie zmienne otrzymaj¹ wartosæ 13
 + dodawanie;  - odejmowanie;  * mno¿enie;  / dzielenie;  % modulo;  ** potêgowanie
@@ -107,19 +153,30 @@ $string3 = 'Kot Ali ma '.$age.' lat';
 echo $string3;                     //= Kot Ali ma 12 lat
 
 
-TABLICE
+
+
+
+    #####            #       #
+      #              #       #        #
+      #      ####    ###     #              ###     ###
+      #          #   #   #   #       ##    #   #   #   #
+      #      #####   #   #   #        #    #       #####
+      #     #    #   #   #   #   #    #    #   #   #
+      #      ### #   ####     ###    ###    ###     ###
+	  
 $tablicaTestowa = ['Ala', 3, 3.14, "Elo"];
-var_dump($tablicaTestowa); //= array(4) { [0]=> string(3) "Ala" [1]=> int(3) [2]=> float(3.14) [3]=> string(3) "Elo" } 
-print_r($tablicaTestowa);  //= Array ( [0] => Ala [1] => 3 [2] => 3.14 [3] => Elo ) 
-$tablicaTestowa[] = 'Nowy element';  // dodawanie nowego elmentu
+var_dump($tablicaTestowa);                       //= array(4) { [0]=> string(3) "Ala" [1]=> int(3) [2]=> float(3.14) [3]=> string(3) "Elo" } 
+print_r($tablicaTestowa);                        //= Array ( [0] => Ala [1] => 3 [2] => 3.14 [3] => Elo ) 
+$tablicaTestowa[] = 'Nowy element';              // dodawanie nowego elmentu
 unset($tablicaTestowa[3], $tablicaTestowa[1],);  // usówanie konkretnych elementów
 
 $tablicaTestowa = [4 => 'Ala', 6 => "Ola", "Elo"];
 $tablicaTestowa[] = "Nowy";
-print_r($tablicaTestowa);  //= Array ( [4] => Ala [6] => Ola [7] => Elo [8] => Nowy ) 
-var_dump(count($tablicaTestowa));  //= int(4)   zwróci iloœæ elementów nie zale¿nie od numerowania indeksów
+print_r($tablicaTestowa);                        //= Array ( [4] => Ala [6] => Ola [7] => Elo [8] => Nowy ) 
+var_dump(count($tablicaTestowa));                //= int(4)   zwróci iloœæ elementów nie zale¿nie od numerowania indeksów
 
-TABLICE ASOCJACYJNE
+
+// TABLICE ASOCJACYJNE ------------------------------------------------------------------------------------------------
 - indeksami noga byæ stringi
 $user = [
     'firstName' =>'Jan',
@@ -146,7 +203,14 @@ $hello = array_map(
 print_r($hello);   //= Array ( [4] => Hello Ala [6] => Hello Ola [7] => Hello Elo ) 
 
 
-INSTRUKCJE WARUNKOWE
+  ###               #                #                                                             #
+   #                #                #               #                                             #
+   #  ####   ###  ##### # ### #    # #   #  ###         ###      #     #  ####  # ### #    # ####  #   #  ###  #     #  ###
+   #  #   # #       #   ##    #    # # #   #   #    ## #   #     #     #      # ##    #    # #   # # #   #   # #     # #   #
+   #  #   #  ###    #   #     #    # ##    #         # #####     #  #  #  ##### #     #    # #   # ##    #   # #  #  # #####
+   #  #   #     #   #   #     #    # # #   #   #     # #         # # # # #    # #     #    # #   # # #   #   # # # # # #
+  ### #   #  ###     ## #      ##### #   #  ###  #   #  ###       #   #   ### # #      ##### #   # #   #  ###   #   #   ###
+                                                  ###
 $age = 20;
 if ($age >= 17) {
 	echo "Warunek spe³niony";
@@ -154,6 +218,16 @@ if ($age >= 17) {
 	echo "Warunek NIE spe³niony";
 }
 
+//zapis bez nawiasów:
+if($action === 'create'):
+	echo 'nowa notatka';
+else:
+	echo 'lista notatka';
+endif;
+//to samo co wy¿ej
+$action = $_GET['action'] ?? null;
+
+				
 Wartosci false:  0, -0, 0.0, -0.0,  "",  "0",  [],  null
 
 $age = 20;
@@ -181,7 +255,14 @@ switch ($age) {
 }
 
 
-PÊTLE
+    ####              #     #
+    #   #             #     #
+    #   #    ###    #####   #        ###
+    ####    #   #     #     #       #   #
+    #       #####     #     #       #####
+    #       #         #     #   #   #
+    #        ###       ##    ###     ###
+               ##
 - for
 - foreach
 - while
@@ -246,7 +327,15 @@ foreach($movieDetalis as $key => $value) {
 											cast - actor1: Joaquin Phoenix
 											cast - actor2: Robert de niro 
 
-FUNKCJE
+    #####                    #
+    #                        #                   #
+    #       #    #   ####    #   #    ###             ###
+    ####    #    #   #   #   # #     #   #      ##   #   #
+    #       #    #   #   #   ##      #           #   #####
+    #       #    #   #   #   # #     #   #       #   #
+    #        #####   #   #   #   #    ###    #   #    ###
+                                              ###
+
 Nie mo¿na przeci¹¿aæ funkcji
 function nazwaFunkcji(argumenty): typWartoœciZwracanej
 {
@@ -286,6 +375,14 @@ $myFunction = function (string $arg1 ) : void
     echo "Witaj $arg1 </br>";
 };
 $myFunction("Tom");
+
+
+strlen();  //d³ugoœæ ³añcucha. 
+//przyk³¹d z okreœleneim s³ugoœci liczby:
+$iloscCyfr = strlen((string) $liczba);
+
+json_encode($text);
+
 
 CALLABLE
 //przekazanie funkcji jako argument
@@ -332,12 +429,185 @@ echo $result;   //=40
 											
 											
 											
-tryby:
- - coercive - trym domyœlny, dopuszczaj¹cy rzutowanie
- - strict - œcis³y, który nie dopuszcza rzutowania		
-Tryb œcis³y uruchamiamy za pomoca komendy, umieszczonej na pocz¹tku pliku:
-declare(strict_types=1);
+
  
 
 losowanie liczby:
 	rand(0, 1)
+	
+	
+	
+	
+	
+     ###    #
+    #   #   #
+    #       #        ####     ###     ###
+    #       #            #   #       #
+    #       #        #####    ###     ###
+    #   #   #   #   #    #       #       #
+     ###     ###     ### #    ###     ###
+
+
+	
+    class SomeClass()
+    {
+        // Sta³e publiczne - bêdziemy o nich mówiæ    
+        // Sta³e prywatne - bêdziemy o nich mówiæ    
+
+        // W³aœciwoœci statyczne publiczne - bêdziemy o nich mówiæ
+        // W³aœciwoœci statyczne prywatne - bêdziemy o nich mówiæ
+        // Metody statyczne publiczne - bêdziemy o nich mówiæ
+        // Metody statycznie prywatne - bêdziemy o nich mówiæ
+
+        // W³aœciwoœci publiczne
+        // W³aœciwoœci prywatne
+
+        // Konstruktor
+
+        // Metody publiczne
+        // Metody prywatne
+    }	
+	
+	
+class Samchod
+{
+    public function __construct(string $kod = '000') {
+        self::$wyprodukowano++;
+        echo "W³aœnie powsta³o nowe auto, nr: ". self::$wyprodukowano ."<br/>";
+        $this->kodKluczyka = $kod;
+    }
+
+    public const JAKAS_STALA_PUBLIC = 'p';
+    private const JAKAS_STALA = 'a';
+    private static int $wyprodukowano =0;
+    public $pojemnosc;                        //domyœlna wartoœæ NULL
+    public string $brand = "FSO";             // od wersji 7.4 mo¿na deklarowac typ
+    public ?string $type = null;
+    //protected 
+    private string $kodKluczyka;
+
+    public static function IleWyprodukowano() : int {  //funkcja statuczna
+        return self::$wyprodukowano;
+    }
+
+    public function wewnetrznaMetoda() : void {
+        echo "Wykonuje co trzeba. ".self::JAKAS_STALA;  //do staych wewn¹trz dostajemy siê za pomoc¹ self::
+    }
+
+    public function uruchomSilnik(): void {
+        $this->wewnetrznaMetoda();            //wywo³anie wewnêtrznej funkcji
+        echo "Silnik o pojemnoœci ". $this->pojemnosc ." zosta³ uruchomiony.<br/> ";
+    }
+
+    public function ustawBieg(int $bieg = 0): ?int  {
+        if($bieg === 0) {
+            return null;
+        }
+        echo "Wrzuci³eœ $bieg bieg <br/> ";
+        return $bieg;
+    }
+	
+	final public function numerSeryjny() : void {  //funkcja final nie mo¿e byæ zas³oniêta przez potomka
+		echo "Tajny kod to: ...";
+	}
+}
+
+
+$pojazd = new Samchod();
+echo $pojazd->brand."<br/>" ;      //= FSO
+$pojazd->pojemnosc = 0.6;
+echo $pojazd->pojemnosc."<br/>" ;  //= 0.6
+$pojazd->noweCos = 4;
+echo $pojazd->noweCos."<br/>";     //= 4
+$pojazd->uruchomSilnik();          //= Wykonuje co trzeba. Silnik o pojemnoœci 0.6 zosta³ uruchomiony.
+$pojazd->ustawBieg();              // zwróci null, czyli nic nie pisze
+$pojazd->ustawBieg(1);             //= Wrzuci³eœ 1 bieg 
+echo Samchod::JAKAS_STALA_PUBLIC;  //= p
+echo $pojazd::JAKAS_STALA_PUBLIC;  //= p    to wywo³anie nie jest zalecane
+echo "Wyprodukowano: ".Samchod::IleWyprodukowano() ."<br/>"; //wywo³anie funkcji statycznej
+
+
+//DZIEDZICZENIE
+
+class Fiat extends Samchod {
+    //dziecko dziedziczy konstruktor
+    public function __construct() {  // jeœli stworze swój konstruktor, to on ZAS£ANIA konstruktor rodzica
+        parent::__construct();       // jawne wywo³anie konstruktora rodzica
+        echo "Konstruktor Fiat <br/>";
+    }
+
+    public string $naglosnienie = 'Safari';
+
+}
+
+$fiat126p = new Fiat();
+$fiat126p->ustawBieg(4);
+
+//KLASA ABSTRAKCYJNA
+//czyli wzozec dla klas potomnych
+//nie mo¿na stworzyæ jej instancji
+abstract class AbstractParent {
+    protected string $text;
+    public function __construct(string $text) {
+        $this->text = $text;
+    }
+    abstract public function render(string $param1, array $param2) : string;
+    public function nieAbstrkcyjanFunkcja() : void { echo "Tadam!"; }  //mo¿e zawieraæ funkcje nie abstrakcyjne
+}
+class Child extends AbstractParent {
+    public function render(string $param1='', array $param2=[]) : string {
+        return '<div><h2>'.$this->text.'</h2></div>';
+    }
+}
+
+//$rodzic = new AbstractParent();  //ERROR
+$dziecko = new Child('Moj tekst');
+echo $dziecko->render();
+
+
+
+//INTERFEJSY
+//Interfejs wychodzi jeszcze poziom wy¿ej ni¿ abstrakcja
+interface ExampleInterface {
+    public const SOMETHING = 'bar';    //zawiera równie¿ sta³e statyczne
+    public function doSomethig1(int $arg) : string;  //funkcje tylko czysto abstrakcyjne (bez cia³a)
+    public function doSomethig2(int $arg, string $arg2) : void;
+}
+
+class Example implements ExampleInterface {  //mo¿na implenetowac po kilku interfejsach
+    public function doSomethig1(int $arg) : string {
+        return "Hejka z arg: ".$arg;
+    }
+    public function doSomethig2(int $arg, string $arg2) : void {
+        echo "Wywo³uje doSomethig2 z ".$arg." oraz ".$arg2;
+    }
+}
+
+
+$wywolanie = new Example;
+$wywolanie->doSomethig2(12, "Hejka"); //Wywo³uje doSomethig2 z 12 oraz Hejka
+
+//FINAL  - blokada dziedziczenia
+final class Vehicle {}
+//class Car extends Vehicle {} //ERROR
+
+
+//NAMESPACE
+
+//namespace MyNamespace; //po frazie declare(strict_type=1);
+//przyk³ad:
+namespace Path_To_Class;
+//Aby skorzystaæ z klas z danej "przestrzeni", trzeba zaimportowaæ t¹ przestrzeñ z pomoc¹ "use"
+use Path_To_Class;
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
