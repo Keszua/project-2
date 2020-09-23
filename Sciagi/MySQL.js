@@ -31,6 +31,8 @@ INT - liczby całkowite (4B)
 FLOAT - zmiennoprzecinkowe ()
 TEXT - napis (do 65535 znaków)
 DATA - w tormacie RRRR-MM-DD
+	DATETIME - // w formacie RRRR-MM-DD HH:MM:SS 
+	TIMESTAMP - //"odcisk czasu" aktualizowany zasze, gdy cos się zmieni 
 TIME - GG-MM-SS
 
 //klucz ID powinien byc tylu: INT, Indeks: PRIMARY oraz zaznaczone A_I (Auto Increment)
@@ -124,6 +126,12 @@ INSERT INTO klienci VALUES (NULL, "Marlin", "Monroe", "Los Angeles"), (NULL, "Jo
 
 #Wstaw do bazy osobe za pomocą SET
 INSERT INTO klienci SET idklienta=NULL, imie="Steve", nazwisko="McQueen", miejscowosc="Los Angeles"
+
+//wstawianie daty:
+now()  //aktualna data iczas
+curdate()  //tylko data
+curtime()  // tylko czas
+now() + INTERVAL 14 DAY   //wstaw datę i czas, jaka będzie dokładnie za 14 dni
 
 #----------------------------------------------------------------------------------------------
 # usuń cały wiersz z id=2

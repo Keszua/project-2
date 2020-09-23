@@ -97,9 +97,34 @@ htmlentities(); //zabezpiecza, aby przegladarka nie wykonywa³a ego kodu
 	var_dump($zmiennaTekstowa);  //= string(5) "tekst"
 	var_dump($zmiennaLiczbowa);  //= int(23) 
 
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
 
 
+CZAS
+	echo time()."<br/>";			//wyœwietli sekundy 
+	echo mktime(17, 37, 1, 9, 9, 2020 )."<br/>";  // mktime(hour, min, sec, month, day, year)  pokazuje ile sekund up³ynê³o danej daty
+	echo microtime()."<br/>";  //czas podany w mikrosekundach
 
+	echo date('Y-m-d')."<br/>";  //Y 2000, y 20;  m-month (z zerem) n-miesi¹c  M trzyliterowy;  d dzien miesi¹ca (z zerem) j dzeiñ meisiaca D trzyliterowy; 
+    echo date('H:i:s')."<br/>";   // H 24godz h 12godz   G 24godz bez zera  g 12godz bez zera;     i minuty    
+	echo date('Y-m-d H:i:s')."<br/>";
+
+	$dataczas = new DateTime();
+	echo $dataczas->format('Y-m-d H:i:s')."<br/>";
+	//print_r($dataczas);
+	$dzien = 26;
+	$miesiac = 7;
+	$rok = 1875;
+	if(checkdate($miesiac, $dzien, $rok)) // checkdate(mon, day, yer )
+		echo "By³ tak dzieñ. </br>";
+	else
+		echo "Sprawdz wprowadzone dane. </br>";
+
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
 
 	
 	
