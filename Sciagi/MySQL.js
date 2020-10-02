@@ -25,13 +25,16 @@ chmod 777 xamp.run
 // 1.id   2.treść   3.A   4.B   5.C   6.D   7.Poprawna odpowiedz
 
 //Podstawowe typy danych:
-CHAR[x] - przehowyje x znaków (max 255)
-VARCHAR[x] - Pole tekstowe o zmiennej długości
-INT - liczby całkowite (4B)
-FLOAT - zmiennoprzecinkowe ()
-TEXT - napis (do 65535 znaków)
-DATA - w tormacie RRRR-MM-DD
-TIME - GG-MM-SS
+VARCHAR[x]  // pole tekstowe o zmiennej długości (max 255)
+CHAR[x]     // pole tekstowe o stałej długości (max 255)
+TEXT        // napis (do 65535 znaków)
+INT         // liczby całkowite (4B)
+FLOAT       // zmiennoprzecinkowe ()
+DOUBLE      // zmiennoprzecinkowe ()
+DATA        // w tormacie YYYY-MM-DD
+DATETIME    // data i godzina w formacie  YYYY-MM-DD HH:MM:SS ('Y-m-d H:i:s')
+TIMESTAMP   // automatycznie się aktualizuje po każdej zmianie rekordu (do śledzenia aktywności na koncie)
+TIME - HH-MM-SS
 
 //klucz ID powinien byc tylu: INT, Indeks: PRIMARY oraz zaznaczone A_I (Auto Increment)
 //Dla wszystkich Typów TEXT ustawić Metodę porównywania napisów utf8_polish_ci
@@ -55,6 +58,47 @@ Rodzaje komend:
      - kasowanie wszsytkich REKORDÓW         =  TRUNCATE
      - kasowanie STRUKTURY w bazie           =  DROP
 - zmieniajace strukturę tabel lub bazy
+
+//do szybkich testów, mozna skorzystać ze strony: https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_all
+
+ //wyciąganie danych. Pełny opis: https://dev.mysql.com/doc/refman/8.0/en/select.html
+SELECT	
+		select_expr [, select_expr ...]  //nazwy kolumn które chcemy wyciągnąć. Wszystkie to *
+	FROM 
+		tbl_name  //nazwa tabeli 
+	[WHERE where_condition]  // np id=15 AND answer="a"
+	[ORDER BY {col_name | expr | position} [ASC | DESC], ...]  //służy do sortowania 
+	[LIMIT {[offset,] row_count | row_count OFFSET offset}]    //ilość wyświetlonych
+			
+    | INNER | //dołącz i wypisz TYLKO pasujące
+    | LEFT  | //weź wszystko z lewej i spróbuj połączyć z prawą (jak się nie uda, to wpisz null w brakujące komórki)
+    | RIGHT | //anlogicznei do left
+    |       | JOIN  //JOIN służy do obsługi relacji  1:1  1:n  n:m
+			     // 1:1 jedna osoba posiada tlylko jedno zameldowanie
+			     // 1:n jedna osoba posiada kilka kont bankowych (które należą tylko do niej)
+			     // n:m jedna osoba moze należeć go wielu gróp na FB jak również do jednej grópy może należeć wiele osób
+			
+//Przykład: 			
+SELECT *
+FROM Products
+INNER JOIN Suppliers ON Products.SupplierID = Suppliers.SupplierID
+		
+			
+			
+INSERT	//dodawanie nowych rekordów https://dev.mysql.com/doc/refman/8.0/en/insert.html
+	[INTO] tbl_name
+	[(col_name [, col_name] ...)]
+	{ {Values | Value} (value_list) [, (value_list)] ... | VALUES row_construstor}
+	
+	INSERT INTO tbl_name () VALUES();
+
+
+UPDATE // aktualizacja rekordów	
+		tbl_name 
+	SET col1={expr1|DEFAULT} [, col2={expr2|DEFAULT}]...
+	[WHERE where_condition]
+	
+
 
 //WYSZUKUJĄCE:
 SELECT * FROM pytania                                       //wybierz wszystkie z bazy "pytania" (wyświetl wszystko)

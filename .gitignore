@@ -10,3 +10,6 @@ mod/curriencies.txt
 
 #inne pliki
 *.stackdump
+PHP/ProjektA/config/config.php
+config.php
+*onfig.php
