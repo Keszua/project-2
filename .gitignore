@@ -12,4 +12,5 @@ mod/curriencies.txt
 *.stackdump
 PHP/ProjektA/config/config.php
 config.php
-*onfig.php
+
+PHP/Zelent/connect.php
