@@ -248,7 +248,7 @@ git rebase nazwaGalezi 				//Prawdopodobnie zaciągnięcie zmian z "nazwaGalezi"
 // KLONOWANIE
 git clone folderDoSklonowania NowyFolder	//klonowanie folderów na naszym kompie
 git clone https://github.com/Codeinwp/Ideal-Image-Slider-JS.git  	//robienie kolnu/kopi z repozytorium
-git clone https://github.com/Codeinwp/Ideal-Image-Slider-JS.git . 	//(z kropką) robienie kolnu/kopi w folderze w którym jestesmy
+git clone https://github.com/Codeinwp/Ideal-Image-Slider-JS.git . 	//(z kropką) robienie klonu/kopi w folderze w którym jestesmy
 
 
 
@@ -259,8 +259,8 @@ git clone https://github.com/Codeinwp/Ideal-Image-Slider-JS.git . 	//(z kropką)
 plik1.txt
 /folder
 # wszystko z tym znaczkiem to komentarz
-//Do tej listy można dodac TYLKO pliki i foldery nie śledzone. 
-//Jeżeli jakiś plik jest śledzony i chcemy go przestać śledzić: git rm --cached nazwaPliku
+//Do listy .gitignore, można dodac TYLKO pliki i foldery nie śledzone. 
+git rm --cached nazwaPliku  //Jeżeli jakiś plik jest śledzony i chcemy go przestać śledzić
 
 
 //na https://porady-it.pl/programowanie/git-jak-wstrzymac-sledzenie-zmian-w-pliku-np-konfiguracyjnym/
