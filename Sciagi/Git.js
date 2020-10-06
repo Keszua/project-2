@@ -263,6 +263,7 @@ plik1.txt
 git rm --cached nazwaPliku  //Jeżeli jakiś plik jest śledzony i chcemy go przestać śledzić
 
 
+
 //na https://porady-it.pl/programowanie/git-jak-wstrzymac-sledzenie-zmian-w-pliku-np-konfiguracyjnym/
 //znalazłem inny sposób na "nie śledzenie" pliku:
 git update-index --assume-unchanged nazwa_pliku     // wstrzyma śledzenie zmian w pliku
