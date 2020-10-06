@@ -1,4 +1,4 @@
-//Kurs Zelenta: https://www.youtube.com/watch?v=99JAI24Zd24&list=PLOYHgt8dIdoymv-Wzvs8M-OsKFD31VTVZ
+﻿//Kurs Zelenta: https://www.youtube.com/watch?v=99JAI24Zd24&list=PLOYHgt8dIdoymv-Wzvs8M-OsKFD31VTVZ
 
 
 // Rekord (krotka) - to pojedynczy wiersz w tabeli (np: zestaw cech danego ucznia) - def2: to pojedyńczy obiekt wraz z wartosciami wszystkich opisujących go cech
@@ -169,6 +169,12 @@ INSERT INTO klienci VALUES (NULL, "Marlin", "Monroe", "Los Angeles"), (NULL, "Jo
 #Wstaw do bazy osobe za pomocą SET
 INSERT INTO klienci SET idklienta=NULL, imie="Steve", nazwisko="McQueen", miejscowosc="Los Angeles"
 
+//wstawianie daty:
+now()  //aktualna data iczas
+curdate()  //tylko data
+curtime()  // tylko czas
+now() + INTERVAL 14 DAY   //wstaw datę i czas, jaka będzie dokładnie za 14 dni
+
 #----------------------------------------------------------------------------------------------
 # usuń cały wiersz z id=2
 DELETE FROM zamowienia WHERE idzamowienia=2  #UWAGA bez podania WHERE, usunięta zostanie cała tabela
@@ -180,5 +186,14 @@ TRUNCATE TABLE zamowienia   #szybkie polecenie, któe nie usówa rekord po rekor
 
 
 
+
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
+PDO
+
+Dokumentacja dla PDO: 
+https://www.php.net/manual/en/pdo.setattribute.php
+bit.ly/atrybutyPHP
 
 
