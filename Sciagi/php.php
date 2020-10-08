@@ -63,7 +63,7 @@ htmlentities(); //zabezpiecza, aby przegladarka nie wykonywała ego kodu
 
 rand(0, 1) // losowanie liczby: od 0 do 1
 	
-	
+header('Location: index.php'); // przekierowanie na stronę
 
 
 
@@ -637,5 +637,79 @@ MySQLi  // https://www.php.net/manual/en/book.mysqli.php
 PDO   // https://www.php.net/manual/en/book.pdo.php
 	
 	
-	8:24
+//Urzywanie PDO:
+	private PDO $conn;
+	//nawiązanie połaczenia:
+	$dsn = "mysql:dbname={$config['database']};host={$config['host']}";
+	$this->conn = new PDO(
+		$dsn, 
+		$config['user'], 
+		$config['password'],
+		[
+			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+		]
+    );
+	
+//Pobieranie jednego rekordu:
+	try {
+		$query = "SELECT id, title, description, created FROM notes WHERE id = $id";
+		$result = $this->conn->query($query);
+		$note = $result->fetch(PDO::FETCH_ASSOC);
+	} catch (Throwable $e) {
+		throw new StorageException('Nie udało się pobrać notatki', 400, $e);
+	}
+	var_dump($note);  //wyświetlenie zawartości  
+	
+//pobieranie wszystkich rekordów	
+	try {
+		$query = "SELECT id, title, description, created FROM notes";
+		$result = $this->conn->query($query, PDO::FETCH_ASSOC);
+		$allNote $result->fetchAll();
+	} catch (Throwable $e) {
+		throw new StorageException('Nie udało się pobrać danych o notatkach', 400, $e);
+    }
+	var_dump($allNote);  //wyświetlenie zawartości  
+	
+//stworzenie/zapisanie nowego rekordu	
+	try {
+		$title = $this->conn->quote($data['title']);
+		$description = $this->conn->quote($data['description']);
+		$created = $this->conn->quote(date('Y-m-d H:i:s'));
+		
+		$query = " 
+		INSERT INTO notes(title, description, created) 
+		VALUES($title, $description, $created)
+		"; 
+		$this->conn->exec($query); //wysłanie polecenia zapisania
+	} catch (Throwable $e) {
+		throw new StorageException('Nie udało się utworzyć nowej notatki!', 400, $e);
+    }
+	
+//Edycja rekordu:	
+	try {
+		$title = $this->conn->quote($data['title']);
+		$description = $this->conn->quote($data['description']);
+		$query = "
+			UPDATE notes
+			SET title = $title, description = $description
+			WHERE id = $id
+		";
+		$this->conn->exec($query);
+	} catch (Throwable $e) {
+		throw new StorageException('Nie udało się edytować notatki!', 400);
+	}	
+	
+// Usówanie rekordu
+	try {
+		$query = "DELETE FROM notes WHERE id = $id LIMIT = 1";
+		$this->conn->exec($query);
+	} catch (Throwable $e) {
+		throw new StorageException('Nie udało się usunąć notatki!', 400);
+    }	
+	
+	
+	
+	
+	
+	
 	
