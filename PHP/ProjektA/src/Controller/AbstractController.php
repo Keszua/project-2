@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Database;
+use App\Model\NoteModel;
 use App\Request;
 use App\View;
 
@@ -20,7 +20,7 @@ abstract class AbstractController
 
     protected static array $configuration = [];
 
-    protected Database $db;
+    protected NoteModel $noteModel;
     protected Request $request;
     protected View $view;
 
@@ -34,7 +34,7 @@ abstract class AbstractController
         if(empty(self::$configuration['db'])) {
             throw new ConfigurationException('Configuration error');
         }
-        $this->db = new Database(self::$configuration['db']);
+        $this->noteModel = new NoteModel(self::$configuration['db']);
 
         $this->request = $request;
         $this->view = new View();
