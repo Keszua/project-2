@@ -103,9 +103,13 @@ header('Location: index.php'); // przekierowanie na stronę
 	var_dump($zmiennaTekstowa);  //= string(5) "tekst"
 	var_dump($zmiennaLiczbowa);  //= int(23) 
 
-
-
-
+//sprawdzanie, czy dana funkcja istnieje
+	method_exists($object, $method_name)
+	//przykład:
+	$action = $this->action() . 'Action';
+	if(!method_exists($this, $action)) {
+            $action = self::DEFAULT_ACTION . 'Action';
+        }
 
 	
 	
