@@ -27,7 +27,7 @@ var obj = {
 }
 
 
-//przykład pokzujący, że nie ma rozdzielenia między funkcją a metodą
+//przykład pokazujący, że nie ma rozdzielenia między funkcją a metodą
 var user = {
     name: "Uzytkownik",
     showMsg: function() {

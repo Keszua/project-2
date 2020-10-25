@@ -714,6 +714,23 @@ PDO   // https://www.php.net/manual/en/book.pdo.php
 	
 	
 	
+YII
+
+https://www.yiiframework.com/doc/guide/2.0/en/start-installation
+Na tej stronie jest instalka composer.
+
+W c:/xamp/htdocs 
+Przez konsolę zaistalowałem plagin:
+	composer global require "fxp/composer-asset-plugin:^1.2.0"
+
+Będąc w c:/xamp/htdocs, folder z projektem zakładam  poleceniem:
+composer create-project --prefer-dist --stability=dev yiisoft/yii2-app-basic NAZWA_FOLDERU_Z_PROJEKTEM
+
+Po instalacji, można odpalić stronę startową w przeglądarce:
+http://localhost/project_yii/web/
+	
+	
+	
 	
 	
 	

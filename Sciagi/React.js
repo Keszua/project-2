@@ -54,17 +54,28 @@ const app = [header, main, footer]
  
 ReactDOM.render(app, document.getElementById('root'))
 
+//------------------------------------------------------------
+//------------------------------------------------------------
+//------------------------------------------------------------
+
+//kliknięcie na napis w h1:
+<button onClick={function () { alert("wykryto klik") }}>Kliknij</button>
+//lub to samo z arrowFunction
+<button onClick={() => alert("wykryto klik")}>Kliknij</button>
+//to samo, ale przekazujemy wcześneij zdefiniowaną funkcję:
+const handleClick = () => alert("klik")
+<button onClick={handleClick}>Pierwszy artykuł</button>
+
+
+.trim()  // usówa białe znaki na końcu. tak jak strip() w Pythonie
+const value = input.value.trim();
+
 
 
 
 //------------------------------------------------------------
 //------------------------------------------------------------
 //------------------------------------------------------------
-//komponenty
-
-
-
-
 
 
 //komponent daty
@@ -92,7 +103,7 @@ const UserTable = () => (
  )
 ReactDOM.render( <UserTable /> , document.getElementById('content')); 
 
-//Wewnątrz tego komponentu mozna włozc kolejne komponenty:
+//Wewnątrz tego komponentu mozna włożyć kolejne komponenty:
 const UserTable = () => (
 	<div>
 		<h2>To jest komponent userTable</h2>
@@ -113,97 +124,38 @@ ReactDOM.render( React.createElement(Tweet, null), document.getElementById('Komp
 ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 
 
-Komponenty stanowe - posiadają one stan, czyli mogą przechowywać dane odnośnie 
-swojej reprezentacji (przykładowo komponent na wprowadzanie tekstu - <input> zawierałby
-informacje o aktualnie wpisanym tekście), ale posiadają też funkcje cyklu życia.
-
-class Tweet2 extends React.Component {
-	render(){
-		const date = (new Date());
-		return(
-			<div>
-				Element Tweet2 Stanowy
-				<time>{date.toLocaleString()}</time>
-				<p> Siemka </p>
-
-			</div>
-		) 
-	}
-}  
-ReactDOM.render( <Tweet2 /> , document.getElementById('Komponent_Stanowy'));
-
-//Można od razy załadowac kilka "Tweetów"
-ReactDOM.render( 
-	<div>
-		<Tweet2 /> 
-		<Tweet2 /> 
-		<Tweet2 /> 
-	</div>	
-	, document.getElementById('Komponent_Stanowy'));
-
-
-props - Parametry przekazywane od rodzica do dziecka
-
-Wartości dynamiczne otaczamy znacznikami {}
-
-//Tworze sobie jakas "strukture" z danymi wejsciowymi:
-const TweetData = {
-  user: {
-    name: "Bartosz Szczeciński",
-    handle: "btmpl"
-  },
-  date: new Date(),
-  text: "Witaj świecie!"
-}
-// w 
-ReactDOM.render( <Tweet2 />, document.getElementById('Komponent_Stanowy'));
-//Dopisuje sobie skąd będą pobierane dane:
-ReactDOM.render( <Tweet2 tweet={TweetData}/>, document.getElementById('Komponent_Stanowy'));
-
-//do klasy Tweet, pod "render(){" dodaje sobie linjke:
-const { user, text, date } = this.props.tweet;
-//przerabiam "TweetUser" z:
- const TweetUser = () => ( <span> Imie: <b>Karol</b> </span> ) //bez nawiasów i średnika też zadziałało
-//na:
-const TweetUser = ({name, handle}) => ( <span> Imie <b>{name}</b>{handle}</span> );
-
-
-//Teraz do <TweetUser /> wewnatrz "Tweet" moge przekazac dane
-// szczegóły na : https://szczecinski.eu/docs/react/komponenty/pass-props
-
-
-
-
 
 
 
 //------------------------------------------------------------
-//komponent funkcyjny, bezstanowy
-	const App1 = () => {  
+//------------------------------------------------------------
+//------------------------------------------------------------
+//komponenty
+
+//kompinent bezstanowy (funkcyjny)
+	const App = () => {
 		return (
 			<div>
-				<hi>Pierwszy komponent funkcyjny</hi>
+				<h1>Piewszy kompinent bezstanowy</h1>
 			</div>
 		)
 	}
+	ReactDOM.render(<App/>, document.getElementById('root'));
 
-	ReactDOM.render(<App1 />, document.getElementById('root'))
-
-//------------------------------------------------------------
-// komponent klasowy, stanowy
-	class App2 extends React.Component { //klasa dziedziczaca z React
-		state = {	//state nie jest wymagane
-			number: 0,
+//kompinent stanowy (klasowy)
+	class App2 extends React.Component {
+		state = {
+			number: 0
 		}
-		render() { //wymagana jest metoda render
-			return (    // komponent stanowy musi coś zwrócić
-				<section>
-					<h2>Komponent klasowy {this.state.number}</h2>
-				</section>
+
+		render() {
+			return (
+				<div>
+					<h1>Piewszy kompinent stanowy {this.state.number}</h1>
+				</div>
 			)
 		}
 	}
-
 	ReactDOM.render(<App2 />, document.getElementById('root'))
 
 //------------------------------------------------------------
@@ -282,73 +234,46 @@ React router
 //------------------------------------------------------------
 //------------------------------------------------------------
 //Lista zakupów:
+	class ShoppingList extends React.Component {
+		state = {
+			items1: 'ogórki',
+			items2: 'jajka',
+			items3: 'sok',
+		}
 
-class ShoppingList extends React.Component {
-    state = {
-        items1: 'ogórki',
-        items2: 'jajka',
-        items3: 'sok',
-    }
+		render() { 
+			return (   
+				<section>
+					<h2>Lista zakupów: </h2>
+					<ul>
+						<li>{this.state.items1}</li>    {/*  pierwszy krok */}
+						<ItemList name="element 1" />   {/*  drugi krok */}
+						<ItemList name={this.state.items2} />   {/*  trzeci krok */}
+						<ItemList name={this.state.items2} example={2 + 2} />
+						<ItemListC name={this.state.items3} example={2 + 2} />
+					</ul>
+				</section>
+			)
+		}
+	}
 
-    render() { 
-        return (   
-            <section>
-                <h2>Lista zakupów: </h2>
-                <ul>
-                    <li>{this.state.items1}</li>
-                    <li>{this.state.items2}</li>
-                    <li>{this.state.items3}</li>
-                </ul>
-            </section>
-        )
-    }
-}
+	const ItemList = (props) => {
+		return (
+			//<li>{this.state.items1}</li> to nie zadzaiała
+			<li>{props.name} - {props.example}</li>
+		)
+	}
 
-ReactDOM.render(<ShoppingList />, document.getElementById('root'))
+	class ItemListC extends React.Component {
+		render() {
+			return (
+				//<li>{props.name} - {props.example}</li> //teraz to nie zadziała
+				<li>{this.props.name} : {this.props.example}</li> //teraz to nie zadziała
+			)
+		}
+	}
 
-
-//------------------------------------------------------------
-//etap 2
-class ShoppingList extends React.Component {
-    state = {
-        items1: 'ogórki',
-        items2: 'jajka',
-        items3: 'sok',
-    }
-
-    render() { 
-        return (   
-            <section>
-                <h2>Lista zakupów: </h2>
-                <ul>
-                    <li>{this.state.items1}</li>    {/*  pierwszy krok */}
-                    <ItemList name="element 1" />   {/*  drugi krok */}
-                    <ItemList name={this.state.items2} />   {/*  trzeci krok */}
-                    <ItemList name={this.state.items2} example={2 + 2} />
-                    <ItemListC name={this.state.items3} example={2 + 2} />
-                </ul>
-            </section>
-        )
-    }
-}
-
-const ItemList = (props) => {
-    return (
-        //<li>{this.state.items1}</li> to nie zadzaiała
-        <li>{props.name} - {props.example}</li>
-    )
-}
-
-class ItemListC extends React.Component {
-    render() {
-        return (
-            //<li>{props.name} - {props.example}</li> //teraz to nie zadziała
-            <li>{this.props.name} : {this.props.example}</li> //teraz to nie zadziała
-        )
-    }
-}
-
-ReactDOM.render(<ShoppingList />, document.getElementById('root2'))
+	ReactDOM.render(<ShoppingList />, document.getElementById('root2'))
 
 
 //------------------------------------------------------------
@@ -1132,6 +1057,7 @@ class ListItems extends React.Component {
 }
 
 ReactDOM.render(<ListItems data={data} />, document.getElementById('root7'));
+
 //------------------------------------------------------------
 // Lista elementów, filtrowana zależnie od właściwości przycisku
 //Part IV
@@ -1395,6 +1321,7 @@ class ExchangeCounter extends React.Component {
 }
 
 ReactDOM.render(<ExchangeCounter />, document.getElementById("root3"));
+
 //-----------------------------------------------------------------------------
 //Kantor wymiany walut
 //Etap II 
@@ -1444,6 +1371,7 @@ class ExchangeCounter extends React.Component {
 }
 
 ReactDOM.render(<ExchangeCounter />, document.getElementById("root3"));
+
 //-----------------------------------------------------------------------------
 // Kantor wymiany walut
 // Etap III 
@@ -1515,6 +1443,7 @@ class ExchangeCounter extends React.Component {
 }
 
 ReactDOM.render(<ExchangeCounter />, document.getElementById("root3"));
+
 //-----------------------------------------------------------------------------
 // Kantor wymiany walut
 // Etap IV
@@ -1635,11 +1564,8 @@ class ExchangeCounter extends React.Component {
 
 ReactDOM.render(<ExchangeCounter />, document.getElementById("root3"));
 
-
-
 //-----------------------------------------------------------------------------
 //Wróżba
-
 class Wrozba extends React.Component {
 
 	state = {
@@ -1699,6 +1625,7 @@ class Wrozba extends React.Component {
 }
 
 ReactDOM.render(<Wrozba />, document.getElementById("root4"));
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -1757,8 +1684,6 @@ używam:
 
 
 //------------------------------------------------------------
-.trim()  // usówa białe znaki na końcu. tak jak strip() w Pythonie
-const value = input.value.trim();
 
 
 
