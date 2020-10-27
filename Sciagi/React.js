@@ -173,6 +173,45 @@ ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 	ReactDOM.render(<ZebraneApp />, document.getElementById('root'))
 
 //------------------------------------------------------------
+//kompinent stanowy (klasowy) rozbudowany:
+	class DodajCyfre extends React.Component {
+		constructor(props) {
+			super(props); //wymagane przekazanie propsów do rodzica
+			this.state = {
+				text: "",
+			}
+			this.handleClick = this.handleClick.bind(this)
+		}
+			handleClick() { // może być przypisany this w konstruktorze, albo funkcja straałkowa, 
+			                // albo w <button> dopisać .bind(this)
+			const number = Math.floor(Math.random() * 10);
+			this.setState({ //albo jawne wywołanie jako funkcję: 
+ 			                //this.setState((prevState) => ({ text: this.prevState.text + number})
+				text: this.state.text + number
+			})
+		}
+
+		render() {
+			return (
+				<>
+					<p>------------------------------root2------------------------------</p>
+					<button onClick={this.handleClick}>{this.props.btnTitle}Dodaj Cyfre</button>
+	                    //this.props.btnTitle jest przekazany z ReactDOM.render(<App btnTitle="Dodaj cyfrę"/>, ...)
+					<section>
+						<PanelResult text={this.state.text} >jednostek</PanelResult>
+					</section>
+				</>
+			)
+		}
+	}
+	
+	const PanelResult = (props) => {    // poprzez props, otrzymałem przekazany argument
+		return (
+			<h1>{props.text}: {props.children}</h1> //to co jest między znacznikami, jest przekazane jako props.children
+		)
+	}
+	
+//------------------------------------------------------------
 //------------------------------------------------------------
 //------------------------------------------------------------
 React router
