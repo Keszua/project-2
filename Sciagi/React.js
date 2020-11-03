@@ -54,17 +54,57 @@ const app = [header, main, footer]
  
 ReactDOM.render(app, document.getElementById('root'))
 
+//------------------------------------------------------------
+//------------------------------------------------------------
+//------------------------------------------------------------
+
+//kliknięcie na napis w h1:
+<button onClick={function () { alert("wykryto klik") }}>Kliknij</button>
+//lub to samo z arrowFunction
+<button onClick={() => alert("wykryto klik")}>Kliknij</button>
+//to samo, ale przekazujemy wcześneij zdefiniowaną funkcję:
+const handleClick = () => alert("klik")
+<button onClick={handleClick}>Pierwszy artykuł</button>
+//button przekazujący argumenty do handleClick(argumenty):
+	<button
+		onClick={this.handleClick.bind(this, argumenty)}
+		onClick={() => this.handleClick(argumenty)}
+		disabled={jakasFlaga ? false : true  } //wyszarzenie przycisku
+	> OK </button>
+
+
+  __________________________
+  |                        | input
+  --------------------------
+
+	handleInputChange =(e) => {
+			this.setState({ 
+				 	inputValue: e.target.value ,
+			});
+	}
+
+	render() {
+		return (
+				<input type="text" 
+					placehlder="Sugerowany tekst"
+					value={this.state.inputValue} 
+					onChange = {this.handleInputChange}
+				/>
+		)
+	}
+
+
+
+.trim()  // usówa białe znaki na końcu. tak jak strip() w Pythonie
+const value = input.value.trim();
+
+const value = parseInt(props.number); //typowanie na Int
 
 
 
 //------------------------------------------------------------
 //------------------------------------------------------------
 //------------------------------------------------------------
-//komponenty
-
-
-
-
 
 
 //komponent daty
@@ -92,7 +132,7 @@ const UserTable = () => (
  )
 ReactDOM.render( <UserTable /> , document.getElementById('content')); 
 
-//Wewnątrz tego komponentu mozna włozc kolejne komponenty:
+//Wewnątrz tego komponentu mozna włożyć kolejne komponenty:
 const UserTable = () => (
 	<div>
 		<h2>To jest komponent userTable</h2>
@@ -113,97 +153,38 @@ ReactDOM.render( React.createElement(Tweet, null), document.getElementById('Komp
 ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 
 
-Komponenty stanowe - posiadają one stan, czyli mogą przechowywać dane odnośnie 
-swojej reprezentacji (przykładowo komponent na wprowadzanie tekstu - <input> zawierałby
-informacje o aktualnie wpisanym tekście), ale posiadają też funkcje cyklu życia.
-
-class Tweet2 extends React.Component {
-	render(){
-		const date = (new Date());
-		return(
-			<div>
-				Element Tweet2 Stanowy
-				<time>{date.toLocaleString()}</time>
-				<p> Siemka </p>
-
-			</div>
-		) 
-	}
-}  
-ReactDOM.render( <Tweet2 /> , document.getElementById('Komponent_Stanowy'));
-
-//Można od razy załadowac kilka "Tweetów"
-ReactDOM.render( 
-	<div>
-		<Tweet2 /> 
-		<Tweet2 /> 
-		<Tweet2 /> 
-	</div>	
-	, document.getElementById('Komponent_Stanowy'));
-
-
-props - Parametry przekazywane od rodzica do dziecka
-
-Wartości dynamiczne otaczamy znacznikami {}
-
-//Tworze sobie jakas "strukture" z danymi wejsciowymi:
-const TweetData = {
-  user: {
-    name: "Bartosz Szczeciński",
-    handle: "btmpl"
-  },
-  date: new Date(),
-  text: "Witaj świecie!"
-}
-// w 
-ReactDOM.render( <Tweet2 />, document.getElementById('Komponent_Stanowy'));
-//Dopisuje sobie skąd będą pobierane dane:
-ReactDOM.render( <Tweet2 tweet={TweetData}/>, document.getElementById('Komponent_Stanowy'));
-
-//do klasy Tweet, pod "render(){" dodaje sobie linjke:
-const { user, text, date } = this.props.tweet;
-//przerabiam "TweetUser" z:
- const TweetUser = () => ( <span> Imie: <b>Karol</b> </span> ) //bez nawiasów i średnika też zadziałało
-//na:
-const TweetUser = ({name, handle}) => ( <span> Imie <b>{name}</b>{handle}</span> );
-
-
-//Teraz do <TweetUser /> wewnatrz "Tweet" moge przekazac dane
-// szczegóły na : https://szczecinski.eu/docs/react/komponenty/pass-props
-
-
-
-
 
 
 
 //------------------------------------------------------------
-//komponent funkcyjny, bezstanowy
-	const App1 = () => {  
+//------------------------------------------------------------
+//------------------------------------------------------------
+//komponenty
+
+//kompinent bezstanowy (funkcyjny)
+	const App = () => {
 		return (
 			<div>
-				<hi>Pierwszy komponent funkcyjny</hi>
+				<h1>Piewszy kompinent bezstanowy</h1>
 			</div>
 		)
 	}
+	ReactDOM.render(<App/>, document.getElementById('root'));
 
-	ReactDOM.render(<App1 />, document.getElementById('root'))
-
-//------------------------------------------------------------
-// komponent klasowy, stanowy
-	class App2 extends React.Component { //klasa dziedziczaca z React
-		state = {	//state nie jest wymagane
-			number: 0,
+//kompinent stanowy (klasowy)
+	class App2 extends React.Component {
+		state = {
+			number: 0
 		}
-		render() { //wymagana jest metoda render
-			return (    // komponent stanowy musi coś zwrócić
-				<section>
-					<h2>Komponent klasowy {this.state.number}</h2>
-				</section>
+
+		render() {
+			return (
+				<div>
+					<h1>Piewszy kompinent stanowy {this.state.number}</h1>
+				</div>
 			)
 		}
 	}
-
 	ReactDOM.render(<App2 />, document.getElementById('root'))
 
 //------------------------------------------------------------
@@ -220,6 +201,69 @@ const TweetUser = ({name, handle}) => ( <span> Imie <b>{name}</b>{handle}</span>
 
 	ReactDOM.render(<ZebraneApp />, document.getElementById('root'))
 
+//------------------------------------------------------------
+//kompinent stanowy (klasowy) rozbudowany:
+	class DodajCyfre extends React.Component {
+		constructor(props) {
+			super(props); //wymagane przekazanie propsów do rodzica
+			this.state = {
+				text: "",
+				messageIsActive: false,
+			}
+			this.handleClick = this.handleClick.bind(this)
+		}
+
+		handleClick() { // może być przypisany this w konstruktorze, albo funkcja straałkowa, 
+		                // albo w <button> dopisać .bind(this)
+			debugger 	// zatrzyma program w tym miejscu
+			const number = Math.floor(Math.random() * 10);
+			this.setState({ //albo jawne wywołanie jako funkcję: 
+ 			                //this.setState( (prevState) => ({ text: prevState.text + number})
+				text: this.state.text + number,
+				messageIsActive: !this.state.messageIsActive
+			})
+		}
+
+		render() {
+			
+			// Tworze jeden obiekt, który zawiera wspólne cechy. 
+			// w if() dopisze ewentualne dodatkowe właściwości albo  je zmieniam
+			// jest to robione w render, więc za każdym razem ten obiekt jest tworzony na nowo
+			let btnStyle = {
+				border: '2px solid black',
+				padding: '10px 20px',
+				fontFamily: 'arial',
+				fontSize: 30,
+				display: 'block',
+				margin: '20px auto',
+				backgroundColor: 'white',
+			}
+			if (this.state.messageIsActive) {
+				btnStyle.backgroundColor = 'cadetblue';
+				btnStyle.color = 'white';
+			}
+		
+			return (
+				<>
+					<button onClick={this.handleClick} //lub: onClick={() => this.handleClick(argumenty)}
+						style={btnStyle}
+					>   Dodaj Cyfre
+					</button>
+	                    //this.props.btnTitle jest przekazany z ReactDOM.render(<App btnTitle="Dodaj cyfrę"/>, ...)
+					<section>
+						<PanelResult text={this.state.text} >jednostek</PanelResult>
+					</section>
+				</>
+			)
+		}
+	}
+	
+	const PanelResult = (props) => {    // poprzez props, otrzymałem przekazany argument
+		return (
+			<h1>{props.text}: {props.children}</h1> //to co jest między znacznikami, jest przekazane jako props.children
+		)
+	}
+	
 //------------------------------------------------------------
 //------------------------------------------------------------
 //------------------------------------------------------------
@@ -282,240 +326,50 @@ React router
 //------------------------------------------------------------
 //------------------------------------------------------------
 //Lista zakupów:
+	class ShoppingList extends React.Component {
+		state = {
+			items1: 'ogórki',
+			items2: 'jajka',
+			items3: 'sok',
+		}
 
-class ShoppingList extends React.Component {
-    state = {
-        items1: 'ogórki',
-        items2: 'jajka',
-        items3: 'sok',
-    }
+		render() { 
+			return (   
+				<section>
+					<h2>Lista zakupów: </h2>
+					<ul>
+						<li>{this.state.items1}</li>    {/*  pierwszy krok */}
+						<ItemList name="element 1" />   {/*  drugi krok */}
+						<ItemList name={this.state.items2} />   {/*  trzeci krok */}
+						<ItemList name={this.state.items2} example={2 + 2} />
+						<ItemListC name={this.state.items3} example={2 + 2} />
+					</ul>
+				</section>
+			)
+		}
+	}
 
-    render() { 
-        return (   
-            <section>
-                <h2>Lista zakupów: </h2>
-                <ul>
-                    <li>{this.state.items1}</li>
-                    <li>{this.state.items2}</li>
-                    <li>{this.state.items3}</li>
-                </ul>
-            </section>
-        )
-    }
-}
+	const ItemList = (props) => {
+		return (
+			//<li>{this.state.items1}</li> to nie zadzaiała
+			<li>{props.name} - {props.example}</li>
+		)
+	}
 
-ReactDOM.render(<ShoppingList />, document.getElementById('root'))
+	class ItemListC extends React.Component {
+		render() {
+			return (
+				//<li>{props.name} - {props.example}</li> //teraz to nie zadziała
+				<li>{this.props.name} : {this.props.example}</li> //teraz to nie zadziała
+			)
+		}
+	}
 
-
-//------------------------------------------------------------
-//etap 2
-class ShoppingList extends React.Component {
-    state = {
-        items1: 'ogórki',
-        items2: 'jajka',
-        items3: 'sok',
-    }
-
-    render() { 
-        return (   
-            <section>
-                <h2>Lista zakupów: </h2>
-                <ul>
-                    <li>{this.state.items1}</li>    {/*  pierwszy krok */}
-                    <ItemList name="element 1" />   {/*  drugi krok */}
-                    <ItemList name={this.state.items2} />   {/*  trzeci krok */}
-                    <ItemList name={this.state.items2} example={2 + 2} />
-                    <ItemListC name={this.state.items3} example={2 + 2} />
-                </ul>
-            </section>
-        )
-    }
-}
-
-const ItemList = (props) => {
-    return (
-        //<li>{this.state.items1}</li> to nie zadzaiała
-        <li>{props.name} - {props.example}</li>
-    )
-}
-
-class ItemListC extends React.Component {
-    render() {
-        return (
-            //<li>{props.name} - {props.example}</li> //teraz to nie zadziała
-            <li>{this.props.name} : {this.props.example}</li> //teraz to nie zadziała
-        )
-    }
-}
-
-ReactDOM.render(<ShoppingList />, document.getElementById('root2'))
+	ReactDOM.render(<ShoppingList />, document.getElementById('root2'))
 
 
 //------------------------------------------------------------
 //Przycisk - po kliknięciu dodawana jest litera do tekstu
-//Etap 1:
-
-class App2 extends React.Component { //klasa dziedziczaca z React
-    state = {	
-        text: "",
-    }
-
-    handleClick = () => {
-        //this.state.text += "a"; //w konsoli działa, ale nie wywołuje się render
-			//aby zadziałało, trzeba zstosować taką składnię:
-        this.setState({
-            text: this.state.text + "a",
-        })
-    }
-    
-    render() { 
-        return (
-            <> 
-                <button onClick={this.handleClick}>Dodaj "A"</button>    
-                <section>
-                <h1>{this.state.text}</h1>
-                </section>
-            </>
-        )
-    }
-}
-
-ReactDOM.render(<App2 />, document.getElementById('root2'))
-
-
-//------------------------------------------------------------
-//Etap 2: 
-// handleClick już nie jest funkcją strzałkową. Ale trzeba "bind" w wysołaniu funkcji
-
-class App2 extends React.Component { //klasa dziedziczaca z React
-    state = {	
-        text: "",
-    }
-
-    handleClick() { //już nie jest funkcją strzałkową
-        this.setState({
-            text: this.state.text + "a",
-         })
-    }
-    
-    render() { 
-        return (
-            <> 
-                <button onClick={this.handleClick.bind(this)}>Dodaj "A"</button>    //tu jest "bind"
-                <section>
-                <h1>{this.state.text}</h1>
-                </section>
-            </>
-        )
-    }
-}
-
-ReactDOM.render(<App2 />, document.getElementById('root2'))
-
-//------------------------------------------------------------
-//Etap 3: 
-// przerabiam handleClick na funkcję strzałkową, czyli zwracam obiekt poprzez return (który jest domyślny)
-
-class App2 extends React.Component {
-    state = {	
-        text: "",
-    }
-
-    handleClick() {
-        this.setState( (prevState) => ({ text: prevState.text + "a" }) ) // moge przekazać argument,
-		//lub: this.setState( () => ({ text: this.state.text + number }) )
-	}
-    
-    render() { 
-        return (
-            <> 
-                <button onClick={this.handleClick.bind(this)}>Dodaj "A"</button>    
-                <section>
-                <h1>{this.state.text}</h1>
-                </section>
-            </>
-        )
-    }
-}
-
-ReactDOM.render(<App2 />, document.getElementById('root2'))
-
-
-//------------------------------------------------------------
-//Etap 3: 
-// state przenosze do konstruktora
-
-class App2 extends React.Component { //klasa dziedziczaca z React
-    // state definiuje w konstruktorze
-    constructor(props) {    // mamy porzekazać props do konstruktora
-        super(props);       // i przekazać go do konstrukotra z którego dziedziczymy
-        this.state = {
-            text: "",
-        }
-        this.handleClick = this.handleClick.bind(this) //ten zabieg pozwoli na nie stosowanie 
-			// .bind(this) w głównej metodzie render()
-    }
-    
-    handleClick() {
-        this.setState( (prevState) => ({ text: prevState.text + "a" }) )
-    }
-    
-    render() { 
-        return (
-            <> 
-                <button onClick={this.handleClick}>Dodaj "A"</button>    //tutaj już nie ma .bind(this)
-                <section>
-                <h1>{this.state.text}</h1>
-                </section>
-            </>
-        )
-    }
-}
-
-ReactDOM.render(<App2 />, document.getElementById('root2'))
-
-
-//------------------------------------------------------------
-//Etap 4
-//Wyświetlany tekst umieszczam w odzielym panelu
-
-class App2 extends React.Component { 
-    constructor(props) {    
-        super(props);       
-        this.state = {
-                text: "",
-        }
-        this.handleClick = this.handleClick.bind(this)
-    }
-    
-    handleClick() {
-        console.log(this.state.text);
-        this.setState( (prevState) => ({ text: prevState.text + "a" }) )
-    }
-    
-    render() { 
-        return (
-            <> 
-                <button onClick={this.handleClick}>Dodaj "A"</button>    
-                <section>
-                <PanelResult text={this.state.text}/> //tworze PanelResult (dowolna nazwa) i przekazuje mu argumenty
-                </section>
-            </>
-        )
-    }
-}
-
-const PanelResult = (props) => {    // poprzez props, otrzymałem przekazany argument
-    return (
-        <h1>{props.text}</h1>
-    )
-}
-
-
-//------------------------------------------------------------
-//Etap 5
-// Zamiast litery, dodaje cyfrę wylosowaną z przedziału 0-10
-
 class App2 extends React.Component {
     constructor(props) {  
         super(props);     
@@ -552,143 +406,12 @@ const PanelResult = (props) => {    // poprzez props, otrzymałem przekazany arg
 ReactDOM.render(<App2 />, document.getElementById('root2'))
 
 
-//------------------------------------------------------------
-//Etap 6
-// nazwę przycisku przekazuje z obiektu props
-class App2 extends React.Component {
-    constructor(props) {  
-        super(props);     
-        this.state = {
-                text: "",
-        }
-        this.handleClick = this.handleClick.bind(this)
-    }
-    
-    handleClick() {
-        const number = Math.floor(Math.random()*10);
-        this.setState({ 
-            text: this.state.text + number 
-        }) 
-    }
-    
-    render() { 
-        return (
-            <> 
-                <button onClick={this.handleClick}>{this.props.btnTitle}</button>   //tutaj
-					// jest nazwa przekazana "z dołu" przez props
-                <section>
-                <PanelResult text={this.state.text}/>
-                </section>
-            </>
-        )
-    }
-}
 
-const PanelResult = (props) => {
-    return (
-        <h1>{props.text}</h1>
-    )
-}
-
-
-ReactDOM.render(<App2 btnTitle="dodaj cyfrę" />, document.getElementById('root2'))
 
 
 
 //------------------------------------------------------------
-//Przycisk Pokaż/ukryj który pozauje/ukrywa tekst
-
-class Message extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            messageIsActive: false
-        }
-        this.handleMessageButton = this.handleMessageButton.bind(this);
-    }
-
-    handleMessageButton() {
-        this.setState({
-            messageIsActive:  !this.state.messageIsActive, 
-        })
-        console.log(`działa ${this.state.messageIsActive}`);
-    }
-
-    render() {
-
-        const text = `Bal bla bla bla...`
-
-        return(
-            <>
-                <button onClick={this.handleMessageButton}>
-                    {this.state.messageIsActive?"Ukryj":"Pokaż"}
-                </button>
-                {this.state.messageIsActive && <p>{text}</p>}
-            </>
-        )
-    }
-}
-
-ReactDOM.render(<Message />, document.getElementById('root3'))
-
-
-
-//------------------------------------------------------------
-// Zliczanie kliknięć i wyświetlanie wyniku
-
-class Counter extends React.Component {
-
-    state = {
-        count: 0,
-        result: 0
-    }
-
-    handleMathClick(type = 'reset', number = 1) {
-        if(type === "dodawanie") {
-            this.setState(prevState => ({
-                count: prevState.count + 1,
-                result: prevState.result + number
-            }))
-        }
-
-        if(type === "odejmowanie") {
-            this.setState(prevState => ({
-                count: prevState.count + 1,
-                result: prevState.result - number
-            }))
-        }
-
-        if(type === "reset") {
-            this.setState(prevState => ({
-                count: prevState.count + 1,
-                result: 0
-            }))
-        }
-    }
-
-    render() {
-
-        return(
-            <>
-                <button onClick = {this.handleMathClick.bind(this, "dodawanie", 1)} >+1</button>
-                <button onClick = { () => this.handleMathClick( "dodawanie", 10)} >+10</button>
-                <button onClick = { () => this.handleMathClick()} >Reset wyniku</button>
-                <button onClick = { () => this.handleMathClick( "odejmowanie" )}>-1</button>
-                <h1>Liczba kliknięć: {this.state.count}</h1>
-                <h1>Wynik: {this.state.result}</h1>
-                
-            </>
-        )
-    }
-}
-
-const startValue = 10;
-ReactDOM.render(<Counter result={startValue}/>, document.getElementById('root4'))
-
-
-//------------------------------------------------------------
-//To samo co wcześniej, ale zrobiony "uniwersalny" przycik button
+//Licznik kliknięć
 
 class Counter extends React.Component {
 
@@ -1132,6 +855,7 @@ class ListItems extends React.Component {
 }
 
 ReactDOM.render(<ListItems data={data} />, document.getElementById('root7'));
+
 //------------------------------------------------------------
 // Lista elementów, filtrowana zależnie od właściwości przycisku
 //Part IV
@@ -1395,6 +1119,7 @@ class ExchangeCounter extends React.Component {
 }
 
 ReactDOM.render(<ExchangeCounter />, document.getElementById("root3"));
+
 //-----------------------------------------------------------------------------
 //Kantor wymiany walut
 //Etap II 
@@ -1444,6 +1169,7 @@ class ExchangeCounter extends React.Component {
 }
 
 ReactDOM.render(<ExchangeCounter />, document.getElementById("root3"));
+
 //-----------------------------------------------------------------------------
 // Kantor wymiany walut
 // Etap III 
@@ -1515,6 +1241,7 @@ class ExchangeCounter extends React.Component {
 }
 
 ReactDOM.render(<ExchangeCounter />, document.getElementById("root3"));
+
 //-----------------------------------------------------------------------------
 // Kantor wymiany walut
 // Etap IV
@@ -1635,11 +1362,8 @@ class ExchangeCounter extends React.Component {
 
 ReactDOM.render(<ExchangeCounter />, document.getElementById("root3"));
 
-
-
 //-----------------------------------------------------------------------------
 //Wróżba
-
 class Wrozba extends React.Component {
 
 	state = {
@@ -1699,6 +1423,7 @@ class Wrozba extends React.Component {
 }
 
 ReactDOM.render(<Wrozba />, document.getElementById("root4"));
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -1757,8 +1482,6 @@ używam:
 
 
 //------------------------------------------------------------
-.trim()  // usówa białe znaki na końcu. tak jak strip() w Pythonie
-const value = input.value.trim();
 
 
 

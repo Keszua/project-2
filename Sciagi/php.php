@@ -1,4 +1,4 @@
-Sugeroway edytor php to VSC. 
+﻿Sugeroway edytor php to VSC. 
 
 link do dokumentacji PHP:
 https://www.php.net/manual/en/ref.array.php
@@ -63,7 +63,7 @@ htmlentities(); //zabezpiecza, aby przegladarka nie wykonywała ego kodu
 
 rand(0, 1) // losowanie liczby: od 0 do 1
 	
-	
+header('Location: index.php'); // przekierowanie na stronę
 
 
 
@@ -103,9 +103,13 @@ rand(0, 1) // losowanie liczby: od 0 do 1
 	var_dump($zmiennaTekstowa);  //= string(5) "tekst"
 	var_dump($zmiennaLiczbowa);  //= int(23) 
 
-
-
-
+//sprawdzanie, czy dana funkcja istnieje
+	method_exists($object, $method_name)
+	//przykład:
+	$action = $this->action() . 'Action';
+	if(!method_exists($this, $action)) {
+            $action = self::DEFAULT_ACTION . 'Action';
+        }
 
 	
 	
@@ -637,6 +641,97 @@ MySQLi  // https://www.php.net/manual/en/book.mysqli.php
 PDO   // https://www.php.net/manual/en/book.pdo.php
 	
 	
-	8:24
+//Urzywanie PDO:
+	private PDO $conn;
+	//nawiązanie połaczenia:
+	$dsn = "mysql:dbname={$config['database']};host={$config['host']}";
+	$this->conn = new PDO(
+		$dsn, 
+		$config['user'], 
+		$config['password'],
+		[
+			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+		]
+    );
+	
+//Pobieranie jednego rekordu:
+	try {
+		$query = "SELECT id, title, description, created FROM notes WHERE id = $id";
+		$result = $this->conn->query($query);
+		$note = $result->fetch(PDO::FETCH_ASSOC);
+	} catch (Throwable $e) {
+		throw new StorageException('Nie udało się pobrać notatki', 400, $e);
+	}
+	var_dump($note);  //wyświetlenie zawartości  
+	
+//pobieranie wszystkich rekordów	
+	try {
+		$query = "SELECT id, title, description, created FROM notes";
+		$result = $this->conn->query($query, PDO::FETCH_ASSOC);
+		$allNote $result->fetchAll();
+	} catch (Throwable $e) {
+		throw new StorageException('Nie udało się pobrać danych o notatkach', 400, $e);
+    }
+	var_dump($allNote);  //wyświetlenie zawartości  
+	
+//stworzenie/zapisanie nowego rekordu	
+	try {
+		$title = $this->conn->quote($data['title']);
+		$description = $this->conn->quote($data['description']);
+		$created = $this->conn->quote(date('Y-m-d H:i:s'));
+		
+		$query = " 
+		INSERT INTO notes(title, description, created) 
+		VALUES($title, $description, $created)
+		"; 
+		$this->conn->exec($query); //wysłanie polecenia zapisania
+	} catch (Throwable $e) {
+		throw new StorageException('Nie udało się utworzyć nowej notatki!', 400, $e);
+    }
+	
+//Edycja rekordu:	
+	try {
+		$title = $this->conn->quote($data['title']);
+		$description = $this->conn->quote($data['description']);
+		$query = "
+			UPDATE notes
+			SET title = $title, description = $description
+			WHERE id = $id
+		";
+		$this->conn->exec($query);
+	} catch (Throwable $e) {
+		throw new StorageException('Nie udało się edytować notatki!', 400);
+	}	
+	
+// Usówanie rekordu
+	try {
+		$query = "DELETE FROM notes WHERE id = $id LIMIT = 1";
+		$this->conn->exec($query);
+	} catch (Throwable $e) {
+		throw new StorageException('Nie udało się usunąć notatki!', 400);
+    }	
+	
+	
+	
+	
+YII
+
+https://www.yiiframework.com/doc/guide/2.0/en/start-installation
+Na tej stronie jest instalka composer.
+
+W c:/xamp/htdocs 
+Przez konsolę zaistalowałem plagin:
+	composer global require "fxp/composer-asset-plugin:^1.2.0"
+
+Będąc w c:/xamp/htdocs, folder z projektem zakładam  poleceniem:
+composer create-project --prefer-dist --stability=dev yiisoft/yii2-app-basic NAZWA_FOLDERU_Z_PROJEKTEM
+
+Po instalacji, można odpalić stronę startową w przeglądarce:
+http://localhost/project_yii/web/
+	
+	
+	
+	
+	
 
 skończyłem oglądać na 45:43	

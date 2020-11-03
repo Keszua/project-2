@@ -130,9 +130,11 @@ console.log( newTableBig2 ); //= ["Pies", "Kot", "Słoń", "Wieloryb", "Chomik n
 	const tab3 = tab.map(function(el) {
 		return el.toUpperCase()
 	});
+	const tab4 = tab.map(el => el[0].toUpperCase())
 	console.log(tab); //[Marcin, Ania, Agnieszka]
 	console.log(tab2); //[Marcin, Ania, Agnieszka]
 	console.log(tab3); //[MARCIN, ANIA, AGNIESZKA]
+	console.log(tab4); //[M, A, A]
 
 	const users = ["adam", "bogdan", "czarek", "darek"];
 	const usersFirstLetterUpperCase = users.map(user => user[0].toUpperCase())

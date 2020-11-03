@@ -314,7 +314,7 @@ gulp.task('watch', function(){
 	gulp.watch('source/*.html', ['html']);
 });
 
-teraz po wykomaniu 
+teraz po wykonaniu 
 λ gulp watch
 cały czas będzie pracowało to zadanie
 
@@ -563,7 +563,7 @@ function setOptions(options) {
 }
 let opt = setOptions({env: 'DEV', db: 'SQL' });
 console.log(opt); //= (2)�["DEV", "SQL"]
-//Zamiast powyższego można srobić tak:
+//Zamiast powyższego można zrobić tak:
 function setOptions({env, db}) {
     return [env, db];
 }
@@ -648,7 +648,7 @@ set.add(20);	// gdy podamy ponownie taką samą wartosć, to zostanei ona zignor
 set.add('OK');
 set.add(true);
 console.log(set); //= Set(4) {10, 20, "OK", true}
-console.log(set.has(10)); //gdy element jest w zestawie, zwucone zostanei true
+console.log(set.has(10)); //gdy element jest w zestawie, zwucone zostanie true
 set.delete(10); //usunięcie elementu z zestawu
 
 WeakSet - można rzywać tylko obiektów
@@ -667,7 +667,7 @@ window.onload = function() {
 		p.className = 'blue';
 	}
 }
-//Od teraz wsystkie akapity mają podmieniony kolor na niebieski
+//Od teraz wszystkie akapity mają podmieniony kolor na niebieski
 
 
 Iterator - własny obiekt iterowalny, jest protokołem 
@@ -717,7 +717,7 @@ Klasy
 //Klasy w JS bazują na protoypach
 
 class Article { }  // najprostsza klasa
-const art = new Article(); stworzenie obiektu
+const art = new Article(); //stworzenie obiektu
 console.log(art); //= Article {}
 
 //Tworzenie klasy w formie expresion (wyrażenia) (jak z funkcjami)
@@ -743,10 +743,10 @@ console.log(Article.compareId(art, art2)); //= false
 Dziedziczenie (rozszeżanie)
 
 class BlogArticle extends Article {
-	 constructor(id, title, category) { 
-	 	super(id, title);	//przekazanie parametrów do konstruktora rodzica
-	 	this.category = category;
-	 }
+	constructor(id, title, category) { 
+		super(id, title);	//przekazanie parametrów do konstruktora rodzica
+		this.category = category;
+	}
 }
 
 const blog1 = new BlogArticle(123, "Blog1", 'zombi'); 
@@ -815,7 +815,7 @@ p.id = 345;
 console.log(p.id); //= Wartosc klucza = 345	//standardowe 'get' zsotało nadpisane
 console.log(x.id); //= 345
 p.title = 'Elo';
-console.log(p.title); //= Wartosc klucza = Elo	//standardowe 'get' zsotało nadpisane
+console.log(p.title); //= Wartosc klucza = Elo	//standardowe 'get' zostało nadpisane
 
 //------------------------------------------------------------
 //Reflection
@@ -852,7 +852,7 @@ console.log(Math.sign(m));  //=1   zwraca znak, dla ujemnych zwróci -1, dla zer
 console.log(Math.log2(m));  //= 1.2941354806753338
 console.log(Math.log10(m)); //= 0.3895735981363
 
-.toFixed() // precyzja -  w nawiuasie jaka PRECYZJA
+.toFixed() // precyzja -  w nawiasie jaka PRECYZJA
 
 //------------------------------------------------------------
 //Obiekt Number
@@ -899,7 +899,7 @@ const obj = {
 	age: 40
 };
 console.log(obj); //= {name: "Tomek", age: 40}
-const objClone = Object.assign(obj); //nowy objekt, który skopiuje zawartosć z istniejącego objektu
+const objClone = Object.assign(obj); //nowy objekt, który skopiuje zawartosć z istniejącego objektu (kopiowanie obiektu)
 console.log(objClone); //= {name: "Tomek", age: 40}
 const objClone2 = Object.assign(obj, {id: 567}); //nowy objekt, który skopiuje zawartosć z istniejącego objektu + dodatkowa właściwość
 console.log(objClone2); //= {name: "Tomek", age: 40, id: 567}
@@ -924,7 +924,7 @@ async function wait3sec(string) {
         }, 3000);
     });
 }
-console.log(wait3sec('Czas Minął')); //= Promise {<pending>}   pending to oczekująca, jeszce nie zaostała "zorwiązana"
+console.log(wait3sec('Czas Minął')); //= Promise {<pending>}   pending to oczekująca, jeszcze nie zaostała "zorwiązana"
 
 // etap III
 async function wait3sec(string) {
@@ -1481,7 +1481,7 @@ console.log(transformList2);//= [ 'FUNKCYJNE',   'JAVASCRIPT',   'REDUKCJA',   '
 //Klasy
 
 //Prototyp
-function Point(x, y) { //funkcja pełniąca rolę konstruktora (funkcja kostruująca)
+function Point(x, y) { //funkcja pełniąca rolę konstruktora (funkcja konstruująca)
      this.x = x;
      this.y = y;
 }
@@ -1599,9 +1599,9 @@ btn.showButtonParams(); //= Start large
 //------------------------------------------------------------
 //Kompozycja
  var Widget = {
-     init: function(name) { //funkcja inicjalizująca
-         this.name = name;
-     },
+    init: function(name) { //funkcja inicjalizująca
+        this.name = name;
+    },
 };
 
 var hasLabel = {
