@@ -638,4 +638,5 @@ PDO   // https://www.php.net/manual/en/book.pdo.php
 	
 	
 	8:24
-	
+
+skończyłem oglądać na 45:43	

@@ -151,7 +151,7 @@ for pos, (m, d) in enumerate(zip(months, workDay)):
 
 
 #-----------------------------------------------------------------------------
-#tuple - nie edytowalna lista
+#tuple (pol: krotka) - nie edytowalna lista
 produkty = ("mleko", "ser", "parówki")
 tup = 1, 2, 3 # to też jest tuple
 produkty = produkty + tup	# można robić konkatenacje, następuje stworzenie nowego tupla

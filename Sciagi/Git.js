@@ -78,11 +78,11 @@ git add --all  			//dodanie wszystkich plików
 git add -A  			//dodanie wszystkich plików
 git add .  				//dodanie wszystkich plików
 git commit  			//zrobienie komitu (snapshota). Otworzy sie edytor w którym trzeba wpisać opis zmina.
-git commit -m "Opis zmiany"  //zrobienie komitu (snapshota) bez otwierania edytora
-                             // Tytół opisu zrobic do 50 znaków. Zawijanie wierszy po 72 znakach.
+git commit -m "Opis zmiany" //zrobienie komitu (snapshota) bez otwierania edytora
+                            // Tytół opisu zrobic do 50 znaków. Zawijanie wierszy po 72 znakach.
 git commit -a -m "Opis zmiany"  	//zrobienie add i od razu komitu (snapshota) 
 git commit --all -m "Opis zmiany"  	//zrobienie add i od razu komitu (snapshota) 
-git commit nazwaPliku  	//komitowanie tylko jednego pliku
+git commit nazwaPliku  	    //komitowanie tylko jednego pliku
 
 git log   					//informacje o komitach
 git log --oneline  			//skrócone informacje o komitach (tylko najważniejsze informacje)
@@ -95,14 +95,29 @@ git log --until				// do
 git log --before			// to samo co until
 git log --author="Adam"		// tylko rewizja danego autora
 git log --oneline --author="Adam"	// tylko rewizja danego autora
-git log --grep "tresc w opisie"   //szukanie tylko tych komitów, co zawierają w opisie (wielkośc liter ma znaczenie)
+git log --grep "tresc w opisie"     //szukanie tylko tych komitów, co zawierają w opisie (wielkośc liter ma znaczenie)
 git log --stat  			//skrócone statystyki każdej z zatwierdzonych zmian
 git log -p 					//Pokazuje ona różnice wprowadzone z każdą rewizją.
 git log -p -3  				//Pokazuje ona różnice wprowadzone z ostatnimi trzema rewizjami.
-git log --format:"%h - %an, %ar : %s"	//pozwala ona określić własny wygląd i format informacji. 
-                            // Szcegóły na https://git-scm.com/book/pl/v1/Podstawy-Gita-Podgl%C4%85d-historii-rewizji
-git log --pretty=format:"%h - %an, %ar : %s"	//pozwala ona określić własny wygląd i format informacji. 
-                            // Szcegóły na https://git-scm.com/book/pl/v1/Podstawy-Gita-Podgl%C4%85d-historii-rewizji
+git log --pretty=format: | "%h - %an, %ar : %s"	//pozwala ona określić własny wygląd i format informacji. Poniżej opcje:
+                         | "%H"  hash commita
+                         | "%h"  skrócony hash commita
+                         | "%T"  hash drzewa
+                         | "%t"  skrócony hash drzewa
+                         | "%P"  hash commita nadrzędnego
+                         | "%p"  skrócony hash commita nadrzędnego
+                         | "%an" Nazwa autora
+                         | "%ae" E-mail autora
+                         | "%ad" Data autora (odnosi się do --date=option)
+                         | "%ar" Data autora, względna
+                         | "%cn" Nazwa zatwierdzającego zmiany
+                         | "%ce" E-mail zatwierdzającego zmiany
+                         | "%cd" Data zatwierdzającego zmiany
+                         | "%cr" Data zatwierdzającego zmiany, względna
+                         | "%s"  Wiadomość
+                         |  // Szcegóły na https://git-scm.com/book/pl/v1/Podstawy-Gita-Podgl%C4%85d-historii-rewizji
+
+							
 //przykład:
 git log --pretty="%h - %s" --author=gitster --since="2008-10-01" \
    --before="2008-11-01" --no-merges -- t/
@@ -116,7 +131,7 @@ git log --graph --decorate --all --oneline //do podglądu grafów z gałęziami
 git log -S main.py --author zgredek --before="2015-08-15 00:00" --after="2015-08-01"   //wypisze wszystkie commity, 
                         //utworzone między 1 a 15 sierpnia 2015 roku, autorstwa zgredka, w których zmienia się ilość wystąpień słowa „main.py”, 
                         //czyli zostaje dodana linijka np. import main.py, albo usunięta. 
-git shortlog					//do podglądu, kto nad czym pracuje
+git shortlog			//do podglądu, kto nad czym pracuje
 
 
 git show 				//pokaz szczegóły najnowszego komitu

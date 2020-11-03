@@ -9,6 +9,7 @@ mod/curriencies.txt
 /test_jest/node_modules
 
 #inne pliki
+*.orig
 *.stackdump
 PHP/ProjektA/config/config.php
 config.php
