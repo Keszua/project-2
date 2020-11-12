@@ -222,7 +222,7 @@ git reset --mixed 5a33dd3	//Przywracamy podany commit a pliki ze zmianami trafi�
 git reset --soft 5a33dd3	//Przywracamy podany commit a pliki ze zmianami trafią do poczekalni (stage)
 git reset --hard 5a33dd3	//Przywracamy podany commit a zmiany zostaną całkowicie usunięte
 git commit --amend   		//umozliwia poprawkę osatniego commitu (zwykle gdy zrobimy błąd w opisie) (Otworzy sie edytor, nie strace starego opisu)
-							//Gdy zapomne dodać pliku, czyli po commicie, dodaje plik (git add plik) i wywoluje git commit --ammend. Zakonczy sie to jedna rewizją.
+							//Gdy zapomne dodać pliku, czyli po commicie, dodaje plik (git add plik) i wywoluje git commit --amend. Zakonczy sie to jedna rewizją.
 git commit --amend -m "Nowy opis"  	//umozliwia poprawkę opisu osatniego komitu 
 
 git clean 					//służy do usuwanie plików które nie są śledzone (takie polecenie wywali błąd, trzeba podać )
