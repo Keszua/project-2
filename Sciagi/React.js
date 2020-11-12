@@ -213,9 +213,10 @@ ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 			this.handleClick = this.handleClick.bind(this)
 		}
 
-		handleClick() { // może być przypisany this w konstruktorze, albo funkcja straałkowa, 
-		                // albo w <button> dopisać .bind(this)
-			debugger 	// zatrzyma program w tym miejscu
+		handleClick(e) { // może być przypisany this w konstruktorze, albo funkcja straałkowa, 
+		                 // albo w <button> dopisać .bind(this)
+						 // e czyli event, dodawnay jest domyślnie na końcu. Nie trzeba go dodawać
+			debugger 	 // zatrzyma program w tym miejscu
 			const number = Math.floor(Math.random() * 10);
 			this.setState({ //albo jawne wywołanie jako funkcję: 
  			                //this.setState( (prevState) => ({ text: prevState.text + number})
@@ -245,7 +246,8 @@ ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 		
 			return (
 				<>
-					<button onClick={this.handleClick} //lub: onClick={() => this.handleClick(argumenty)}
+					<button onClick={this.handleClick} //lub: onClick={(e) => this.handleClick(argumenty, e)}
+					                                   // e czyli event, dodawnay jest domyślnie na końcu. Nie trzeba go dodawać
 						style={btnStyle}
 					>   Dodaj Cyfre
 					</button>
@@ -1423,6 +1425,24 @@ class Wrozba extends React.Component {
 }
 
 ReactDOM.render(<Wrozba />, document.getElementById("root4"));
+
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//Konwencja nazenictwa, nazewnictwo
+
+handleSubmit() - 
+hamdle - obsługa
+on - event, zdarzenie
+//Submit - na potwierdzenie
+handleLoginClick() {} - obsługa logowanie poprzez kliknięcie
+handleFormSubmit() {} - potwierzenie wypełnienia formulaża
+buttonClicked() {} - przycisk kliknięty (bez handle)
+
+
+
+
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
