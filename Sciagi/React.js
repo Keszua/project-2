@@ -73,9 +73,12 @@ const handleClick = () => alert("klik")
 	> OK </button>
 
 
-  __________________________
-  |                        | input
-  --------------------------
+  __________________________            ___
+  |                        | input      |v| checkbox
+  --------------------------            ---
+	state = {
+		inputValue: 
+	}
 
 	handleInputChange =(e) => {
 			this.setState({ 
@@ -85,13 +88,90 @@ const handleClick = () => alert("klik")
 
 	render() {
 		return (
-				<input type="text" 
+			<label>
+				Wpisz cos
+				<input type="text" // "checkbox", "emali", "password"
+					name="name"
 					placehlder="Sugerowany tekst"
 					value={this.state.inputValue} 
 					onChange = {this.handleInputChange}
 				/>
+			</label>
 		)
 	}
+
+
+  __________________________
+  |                        | 
+  | textarea               | 
+  |                        | 
+  --------------------------
+	<label>
+		napisz coś o mieście
+		<textarea value={this.state.text}
+				onChange={this.handleTextChange}
+		>
+		</textarea>
+	<label>
+	
+
+
+  ___
+  |v| checkbox
+  ---
+	state = {
+		isChecked: false,
+	}
+
+	handleCheckedChange =(e) => {
+			this.setState({ 
+				isChecked: e.target.checked ,
+			});
+	}
+
+	render() {
+		return (
+			<label>
+				Wpisz cos
+				<input type="checkbox" 
+					name="name"
+					checked={this.state.isChecked} 
+					onChange = {this.handleCheckedChange}
+
+					//value={this.state.inputValue} 
+				/>
+			</label>
+		)
+	}
+
+
+  _____________
+  |          v| select  (pole kombi)
+  -------------
+	state = {
+		number: "0",
+	}
+
+	handleSelectChange =(e) => {
+		this.setState({ 
+			number: e.target.value,
+		});
+	}
+
+	<label>
+		Ile razy byłes w tym mieście
+		<select value={this.state.number}
+			onChange={this.handleSelectChange}
+		>
+			<option value="0">0</opton>
+			<option value="1">1</opton>
+			<option value="5">5</opton>
+			<option value="more">Więcej</opton>
+		</select>
+	<label>
+
+
+
 
 
 
@@ -99,6 +179,32 @@ const handleClick = () => alert("klik")
 const value = input.value.trim();
 
 const value = parseInt(props.number); //typowanie na Int
+
+
+//DESTRUKTURYZACJA
+
+	render() {
+        const {isConfirmed, isFormSubmitted} = this.state  //DESTRUKTURYZACJA: wyodrębniam sobie element 
+            //ze środka "state". Teraz zamist pisać {this.state.isConfirmed}
+            // zapisuje tylko: {isConfirmed} 
+            // można wyodrębnić kilka elementów
+	}
+
+
+
+	const player = {
+		age: 24,
+		name: "John"
+	};
+	//destrukturyzacja:
+	const {age, name} = player; //można też użyć let zamist const  
+	//wyodrębnainie na piechotę:
+	const age = player.age;
+
+
+	const players = ["Jacek", "Tomasz"]
+	//destrukturyzacja:
+	const [user1, user2] = players;  //musimy napisać nazy 
 
 
 
