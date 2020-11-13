@@ -73,14 +73,15 @@ const handleClick = () => alert("klik")
 	> OK </button>
 
 
-  __________________________            ___
-  |                        | input      |v| checkbox
-  --------------------------            ---
+  __________________________         ___
+  | input                  |         |v| checkbox
+  --------------------------         ---
 	state = {
-		inputValue: 
+		inputValue: ""
 	}
 
 	handleInputChange =(e) => {
+			e.preventDefault() //zabespiecza przed przeładowaniem się strony
 			this.setState({ 
 				 	inputValue: e.target.value ,
 			});
@@ -92,7 +93,7 @@ const handleClick = () => alert("klik")
 				Wpisz cos
 				<input type="text" // "checkbox", "emali", "password"
 					name="name"
-					placehlder="Sugerowany tekst"
+					placeholder="Sugerowany tekst"
 					value={this.state.inputValue} 
 					onChange = {this.handleInputChange}
 				/>
@@ -102,8 +103,8 @@ const handleClick = () => alert("klik")
 
 
   __________________________
-  |                        | 
   | textarea               | 
+  |                        | 
   |                        | 
   --------------------------
 	<label>
@@ -196,15 +197,21 @@ const value = parseInt(props.number); //typowanie na Int
 		age: 24,
 		name: "John"
 	};
+	//wyodrębnianie na piechotę:
+	const age = player.age;
 	//destrukturyzacja:
 	const {age, name} = player; //można też użyć let zamist const  
-	//wyodrębnainie na piechotę:
-	const age = player.age;
+	const {age : playerAge, name : playerName } = player; //nadawanie nowych nazw
 
 
-	const players = ["Jacek", "Tomasz"]
+	const players = ["Jacek", "Tomasz", "Jarek"]
 	//destrukturyzacja:
-	const [user1, user2] = players;  //musimy napisać nazy 
+	const [user1, user2, user3] = players;  //musimy napisać nazy 
+	let [,,user3] = players;  //wyodrebnienie TYLKO trzeciego
+	//Wyodrebniam user1 i w "users" jest reszta elementów (w formie krótszej tablicy):
+	let [user1, ...users] = players; 
+
+
 
 
 
@@ -215,6 +222,10 @@ const value = parseInt(props.number); //typowanie na Int
 
 //komponent daty
 <time>{(new Date()).toString()}</time>
+
+setTimeout(()=> console.log("minelo 5 sek"), 5000)
+
+
 
 KOMPONENTY
 * stateless functional component, - SFC, komponent bezstanowy
@@ -362,6 +373,10 @@ ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 				</>
 			)
 		}
+	
+		componentDidMount() {} // metoda wykona się (tylko raz) po render, czyli, gdy już wygenerowany zostanie cały DOM
+		componentDidUpdate() {} // 
+
 	}
 	
 	const PanelResult = (props) => {    // poprzez props, otrzymałem przekazany argument
