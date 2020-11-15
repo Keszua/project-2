@@ -62,7 +62,7 @@ ReactDOM.render(app, document.getElementById('root'))
 <button onClick={function () { alert("wykryto klik") }}>Kliknij</button>
 //lub to samo z arrowFunction
 <button onClick={() => alert("wykryto klik")}>Kliknij</button>
-//to samo, ale przekazujemy wcześneij zdefiniowaną funkcję:
+//to samo, ale przekazujemy wcześniej zdefiniowaną funkcję:
 const handleClick = () => alert("klik")
 <button onClick={handleClick}>Pierwszy artykuł</button>
 //button przekazujący argumenty do handleClick(argumenty):
@@ -147,7 +147,7 @@ const handleClick = () => alert("klik")
 
 
   _____________
-  |          v| select  (pole kombi)
+  |         |v| select  (pole kombi)
   -------------
 	state = {
 		number: "0",
@@ -172,8 +172,10 @@ const handleClick = () => alert("klik")
 	<label>
 
 
-
-
+//biblioteki do tworzenia formularzy: 
+https://formik.org/docs/overview
+https://www.npmjs.com/package/yup
+// Jak tego urzywać: https://www.youtube.com/watch?v=HNJSX31bzbs
 
 
 .trim()  // usówa białe znaki na końcu. tak jak strip() w Pythonie
@@ -223,8 +225,36 @@ const value = parseInt(props.number); //typowanie na Int
 //komponent daty
 <time>{(new Date()).toString()}</time>
 
-setTimeout(()=> console.log("minelo 5 sek"), 5000)
 
+class Zegar extends Component {
+    state = {  time: this.getTime() }
+
+    getTime() {
+        const currentTime = new Date();
+        return ( {
+                hours: currentTime.getHours(),
+                minutes: currentTime.getMinutes(),
+                seconds: currentTime.getSeconds()
+        })
+    }
+
+    setTime() {
+        const time = this.getTime()
+        this.setState({ time })
+    }
+
+    componentDidMount() { this.interval = setInterval(() => this.setTime(), 1000) }
+
+    render() {
+        const { hours, minutes, seconds } = this.state.time
+        return ( <div> {hours}:{minutes}:{seconds} </div>);
+    }
+}
+
+setTimeout(()=> console.log("minelo 5 sek"), 5000) //wysoła za 5 sekund
+
+const index = setInterval(() => { console.log("Hejka") }, 1000)  //wywołuje co sekundę
+clearInterval(index); //ady wyłączyć interwał
 
 
 KOMPONENTY
@@ -377,7 +407,8 @@ ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 		}
 	
 		componentDidMount() {} // metoda wykona się (tylko raz) po render, czyli, gdy już wygenerowany zostanie cały DOM
-		componentDidUpdate() {} // 
+		componentDidUpdate() {} // wykonuje się po każdej aktualizacji render
+		componentWillUnmount() {} //taki destruktor
 
 	}
 	
