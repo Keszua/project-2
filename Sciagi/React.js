@@ -529,21 +529,57 @@ React router
 
 	const ItemList = (props) => {
 		return (
-			//<li>{this.state.items1}</li> to nie zadzaiała
 			<li>{props.name} - {props.example}</li>
 		)
 	}
+    //to samo ale jeszcze krócej zapisane:
+	const ItemList = props => (
+		<li>{props.name} - {props.example}</li>
+	)
+    //to samo ale urzyta destrukturyzacja
+	const ItemList = ({name, example}) => (
+		<li>{name} - {example}</li>
+	)
+	
 
 	class ItemListC extends React.Component {
 		render() {
 			return (
-				//<li>{props.name} - {props.example}</li> //teraz to nie zadziała
-				<li>{this.props.name} : {this.props.example}</li> //teraz to nie zadziała
+				<li>{this.props.name} : {this.props.example}</li>
 			)
 		}
 	}
 
 	ReactDOM.render(<ShoppingList />, document.getElementById('root2'))
+//------------------------------------------------------------
+//Lista zakupów - z urzyciem hook
+	const ShoppingList = () => {
+		const [items] = React.useState({
+			items1: 'ogórki',
+			items2: 'jajka',
+			items3: 'sok',
+		})
+
+		return (   
+			<section>
+				<h2>Lista zakupów: </h2>
+				<ul>
+					<li>{items.items1}</li>    {/*  pierwszy krok */}
+					<ItemList name="element 1" />   {/*  drugi krok */}
+					<ItemList name={items.items2} />   {/*  trzeci krok */}
+					<ItemList name={items.items2} example={2 + 2} />
+				</ul>
+			</section>
+		)
+		
+	}
+
+	const ItemList = ({name, example}) => (
+		<li>{name} - {example}</li>
+	)
+	
+	ReactDOM.render(<ShoppingList />, document.getElementById('root2'))
+
 
 
 //------------------------------------------------------------
