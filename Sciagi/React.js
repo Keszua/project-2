@@ -426,10 +426,35 @@ HOOK
 const [stan, funkcja] = React.useState(stanPoczatkowy);  
 
 
+const [counter, setCounter] = useState(0);
+const handlerClick = () => setCounter(counter + 1);
+return (
+    <div onClick={handlerClick}>
+        <p>counter: {counter}</p>
+    </div>
+    );
 
+const [object, setObject] = useState({ a: 0, b: 0 });
+const handlerClick = () => setObject({ ...object, a: object.a + 1 });
+return (
+	<div onClick={handlerClick}>
+		<p>a: {object.a}</p>
+		<p>b: {object.b}</p>
+	</div>
+);
 
+//------------------------------
+useEffect(funkcja, [tablicaZaleznosci]);
 
+const handleMouseMove = e => setCounter(e.clientX);
 
+useEffect(() => {  //funkcja zawierająca imperatywny kod
+	window.addEventListener('mousemove', handleMouseMove); //to wykona się raz, albo gdy zmieni się coś w tablicy zależnosci
+	return () => { //componentWillUnmount  gdy komponent staje sie nie aktywny 
+		alert('Komponent odmontowany');
+		window.removeEventListener('mousemove', handleMouseMove);
+	}
+}, [props.rerenderCounter]); //dopiero gdy zmieni sie któryś z elementów tablicy, nastapi componentDidUpdate
 
 
 
@@ -551,7 +576,7 @@ React router
 	}
 
 	ReactDOM.render(<ShoppingList />, document.getElementById('root2'))
-//------------------------------------------------------------
+//------------------------------
 //Lista zakupów - z urzyciem hook
 	const ShoppingList = () => {
 		const [items] = React.useState({
@@ -619,8 +644,20 @@ const PanelResult = (props) => {    // poprzez props, otrzymałem przekazany arg
 
 ReactDOM.render(<App2 />, document.getElementById('root2'))
 
+//------------------------------
+to samo z hookami:
+const Hooks = () => {
+    const [text, setText] = React.useState("");
+   
+   const handleOnClick = () => (setText(text + Math.floor(Math.random() * 10)));
 
-
+    return (
+        <>
+            <button onClick={handleOnClick}>Dodaj losową cyfrę</button>
+            <h1>{text}</h1>
+        </>
+    );
+};
 
 
 
