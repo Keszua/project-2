@@ -1,7 +1,8 @@
 ﻿//Kurs Zelenta: https://www.youtube.com/watch?v=99JAI24Zd24&list=PLOYHgt8dIdoymv-Wzvs8M-OsKFD31VTVZ
 
 
-// Rekord (krotka) - to pojedynczy wiersz w tabeli (np: zestaw cech danego ucznia) - def2: to pojedyńczy obiekt wraz z wartosciami wszystkich opisujących go cech
+// Rekord (krotka) - def1: to pojedynczy wiersz w tabeli (np: zestaw cech danego ucznia)
+//                   def2: to pojedyńczy obiekt wraz z wartosciami wszystkich opisujących go cech
 // Pole (atrybut) - część, przechowyjąca jednostkowe dane
 // Relacja - to powiązanie logiczne wystepujące pomiędzy tabelami, realizowane za pomoca klócza podstawowego i tzw. klucza obcego.
 //           Tabela z informacją, zawierająca np: który uczeń wyporzyczył która książkę. Zawiera zwykle samo ID ksiażki z ID ucznia

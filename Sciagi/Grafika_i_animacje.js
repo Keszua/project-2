@@ -278,7 +278,19 @@ https://boxy-svg.com/app
 
         
         <path d="M200 200 L350 200 L275 250 Z" fill="white" stroke="yellow" stroke-width="8" />
-        <!--  d - œcie¿ka M- moveTo  L - lineTo  Z - closepatch (³¹czy pierwszy z ostatnim) -->
+		// przyk³ady na https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
+		d - œcie¿ka   
+        m - moveTo                    M x y                        <path d="M10 10"/>
+		l - lineTo                    L x y 
+		z - closepatch (³¹czy pierwszy z ostatnim) 
+		h - drwa a horizontal line    H x
+		v - draw a vertical line      V y
+        C - krzywa Bezjera;           C dx1 dy1, dx2 dy2, dx dy    <path d="M 10 10 C 20 20, 40 20, 50 10" stroke="black" fill="transparent"/>
+		s - Several bezier            S dx2 dy2, dx dy             <path d="M 10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80" stroke="black" fill="transparent"/>
+		q -                           Q dx1 dy1, dx dy             <path d="M 10 80 Q 95 10 180 80" stroke="black" fill="transparent"/>
+		t- krótki zapis cubic Bezjer  T x y                        <path d="M 10 80 Q 52.5 10, 95 80 T 180 80" stroke="black" fill="transparent"/>
+        a -³uk                        A rx ry x-axis-rotation large-arc-flag sweep-flag x y    
+
 
         <!-- Grupowanie -->
         <g id="face" fill="white">

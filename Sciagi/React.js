@@ -91,7 +91,7 @@ const handleClick = () => alert("klik")
 		return (
 			<label>
 				Wpisz cos
-				<input type="text" // "checkbox", "emali", "password"
+				<input type="text" // "checkbox", "emali", "password", "number"
 					name="name"
 					placeholder="Sugerowany tekst"
 					value={this.state.inputValue} 
@@ -423,6 +423,9 @@ ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 //------------------------------------------------------------
 //------------------------------------------------------------
 HOOK
+
+//------------------------------
+//przechowywanie stanu (raczej typy prymitywne)
 const [stan, funkcja] = React.useState(stanPoczatkowy);  
 
 
@@ -444,6 +447,7 @@ return (
 );
 
 //------------------------------
+//Zastępuje montowanie, odmontowywanie komponentów
 useEffect(funkcja, [tablicaZaleznosci]);
 
 const handleMouseMove = e => setCounter(e.clientX);
@@ -454,17 +458,130 @@ useEffect(() => {  //funkcja zawierająca imperatywny kod
 		alert('Komponent odmontowany');
 		window.removeEventListener('mousemove', handleMouseMove);
 	}
-}, [props.rerenderCounter]); //dopiero gdy zmieni sie któryś z elementów tablicy, nastapi componentDidUpdate
+}, [props.rerenderCounter]); //dopiero gdy zmieni sie któryś z elementów tablicy, nastąpi componentDidUpdate
+
+
+useLayoutEffect( () => {
+ () => consloe.log('Funkcja wywoła się PRZED wyrenderowaniem DOM'),
+}, [] );
+
+
+//------------------------------
+useRef
+
+
+//------------------------------
+ReactContext // - coś w stylu globalnych zmiennych
+
+//------------------------------
+//Narzędzie chyba głównie do obsługi bazy danych
+useReducer
+//film 146
+
+// reducer - to funkcja która przyjmuje 2 argumenty:
+// pierwszym jest aktualny stan, drugi argument to "akcja". Akcja to obiekt
+// i zwraca NOWY stan na podstawie typu akcji
+const coursesReducer = (state, action) => {
+    console.log("wywołany", action.type);
+    switch (action.type) {
+        case 'ADD':
+            return [...state, action.course];
+        default:
+            throw new Error('Oooops something went wrong!');
+    }
+};
+
+const App = () => {
+	const [state, dispatch] = useReducer(coursesReducer, []);  //dispatch - jest to metoda, która zawiera obiekt akcji, którą musimy przekazać
+    //const [state, dispatch] = useReducer(coursesReducer, tablicaZDanymi);
+
+
+    return (
+        <>  //nie pełny przykład
+            {console.log("Hejka")}
+            <h1>Reducer</h1>
+            {cursesElements}
+            <Form addHandler={dispatch} ></Form>  
+        </>
+    );
+}
+
+
+//------------------------------
+useMemo // - służy do nie przeładowywania elmenu przy kazdym renderze.
+// Przeładuej się TYLKO, gdy zmieni się jego stan
+
+    const SecondCounterComponent = useMemo(() =>
+        <Counter counter={secondCounter} index={2} />, [secondCounter])
+
+
+//------------------------------
+useHistory  //- filmik 153
+// poniższe trzy hooki wykorzystuje się do routingu
+
+const Component = () => {
+	const history = useHistory(); //aby uzyskać dostęp do historii 
+
+	const handleOnClick = () => {
+		const location = {
+			pathname: '/redux',
+			//ewentualnie inne parametry
+		};
+		history.push(location);
+	}
+
+	const handleOnClickBack = () => history.goBack(); //metoda do powracanie do poprzedniej ścieżki
+
+	return (
+		<button onClick={handleOnClick}> Idz do strony </button>
+		<button onClick={handleOnClickBack}> Powrót do poprzedniej strony </button>
+	);
+}
+
+//------------------------------
+useLocation  // - okrojona wersja useHistory
+
+	const location = useLocation();  //domyślnie undefine
+	const isActive = Boolean(location.state && location.state.isActive);
+
+<p1> Przesłana informacja: {String(isActive)} <p>
+
+//------------------------------
+useParms // - film 155
+
+//załużmy że jakiś komponent ma:
+	const[inputData, setInputData] = useState('');
+	const history = usehistory();
+
+	cosnt handleOnClick = () => {
+		const location = { 
+			pathname: '/typeScript/${inputData}', //UWAGA, w Route będzie ścieżka: "/typeScript/:message"
+		};
+		history.push(location);
+	}
+	<button onClick={handleOnClick}> Wyślij parametr do StoryTypeScript </button>
+// dane zostana wysłane jako parametr w pasku adresu
+
+// w komponencie (zwykle w innym folderze), przechwycimy te parametry za pomocą useParams
+
+	const paramsObject = useParams();
+
+	<p> paramsObject.message </P> //tutaj zobaczymy odebrane parametry. Nazwa zależna od nazwy parametru w ścieżce
 
 
 
+//------------------------------------------------------------
+//------------------------------------------------------------
+//------------------------------------------------------------
+REDUX - //zewnętrzna biblioteka do zarządzania przesyłanymi danymi. Film 157
+// instalacja:
+	npm i redux
 
-
-
-
-
-
-
+//akcja w reduksie jest obiektem, który ma obowiżakowe pole type:
+{
+	type: ADD, //obowiązkowy element
+	paylowad: { } //opcjonalny ładunek
+}
 
 
 //------------------------------------------------------------

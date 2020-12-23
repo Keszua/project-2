@@ -5,6 +5,8 @@ Ostatnia zmiana 2019.10.10
 
 //Piotrek pracuje w Acaisoft
 
+//zbiór podstawowych zadañ i algorymów, np. na drzewko, kolejkê, sortowanie itp : https://github.com/trekhleb/javascript-algorithms
+
 
 Znaki specjalne dla printf 
 '\0' - ostatni znak w ³añcuchu 
@@ -33,6 +35,9 @@ console.error('B³¹d!'); //tekst b³êdu - czerwony, na czerwonym tle
 console.info('Informacja!'); //tekst informacyjny z ikonk¹ info
 console.dir(someButton);  // Gdy chcemy wypisaæ wiêcej detali o tym obiekcie
 console.table([1,2,3,4,5]); //do przyjemnego wypisywania tablicy
+console.assert(false, "Jakis warunek false");  //wyœwietli siê TYLKO gdy warunek zwróci false
+console.count(); //do policzenia czegoœ
+console.trace(); // coœ jak debug tree w Atolicu
 
 //grupowanie wielu tekstów (console.log etc) w konsoli w jedn¹ grupê
 console.group('Nazwa grupy');
@@ -45,10 +50,26 @@ console.log('Ala ma kota');
 console.log('Kot ma Alê');
 console.groupEnd(); //koñczenie grupy
 
+%c - nadanie koloru i stylu
+console.log("Hejka w %cKolorze %ci po za kolorem ", 'color: blue; font-size: x-large', 'color: black')
+%o - dodanie obiektu 
+%s - dodanie tekstu
+%d - dodane liczby
+
+
+//Wyœwietliæ coœ w "wyskakuj¹cym okienku"
+alert('Hejka');
+
+//Wprowadzanie TAK/NIE przez "wyskakuj¹ce okno"
+confirm('Czy jesteœ pewien, ¿e chcesz kontynuowaæ?')  //zwraca true albo false
+
+
 //czasami bêdziemy chcieli sprawdziæ jak szybko wykona siê nasz skrypt...
 console.time('Pierwszy test'); //rozpoczyna test - zaczyna liczyæ czas
 for (let i=0; i<100000; i++) { ... }
 console.timeEnd('Pierwszy test'); //koñczy test
+
+//wiêcej o consloe.log na: https://medium.com/javascript-in-plain-english/mastering-js-console-log-like-a-pro-1c634e6393f9
 
 //czasami te¿ bêdziemy chcieli zatrzymaæ na chwilê dzia³anie skryptu w danym miejscu
 function test() {
@@ -1248,8 +1269,37 @@ kierunek rysowania - czy zgodnei ze wskazówkami zegra?
 //React - formularz
 
 //-----------------------------------------------------------------------------
+JEST
+//strona z dokumentacj¹: https://jestjs.io/docs/en/using-matchers
+
+//filmik szkoleniowy: https://www.youtube.com/watch?v=jpV3WEi3shs&t=440s
+
+//Zak³adanie nowego projetu przez:
+	npm init --yes
+	npm install --save-dev jest
 
 
+//proponowane paczki do testów
+	npm install--save - dev @babel/cli @babel/core @babel/preset-env babel-jest @babel/plugin - transform - modules - commonjs
+//trzeba zrobiæ konfiguracje bable:
+//stworzyæ plik babel.config.js a w nim wpisaæ:
+	module.exports = {
+		presets: [['@babel/preset-env', { targets: { node: 'current' } }]],
+		plugins: [['@babel/plugin-transform-modules-commonjs']],
+	};
+
+w folderze package.json trzeba dodaæ w: "scripts"
+  "scripts": {
+    "test": "jest", //edytowany
+    "build": "babel ./src/index.js --out-dir build --ignore 'src/*.test.js'", //to dodane
+    "start": "npm run build && node ./build/index.js"  //to dodane
+  },
+
+
+
+
+//aby uruchomiæ testy:
+npm run test
 
 
 //-----------------------------------------------------------------------------

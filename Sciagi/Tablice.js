@@ -120,7 +120,7 @@ console.log( newTableBig2 ); //= ["Pies", "Kot", "Słoń", "Wieloryb", "Chomik n
 
 
 
-
+//------------------------------
 //.map() - metoda iterująca. Robi pętlę po tablicy i każdorazowo zwraca nowy element tablicy.
 	//W wyniku po zakończeniu całej pętli zwracana jest nowa tablica z taką samą liczbą elementów
 	const tab = ['Marcin', 'Ania', 'Agnieszka'];
@@ -160,6 +160,7 @@ console.log( newTableBig2 ); //= ["Pies", "Kot", "Słoń", "Wieloryb", "Chomik n
     console.log(doubleNumbers); //[4, 6, 8]
 
 
+//------------------------------
 .forEach() - pracuje na tablicy, nie zwraca nowej (zwrac undefine)
 //możemy przekazać 3 parametry:
 1 - przekazujemy element na którym będziemy operować
@@ -182,6 +183,7 @@ usersAge.forEach((age, index, array) => {
 document.body.appendChild(section);
 
 
+//------------------------------
 //.filter() Zwraca nową tablicę złożona z tych elementów, przy których literator zwrócił true
 	const users = ["adam", "bogdan", "czarek", "darek"];
 	const NameWith6Letter =  users.filter(user => user.length === 6)
@@ -196,8 +198,9 @@ document.body.appendChild(section);
 	});
 	console.log(evenNumbers); //[2, 4, 6]
 
-
+//------------------------------
 //.reduce() - redukowanie tablicy. A raczej, służy np. do zsumowania elementów:
+// opis tej funkcji: https://thecodebarbarian.com/javascript-reduce-in-5-examples.html
 	const tab = [1, 2, 3, 4];
 	const result = tab.reduce(function(prev, next) {
 		return prev + next;
@@ -213,7 +216,7 @@ document.body.appendChild(section);
 //3 iteracja => prev = 3, next = 3   czyli 3+3=6
 //4 iteracja => prev = 6, next = 4   czyli 6+4=10
 
-//Można dodać parametr "wartosć poczatkową", np:
+//Można dodać parametr "wartość poczatkową", np:
 	const sum2 = [1, 2, 3].reduce(function(a, b) {
 		return a + b;
 	}, "");
@@ -224,7 +227,22 @@ document.body.appendChild(section);
   return previousValue + currentValue;
 }, 10); //dzie 10 to 'initialValue'
 
+//to samo co wyżej:
+[0,1,2,3].reduce( (sum, li) => sum + li, 10);
 
+//przykład z tablicą obiektów. Chcemy zsumować tylko wybrane eleenty:
+const lineItems = [
+  { description: 'Eggs (Dozen)', quantity: 1, price: 3, total: 3 },
+  { description: 'Cheese', quantity: 0.5, price: 5, total: 2.5 },
+  { description: 'Butter', quantity: 2, price: 6, total: 12 }
+];
+lineItems.reduce((sum, li) => sum + li.total, 0); //= 17.5   UWAGA! trzeba podać wartość początkową 0 lub ""
+
+//wyciągnie max z tablicy:
+[1, 2, 5, 1].reduce( (max,d) => d>max ? d : max ) //= 5
+//na stronie z opisem jest też przykład grupowania elementów za pomocą reduce
+
+//------------------------------
 .find()
 //metoda zwróci element, który jako pierwszy pasuje do warunku
 	const customers = [
@@ -237,6 +255,7 @@ document.body.appendChild(section);
 	console.log(idUsersAdult); //= {name: "Marta", age:17 }
 
 
+//------------------------------
 //.find()   zwraca pierwszy pasujący element:
 	const tab = [12, 5, 8, 130, 44];
 	const bigNr = tab.find(function(el) {
@@ -246,6 +265,7 @@ document.body.appendChild(section);
 
 
 
+//------------------------------
 //.findIndex() - metoda zwraca index elementu, który jako pierwszy zwrócił true. Jeśli nie znajdzie, zwórci -1
 	const customers = [
 		{name: "Adam", age:67 },

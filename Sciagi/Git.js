@@ -8,6 +8,9 @@ https://github.com/chajr/commands/blob/master/git/commands.md
 //Bitbucket z C32
 http://bitbucket.radwag.net:7990/projects/PRVNLIS/repos/pue_c32/commits?fbclid=IwAR3MRSWxdHifVd4tKjUNKUmRdl986UjnfiDeb12hypKlacprWppBeOfeaTc
 
+//strona do potrenowania komend
+http://onlywei.github.io/explain-git-with-d3/#branch
+
 Aby sprawdzić, czy mamy zinstalowanego Git'a trzeba w wierszy poleceń spisać: git
 jeżeli wyświetlą sie jakies informacje inne niż błąd, to znaczy że git zainstalował sie na naszym kompie.
 
@@ -214,10 +217,10 @@ rm nazwaPliku  				//usówanie pliku (tylko z katalogu roboczego)
 git rm nazwaPliku  			//usówanie pliku z indeksu (staging) i z katalogu roboczego (nie bedzie pliku na dysku)
 git rm --cached nazwaPliku  //przestań śledzić plik (usunięcie pliku z poczekalni, uzyskuje status: nieśledzony). Plik bedzie cały czas na dysku w flderze roboczym. 
 git reset  					//kopiuje pliki z ostatniego commita do przechowalni (stage), nadpisując jej stan
-git reset HEAD 				//aby upewnić się do jakiego stanu wrócić (do ostatniego comitu)
+git reset HEAD 				//aby upewnić się do jakiego stanu wrócić (do ostatniego commitu)
 git reset -- plik           // usuwa pliki z przechowalni (stage); oznacza to, że komenda ta kopiuje pliki z ostatniego commita do przechowalni (stage), nadpisując jej stan.
 git reset HEAD plik   		//aby usunąć konkretny plik z poczekalni
-//UWAGA pniższymi poleceniami reset usuwamy trwale najmłodsze gałęzie
+//UWAGA poniższymi poleceniami reset usuwamy trwale najmłodsze gałęzie
 git reset --mixed 5a33dd3	//Przywracamy podany commit a pliki ze zmianami trafią do folderu roboczego
 git reset --soft 5a33dd3	//Przywracamy podany commit a pliki ze zmianami trafią do poczekalni (stage)
 git reset --hard 5a33dd3	//Przywracamy podany commit a zmiany zostaną całkowicie usunięte
@@ -312,7 +315,7 @@ git branch -v						//pokazuje informacje, o ostatnich zmianach na każdej z gał
 git branch nazwaNowegoBrancha  		//tworzy nową gałąź
 git branch -D nazwaGalezi 			//po połączeniu gałęzi, gdy już nie będzie potrzebna, można ją usunąć.
 
-git push origin nazwaGalezi 		// jednorazowe wysłanie na serwer podanej gałęzi (sparawdzone polecenie)
+git push origin nazwaGalezi 		// jednorazowe wysłanie na serwer podanej gałęzi (sprawdzone polecenie)
 git push –u origin nazwaGalezi 		// przypisanie i wysłanie na serwer podanej gałęzi
 git push --set-upstream origin nazwaGalezi //polecenie sugerowane przez gita
 git push --all origin				//wysłanie wszytkich gałezi na serwer
@@ -341,6 +344,8 @@ git merge --no-ff                   // merge bez fast-forward, który wymusi na 
 git merge --abort 					// przerywa łączenie (możliwe, gdy wystąpią konflikty)
 git merge --continue 				// po rozwiązaniu konfliktów zapisuje zmiany
 git merge --revert 					// cofa wszystkie wprowadzone zmiany
+
+git reset --hard HEAD~              //Jeżeli nasza ostatnia rewizja jest mergem i chcemy wycofać nasz merge, ponieważ uznaliśmy, że coś poszło nie tak
 
 git cherry-pick 5a33dd3             // Cherry pick kopiuje tylko commit, który mu wskażemy, na początek brancha nad którym pracujemy.
 
@@ -629,6 +634,10 @@ M -plik śledzony w indeksie (w stagu, w przechowalni)
 
 //jeszcze może sie pojawić;
 D - Deleted
+
+
+
+git commit --allow-empty -m "a1.txt"  //prawdopodobnie tworzy pusty plik tekstowy i od razy dodaje go do commita
 
 
 /****************************************************************
