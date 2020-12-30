@@ -14,6 +14,8 @@ Node.js  - jest to środowisko uruchomieniwe do odpalania JS bez przeglądarki. 
 node -v  	// sprawdzanie wersji. 
 npm -v 		// sprawdzanie wersji. 
 
+//aby sprawdzić wersję V8 z jakiego korzysta przeglądarka, trzba w pasku wpisać chrome://version
+
 //Aby z niego skorzystać ogólnie przez wiersz poleceń, w wierszu poleceń wpisać:
 λ node 
 //pojawi się znaczek ">" to oznacza że już działa node.
@@ -26,7 +28,7 @@ undefined
 //Aby wyjść, trzeba dwukrotnie: Ctrl+C 
 
 
-//Aby pisać kod w pliku, trzba zrobić plik .js i wnim pisac.
+//Aby pisać kod w pliku, trzba zrobić plik .js i w nim pisac.
 //Odpalenie skryptu: 
 //    node nazwaPliku.js
 
@@ -43,6 +45,7 @@ undefined
 //Wyjście z edytora: Ctrl+D
 
 //Polecenia REPL:
+const os = require('os');
 os.  +Tab		//wyświetli listę poleceń (taki help)
 os.totalmem()	//pokazuje ilość zainstalowanej pamięci RAM na kompie
 os.type()  		//jaki system operacyjny -> 'Windows_NT'
@@ -75,17 +78,12 @@ setTimeout(
     1000
 )
 
+setInterval() // wywołania cykliczne
+clearinterval()  //zatrzymuje powyższe
+
 //-----------------------------------------------------------------------------
 // MODUŁY 
 // Moduły, to mini programy. Dostęp lokalny, prywatny (chyba że zdefinujemy inaczej)
-
-
-
-
-
-
-
-
 
 
 
@@ -93,15 +91,15 @@ setTimeout(
 //Prosty serer:
 //Tworze plik app.js (dowolna nazwa)
 //zawartość pliku:
-const http = require('http');
+const http = require('http');  //import http from 'http';  (ale ta forma jest jeszcze nie obsługiwana)
 
-const server = http.createServer((request, response) => {
-    console.log(request.url);
+const server = http.createServer((request, response) => { //zapytanie i odpowiedz
+    console.log(request.url);  //podgląd, o co pyta przeglądarka, gdy do adresu dpiszemy coś, np: http://localhost:3000/mojePytanie
     response.writeHead(200, {'Content-Type':'text/html'}) // 200 to zwrucenie wartosci OK
     response.end('<h1>Hello Node!<h1>') // tresc odpowiedzi
 })
 
-server.listen(3000, '127.0.0.1', () => console.log("Serwer wystartował")); //nasłuchiwanie na porcie 3000
+server.listen(3000, '127.0.0.1', () => console.log("Serwer wystartował")); //nasłuchiwanie na porcie 3000. Callback nie jest wymagany
 
 //Następnie w cmder (albo wierszu poleceń) wejść do folderu z tym plikiem
 //i uruchomić ten plik przez node poleceniem:
@@ -111,6 +109,26 @@ server.listen(3000, '127.0.0.1', () => console.log("Serwer wystartował")); //na
 localhost:3000
 //W przeglądarce powiniśmy zobaczyć treść odpowiedzi, czyli: Hello Node!
 //Aby zatrzymać serwer, urzyć Ctrl+C
+
+
+
+//-----------------------------------------------------------------------------
+//Obiekt global  (podobnie jak window w przeglądarce)
+najważneijsze metody:
+- process
+- require()
+- module
+- exports
+- consol (m. in. consloe.log())
+- class Buffer
+- setTimeout() / setInterval() / clearinterval()
+- __dirname / __filename
+
+//Obiekt global.proces 
+global.process.argv - zwróci tablicę ze ścieżką i podanymi ARGUMENTAMI (w formie stringów)
+global.process.env - chyba wszystkie dane o urzytkowniku, kodowaniu, cieżki, jaki windows itp.
+//można wpisywać bez "blobal", czyli: console.log(process.env);
+
 
 //-----------------------------------------------------------------------------
 // #####   ####                   
@@ -158,19 +176,19 @@ fs.readdir('./', (err, files) => {
 //-----------------------------------------------------------------------------
 //READFILE
 
-fs.readFile('names.txt', (err, data) => {
+fs.readFile('names.txt', (err, data) => {  // ewentualnie ściezke podawć jako: './names.txt'
     console.log(data); //pobrane dane w formie buforu, wartości w postaci HEX
     console.log(data.toString());   //dane w postaci "string"
 })
 
 //To samo ale z kodowaniem
-fs.readFile('names.txt', 'utf8', (err, data) => {
+fs.readFile('names.txt', 'utf8', (err, file) => { 
     if(err) throw Error(err)
-     console.log(data);
+     console.log(file);
 })
 
 try{
-    const names = fs.readFileSync('names.txt', 'utf8')
+    const names = fs.readFileSync('names.txt', 'utf8')  //SYNCHRONICZNE wywołanie
     console.log(names);
 } catch (err) {
     console.log(err);    

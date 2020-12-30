@@ -328,6 +328,9 @@ console.log('Przed: ' + tab); //Przed: [1,2,3,4]
 tab.reverse()
 console.log('Po: ' + tab); //Po: [4,3,2,1]
 
+//funkcja która odwraca stringa:
+function reverseString(stringToRevers) {stringToRevers.split('').reverse().join('');}
+
 //.sort(fn) służy do sortowania tablic.
 const tab = ['Marcin', 'Ania', 'Piotrek', 'Grześ'];
 tab.sort();

@@ -222,6 +222,8 @@ console.log(textChanged); 			//= Ola ma kota, a kot ma Alê, Ala go kocha, a Kot 
 const textChangedAll = text.replace(/Al/g,"Ol");
 console.log(textChangedAll); 		//= Ola ma kota, a kot ma Olê, Ola go kocha, a Kot j¹ wcale ;(
 
+//funkcja która odwraca stringa:
+function reverseString(stringToRevers) { stringToRevers.split('').reverse().join(''); }
 
 //-----------------------------------------------------------------------------
 //Funckje
