@@ -70,14 +70,14 @@ console.log(arr3); //= [10]
 const arr4 = Array(10);
 console.log(arr4); //= (10) [empty × 10]
 const arr5 = [1,2,3,4,5,6];
-console.log(arr5.find(x => x>4)); //= 5
+console.log(arr5.find(x => x>4)); //= 5   zwraca pierwszy pasujący
 console.log(arr5.find(x => x<4)); //= 1
 
 
 
 
 //metody tablic:
-//.join() - elementy tablicy przerabia na string
+//.join() - elementy tablicy przerabia na jeden długi string
 	const users = ["adam", "bogdan", "czarek", "darek"];
 	const userString = users.join(" "); //w nawiasie - jaki separtaor
 	consloe.log(userString); //= "adam bogdan czarek darek"
