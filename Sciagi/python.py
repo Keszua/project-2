@@ -160,8 +160,9 @@ produkty = produkty + tup	# można robić konkatenacje, następuje stworzenie no
 #-----------------------------------------------------------------------------
 # set (zbiór)
 s = {1, 2, 3, 1, 1, 2, 3}   #ignoruje powtarzające sie elemeny
-print(s) 					#= {1, 2, 3}
-s2 = set([3, 4, 5])			# tablice zamieniam na set
+print(s)                    #= {1, 2, 3}
+s.add(8)                    # dodanie elementu
+s2 = set([3, 4, 5])	        # tablice zamieniam na set
 print(s.intersection(s2))	#= {3}		Wypisze tylko elemeny wspólne
 print(s.symmetric_difference(s2))   #{1, 2, 4, 5}  wypisze elementy nie wspólne
 print(s.difference(s2))     #= {1, 2}  elementy ze zbioru s, których nie ma w s2
