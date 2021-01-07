@@ -112,13 +112,19 @@ work
 //zawartość pliku:
 const http = require('http');  //import http from 'http';  (ale ta forma jest jeszcze nie obsługiwana)
 
-const server = http.createServer((request, response) => { //zapytanie i odpowiedz
+const server = http.createServer()
+
+server.addListener('request', (request, response) => {  // addListener  zamiennie z on
     console.log(request.url);  //podgląd, o co pyta przeglądarka, gdy do adresu dpiszemy coś, np: http://localhost:3000/mojePytanie
-    response.writeHead(200, {'Content-Type':'text/html'}) // 200 to zwrucenie wartosci OK
+    response.writeHead(200, { 'Content-Type': 'text/html' }) // 200 to zwrucenie wartosci OK   
+               //inne typy: { 'Content-Type': 'application/json' 'text/css'  'text/plain'  'text/html; charset=utf-8'   'video/mp4'   'image/png'   'image/jpeg'
+    //response.statusCode //można wprowadzić kod odpowiedzi
+    //response.write( /* zawartość*/ )  //wewnętrzna metoda definiująca zawartosć
     response.end('<h1>Hello Node!<h1>') // tresc odpowiedzi
-})
+});
 
 server.listen(3000, '127.0.0.1', () => console.log("Serwer wystartował")); //nasłuchiwanie na porcie 3000. Callback nie jest wymagany
+
 
 //Następnie w cmder (albo wierszu poleceń) wejść do folderu z tym plikiem
 //i uruchomić ten plik przez node poleceniem:
@@ -128,6 +134,15 @@ server.listen(3000, '127.0.0.1', () => console.log("Serwer wystartował")); //na
 localhost:3000
 //W przeglądarce powiniśmy zobaczyć treść odpowiedzi, czyli: Hello Node!
 //Aby zatrzymać serwer, urzyć Ctrl+C
+
+
+//Przykład 2
+//To samo co wyżej, tylko krótrzy zapis
+const http = require('http');  //import http from 'http';  (ale ta forma jest jeszcze nie obsługiwana)
+http.createServer((req, res) => { 
+    res.writeHead(200, {'Content-Type':'text/html'}) 
+    res.end('<h1>Hello Node!<h1>') 
+}).listen(3000, '127.0.0.1');
 
 
 
@@ -257,6 +272,18 @@ fs.writeFile('nowyPlik.txt', "Tresc w nowym pliku", (err) => {
     if(err) console.log(ree);
     else console.log("Udało sie zapspiac w pliku");
 })
+
+
+//Samuraj zrobił to tak:
+	//const dataJSON = JSON.stringify(tasks);
+	fs.writeFile('./todoDB.json', dataJSON, 'utf-8', (err) => {
+		if (err) throw err;
+        console.log('Zadanie', title.yellow.underline, 'zostało usunięte.'.magenta)
+    });
+
+//asynchronicznie tak:
+	fs.writeFileSync('./todoDB.json', dataJSON);
+
 
 fs.readFile('names.txt', 'utf8', (err, data) => {
     if(err) return console.log('nie udalo sie');
@@ -397,25 +424,20 @@ axios.get(url)
 
 
 
-
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-//  #####   ###    ####   #   #
-//      #  #   #  #    #  ##  #
-//      #  #      #    #  ##  #
-//      #   ###   #    #  # # #
-//      #      #  #    #  #  ##
-//  #   #  #   #  #    #  #  ##
-//   ###    ###    ####   #   #
+/*
+         #                 ###            #
+         #                #               #                           #
+  ###  ##### # ###  ###   #     ####      #   # #    # # ###  ###   ###  #     #
+ #       #   ##    #   # ####       #     # #   #    # ##    #     #   # #     #
+  ###    #   #     #####  #     #####     ##    #    # #      ###  #   # #  #  #
+     #   #   #     #      #    #    #     # #   #    # #         # #   # # # # #
+  ###     ## #      ###   #     ### #     #   #  ##### #      ###   ###   #   #
 
+*/
 JSONView - //wtyczka do "ładnego" wyświetlania jsona (wtyczka do przeglądarki)
-
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 
 Bibioteki do node:
 
@@ -509,13 +531,6 @@ uruchamiam go poleceniem:
 Wyświetli się adres serwera, np: http://localhost:8080/webpack-dev-server/
 Tym adresem uruchamiamy stronę
 
-
-System numerownia wersji:
-Numerowanie semantyczne
-2.3.6
-gdzie 2 to główna wersja
-gdzie 3 to nowe funkcjonalności w ramach głównej wersji
-gdzie 6 to drobne poprawki (błędy itp.)
 
 
 Automatyczne tworzenie pliku konfiguracyjnego packet.json:
