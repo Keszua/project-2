@@ -70,7 +70,7 @@ it('works', async () => {
 //w pliku indeks.js  tworzymy sobie jakaś funkcję, np. dodającą :
 	export const sum = (a, b) => a + b;
 
-//w pliku indeks.test.js  robie sprawdzanei, czy moja funkcja prawidłowo dodaje:
+//w pliku indeks.test.js  robie sprawdzanie, czy moja funkcja prawidłowo dodaje:
 	import { sum } from './index.js';
 	//test, czy nasza funkcja sumująca, gdy podamy 1 i 2, to zwróci 3?
 	test('adds 1 + 2 to equal 3', () => {

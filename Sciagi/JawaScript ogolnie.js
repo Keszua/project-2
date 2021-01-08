@@ -81,6 +81,7 @@ test();
 if (typeof x === "undefined") {...} //Czy dana zmienna istnieje
 
 
+let numer = parseInt('4');  //konwersja, rzutowanie na liczbê
 
 
 
@@ -1310,7 +1311,67 @@ npm run test
 
 
 //-----------------------------------------------------------------------------
+//Zadanie testowe z samolotem:
+const mo¿liweMiejsca = {
+    dwieRodziny: ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'J'],
+    srodek: ['D', 'E', 'F', 'G'],
+    lewo: ['B', 'C', 'D', 'E'],
+    prawo: ['F', 'G', 'H', 'J'],
+}
 
+export const miejsca = (N, S) => {
+
+    const NoSpaceString = S.split(' ').join('');
+    const sArr = NoSpaceString.split(',');
+
+    let ret = 0;
+
+    for (let n = 1; n <= N; n++) {
+        const onlyThisRow = [];
+        sArr.forEach(el => {
+            //console.log('el: ', element, 'len', element.length);
+            //let liczba = el[0].toString();
+            let liczba = parseInt(el[0]);
+            if (el.length === 3) {
+                liczba = parseInt(el[0] + el[1]);
+                //console.log('dwieCyfry', dwieCyfry, typeof (dwieCyfry));
+                if (liczba === n) onlyThisRow.push(el[2]);
+            } else if (liczba === n) onlyThisRow.push(el[1]);
+        });
+
+        const dostepneOpcje = {
+            dwieRodziny: true,
+            srodek: true,
+            lewo: true,
+            prawo: true,
+        }
+
+        onlyThisRow.forEach(thisRow => {
+            for (let i = 0; i < thisRow.length; i++) {
+                if (mo¿liweMiejsca.dwieRodziny.includes(thisRow[i])) {
+                    dostepneOpcje.dwieRodziny = false;
+                }
+                if (mo¿liweMiejsca.srodek.includes(thisRow[i])) {
+                    dostepneOpcje.srodek = false;
+                }
+                if (mo¿liweMiejsca.lewo.includes(thisRow[i])) {
+                    dostepneOpcje.lewo = false;
+                }
+                if (mo¿liweMiejsca.prawo.includes(thisRow[i])) {
+                    dostepneOpcje.prawo = false;
+                }
+            }
+        });
+
+        if (dostepneOpcje.dwieRodziny) {
+            ret += 2;
+        } else if (dostepneOpcje.lewo || dostepneOpcje.srodek || dostepneOpcje.prawo) {
+            ret++;
+        }
+    }
+
+    return ret;
+}
 
 
 
