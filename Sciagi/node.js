@@ -116,8 +116,8 @@ const server = http.createServer()
 
 server.addListener('request', (request, response) => {  // addListener  zamiennie z on
     console.log(request.url);  //podgląd, o co pyta przeglądarka, gdy do adresu dpiszemy coś, np: http://localhost:3000/mojePytanie
-    response.writeHead(200, { 'Content-Type': 'text/html' }) // 200 to zwrucenie wartosci OK   
-               //inne typy: { 'Content-Type': 'application/json' 'text/css'  'text/plain'  'text/html; charset=utf-8'   'video/mp4'   'image/png'   'image/jpeg'
+    response.writeHead(200, { "Content-Type": 'text/html', "inny": 'cos tam' }) // 200 to zwrucenie wartosci OK   
+               //inne typy: { "Content-Type": 'application/json' 'text/css'  'text/plain'  'text/html; charset=utf-8'   'video/mp4'   'image/png'   'image/jpeg'
     //response.statusCode //można wprowadzić kod odpowiedzi
     //response.write( /* zawartość*/ )  //wewnętrzna metoda definiująca zawartosć
     response.end('<h1>Hello Node!<h1>') // tresc odpowiedzi
@@ -145,7 +145,12 @@ http.createServer((req, res) => {
 }).listen(3000, '127.0.0.1');
 
 
-
+//Metody:
+GET  - odczytaj ("daj mi")
+HEAD - jak GET, ale nie odsyłaj body z powrotem
+POST - stwórz  (do przesyłaniu danych)
+PUT  - aktualizuj
+DELETE - usuń
 
 
 
