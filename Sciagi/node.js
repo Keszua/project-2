@@ -116,8 +116,9 @@ const server = http.createServer()
 
 server.addListener('request', (request, response) => {  // addListener  zamiennie z on
     console.log(request.url);  //podgląd, o co pyta przeglądarka, gdy do adresu dpiszemy coś, np: http://localhost:3000/mojePytanie
-    response.writeHead(200, { "Content-Type": 'text/html', "inny": 'cos tam' }) // 200 to zwrucenie wartosci OK   
-               //inne typy: { "Content-Type": 'application/json' 'text/css'  'text/plain'  'text/html; charset=utf-8'   'video/mp4'   'image/png'   'image/jpeg'
+    response.writeHead(200, { 'Content-Type': 'text/html', "inny": 'cos tam' }) // 200 to zwrucenie wartosci OK   
+               //inne typy: { 'Content-Type': 'application/json' 'text/css'  'text/plain'  'text/html; charset=utf-8'   'video/mp4'   'image/png'   'image/jpeg'
+               //Samuraj cos wspomniał, że gdy urzywamy -, to rzeba klucz pisać w apostrofach
     //response.statusCode //można wprowadzić kod odpowiedzi
     //response.write( /* zawartość*/ )  //wewnętrzna metoda definiująca zawartosć
     response.end('<h1>Hello Node!<h1>') // tresc odpowiedzi
