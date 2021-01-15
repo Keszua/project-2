@@ -153,6 +153,25 @@ POST - stwórz  (do przesyłaniu danych)
 PUT  - aktualizuj
 DELETE - usuń
 
+//-----------------------------------------------------------------------------
+//prostu serwer z rutingiem:
+const http = require('http');
+const port = process.env.PORT || 3000
+http.createServer((req, res) => {
+    if (req.url === "/") {
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
+        res.end(`<h1>Strona główna</h1> `)
+    } else if (req.url === "/users") {
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
+        res.end(`<h1>Strona użytkowników</h1> `)
+    } else {
+        res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' })
+        res.end(` <h4>Brak strony o adresie</h4>  ${req.url} `)
+    }
+}).listen(port, '127.0.0.1', () => console.log('Nasłuchuje na porcie ', port));
+
+
+
 
 
 
@@ -202,6 +221,7 @@ najważneijsze metody:
 //Obiekt global.proces 
 global.process.argv - zwróci tablicę ze ścieżką i podanymi ARGUMENTAMI (w formie stringów)
 global.process.env - chyba wszystkie dane o urzytkowniku, kodowaniu, cieżki, jaki windows itp.
+const port = process.env.PORT || 3000   // gdy chcemy wsatwić stronke na serwerze
 //można wpisywać bez "global", czyli: console.log(process.env);
 
 

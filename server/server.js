@@ -27,15 +27,40 @@ http.createServer((req, res) => {
 */
 
 
-//Filmik 52 API, Endpointy oraz metody HTTP
+//Filmik 57 Prosy routing
 const http = require('http');
-http.createServer( (req, res) => {
-    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8'})
-    //res.write("<h1>Witaj</h1>")
-    res.end(`
-        <h1>Witaj</h1>
-    `)
-}).listen(3000,'127.0.0.1');
+const fs = require('fs');
+const path = require('path');
+const port = process.env.PORT || 3000
+
+http.createServer((req, res) => {
+
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
+    switch (req.url) {
+        case '/':
+            fs.readFile(path.join(__dirname, "index.html"), (err, page) => {
+                if (err) res.end('<h1>Nie udało się pobrac pliku</h1>')
+                else res.end(page);
+            })
+            //res.end(`<h1>Strona główna</h1> `)
+            break;
+        case '/users':
+            fs.readFile(path.join(__dirname, "users.html"), (err, page) => {
+                if (err) res.end('<h1>Nie udało się pobrac pliku</h1>')
+                else res.end(page);
+            })
+            break;
+        case '/api/users':
+            res.end(`<h1>API</h1> `)
+            break;
+
+        default:
+            res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' })
+            res.end(` <h4>Brak strony o adresie</h4>  ${req.url} `)
+            break;
+    }
+
+}).listen(port, '127.0.0.1', () => console.log('Nasłuchuje na porcie ', port));
 
 
 
