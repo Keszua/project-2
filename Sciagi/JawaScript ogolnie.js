@@ -308,32 +308,32 @@ fn1("ala");
 //EVENT
 //Najczêœciej urzywane zdarzenia:
 
-Typ zdarzenia:	Opis:
-click			odpalane, gdy element zosta³ klikniêty (np. input)
-change			odpalane, gdy opuœciliœmy element, i zmieni³ on swoj¹ zawartoœæ (np. pole tekstowe)
-mouseover		odpalane, gdy kursor znalaz³ siê na elemencie
-mouseout		odpalane, gdy kursor opuœci³ element
-mouseenter		odpalane, gdy kursor znalaz³ siê na elemencie
-mouseleave		odpalane, gdy kursor opuœci³ element
-dblclick		odpalane, gdy podwójnie klikniemy na element (np. input)
-submit			odpalane, gdy formularz jest wysy³any
-resize			odpalane, gdy rozmiar okna przegl¹darki jest zmieniany
-focus			odpalane, gdy element sta³ siê wybrany (np. pole tekstowe, link, button, element z tabindex) (jak za pomoc¹ klawiatury)
-blur			odpalane, gdy element przesta³ byæ aktywny (np. opuœciliœmy input)
-keydown			odpalane, gdy zosta³ naciœniêty klawisz na klawiaturze
-keyup			odpalane gdy puœcimy klawisz na klawiaturze
-input			podobne do powy¿szego, ale odpalane synchronicznie w czasie trzymania klawisza (np. przytrzymanie klawisza A w polu tekstowym)
-load			odpalane, gdy obiekt zosta³ za³adowany (np. ca³a strona, pojedyncza grafika)
-contextmenu		odpalane, gdy klikniêto prawym klawiszem myszki i pojawi³o siê menu kontekstowe
-wheel			odpalane, gry krêcimy kó³eczkiem myszki
-select			odpalane, gdy zawartoœæ obiektu zosta³a zaznaczona
-unload			odpalane, gdy u¿ytkownik opuszcza dana stronê
-animationstart	odpalane, gdy animacja css siê zacznie
-animationend	odpalane, gdy animacja css siê zacznie
-animationiteration	odpalane, gdy animacja css zrobi jedn¹ iteracjê
-transitionstart	odpalane, gdy transition css siê zacznie
-transitionend	odpalane, gdy transition css siê zacznie
-transitionrun	odpalane, gdy transition css siê zacznie (odpalane przed opóŸnieniem transition)
+Typ zdarzenia:		Opis:
+click				gdy element zosta³ klikniêty (np. input)
+change				gdy opuœciliœmy element, i zmieni³ on swoj¹ zawartoœæ (np. pole tekstowe)
+mouseover			gdy kursor znalaz³ siê na elemencie
+mouseout			gdy kursor opuœci³ element
+mouseenter			gdy kursor znalaz³ siê na elemencie
+mouseleave			gdy kursor opuœci³ element
+dblclick			gdy podwójnie klikniemy na element (np. input)
+submit				gdy formularz jest wysy³any
+resize				gdy rozmiar okna przegl¹darki jest zmieniany
+focus				gdy element sta³ siê wybrany (np. pole tekstowe, link, button, element z tabindex) (jak za pomoc¹ klawiatury)
+blur				gdy element przesta³ byæ aktywny (np. opuœciliœmy input)
+keydown				gdy zosta³ naciœniêty klawisz na klawiaturze
+keyup				gdy puœcimy klawisz na klawiaturze
+input				podobne do powy¿szego, ale odpalane synchronicznie w czasie trzymania klawisza (np. przytrzymanie klawisza A w polu tekstowym)
+load				gdy obiekt zosta³ za³adowany (np. ca³a strona, pojedyncza grafika)
+contextmenu			gdy klikniêto prawym klawiszem myszki i pojawi³o siê menu kontekstowe
+wheel				gdy krêcimy kó³eczkiem myszki
+select				gdy zawartoœæ obiektu zosta³a zaznaczona
+unload				gdy u¿ytkownik opuszcza dana stronê
+animationstart		gdy animacja css siê zacznie
+animationend		gdy animacja css siê zacznie
+animationiteration	gdy animacja css zrobi jedn¹ iteracjê
+transitionstart		gdy transition css siê zacznie
+transitionend		gdy transition css siê zacznie
+transitionrun		gdy transition css siê zacznie (odpalane przed opóŸnieniem transition)
 
 
 

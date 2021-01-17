@@ -7,6 +7,15 @@
 //   #   #  #   #  #   #
 //    ###    ###    ###  
 
+//Import pliku ze stylami:
+ <link rel="stylesheet" href="style.css">
+
+
+//tło:
+	background-image: url('./media/img_hero.jpg');
+   
+
+
 
 //Style CSS
 
@@ -772,42 +781,55 @@ to co jest pomiedzy znacznikami <style>
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //WŁAŚCIWOŚCI KONTENERA:  (filmik 35  Minuta 5:25 )
-//tworzymy kontener: 	flex zajmuje 100% rodzica; 
-//						inline-flex zajmuje tyle ile potrzebują jego dzieci
-	display: flex; /* inline-flex */  
-//oś; row to pozioma	
-	flex-direction:row; /* column, row-reverse, column-reverse */
-//zawijanie elementów	
-	flex-wrap: nowrap; /* wrap, wrap-reverse */
-	flex-flow: row nowrap; /* skrót dla flex-direction i flex-wrap */
-//pozwala układać elementy na osi głównej. start: do lewej;	
-// 		space-around: delikatna przestrzeń między elementami
-	justify-content: flex-start; /* flex-end, center, space-around, space-between, space-evenly */
-//definiuje oś prostopadłą
-	align-items: stretch; /* flex-start, flex-end, center, baseline */
-//gdy mamy wiele lini, opisujemy zachowanie poszczególnych wierszy
-// stretch - rozciąganie się elementów; flex-start: upakowane do góry strony
-// center: upakowane do środka
-	align-content: stretch; /* flex-start, flex-end, center, space-between, space-around */
+//tworzymy kontener:    
+    display: flex; /* inline-flex */  
+          // flex zajmuje 100% rodzica; 
+          // inline-flex zajmuje tyle ile potrzebują jego dzieci
 
+//oś; 
+    flex-direction: row; /* column, row-reverse, column-reverse */  
+                 // row - to pozioma	
+
+//zawijanie elementów	
+    flex-wrap: nowrap; /* wrap, wrap-reverse */
+        
+    flex-flow: row nowrap; /* skrót dla flex-direction i flex-wrap */
+
+//pozwala układać elementy na osi głównej. start: do lewej;	
+    justify-content: flex-start; /* flex-end, center, space-around, space-between, space-evenly */ 
+                  // flex-start: do lewej strony
+                  // space-around: delikatna przestrzeń między elementami
+                  // space-evenly równomierne przestrzenie
+
+//definiuje oś prostopadłą
+    align-items: stretch; /* flex-start, flex-end, center, baseline */
+
+//gdy mamy wiele lini, opisujemy zachowanie poszczególnych wierszy
+    align-content: stretch; /* flex-start, flex-end, center, space-between, space-around */
+                // stretch - rozciąganie się elementów; flex-start: upakowane do góry strony
+                // center: upakowane do środka
+
+
+//-----------------------------------------------------------------------------
 //WŁAŚCIWOŚCI ELEMENTU
 //w jakiej kolejności mają wyświetlać się elemnty
-	order: 0; /* liczba całkowita (wartosci dodatnie i ujemne) */
-	flex-grow: 1; 		// Wypełnienie wolnej przestrzeni  ( wartosć bezwzględna (od 0 w górę) )
-	flex-shrink: 1; 	// Ściśnięcie ( wartosć bezwzględna (od 0 w górę) )
-	flex-basis: auto; 	// domyślna wielkości elementu (z różymi jednostkami) 
-	flex: 0 1 auto; 	// skrót do flex-grow, flex-shrink, flex-basis 
-//	robi to co align-items, ale dotyczy pojedyńczego elementu (czy ma sie rozciągać)
-	align-self: auto; /* strech, center, flex-start, flex-end, baseline */
+    order: 0; /* liczba całkowita (wartosci dodatnie i ujemne) */
+    flex-grow: 1;       // Wypełnienie wolnej przestrzeni  ( wartosć bezwzględna (od 0 w górę) )
+    flex-shrink: 1;     // Ściśnięcie ( wartosć bezwzględna (od 0 w górę) )
+    flex-basis: auto;   // domyślna wielkości elementu (z różymi jednostkami) 
+        flex: 0 1 auto;    // skrót do flex-grow, flex-shrink, flex-basis 
+
+//  robi to co align-items, ale dotyczy pojedyńczego elementu (jeden ma się RÓŻNIĆ od pozostałych)
+    align-self: auto; /* strech, center, flex-start, flex-end, baseline */
 
 
-	column-width: 150px;
+    column-width: 150px;
     column-count: 2;
-	column-gap // definiuje odstęp pomiędzy kolumnami tekstu
-	column-rule-color 	// pozwala ustalić kolor linii rozdzielającej kolumny tekstu; 
-	column-rule-width 	// szerokość linii rozdzielającej kolumny;
-	column-rule-style 	// styl linii rozdzielającej kolumny; 
-	column-rule 		// skrót dla trzech powyższych wartości;
+    column-gap          // definiuje odstęp pomiędzy kolumnami tekstu
+    column-rule-color   // pozwala ustalić kolor linii rozdzielającej kolumny tekstu; 
+    column-rule-width   // szerokość linii rozdzielającej kolumny;
+    column-rule-style   // styl linii rozdzielającej kolumny; 
+       column-rule      // skrót dla trzech powyższych wartości;
 
 //fajny opis: http://www.artax.krakow.pl/flex-box-rozmieszczenie.1,14.html
 
@@ -892,7 +914,7 @@ max-content	// wypełnia całą dostepną szerokość.
 
 // Niejawne - siatka tworzy się w zależności od ilości elementów
 
-// Wymuszone - wkładamy jeden oelent, ale od 3 do 4 lini, czyli
+// Wymuszone - wkładamy jeden elent, ale od 3 do 4 lini, czyli
 // 				wymusilismy stworzenie poprzedzajacych pól.
 
 //Przykład JAWNIE:
@@ -960,7 +982,7 @@ max-content	// wypełnia całą dostepną szerokość.
 			"info		info		article"
 			".			.			article"
 			"footer		footer		footer" ;
-	//powyżej nazywam wsyzstkie komorki. jak nie che dawać nazwy, daje kropkę. Muszę tworzyć prostokoty
+	//powyżej nazywam wszystkie komorki. Jak nie che dawać nazwy, daje kropkę. Muszę tworzyć prostokąty
 	}
 	.e1{ grid-area: article; } //umieszczam element, który ma zając wszystkie komórki "article"
 	.e3{ grid-area: footer; } //umieszczam element, który ma zając wszystkie komórki "footer"

@@ -73,7 +73,7 @@ SELECT
 			
     | INNER | //dołącz i wypisz TYLKO pasujące
     | LEFT  | //weź wszystko z lewej i spróbuj połączyć z prawą (jak się nie uda, to wpisz null w brakujące komórki)
-    | RIGHT | //anlogicznei do left
+    | RIGHT | //anlogicznie do left
     |       | JOIN  //JOIN służy do obsługi relacji  1:1  1:n  n:m
 			     // 1:1 jedna osoba posiada tlylko jedno zameldowanie
 			     // 1:n jedna osoba posiada kilka kont bankowych (które należą tylko do niej)

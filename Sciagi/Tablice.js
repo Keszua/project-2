@@ -290,7 +290,7 @@ lineItems.reduce((sum, li) => sum + li.total, 0); //= 17.5   UWAGA! trzeba poda�
 
 //.lastIndexOf()  która działa jak indexOf(), ale zwraca ostatnią pozycję szukanego tekstu
 
-//.includes()  zwraca prawdę lub fałsz w zależności czy szukana wartość znajduje się w tablicy
+//.includes()  zwraca prawdę lub fałsz w zależności czy szukana wartość znajduje się w tablicy, czy element jest zawarty, czy zawiera się w tablicy
 	const tab = ['Marcin', 'Ania', 'Agnieszka', 'Monika'];
 	if (tab.includes('Ania')) {
 		console.log('Ania występuje w tablicy pod indexem ' + tab.indexOf('Ania'));
