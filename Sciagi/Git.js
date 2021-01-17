@@ -381,7 +381,7 @@ git stash push -m "Opis zmian w pliku na stosie"
 git stash list 				//wyświetla listę zmian odłożonych na stos
 git stash show             	//pokazuje jakie zmiany znajdują się na stosie  
                             // -p lub —patch  szczegółowe informacje o zmianach
-git stash show stash@{x} 	//pozkazujezmiany. 0,1,2,..,x, gdzie 0 to ostatnio dodane zmiany do schowka.
+git stash show stash@{x} 	//pozkazuje zmiany. 0,1,2,..,x, gdzie 0 to ostatnio dodane zmiany do schowka.
 //na stos można dodać tylko zmiamy plików które są śledzone przez git
 git stash push -m "Opis zmian w pliku nie śledzonym" -u
 git stash apply				//Nakładanie zmian ze schowka na obecny stan HEAD

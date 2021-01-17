@@ -1,3 +1,20 @@
+
+//Stringi
+
+.split()  //zamiana stringa na tablicę:
+const text = "Jakiś tekst";
+const parts = text.split(" "); 	//split dzieli tekst, kryterium dzielenia to: spacja.  parts będzie tablicą
+parts //= ["Jakiś", "tekst"]
+
+//usówanie spacji:
+const text = "Jakiś tek     st";
+const textBezSpacji = text.split(' ').join('');
+
+let numer = parseInt('4');  //konwersja, rzutowanie na liczbę
+
+
+
+
 //Tablice
 const tab = []; //pusta tablica
 const tab2 = [1, 2, 3, 4]; //tablica z 4 liczbami
@@ -13,7 +30,7 @@ console.log(tab); //[blank x 10]
 const tab = new Array(10, "Ala", "Bala", "Cala");
 console.log(tab); //["Ala", "Bala", "Cala", blank x 7]
 
-//zamiana stringa na tablicę:
+.split()  //zamiana stringa na tablicę:
 const text = "Jakiś tekst";
 const parts = text.split(" "); 	//split dzieli tekst, kryterium dzielenia to: spacja.  parts będzie tablicą
 parts //= ["Jakiś", "tekst"]
@@ -70,14 +87,19 @@ console.log(arr3); //= [10]
 const arr4 = Array(10);
 console.log(arr4); //= (10) [empty × 10]
 const arr5 = [1,2,3,4,5,6];
-console.log(arr5.find(x => x>4)); //= 5
+console.log(arr5.find(x => x>4)); //= 5   zwraca pierwszy pasujący
 console.log(arr5.find(x => x<4)); //= 1
 
 
 
 
-//metody tablic:
-//.join() - elementy tablicy przerabia na string
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//METODY TABLIC
+
+
+.join() // - elementy tablicy przerabia na jeden długi string  
 	const users = ["adam", "bogdan", "czarek", "darek"];
 	const userString = users.join(" "); //w nawiasie - jaki separtaor
 	consloe.log(userString); //= "adam bogdan czarek darek"
@@ -91,13 +113,13 @@ console.log(ourTable.join(" <--> ")); //wypisze się "Marcin <--> Ania <--> Agni
 
 
 
-//.concat() - łączy tablicę z innymi elementami lub tabliczmi i zwraca nową tablicę
+.concat() // - łączy tablicę z innymi elementami lub tabliczmi i zwraca nową tablicę
 	const users = ["adam", "bogdan", "czarek", "darek"];
 	const newUser = "edyta";
 	const allUsers = users.concat(newUser);
 	consloe.log(allUsers); //= ["adam", "bogdan", "czarek", "darek", "edyta"];
 
-//.concat() - łączenie dwóch tablic
+.concat() // - łączenie dwóch tablic
 const anim1 = ["Pies", "Kot"];
 const anim2 = ["Słoń", "Wieloryb"];
 const anim3 = ["Chomik ninja", "Świnka morderca"];
@@ -111,8 +133,6 @@ console.log( newTableBig2 ); //= ["Pies", "Kot", "Słoń", "Wieloryb", "Chomik n
 
 
 
-
-
 //operator spread - alternatywa dla metody contact()
 	const users = ["adam", "bogdan", "czarek", "darek"];
 	const allUsers = [...users, "edyta"]
@@ -121,7 +141,7 @@ console.log( newTableBig2 ); //= ["Pies", "Kot", "Słoń", "Wieloryb", "Chomik n
 
 
 //------------------------------
-//.map() - metoda iterująca. Robi pętlę po tablicy i każdorazowo zwraca nowy element tablicy.
+.map() // - metoda iterująca. Robi pętlę po tablicy i każdorazowo zwraca nowy element tablicy.
 	//W wyniku po zakończeniu całej pętli zwracana jest nowa tablica z taką samą liczbą elementów
 	const tab = ['Marcin', 'Ania', 'Agnieszka'];
 	const tab2 = tab.map(function(el) {
@@ -161,7 +181,7 @@ console.log( newTableBig2 ); //= ["Pies", "Kot", "Słoń", "Wieloryb", "Chomik n
 
 
 //------------------------------
-.forEach() - pracuje na tablicy, nie zwraca nowej (zwrac undefine)
+.forEach() // pracuje na tablicy, nie zwraca nowej (ZWRACA: undefine)
 //możemy przekazać 3 parametry:
 1 - przekazujemy element na którym będziemy operować
 2 - indeks (numer na którym teraz wykonujemy, tak jak "i" w for(int i=0; i<el.length; i+++)
@@ -184,7 +204,7 @@ document.body.appendChild(section);
 
 
 //------------------------------
-//.filter() Zwraca nową tablicę złożona z tych elementów, przy których literator zwrócił true
+.filter() // Zwraca nową tablicę złożona z tych elementów, przy których literator zwrócił true
 	const users = ["adam", "bogdan", "czarek", "darek"];
 	const NameWith6Letter =  users.filter(user => user.length === 6)
 	console.log(NameWith6Letter); //= ["bogdan", "czarek"]
@@ -199,7 +219,7 @@ document.body.appendChild(section);
 	console.log(evenNumbers); //[2, 4, 6]
 
 //------------------------------
-//.reduce() - redukowanie tablicy. A raczej, służy np. do zsumowania elementów:
+.reduce() //- redukowanie tablicy. A raczej, służy np. do zsumowania elementów:
 // opis tej funkcji: https://thecodebarbarian.com/javascript-reduce-in-5-examples.html
 	const tab = [1, 2, 3, 4];
 	const result = tab.reduce(function(prev, next) {
@@ -290,7 +310,7 @@ lineItems.reduce((sum, li) => sum + li.total, 0); //= 17.5   UWAGA! trzeba poda�
 
 //.lastIndexOf()  która działa jak indexOf(), ale zwraca ostatnią pozycję szukanego tekstu
 
-//.includes()  zwraca prawdę lub fałsz w zależności czy szukana wartość znajduje się w tablicy, czy element jest zawarty, czy zawiera się w tablicy
+.includes()  //zwraca prawdę lub fałsz w zależności czy szukana wartość znajduje się w tablicy, czy element jest zawarty, czy zawiera się w tablicy
 	const tab = ['Marcin', 'Ania', 'Agnieszka', 'Monika'];
 	if (tab.includes('Ania')) {
 		console.log('Ania występuje w tablicy pod indexem ' + tab.indexOf('Ania'));
@@ -327,6 +347,9 @@ const tab = [1,2,3,4];
 console.log('Przed: ' + tab); //Przed: [1,2,3,4]
 tab.reverse()
 console.log('Po: ' + tab); //Po: [4,3,2,1]
+
+//funkcja która odwraca stringa:
+function reverseString(stringToRevers) {stringToRevers.split('').reverse().join('');}
 
 //.sort(fn) służy do sortowania tablic.
 const tab = ['Marcin', 'Ania', 'Piotrek', 'Grześ'];

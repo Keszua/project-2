@@ -14,6 +14,8 @@ Node.js  - jest to środowisko uruchomieniwe do odpalania JS bez przeglądarki. 
 node -v  	// sprawdzanie wersji. 
 npm -v 		// sprawdzanie wersji. 
 
+//aby sprawdzić wersję V8 z jakiego korzysta przeglądarka, trzba w pasku wpisać chrome://version
+
 //Aby z niego skorzystać ogólnie przez wiersz poleceń, w wierszu poleceń wpisać:
 λ node 
 //pojawi się znaczek ">" to oznacza że już działa node.
@@ -26,7 +28,7 @@ undefined
 //Aby wyjść, trzeba dwukrotnie: Ctrl+C 
 
 
-//Aby pisać kod w pliku, trzba zrobić plik .js i wnim pisac.
+//Aby pisać kod w pliku, trzba zrobić plik.js i w nim pisac.
 //Odpalenie skryptu: 
 //    node nazwaPliku.js
 
@@ -43,12 +45,15 @@ undefined
 //Wyjście z edytora: Ctrl+D
 
 //Polecenia REPL:
+const os = require('os');
 os.  +Tab		//wyświetli listę poleceń (taki help)
 os.totalmem()	//pokazuje ilość zainstalowanej pamięci RAM na kompie
 os.type()  		//jaki system operacyjny -> 'Windows_NT'
 os.platform()	//jaki system operacyjny -> 'win32' 
 os.cpus()		//informacje o procesorach
 os.userInfo()	//informacje o urzytkowniku
+os.uptime()     //jak długo działa komputer
+os.homedir()    //ścieżka do home
 //-----------------------------------------------------------------------------
 //Statusy odpowiedzi 
 1-- kody informacyjne
@@ -68,40 +73,59 @@ Przykłady:
 500 "Internal Server Error" - "Coś u mnie nie tak"
 
 
-//-----------------------------------------------------------------------------
-//funkcje czasowe:
-setTimeout(
-    () => { console.log("Wykonalo sie!"); },
-    1000
-)
+
 
 //-----------------------------------------------------------------------------
-// MODUŁY 
-// Moduły, to mini programy. Dostęp lokalny, prywatny (chyba że zdefinujemy inaczej)
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+
+//gdy ściągniemy projekt z gita, albo "przypadkiem" usuneliśmy plik node_modules, odzyskuemy wszystkot poleceniem:
+npm install
+
+//Przykładowa instalacja pakietów z npm:
+npm install -g nodemon          //instalacja globalna
+npm install --save-dev nodemon  //instalacja z dopisaniem do package-lock.json i dependences (zależności)
+npm uninstall nodemon           // usuwnie modułu
+
+//gdyby Nodemon nie działał, bo: "cannot be loaded because running scripts is disab led on this system..."
+// Uruchom windows powerShell i wpisz
+	Get-ExecutionPolicy
+//jesli jest 'Restricted', to wpisz polecenie:
+	Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+
+//proponowana struktura plików:
+docs
+edu
+imagesmodules
+node-exapmles
+work
 
 
 
-
-
-
-
-
-
-
-
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //Prosty serer:
 //Tworze plik app.js (dowolna nazwa)
 //zawartość pliku:
-const http = require('http');
+const http = require('http');  //import http from 'http';  (ale ta forma jest jeszcze nie obsługiwana)
 
-const server = http.createServer((request, response) => {
-    console.log(request.url);
-    response.writeHead(200, {'Content-Type':'text/html'}) // 200 to zwrucenie wartosci OK
+const server = http.createServer()
+
+server.addListener('request', (request, response) => {  // addListener  zamiennie z on
+    console.log(request.url);  //podgląd, o co pyta przeglądarka, gdy do adresu dpiszemy coś, np: http://localhost:3000/mojePytanie
+    response.writeHead(200, { 'Content-Type': 'text/html', "inny": 'cos tam' }) // 200 to zwrucenie wartosci OK   
+               //inne typy: { 'Content-Type': 'application/json' 'text/css'  'text/plain'  'text/html; charset=utf-8'   'video/mp4'   'image/png'   'image/jpeg'
+               //Samuraj cos wspomniał, że gdy urzywamy -, to rzeba klucz pisać w apostrofach
+    //response.statusCode //można wprowadzić kod odpowiedzi
+    //response.write( /* zawartość*/ )  //wewnętrzna metoda definiująca zawartosć
     response.end('<h1>Hello Node!<h1>') // tresc odpowiedzi
-})
+});
 
-server.listen(3000, '127.0.0.1', () => console.log("Serwer wystartował")); //nasłuchiwanie na porcie 3000
+server.listen(3000, '127.0.0.1', () => console.log("Serwer wystartował")); //nasłuchiwanie na porcie 3000. Callback nie jest wymagany
+
 
 //Następnie w cmder (albo wierszu poleceń) wejść do folderu z tym plikiem
 //i uruchomić ten plik przez node poleceniem:
@@ -112,14 +136,105 @@ localhost:3000
 //W przeglądarce powiniśmy zobaczyć treść odpowiedzi, czyli: Hello Node!
 //Aby zatrzymać serwer, urzyć Ctrl+C
 
+
+//Przykład 2
+//To samo co wyżej, tylko krótrzy zapis
+const http = require('http');  //import http from 'http';  (ale ta forma jest jeszcze nie obsługiwana)
+http.createServer((req, res) => { 
+    res.writeHead(200, {'Content-Type':'text/html'}) 
+    res.end('<h1>Hello Node!<h1>') 
+}).listen(3000, '127.0.0.1');
+
+
+//Metody:
+GET  - odczytaj ("daj mi")
+HEAD - jak GET, ale nie odsyłaj body z powrotem
+POST - stwórz  (do przesyłaniu danych)
+PUT  - aktualizuj
+DELETE - usuń
+
 //-----------------------------------------------------------------------------
-// #####   ####                   
-// #      #                         
-// #       ###                    
-// ####       #                 
-// #          #                   
-// #      ####                    
-//     
+//prostu serwer z rutingiem:
+const http = require('http');
+const port = process.env.PORT || 3000
+http.createServer((req, res) => {
+    if (req.url === "/") {
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
+        res.end(`<h1>Strona główna</h1> `)
+    } else if (req.url === "/users") {
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
+        res.end(`<h1>Strona użytkowników</h1> `)
+    } else {
+        res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' })
+        res.end(` <h4>Brak strony o adresie</h4>  ${req.url} `)
+    }
+}).listen(port, '127.0.0.1', () => console.log('Nasłuchuje na porcie ', port));
+
+
+
+
+
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+// MODUŁY 
+// Moduły, to mini programy. Dostęp lokalny, prywatny (chyba że zdefinujemy inaczej)
+//import modułu: 
+const http = require('http');
+
+//export modułu:
+module.exports = {};  //EXPORT === MODULE.EXPORTS === {}
+// lub:
+module.exports = "coś zwrócine z tego modułu :) ";
+
+//przykład eksportu licznika, który inkrementuje się za kazdym wywołaniem
+	let counter = 0;
+	module.exports = () =>  console.log(++counter)
+
+//przykład eksportu kilku właściwości
+let counter = 0;
+exports.ob = {	//proponowana skałądnia "module.exports", bo jakieś wiązania sa zrywane w "exports"
+    add() { console.log(++counter) },
+    actualNumber() { console.log(counter) }
+}
+const GetNum = () => { console.log('GetNum', counter) };
+exports.GetNum = GetNum;
+exports.GetNum2 = () => { console.log('GetNum2', counter) };
+
+
+
+
+
+//-----------------------------------------------------------------------------
+//Obiekt global  (podobnie jak window w przeglądarce)
+najważneijsze metody:
+- process
+- require()
+- module
+- exports
+- consol (m. in. consloe.log())
+- class Buffer
+- setTimeout() / setInterval() / clearinterval()  //setTimeout( () => { console.log("Wykonalo sie!"); }, 1000 )
+- __dirname / __filename
+
+//Obiekt global.proces 
+global.process.argv - zwróci tablicę ze ścieżką i podanymi ARGUMENTAMI (w formie stringów)
+global.process.env - chyba wszystkie dane o urzytkowniku, kodowaniu, cieżki, jaki windows itp.
+const port = process.env.PORT || 3000   // gdy chcemy wsatwić stronke na serwerze
+//można wpisywać bez "global", czyli: console.log(process.env);
+
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//   #####    ###
+//   #       #   #
+//   #       #
+//   ####     ###
+//   #           #
+//   #       #   #
+//   #        ###
 
 const fs = require('fs');
 //-----------------------------------------------------------------------------
@@ -136,7 +251,7 @@ fs.access('./names.txt', fs.constants.W_OK, (err) => {
 //-----------------------------------------------------------------------------
 fs.rename('names.txt', 'imiona.txt', (err) => {  //zmiana nazwy pliku
     if (err) return console.log(err);
-    console.log("nazwa zminiona");
+    console.log("nazwa zmieniona");
 })
 
 //obsługa polecenia asynchronicznego
@@ -148,7 +263,7 @@ try {
 
 //-----------------------------------------------------------------------------
 //odczytywanie informacji o plikach (jakie pliki są w folderze)
-console.log(fs.readdirSync('./'));  //wyświetli pliki istniejace w tym filderze
+console.log(fs.readdirSync('./'));  //wyświetli pliki istniejace w tym folderze
 
 fs.readdir('./', (err, files) => {
     if(err) return console.log("Błąd: ", err);
@@ -158,19 +273,19 @@ fs.readdir('./', (err, files) => {
 //-----------------------------------------------------------------------------
 //READFILE
 
-fs.readFile('names.txt', (err, data) => {
+fs.readFile('names.txt', (err, data) => {  // ewentualnie ściezke podawć jako: './names.txt'
     console.log(data); //pobrane dane w formie buforu, wartości w postaci HEX
     console.log(data.toString());   //dane w postaci "string"
 })
 
 //To samo ale z kodowaniem
-fs.readFile('names.txt', 'utf8', (err, data) => {
+fs.readFile('names.txt', 'utf8', (err, file) => { 
     if(err) throw Error(err)
-     console.log(data);
+     console.log(file);
 })
 
 try{
-    const names = fs.readFileSync('names.txt', 'utf8')
+    const names = fs.readFileSync('names.txt', 'utf8')  //SYNCHRONICZNE wywołanie
     console.log(names);
 } catch (err) {
     console.log(err);    
@@ -184,6 +299,18 @@ fs.writeFile('nowyPlik.txt', "Tresc w nowym pliku", (err) => {
     else console.log("Udało sie zapspiac w pliku");
 })
 
+
+//Samuraj zrobił to tak:
+	//const dataJSON = JSON.stringify(tasks);
+	fs.writeFile('./todoDB.json', dataJSON, 'utf-8', (err) => {
+		if (err) throw err;
+        console.log('Zadanie', title.yellow.underline, 'zostało usunięte.'.magenta)
+    });
+
+//asynchronicznie tak:
+	fs.writeFileSync('./todoDB.json', dataJSON);
+
+
 fs.readFile('names.txt', 'utf8', (err, data) => {
     if(err) return console.log('nie udalo sie');
     fs.writeFile('nowyPlik.txt', data, (err) => {
@@ -192,6 +319,8 @@ fs.readFile('names.txt', 'utf8', (err, data) => {
     })
 })
 
+//-----------------------------------------------------------------------------
+//APPENDFILE  - dodawanie treści do pliku
 const names = "Jan, Jerzy"
 fs.appendFile( 'users.txt', names, (err) => {
   if(err) console.log(ree);
@@ -210,10 +339,11 @@ fs.readFile('names.txt', (err, data) => {       //odczyt w formacie HEX
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-const path = require('path');
+const path = require('path');  //moduł pomagający budowanie ścieżki
 
 const pathToFile = path.join(__dirname, 'indeks.js');
-const pathToFile2 =__dirname + '\\' + 'indeks.js' //to samo co wyżej
+const pathToFile2 =__dirname + '\\' + 'indeks.js'; //to samo co wyżej
+const pathToFile3 =__filename;                     //to samo co wyżej
 //console.log(pathToFile2);    //wyświetli całą ścieżkę gdzie jesteśmy
 
 const anotherPath = path.join('/users/pl', 'active', 'user.json') //ręczne układnaie śceizki
@@ -224,44 +354,116 @@ const parse = path.parse(__filename);   //śceizka w postaci obiektu z kilkoma d
 
 const parse2 = path.parse(path.join(__filename, 'index.js'));
 //console.log(parse2);
-//console.log(parse2.ext); //tylko rozszeżenie
-//console.log(path.extname('jakisPlik.js')); //tylko rozszeżenie
+console.log(path.extname('jakisPlik.js')); //tylko rozszeżenie
+
+
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+//    ###           #           #    
+//   #              #           #    
+//   #      ###   #####   ###   #    
+//  ####   #   #    #    #   #  #### 
+//   #     #####    #    #      #   #
+//   #     #        #    #   #  #   #
+//   #      ###      ##   ###   #   #
+//
 
-/*Zakładnie nowego projektu (serwera):
-1. Musze mieć zainstalowany node na kompie. Można to sprawdzić poleceniem w konsoli:
-	node -v
-2. W pustym folderze, tworze sobie plik "app.js"
-3. W konsoli wywłuje polecenie 	
-	npm init
-4. Konsola będzie czekała na wpisanie kilku informacji: nazwa projektu itd...
-	Aby zostawić domyślne, trzeba ponaciskać Enter.
-5. Aby korzystać z Expres, to trzeba go zainstalować:
-	npm i express -S
-6. W pliku app.js tworze prosty serwer:
-	const express = require('express')
-	const app = express();
-	app.listen(3000, () => {
-		console.log('Server is listening at http://localhost:3000');
-	});
+//Projekt konsolowy, ma pobrać API waluty i daty (na podstawie filmu 40, node.js)
+//Urzyjemy node-fetch  (oparty na promisach). Instalacja:   npm i node-fetch
+//Z konsoli uruchamiamy plik z parametrem (datą)
+//na podstawie podanego parametru wysyłamy zapytanie do zewnętrznego serwera
+const fetch = require('node-fetch');
+
+const number = process.argv[2] || Math.floor(Math.random() * 2000);  //odczytanie parametru, gdy wpiszemy: node nazwaPliku.js 2000
+//można zabespieczyć, ze jak ne licznba, to wywołaj process.exit();
+
+fetch(`http://numbersapi.com/${number}/year?json`)
+    .then(response => { //Gdy pozytywne rozwiązanie obietnicy, to zwróci kolejny promis
+        if(response.ok) {
+            return response.json()
+        } else {
+            throw new Error("Coś nie tak! ", response.status)
+        }
+    })
+    .then(data => console.log(data.text))
+    .catch(error => console.log('Błąd!', error)) //rozwiązanie negatywne
+
+
+
+
+
+//                                               #
+//                                               #
+//  # ###   ###    ####  #    #   ###    ###   #####
+//  ##     #   #  #   #  #    #  #   #  #        #
+//  #      #####  #   #  #    #  #####   ###     #
+//  #      #       ####  #    #  #          #    #
+//  #       ###       #   #####   ###    ###      ##
+//                    #
+
+//ten sam projekt co wyżej
+const request = require('request');
+
+const number = process.argv[2] || Math.floor(Math.random() * 2000);  //odczytanie parametru, gdy wpiszemy node nazwaPliku.js 2000
+
+const url = `http://numbersapi.com/${number}/year?json`;
+request(url, { json: true }, (error, response, body) => {
+    if (error) {        return console.log('error', error);     }
+    if (response.statusCode !== 200) return console.log('Coś poszło nie tak, sprawdz URL');
+    console.log(body.text);
+});
+
+
+
+
+//                  #
+//   ####   #   #        ###    ###
+//       #   # #   ##   #   #  #
+//   #####    #     #   #   #   ###
+//  #    #   # #    #   #   #      #
+//   ### #  #   #  ###   ###    ###
+
+//to samo co wyżej
+const axios = require('axios');
+
+const number = process.argv[2] || Math.floor(Math.random() * 2000);  //odczytanie parametru, gdy wpiszemy node nazwaPliku.js 2000
+
+const url = `http://numbersapi.com/${number}/year?json`;
+axios.get(url)
+    .then((response) => {
+        console.log(response.data.text)
+    })
+    .catch(error => console.log('error', error)) //rozwiązanie negatywne
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+/*
+         #                 ###            #
+         #                #               #                           #
+  ###  ##### # ###  ###   #     ####      #   # #    # # ###  ###   ###  #     #
+ #       #   ##    #   # ####       #     # #   #    # ##    #     #   # #     #
+  ###    #   #     #####  #     #####     ##    #    # #      ###  #   # #  #  #
+     #   #   #     #      #    #    #     # #   #    # #         # #   # # # # #
+  ###     ## #      ###   #     ### #     #   #  ##### #      ###   ###   #   #
 
 */
-
-//proponowana struktura plików:
-docs
-edu
-imagesmodules
-node-exapmles
-work
-
-
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+JSONView - //wtyczka do "ładnego" wyświetlania jsona (wtyczka do przeglądarki)
 
 Bibioteki do node:
 
@@ -285,7 +487,7 @@ Powino być widać proces instalacji
 Aby go uruchomić, trzeba w wierszu poleceń wpisać:
 http-server
 Pojawi się adres IP 
-Ten adres trzeba wkleić w przeglądarekę i odpali się plik "index.html" folderu z ktrurego 
+Ten adres trzeba wkleić w przeglądarekę i odpali się plik "index.html" folderu z którego 
 uruchomiliśmy polecenie "http-server"
 
 Z jakiegos powodu na moim lapku nie ładuje sie strona
@@ -356,13 +558,6 @@ Wyświetli się adres serwera, np: http://localhost:8080/webpack-dev-server/
 Tym adresem uruchamiamy stronę
 
 
-System numerownia wersji:
-Numerowanie semantyczne
-2.3.6
-gdzie 2 to główna wersja
-gdzie 3 to nowe funkcjonalności w ramach głównej wersji
-gdzie 6 to drobne poprawki (błędy itp.)
-
 
 Automatyczne tworzenie pliku konfiguracyjnego packet.json:
 W konsoli polecenie:
@@ -380,6 +575,61 @@ i pobrane zostaną brakujące pliki
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+
+
+//  #####
+//  #
+//  #      #   #  ####   # ###   ###    ###    ###
+//  ####    # #   #   #  ##     #   #  #      #
+//  #        #    #   #  #      #####   ###    ###
+//  #       # #   ####   #      #          #      #
+//  #####  #   #  #      #       ###    ###    ###
+//                #
+
+
+//Zakładnie nowego projektu (serwera):
+//1. Musze mieć zainstalowany node na kompie. Można to sprawdzić poleceniem w konsoli:
+	node -v
+//2. W pustym folderze, tworze sobie plik "app.js"
+//3. W konsoli wywłuje polecenie 	
+	npm init  //npm init --yes    -aby wszystko domyslnie było na "tak"
+//4. Konsola będzie czekała na wpisanie kilku informacji: nazwa projektu itd...
+//	Aby zostawić domyślne, trzeba ponaciskać Enter.
+//5. Aby korzystać z Expres, to trzeba go zainstalować:
+	npm i express -S
+//6. W pliku app.js tworze prosty serwer:
+	const express = require('express')
+	const app = express();
+	app.listen(3000, () => {
+		console.log('Server is listening at http://localhost:3000');
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+//  #   #                 #
+//  ##  #                 #        #
+//  ##  #   ###    ###  #####          ###
+//  # # #  #   #  #       #       ##  #
+//  #  ##  #####   ###    #        #   ###
+//  #  ##  #          #   #        #      #
+//  #   #   ###    ###     ##  #   #   ###
+//                               ###
+
+
+
+
+
+
+
 
 
 

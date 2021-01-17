@@ -5,7 +5,8 @@ Definowanie na dwa sposby:
 * słowo kluczowe "new"
 
 operacje na obiektach przez metodę "Object":
-Object.getOwnPropertyDescriptor(nazwaObiektu, "właściwość" ); // wyswietla właściwości dla podanego obiektu
+Object.getOwnPropertyDescriptor(nazwaObiektu, "właściwość" ); // wyswietla właściwości dla podanego obiektu (chyab w formie jsona)
+Object.getOwnPropertyNames(nazwaObiektu); // też wyswietli właściwości ale w formie tablicy
 Object.defineProperty(nazwaObiektu, "właściwość", { value: 10 }); // zmiana wskazanej, w tym przypadku vartosci w danym obiekcie.
 																// można też na tej samej zasadzie dodać kolejną właściwość
 var newObj = Object.assign({}, Obj); 	//tworzy duplikat obiektu. Pierwszy argument to nowy (pusty) obiekt, adrugi argument to obiekt do skopiowania
