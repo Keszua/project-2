@@ -11,31 +11,39 @@ app.listen(3000, () => {
     //console.log('Server is listening at http://localhost:3000');
 });
 
-// app.get('/', (req) => {
-//     console.log(req.hostname);  //nazwa
-//     console.log(req.ip);    //ip klienta (czasami połączenie przechodzi przez proxy i PI może inne)
-//     console.log(req.ips); //tablica IP. Jak odpalam z tego samego kompa, to tablica będzie pusta
-// });
 
-
-// app.get('/hi', () => {
-//     console.log("Hi, Witaj");
-// });
-
-/*
-app.all('/', (req) => {  //reakcja na każde zapytanie/metodę
-    //console.log(req.method); //= GET
-    console.log('req.url', req.url);
-    //console.log('req.originalUrl', req.originalUrl); // różni się od url gdy przekierowywujemy wizytatora
-    //console.log('req.path', req.path); //zawiera ostatnią część adresu
-    //console.log('req.protocol', req.protocol); // "zwykłe" połaczenie http  //= http
-    //console.log('req.secure', req.secure);  // "zabezpieczone" połaczenie  https //=false
-    console.log('req.query', req.query); //zwróci odkodowany obekt, np: { name: 'dfdff', surname: 'Ja' }
-    console.log('Hello '+ req.query.name);
-
-    console.log(req.get('Referer')); //zwróci adres poprzedniej strony (strony odsyłajacej), np: aby zobaczyć kto nas polecił, np: FaceBook
+app.get('/', (req, res) => {
+    //console.log(req.hostname);  //nazwa
+    //console.log(req.ip);    //ip klienta (czasami połączenie przechodzi przez proxy i IP może być inne)
+    //console.log(req.ips); //tablica IP. Jak odpalam z tego samego kompa, to tablica będzie pusta
+    //res.write(`<h1>Witaj ${req.params.id}</h1>`);
+    res.write(`<h1>Witaj </h1>`);
+    res.end();
 });
-*/
+
+
+app.get('/hi', () => {
+    console.log("Hi, Witaj");
+});
+
+
+// app.all('/elo', (req, res) => {  //reakcja na każde zapytanie/metodę
+//     //console.log(req.method); //= GET
+//     //console.log('req.url', req.url);
+//     //console.log('req.originalUrl', req.originalUrl); // różni się od url gdy przekierowywujemy wizytatora
+//     //console.log('req.path', req.path); //zawiera ostatnią część adresu
+//     //console.log('req.protocol', req.protocol); // "zwykłe" połaczenie http  //= http
+//     //if (req.protocol !== 'https') { console.log('Protokół niezabezpieczony') };
+//     //console.log('req.secure', req.secure);  // "zabezpieczone" połaczenie  https //=false
+//     //if (!req.secure) { console.log('Protokół niezabezpieczony') };
+//     //console.log('req.query', req.query); //zwróci odkodowany obekt, np: { name: 'dfdff', surname: 'Ja' }
+//     //console.log('Hello ' + req.query.name);
+
+//     //console.log(req.get('Referer')); //zwróci adres poprzedniej strony (strony odsyłajacej), np: aby zobaczyć kto nas polecił, np: FaceBook
+//     res.write(`<h1>All </h1>`);
+//     res.end();
+// });
+
 
 
 //--------------------------------------------------------------------------------------
@@ -53,7 +61,7 @@ app.get('/:id', (req, res) => {
   // to samo co dwie powyższe linijki
     //res.send(`<h1>Witaj ${req.params.id}</h1>`);
 
-// można wysyłac: 
+// można wysyłac:
   // *string - text/html
     //res.send(`<h1>Witaj ${req.params.id}</h1>`);
   // *Buffer - dane binarne, gdy chemy przesłać plik
@@ -77,9 +85,9 @@ app.post('/', (req) => {        //dodawanie nowego obiektu
 
 app.patch('/:id', (req) => {  //aktualizacja
     console.log('Aktualizacja osoby o ID 1', req.params.id);
-}) //akutalizacja 
+}) //akutalizacja
 
-//app.put //zastepuje 
+//app.put //zastepuje
 
 app.delete('/1', (req) => {     //usuwanie obiektu o danym id
     console.log('Usuwanie osoby o ID 1');
@@ -117,39 +125,39 @@ app.get('/home/about/company', (req, res) => {
 
 //--------------------------------------------------------------------------------------
 //filmik 71 
-const patch = require('path')
+// const patch = require('path')
 
 
-app.get('/', (req, res) => {
-  
-    res.send(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>Document</title>
-        </head>
-        <body>
-            <img src="/logo">
-            Witaj, hejka
-        
-        </body>
-        </html>
-    `);
-});
+// app.get('/', (req, res) => {
 
-app.get('/logo', (req, res) => {
-    
-    //const fileName = path.join(__dirname, 'EXPRESS/plik.png');
-    //const fileName =  `D:\Klamoty\Web\Git\book\express\plik.png`;
-    //console.warn(fileName);
-    console.warn(__dirname);
-    //res.sendFile(fileName);
-    //res.send("Hejka");
+//     res.send(`
+//         <!DOCTYPE html>
+//         <html lang="en">
+//         <head>
+//             <meta charset="UTF-8">
+//             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//             <meta http-equiv="X-UA-Compatible" content="ie=edge">
+//             <title>Document</title>
+//         </head>
+//         <body>
+//             <img src="/logo">
+//             Witaj, hejka
 
-});
+//         </body>
+//         </html>
+//     `);
+// });
+
+// app.get('/logo', (req, res) => {
+
+//     //const fileName = path.join(__dirname, 'EXPRESS/plik.png');
+//     //const fileName =  `D:\Klamoty\Web\Git\book\express\plik.png`;
+//     //console.warn(fileName);
+//     console.warn(__dirname);
+//     //res.sendFile(fileName);
+//     //res.send("Hejka");
+
+// });
 
 
 

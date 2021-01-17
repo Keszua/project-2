@@ -587,7 +587,7 @@ i pobrane zostaną brakujące pliki
 //                #
 
 
-//Zakładnie nowego projektu (serwera):
+//Zakładnie nowego projektu (serwera): (film 64)
 //1. Musze mieć zainstalowany node na kompie. Można to sprawdzić poleceniem w konsoli:
 	node -v
 //2. W pustym folderze, tworze sobie plik "app.js"
@@ -596,13 +596,55 @@ i pobrane zostaną brakujące pliki
 //4. Konsola będzie czekała na wpisanie kilku informacji: nazwa projektu itd...
 //	Aby zostawić domyślne, trzeba ponaciskać Enter.
 //5. Aby korzystać z Expres, to trzeba go zainstalować:
-	npm i express -S
+	npm i express -S  //lub npm install express --save
 //6. W pliku app.js tworze prosty serwer:
-	const express = require('express')
-	const app = express();
-	app.listen(3000, () => {
-		console.log('Server is listening at http://localhost:3000');
-	});
+    const express = require('express')
+    const app = express();
+    app.listen(3000, () => {
+        console.log('Server is listening at http://localhost:3000');
+    });
+//7. Uruchamiamy go poleceneim node nazsaPliku.js
+//routing:
+
+app.get('/', (req, res) => {
+    //console.log(req.hostname);  //nazwa serwera (na stacjonarnym kompie wyświetli się: "localhost")
+    //console.log(req.ip);    //ip klienta (czasami połączenie przechodzi przez proxy i IP może być inne)
+    //console.log(req.ips); //tablica IP. Jak odpalam z tego samego kompa, to tablica będzie pusta
+    res.write(`<h1>Witaj ${req.params.id}</h1>`);
+    res.end();
+});
+
+app.get('/podstrona', (req, res) => { ...   });
+
+//inne metody:
+app.all('/', (req, res) => {  //reakcja na każde zapytanie/metodę
+    //console.log(req.method); //= GET
+    //console.log('req.url', req.url);
+    //console.log('req.originalUrl', req.originalUrl); // różni się od url gdy przekierowywujemy wizytatora
+    //console.log('req.path', req.path); //zawiera ostatnią część adresu
+    //console.log('req.protocol', req.protocol); // "zwykłe" połaczenie http  //= http
+	if(req.protocol !== 'https') {console.log('Protokół niezabezpieczony')};
+    //console.log('req.secure', req.secure);  // "zabezpieczone" połaczenie  https //= false
+    if(!req.secure) {console.log('Protokół niezabezpieczony')};
+    //console.log('req.query', req.query); //zwróci odkodowany obekt, np: { name: 'Karol', surname: 'Keszua' }  film 67
+    //console.log('Hello ' + req.query.name);  //gdy spodziewamy się że przesłane będzie do nas "name"
+    //console.log(req.get('Referer')); //zwróci adres poprzedniej strony (strony odsyłajacej), np: aby zobaczyć kto nas polecił, np: FaceBook
+    res.write(`<h1>Witaj ${req.params.id}</h1>`);
+    res.end();
+});
+
+app.post('/', (req) => {        //dodawanie nowego obiektu
+});
+
+app.patch('/:id', (req) => {  //aktualizacja
+    console.log('Aktualizacja osoby o ID 1', req.params.id);
+})
+
+app.put('/', (req) => {   }); //zastepuje
+
+app.delete('/1', (req) => {     //usuwanie obiektu o danym id
+    console.log('Usuwanie osoby o ID 1');
+})
 
 
 
@@ -614,6 +656,32 @@ i pobrane zostaną brakujące pliki
 
 
 
+
+
+
+
+//-----------------------------------------------------------------------------
+encodeURIComponent()  // do szyfrowania, zabespieczania przezyłąnych danych.
+//KLIENT (plik script.js)
+const name = 'Jakaś osoba';
+const surName = 'Nazwisko';
+const url = `http://localhost:3000/?name=${encodeURIComponent(name)} & surname=${encodeURIComponent(surName)}`;
+
+URLSearchParams() // podobnie jak wyższe polecenie do szyfrowania
+const name = 'Jakaś osoba';
+const surName = 'Nazwisko';
+const params = new URLSearchParams({
+	name,   surName
+})
+const url = `http://localhost:3000/?` + params;
+
+
+
+
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 //  #   #                 #
 //  ##  #                 #        #

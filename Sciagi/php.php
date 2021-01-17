@@ -59,7 +59,7 @@ require("src/debug.php");      //jeśli plik nie istnieje, to skrypt przerywa dz
 require_once("src/debug.php"); 
 
 
-htmlentities(); //zabezpiecza, aby przegladarka nie wykonywała ego kodu
+htmlentities(); //zabezpiecza, aby przegladarka nie wykonywała tego kodu
 
 rand(0, 1) // losowanie liczby: od 0 do 1
 	
@@ -111,8 +111,8 @@ header('Location: index.php'); // przekierowanie na stronę
             $action = self::DEFAULT_ACTION . 'Action';
         }
 
-	
-	
+
+
      ####                                       #
     #    #                                      #
     #    #   ####     ###    # ###    ####    #####    ###    # ###   #   #
@@ -122,7 +122,7 @@ header('Location: index.php'); // przekierowanie na stronę
      ####    #        ###    #        ### #      ##    ###    #        #
              #                                                        #
 
-			 //przypisania
+//przypisania
 $pierwsza = 1;
 $pierwsza = $druga = 13; //obie zmienne otrzymają wartosć 13
 + dodawanie;  - odejmowanie;  * mnożenie;  / dzielenie;  % modulo;  ** potęgowanie
@@ -388,7 +388,7 @@ $myFunction("Tom");
 
 
 strlen();  //długość łańcucha. 
-//przykłąd z określeneim sługości liczby:
+//przykład z określeniem sługości liczby:
 $iloscCyfr = strlen((string) $liczba);
 
 json_encode($text);

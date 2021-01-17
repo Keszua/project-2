@@ -7,7 +7,7 @@ Zobaczyć co to:
 
 Django podobno lepszy od React
 
-Poitrek poleca:  https://material-ui.com/
+Piotrek poleca:  https://material-ui.com/
 
 eslint - sprawdza poprawnosc napisanego kodu, w tym sprawdza sredniki, niezadeklarowane zmienne, niedomkniete nawiasy...
 
