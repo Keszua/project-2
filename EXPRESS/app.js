@@ -8,23 +8,23 @@ const express = require('express')
 const app = express()
 
 app.listen(3000, () => {
-    //console.log('Server is listening at http://localhost:3000');
+    console.log('Server is listening at http://localhost:3000');
 });
 
 
-app.get('/', (req, res) => {
-    //console.log(req.hostname);  //nazwa
-    //console.log(req.ip);    //ip klienta (czasami połączenie przechodzi przez proxy i IP może być inne)
-    //console.log(req.ips); //tablica IP. Jak odpalam z tego samego kompa, to tablica będzie pusta
-    //res.write(`<h1>Witaj ${req.params.id}</h1>`);
-    res.write(`<h1>Witaj </h1>`);
-    res.end();
-});
+// app.get('/', (req, res) => {
+//     //console.log(req.hostname);  //nazwa
+//     //console.log(req.ip);    //ip klienta (czasami połączenie przechodzi przez proxy i IP może być inne)
+//     //console.log(req.ips); //tablica IP. Jak odpalam z tego samego kompa, to tablica będzie pusta
+//     //res.write(`<h1>Witaj ${req.params.id}</h1>`);
+//     res.write(`<h1>Witaj </h1>`);
+//     res.end();
+// });
 
 
-app.get('/hi', () => {
-    console.log("Hi, Witaj");
-});
+// app.get('/hi', () => {
+//     console.log("Hi, Witaj");
+// });
 
 
 // app.all('/elo', (req, res) => {  //reakcja na każde zapytanie/metodę
@@ -48,36 +48,38 @@ app.get('/hi', () => {
 
 //--------------------------------------------------------------------------------------
 //filmik 69 
-
 /*
 app.get('/', (req) => {
     console.log('Spis ludzi');  //nazwa
 });
 
+
+
 app.get('/:id', (req, res) => {
     console.log('Informacja o osobie ', req.params.id);
     //res.write(`<h1>Witaj ${req.params.id}</h1>`);
     //res.end();
-  // to samo co dwie powyższe linijki
+    // to samo co dwie powyższe linijki
     //res.send(`<h1>Witaj ${req.params.id}</h1>`);
 
-// można wysyłac:
-  // *string - text/html
+    // można wysyłac:
+    // *string - text/html
     //res.send(`<h1>Witaj ${req.params.id}</h1>`);
-  // *Buffer - dane binarne, gdy chemy przesłać plik
+    // *Buffer - application/octet-stream dane binarne (gdy chemy przesłać plik)
     //const str = 'Jakiś fajny tekst';
     //const arr = str.split(' ');
     //res.send(arr);
-  // *array/Object - aplication/json i dane zakodowane do JSON
+    // *array/Object - aplication/json i dane zakodowane do JSON
     obj = {
         text: "Witaj",
         isGood: true,
     }
     //res.send(obj);
-  //lub zawsze json, nawet gdy dana wejściową jest tekst:
+    //lub zawsze json, nawet gdy dana wejściową jest tekst:
     res.json("Witaj fajny formacie");
 
 });
+
 
 app.post('/', (req) => {        //dodawanie nowego obiektu
     console.log('Dodawanie nowej osoby');
@@ -123,45 +125,19 @@ app.get('/home/about/company', (req, res) => {
 })
 */
 
-//--------------------------------------------------------------------------------------
-//filmik 71 
-// const patch = require('path')
-
-
-// app.get('/', (req, res) => {
-
-//     res.send(`
-//         <!DOCTYPE html>
-//         <html lang="en">
-//         <head>
-//             <meta charset="UTF-8">
-//             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//             <meta http-equiv="X-UA-Compatible" content="ie=edge">
-//             <title>Document</title>
-//         </head>
-//         <body>
-//             <img src="/logo">
-//             Witaj, hejka
-
-//         </body>
-//         </html>
-//     `);
-// });
-
-// app.get('/logo', (req, res) => {
-
-//     //const fileName = path.join(__dirname, 'EXPRESS/plik.png');
-//     //const fileName =  `D:\Klamoty\Web\Git\book\express\plik.png`;
-//     //console.warn(fileName);
-//     console.warn(__dirname);
-//     //res.sendFile(fileName);
-//     //res.send("Hejka");
-
-// });
 
 
 
+app.get('/hi/:name', (req, res) => {
+    const { name } = req.params;
+    res.cookie('visitor_name', name, { maxAge: 5 * 60 * 1000 });
+    res.send(`<h2>Witaj ${name} </h1>`);
+});
 
 
+app.get('/logout', (req, res) => {
+    res.clearCookie('visitor_name');
+    res.send('Wylogowano');
+});
 
 //--------------------------------------------------------------------------------------

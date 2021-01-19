@@ -64,7 +64,7 @@ os.homedir()    //ścieżka do home
 
 Przykłady:
 200 "OK"
-301 "Move Permanently" trwałe przeniesienie zasobu na nowy adres url
+301 "Move Permanently" trwałe przeniesienie zasobu na nowy adres url (blokuje powrót na podstronę)
 302 przekierowanie niestałe. (należy prejść na podany adres, ale to może się jeszcze zmienić)
 303 zobacz gdzie indziej - przy metodzie HTTP innej niż GET, ale ma przekierownie na GET
 307 przekierowanei tymczasowe - przy metodzie HTTP innej niż GET
@@ -576,7 +576,6 @@ i pobrane zostaną brakujące pliki
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
-
 //  #####
 //  #
 //  #      #   #  ####   # ###   ###    ###    ###
@@ -631,24 +630,102 @@ app.all('/', (req, res) => {  //reakcja na każde zapytanie/metodę
     //console.log(req.get('Referer')); //zwróci adres poprzedniej strony (strony odsyłajacej), np: aby zobaczyć kto nas polecił, np: FaceBook
     res.write(`<h1>Witaj ${req.params.id}</h1>`);
     res.end();
+    //res.send(`<h1>Witaj ${req.params.id}</h1>`);   // to samo co dwie powyższe linijki  czyli write i end  + dodaje Content-Lenght,  Content-Type
+
 });
 
 app.post('/', (req) => {        //dodawanie nowego obiektu
 });
 
-app.patch('/:id', (req) => {  //aktualizacja
+app.patch('/:id', (req) => {    //aktualizacja   :id/:id2 - zmienna, mozna je rozdzielać znakami / . - (slesz, kropka, myślnik)
     console.log('Aktualizacja osoby o ID 1', req.params.id);
 })
 
-app.put('/', (req) => {   }); //zastepuje
+app.put('/', (req) => {   });   //zastepuje obiekt nowym obiektem
 
 app.delete('/1', (req) => {     //usuwanie obiektu o danym id
     console.log('Usuwanie osoby o ID 1');
 })
 
+// istotan jest kolejnosc przechwytywania ścieżek.
+// ? - zastępuje wszytkie znaki, czyli ściezka //article/123?   przechwyci:   //article/123/Tytyl
+// i stworzy sie obiekt req.params:  {id: '123',  title: 'Tytul' }
+
+//res.SEND - sam dobierze Content-Type:
+app.get('/:id', (req, res) => {   
+    res.send("Ala ma kota"]);  // *string - text/html
+    res.send( ["Ala", "ma", "kota"] );  // *array/Object - aplication/json i dane zakodowane do JSON
+    res.send( {"text": "Hello", "isGood": true} );  // *array/Object - aplication/json i dane zakodowane do JSON
+	res.json( {"text": "Hello", "isGood": true} );    //zawsze wysle JSON + można go formatować
+    // *Buffer - application/octet-stream dane binarne (gdy chemy przesłać plik)
+}
+
+//Przekierowanie  (node.js, filmik 70 od minóty 13-tej)
+app.get('/', (req, res) => {
+    res.redirect('/another/path');  //robi to samo poniższe 2 linijki:
+        //res.location('http://google.com');
+        //res.sendStatus(302);
+
+    
+    res.redirect('..');     // gdy mamy dłuższe ścieżki i chcemy zrobić przekierowanie na ściezkę wyżej:
+    res.redirect('back');   // powrót do poprzedneij ścieżki (domyślnie cofa nas na stronę główną)
+    res.redirect('http://google.com', 301);  //z wymuszonym statusem twałego przekierowania
+})
+
+//wysyłanie pliku, np: obrazka na stronę  (filmik 71 )
+app.get('/logo', (req, res) => {
+    res.sendFile('plik.png');   //lub ścieżkę, np: const fileName = path.join(__dirname, 'EXPRESS/plik.png');  //wymagane dodanie: const patch = require('path')
+        //jako drugi argument mogę podać: { root: patch.join(__dirname, 'static') }  w tym przypadku nie podawać całej ścieżki, tylko nazwe pliku (lub folder/plik)
+        //    { lastModified: flase }  //to wymusi, że za każdym razem jest przesyłąny nowy plik
+        //    { headers }  // mozna dodać kolejne nagłowki
+        //    { dotfiles - allow/deny/ignore }  // czy można pobierać pliki z kropką (np, gdy ktoś che pobrać .gitignore )
+        //    inne
+	//lub wysłać plik z 'index.html'
+
+    //inna metoda wysyłania pliku: 
+    res.attachment('plik.png'); //wymusi na użytkowniku pobranie pliku 
+    res.end();
+
+    //inna metoda wyysłania pliku:
+    res.download(fileName, 'Nazwa_dla_pobierajacego.png'); //trzeba podac śceirzkę absolutną, czyli const fileName = path.join(__dirname, 'EXPRESS/plik.png');   Mozn apodac 3-ci argument z obiektem
+
+});
+
+    //ustawianie dowolnych nagłówków:   UWAGA! W pierw trzeba wustawić nagówki, dopiero później treść odpowiedzi
+    res.set( {'Content-Type': 'text/plain', 'Content-Lenght': '123'} );
+    res.headersSent  //trochę tego nie rozumiem. Gdy jest true, to znaczy że zostały już wysłane nagłówki i nie mozna już ich edytować
 
 
 
+//-----------------------------------------------------------------------------
+//COOKIE
+
+    res.cookie('ad_id', '123');  //stworzenie ciasteczka 
+        // jako trzeci argument można podać:
+        // domain   - domena do której bedą wysyłąne ciastka
+        // expires  - czas do kiedy ciastko ma być zapamiętane
+        // maxAge   - zamiast expires - okresla, jak długo ciastko ma istnieć (w ms)
+        // httpOnly - sprawia, że frontend nie ma dostepu do ciastka
+
+//przykład ustawienia cistka na 5 minut:
+app.get('/hi/:name', (req, res) => {
+    res.cookie('visitor_name', req.params.name, { maxAge: 5 * 60 * 1000 });
+});
+
+//przykład ustawienia ciastka z imieniem na 7 dni:
+app.get('/hi/:name', (req, res) => {  //w przeglądarece:  http://localhost:3000/hi/karol
+    const { name } = req.params;
+    const dt = new Date();
+    dt.setDate(dt.getDate() + 7);  //aktualna data + 7 dni
+    res.cookie('visitor_name', name, { expires: dt });
+});
+
+
+    res.clearCookie()  //usówanie cistka
+app.get('/logout', (req, res) => {
+    res.clearCookie('visitor_name');
+    res.send('Wylogowano');
+});
 
 
 
@@ -661,7 +738,7 @@ app.delete('/1', (req) => {     //usuwanie obiektu o danym id
 
 
 //-----------------------------------------------------------------------------
-encodeURIComponent()  // do szyfrowania, zabespieczania przezyłąnych danych.
+encodeURIComponent()  // do szyfrowania, zabespieczania przesyłąnych danych.
 //KLIENT (plik script.js)
 const name = 'Jakaś osoba';
 const surName = 'Nazwisko';
