@@ -602,7 +602,9 @@ i pobrane zostaną brakujące pliki
     app.listen(3000, () => {
         console.log('Server is listening at http://localhost:3000');
     });
-//7. Uruchamiamy go poleceneim node nazsaPliku.js
+//7. Uruchamiamy go poleceniem:
+    node nazsaPliku.js
+
 //routing:
 
 app.get('/', (req, res) => {
@@ -718,6 +720,7 @@ app.get('/hi/:name', (req, res) => {  //w przeglądarece:  http://localhost:3000
     const dt = new Date();
     dt.setDate(dt.getDate() + 7);  //aktualna data + 7 dni
     res.cookie('visitor_name', name, { expires: dt });
+    res.send(`<h2>Witaj ${name} </h2>`);  //komunikat na stronie
 });
 
 
@@ -725,11 +728,51 @@ app.get('/hi/:name', (req, res) => {  //w przeglądarece:  http://localhost:3000
 app.get('/logout', (req, res) => {
     res.clearCookie('visitor_name');
     res.send('Wylogowano');
+    res.redirect('/');  //po wylogowaniu, przejdz na stronę główną
 });
 
 
 
+//-----------------------------------------------------------------------------
+//MIDDLEWARE
 
+//Nalezy pamiętać, aby zastowować midleware przed naszymi śceiżkami
+    app.use(jakiśMiddleware());
+
+//Mmddleware dla JSONA:
+    app.use(express.json());
+
+//Przykład przesłania JSONA z front na back  (z filmu 73  min: 8:46)
+{
+// w pliku app.js  (plik serwera, oczywiście wyżej import i uruchomienie expresa...)
+    app.use(express.json());
+
+    app.post('/hello', (req, res) => {  //przesłanie danych z frona do back
+        console.log(req.body);
+        const { name, surname } = req.body;  //body dochodzi po dodaniu:  app.use(express.json());
+        res.send(`<h2>Witaj ${name} ${surname} </h2>`);  //to mi się nie wyświetliło
+    });
+
+
+//w konsoli przeglądarki (strona klienta):
+    fetch('/hello', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: 'Anna',
+        surname: 'Kowalska' }),
+      headers: { 'Content-Type': 'application/json'},
+    });
+
+}
+
+//Przykład midleware, który automatycznie ładuje pliki z folderu:
+
+// w projekcie trzeba dodać folder 'static', w którym bedzie plik index.html i inne potrzebne pliki
+// w app.js (plik serwera) po za podstawowym importem expresa i require('path), dosajemy tylko:
+
+app.use(express.static(
+    path.join(__dirname, 'static'),
+));
 
 
 

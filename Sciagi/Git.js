@@ -471,7 +471,7 @@ git tag v1.0.0 5a33dd3	-a -m "opis"	//przypisanie etykiety do konkretnego commit
 git tag -d v1.0.0			//usunięcie tag
 git tag -l 'v1.4.2.*'		//wyszukanie konkretnej serii etykiet
 git show v1.0				//wyświetla informacje o komicie 
-git push --tags				//wysłane informacji otagach na serwer
+git push --tags				//wysłane informacji o tagach na serwer
 git push origin v1.0.0 		//wysłanie informacji o tylko jednym tagu
 
 git push origin -d v1.0.0 	//usuwanie tagów z repozytorium
