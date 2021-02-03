@@ -731,6 +731,29 @@ app.get('/logout', (req, res) => {
     res.redirect('/');  //po wylogowaniu, przejdz na stronę główną
 });
 
+//do wygodniejszej obsługi cistek jest biblioteka cookie-parser  (npm i cookie-parser --save) filmik 73
+    const cookieParser = require('cookie-parser')
+    app.use(cookieParser());
+
+    app.get('/hi/:name', (req, res) => {
+        res.cookie('visitor_name', req.params.name, { maxAge: 5 * 60 * 1000 });
+        res.send(`<h2>Witaj ${req.params.name} </h2>`);
+    });
+
+    app.get('/', (req, res) => {
+        const { visitor_name } = req.cookies;
+        if (visitor_name) {
+            res.send(`<h2>Cistko: ${req.cookies.visitor_name} </h2>`);
+        } else {
+            res.send('Czy my się znamy?');
+        }
+        console.log(req.cookies);
+    });
+
+    app.get('/logout', (req, res) => {
+        res.clearCookie('visitor_name');
+        res.send('Wylogowano');
+    });
 
 
 //-----------------------------------------------------------------------------

@@ -225,7 +225,19 @@ Application -> Clear storage -> Clear site data
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
-
+//PROPONOWANA STRUKTURA PLIKÓW
+|-- app.js
+|-- package.json
+|-- public    (pliki statyczne)
+|   |-- index.html
+|   |-- images
+|   |-- javascripts
+|   |-- stylesheets
+|       |-- style.css
+|   
+|-- routes   
+    |-- index.js
+    |-- users.js
 
 
 
