@@ -80,6 +80,7 @@ git add nazwaPliku 		//dodawanie pliku do indeksu
 git add --all  			//dodanie wszystkich plików
 git add -A  			//dodanie wszystkich plików
 git add .  				//dodanie wszystkich plików
+git add folser/plik     //dodanie pliki konkretnego folderu
 git commit  			//zrobienie komitu (snapshota). Otworzy sie edytor w którym trzeba wpisać opis zmina.
 git commit -m "Opis zmiany" //zrobienie komitu (snapshota) bez otwierania edytora
                             // Tytół opisu zrobic do 50 znaków. Zawijanie wierszy po 72 znakach.
