@@ -357,6 +357,71 @@ const parse2 = path.parse(path.join(__filename, 'index.js'));
 console.log(path.extname('jakisPlik.js')); //tylko rozszeżenie
 
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//  ####
+//  #   #                          #
+//  #   #  # ###   ###   ### ##         ###    ###
+//  ####   ##     #   #  #  #  #  ##   #      #   #
+//  #      #      #   #  #  #  #   #    ###   #####
+//  #      #      #   #  #  #  #   #       #  #
+//  #      #       ###   #  #  #  ###   ###    ###
+
+// stany promisa:
+// pending - oczekujący
+// fulfielled - spełniony
+// reject - odrzucony
+
+const mypromise = new Promise(() => {
+    console.log('Jestem prostym promisem');
+})
+
+//tworzenie promisa (chyba zwykle po stronie serwera)
+const myPromise = new Promise((resolve, reject) => {
+    //console.log('Jestem promisem2');
+    setTimeout(() => {
+        resolve('Wszystko OK'); //to zwróci, gdy się wykona
+    }, 2000);
+    setTimeout(() => {
+        reject(new Error('Nie chce mi się pracować')); //to zwróci, gdy się nie wykona
+    }, 1600);
+})
+
+// rozpatrywanie promisa
+myPromise
+    .then((result) => {
+        console.log('Zadanie skonczone', result);
+    })
+    .catch(err => {
+        console.log('Coś nie tak', err);
+    });
+
+
+//async - specjalna metoda, do obsługi promisów
+
+(async () => {
+    await gotujWode();
+    console.log("Woda zagotowana");
+    await zaparzanieHerbaty();
+    console.log("Herbata zaparzona");
+    await czekajNaOdpowiedniaTemp()
+    console.log("Temperatura odpowiednia, czas wypić");
+
+})();
+
+function gotujWode(clb) {
+    console.log("Gotowanie wody...");
+    return new Promise((resolve, reject) => {
+        setTimeout(resolve, 1000);
+    });
+}
+
+
+
+
+
+
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
