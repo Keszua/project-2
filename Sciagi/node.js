@@ -410,6 +410,7 @@ myPromise
 
 })();
 
+//przykladowa funkcja z promisem:
 function gotujWode(clb) {
     console.log("Gotowanie wody...");
     return new Promise((resolve, reject) => {

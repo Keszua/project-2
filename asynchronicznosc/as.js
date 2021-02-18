@@ -4,20 +4,74 @@
 //     setTimeout(clb, 2000);
 // }
 
-(async () => {
-    await gotujWode();
-    console.log("Woda zagotowana");
-    await zaparzanieHerbaty();
-    console.log("Herbata zaparzona");
-    await czekajNaOdpowiedniaTemp()
-    console.log("Temperatura odpowiednia, czas wypić");
+// (async () => {
+//     await gotujWode(() => { console.log("AAA") });
+//     console.log("Woda zagotowana");
+//     await zaparzanieHerbaty();
+//     console.log("Herbata zaparzona");
+//     await czekajNaOdpowiedniaTemp()
+//     console.log("Temperatura odpowiednia, czas wypić");
 
-})();
+// })();
+
+// (async () => {
+//     await doMyJob(2, () => console.log('Dobry znak'));
+//     console.log("Zakończono")
+
+// })();
+
+doMyJob(2, err => {
+    if (err === null) {
+        console.log('Jest OK');
+        pay(() => {
+            console.log('Zapłata poszła');
+        });
+    } else {
+        console.log('Coś posżło nie tak', err);
+    }
+
+})
+//     console.log("Zakończono")
+
+
+function pay(clb) {
+    //return ({ null, 'OK'})
+    clb(null);
+}
+
+function doMyJob(hours, clb) {
+
+    if (hours > 8) {
+        //reject('Cos nie tak')
+        clb(new Error('Za dlugie godziny pracy'))
+    } else {
+        setTimeout(() => {
+            clb(null);
+        }, hours * 1000);
+    }
+
+    // return new Promise((resolve, reject) => {
+    //     if (hours > 8) {
+    //         //reject('Cos nie tak')
+    //         clb(new Error('Za dlugie godziny pracy'))
+    //     }
+    //     else {
+    //         clb();
+    //         setTimeout(resolve, hours * 1000);
+    //     }
+
+    // });
+}
+
 
 function gotujWode(clb) {
-    console.log("Gotowanie wody...");
+    console.log('Gotowanie wody...');
     return new Promise((resolve, reject) => {
-        setTimeout(resolve, 1000);
+        setTimeout(() => {
+            console.log('xxxx');
+            clb();
+            resolve()
+        }, 3000);
     });
 }
 
@@ -30,7 +84,7 @@ function gotujWode(clb) {
 function zaparzanieHerbaty(clb) {
     console.log('Zaparzanie herbaty...');
     return new Promise((resolve, reject) => {
-        setTimeout(resolve, 1000);
+        setTimeout(resolve, 3000);
     });
 }
 
@@ -42,7 +96,7 @@ function zaparzanieHerbaty(clb) {
 function czekajNaOdpowiedniaTemp(clb) {
     console.log('Czekam na odpowiednia temepraturę...');
     return new Promise((resolve, reject) => {
-        setTimeout(resolve, 1000);
+        setTimeout(resolve, 3000);
     });
 }
 
