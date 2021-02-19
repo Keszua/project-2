@@ -20,35 +20,62 @@
 
 // })();
 
-doMyJob(2, err => {
-    if (err === null) {
-        console.log('Jest OK');
-        pay(() => {
-            console.log('Zapłata poszła');
-        });
-    } else {
-        console.log('Coś posżło nie tak', err);
+// doMyJob(2, err => {
+//     if (err === null) {
+//         console.log('Jest OK');
+//         pay(() => {
+//             console.log('Zapłata poszła');
+//         });
+//     } else {
+//         console.log('Coś poszło nie tak', err);
+//     }
+// })
+
+// doMyJob(7)
+//     .then(() => {
+//         console.log('Zadanie zakończone');
+//         return pay();
+//     })
+//     .then(() => {
+//         console.log('Wypłata doszła');
+
+//     })
+//     .catch(err => {
+//         console.log('Coś poszło nie tak', err);
+//     })
+
+
+(async () => {
+    try {
+        await doMyJob(9);
+        console.log('Zadanie zakończone');
+        await pay();
+        console.log('Wypłata doszła');
+    } catch (e) {
+        console.log('GAGATEK NIE ZAPŁACIŁ!!!')
     }
-
-})
-//     console.log("Zakończono")
+})();
 
 
-function pay(clb) {
-    //return ({ null, 'OK'})
-    clb(null);
+function pay() {
+    return new Promise(resolve => resolve())
+
 }
 
-function doMyJob(hours, clb) {
+function doMyJob(hours) {
+    console.log("doMyJob...")
 
-    if (hours > 8) {
-        //reject('Cos nie tak')
-        clb(new Error('Za dlugie godziny pracy'))
-    } else {
-        setTimeout(() => {
-            clb(null);
-        }, hours * 1000);
-    }
+    return new Promise((resolve, reject) => {
+        if (hours > 8) {
+            reject(new Error('Za dlugie godziny pracy'))
+        } else {
+            setTimeout(() => {
+                resolve()
+            }, hours * 1000);
+
+        }
+    });
+
 
     // return new Promise((resolve, reject) => {
     //     if (hours > 8) {
@@ -59,7 +86,6 @@ function doMyJob(hours, clb) {
     //         clb();
     //         setTimeout(resolve, hours * 1000);
     //     }
-
     // });
 }
 

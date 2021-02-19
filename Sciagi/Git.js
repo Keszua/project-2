@@ -459,6 +459,12 @@ git pull origin nazwaGalezi //UWAGA pobranie danych na aktywną gałąź (na kt�
 
 git fetch [nazwa-zdalengo-repozytorium]	//aby uzyskać dane ze zdalnego projektu
 
+//ZAKŁADANIE ZDALNEGO REPO NA SWOIM KOMPIE:
+1. Ma być w katalogu, w którym chce ząłoyć repozytorium "zdalne"
+git init --bare  // Ten parametr powoduje że repozytorium nie będzie miało katalogu roboczego
+// Otrzymam komunikat w stylu: Initialized empty Git repository in C:/Users/t_kowalski/ProjektZdalny/
+git remote add origin C:/Users/t_kowalski/ProjektZdalny  // podłacam się pod to repozytorium
+git push origin master  // powinno już działać wypychanie
 
 
 // ETYKIETOWANIE
