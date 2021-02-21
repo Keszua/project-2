@@ -900,15 +900,75 @@ const url = `http://localhost:3000/?` + params;
 //  #  ##  #          #   #        #      #
 //  #   #   ###    ###     ##  #   #   ###
 //                               ###
+/*
+ _   _                _       ___   _____         .
+| \ | |              | |     |_  | / ___ \        .
+|  \| |   ___   ___  | |_      | | \ \__\|                 .
+| . ' |  / _ \ / __| | __|     | |  \__ \             .
+| |\  | |  __/ \__ \ | |_  /\__/ / |\__\ \                    .
+\_| \_/  \___| |___/  \__| \____/  \_____/                             .
+                                      .
+
+					_				 _
+				   | |				| |  
+	  ___	 ___   | |_		___    _| |
+	 / _ \  /__ \  |   \   / __\  /   |
+	|  __/  / _ |  | O |  | |___  | O |
+	 \___|	\___\  |___/   \___/  \___|
+									  
+
+*/
+
+// Kamil Myśliwiec - autor nestJS
+//instalacja:
+$ npm i -g @nestjs/cli  //globalna instalacja paczek
+$ nest new project-name  // zakładanie proejktu
+$ nest new project-name -l JS // zakładanie proejktu w JS (nie typescript)
+
+//instalacja nie globalna:
+npx @nestjs/cli new nazwa-projektu  //za każdym razem ściąga paczki, co trwa bardzo długo
+
+//uruchamianie:
+npm run start 
+npm run start:dev  // 
+nest start --watch // autoprzeładowywanie po zapisaniu zmian
+npx @nestjs/cli start //dla instalaci nie globalnej
+yarn start // dla instalacji z paczkami yarn (nie npm) Najstarsza wersja
+
+zerknąć sobie na narzędzie Insomnia
+Autośedzenie kodu: Quokka.js
+//przerywanie procesu: Ctrl + C
+
+    nest info // informacje o wersji, paczkach
+    nest generate <rodzaj> <nazwa> // pozwala wygenerować elementy i umieszcza je w odpowiednie miejsca + układa kod
+                  controller //co  // generuje kontroler
+                  module     //mo  //generuje moduł
+                  service    //s //generuje serwis (usługę)
+
+    nest build // tworzy produkcyjną aplikację w folderze dist
+//aby uruchomić:
+    node ./dist/main.js
+
+    nest update  //aktualizacja nest do najnowszej wersjii
 
 
+//transpilacja: zmiana TS na JS (coś jak Babel)
+// jak transpilować TS w VSC?
+    npm install -g typescript
+//potem:
+    tsc --version
 
-
-
-
-
-
-
-
-
-
+konfiguracja TS w VSC w pliku tsconfig.json
+//opis konfiguracji pod linkiem:
+https://www.typescriptlang.org/docs/handbook/tsconfig-json.html									  
+								
+//konsola do trenowania TS:
+https://www.typescriptlang.org/play/		
+									  
+									  
+									  
+									  
+									  
+									  
+									  
+									  
