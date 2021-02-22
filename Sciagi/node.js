@@ -967,8 +967,42 @@ https://www.typescriptlang.org/play/
 									  
 									  
 									  
-									  
-									  
-									  
-									  
+//Typy w TS:									  
+boolean
+number
+string
+Array<number>  lub  number[]
+enum UserType { admin, user, guest }   np:  const mojaDana: UserType = UserType.user;
+any - brak typowania
+void                                   np:  function testf():void { } 
+null, undefined                        np: const mojaDana:  null = null;
+//rzutowanie:
+  as string,   as number  itp...						  
+
+//Interfejsy									  
+enum UserType { admn, user, }
+interface UserHelloResponse {
+    name: string;
+    age: number;
+    isEnabled: boolean;
+    accountType: UserType;
+    sayHello: (anotherPerson: string) => void;
+}
+//urzycie interfejsu:   (od tej pory, po Ctrl+space są podpowiedzi, co zawiera ten obiekt)
+fetch('/user-hello')
+    .then(r => r.json())
+    .then((data: UserHelloResponse) => {  console.log(data.name)  });
+
+// po interfejsach można dziedziczyć: 
+class User implements UserHelloResponse {
+    name: string = '';
+    constructor(name: string) { this.name = name; }
+    sayHello(anotherPerson: string) { console.log(this.name, 'say hello', anotherPerson); }
+    ...
+}
+
+
+
+
+						  
 									  
