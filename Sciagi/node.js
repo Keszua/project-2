@@ -983,23 +983,49 @@ null, undefined                        np: const mojaDana:  null = null;
 enum UserType { admn, user, }
 interface UserHelloResponse {
     name: string;
+    sayHello: (anotherPerson: string) => void;
+}
+//dziedziczenei interfejsów:
+interface SpecialUserHelloResponse extends UserHelloResponse {
     age: number;
     isEnabled: boolean;
     accountType: UserType;
-    sayHello: (anotherPerson: string) => void;
 }
+
 //urzycie interfejsu:   (od tej pory, po Ctrl+space są podpowiedzi, co zawiera ten obiekt)
 fetch('/user-hello')
     .then(r => r.json())
     .then((data: UserHelloResponse) => {  console.log(data.name)  });
 
-// po interfejsach można dziedziczyć: 
+// interfejsach narzuca, co musi być w klasie (jak funckje czysto witrualne)
 class User implements UserHelloResponse {
     name: string = '';
     constructor(name: string) { this.name = name; }
     sayHello(anotherPerson: string) { console.log(this.name, 'say hello', anotherPerson); }
     ...
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
