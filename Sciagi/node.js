@@ -975,7 +975,7 @@ Array<number>  lub  number[]
 enum UserType { admin, user, guest }   np:  const mojaDana: UserType = UserType.user;
 any - brak typowania
 void                                   np:  function testf():void { } 
-null, undefined                        np: const mojaDana:  null = null;
+null, undefined                        np:  const mojaDana:  null = null;
 //rzutowanie:
   as string,   as number  itp...						  
 
@@ -990,6 +990,7 @@ interface SpecialUserHelloResponse extends UserHelloResponse {
     age: number;
     isEnabled: boolean;
     accountType: UserType;
+    adminName?: string;   // dany element nie zawsze będzie dsotępny (pytajnik przed dwukropkiem)
 }
 
 //urzycie interfejsu:   (od tej pory, po Ctrl+space są podpowiedzi, co zawiera ten obiekt)
@@ -1002,10 +1003,23 @@ class User implements UserHelloResponse {
     name: string = '';
     constructor(name: string) { this.name = name; }
     sayHello(anotherPerson: string) { console.log(this.name, 'say hello', anotherPerson); }
-    ...
 }
 
+//dziedziczenie
+class Vehicle {
+    run() { console.log("Brum, brum..."); }
+}
+class Car extends Vehicle {
+    drivenKms: number = 0;
+    constructor(
+        public readonly brand: string, //readonly - nie można ponownie przypisać tej wartości
+        public readonly name: string
+    ) {
+        super(); //do przekazania argumentów do rodzica
+    }
 
+    showInfo() { console.log(this.brand, this.name); }
+}
 
 
 
