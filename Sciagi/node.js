@@ -154,7 +154,7 @@ PUT  - aktualizuj
 DELETE - usuń
 
 //-----------------------------------------------------------------------------
-//prostu serwer z rutingiem:
+//prosty serwer z rutingiem:
 const http = require('http');
 const port = process.env.PORT || 3000
 http.createServer((req, res) => {
@@ -1006,7 +1006,9 @@ class User implements UserHelloResponse {
 }
 
 //dziedziczenie
-class Vehicle {
+abstract class Vehicle {          //klasa abstrakcyjna, nie pozwala tworzyć obiektów z tej encji
+    createAt: Date = new Date();
+    showCreateDate() { this.createAt.toLocaleString() };
     run() { console.log("Brum, brum..."); }
 }
 class Car extends Vehicle {
@@ -1019,13 +1021,46 @@ class Car extends Vehicle {
     }
 
     showInfo() { console.log(this.brand, this.name); }
+    get kms():number {       return this.drivenKms; }
+    set kms(newKms:number) {        this.drivenKms = newKms; }
+}
+const myCar = new Car('Fiat', 'Tipo');
+myCar.kms = 100;        // ustawiam bez słówka "set"
+console.log(myCar.kms); // odczytuje bez słówka "get"
+
+//typy generyczne:
+interface ApiResponse<T> {
+    httpCode: number;
+    isOK: boolean;
+    payload: T;
 }
 
+const answer: ApiResponse<string> = {  //dla tego przypadku, payload ma być stringiem
+    httpCode: 200,
+    isOK: true,
+    payload: 'Bonifacy',
+};
+
+//pliki definicji
+npm add -D @types/jquery
+npm add -D @types/react
 
 
+//-----------------------------------------------------------------------------
+function goToPkp():      Promise<void> { return new Promise(resolve => setTimeout(resolve, 1000)); }
+function waitForTrain(): Promise<void> { return new Promise(resolve => setTimeout(resolve, 1500)); }
+function travelToDest(): Promise<void> { return new Promise(resolve => setTimeout(resolve, 2000));  }
 
+console.log('Ryszam!');
+(async () => {
+    await goToPkp();
+    console.log('Dotarłem do PKP!');
+    await waitForTrain();
+    console.log('Pociąg przyjechał');
+    await travelToDest();
+    console.log('Dojechałem!');
 
-
+})();
 
 
 
