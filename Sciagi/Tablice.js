@@ -490,9 +490,19 @@ const multi3 = multiply.apply(null, [2, 3]);
 |                                      |                                       |                                       |                                      |
 //Operatory logiczne:  
 |                                      |                                       |                                       | &&  ||  xor                          |
+//długość łańcucha. 
+|                                      |                                       |                                       | strlen();                            |
+|                                      |                                       |                                       | $len = strlen((string) $liczba);     |
+//zamiana liczby na łańcuch
+|                                      |                                       |                                       | $txt = (string) $liczba              |
+//dekodowanie JSONA
+|                                      |                                       |                                       | json_encode($text);                  |
 |                                      |                                       |                                       |                                      |
 |                                      |                                       |                                       |                                      |
-
-
+|                                      |                                       |                                       |                                      |
+|                                      |                                       |                                       |                                      |
+|                                      |                                       |                                       |                                      |
+|                                      |                                       |                                       |                                      |
+|                                      |                                       |                                       |                                      |
 
 
