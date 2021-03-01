@@ -1107,9 +1107,9 @@ console.log('Ryszam!');
 
 
 //-----------------------------------------------------------------------------
-nest generate controller 
+nest generate controller nazwa
 //skrót:
-nest g co
+nest g co nazwa
 
 //pobieranie nagłowka:  (film 50, 15:00)
 // w parametrach funkcji, która jest odekorowana @Get(), wpisać: 
@@ -1146,7 +1146,7 @@ export class FoxController {
 //lub wywyłam z przeglądarki:  film 52, 12:00
 http://localhost:3000/fox/Karol/Testowy
 //do obłsugi tego wykorzytuje:
-    @Get('/:name/:surname')
+    @Get('/:name/:surname?') //znak zapytania powoduje, że ten parametr jest opcjonalny
     getItem(
         @Param('name') name: string,
         @Param('surname') surname: string,
@@ -1173,6 +1173,46 @@ http://localhost:3000/fox/Karol/Testowy
 // @Redirect('https://wp.pl')  -przekierowanie na inną stronę
 
 
+//Be RESTful!
+- POST /kolekcja/ - tworzenie nowego elementu (wstaw nowy rekord)
+- GET /kolekcja/ - pobranie wszystkich elementów 
+- GET /kolekcja/1 - pobranie pojedynczego elementu
+- DELETE /kolekcja/1 - usunięcie pojedynczego elementu
+- PUT /kolekcja/1 - modyfikacja pojedynczego elementu, przez zastapienie go
+- PATCH /kolekcja/1 - modyfikacja pojedynczego elementu, przez uzupełnienie go.
+
+//tworzenie nowego rekordu:
+    @Post('/')
+	createFox(
+	    @Body() newFox
+	): string {
+		return '
+	}
+
+
+//DTO - data transfer object, taki interface, ale w formie klasy:
+// zalecane zrobienie oddzielnego folderu dto
+export class CreateFoxDto {
+    name: string;
+    age: number;
+    isAdopted: boolean;
+};
+
+    @Post('/')
+    createFox(
+        @Body() newFox: CreateFoxDto,
+    ): string {
+        console.log(newFox);
+        return `New fox ${newFox.name}`;
+    }
+
+//Do przesyłania danych z frontu do back, zapecany format JSON. Do plików: Multipart FormData (film 53, 6:19)
+
+
+//-----------------------------------------------------------------------------
+nest generate service nazwa
+//skrót:
+nest g s nazwa
 
 
 
@@ -1190,5 +1230,11 @@ http://localhost:3000/fox/Karol/Testowy
 
 
 
-						  
-									  
+
+
+
+
+
+
+
+
