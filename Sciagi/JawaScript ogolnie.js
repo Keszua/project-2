@@ -123,6 +123,8 @@ const min = 1;
 const max = 15;
 const random = Math.floor(Math.random()*(max-min+1)+min);
 console.log(random);
+// prawdopodobnei to samo co wyzej, skrucony zapis Math.floor
+//const random = ~~(Math.random()*(max-min+1)+min);
 
 function Random(min=0, max=100) {
  	return Math.floor(Math.random() * (max-min+1)+min);

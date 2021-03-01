@@ -70,6 +70,10 @@ Przykłady:
 307 przekierowanei tymczasowe - przy metodzie HTTP innej niż GET
 403 "Forbidden" - "ja wiem, że chcesz, ale nie mamsz dostępu"
 404 "Not Found" - odebrałem Twoje zapytanie ale nie ma zasobu dla Twojego URL
+405 "Method Not Allowed"
+406 "Not Accepted"
+408 "Request timeout"
+409 "Conflict"
 500 "Internal Server Error" - "Coś u mnie nie tak"
 
 
@@ -149,12 +153,12 @@ http.createServer((req, res) => {
 //Metody:
 GET  - odczytaj ("daj mi")
 HEAD - jak GET, ale nie odsyłaj body z powrotem
-POST - stwórz  (do przesyłaniu danych)
+POST - stwórz  (do przesyłania danych)
 PUT  - aktualizuj
 DELETE - usuń
 
 //-----------------------------------------------------------------------------
-//prostu serwer z rutingiem:
+//prosty serwer z rutingiem:
 const http = require('http');
 const port = process.env.PORT || 3000
 http.createServer((req, res) => {
@@ -355,6 +359,72 @@ const parse = path.parse(__filename);   //śceizka w postaci obiektu z kilkoma d
 const parse2 = path.parse(path.join(__filename, 'index.js'));
 //console.log(parse2);
 console.log(path.extname('jakisPlik.js')); //tylko rozszeżenie
+
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//  ####
+//  #   #                          #
+//  #   #  # ###   ###   ### ##         ###    ###
+//  ####   ##     #   #  #  #  #  ##   #      #   #
+//  #      #      #   #  #  #  #   #    ###   #####
+//  #      #      #   #  #  #  #   #       #  #
+//  #      #       ###   #  #  #  ###   ###    ###
+
+// stany promisa:
+// pending - oczekujący
+// fulfielled - spełniony
+// reject - odrzucony
+
+const mypromise = new Promise(() => {
+    console.log('Jestem prostym promisem');
+})
+
+//tworzenie promisa (chyba zwykle po stronie serwera)
+const myPromise = new Promise((resolve, reject) => {
+    //console.log('Jestem promisem2');
+    setTimeout(() => {
+        resolve('Wszystko OK'); //to zwróci, gdy się wykona
+    }, 2000);
+    setTimeout(() => {
+        reject(new Error('Nie chce mi się pracować')); //to zwróci, gdy się nie wykona
+    }, 1600);
+})
+
+// rozpatrywanie promisa
+myPromise
+    .then((result) => {
+        console.log('Zadanie skonczone', result);
+    })
+    .catch(err => {
+        console.log('Coś nie tak', err);
+    });
+
+
+//async - specjalna metoda, do obsługi promisów
+
+(async () => {
+    await gotujWode();
+    console.log("Woda zagotowana");
+    await zaparzanieHerbaty();
+    console.log("Herbata zaparzona");
+    await czekajNaOdpowiedniaTemp()
+    console.log("Temperatura odpowiednia, czas wypić");
+
+})();
+
+//przykladowa funkcja z promisem:
+function gotujWode(clb) {
+    console.log("Gotowanie wody...");
+    return new Promise((resolve, reject) => {
+        setTimeout(resolve, 1000);
+    });
+}
+
+
+
+
 
 
 
@@ -602,7 +672,9 @@ i pobrane zostaną brakujące pliki
     app.listen(3000, () => {
         console.log('Server is listening at http://localhost:3000');
     });
-//7. Uruchamiamy go poleceneim node nazsaPliku.js
+//7. Uruchamiamy go poleceniem:
+    node nazsaPliku.js
+
 //routing:
 
 app.get('/', (req, res) => {
@@ -718,6 +790,7 @@ app.get('/hi/:name', (req, res) => {  //w przeglądarece:  http://localhost:3000
     const dt = new Date();
     dt.setDate(dt.getDate() + 7);  //aktualna data + 7 dni
     res.cookie('visitor_name', name, { expires: dt });
+    res.send(`<h2>Witaj ${name} </h2>`);  //komunikat na stronie
 });
 
 
@@ -725,11 +798,74 @@ app.get('/hi/:name', (req, res) => {  //w przeglądarece:  http://localhost:3000
 app.get('/logout', (req, res) => {
     res.clearCookie('visitor_name');
     res.send('Wylogowano');
+    res.redirect('/');  //po wylogowaniu, przejdz na stronę główną
 });
 
+//do wygodniejszej obsługi cistek jest biblioteka cookie-parser  (npm i cookie-parser --save) filmik 73
+    const cookieParser = require('cookie-parser')
+    app.use(cookieParser());
+
+    app.get('/hi/:name', (req, res) => {
+        res.cookie('visitor_name', req.params.name, { maxAge: 5 * 60 * 1000 });
+        res.send(`<h2>Witaj ${req.params.name} </h2>`);
+    });
+
+    app.get('/', (req, res) => {
+        const { visitor_name } = req.cookies;
+        if (visitor_name) {
+            res.send(`<h2>Cistko: ${req.cookies.visitor_name} </h2>`);
+        } else {
+            res.send('Czy my się znamy?');
+        }
+        console.log(req.cookies);
+    });
+
+    app.get('/logout', (req, res) => {
+        res.clearCookie('visitor_name');
+        res.send('Wylogowano');
+    });
 
 
+//-----------------------------------------------------------------------------
+//MIDDLEWARE
 
+//Nalezy pamiętać, aby zastowować midleware przed naszymi śceiżkami
+    app.use(jakiśMiddleware());
+
+//Mmddleware dla JSONA:
+    app.use(express.json());
+
+//Przykład przesłania JSONA z front na back  (z filmu 73  min: 8:46)
+{
+// w pliku app.js  (plik serwera, oczywiście wyżej import i uruchomienie expresa...)
+    app.use(express.json());
+
+    app.post('/hello', (req, res) => {  //przesłanie danych z frona do back
+        console.log(req.body);
+        const { name, surname } = req.body;  //body dochodzi po dodaniu:  app.use(express.json());
+        res.send(`<h2>Witaj ${name} ${surname} </h2>`);  //to mi się nie wyświetliło
+    });
+
+
+//w konsoli przeglądarki (strona klienta):
+    fetch('/hello', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: 'Anna',
+        surname: 'Kowalska' }),
+      headers: { 'Content-Type': 'application/json'},
+    });
+
+}
+
+//Przykład midleware, który automatycznie ładuje pliki z folderu:
+
+// w projekcie trzeba dodać folder 'static', w którym bedzie plik index.html i inne potrzebne pliki
+// w app.js (plik serwera) po za podstawowym importem expresa i require('path), dosajemy tylko:
+
+app.use(express.static(
+    path.join(__dirname, 'static'),
+));
 
 
 
@@ -768,6 +904,273 @@ const url = `http://localhost:3000/?` + params;
 //  #  ##  #          #   #        #      #
 //  #   #   ###    ###     ##  #   #   ###
 //                               ###
+/*
+ _   _                _       ___   _____         .
+| \ | |              | |     |_  | / ___ \        .
+|  \| |   ___   ___  | |_      | | \ \__\|        .
+| . ' |  / _ \ / __| | __|     | |  \__ \         .
+| |\  | |  __/ \__ \ | |_  /\__/ / |\__\ \        .
+\_| \_/  \___| |___/  \__| \____/  \_____/        .
+                                                  .
+
+					_				 _
+				   | |				| |  
+	  ___	 ___   | |_		___    _| |
+	 / _ \  /__ \  |   \   / __\  /   |
+	|  __/  / _ |  | O |  | |___  | O |
+	 \___|	\___\  |___/   \___/  \___|
+									  
+
+*/
+
+// Kamil Myśliwiec - autor nestJS
+//instalacja:
+$ npm i -g @nestjs/cli  //globalna instalacja paczek
+$ nest new project-name  // zakładanie proejktu
+$ nest new project-name -l JS // zakładanie proejktu w JS (nie typescript)
+
+//instalacja nie globalna:
+npx @nestjs/cli new nazwa-projektu  //za każdym razem ściąga paczki, co trwa bardzo długo
+
+//uruchamianie:
+npm run start 
+npm run start:dev  // 
+nest start --watch // autoprzeładowywanie po zapisaniu zmian
+npx @nestjs/cli start //dla instalaci nie globalnej
+yarn start // dla instalacji z paczkami yarn (nie npm) Najstarsza wersja
+//przerywanie procesu: Ctrl + C
+
+//zerknąć sobie na narzędzie Insomnia
+//Autośedzenie kodu: Quokka.js
+
+    nest info // informacje o wersji, paczkach
+    nest generate <rodzaj> <nazwa> // pozwala wygenerować elementy i umieszcza je w odpowiednie miejsca + układa kod
+                  controller //co  // generuje kontroler
+                  module     //mo  //generuje moduł
+                  service    //s //generuje serwis (usługę)
+
+    nest build // tworzy produkcyjną aplikację w folderze dist
+//aby uruchomić:
+    node ./dist/main.js
+
+    nest update  //aktualizacja nest do najnowszej wersjii
+
+
+//transpilacja: zmiana TS na JS (coś jak Babel)
+// jak transpilować TS w VSC?
+    npm install -g typescript
+//potem:
+    tsc --version
+
+konfiguracja TS w VSC w pliku tsconfig.json
+//opis konfiguracji pod linkiem:
+https://www.typescriptlang.org/docs/handbook/tsconfig-json.html									  
+								
+//konsola do trenowania TS:
+https://www.typescriptlang.org/play/		
+									  
+									  
+									  
+//Typy w TS:									  
+boolean
+number
+string
+Array<number>  lub  number[]
+enum UserType { admin, user, guest }   np:  const mojaDana: UserType = UserType.user;
+any - brak typowania
+void                                   np:  function testf():void { } 
+null, undefined                        np:  const mojaDana:  null = null;
+//rzutowanie:
+  as string,   as number  itp...						  
+
+
+//Interfejsy									  
+enum UserType { admn, user, }
+interface UserHelloResponse {
+    name: string;
+    sayHello: (anotherPerson: string) => void;
+}
+//dziedziczenei interfejsów:
+interface SpecialUserHelloResponse extends UserHelloResponse {
+    age: number;
+    isEnabled: boolean;
+    accountType: UserType;
+    adminName?: string;   // dany element nie zawsze będzie dsotępny (pytajnik przed dwukropkiem)
+}
+
+//urzycie interfejsu:   (od tej pory, po Ctrl+space są podpowiedzi, co zawiera ten obiekt)
+fetch('/user-hello')
+    .then(r => r.json())
+    .then((data: UserHelloResponse) => {  console.log(data.name)  });
+
+// interfejsach narzuca, co musi być w klasie (jak funckje czysto witrualne)
+class User implements UserHelloResponse {
+    name: string = '';
+    constructor(name: string) { this.name = name; }
+    sayHello(anotherPerson: string) { console.log(this.name, 'say hello', anotherPerson); }
+}
+
+//dziedziczenie
+abstract class Vehicle {          //klasa abstrakcyjna, nie pozwala tworzyć obiektów z tej encji
+    createAt: Date = new Date();
+    showCreateDate() { this.createAt.toLocaleString() };
+    run() { console.log("Brum, brum..."); }
+}
+class Car extends Vehicle {
+    drivenKms: number = 0;
+    constructor(
+        public readonly brand: string, //readonly - nie można ponownie przypisać tej wartości
+        public readonly name: string
+    ) {
+        super(); //do przekazania argumentów do rodzica
+    }
+
+    showInfo() { console.log(this.brand, this.name); }
+    get kms():number {       return this.drivenKms; }
+    set kms(newKms:number) {        this.drivenKms = newKms; }
+}
+const myCar = new Car('Fiat', 'Tipo');
+myCar.kms = 100;        // ustawiam bez słówka "set"
+console.log(myCar.kms); // odczytuje bez słówka "get"
+
+//typy generyczne:
+interface ApiResponse<T> {
+    httpCode: number;
+    isOK: boolean;
+    payload: T;
+}
+
+const answer: ApiResponse<string> = {  //dla tego przypadku, payload ma być stringiem
+    httpCode: 200,
+    isOK: true,
+    payload: 'Bonifacy',
+};
+
+ 
+//przykład nadawania typów:   (filmik 48)
+    function (a: number, b: number): number {
+        return a + b;
+    }
+
+    enum Gender { Female = 'female', Male = 'male'};
+    interface Kitty {
+        name: string;
+        gender: Gender;
+        age: number | 'Unknown';
+        isAdopted: boolean;
+        specialNeeds?: string[];  //opcjonalny (znak '?')
+    }
+
+    const kitties: Kitty[] = [
+        {
+            name: 'Mruczek',
+            gender: Gender.Male,
+            age: 3,
+            isAdopted: true,
+            specialNeeds: ['Drinks only water'],
+        },
+        {
+            name: 'Simon',
+            gender: Gender.Male,
+            age: 'Unknown',
+            isAdopted: true,
+            // brak specialNeeds: false,
+        }
+    ]
+
+
+
+
+
+//pliki definicji
+npm add -D @types/jquery
+npm add -D @types/react
+
+
+//-----------------------------------------------------------------------------
+//Przykład asynchronicznosći w TS
+function goToPkp():      Promise<void> { return new Promise(resolve => setTimeout(resolve, 1000)); }
+function waitForTrain(): Promise<void> { return new Promise(resolve => setTimeout(resolve, 1500)); }
+function travelToDest(): Promise<void> { return new Promise(resolve => setTimeout(resolve, 2000));  }
+
+console.log('Ryszam!');
+(async () => {
+    await goToPkp();
+    console.log('Dotarłem do PKP!');
+    await waitForTrain();
+    console.log('Pociąg przyjechał');
+    await travelToDest();
+    console.log('Dojechałem!');
+
+})();
+
+
+
+//-----------------------------------------------------------------------------
+nest generate controller 
+//skrót:
+nest g co
+
+//pobieranie nagłowka:  (film 50, 15:00)
+// w parametrach funkcji, która jest odekorowana @Get(), wpisać: 
+    @Headers() headers: any,
+//aby pobrać konkretny parametr:
+    @Headers('accept-encoding') encoding: string,
+//Aby pobrać IP:
+    @Ip() ip: string,
+//Porawa właściwego wyświetlania IP: film 50, 17:00
+
+
+ODBIERANIE DANYCH przez NestJS
+//wysłanie z przeglądarki tekstu jako parametr:
+http://localhost:3000/fox?name=Karol&surname=Testowy
+
+//Do obsługi tego można wykorzystac:
+import { Controller, Get, Headers, Ip, Query, Req } from '@nestjs/common';
+import { Request } from 'express';
+
+@Controller('fox')
+export class FoxController {
+    @Get('/')  // lub @Post(), @Put  itp
+    myFirstAction(
+        @Ip() ip: string,
+        @Query('name') name: string,
+        @Query('surname') surname: string,
+        @Req() request: Request,  //raczej nie będziemy z tego korzystać, to najniższy poziom dostępu do Request
+    ): string {
+        console.log('Argumenty :', name, surname);
+        return `<h1> you Ip is: ${ip}</h1> <h3>hi ${name}  </h3>`;
+    }
+}
+
+//lub wywyłam z przeglądarki:  film 52, 12:00
+http://localhost:3000/fox/Karol/Testowy
+//do obłsugi tego wykorzytuje:
+    @Get('/:name/:surname')
+    getItem(
+        @Param('name') name: string,
+        @Param('surname') surname: string,
+    ): string {
+        return `Hello ${name} o ksywie ${surname}`;
+    }
+
+
+
+
+//Mogę zwracać 
+    //tekst:
+    return `<h1> you Ip is: </h1> <h3>hi  </h3>`;
+	// tablice sa przerabiane na Jsony:
+    return { numberofFoxes: 100,  areFoxesHappy: true, }
+    //Promisy:
+    return new Promise(resolve => setTimeout(() => resolve('Hello World'), 2000));
+        //fajna przebudowa tego promisa, filmik 51, 4:00
+
+
+// @HttpCode(202) - zmiana kodu odpowiedzi. Bez tego domyślnie jest 200, a dla POST 201
+// @Header('X-My-Test', 'Testowy naglowek') - dodatkowy, niestandardowy nagłówek film 52, 2:00 
+// @Redirect('/test')  -przekierowanie na inną stronę, podstronę
+// @Redirect('https://wp.pl')  -przekierowanie na inną stronę
 
 
 
@@ -780,3 +1183,12 @@ const url = `http://localhost:3000/?` + params;
 
 
 
+
+
+
+
+
+
+
+						  
+									  

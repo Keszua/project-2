@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "colors": "^1.4.0",
+    "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",
     "request": "^2.88.0"

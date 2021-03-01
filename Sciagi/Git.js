@@ -80,6 +80,7 @@ git add nazwaPliku 		//dodawanie pliku do indeksu
 git add --all  			//dodanie wszystkich plików
 git add -A  			//dodanie wszystkich plików
 git add .  				//dodanie wszystkich plików
+git add folser/plik     //dodanie pliki konkretnego folderu
 git commit  			//zrobienie komitu (snapshota). Otworzy sie edytor w którym trzeba wpisać opis zmina.
 git commit -m "Opis zmiany" //zrobienie komitu (snapshota) bez otwierania edytora
                             // Tytół opisu zrobic do 50 znaków. Zawijanie wierszy po 72 znakach.
@@ -458,6 +459,12 @@ git pull origin nazwaGalezi //UWAGA pobranie danych na aktywną gałąź (na kt�
 
 git fetch [nazwa-zdalengo-repozytorium]	//aby uzyskać dane ze zdalnego projektu
 
+//ZAKŁADANIE ZDALNEGO REPO NA SWOIM KOMPIE:
+1. Ma być w katalogu, w którym chce ząłoyć repozytorium "zdalne"
+git init --bare  // Ten parametr powoduje że repozytorium nie będzie miało katalogu roboczego
+// Otrzymam komunikat w stylu: Initialized empty Git repository in C:/Users/t_kowalski/ProjektZdalny/
+git remote add origin C:/Users/t_kowalski/ProjektZdalny  // podłacam się pod to repozytorium
+git push origin master  // powinno już działać wypychanie
 
 
 // ETYKIETOWANIE
@@ -471,7 +478,7 @@ git tag v1.0.0 5a33dd3	-a -m "opis"	//przypisanie etykiety do konkretnego commit
 git tag -d v1.0.0			//usunięcie tag
 git tag -l 'v1.4.2.*'		//wyszukanie konkretnej serii etykiet
 git show v1.0				//wyświetla informacje o komicie 
-git push --tags				//wysłane informacji otagach na serwer
+git push --tags				//wysłane informacji o tagach na serwer
 git push origin v1.0.0 		//wysłanie informacji o tylko jednym tagu
 
 git push origin -d v1.0.0 	//usuwanie tagów z repozytorium
