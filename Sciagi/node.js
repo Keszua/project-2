@@ -70,6 +70,10 @@ Przykłady:
 307 przekierowanei tymczasowe - przy metodzie HTTP innej niż GET
 403 "Forbidden" - "ja wiem, że chcesz, ale nie mamsz dostępu"
 404 "Not Found" - odebrałem Twoje zapytanie ale nie ma zasobu dla Twojego URL
+405 "Method Not Allowed"
+406 "Not Accepted"
+408 "Request timeout"
+409 "Conflict"
 500 "Internal Server Error" - "Coś u mnie nie tak"
 
 
@@ -149,7 +153,7 @@ http.createServer((req, res) => {
 //Metody:
 GET  - odczytaj ("daj mi")
 HEAD - jak GET, ale nie odsyłaj body z powrotem
-POST - stwórz  (do przesyłaniu danych)
+POST - stwórz  (do przesyłania danych)
 PUT  - aktualizuj
 DELETE - usuń
 
@@ -903,11 +907,11 @@ const url = `http://localhost:3000/?` + params;
 /*
  _   _                _       ___   _____         .
 | \ | |              | |     |_  | / ___ \        .
-|  \| |   ___   ___  | |_      | | \ \__\|                 .
-| . ' |  / _ \ / __| | __|     | |  \__ \             .
-| |\  | |  __/ \__ \ | |_  /\__/ / |\__\ \                    .
-\_| \_/  \___| |___/  \__| \____/  \_____/                             .
-                                      .
+|  \| |   ___   ___  | |_      | | \ \__\|        .
+| . ' |  / _ \ / __| | __|     | |  \__ \         .
+| |\  | |  __/ \__ \ | |_  /\__/ / |\__\ \        .
+\_| \_/  \___| |___/  \__| \____/  \_____/        .
+                                                  .
 
 					_				 _
 				   | |				| |  
@@ -934,10 +938,10 @@ npm run start:dev  //
 nest start --watch // autoprzeładowywanie po zapisaniu zmian
 npx @nestjs/cli start //dla instalaci nie globalnej
 yarn start // dla instalacji z paczkami yarn (nie npm) Najstarsza wersja
-
-zerknąć sobie na narzędzie Insomnia
-Autośedzenie kodu: Quokka.js
 //przerywanie procesu: Ctrl + C
+
+//zerknąć sobie na narzędzie Insomnia
+//Autośedzenie kodu: Quokka.js
 
     nest info // informacje o wersji, paczkach
     nest generate <rodzaj> <nazwa> // pozwala wygenerować elementy i umieszcza je w odpowiednie miejsca + układa kod
@@ -978,6 +982,7 @@ void                                   np:  function testf():void { }
 null, undefined                        np:  const mojaDana:  null = null;
 //rzutowanie:
   as string,   as number  itp...						  
+
 
 //Interfejsy									  
 enum UserType { admn, user, }
@@ -1041,12 +1046,49 @@ const answer: ApiResponse<string> = {  //dla tego przypadku, payload ma być str
     payload: 'Bonifacy',
 };
 
+ 
+//przykład nadawania typów:   (filmik 48)
+    function (a: number, b: number): number {
+        return a + b;
+    }
+
+    enum Gender { Female = 'female', Male = 'male'};
+    interface Kitty {
+        name: string;
+        gender: Gender;
+        age: number | 'Unknown';
+        isAdopted: boolean;
+        specialNeeds?: string[];  //opcjonalny (znak '?')
+    }
+
+    const kitties: Kitty[] = [
+        {
+            name: 'Mruczek',
+            gender: Gender.Male,
+            age: 3,
+            isAdopted: true,
+            specialNeeds: ['Drinks only water'],
+        },
+        {
+            name: 'Simon',
+            gender: Gender.Male,
+            age: 'Unknown',
+            isAdopted: true,
+            // brak specialNeeds: false,
+        }
+    ]
+
+
+
+
+
 //pliki definicji
 npm add -D @types/jquery
 npm add -D @types/react
 
 
 //-----------------------------------------------------------------------------
+//Przykład asynchronicznosći w TS
 function goToPkp():      Promise<void> { return new Promise(resolve => setTimeout(resolve, 1000)); }
 function waitForTrain(): Promise<void> { return new Promise(resolve => setTimeout(resolve, 1500)); }
 function travelToDest(): Promise<void> { return new Promise(resolve => setTimeout(resolve, 2000));  }
@@ -1061,6 +1103,75 @@ console.log('Ryszam!');
     console.log('Dojechałem!');
 
 })();
+
+
+
+//-----------------------------------------------------------------------------
+nest generate controller 
+//skrót:
+nest g co
+
+//pobieranie nagłowka:  (film 50, 15:00)
+// w parametrach funkcji, która jest odekorowana @Get(), wpisać: 
+    @Headers() headers: any,
+//aby pobrać konkretny parametr:
+    @Headers('accept-encoding') encoding: string,
+//Aby pobrać IP:
+    @Ip() ip: string,
+//Porawa właściwego wyświetlania IP: film 50, 17:00
+
+
+ODBIERANIE DANYCH przez NestJS
+//wysłanie z przeglądarki tekstu jako parametr:
+http://localhost:3000/fox?name=Karol&surname=Testowy
+
+//Do obsługi tego można wykorzystac:
+import { Controller, Get, Headers, Ip, Query, Req } from '@nestjs/common';
+import { Request } from 'express';
+
+@Controller('fox')
+export class FoxController {
+    @Get('/')  // lub @Post(), @Put  itp
+    myFirstAction(
+        @Ip() ip: string,
+        @Query('name') name: string,
+        @Query('surname') surname: string,
+        @Req() request: Request,  //raczej nie będziemy z tego korzystać, to najniższy poziom dostępu do Request
+    ): string {
+        console.log('Argumenty :', name, surname);
+        return `<h1> you Ip is: ${ip}</h1> <h3>hi ${name}  </h3>`;
+    }
+}
+
+//lub wywyłam z przeglądarki:  film 52, 12:00
+http://localhost:3000/fox/Karol/Testowy
+//do obłsugi tego wykorzytuje:
+    @Get('/:name/:surname')
+    getItem(
+        @Param('name') name: string,
+        @Param('surname') surname: string,
+    ): string {
+        return `Hello ${name} o ksywie ${surname}`;
+    }
+
+
+
+
+//Mogę zwracać 
+    //tekst:
+    return `<h1> you Ip is: </h1> <h3>hi  </h3>`;
+	// tablice sa przerabiane na Jsony:
+    return { numberofFoxes: 100,  areFoxesHappy: true, }
+    //Promisy:
+    return new Promise(resolve => setTimeout(() => resolve('Hello World'), 2000));
+        //fajna przebudowa tego promisa, filmik 51, 4:00
+
+
+// @HttpCode(202) - zmiana kodu odpowiedzi. Bez tego domyślnie jest 200, a dla POST 201
+// @Header('X-My-Test', 'Testowy naglowek') - dodatkowy, niestandardowy nagłówek film 52, 2:00 
+// @Redirect('/test')  -przekierowanie na inną stronę, podstronę
+// @Redirect('https://wp.pl')  -przekierowanie na inną stronę
+
 
 
 
