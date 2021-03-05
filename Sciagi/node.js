@@ -1143,7 +1143,7 @@ export class FoxController {
     }
 }
 
-//lub wywyłam z przeglądarki:  film 52, 12:00
+//lub wysyłam z przeglądarki:  film 52, 12:00
 http://localhost:3000/fox/Karol/Testowy
 //do obłsugi tego wykorzytuje:
     @Get('/:name/:surname?') //znak zapytania powoduje, że ten parametr jest opcjonalny
@@ -1206,7 +1206,7 @@ export class CreateFoxDto {
         return `New fox ${newFox.name}`;
     }
 
-//Do przesyłania danych z frontu do back, zapecany format JSON. Do plików: Multipart FormData (film 53, 6:19)
+//Do przesyłania danych z frontu do back, zalecany format JSON. Do plików: Multipart FormData (film 53, 6:19)
 
 
 //-----------------------------------------------------------------------------
@@ -1239,8 +1239,35 @@ onApplicationShutdown() - wszystkie połączenia HTTP zamknięte, apka zaraz zos
 //film 61, 4:00
 
 
+//-----------------------------------------------------------------------------
+MySQL
+Film 62, 11:00 
+
+Uruchamianie z Xampa:
+Odpalić Apache i MySQL
+w przeglądarce wejśc na:
+http://localhost/phpmyadmin
+
+Dla Nest doinstlować:
+npm install --save @nestjs/typeorm typeorm mysql2
+
+w scr/app.module.ts
+dopisać w @Module({
+    imports: [
+        TypeOrmModule.forRoot(),
+    ],
+
+Stworzyć plik konfiguracyjny /ormconfig.json
+Zawartosc pliku można znaleźć tu:
+https://docs.nestjs.com/techniques/database
 
 
+
+Szyfrowanei hasła:
+https://docs.nestjs.com/security/encryption-and-hashing
+Trzeba doinstalować bcrypt i pliki definicji
+$ npm i bcrypt
+$ npm i -D @types/bcrypt
 
 
 
@@ -1251,6 +1278,4 @@ Po stworzeniu user, podpinanie go do controlerów innych modułów: film 85, 6:0
 
 
 
-
-
-
+ORM - Object-Relational Mapping (Mapowanie Obiektowo-Relacyjne) zerknąłem na: https://fsgeek.pl/post/typeorm-pierwsze-kroki/
