@@ -990,7 +990,7 @@ interface UserHelloResponse {
     name: string;
     sayHello: (anotherPerson: string) => void;
 }
-//dziedziczenei interfejsów:
+//dziedziczenie interfejsów:
 interface SpecialUserHelloResponse extends UserHelloResponse {
     age: number;
     isEnabled: boolean;
@@ -1143,7 +1143,7 @@ export class FoxController {
     }
 }
 
-//lub wywyłam z przeglądarki:  film 52, 12:00
+//lub wysyłam z przeglądarki:  film 52, 12:00
 http://localhost:3000/fox/Karol/Testowy
 //do obłsugi tego wykorzytuje:
     @Get('/:name/:surname?') //znak zapytania powoduje, że ten parametr jest opcjonalny
@@ -1206,7 +1206,7 @@ export class CreateFoxDto {
         return `New fox ${newFox.name}`;
     }
 
-//Do przesyłania danych z frontu do back, zapecany format JSON. Do plików: Multipart FormData (film 53, 6:19)
+//Do przesyłania danych z frontu do back, zalecany format JSON. Do plików: Multipart FormData (film 53, 6:19)
 
 
 //-----------------------------------------------------------------------------
@@ -1219,6 +1219,37 @@ nest g s nazwa
 
 
 
+//-----------------------------------------------------------------------------
+MySQL
+Film 62, 11:00 
+
+Uruchamianie z Xampa:
+Odpalić Apache i MySQL
+w przeglądarce wejśc na:
+http://localhost/phpmyadmin
+
+Dla Nest doinstlować:
+npm install --save @nestjs/typeorm typeorm mysql2
+
+w scr/app.module.ts
+dopisać w @Module({
+    imports: [
+        TypeOrmModule.forRoot(),
+        UserModule,
+        ...
+    ],
+
+Stworzyć plik konfiguracyjny /ormconfig.json
+Zawartosc pliku można znaleźć tu:
+https://docs.nestjs.com/techniques/database
+
+
+
+Szyfrowanei hasła:
+https://docs.nestjs.com/security/encryption-and-hashing
+Trzeba doinstalować bcrypt i pliki definicji
+$ npm i bcrypt
+$ npm i -D @types/bcrypt
 
 
 
@@ -1228,13 +1259,4 @@ nest g s nazwa
 
 
 
-
-
-
-
-
-
-
-
-
-
+ORM - Object-Relational Mapping (Mapowanie Obiektowo-Relacyjne) zerknąłem na: https://fsgeek.pl/post/typeorm-pierwsze-kroki/
