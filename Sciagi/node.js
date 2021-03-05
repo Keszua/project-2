@@ -990,7 +990,7 @@ interface UserHelloResponse {
     name: string;
     sayHello: (anotherPerson: string) => void;
 }
-//dziedziczenei interfejsów:
+//dziedziczenie interfejsów:
 interface SpecialUserHelloResponse extends UserHelloResponse {
     age: number;
     isEnabled: boolean;
@@ -1184,7 +1184,7 @@ http://localhost:3000/fox/Karol/Testowy
 //tworzenie nowego rekordu:
     @Post('/')
 	createFox(
-	    @Body() newFox
+	    @Body() newFox //aby przyjmować konkretne dane
 	): string {
 		return '
 	}
@@ -1215,6 +1215,28 @@ nest generate service nazwa
 nest g s nazwa
 
 
+//-----------------------------------------------------------------------------
+nest generate module <nazwa> // możliwoś podzielenia aplikacji ze względu na skupienie wokół jednej funkcjonalności (domeny)
+//skrót: 
+nest g mo nazwa
+
+jest to zwykłą klasa, zawierajaca dekrator @Module(), a w nim:
+* controllers - lista kontrolerów
+* providers - lista providerów z których korzystamy
+
+
+UWAGA!!! Aby wszsytko robiło się automatyczne, trzeba w pierw wygenerować moduł.
+
+//-----------------------------------------------------------------------------
+Metody startu aplikacji
+onModuleInit() - moduły i jego zależności zostały załadowane
+
+onApplicationBootstrap() - wszystkie moduły i ich zależności zostały załadowane. Bezpieczniejsze.
+
+onModuleDestroy() - rozpoczęcie zamykania apki.
+
+onApplicationShutdown() - wszystkie połączenia HTTP zamknięte, apka zaraz zostanie zniszczona.
+//film 61, 4:00
 
 
 
@@ -1223,15 +1245,9 @@ nest g s nazwa
 
 
 
+Do obsługi mySQL polecany program HeidiSQL
 
-
-
-
-
-
-
-
-
+Po stworzeniu user, podpinanie go do controlerów innych modułów: film 85, 6:00
 
 
 
