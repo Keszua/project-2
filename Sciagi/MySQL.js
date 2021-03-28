@@ -32,12 +32,12 @@ TEXT        // napis (do 65535 znaków)
 INT         // liczby całkowite (4B)
 FLOAT       // zmiennoprzecinkowe ()
 DOUBLE      // zmiennoprzecinkowe ()
-DATA        // w tormacie YYYY-MM-DD
+DATA        // w formacie YYYY-MM-DD
 DATETIME    // data i godzina w formacie  YYYY-MM-DD HH:MM:SS ('Y-m-d H:i:s')
 TIMESTAMP   // automatycznie się aktualizuje po każdej zmianie rekordu (do śledzenia aktywności na koncie)
 TIME - HH-MM-SS
 
-//klucz ID powinien byc tylu: INT, Indeks: PRIMARY oraz zaznaczone A_I (Auto Increment)
+//klucz ID powinien byc typu: INT, Indeks: PRIMARY oraz zaznaczone A_I (Auto Increment)
 //Dla wszystkich Typów TEXT ustawić Metodę porównywania napisów utf8_polish_ci
 // Na dole, struktórę i sortowanie również ustawić na utf8_polish_ci
 
@@ -47,6 +47,31 @@ instancja - jeden z reprezentantów klasy
 
 
 Jak wczytać bazę danych w konsoli, minuta 11 filmu: https://www.youtube.com/watch?v=SZD9_TtLtLE&t=193s
+
+mysql -u root -p   // logowanie się do bazy
+EXIT               // wyjście z bazy (wylogowanie)
+SHOW DATABASES;    // pokazuje dostępne biblioteki
+DROP DATABASE IF EXISTS nazwaBazy  // usuń bazę, jeśli istnieje
+DROP TABLE nazwaTabeli; // usówanie tabeli 
+CREATE DATABASE nazwaBazy // tworzenie nowej bazy
+CREATE TABLE nazwaTabeli  \n
+  -> ( id_dzial INT NOT NULL PRIMARY KEY AUTO_INCREMENT
+  ->   nazwa VARCHR(30) UNIQUE   //UNIQUE zapewni, że nie może być taich samych 
+  -> );
+USE nazwaTabeli;          // wejście do tabeli
+SHOW TABLES;              // Pokazuej zawrtość tabeli w której jestesmy
+DESCRIBE nazwaTabeli      // wyświetli właściwości tabeli w formie tabeli   | Field | Type | Null | Key | Def |
+INSERT INTO nazwaTabeli (nazwa) VALUES ( 'bajki'), (druga_tabela)  // dodawanie nowych rekordów
+SET SESSION sql_mode='traditional';  // zabespiecza przed dodawaniem pustych pól
+DELETE FROM nazwaTabeli WHERE id_dzial=5;  //kasownaie rekordu
+ALTER TABLE nazwaTabeli + ADD UNIQUE(pesel)  //nada key; UNI
+                        + CHANGE nazwaKolumny nowyTypPola
+                        + ADD COLUMN nazwaKolumny typPola
+                        + RENAME TO 
+                        + DROP nazwaKolumny
+						
+ALTER TABLE staraNazwaKolumny RENAME TO nowaNazwaKolumny						
+
 
 
 // SQL = Structured Query Language (strukturalny język zapytań)
@@ -62,6 +87,8 @@ Rodzaje komend:
 
 //do szybkich testów, mozna skorzystać ze strony: https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_all
 
+
+//------------------------------------------------------------
  //wyciąganie danych. Pełny opis: https://dev.mysql.com/doc/refman/8.0/en/select.html
 SELECT	
 		select_expr [, select_expr ...]  //nazwy kolumn które chcemy wyciągnąć. Wszystkie to *
@@ -79,6 +106,17 @@ SELECT
 			     // 1:n jedna osoba posiada kilka kont bankowych (które należą tylko do niej)
 			     // n:m jedna osoba moze należeć go wielu gróp na FB jak również do jednej grópy może należeć wiele osób
 			
+			
+SELECT * FROM nazwaTabeli;  //pokazuje całą tabelę z danymi
+SELECT imie, nazwisko FROM nazwaTabeli;  //wypisz wybrane kolumny
+SELECT CONCAT(nawisko, ' ', imie) AS 'Nazwisko i imie'
+         FROM nazwaTabeli
+         FROM data_urodzenia > '1983-01-01'
+         FROM data_urodzenia BETWEN '1983-01-01' AND '1993-01-01'
+		     WHERE imie IN('Agata', 'Ola');
+
+
+			
 //Przykład: 			
 SELECT *
 FROM Products
@@ -86,6 +124,7 @@ INNER JOIN Suppliers ON Products.SupplierID = Suppliers.SupplierID
 		
 			
 			
+//------------------------------------------------------------			
 INSERT	//dodawanie nowych rekordów https://dev.mysql.com/doc/refman/8.0/en/insert.html
 	[INTO] tbl_name
 	[(col_name [, col_name] ...)]
@@ -93,14 +132,16 @@ INSERT	//dodawanie nowych rekordów https://dev.mysql.com/doc/refman/8.0/en/inse
 	
 	INSERT INTO tbl_name () VALUES();
 
-
+//------------------------------------------------------------
 UPDATE // aktualizacja rekordów	
 		tbl_name 
 	SET col1={expr1|DEFAULT} [, col2={expr2|DEFAULT}]...
 	[WHERE where_condition]
 	
+UPDATE nazwaTabeli SET nazwaKolumy=wartość WHERE id=2  //
 
 
+//------------------------------------------------------------
 //WYSZUKUJĄCE:
 SELECT * FROM pytania                                       //wybierz wszystkie z bazy "pytania" (wyświetl wszystko)
 SELECT tresc, odpa, odpb, odpc FROM pytania                 //wyberz wymienione
@@ -113,7 +154,7 @@ SELECT * FROM pytania ORDER BY tresc DESC                   // uporządkuj malej
 SELECT * FROM ksiazki ORDER BY cena DESC LIMIT 1            // uporządkuj malejąco i wypisz tylko jedną (najdroższą)
 SELECT id, tresc FROM pytania WHERE id>=10 AND id<=12       // wybierz pytania tylko z zakresu
 SELECT id, tresc FROM pytania WHERE id BETWEEN 10 AND 12    // to samo co wyżej, wybierz pytania gdzie id pomiędzy 10 a 12
-SELECT * FROM pytania WHERE tresc LIKE "Jak%"               // wybierz wszystkei z bazy, gdzie treść "jest podobna" do napisu "Jak%". Proc zatepuje każdy znak (bo gwiazdka zajęta)  
+SELECT * FROM pytania WHERE tresc LIKE "Jak%"               // wybierz wszystkie z bazy, gdzie treść "jest podobna" do napisu "Jak%". Proc zatepuje każdy znak (bo gwiazdka zajęta)  
 SELECT * FROM pytania WHERE tresc LIKE "%C++%"				// Wyciagamy z bazy pytania zawierające frazę "C++"
 SELECT * FROM pytania WHERE tresc LIKE "%C++%" OR odpa LIKE "%C++%" OR odpb LIKE "%C++%"  // co wyżej, ale szukaj też w pytaniach
 SELECT * FROM pytania WHERE (kategoria="programowanie" OR kategoria="systemy operacyjne i sieci") AND rok=2012 // wybierz okreslone kategorie z roku 2012
@@ -122,13 +163,13 @@ POLECENIA ZŁOŻONE:
 //mam do dyspozycji 3 tabele: klienci, ksiazki i zamowienia. 
 // na podstawie filmiku: https://www.youtube.com/watch?v=P2YT9PvflUM&list=PLOYHgt8dIdoymv-Wzvs8M-OsKFD31VTVZ&index=2
 SELECT klienci.imie, klienci.nazwisko, zamowienia.idzamowienia, zamowienia.data FROM klienci, zamowienia WHERE klienci.idklienta = zamowienia.idklienta
-//wjmij dla wszystkich zamówień: imię i nazwisko klienta, id zamówienia, datę zamówienia.
+//wyjmij dla wszystkich zamówień: imię i nazwisko klienta, id zamówienia, datę zamówienia.
 //po klauzuli WHERE trzeba wypisać wszsytkie relacje, jakie zachodza w tabelach urzytych w naszym zapytaniu
 
 SELECT k.imie, k.nazwisko, z.idzamowienia, z.data FROM klienci AS k, zamowienia AS z WHERE k.idklienta = z.idklienta
 //to samo co wyżej, tylko urzyte aliasy
 
-#Imiona i nazwiska osób, które zmaówiły kiedykolwiek książke nr2
+#Imiona i nazwiska osób, które zamówiły kiedykolwiek książke nr2
 SELECT k.imie, k.nazwisko, z.idksiazki FROM klienci AS k, zamowienia AS z WHERE k.idklienta = z.idklienta AND z.idksiazki=2
 
 #jakie książki (tytuł, autor) zamówiła osoba Jan Nowak?
@@ -186,6 +227,18 @@ TRUNCATE TABLE zamowienia   #szybkie polecenie, któe nie usówa rekord po rekor
 #do DELETE najlepiej dodawać ORDER BY  oraz  LIMIT 
 
 
+
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
+
+RELACJE:
+//gdy sa uryte, to trzeba to wypisać:
+SELECT * FROM bajki, postacie WHERE bajki.id_postac = postacie.id_postac;
+//ten sam efekt:
+SELECT * FROM bajki JOIN postacie ON bajki.id = postacie.id   //UWAGA JOIN nie pokazuje rekordów w których nie ma relacji
+SELECT * FROM bajki LEFT JOIN postacie ON bajki.id = postacie.id   //Wypisze wszystkie rekordy z lewej, nawet bez relacji (będzie NULL)
+                    RIGHT  // zrobi NULL 
 
 
 #----------------------------------------------------------------------------------------------

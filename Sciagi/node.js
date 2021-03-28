@@ -945,8 +945,8 @@ yarn start // dla instalacji z paczkami yarn (nie npm) Najstarsza wersja
 
     nest info // informacje o wersji, paczkach
     nest generate <rodzaj> <nazwa> // pozwala wygenerować elementy i umieszcza je w odpowiednie miejsca + układa kod
-                  controller //co  // generuje kontroler
                   module     //mo  //generuje moduł
+                  controller //co  // generuje kontroler
                   service    //s //generuje serwis (usługę)
 
     nest build // tworzy produkcyjną aplikację w folderze dist
@@ -995,7 +995,7 @@ interface SpecialUserHelloResponse extends UserHelloResponse {
     age: number;
     isEnabled: boolean;
     accountType: UserType;
-    adminName?: string;   // dany element nie zawsze będzie dsotępny (pytajnik przed dwukropkiem)
+    adminName?: string;   // dany element nie zawsze będzie dostępny (pytajnik przed dwukropkiem)
 }
 
 //urzycie interfejsu:   (od tej pory, po Ctrl+space są podpowiedzi, co zawiera ten obiekt)
@@ -1262,15 +1262,31 @@ Zawartosc pliku można znaleźć tu:
 https://docs.nestjs.com/techniques/database
 
 
+//Rejestracja urzytkowników:
+// poczytać na:
+//https://codebrains.io/nest-js-express-jwt-authentication-with-typeorm-and-passport/
 
-Szyfrowanei hasła:
+
+Szyfrowanie hasła:
 https://docs.nestjs.com/security/encryption-and-hashing
 Trzeba doinstalować bcrypt i pliki definicji
 $ npm i bcrypt
 $ npm i -D @types/bcrypt
 
+//do autentykacji potrzeba doinstalować:
+$ npm install --save @nestjs/passport passport passport-local
+$ npm install --save-dev @types/passport-local
+$ npm i cookie-parser
+$ npm i -D @types/cookie-parser
 
+tworze 
+nest g resource Auth
+Będzie pytanie, czy stworzyć REST API? -> wybrać Tak
+Następnie, w folderze auth usunąc wszystkie domyslne Dto, akcje, metody encję.
+Więcej na  film 142,
 
+Odekorowanie akcji tylko dla zalogowanego urzytkownika za pomocą @UseGuards(AuthGuard('jwt'))
+film 142, 25:00
 
 Do obsługi mySQL polecany program HeidiSQL
 
@@ -1279,3 +1295,76 @@ Po stworzeniu user, podpinanie go do controlerów innych modułów: film 85, 6:0
 
 
 ORM - Object-Relational Mapping (Mapowanie Obiektowo-Relacyjne) zerknąłem na: https://fsgeek.pl/post/typeorm-pierwsze-kroki/
+
+//AND 
+item.find({
+    description: 'ogórki',  //and
+    price: 9.99,
+})
+
+//OR  
+item.find({
+    where: [
+        { description: 'ogórki' }, //lub
+        { price: 9.99 },
+    ]
+})
+
+//OR  i AND
+item.find({
+    where: [
+        { description: 'ogórki' }, //lub
+        { price: 9.99, name: 'kiszeniaki' },  //wewnątrz jest and
+    ]
+})
+
+LessThan(liczba) - mnijesze niż(<)
+LessThanOrEqual(liczba) - mniejsze lub równe od(<=)
+MoreThan(liczba) - większe niż(>)
+MoreThanOrEqual(liczba) - większe, równe niż(>=)
+Between(od, do) ( >= i <= )
+
+//Produkty kosztujące mniej niż 10 złoty:
+item.find({
+    where: [
+        price: LessThan(10),  // <10
+    ]
+})
+
+Like() // nie trzeba podawać pełnej nazwy.  % dowolny cią   _ dowolny znak
+
+item.find({
+    where: [
+        name: Like('Ogórki%'),  // ogórki kiszone, ogórki afrykańskie lub ogórki inne
+    ]
+})
+
+item.find({
+    where: [
+        name: Like(`%${searchTerm}%`),  
+    ]
+})
+
+In() jedna wartość z kilku. Poniższy przykłąd odnajdzie 4 elementy o podanym ID (jeśli taie są)
+
+where: {
+    id: In([1, 2, 100, 4])  //UWAGA, nie podawać pustej tablicy
+}
+
+sprawdzanie, czy pole jest nulem
+IsNull() 
+where: {
+    description: IsNull(),  //zwróci wszystkie pola, które są puste
+}
+
+Zaprzeczenie
+where: {
+    description: Not(IsNull()),  //zwróci wszystkie pola, które są puste
+}
+
+Raw() - można podać SQL
+where: {
+    description: Raw(''),  //zwróci wszystkie pola, które są puste
+}
+
+

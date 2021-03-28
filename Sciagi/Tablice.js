@@ -476,12 +476,32 @@ const multi3 = multiply.apply(null, [2, 3]);
 // #     #         #   #   #    # # # # #  #  #     #   #  #  #             # #      #      #   # #   #   # # # # #
 // #####  ###   ###     ##  ### #  #   #  ###  ###  #   # ###  ###      #   #  ###  #####  #    #   #  ###   #   #
 //                                                                       ###     ##       #
+//Dodawanie elementów:
+const tab = ["Marcin", "Ania", "Agnieszka"];
+tab.push("Piotrek");  //dodaje element i zwaca ilosc elementów:  let numer = tab.push("Piotr"); zwróci 4 
+console.log(tab); //[Marcin, Ania, Agnieszka, Piotrek]
+tab.push("Y", "Z");
+console.log(tab); //[Marcin, Ania, Agnieszka, Piotrek, Y, Z]
+//lub:
+const tab = ["Marcin", "Ania", "Agnieszka"];
+tab[3] = "Piotrek";
+//lub
+tab[tab.length] = "Piotrek";
+console.log(tab); //[Marcin, Ania, Agnieszka, Piotrek]
 
-========================================================================================================================================================================================================
-|              JavaScript                        |                Python                           |                 Java                            |                  PHP                            |
-=========================================================================================================================================================================================================
+=========================================================================================================================================================================================================================================================
+|              JavaScript                        |                Python                           |                  GO                             |                  PHP                            |                      Java                      |
+=========================================================================================================================================================================================================================================================
 |                                                |                                                 |                                                 |                                                 |
+/*deklaracja tablicy */                          |                                                 | var tab [5]int                                  |
+| const tab = ["Marcin", "Ania", "Agnieszka"];   |                                                 | tab := [5]int {1, 2, 5, 6, 7}                   |                                                 |
+|                                                |                                                 | tab := []int {2, 5, 6}                          |                                                 |
+//dodanie nowego elemntu do tablicy
+| tab.push("Piotrek"); /* zwroci dlugosc tab */  |                                                 | tab = append(tab, 13)                           |                                                 |
+| tab[4] = "Krysia";                             |                                                 |                                                 |                                                 |
+| tab[tab.length] = "Marek";                     |                                                 |                                                 |                                                 |
 |                                                |                                                 |                                                 |                                                 |
+
 // nowa tablica z wybranymi elementami           |
 | tablica.filter(callback)                       |                                                 |                                                 |                                                 |
 |                                                |                                                 |                                                 |                                                 |
@@ -493,20 +513,23 @@ const multi3 = multiply.apply(null, [2, 3]);
 | encodeURIComponent('tekst & CosTam')           |                                                 |                                                 |                                                 |
 |                                                |                                                 |                                                 |                                                 |
 //Operatory logiczne:  
-|                                      |                                       |                                       | &&  ||  xor                          |
+|                                                |                                                 |                                                 | &&  ||  xor                                     |
 //długość łańcucha. 
-|                                      |                                       |                                       | strlen();                            |
-|                                      |                                       |                                       | $len = strlen((string) $liczba);     |
+|                                                |                                                 |                                                 | strlen();                                       | 
+|                                                |                                                 |                                                 | $len = strlen((string) $liczba);                |
 //zamiana liczby na łańcuch
-|                                      |                                       |                                       | $txt = (string) $liczba              |
+|                                                |                                                 |                                                 | $txt = (string) $liczba                         |
 //dekodowanie JSONA
-|                                      |                                       |                                       | json_encode($text);                  |
-|                                      |                                       |                                       |                                      |
-|                                      |                                       |                                       |                                      |
-|                                      |                                       |                                       |                                      |
-|                                      |                                       |                                       |                                      |
-|                                      |                                       |                                       |                                      |
-|                                      |                                       |                                       |                                      |
-|                                      |                                       |                                       |                                      |
+|                                                |                                                 |                                                 | json_encode($text);                             |
+|                                                |                                                 |                                                 |                                                 |
+|                                                |                                                 |                                                 |                                                 |
+|                                                |                                                 |                                                 |                                                 |
+|                                                |                                                 |                                                 |                                                 |
+|                                                |                                                 |                                                 |                                                 |
+|                                                |                                                 |                                                 |                                                 |
+|                                                |                                                 |                                                 |                                                 |
+|                                                |                                                 |                                                 |                                                 |
+|                                                |                                                 |                                                 |                                                 |
+|                                                |                                                 |                                                 |                                                 |
 
 
