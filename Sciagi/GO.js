@@ -69,8 +69,9 @@ b := []byte(s)   //= [116 104 105 115 32 105 115 32 97 32 115 116 114 105 110 10
 
 
 var arr [5]int
-arr := [5]int {1, 3, 5, 6, 6}  //ten sam efekt co wyżej
-arr := []int {1, 3, 5, 6, 6}   //ten sam efekt co wyżej
+arr := [5]int {1, 3, 5, 6, 6}    //ten sam efekt co wyżej
+arr := [...]int {1, 3, 5, 6, 6}  //ten sam efekt co wyżej
+arr := []int {1, 3, 5, 6, 6}     //ten sam efekt co wyżej
 arr = append(arr, 13)  //dodanie nowego elementu
 
 for index, value := range arr {  //specjalny for dla tablic
@@ -142,6 +143,31 @@ func main() {
     fmt.Println("Person", p)  //= Person {Karol 19}
     fmt.Println("Age", p.age)  //= Age 19
 }
+
+
+//ENUMY:
+const (
+    a = iota   // aby olać zerowy indeks, treba zapisać to tak: _ = iota
+    b
+    c
+)
+
+const (
+    _ = iota  //ignore first value
+    KB = 1 << (10 * iota)
+    MB
+    GB
+    TB
+    PB
+    EB
+    ZB
+    YB
+)
+
+fileSize := 4000000000
+fmt.Printf("%.2fGB", fileSize/GB) //= 3.73GB
+
+
 
 
 
