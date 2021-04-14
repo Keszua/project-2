@@ -46,6 +46,7 @@ float64
 string
 complex64  liczby zespolone  (1 + 2i)   var n complex64 = 1 + 2i      real(n)   imag(n)    var n complex64 = complex(1 + 2i) dla większej precyzji
 
++Inf //gdy dzeilimy przez zero
 
 
 // Aby wyświetlić typ danej:
@@ -172,4 +173,78 @@ fmt.Printf("%.2fGB", fileSize/GB) //= 3.73GB
 
 
 
-	
+//--------------------------------------------------------------------------------------
+FUNCTIONS
+//--------------------------------------------------------------------------------------
+func main() {
+    func() {                   // podstawowoa struktura funkcji
+        fmt.Println("Hejka")
+    } ()
+}
+
+
+func main() {
+   sayMessage("siemka")        // przekazanie parametru
+    var txt string = "Witam"
+    sayMessagePointer(&txt)    // przekazanie adresu do tekstu
+    sumuj(1, 2, 3, 4 , 5)      // przekazuje dowolną ilość intów
+    s := sumuj2("Suma wynosi", 1, 2, 3, 4 , 5)  // przekazuje tekst i dowolną wartość intów i funckja zwróci inta
+    s3 := sumuj3(1, 2, 3, 4 , 5)
+}
+
+func sayMessage(msg string) {
+    fmt.Println(msg)           //= siemka
+}
+
+func sayMessagePointer(msg* string) {
+    fmt.Println(*msg)          //= Witam
+    *msg = "inny tekst"        // zmiana oryginalnego testu
+}
+
+func sumuj(val ...int) int {
+    fmt.Println(val)           //= [1 2 3 4 5]
+    result := 0 
+    for _, v := range val {
+        result += v
+    }
+    fmt.Println("Suma:", result)  //= Suma: 15
+    return result
+}
+
+func sumuj(val ...int) {
+    fmt.Println(val)           //= [1 2 3 4 5]
+    ...
+}
+
+func sumuj2(msg string, val ...int) int {  //przymuje stringa, dowolną ilość intów i zwraca inta
+    result := 0 
+    for _, v := range val {
+        result += v
+    }
+    fmt.Println(msg, result)   //= Suma wynosi 15
+    return result
+}
+
+func sumuj3(val ...int) (result int) {  //od razu inicjaliowana jest zmienne, która domyślnie zostanii zwrócina
+    for _, v := range val {
+        result += v
+    } 
+    return 
+}
+
+//--------------------------------------------------------------------------------------
+func main() {
+    d, err := divide(5, 1)
+    if err != nil {
+        fmt.Println(err)  
+        return
+    }
+    fmt.Println("Iloczyn", d)  
+}
+
+func divide(a, b float64) (float64, error) {
+    if b == 0.0 {
+        return 0.0, fmt.Errorf("Cannot divide by zero")
+    }
+    return a / b, nil
+}
