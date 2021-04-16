@@ -55,10 +55,12 @@ complex64  liczby zespolone  (1 + 2i)   var n complex64 = 1 + 2i      real(n)   
 
 // oprearcje loczne: &  |  ^  &^
 
-// rzutowanie stringa na liczbę i odwrotnie:
-// potrzebna paczka "strconv"
+// rzutowanie
 var i int =  42
-var tekst string = strconv.Itoa(i)
+var tekst string = strconv.Itoa(i) //rzutowanie inta na string [potrzebna paczka "strconv"]
+data []byte
+string(data)  //rzutowanie ciągu znaków na stringa
+
 
 b, err := strconv.ParseBool("true")
 f, err := strconv.ParseFloat("3.1415", 64)
@@ -139,10 +141,15 @@ type person struct {
 	age int
 }
 
+func (p person) show() {  //metoda dla struktury
+    fmt.Println(p.name)
+}
+
 func main() {
     p := person{name: "Karol", age: 19}
-    fmt.Println("Person", p)  //= Person {Karol 19}
+    fmt.Println("Person", p)   //= Person {Karol 19}
     fmt.Println("Age", p.age)  //= Age 19
+    p.show()                   //= Karol 
 }
 
 
@@ -179,10 +186,16 @@ FUNCTIONS
 func main() {
     func() {                   // podstawowoa struktura funkcji
         fmt.Println("Hejka")
-    } ()
+    } ()                       // funkcja sama się wywoła. Tutaj można przekazać parametry
 }
 
-
+func main() {
+	var f func () = func() {   // lub krótki zapis  f := func() {
+		fmt.Println("Hejka")
+	} 
+	f()
+}
+//--------------------------------------------------------------------------------------
 func main() {
    sayMessage("siemka")        // przekazanie parametru
     var txt string = "Witam"
@@ -225,7 +238,7 @@ func sumuj2(msg string, val ...int) int {  //przymuje stringa, dowolną ilość 
     return result
 }
 
-func sumuj3(val ...int) (result int) {  //od razu inicjaliowana jest zmienne, która domyślnie zostanii zwrócina
+func sumuj3(val ...int) (result int) {  //od razu inicjaliowana jest zmienna, która domyślnie zostanie zwrócona
     for _, v := range val {
         result += v
     } 
@@ -248,3 +261,131 @@ func divide(a, b float64) (float64, error) {
     }
     return a / b, nil
 }
+
+//--------------------------------------------------------------------------------------
+func main() {
+	g := greeter {
+		name : "Karol",
+	}
+	g.greet()               //= Karol
+}
+
+type greeter struct {
+	name string
+}
+
+func (g greeter) greet() {  //metody dla struktury. Można przekazać wskaźnik do struktury, aby zmieniac besposrednio zawartosc struktury
+	fmt.Println(g.name)
+}
+
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+INTERFACES
+
+func main() {
+    var w Writer = ConsoleWriter {}  //tworze obiekt na podstawie interfejsu i przypisuje strukturę
+    w.Write([]byte("Hello go!"))
+}
+
+type Writer interface {
+    Write([]byte) (int, error)  //Definicja metody. Wymusi, żeby TYP posiadał taką funkcję
+}
+
+type ConsoleWriter struct {
+}
+
+func (cw ConsoleWriter) Write(data []byte) (int, error) { //metoda dla struktury
+    n, err := fmt.Println(string(data))
+    return n, err
+}
+
+//--------------------------------------------------------------------------------------
+func main() {
+	myInt := IntCounter(0)
+	var inc Incrementer = &myInt 
+	fmt.Println(inc.Increment())  //= 1
+	fmt.Println(inc.Increment())  //= 2
+}
+
+type Incrementer interface {
+	Increment() int
+}
+
+type IntCounter int
+
+func (ic *IntCounter ) Increment() int {
+        *ic ++
+	return int(*ic)
+}
+//--------------------------------------------------------------------------------------
+
+package main
+
+import (
+	"fmt"
+	"bytes"
+)
+
+func main() {
+	var wc WriterCloser = NewBufferedCloser()
+	wc.Write([]byte("Hello, this is a test"))
+	wc.Close()
+}
+
+type Writer interface {
+	Write([]byte) (int, error)
+}
+
+type Closer interface {
+	Close() error
+}
+
+type WriterCloser interface {
+	Writer
+	Closer
+}
+
+type BufferedWriterCloser  struct {
+	buffer *bytes.Buffer
+}
+
+func (bwc *BufferedWriterCloser )  Write(data []byte) (int, error) {
+	n, err := bwc.buffer.Write(data)
+	if err != nil {
+		return 0, err
+	}
+	
+	v := make([]byte, 8)
+	for bwc.buffer.Len() > 8 {
+		_, err := bwc.buffer.Read(v)
+		if err != nil {
+			return 0, err
+		}
+		_, err = fmt.Println(string(v))
+		if err != nil {
+			return 0, err
+		}
+	}
+	
+	return n, nil
+}
+
+func (bwc *BufferedWriterCloser )  Close() error {
+	for bwc.buffer.Len() > 0 {
+		data := bwc.buffer.Next(8)
+		_, err := fmt.Println(string(data))
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func NewBufferedCloser() *BufferedWriterCloser {
+	return &BufferedWriterCloser  {
+		buffer: bytes.NewBuffer([]byte{}),
+	}
+}
+
+
