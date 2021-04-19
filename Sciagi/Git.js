@@ -320,7 +320,7 @@ git branch -a                       //pokazuje gałezie lokalne i zdalne
 git remote show origin              //pokazuje informacje o gałęziach oraz która gałąź jest podpięta pod "pull"
 git branch -v                       //pokazuje informacje, o ostatnich zmianach na każdej z gałęzi
 git branch nazwaNowegoBrancha       //tworzy nową gałąź
-git branch -D nazwaGalezi           //po połączeniu gałęzi, gdy już nie będzie potrzebna, można ją usunąć.
+git branch -D nazwaGalezi           //usuwanie gałęzi
 
 git push origin nazwaGalezi         // jednorazowe wysłanie na serwer podanej gałęzi (sprawdzone polecenie)
 git push –u origin nazwaGalezi      // przypisanie i wysłanie na serwer podanej gałęzi
