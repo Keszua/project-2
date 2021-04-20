@@ -14,6 +14,8 @@ func main() {
 
 //uruchomienie skryptu poleceniem:
 go run.
+go run src/main.go  //uruchomienie konkretnego pliku
+go run -race src/main.go  //specjalny tryb, w konsoli pokazuje jakieś procesy gorutine
 
 //jakaś konfiguracja i instalacja 30minuta na: https://www.youtube.com/watch?v=YS4e4q9oBaU&t=1245s
 
@@ -267,7 +269,7 @@ func divide(a, b float64)(float64, error) {
 func main() {
     g:= greeter {
         name: "Karol",
-	}
+    }
     g.greet()               //= Karol
 }
 
@@ -363,10 +365,10 @@ func(bwc * BufferedWriterCloser)  Write(data[]byte)(int, error) {
     v:= make([]byte, 8)
     for bwc.buffer.Len() > 8 {
         _, err:= bwc.buffer.Read(v)
-		if err != nil {
+        if err != nil {
             return 0, err
         }
-		_, err = fmt.Println(string(v))
+        _, err = fmt.Println(string(v))
     if err != nil { return 0, err }
 }
 return n, nil
@@ -375,16 +377,16 @@ return n, nil
 func(bwc * BufferedWriterCloser)  Close() error {
     for bwc.buffer.Len() > 0 {
         data:= bwc.buffer.Next(8)
-		_, err:= fmt.Println(string(data))
-		if err != nil { return err }
-	}
+        _, err:= fmt.Println(string(data))
+        if err != nil { return err }
+    }
 return nil
 }
 
 func NewBufferedCloser() * BufferedWriterCloser {
     return & BufferedWriterCloser  {
         buffer: bytes.NewBuffer([]byte{}),
-	}
+    }
 }
 
 //--------------------------------------------------------------------------------------
@@ -432,12 +434,12 @@ func main() {
 //--------------------------------------------------------------------------------------
 import("fmt"; "runtime"; "sync" )
 
-var wg = sync.WaitGroup{ }
-var m = sync.RWMutex{ }
+var wg = sync.WaitGroup{}
+var m = sync.RWMutex{}  // lub sync.Mutex  - to protect data access 
 var counter = 0
 
 func main() {
-    runtime.GOMAXPROCS(2)  //określam, z ilu rdzeni (fizycznych procesorów) ma korzystać
+    runtime.GOMAXPROCS(2)  //określam, z ilu rdzeni (fizycznych procesorów) ma korzystać (okreslenei równoległości procesów, czyli parallelism)
     for i := 0; i < 10; i++ {
         wg.Add(2)
         m.RLock()
@@ -461,8 +463,93 @@ func increment() {
 }
 
 //--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+CHANNELS
 
 
+
+import ( "fmt"; "sync" )
+
+var wg = sync.WaitGroup{}
+
+func main() {
+  ch := make(chan int)
+  wg.Add(2)
+  go func() {
+    i := <- ch
+    fmt.Println(i)
+    wg.Done()
+  }()
+
+  go func() {
+    ch <- 42
+    wg.Done()
+  } ()
+  wg.Wait()
+}
+
+//--------------------------------------------------------------------------------------
+import ( "fmt"; "sync" )
+
+var wg = sync.WaitGroup{}
+
+func main() {
+  ch := make(chan int, 50)
+  wg.Add(2)
+
+  go func(ch <-chan int) {
+    for {
+      if i, ok := <- ch; ok {
+        fmt.Println(i)
+      } else {
+        break
+      }
+    }
+    wg.Done()
+  } (ch)
+
+  go func(ch chan<- int) {
+    ch <- 42
+    ch <- 27
+    close(ch)
+    wg.Done()
+  } (ch)
+
+  wg.Wait()	
+}
+
+//--------------------------------------------------------------------------------------
+import ( "fmt"; "time" )
+
+const (
+  logInfo    = "INFO"
+  logWarning = "WAGNING"
+  logError   = "ERROR"
+)
+
+type logEntry struct {
+  time     time.Time
+  severity string
+  message  string
+}
+
+var logCh = make(chan logEntry, 50)
+
+func main() {
+  go logger()
+  logCh <- logEntry{time.Now(), logInfo, "Ap is starting"}
+  logCh <- logEntry{time.Now(), logInfo, "Ap is shutting down"}
+  time.Sleep(100 * time.Millisecond)	
+}
+
+func logger() {
+  for entry := range logCh {
+    fmt.Printf("%v - [%v]%v\n", entry.time.Format("2006-01-02T15:04:05"), entry.severity, entry.message)
+  }
+}
+
+//--------------------------------------------------------------------------------------
 
 
 
