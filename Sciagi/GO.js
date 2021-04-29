@@ -1,8 +1,8 @@
 //Tworzenie nowego projektu.
 //Opis tutaj: https://golang.org/doc/tutorial/getting-started
-//Zakłądam że go jest już zainstalowany (można sprawdzić poleniem: go version)
+//Zakładam że go jest już zainstalowany (można sprawdzić poleniem: go version)
 //Tworze folder i wchodze do niego. W nim opdpal kosolę i wpisuje:
-$ go mod init example.com / hello
+$ go mod init example.com/hello
 // powstanie tam nowy moduł "go.mod"
 // ręcznie tworze plik hello.go  i uruchamiam mój edytor kodu (czyli VSC)
 // podstawowy pierwszy kod:
@@ -50,6 +50,8 @@ complex64  liczby zespolone(1 + 2i)   var n complex64 = 1 + 2i      real(n)   im
 
 +Inf //gdy dzielimy przez zero
 
+time.Time  //typ daty. Wymaga import ("time")
+
 
 // Aby wyświetlić typ danej:
 var i int = 4
@@ -84,6 +86,36 @@ for index, value := range arr {  //specjalny for dla tablic
 }
 
 
+  var mySlice []string
+  mySlice = append(mySlice, "Trevor")
+  mySlice = append(mySlice, "John")
+  fmt.Println(mySlice)  //= [Trevor John]
+
+
+  var mySlice2 []int
+  mySlice2 = append(mySlice2, 2)
+  mySlice2 = append(mySlice2, 1)
+  mySlice2 = append(mySlice2, 3)
+  fmt.Println(mySlice2)  //= [2 1 3]
+  sort.Ints(mySlice2)
+  fmt.Println(mySlice2)  //= [1 2 3]
+
+
+  fmt.Println(number[0:2]) //= [1 2]
+  fmt.Println(number[:2])  //= [1 2]
+  fmt.Println(number[6:9]) //= [7 8 9]
+  fmt.Println(number[6:])  //= [7 8 9 10]
+
+
+
+/* --------------------------------------------------------------------------------------
+  ### ##    ####   #### 
+  #  #  #       #  #   #
+  #  #  #   #####  #   #
+  #  #  #  #    #  ####
+  #  #  #   ### #  #
+                   #
+*/
 m:= make(map[string]int)
 m["tringle"] = 3
 m["squere"] = 4
@@ -96,9 +128,26 @@ for key, value := range m {
     fmt.Println("Key:", key, "Val:", value)
 }
 
+//------------------
+type User struct {
+  FirstName string
+  LastName  string
+}
+
+  myMap := make(map[string]User) //mapa przechowująca strukturę
+  myMap2 := make(map[string]interface{}) //mapa przechowująca dowolny typ (nie zalecane)
+
+  me := User{
+    FirstName: "Trevor",
+    LastName:  "Sawler",
+  }
+
+  myMap["me"] = me
+
+  fmt.Print(myMap["me"].FirstName)
 
 
-
+//---------------
 if x > 6 {  //bez nawiasów. Z nawiasami tez jest dobrze
     ftmPrintln("More than 6")
 } else if x < 2 {
@@ -137,14 +186,31 @@ if err != nil {
 } else { fmt.Println("kwadrat", kwadrat) }
 
 
+myVar := "cat"
+switch myVar {
+  case "cat":
+    fmt.Println("It is cat")
+  default:
+    fmt.Println("Something else")
+}
 
-//struktury:
+
+
+/* --------------------------------------------------------------------------------------
+           #                           #  
+           #                           #
+   ###   #####  # ###  #   #   ###   #####
+  #        #    ##     #   #  #   #    #
+   ###     #    #      #   #  #        #
+      #    #    #      #   #  #   #    #
+   ###      ##  #       ####   ###      ##
+*/
 type person struct {
     name string
     age int
 }
 
-func(p person) show() {  //metoda dla struktury
+func(p person) show() {  //metoda dla struktury   na innym kursie było ze wskaźnikiem: func(p *person) show() {
     fmt.Println(p.name)
 }
 
@@ -183,7 +249,15 @@ fmt.Printf("%.2fGB", fileSize / GB) //= 3.73GB
 
 
 
-//--------------------------------------------------------------------------------------
+/* --------------------------------------------------------------------------------------
+    ###
+   #
+   #     #   #  ####    ###
+  ####   #   #  #   #  #   #
+   #     #   #  #   #  #
+   #     #   #  #   #  #   #
+   #      ####  #   #   ###
+*/
 FUNCTIONS
 //--------------------------------------------------------------------------------------
 func main() {
@@ -281,15 +355,15 @@ func(g greeter) greet() {  //metody dla struktury. Można przekazać wskaźnik d
     fmt.Println(g.name)
 }
 
-//--------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------
-INTERFACES
-
-func main() {
-    var w Writer = ConsoleWriter { }  //tworze obiekt na podstawie interfejsu i przypisuje strukturę
-    w.Write([]byte("Hello go!"))
-}
+/*--------------------------------------------------------------------------------------
+                #                    ###
+   #            #                   #
+       ####   #####   ###   # ###   #      ####    ###    ###
+  ##   #   #    #    #   #  ##     ####        #  #   #  #   #
+   #   #   #    #    #####  #       #      #####  #      #####
+   #   #   #    #    #      #       #     #    #  #   #  #
+  ###  #   #     ##   ###   #       #      ### #   ###    ###
+*/
 
 type Writer interface {
     Write([]byte)(int, error)  //Definicja metody. Wymusi, żeby TYP, lub funkcja zwracajaca typ, posiadał taką funkcję
@@ -303,6 +377,10 @@ func(cw ConsoleWriter) Write(data[]byte)(int, error) { //metoda dla struktury
     return n, err
 }
 
+func main() {
+    var w Writer = ConsoleWriter { }  //tworze obiekt na podstawie interfejsu i przypisuje strukturę
+    w.Write([]byte("Hello go!"))
+}
 
 //--------------------------------------------------------------------------------------
 var i interface{ } = "0"
@@ -389,10 +467,15 @@ func NewBufferedCloser() * BufferedWriterCloser {
     }
 }
 
-//--------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------
-GOROUTINES
+/* --------------------------------------------------------------------------------------
+   ###    ####   ####    ####   #    #  #####  ###  #   #  #####   ### 
+  #   #  #    #  #   #  #    #  #    #    #     #   ##  #  #      #   #
+  #      #    #  #   #  #    #  #    #    #     #   ##  #  #      #
+  #      #    #  ####   #    #  #    #    #     #   # # #  ####    ###
+  #  ##  #    #  # #    #    #  #    #    #     #   #  ##  #          #
+  #   #  #    #  #  #   #    #  #    #    #     #   #  ##  #      #   #
+   ###    ####   #   #   ####    ####     #    ###  #   #  #####   ###
+*/
 
 import("fmt"; "time" )
 
@@ -462,12 +545,15 @@ func increment() {
     wg.Done()
 }
 
-//--------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------
-CHANNELS
-
-
+/*--------------------------------------------------------------------------------------
+   ###   #   #    #    #   #  #   #  #####  #       ### 
+  #   #  #   #   # #   ##  #  ##  #  #      #      #   #
+  #      #   #   # #   ##  #  ##  #  #      #      #
+  #      #####  #   #  # # #  # # #  ####   #       ###
+  #      #   #  #####  #  ##  #  ##  #      #          #
+  #   #  #   #  #   #  #  ##  #  ##  #      #      #   #
+   ###   #   #  #   #  #   #  #   #  #####  #####   ###
+*/
 
 import ( "fmt"; "sync" )
 
