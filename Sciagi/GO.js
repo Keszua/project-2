@@ -147,6 +147,7 @@ type User struct {
   fmt.Print(myMap["me"].FirstName)
 
 
+
 //---------------
 if x > 6 {  //bez nawiasów. Z nawiasami tez jest dobrze
     ftmPrintln("More than 6")
@@ -190,10 +191,19 @@ myVar := "cat"
 switch myVar {
   case "cat":
     fmt.Println("It is cat")
+    // bez break. Jesli chce aby wykonać też poniższy case, trzeba dodać fallthrough
+  case "dog", "horse":
+    fmt.Println("It is dog or horse")
   default:
     fmt.Println("Something else")
 }
 
+switch os := runtime.GOOS; os {
+  case "linux":
+    fmt.Println("Linux.")
+  default:
+    fmt.Printf("%s.\n", os)
+}
 
 
 /* --------------------------------------------------------------------------------------
@@ -358,11 +368,11 @@ func(g greeter) greet() {  //metody dla struktury. Można przekazać wskaźnik d
 /*--------------------------------------------------------------------------------------
                 #                    ###
    #            #                   #
-       ####   #####   ###   # ###   #      ####    ###    ###
-  ##   #   #    #    #   #  ##     ####        #  #   #  #   #
-   #   #   #    #    #####  #       #      #####  #      #####
-   #   #   #    #    #      #       #     #    #  #   #  #
-  ###  #   #     ##   ###   #       #      ### #   ###    ###
+       ####   #####   ###   # ###   #     ####    ###    ###
+  ##   #   #    #    #   #  ##     ####       #  #   #  #   #
+   #   #   #    #    #####  #       #     #####  #      #####
+   #   #   #    #    #      #       #    #    #  #   #  #
+  ###  #   #     ##   ###   #       #     ### #   ###    ###
 */
 
 type Writer interface {
