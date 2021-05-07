@@ -210,4 +210,4 @@ def wypisz(napis, spacje=1):
         print(line2)
 
 
-wypisz('CHANNELS', 2)
+wypisz('http', 3)

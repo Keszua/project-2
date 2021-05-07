@@ -24,6 +24,20 @@ go run -race src/main.go  //specjalny tryb, w konsoli pokazuje jakieś procesy g
 //------------------------------------------------------------
 //------------------------------------------------------------
 
+Proponowana struktura katalogów ze strony:
+http://golang.org.pl/getting_started/06_project_step_by_step.html
+mkdir workspace/bin
+mkdir workspace/libs
+mkdir workspace/libs/bin
+mkdir workspace/libs/src
+mkdir workspace/src
+
+
+
+//------------------------------------------------------------
+//------------------------------------------------------------
+//------------------------------------------------------------
+
 //deklaracja zmiennych:
 
 var x int = 4  //bez średnika
@@ -565,6 +579,42 @@ func increment() {
    ###   #   #  #   #  #   #  #   #  #####  #####   ###
 */
 
+/*
+Kanał ma dwie podstawowe operacje: wysyłanie i odbieranie, znane pod wspólną nazwą komunikacji.
+
+ch <- x   // instrukcja wysyłania
+x = <-ch  // wyrażenie odbierania w instrukcji przypisania
+<-ch      // instrukcja odbierania; wynik jest porzucany
+close(ch) // zamknięcie kanału. Próba wysłania wartosci do kanału, wywoła panikę
+
+ch = make(chan int)    // kanał niebuforowany (niebuforowane są okreslane jako synchroniczne)
+ch = make(chan int, 0) // kanał niebuforowany
+ch = make(chan int, 3) // kanał buforowany z pojemnością 3
+
+*/
+
+
+//--------------------------------------------------------------------------------------
+import ( "fmt"; "math/rand" ; "time")
+
+func CalculateValue(intChan chan int) {
+  rand.Seed(time.Now().UnixNano()) // bez tego będzie losował cały czas tę samą liczbę
+  randomNumber := rand.Intn(10)    // losuje liczbę 
+  intChan <- randomNumber          // funkcja niczego nie zwraca, tylko przekazuje wartośc do kanału
+}
+
+func main() {
+  intChan := make(chan int)  // tworze nowy kanał
+  defer close(intChan)       // sam zamknie kanał gdy bedzie już zakończony
+
+  go CalculateValue(intChan) // ywołanie funkcji z kanałem (gorutine)
+
+  num := <-intChan           // nasłuchiwanie kanału
+  fmt.Println("num", num)
+}
+
+
+//--------------------------------------------------------------------------------------
 import ( "fmt"; "sync" )
 
 var wg = sync.WaitGroup{}
@@ -646,8 +696,321 @@ func logger() {
 }
 
 //--------------------------------------------------------------------------------------
+POTOKI
+Fajnie opisane potoki w książce s225
+|-----------|  0, 1, 2, 3 |---------------| 0, 1, 4, 9  |---------------|
+|  Licznik  |------------>|  Potęgowanie  |------------>|  Wyświetlacz  |
+|-----------|             |---------------|             |---------------|
+
+func main() {
+  naturals := make(chan int)
+  squares  := make(chan int)
+  
+// Licznik.
+  go func() {
+    for x := 0; x < 100; x++ {
+      naturals <- x
+    }
+    close(naturals)
+  }()
+
+  // Potęga kwadratowa.
+  go func() {
+    for x := range naturals {
+      squares <- x * x
+    }
+    close(squares)
+  }()
+
+  // Wyświetlacz (w głównej funkcji goroutine).
+  for x := range squares {
+  fmt.Println(x)
+  }
+}
+//--------------------------------------------------------------------------------------
+// To samo co wyżej, ale przerobione na funkcje i kanały jednokierunkowe 
+func counter(out chan<- int) {
+  for x := 0; x < 100; x++ {
+    out <- x
+  }
+  close(out)
+}
+
+func squarer(out chan<- int, in <-chan int) {
+  for v := range in {
+    out <- v * v
+  }
+  close(out)
+}
+
+func printer(in <-chan int) {
+  for v := range in {
+    fmt.Println(v)
+  }
+}
+
+func main() {
+  naturals := make(chan int)
+  squares := make(chan int)
+  go counter(naturals)
+  go squarer(squares, naturals)
+  printer(squares)
+}
+
+//--------------------------------------------------------------------------------------
+Kanał buforowany. Przehowuje kolejkę elementów.
+
+//Przykład: Funkcja jedncześnie wysyła to smo pytanie do 3 różnych serwerów.
+//Odeśle wynik od najszybszego serwera:
+
+func mirroredQuery() string {
+  responses := make(chan string, 3)
+  go func() { responses <- request("asia.helion.pl") }()
+  go func() { responses <- request("europe.helion.pl") }()
+  go func() { responses <- request("americas.helion.pl") }()
+  return <-responses // zwraca najszybszą odpowiedź
+}
+
+func request(hostname string) (response string) { /* ... */ }
+
+
+
+//--------------------------------------------------------------------------------------
+/*
+   #####    ###     ####    #   #
+       #   #   #   #    #   ##  #
+       #   #       #    #   ##  #
+       #    ###    #    #   # # #
+       #       #   #    #   #  ##
+   #   #   #   #   #    #   #  ##
+    ###     ###     ####    #   #
+*/
+
+import (	"encoding/json"; 	"fmt" )
+
+type Person struct {
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	HasDog    bool   `json:"has-dog"`
+}
+
+func main() {
+  fmt.Println("hejka")
+
+//Pierwszy zapis JSONA na piechote ( w grawisach):
+  myJson := `
+[
+  {
+    "first_name": "Cark",
+    "last_name": "Kent",
+    "has-dog": true
+  },
+  {
+    "first_name": "Bruce",
+    "last_name": "Wilis",
+    "has-dog": false
+  }
+
+]`
+
+  var unmarshalled []Person
+
+  err := json.Unmarshal([]byte(myJson), &unmarshalled)
+  if err != nil {
+    fmt.Println("Coś nie tak z JSONem")
+  }
+
+  fmt.Printf("unmarshalled: %v", unmarshalled) //=  [{Cark Kent false} {Bruce Wilis false}]
+
+  //write json from a struct
+  var mySlice []Person
+
+  var m1 Person
+  m1.FirstName = "Wally"
+  m1.LastName = "West"
+  m1.HasDog = false
+
+  mySlice = append(mySlice, m1)
+
+  fmt.Println(mySlice)
+
+  newJson, err := json.MarshalIndent(mySlice, "", " ")
+  if err != nil {
+    fmt.Println("Coś nie tak z JSONem")
+  }
+  fmt.Println(string(newJson))  //= [
+                                //=   {
+                                //=     "first_name": "Wally",
+                                //=     "last_name": "West",
+                                //=     "has-dog": false
+                                //=   }
+                                //= ]
+}
+
+
+
+
+
+//--------------------------------------------------------------------------------------
+/*
+   #####                     #
+     #                       #
+     #      ###     ###    #####    ###
+     #     #   #   #         #     #
+     #     #####    ###      #      ###
+     #     #           #     #         #
+     #      ###     ###       ##    ###
+*/
+
+
+// zkaładma że mam plik main.go
+// Tworze plik testu, który nazywam main_test.go
+
+// uruchomienie testu:
+go test
+// uruchomienie testu ze szczegułami:
+go test -v
+
+go test -cover  //ile funkcji jest pokrytych testami?
+go test -coverprofile=coverage.out && go tool cover -html=coverage.out
+
+
+
+//w pliku "zwykłym" mamy funkcję dzeilenia:
+func divide(x, y float32) (float32, error) {
+  var result float32
+  if y == 0 {
+    return result, errors.New("cannot divide by 0")
+  }
+  result = x / y
+  return result, nil
+}
+
+//w pliku "testu" mamy dwa podstawowe testy:
+package main
+import "testing"
+
+func TestDivide(t *testing.T) {  // prawidłowe działanie.
+	_, err := divide(10.0, 1.0)
+	if err != nil {
+		t.Error("Got an error when we should not have")
+	}
+}
+
+func TestbadDivide(t *testing.T) { //sprawdzenie, gdy dzielimy przez 0, to czy zwróci błąd?
+	_, err := divide(10.0, 0)
+	if err == nil {
+		t.Error("Got not get error when we should not have")
+	}
+}
+
+// jeśli testy są OK, to po wywołaniu:
+go test
+// otrzymamy PASS, gdy jakiś się wywali, to otrzymamy: FAIL  example.com/main 
+
+
+//--------------------------------------------------------------------------------------
+//w pliku "testu" ale przerobiony na listę testów:
+package main
+import "testing"
+
+var tests = []struct {
+	name     string
+	dividend float32
+	divisor  float32
+	expected float32
+	isErr    bool
+}{
+	{"valid-data", 100.0, 10.0, 10.0, false},
+	{"expect-5", 50.0, 10.0, 5.0, false},
+	{"invalid-data", 100.0, 0.0, 0.0, true},
+	{"expect-fraction", -1.0, -777.0, 0.0012870013, false},
+}
+
+func TestDivsion(t *testing.T) {
+  for _, tt := range tests {
+    got, err := divide(tt.dividend, tt.divisor)
+    if tt.isErr {
+      if err == nil {
+          t.Error("expected an error but did not get one")
+      }
+    } else {
+      if err != nil {
+          t.Error("did not expected an err but gone one", err.Error())
+        }
+      }
+
+    if got != tt.expected {
+      t.Errorf("expected %f but got %f", tt.expected, got)
+    }
+  }
+}
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------
+/*
+   #         #       #
+   #         #       #
+   #       #####   #####   ####
+   ####      #       #     #   #
+   #   #     #       #     #   #
+   #   #     #       #     ####
+   #   #      ##      ##   #
+                           #
+*/
+
+//prosty serwe http:
+import ( "fmt";	"net/http" )
+
+func main() {
+  http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintf(w, "hello world!")
+  })
+
+  _ = http.ListenAndServe(":8080", nil)
+}
+//po uruchomieniu serwera: go run .
+//wystarczy w przeglądarkę wpisać:
+http://localhost:8080/
+// Przerwanie: Ctrl+C
+
+
+//--------------------------------------------------------------------------------------
+// Obsługa 2 stron, rozdzielonych na funkcje:
+package main
+import ( "fmt"; "net/http" )
+
+const portNumber = ":8080"
+// About is the home page handler
+func Home(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "This is the home page")
+}
+// About is the about page handler
+func About(w http.ResponseWriter, r *http.Request) {
+	sum := 2 + 4
+	fmt.Fprintf(w, fmt.Sprintf("This is the about page and sum is %d", sum))
+}
+//main is the main appliction function
+func main() {
+	fmt.Println("Starting aplicatiion on port", portNumber)
+
+	http.HandleFunc("/", Home)
+	http.HandleFunc("/about", About)
+
+	_ = http.ListenAndServe(portNumber, nil)
+}
+//--------------------------------------------------------------------------------------
+
 
 
 
 //--------------------------------------------------------------------------------------
 
+
+
+
+//--------------------------------------------------------------------------------------
