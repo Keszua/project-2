@@ -497,7 +497,7 @@ git push origin -d v1.0.0   //usuwanie tagów z repozytorium
 
 
 //ALIASY 
-//Aliasy - czyli definiowanie skrutów
+//Aliasy - czyli definiowanie skrótów
 //Oto kilka przykładów, które mogą ci się przydać:
 $ git config --global alias.co checkout
 $ git config --global alias.br branch

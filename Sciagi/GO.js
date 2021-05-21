@@ -19,6 +19,25 @@ go run -race src/main.go  //specjalny tryb, w konsoli pokazuje jakieś procesy g
 
 //jakaś konfiguracja i instalacja 30minuta na: https://www.youtube.com/watch?v=YS4e4q9oBaU&t=1245s
 
+// w kursie Trevor Sawler aplikacje uruchamiamy poleceniem:
+go run cmd/web/main.go
+
+
+//------------------------------------------------------------
+instalowanie wtyczek, np, wtyczka chi:
+go get -u github.com/go-chi/chi/v5
+
+kasowanie nieaktywnych wtyczek:
+go mod tidy
+
+
+//------------------------------------------------------------
+Przenoszenie projektu:    
+//film 41 Building modern Web Applications with Go 
+kopiujemy wszsytkie pliki oprócz go.mod  i  go.sum
+
+
+
 
 //------------------------------------------------------------
 //------------------------------------------------------------

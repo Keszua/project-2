@@ -1729,7 +1729,7 @@ BRYTHON
 
 uruchamianie: 
 python -m http.server
-nastepnei wejsc an stronę: http://localhost:8000/
+nastepnei wejsc na stronę: http://localhost:8000/
 
 
 
@@ -1767,7 +1767,7 @@ Aby uruchomić pierwszy skrypt: New -> Python 3
 WEB
 
 #kurs z filmiku: https://www.youtube.com/watch?v=zuxzE7--RYM
-Uruchomienie jakiejś tronki z biblioteki django
+Uruchomienie jakiejś stronki z biblioteki django
 1. Po stworzeniu nowego projektu: File -> New project...
 2. Instaluje przez konsolę: pip install django
 	W cmd powinno działać polecenie: python -m django --version
