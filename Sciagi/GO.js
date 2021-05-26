@@ -15,7 +15,7 @@ func main() {
 //uruchomienie skryptu poleceniem:
 go run .
 
-//jakaś konfiguracja i instalacja 30minuta na: https://www.youtube.com/watch?v=YS4e4q9oBaU&t=1245s
+//Jakaś konfiguracja i instalacja 30minuta na: https://www.youtube.com/watch?v=YS4e4q9oBaU&t=1245s
 
 
 //------------------------------------------------------------
@@ -71,8 +71,28 @@ b := []byte(s)   //= [116 104 105 115 32 105 115 32 97 32 115 116 114 105 110 10
 var arr [5]int
 arr := [5]int {1, 3, 5, 6, 6}    //ten sam efekt co wyżej
 arr := [...]int {1, 3, 5, 6, 6}  //ten sam efekt co wyżej
-arr := []int {1, 3, 5, 6, 6}     //ten sam efekt co wyżej
-arr = append(arr, 13)  //dodanie nowego elementu
+arrB := arr                      //stworzenie nowej tablicy i skopiownie zawarosci z arr
+arrC := &arr                     //referencja ro arr  //= &[1, 3, 5, 6, 6]
+sl1 := []int {1, 3, 5, 6, 6}     //stworzenie SLICES - zawiera len i capacity = 5
+sl2 := make([]int, 3)            //stworzenie SLICES - zawiera len i capacity = 3
+sl3 := make([]int, 3, 100)       //slice with length == 3 and capacity == 100
+arR := arS                       //to będzie referencją (inaczej niż dla tablicy). Zmiana w arR zmieni też arS
+arr = append(arr, 13)            //dodanie nowego elementu
+arr = append(arr, 13, 5, 8)      //dodanie kilku elementów
+arN = append(arr[:2], arr[4:]...) //tworzy nową tablicę, na podstawie wycinków z innej
+len(arr)                         // zwróci ilość elementów tablicy
+b := arr[:]    //= [1 3 5 6 6]   wszytkie elementy            UWAGA! te i poniższe "wyłuskania" tworzą referencje (nie kopie z wyłuskanymi elementami)
+c := arr[2:]   //= [5 6 6]       od trzciego                  Nawet gdy arr jest tablicą a nie slice
+d := arr[:3]   //= [1 3 5]       pierwsze trzy elementy
+e := arr[2:3]  //= [5]           od trzeciego do trzeciego
+
+
+var identiMatrix [3][3]int = [3][3]int{ [3]int{1, 0, 0}, [3]int{0, 1, 0}, [3]int{0, 0, 1} }  //= [[1 0 0] [0 1 0] [0 0 1]]
+inny zapis tego co wyżej:
+var identiMatrix [3][3]int
+identiMatrix [0] = [3]int{1, 0, 0}
+identiMatrix [1] = [3]int{0, 1, 0}
+identiMatrix [2] = [3]int{0, 0, 1}
 
 for index, value := range arr {  //specjalny for dla tablic
     fmt.Println("Index:", index, "val:",value )
@@ -82,10 +102,15 @@ for index, value := range arr {  //specjalny for dla tablic
 m := make(map[string]int)
 m["tringle"] = 3
 m["squere"] = 4
-delete(m, "squere")  //usunięcie wybranego elentu
+delete(m, "squere")       //usunięcie wybranego elentu
 
 fmt.Println(m)            //= map[squere:4 tringle:3]
 fmt.Println(m["squere"])  //= 4
+m["Ohio"] = 41            // dodanie nowego elementu
+
+val, ok := m["Ohio"]
+fmt.Println(val, ok)      //= 41 true
+
 
 for key, value := range m {
     fmt.Println("Key:", key, "Val:", value)
@@ -145,6 +170,7 @@ func main() {
 }
 
 
+//------------------------------------------------------------
 //ENUMY:
 const (
     a = iota   // aby olać zerowy indeks, treba zapisać to tak: _ = iota
