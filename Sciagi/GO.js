@@ -2,7 +2,7 @@
 //Opis tutaj: https://golang.org/doc/tutorial/getting-started
 //Zakładam że go jest już zainstalowany (można sprawdzić poleniem: go version)
 //Tworze folder i wchodze do niego. W nim opdpal kosolę i wpisuje:
-$ go mod init example.com/hello
+$ go mod init example.com / hello
 // powstanie tam nowy moduł "go.mod"
 // ręcznie tworze plik hello.go  i uruchamiam mój edytor kodu (czyli VSC)
 // podstawowy pierwszy kod:
@@ -14,10 +14,10 @@ func main() {
 
 //uruchomienie skryptu poleceniem:
 go run.
-go run src/main.go  //uruchomienie konkretnego pliku
-go run -race src/main.go  //specjalny tryb, w konsoli pokazuje jakieś procesy gorutine
+go run src / main.go  //uruchomienie konkretnego pliku
+go run - race src / main.go  //specjalny tryb, w konsoli pokazuje jakieś procesy gorutine
 
-//jakaś konfiguracja i instalacja 30minuta na: https://www.youtube.com/watch?v=YS4e4q9oBaU&t=1245s
+//Jakaś konfiguracja i instalacja 30minuta na: https://www.youtube.com/watch?v=YS4e4q9oBaU&t=1245s
 
 // w kursie Trevor Sawler aplikacje uruchamiamy poleceniem:
 go run cmd/web/main.go
@@ -45,11 +45,11 @@ kopiujemy wszsytkie pliki oprócz go.mod  i  go.sum
 
 Proponowana struktura katalogów ze strony:
 http://golang.org.pl/getting_started/06_project_step_by_step.html
-mkdir workspace/bin
-mkdir workspace/libs
-mkdir workspace/libs/bin
-mkdir workspace/libs/src
-mkdir workspace/src
+mkdir workspace / bin
+mkdir workspace / libs
+mkdir workspace / libs / bin
+mkdir workspace / libs / src
+mkdir workspace / src
 
 
 
@@ -111,33 +111,53 @@ b:= []byte(s)   //= [116 104 105 115 32 105 115 32 97 32 115 116 114 105 110 103
 var arr [5]int
 arr:= [5]int { 1, 3, 5, 6, 6 }    //ten sam efekt co wyżej
 arr:= [...]int { 1, 3, 5, 6, 6 }  //ten sam efekt co wyżej
-arr:= []int { 1, 3, 5, 6, 6 }     //ten sam efekt co wyżej
-arr = append(arr, 13)  //dodanie nowego elementu
+arrB:= arr                      //stworzenie nowej tablicy i skopiownie zawarosci z arr
+arrC:= & arr                     //referencja ro arr  //= &[1, 3, 5, 6, 6]
+sl1:= []int { 1, 3, 5, 6, 6 }     //stworzenie SLICES - zawiera len i capacity = 5
+sl2:= make([]int, 3)            //stworzenie SLICES - zawiera len i capacity = 3
+sl3:= make([]int, 3, 100)       //slice with length == 3 and capacity == 100
+arR:= arS                       //to będzie referencją (inaczej niż dla tablicy). Zmiana w arR zmieni też arS
+arr = append(arr, 13)            //dodanie nowego elementu
+arr = append(arr, 13, 5, 8)      //dodanie kilku elementów
+arN = append(arr[: 2], arr[4:]...) //tworzy nową tablicę, na podstawie wycinków z innej
+len(arr)                         // zwróci ilość elementów tablicy
+b:= arr[:]    //= [1 3 5 6 6]   wszytkie elementy            UWAGA! te i poniższe "wyłuskania" tworzą referencje (nie kopie z wyłuskanymi elementami)
+c:= arr[2:]   //= [5 6 6]       od trzciego                  Nawet gdy arr jest tablicą a nie slice
+d:= arr[: 3]   //= [1 3 5]       pierwsze trzy elementy
+e:= arr[2: 3]  //= [5]           od trzeciego do trzeciego
+
+
+var identiMatrix [3][3]int = [3][3]int{ [3]int{ 1, 0, 0 }, [3]int{ 0, 1, 0 }, [3]int{ 0, 0, 1 } }  //= [[1 0 0] [0 1 0] [0 0 1]]
+inny zapis tego co wyżej:
+var identiMatrix [3][3]int
+identiMatrix[0] = [3]int{ 1, 0, 0 }
+identiMatrix[1] = [3]int{ 0, 1, 0 }
+identiMatrix[2] = [3]int{ 0, 0, 1 }
 
 for index, value := range arr {  //specjalny for dla tablic
     fmt.Println("Index:", index, "val:", value)
 }
 
 
-  var mySlice []string
-  mySlice = append(mySlice, "Trevor")
-  mySlice = append(mySlice, "John")
-  fmt.Println(mySlice)  //= [Trevor John]
+var mySlice []string
+mySlice = append(mySlice, "Trevor")
+mySlice = append(mySlice, "John")
+fmt.Println(mySlice)  //= [Trevor John]
 
 
-  var mySlice2 []int
-  mySlice2 = append(mySlice2, 2)
-  mySlice2 = append(mySlice2, 1)
-  mySlice2 = append(mySlice2, 3)
-  fmt.Println(mySlice2)  //= [2 1 3]
-  sort.Ints(mySlice2)
-  fmt.Println(mySlice2)  //= [1 2 3]
+var mySlice2 []int
+mySlice2 = append(mySlice2, 2)
+mySlice2 = append(mySlice2, 1)
+mySlice2 = append(mySlice2, 3)
+fmt.Println(mySlice2)  //= [2 1 3]
+sort.Ints(mySlice2)
+fmt.Println(mySlice2)  //= [1 2 3]
 
 
-  fmt.Println(number[0:2]) //= [1 2]
-  fmt.Println(number[:2])  //= [1 2]
-  fmt.Println(number[6:9]) //= [7 8 9]
-  fmt.Println(number[6:])  //= [7 8 9 10]
+fmt.Println(number[0: 2]) //= [1 2]
+fmt.Println(number[: 2])  //= [1 2]
+fmt.Println(number[6: 9]) //= [7 8 9]
+fmt.Println(number[6:])  //= [7 8 9 10]
 
 
 
@@ -152,10 +172,15 @@ for index, value := range arr {  //specjalny for dla tablic
 m:= make(map[string]int)
 m["tringle"] = 3
 m["squere"] = 4
-delete (m, "squere")  //usunięcie wybranego elentu
+delete (m, "squere")       //usunięcie wybranego elentu
 
 fmt.Println(m)            //= map[squere:4 tringle:3]
 fmt.Println(m["squere"])  //= 4
+m["Ohio"] = 41            // dodanie nowego elementu
+
+val, ok := m["Ohio"]
+fmt.Println(val, ok)      //= 41 true
+
 
 for key, value := range m {
     fmt.Println("Key:", key, "Val:", value)
@@ -163,21 +188,21 @@ for key, value := range m {
 
 //------------------
 type User struct {
-  FirstName string
-  LastName  string
+    FirstName string
+    LastName  string
 }
 
-  myMap := make(map[string]User) //mapa przechowująca strukturę
-  myMap2 := make(map[string]interface{}) //mapa przechowująca dowolny typ (nie zalecane)
+myMap:= make(map[string]User) //mapa przechowująca strukturę
+myMap2:= make(map[string]interface{}) //mapa przechowująca dowolny typ (nie zalecane)
 
-  me := User{
+me:= User{
     FirstName: "Trevor",
-    LastName:  "Sawler",
+        LastName: "Sawler",
   }
 
-  myMap["me"] = me
+myMap["me"] = me
 
-  fmt.Print(myMap["me"].FirstName)
+fmt.Print(myMap["me"].FirstName)
 
 
 
@@ -220,15 +245,15 @@ if err != nil {
 } else { fmt.Println("kwadrat", kwadrat) }
 
 
-myVar := "cat"
+myVar:= "cat"
 switch myVar {
-  case "cat":
-    fmt.Println("It is cat")
+    case "cat":
+        fmt.Println("It is cat")
     // bez break. Jesli chce aby wykonać też poniższy case, trzeba dodać fallthrough
-  case "dog", "horse":
-    fmt.Println("It is dog or horse")
-  default:
-    fmt.Println("Something else")
+    case "dog", "horse":
+        fmt.Println("It is dog or horse")
+    default:
+        fmt.Println("Something else")
 }
 
 switch os := runtime.GOOS; os {
@@ -265,6 +290,7 @@ func main() {
 }
 
 
+//------------------------------------------------------------
 //ENUMY:
 const (
     a = iota   // aby olać zerowy indeks, treba zapisać to tak: _ = iota
@@ -560,8 +586,8 @@ func main() {
 //--------------------------------------------------------------------------------------
 import("fmt"; "runtime"; "sync" )
 
-var wg = sync.WaitGroup{}
-var m = sync.RWMutex{}  // lub sync.Mutex  - to protect data access 
+var wg = sync.WaitGroup{ }
+var m = sync.RWMutex{ }  // lub sync.Mutex  - to protect data access 
 var counter = 0
 
 func main() {
@@ -614,183 +640,183 @@ ch = make(chan int, 3) // kanał buforowany z pojemnością 3
 
 
 //--------------------------------------------------------------------------------------
-import ( "fmt"; "math/rand" ; "time")
+import("fmt"; "math/rand"; "time")
 
 func CalculateValue(intChan chan int) {
-  rand.Seed(time.Now().UnixNano()) // bez tego będzie losował cały czas tę samą liczbę
-  randomNumber := rand.Intn(10)    // losuje liczbę 
-  intChan <- randomNumber          // funkcja niczego nie zwraca, tylko przekazuje wartośc do kanału
+    rand.Seed(time.Now().UnixNano()) // bez tego będzie losował cały czas tę samą liczbę
+    randomNumber:= rand.Intn(10)    // losuje liczbę 
+    intChan < - randomNumber          // funkcja niczego nie zwraca, tylko przekazuje wartośc do kanału
 }
 
 func main() {
-  intChan := make(chan int)  // tworze nowy kanał
-  defer close(intChan)       // sam zamknie kanał gdy bedzie już zakończony
+    intChan:= make(chan int)  // tworze nowy kanał
+    defer close(intChan)       // sam zamknie kanał gdy bedzie już zakończony
 
-  go CalculateValue(intChan) // ywołanie funkcji z kanałem (gorutine)
+    go CalculateValue(intChan) // ywołanie funkcji z kanałem (gorutine)
 
-  num := <-intChan           // nasłuchiwanie kanału
-  fmt.Println("num", num)
+    num:= < -intChan           // nasłuchiwanie kanału
+    fmt.Println("num", num)
 }
 
 
 //--------------------------------------------------------------------------------------
-import ( "fmt"; "sync" )
+import("fmt"; "sync" )
 
-var wg = sync.WaitGroup{}
-
-func main() {
-  ch := make(chan int)
-  wg.Add(2)
-  go func() {
-    i := <- ch
-    fmt.Println(i)
-    wg.Done()
-  }()
-
-  go func() {
-    ch <- 42
-    wg.Done()
-  } ()
-  wg.Wait()
-}
-
-//--------------------------------------------------------------------------------------
-import ( "fmt"; "sync" )
-
-var wg = sync.WaitGroup{}
+var wg = sync.WaitGroup{ }
 
 func main() {
-  ch := make(chan int, 50)
-  wg.Add(2)
-
-  go func(ch <-chan int) {
-    for {
-      if i, ok := <- ch; ok {
+    ch:= make(chan int)
+    wg.Add(2)
+    go func() {
+        i:= < - ch
         fmt.Println(i)
-      } else {
-        break
-      }
+        wg.Done()
+    } ()
+
+    go func() {
+        ch < - 42
+        wg.Done()
+    } ()
+    wg.Wait()
+}
+
+//--------------------------------------------------------------------------------------
+import("fmt"; "sync" )
+
+var wg = sync.WaitGroup{ }
+
+func main() {
+    ch:= make(chan int, 50)
+    wg.Add(2)
+
+    go func(ch < -chan int) {
+        for {
+            if i, ok:= < - ch; ok {
+                fmt.Println(i)
+            } else {
+            break
+        }
     }
     wg.Done()
-  } (ch)
+} (ch)
 
-  go func(ch chan<- int) {
-    ch <- 42
-    ch <- 27
+go func(ch chan < - int) {
+    ch < - 42
+    ch < - 27
     close(ch)
     wg.Done()
-  } (ch)
+} (ch)
 
-  wg.Wait()	
+wg.Wait()	
 }
 
 //--------------------------------------------------------------------------------------
-import ( "fmt"; "time" )
+import("fmt"; "time" )
 
 const (
-  logInfo    = "INFO"
+    logInfo = "INFO"
   logWarning = "WAGNING"
-  logError   = "ERROR"
+logError = "ERROR"
 )
 
 type logEntry struct {
-  time     time.Time
-  severity string
-  message  string
+    time     time.Time
+    severity string
+    message  string
 }
 
 var logCh = make(chan logEntry, 50)
 
 func main() {
-  go logger()
-  logCh <- logEntry{time.Now(), logInfo, "Ap is starting"}
-  logCh <- logEntry{time.Now(), logInfo, "Ap is shutting down"}
-  time.Sleep(100 * time.Millisecond)	
+    go logger()
+    logCh < - logEntry{ time.Now(), logInfo, "Ap is starting" }
+    logCh < - logEntry{ time.Now(), logInfo, "Ap is shutting down" }
+    time.Sleep(100 * time.Millisecond)
 }
 
 func logger() {
-  for entry := range logCh {
-    fmt.Printf("%v - [%v]%v\n", entry.time.Format("2006-01-02T15:04:05"), entry.severity, entry.message)
-  }
+    for entry := range logCh {
+        fmt.Printf("%v - [%v]%v\n", entry.time.Format("2006-01-02T15:04:05"), entry.severity, entry.message)
+    }
 }
 
 //--------------------------------------------------------------------------------------
 POTOKI
 Fajnie opisane potoki w książce s225
-|-----------|  0, 1, 2, 3 |---------------| 0, 1, 4, 9  |---------------|
-|  Licznik  |------------>|  Potęgowanie  |------------>|  Wyświetlacz  |
-|-----------|             |---------------|             |---------------|
+    | -----------| 0, 1, 2, 3 | ---------------| 0, 1, 4, 9 | ---------------|
+| Licznik | ------------>| Potęgowanie | ------------>| Wyświetlacz |
+| -----------|             | ---------------|             | ---------------|
 
-func main() {
-  naturals := make(chan int)
-  squares  := make(chan int)
-  
-// Licznik.
-  go func() {
-    for x := 0; x < 100; x++ {
-      naturals <- x
+    func main() {
+    naturals:= make(chan int)
+    squares:= make(chan int)
+
+    // Licznik.
+    go func() {
+        for x := 0; x < 100; x++ {
+            naturals < - x
+        }
+        close(naturals)
+    } ()
+
+    // Potęga kwadratowa.
+    go func() {
+        for x := range naturals {
+            squares < - x * x
+        }
+        close(squares)
+    } ()
+
+    // Wyświetlacz (w głównej funkcji goroutine).
+    for x := range squares {
+        fmt.Println(x)
     }
-    close(naturals)
-  }()
-
-  // Potęga kwadratowa.
-  go func() {
-    for x := range naturals {
-      squares <- x * x
-    }
-    close(squares)
-  }()
-
-  // Wyświetlacz (w głównej funkcji goroutine).
-  for x := range squares {
-  fmt.Println(x)
-  }
 }
 //--------------------------------------------------------------------------------------
 // To samo co wyżej, ale przerobione na funkcje i kanały jednokierunkowe 
-func counter(out chan<- int) {
-  for x := 0; x < 100; x++ {
-    out <- x
-  }
-  close(out)
+func counter(out chan < - int) {
+    for x := 0; x < 100; x++ {
+        out < - x
+    }
+    close(out)
 }
 
-func squarer(out chan<- int, in <-chan int) {
-  for v := range in {
-    out <- v * v
-  }
-  close(out)
+func squarer(out chan < - int, in < -chan int) {
+    for v := range in {
+        out<- v * v
+}
+close(out)
 }
 
-func printer(in <-chan int) {
-  for v := range in {
-    fmt.Println(v)
-  }
+func printer(in < -chan int) {
+    for v := range in {
+        fmt.Println(v)
+    }
 }
 
 func main() {
-  naturals := make(chan int)
-  squares := make(chan int)
-  go counter(naturals)
-  go squarer(squares, naturals)
-  printer(squares)
+    naturals:= make(chan int)
+    squares:= make(chan int)
+    go counter(naturals)
+    go squarer(squares, naturals)
+    printer(squares)
 }
 
 //--------------------------------------------------------------------------------------
-Kanał buforowany. Przehowuje kolejkę elementów.
+Kanał buforowany.Przehowuje kolejkę elementów.
 
 //Przykład: Funkcja jedncześnie wysyła to smo pytanie do 3 różnych serwerów.
 //Odeśle wynik od najszybszego serwera:
 
 func mirroredQuery() string {
-  responses := make(chan string, 3)
-  go func() { responses <- request("asia.helion.pl") }()
-  go func() { responses <- request("europe.helion.pl") }()
-  go func() { responses <- request("americas.helion.pl") }()
-  return <-responses // zwraca najszybszą odpowiedź
+    responses:= make(chan string, 3)
+    go func() { responses < - request("asia.helion.pl") } ()
+    go func() { responses < - request("europe.helion.pl") } ()
+    go func() { responses < - request("americas.helion.pl") } ()
+    return < -responses // zwraca najszybszą odpowiedź
 }
 
-func request(hostname string) (response string) { /* ... */ }
+func request(hostname string)(response string) { /* ... */ }
 
 
 
@@ -805,19 +831,19 @@ func request(hostname string) (response string) { /* ... */ }
     ###     ###     ####    #   #
 */
 
-import (	"encoding/json"; 	"fmt" )
+import("encoding/json"; "fmt" )
 
 type Person struct {
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	HasDog    bool   `json:"has-dog"`
+    FirstName string`json:"first_name"`
+    LastName  string`json:"last_name"`
+    HasDog    bool`json:"has-dog"`
 }
 
 func main() {
-  fmt.Println("hejka")
+    fmt.Println("hejka")
 
-//Pierwszy zapis JSONA na piechote ( w grawisach):
-  myJson := `
+    //Pierwszy zapis JSONA na piechote ( w grawisach):
+    myJson:= `
 [
   {
     "first_name": "Cark",
@@ -832,38 +858,38 @@ func main() {
 
 ]`
 
-  var unmarshalled []Person
+    var unmarshalled []Person
 
-  err := json.Unmarshal([]byte(myJson), &unmarshalled)
-  if err != nil {
-    fmt.Println("Coś nie tak z JSONem")
-  }
+    err:= json.Unmarshal([]byte(myJson), & unmarshalled)
+    if err != nil {
+        fmt.Println("Coś nie tak z JSONem")
+    }
 
-  fmt.Printf("unmarshalled: %v", unmarshalled) //=  [{Cark Kent false} {Bruce Wilis false}]
+    fmt.Printf("unmarshalled: %v", unmarshalled) //=  [{Cark Kent false} {Bruce Wilis false}]
 
-  //write json from a struct
-  var mySlice []Person
+    //write json from a struct
+    var mySlice []Person
 
-  var m1 Person
-  m1.FirstName = "Wally"
-  m1.LastName = "West"
-  m1.HasDog = false
+    var m1 Person
+    m1.FirstName = "Wally"
+    m1.LastName = "West"
+    m1.HasDog = false
 
-  mySlice = append(mySlice, m1)
+    mySlice = append(mySlice, m1)
 
-  fmt.Println(mySlice)
+    fmt.Println(mySlice)
 
-  newJson, err := json.MarshalIndent(mySlice, "", " ")
-  if err != nil {
-    fmt.Println("Coś nie tak z JSONem")
-  }
-  fmt.Println(string(newJson))  //= [
-                                //=   {
-                                //=     "first_name": "Wally",
-                                //=     "last_name": "West",
-                                //=     "has-dog": false
-                                //=   }
-                                //= ]
+    newJson, err := json.MarshalIndent(mySlice, "", " ")
+    if err != nil {
+        fmt.Println("Coś nie tak z JSONem")
+    }
+    fmt.Println(string(newJson))  //= [
+    //=   {
+    //=     "first_name": "Wally",
+    //=     "last_name": "West",
+    //=     "has-dog": false
+    //=   }
+    //= ]
 }
 
 
@@ -888,39 +914,39 @@ func main() {
 // uruchomienie testu:
 go test
 // uruchomienie testu ze szczegułami:
-go test -v
+go test - v
 
-go test -cover  //ile funkcji jest pokrytych testami?
-go test -coverprofile=coverage.out && go tool cover -html=coverage.out
+go test - cover  //ile funkcji jest pokrytych testami?
+go test - coverprofile=coverage.out && go tool cover - html=coverage.out
 
 
 
 //w pliku "zwykłym" mamy funkcję dzeilenia:
-func divide(x, y float32) (float32, error) {
-  var result float32
-  if y == 0 {
-    return result, errors.New("cannot divide by 0")
-  }
-  result = x / y
-  return result, nil
+func divide(x, y float32)(float32, error) {
+    var result float32
+    if y == 0 {
+        return result, errors.New("cannot divide by 0")
+    }
+    result = x / y
+    return result, nil
 }
 
 //w pliku "testu" mamy dwa podstawowe testy:
 package main
 import "testing"
 
-func TestDivide(t *testing.T) {  // prawidłowe działanie.
-	_, err := divide(10.0, 1.0)
-	if err != nil {
-		t.Error("Got an error when we should not have")
-	}
+func TestDivide(t * testing.T) {  // prawidłowe działanie.
+    _, err := divide(10.0, 1.0)
+    if err != nil {
+        t.Error("Got an error when we should not have")
+    }
 }
 
-func TestbadDivide(t *testing.T) { //sprawdzenie, gdy dzielimy przez 0, to czy zwróci błąd?
-	_, err := divide(10.0, 0)
-	if err == nil {
-		t.Error("Got not get error when we should not have")
-	}
+func TestbadDivide(t * testing.T) { //sprawdzenie, gdy dzielimy przez 0, to czy zwróci błąd?
+    _, err := divide(10.0, 0)
+    if err == nil {
+        t.Error("Got not get error when we should not have")
+    }
 }
 
 // jeśli testy są OK, to po wywołaniu:
@@ -934,35 +960,35 @@ package main
 import "testing"
 
 var tests = []struct {
-	name     string
+    name     string
 	dividend float32
 	divisor  float32
 	expected float32
 	isErr    bool
 }{
-	{"valid-data", 100.0, 10.0, 10.0, false},
-	{"expect-5", 50.0, 10.0, 5.0, false},
-	{"invalid-data", 100.0, 0.0, 0.0, true},
-	{"expect-fraction", -1.0, -777.0, 0.0012870013, false},
+	{ "valid-data", 100.0, 10.0, 10.0, false },
+{ "expect-5", 50.0, 10.0, 5.0, false },
+{ "invalid-data", 100.0, 0.0, 0.0, true },
+{ "expect-fraction", -1.0, -777.0, 0.0012870013, false },
 }
 
-func TestDivsion(t *testing.T) {
-  for _, tt := range tests {
-    got, err := divide(tt.dividend, tt.divisor)
-    if tt.isErr {
-      if err == nil {
-          t.Error("expected an error but did not get one")
-      }
-    } else {
-      if err != nil {
-          t.Error("did not expected an err but gone one", err.Error())
+func TestDivsion(t * testing.T) {
+    for _, tt := range tests {
+        got, err := divide(tt.dividend, tt.divisor)
+        if tt.isErr {
+            if err == nil {
+                t.Error("expected an error but did not get one")
+            }
+        } else {
+            if err != nil {
+                t.Error("did not expected an err but gone one", err.Error())
+            }
         }
-      }
 
-    if got != tt.expected {
-      t.Errorf("expected %f but got %f", tt.expected, got)
+        if got != tt.expected {
+            t.Errorf("expected %f but got %f", tt.expected, got)
+        }
     }
-  }
 }
 
 
@@ -983,14 +1009,14 @@ func TestDivsion(t *testing.T) {
 */
 
 //prosty serwe http:
-import ( "fmt";	"net/http" )
+import("fmt"; "net/http" )
 
 func main() {
-  http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "hello world!")
-  })
+    http.HandleFunc("/", func(w http.ResponseWriter, r * http.Request) {
+        fmt.Fprintf(w, "hello world!")
+    })
 
-  _ = http.ListenAndServe(":8080", nil)
+    _ = http.ListenAndServe(":8080", nil)
 }
 //po uruchomieniu serwera: go run .
 //wystarczy w przeglądarkę wpisać:
@@ -1001,56 +1027,56 @@ http://localhost:8080/
 //--------------------------------------------------------------------------------------
 // Obsługa 2 stron, rozdzielonych na funkcje:
 package main
-import ( "fmt"; "net/http" )
+import("fmt"; "net/http" )
 
 const portNumber = ":8080"
 // About is the home page handler
-func Home(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "This is the home page")
+func Home(w http.ResponseWriter, r * http.Request) {
+    fmt.Fprintf(w, "This is the home page")
 }
 // About is the about page handler
-func About(w http.ResponseWriter, r *http.Request) {
-	sum := 2 + 4
-	fmt.Fprintf(w, fmt.Sprintf("This is the about page and sum is %d", sum))
+func About(w http.ResponseWriter, r * http.Request) {
+    sum:= 2 + 4
+    fmt.Fprintf(w, fmt.Sprintf("This is the about page and sum is %d", sum))
 }
 //main is the main appliction function
 func main() {
-	fmt.Println("Starting aplicatiion on port", portNumber)
+    fmt.Println("Starting aplicatiion on port", portNumber)
 
-	http.HandleFunc("/", Home)
-	http.HandleFunc("/about", About)
+    http.HandleFunc("/", Home)
+    http.HandleFunc("/about", About)
 
-	_ = http.ListenAndServe(portNumber, nil)
+    _ = http.ListenAndServe(portNumber, nil)
 }
 //--------------------------------------------------------------------------------------
 //Przykład wczytywania plików html (tmpl);
 package main
-import ( "fmt"; "html/template"; "net/http")
+import("fmt"; "html/template"; "net/http")
 
 const portNumber = ":8080"
 
-func Home(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, "home.page.tmpl")
+func Home(w http.ResponseWriter, r * http.Request) {
+    renderTemplate(w, "home.page.tmpl")
 }
 
-func About(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, "about.page.tmpl")
+func About(w http.ResponseWriter, r * http.Request) {
+    renderTemplate(w, "about.page.tmpl")
 }
 
 //uniwersalna funkcja do wczytywania plików htmlowych
 func renderTemplate(w http.ResponseWriter, tmpl string) {
-	parseTemplate, _ := template.ParseFiles("./templates/" + tmpl)
-	err := parseTemplate.Execute(w, nil)
-	if err != nil {
-		fmt.Println("error parsing template:", err)
-		return
-	}
+    parseTemplate, _ := template.ParseFiles("./templates/" + tmpl)
+    err:= parseTemplate.Execute(w, nil)
+    if err != nil {
+        fmt.Println("error parsing template:", err)
+        return
+    }
 }
 
 func main() {  //main is the main appliction function
-	http.HandleFunc("/", Home)
-	http.HandleFunc("/about", About)
-	_ = http.ListenAndServe(portNumber, nil)
+    http.HandleFunc("/", Home)
+    http.HandleFunc("/about", About)
+    _ = http.ListenAndServe(portNumber, nil)
 }
 
 
