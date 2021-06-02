@@ -5,8 +5,6 @@ Potrek poleca Redux
 Zobaczyć co to: 
 - Redux Thunk
 
-Django podobno lepszy od React
-
 Piotrek poleca:  https://material-ui.com/
 
 eslint - sprawdza poprawnosc napisanego kodu, w tym sprawdza sredniki, niezadeklarowane zmienne, niedomkniete nawiasy...
@@ -67,7 +65,24 @@ exit - kończy działanie konsoli
 //------------------------------------------------------------
 //------------------------------------------------------------
 //------------------------------------------------------------
+HTML
 
+<ul> 
+ <li>  //list item (wypunktowane)
+<ul>
+
+<ul> 
+ <li>  //list item (wypunktowane)
+<ul>
+
+<ol> 
+ <li>  //list item (numerowane)
+<ol>
+
+
+//------------------------------------------------------------
+//------------------------------------------------------------
+//------------------------------------------------------------
 
 
 //Podpinanie skryptu do strony:

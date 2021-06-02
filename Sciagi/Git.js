@@ -70,6 +70,10 @@ git config --unset user.email           //usówanie danych z pliku konfiguracyjn
 git config --global --unset user.email  //usówanie danych z pliku konfiguracyjnego
 git config --list                       //wyświetli pełną konfigurację
 
+git remote show                         //sprawdz ścierzkę do repozytorium
+git config --get remote.origin.url      //sprawdz ścierzkę do konkretnego repozytorium
+
+
 notepad .gitconfig      //aby podejżeć plik konfiguracyjny w notatniku (będąc w folderze głównym ~)
 cat .gitconfig          //aby podejżeć plik konfiguracyjny w konsoli (będąc w folderze głównym ~)
 cat .git/config         //bieżące repozytorium

@@ -21,7 +21,8 @@ go run - race src / main.go  //specjalny tryb, w konsoli pokazuje jakieś proces
 
 // w kursie Trevor Sawler aplikacje uruchamiamy poleceniem:
 go run cmd/web/main.go
-
+go run cmd/web/*.go
+*/
 
 //------------------------------------------------------------
 instalowanie wtyczek, np, wtyczka chi:
@@ -34,8 +35,21 @@ go mod tidy
 //------------------------------------------------------------
 Przenoszenie projektu:    
 //film 41 Building modern Web Applications with Go 
-kopiujemy wszsytkie pliki oprócz go.mod  i  go.sum
+Kopiujemy wszsytkie pliki oprócz go.mod  i  go.sum
+Otwieramy Folder w VSC
+Wpiwujemy w wierszu poleceń:
+go mod init github.com/karol/bookings
 
+Ręcznie trzeba pozmieniać ścieżki w "import" (we wszystkich plikach)
+
+Po próbie uruchomienia projektu poelceniem:
+go run cmd/web/*.go
+*/
+Reszta wtyczek powinna się sama załadować
+Jeżeli się nie zainstalują, to trzeba zrobić to ręcznie:
+go get -u github.com/go-chi/chi/v5
+go get -u github.com/alexedwards/scs/v2
+go get -u github.com/justinas/nosurf
 
 
 
