@@ -5,50 +5,50 @@ Ostatnia zmiana 2019.10.10
 
 //Piotrek pracuje w Acaisoft
 
-//zbiór podstawowych zadañ i algorymów, np. na drzewko, kolejkê, sortowanie itp : https://github.com/trekhleb/javascript-algorithms
+//zbiï¿½r podstawowych zadaï¿½ i algorymï¿½w, np. na drzewko, kolejkï¿½, sortowanie itp : https://github.com/trekhleb/javascript-algorithms
 
 
 Znaki specjalne dla printf 
-'\0' - ostatni znak w ³añcuchu 
-'\a' - alarm (sygna³ akustyczny terminala)
-'\b' - backspace (usuwa poprzedzaj¹cy znak)
+'\0' - ostatni znak w Å‚aÅ„cuchu 
+'\a' - alarm (sygnaÅ‚ akustyczny terminala)
+'\b' - backspace (usuwa poprzedzajÄ…cy znak)
 '\f' - wysuniecie strony (np. w drukarce)
-'\r' - powrót kursora (karetki) do pocz¹tku wiersza
+'\r' - powrÃ³t kursora (karetki) do poczÄ…tku wiersza
 '\n' - znak nowego wiersza
-'\"' - cudzys³ów
+'\"' - cudzysÅ‚Ã³w
 '\'' - apostrof
-'\\' - ukoœnik wsteczny (backslash)
+'\\' - ukoÅ›nik wsteczny (backslash)
 '\t' - tabulacja pozioma
 '\v' - tabulacja pionowa
 '\?' - znak zapytania (pytajnik)
-'\ooo' - liczba zapisana w systemie oktalnym (ósemkowym), gdzie 'oo' nale¿y zast¹piæ trzycyfrow¹ liczb¹ w tym systemie
-'\xhh' - liczba zapisana w systemie heksadecymalnym (szesnastkowym), gdzie 'hh' nale¿y zast¹piæ dwucyfrow¹ liczb¹ w tym systemie
-'\unnnn' - uniwersalna nazwa znaku, gdzie 'nnnn' nale¿y zast¹piæ czterocyfrowym identyfikatorem znaku w systemie szesnatkowym. 'nnnn' odpowiada d³u¿szej formie w postaci '0000nnnn'
-'\unnnnnnnn' - uniwersalna nazwa znaku, gdzie 'nnnnnnnn' nale¿y zast¹piæ oœmiocyfrowym identyfikatorem znaku w systemie szesnatkowym.
+'\ooo' - liczba zapisana w systemie oktalnym (Ã³semkowym), gdzie 'oo' naleÅ¼y zastÄ…piÄ‡ trzycyfrowÄ… liczbÄ… w tym systemie
+'\xhh' - liczba zapisana w systemie heksadecymalnym (szesnastkowym), gdzie 'hh' naleÅ¼y zastÄ…piÄ‡ dwucyfrowÄ… liczbÄ… w tym systemie
+'\unnnn' - uniwersalna nazwa znaku, gdzie 'nnnn' naleÄ…y zastÄ…piÄ‡ czterocyfrowym identyfikatorem znaku w systemie szesnatkowym. 'nnnn' odpowiada dï¿½uï¿½szej formie w postaci '0000nnnn'
+'\unnnnnnnn' - uniwersalna nazwa znaku, gdzie 'nnnnnnnn' naleÅ¼y zastÄ…piÄ‡ oÅ›miocyfrowym identyfikatorem znaku w systemie szesnatkowym.
 
 
 
 
-console.log('Witaj');	// tekst zwyk³y
-console.warn('Uwaga!'); //tekst zwracaj¹cy uwagê - pisany na ¿ó³tym tle i z wykrzyknikiem
-console.error('B³¹d!'); //tekst b³êdu - czerwony, na czerwonym tle
-console.info('Informacja!'); //tekst informacyjny z ikonk¹ info
-console.dir(someButton);  // Gdy chcemy wypisaæ wiêcej detali o tym obiekcie
+console.log('Witaj');	// tekst zwykÅ‚y
+console.warn('Uwaga!'); //tekst zwracajÄ…cy uwagÄ™ - pisany na Å¼Ã³Å‚ym tle i z wykrzyknikiem
+console.error('BÅ‚Ä…d!'); //tekst bÅ‚Ä™du - czerwony, na czerwonym tle
+console.info('Informacja!'); //tekst informacyjny z ikonkÄ… info
+console.dir(someButton);  // Gdy chcemy wypisaÄ‡ wiÄ™cej detali o tym obiekcie
 console.table([1,2,3,4,5]); //do przyjemnego wypisywania tablicy
-console.assert(false, "Jakis warunek false");  //wyœwietli siê TYLKO gdy warunek zwróci false
-console.count(); //do policzenia czegoœ
-console.trace(); // coœ jak debug tree w Atolicu
+console.assert(false, "Jakis warunek false");  //wyÅ›wietli siÄ™ TYLKO gdy warunek zwrÃ³ci false
+console.count(); //do policzenia czegoÅ›
+console.trace(); // coÅ› jak debug tree w Atolicu
 
-//grupowanie wielu tekstów (console.log etc) w konsoli w jedn¹ grupê
+//grupowanie wielu tekstÃ³w (console.log etc) w konsoli w jednÄ… grupÄ™
 console.group('Nazwa grupy');
 console.log('Ala ma kota');
-console.log('Kot ma Alê');
-console.groupEnd(); //koñczenie grupy
+console.log('Kot ma AlÄ™');
+console.groupEnd(); //koÅ„czenie grupy
 
-console.groupCollapsed('Nazwa grupy'); //grupa domyœlnie zwiniêta
+console.groupCollapsed('Nazwa grupy'); //grupa domyÅ›lnie zwiniÄ™ta
 console.log('Ala ma kota');
-console.log('Kot ma Alê');
-console.groupEnd(); //koñczenie grupy
+console.log('Kot ma Alï¿½');
+console.groupEnd(); //koÅ„czenie grupy
 
 %c - nadanie koloru i stylu
 console.log("Hejka w %cKolorze %ci po za kolorem ", 'color: blue; font-size: x-large', 'color: black')
@@ -57,32 +57,66 @@ console.log("Hejka w %cKolorze %ci po za kolorem ", 'color: blue; font-size: x-l
 %d - dodane liczby
 
 
-//Wyœwietliæ coœ w "wyskakuj¹cym okienku"
+//WyÅ›wietli coÅ› w "wyskakujÄ…cym okienku"
 alert('Hejka');
 
-//Wprowadzanie TAK/NIE przez "wyskakuj¹ce okno"
-confirm('Czy jesteœ pewien, ¿e chcesz kontynuowaæ?')  //zwraca true albo false
+//Wprowadzanie TAK/NIE przez "wyskakujÄ…ce okno"
+confirm('Czy jesteÅ› pewien, Å¼e chcesz kontynuowaÄ‡?')  //zwraca true albo false
 
 
-//czasami bêdziemy chcieli sprawdziæ jak szybko wykona siê nasz skrypt...
-console.time('Pierwszy test'); //rozpoczyna test - zaczyna liczyæ czas
+//czasami bï¿½dziemy chcieli sprawdziï¿½ jak szybko wykona siï¿½ nasz skrypt...
+console.time('Pierwszy test'); //rozpoczyna test - zaczyna liczyï¿½ czas
 for (let i=0; i<100000; i++) { ... }
-console.timeEnd('Pierwszy test'); //koñczy test
+console.timeEnd('Pierwszy test'); //koï¿½czy test
 
-//wiêcej o consloe.log na: https://medium.com/javascript-in-plain-english/mastering-js-console-log-like-a-pro-1c634e6393f9
+//wiï¿½cej o consloe.log na: https://medium.com/javascript-in-plain-english/mastering-js-console-log-like-a-pro-1c634e6393f9
 
-//czasami te¿ bêdziemy chcieli zatrzymaæ na chwilê dzia³anie skryptu w danym miejscu
+//czasami teï¿½ bï¿½dziemy chcieli zatrzymaï¿½ na chwilï¿½ dziaï¿½anie skryptu w danym miejscu
 function test() {
     let i = 0;
-    debugger; //taki breakpoint - przerywam dzia³anie skryptu w tym miejscu, dziêki czemu mogê spokojnie go badaæ w zak³adce Source. Dodatkowo w konsoli mam dostêp do zmiennych z danego scope - np. je tam wpisuj¹c
+    debugger; //taki breakpoint - przerywam dziaï¿½anie skryptu w tym miejscu, dziï¿½ki czemu mogï¿½ spokojnie go badaï¿½ w zakï¿½adce Source. Dodatkowo w konsoli mam dostï¿½p do zmiennych z danego scope - np. je tam wpisujï¿½c
 }
 test();
 
 if (typeof x === "undefined") {...} //Czy dana zmienna istnieje
 
 
-let numer = parseInt('4');  //konwersja, rzutowanie na liczbê
+let numer = parseInt('4');  //konwersja, rzutowanie na liczbÄ™
+let numer = parseInt('4', 10);  //drugi parametr to "radix", okreÅ›la podstawÄ™ powyÅ¼szego 
+                                //Å‚aÅ„cucha (np. 2 - system dwujkowy, 10 - system dziesiÄ™tny)
 
+							
+
+
+								
+//-----------------------------------------------------------------------------
+const map = new Map();
+map.set('name', 'Eric');
+map.set('address', 'South Park');
+
+for (const [key, value] of map) {
+	console.log(key, value);
+}
+// logs 'name', 'Eric'
+// logs 'address', 'South Park'
+
+//-----------------------------------------------------------------------------
+const set = new Set(['blue', 'red', 'green']);
+
+for (const item of set) {
+  console.log(item);
+}
+// logs 'blue', 'red', 'green'
+
+//-----------------------------------------------------------------------------
+const numbers = [1, 3, 4];
+
+const iterator = numbers[Symbol.iterator]();
+
+iterator.next(); // => { value: 1, done: false }
+iterator.next(); // => { value: 2, done: false }
+iterator.next(); // => { value: 3, done: false }
+iterator.next(); // => { value: undefined, done: true }
 
 
 
@@ -91,10 +125,10 @@ let numer = parseInt('4');  //konwersja, rzutowanie na liczbê
 //-----------------------------------------------------------------------------
 //Kotrolki:
 // pole do wprowadzania danych:
-<input type="text" id="testValue" value="Domyœlna wartoœæ">
+<input type="text" id="testValue" value="Domyï¿½lna wartoï¿½ï¿½">
 
 //Przycisk
-<button type="button" class="button" id="buttonTestValue">Poka¿ value</button>
+<button type="button" class="button" id="buttonTestValue">Pokaï¿½ value</button>
 
 // zaznaczenie tylko jednego elemetu z grupy (RADIO)
 <input type="radio" value="lubie radio">
@@ -111,7 +145,7 @@ let numer = parseInt('4');  //konwersja, rzutowanie na liczbê
 
 
 
-//Fajny przyk³ad okienka z przyciskiem do zwijania (ukrywania) tekstu i rozwijania (na samym koñcu):
+//Fajny przykï¿½ad okienka z przyciskiem do zwijania (ukrywania) tekstu i rozwijania (na samym koï¿½cu):
 // https://kursjs.pl/kurs/dom/dom-relacje.php#relacje
 
 
@@ -150,14 +184,14 @@ console.log( randomColor() );
 const color =  "#" + Math.random().toString(16).substr(2,6);
 
 /*
-Powy¿sze równanie mo¿emy rozpisaæ na kroki:
+Powyï¿½sze rï¿½wnanie moï¿½emy rozpisaï¿½ na kroki:
 
 1)
-Math.random() - zwraca liczbê z przedzia³u 0-1
+Math.random() - zwraca liczbï¿½ z przedziaï¿½u 0-1
 0.0264363764209139
 
 2)
-Number.toString(16) - zapisuje liczbê w danym systemie jako string
+Number.toString(16) - zapisuje liczbï¿½ w danym systemie jako string
 0.0264363764209139.toString(16) da nam "0.06c488cc270ee"
 
 3)
@@ -169,7 +203,7 @@ Dodajemy # i mamy kolor
 "#" + "06c488" === "#06c488"
 */
 
-//Losowanie kolorów rzywych w formacie hsl:
+//Losowanie kolorï¿½w rzywych w formacie hsl:
 function randomColor() {
     const deg = Math.random() * 360;
     return `hsl(${deg}, 60%, 50%)`;
@@ -181,7 +215,7 @@ const text = "Ala ma kota, a kot ma Ale";
 
 console.log(text.charAt(0)); 		//A
 console.log(text.charAt(4)); 		//m
-//poni¿ej to samo:
+//poniï¿½ej to samo:
 console.log(text[0]); 				//A
 console.log(text[4]); 				//m
 console.log(text.charAt(text.length-1)); //e
@@ -190,42 +224,42 @@ console.log(text.substr(0, 3)); 	//= Ala  od indeksu 0 pobiera 3 znaki
 console.log(text.substring(0, 3)); 	//= Ala  od indeksu 0 do indeksu 3
 console.log("Ala ma kota".slice(4, 6)); //= ma  od indeksu 4 do indeksu 6
 console.log("Ala ma kota".substring(6, 4)); //= ma  od indeksu 4 do indeksu 6 tak jak slice, ale potrafi odwrocic mijecami indeksy
-console.log(encodeURI(text)); 		//= Ala%20ma%20kota%2C%20a%20kot%20ma%20Al%u0119...  kodowanie wszystkich znaków specjalnych
+console.log(encodeURI(text)); 		//= Ala%20ma%20kota%2C%20a%20kot%20ma%20Al%u0119...  kodowanie wszystkich znakï¿½w specjalnych
 let textkodowany = encodeUrl(text);
-console.log(decodeURI(text)); 		//=Ala ma kota, a kot ma Alê...  odkodowanie
+console.log(decodeURI(text)); 		//=Ala ma kota, a kot ma Alï¿½...  odkodowanie
 
-//toUpperCase() i toLowerCase() s³u¿¹ odpowiednio do zamieniania tekstu na du¿e i ma³e litery.
+//toUpperCase() i toLowerCase() sï¿½uï¿½ï¿½ odpowiednio do zamieniania tekstu na duï¿½e i maï¿½e litery.
 const text = "Ala ma kota";
 console.log(text.toUpperCase()); 	//= ALA MA KOTA  
 console.log(text.toLowerCase()); 	//= ala ma kota
 const name = "marcin";
 console.log( name.charAt(0).toUpperCase() + text.slice(1) ); //= Marcin
 
-//indexOf s³u¿y do podawania pozycji szukanego fragmentu w tekœcie (ale tak¿e w tablicy, bo metoda ta dostêpna jest dla stringów i tablic).
-//Je¿eli zwrócon¹ wartoœci¹ jest -1, to szukanego tekstu nie ma:
+//indexOf sï¿½uï¿½y do podawania pozycji szukanego fragmentu w tekï¿½cie (ale takï¿½e w tablicy, bo metoda ta dostï¿½pna jest dla stringï¿½w i tablic).
+//Jeï¿½eli zwrï¿½conï¿½ wartoï¿½ciï¿½ jest -1, to szukanego tekstu nie ma:
 "Ala ma kota".indexOf("kot"); 		//= 7
 "Ala ma kota".includes("kot"); 		//= true
 
-console.log("Ala ma kota i tak ju¿ jest".lastIndexOf("a")); //= a
+console.log("Ala ma kota i tak juï¿½ jest".lastIndexOf("a")); //= a
 
 const url = "http://nazwastrony.pl/przykladowaNazwaPliku.php";
-//tniemy url na czêœci:
+//tniemy url na czï¿½ci:
 console.log( url.slice(url.lastIndexOf(".")+1) ); //php
 console.log( url.slice(url.lastIndexOf("/")+1, url.lastIndexOf(".")) ); //przykladowaNazwaPliku
 
 console.log("G" + "o".repeat(10) + "l!"); //Gooooooooool!
 
-const text = "Ala ma kota, a kot ma Alê, Ala go kocha, a Kot j¹ wcale ;(";
-const parts = text.split(", "); 	//split dzieli tekst, kryterium dzielenia: to przecinek i spacja. parts bêdzie tablic¹
-console.log(text); 					//= Ala ma kota, a kot ma Alê, Ala go kocha, a Kot j¹ wcale ;(
-console.log(parts); 				//= ["Ala ma kota", "a kot ma Alê", "Ala go kocha", "a Kot j¹ wcale ;("]
+const text = "Ala ma kota, a kot ma Alï¿½, Ala go kocha, a Kot jï¿½ wcale ;(";
+const parts = text.split(", "); 	//split dzieli tekst, kryterium dzielenia: to przecinek i spacja. parts bï¿½dzie tablicï¿½
+console.log(text); 					//= Ala ma kota, a kot ma Alï¿½, Ala go kocha, a Kot jï¿½ wcale ;(
+console.log(parts); 				//= ["Ala ma kota", "a kot ma Alï¿½", "Ala go kocha", "a Kot jï¿½ wcale ;("]
 const textChanged = text.replace("Ala", "Ola"); // wyszukanie i zamiana tekstu
-console.log(textChanged); 			//= Ola ma kota, a kot ma Alê, Ala go kocha, a Kot j¹ wcale ;(
-//Aby zamienic wszysktie "Ale" na "Ole", trzeba zastsowac wyra¿enie regularne:
+console.log(textChanged); 			//= Ola ma kota, a kot ma Alï¿½, Ala go kocha, a Kot jï¿½ wcale ;(
+//Aby zamienic wszysktie "Ale" na "Ole", trzeba zastsowac wyraï¿½enie regularne:
 const textChangedAll = text.replace(/Al/g,"Ol");
-console.log(textChangedAll); 		//= Ola ma kota, a kot ma Olê, Ola go kocha, a Kot j¹ wcale ;(
+console.log(textChangedAll); 		//= Ola ma kota, a kot ma Olï¿½, Ola go kocha, a Kot jï¿½ wcale ;(
 
-//funkcja która odwraca stringa:
+//funkcja ktï¿½ra odwraca stringa:
 function reverseString(stringToRevers) { stringToRevers.split('').reverse().join(''); }
 
 //-----------------------------------------------------------------------------
@@ -235,7 +269,7 @@ function myFunc() {  				// jest to deklaracja funkcji
     ...
 }
 
-const myFunc = function() {			// jest to wyra¿enie funkcyjne z  tak zwan¹ funkcjê anonimow¹
+const myFunc = function() {			// jest to wyraï¿½enie funkcyjne z  tak zwanï¿½ funkcjï¿½ anonimowï¿½
     ...
 }
 
@@ -247,46 +281,51 @@ const myFunction = function(a, b) {
 const myFunction = () => {
     console.log(a, b);
 }
-// Funkcja strza³kowa tyczy siê tylko wyra¿eñ funkcyjnych. Dla definicji nie mo¿e byæ u¿yta.
+// Funkcja strzaï¿½kowa tyczy siï¿½ tylko wyraï¿½eï¿½ funkcyjnych. Dla definicji nie moï¿½e byï¿½ uï¿½yta.
 
-//je¿eli funkcja nie ma parametrów, dajemy nawiasy i strza³kê (fat arrow)
+//jeï¿½eli funkcja nie ma parametrï¿½w, dajemy nawiasy i strzaï¿½kï¿½ (fat arrow)
 const myF = function() { ... }
 const myF = () => { ... }
 
-//je¿eli funkcja wymaga tylko jednego parametru pomijamy nawiasy
+//jeï¿½eli funkcja wymaga tylko jednego parametru pomijamy nawiasy
 const myF = function(a) { ... }
 const myF = a => { ... }
 
-//je¿eli funkcja wymaga wiêkszej iloœci parametrów, dajemy nawiasy
+//jeï¿½eli funkcja wymaga wiï¿½kszej iloï¿½ci parametrï¿½w, dajemy nawiasy
 const myF = function(a, b) { ... }
 const myF = (a, b) => { ... }
 
-//je¿eli funkcja zwraca tylko jedn¹ instrukcjê mo¿emy pomin¹æ klamry
+//jeï¿½eli funkcja zwraca tylko jednï¿½ instrukcjï¿½ moï¿½emy pominï¿½ï¿½ klamry
 const myF = function(a) { console.log(a); }
 const myF = a => console.log(a);
 
-//je¿eli funkcja tylko coœ zwraca, mo¿emy pomin¹æ instrukcjê return
+//jeï¿½eli funkcja tylko coï¿½ zwraca, moï¿½emy pominï¿½ï¿½ instrukcjï¿½ return
 const myF = function(a) { return a * a; }
 const myF = a => a * a;
 
 
-//Samo wywo³uj¹ca siê funkcja - IIFE
+//Samo wywoï¿½ujï¿½ca siï¿½ funkcja - IIFE
 (function() {...})();
-(function() {...}()); //Alternatywny zapis (nawiasy w œrodku)
+(function() {...}()); //Alternatywny zapis (nawiasy w ï¿½rodku)
 
-//Przyk³ad:
+//Przykï¿½ad:
 
 (function(a) {
     console.log(a)
 })("ala");
 
-//jest praktycznie równoznaczne z
+//jest praktycznie rï¿½wnoznaczne z
 function fn1(a) {
     console.log(a);
 }
 fn1("ala");
 
 
+//optional chaining (skÅ‚adnia ze znakiem zapytania)
+function cosTam() {
+	...
+	return response?.data //gdy nie odnajdzie "response", to zwrÃ³ci undefined (zamiast null)
+}
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -311,41 +350,41 @@ fn1("ala");
 
 //-----------------------------------------------------------------------------
 //EVENT
-//Najczêœciej urzywane zdarzenia:
+//Najczï¿½ciej urzywane zdarzenia:
 
 Typ zdarzenia:		Opis:
-click				gdy element zosta³ klikniêty (np. input)
-change				gdy opuœciliœmy element, i zmieni³ on swoj¹ zawartoœæ (np. pole tekstowe)
-mouseover			gdy kursor znalaz³ siê na elemencie
-mouseout			gdy kursor opuœci³ element
-mouseenter			gdy kursor znalaz³ siê na elemencie
-mouseleave			gdy kursor opuœci³ element
-dblclick			gdy podwójnie klikniemy na element (np. input)
-submit				gdy formularz jest wysy³any
-resize				gdy rozmiar okna przegl¹darki jest zmieniany
-focus				gdy element sta³ siê wybrany (np. pole tekstowe, link, button, element z tabindex) (jak za pomoc¹ klawiatury)
-blur				gdy element przesta³ byæ aktywny (np. opuœciliœmy input)
-keydown				gdy zosta³ naciœniêty klawisz na klawiaturze
-keyup				gdy puœcimy klawisz na klawiaturze
-input				podobne do powy¿szego, ale odpalane synchronicznie w czasie trzymania klawisza (np. przytrzymanie klawisza A w polu tekstowym)
-load				gdy obiekt zosta³ za³adowany (np. ca³a strona, pojedyncza grafika)
-contextmenu			gdy klikniêto prawym klawiszem myszki i pojawi³o siê menu kontekstowe
-wheel				gdy krêcimy kó³eczkiem myszki
-select				gdy zawartoœæ obiektu zosta³a zaznaczona
-unload				gdy u¿ytkownik opuszcza dana stronê
-animationstart		gdy animacja css siê zacznie
-animationend		gdy animacja css siê zacznie
-animationiteration	gdy animacja css zrobi jedn¹ iteracjê
-transitionstart		gdy transition css siê zacznie
-transitionend		gdy transition css siê zacznie
-transitionrun		gdy transition css siê zacznie (odpalane przed opóŸnieniem transition)
+click				gdy element zostaï¿½ klikniï¿½ty (np. input)
+change				gdy opuï¿½ciliï¿½my element, i zmieniï¿½ on swojï¿½ zawartoï¿½ï¿½ (np. pole tekstowe)
+mouseover			gdy kursor znalazï¿½ siï¿½ na elemencie
+mouseout			gdy kursor opuï¿½ciï¿½ element
+mouseenter			gdy kursor znalazï¿½ siï¿½ na elemencie
+mouseleave			gdy kursor opuï¿½ciï¿½ element
+dblclick			gdy podwï¿½jnie klikniemy na element (np. input)
+submit				gdy formularz jest wysyï¿½any
+resize				gdy rozmiar okna przeglï¿½darki jest zmieniany
+focus				gdy element staï¿½ siï¿½ wybrany (np. pole tekstowe, link, button, element z tabindex) (jak za pomocï¿½ klawiatury)
+blur				gdy element przestaï¿½ byï¿½ aktywny (np. opuï¿½ciliï¿½my input)
+keydown				gdy zostaï¿½ naciï¿½niï¿½ty klawisz na klawiaturze
+keyup				gdy puï¿½cimy klawisz na klawiaturze
+input				podobne do powyï¿½szego, ale odpalane synchronicznie w czasie trzymania klawisza (np. przytrzymanie klawisza A w polu tekstowym)
+load				gdy obiekt zostaï¿½ zaï¿½adowany (np. caï¿½a strona, pojedyncza grafika)
+contextmenu			gdy klikniï¿½to prawym klawiszem myszki i pojawiï¿½o siï¿½ menu kontekstowe
+wheel				gdy krï¿½cimy kï¿½eczkiem myszki
+select				gdy zawartoï¿½ï¿½ obiektu zostaï¿½a zaznaczona
+unload				gdy uï¿½ytkownik opuszcza dana stronï¿½
+animationstart		gdy animacja css siï¿½ zacznie
+animationend		gdy animacja css siï¿½ zacznie
+animationiteration	gdy animacja css zrobi jednï¿½ iteracjï¿½
+transitionstart		gdy transition css siï¿½ zacznie
+transitionend		gdy transition css siï¿½ zacznie
+transitionrun		gdy transition css siï¿½ zacznie (odpalane przed opï¿½nieniem transition)
 
 
 
-//Funkcjê podpianmy do w³aœciwoœci zaczynaj¹cych siê od ON, np: onclick, onmousemove...
+//Funkcjï¿½ podpianmy do wï¿½aï¿½ciwoï¿½ci zaczynajï¿½cych siï¿½ od ON, np: onclick, onmousemove...
 
 function showText() {
-    console.log('Klikniêto przycisk');
+    console.log('Klikniï¿½to przycisk');
 }
 
 const element = document.querySelector('#przycisk');
@@ -356,8 +395,8 @@ element.onmouseover = function() {
     console.log('Najechano na przycisk');
 }
 
-//Je¿eli chcemy podpinaæ zdarzenia do wielu elementów równoczeœnie, musimy zastosowaæ pêtlê:
-const p = document.querySelectorAll('p'); //kilka p na stronie
+//JeÅ¼eli chcemy podpiÄ…Ä‡ zdarzenia do wielu elementÃ³w rÃ³wnoczeÅ›nie, musimy zastosowaÄ‡ pÄ™tlÄ™:
+const p = document.querySelectorAll('p'); //kilka <p> na stronie
 
 p.forEach(function(el) {
     el.onclick = function() {
@@ -365,10 +404,10 @@ p.forEach(function(el) {
     }
 }
 
-//Aby usun¹æ wczeœniej przypisane zdarzenie, wystarczy pod dan¹ w³aœciwoœæ podstawiæ null:
+//Aby usunÄ…Ä‡ wczeÅ›niej przypisane zdarzenie, wystarczy pod danÄ… wÅ‚aÅ›ciwoÅ›Ä‡ podstawiÄ‡ null:
 element.onclick = null;
 
-//Wywo³anie kilu funkcji dla jednego elementu:
+//WywoÅ‚anie kilu funkcji dla jednego elementu:
 const element = document.querySelector('.btn');
 //rejestrujemy 3 zdarzenia click dla elementu
 element.addEventListener('click', showMe);
@@ -376,16 +415,16 @@ element.addEventListener('click', showSomething)
 element.addEventListener('click', function() {
     this.style.color = 'red';
 });
-//Od tej pory po pojedynczym klikniêciu zostan¹ wywo³ane wszystkie trzy funkcje.
+//Od tej pory po pojedynczym klikniÄ™ciu zostanie wywoÅ‚ane wszystkie trzy funkcje.
 
-//element.removeEventListener() - do wyrejestrowania funkcji z danego zdarzenia, która przyjmuje 2 parametry: nazwê zdarzenia i nazwê funkcji któr¹ chcemy wyrejestrowaæ:
+//element.removeEventListener() - do wyrejestrowania funkcji z danego zdarzenia, ktï¿½ra przyjmuje 2 parametry: nazwï¿½ zdarzenia i nazwï¿½ funkcji ktï¿½rï¿½ chcemy wyrejestrowaï¿½:
 element.removeEventListener('click', showMe);
 element.removeEventListener('click', showSomething);
 
-//wiêcej o tym: https://kursjs.pl/kurs/events/events.php
+//wiï¿½cej o tym: https://kursjs.pl/kurs/events/events.php
 
 
-//przyk³ad z przyciskami:
+//przykï¿½ad z przyciskami:
 Mamy prosty html:
 
 <div class="element">
@@ -398,7 +437,7 @@ Mamy prosty html:
     <button data-color="#f349eb">pink</button>
 </div>
 
-//Po klikniêciu na buttony chcemy by w elemencie o klasie .big ustawia³o siê t³o o kolorze z data-color klikniêtego elementu.
+//Po klikniï¿½ciu na buttony chcemy by w elemencie o klasie .big ustawiaï¿½o siï¿½ tï¿½o o kolorze z data-color klikniï¿½tego elementu.
 //krok 0
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -407,11 +446,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const buttons = document.querySelectorAll(".ex1 button");
 
     //krok 2
-    //mamy kolekcjê buttonów - koniecznie pêtla po nich
+    //mamy kolekcjï¿½ buttonï¿½w - koniecznie pï¿½tla po nich
     for (const btn of buttons) {
         btn.addEventListener("click", function() {
             //krok 4
-            //dzia³amy
+            //dziaï¿½amy
             big.style.background = this.dataset.color;
             big.innerText = this.dataset.color;
         })
@@ -419,7 +458,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
-//Przyk³ad:
+//Przykï¿½ad:
 // w pliku index.html mamy fragment kodu:
 	<div class="element">
 	    <div class="big"></div>
@@ -429,22 +468,22 @@ document.addEventListener("DOMContentLoaded", function() {
 	    <button data-color="#75D701">green</button>
 	    <button data-color="#f9d423">yellow</button>
 	    <button data-color="#f349eb">pink</button>
-		<button id="buttonTestClick" class="button" type="button">Kliknij na du¿ym przycisku</button>
+		<button id="buttonTestClick" class="button" type="button">Kliknij na duï¿½ym przycisku</button>
 	</div>
 
-// w pliku script.js piszemy obs³ugê przycisków, które maj¹ za zadanie zmieniaæ kolor obiektu "big"
-document.addEventListener("DOMContentLoaded", function() {	//czekam a¿ strona siê za³aduje
+// w pliku script.js piszemy obsï¿½ugï¿½ przyciskï¿½w, ktï¿½re majï¿½ za zadanie zmieniaï¿½ kolor obiektu "big"
+document.addEventListener("DOMContentLoaded", function() {	//czekam aï¿½ strona siï¿½ zaï¿½aduje
 
-	const big = document.querySelector(".baner"); //pobieram element (klasê) "baner" (dla tego z kropk¹)
+	const big = document.querySelector(".baner"); //pobieram element (klasï¿½) "baner" (dla tego z kropkï¿½)
 	console.log(big);
 	const buttonTestC = document.querySelectorAll("#buttonTestClick");
-	const buttons = document.querySelectorAll("button");	//pobieram wszystkie przyciski (to obiekty, wiêc bez kropki [chyba]).
+	const buttons = document.querySelectorAll("button");	//pobieram wszystkie przyciski (to obiekty, wiï¿½c bez kropki [chyba]).
 	console.log(buttons);
 	const buttonTestC = document.querySelectorAll("#buttonTestClick");	//z # pobieram id
 
 	//buttons[1].addEventListener("click", function() {
 	//	big.style.background = this.dataset.color; 	})
-	//zamiast powy¿szego kodu, mo¿na zrobiæ to w pêtli:
+	//zamiast powyï¿½szego kodu, moï¿½na zrobiï¿½ to w pï¿½tli:
 	buttons.forEach( function(el) {
 		el.addEventListener("click", function() {
 			big.style.background = this.dataset.color;
@@ -453,20 +492,20 @@ document.addEventListener("DOMContentLoaded", function() {	//czekam a¿ strona si
 	})
 });
 
-//wiekszy przyk³ad z przyciskami na: https://kursjs.pl/kurs/events/events.php
+//wiekszy przykï¿½ad z przyciskami na: https://kursjs.pl/kurs/events/events.php
 
 
-//Wstrzymanie domyœlnej akcji
+//Wstrzymanie domyï¿½lnej akcji
 link.addEventListener('click', function(e) {
     e.preventDefault();
     console.log('Ten przycisk nigdzie nie przeniesie.');
 });
 
 
-//Przyk³ad dodawania elementu:
+//Przykï¿½ad dodawania elementu:
 // w pliku index.html
 <div class="elements-list">
-    <!-- tutaj trafi¹ nowe elementy -->
+    <!-- tutaj trafiï¿½ nowe elementy -->
 </div>
 
 <div class="add-element-bar">
@@ -493,11 +532,11 @@ document.addEventListener("DOMContentLoaded", function() {
 		
         list.appendChild(el); //dodaje element do listy
 
-		//tworze przycisk z napisem "Usuñ"
+		//tworze przycisk z napisem "Usuï¿½"
         const del = document.createElement('button');
-        del.innerText = "Usuñ";
+        del.innerText = "Usuï¿½";
         del.classList.add('delete');
-        //od razu dodaje zdarzenie do przycisku, ale lepiej zrobic jak poni¿ej:
+        //od razu dodaje zdarzenie do przycisku, ale lepiej zrobic jak poniï¿½ej:
         //del.addEventListener('click', function() {
         //	const element = this.parentElement;
         //   element.parentElement.removeChild(element);
@@ -508,26 +547,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	const delBtns = document.querySelectorAll('.delete');
 
-	//lepsze rozwizanie, aby zdarzenia dodac do elementu w kturym dodawane s¹ elementy
+	//lepsze rozwizanie, aby zdarzenia dodac do elementu w kturym dodawane sï¿½ elementy
 	list.addEventListener('click', function(e) {
-		if(e.target.classList.contains('delete')) { //tutaj nie tylko klasê mo¿emy sprawdzaæ
+		if(e.target.classList.contains('delete')) { //tutaj nie tylko klasï¿½ moï¿½emy sprawdzaï¿½
 			const element = e.target.parentElement;
 			counter--;
 			element.parentElement.removeChild(element);
 		}
 	});
 });
-// powy¿szy przyk³ad pod linkiem: https://kursjs.pl/kurs/events/events-test3.html
+// powyï¿½szy przykï¿½ad pod linkiem: https://kursjs.pl/kurs/events/events-test3.html
 
-//  e.isTrusted  - mo¿na sprawdziæ, czy dany event zosta³ realnie wykonany przez u¿ytkownika, czy wywo³aliœmy go poprzez skrypt
+//  e.isTrusted  - moï¿½na sprawdziï¿½, czy dany event zostaï¿½ realnie wykonany przez uï¿½ytkownika, czy wywoï¿½aliï¿½my go poprzez skrypt
 const btn = document.querySelector("#testTrusted");
 const btn2 = document.querySelector("#testTrustedClick");
 
-btn.addEventListener('click', function(e) {	//jak klikniemy w ten przycisk, to zwóric nam: true
+btn.addEventListener('click', function(e) {	//jak klikniemy w ten przycisk, to zwï¿½ric nam: true
     console.log(`e.isTrusted: ${e.isTrusted}`);
 });
 btn2.addEventListener('click', function(e) {
-    btn.click();	//wywo³anie klikniecia przycisku "pierwszego", co zwróci w konsoli: false
+    btn.click();	//wywoï¿½anie klikniecia przycisku "pierwszego", co zwrï¿½ci w konsoli: false
 });
 
 
@@ -536,36 +575,36 @@ btn2.addEventListener('click', function(e) {
 //-----------------------------------------------------------------------------
 //DOM i zdarzenia
 
-//Aby dzia³aæ na elementach strony, musimy je wczeœniej pobraæ. Do odwo³ywania siê do jakiegoœ elementu skorzystamy z jednej z kilku metod:
+//Aby dziaï¿½aï¿½ na elementach strony, musimy je wczeï¿½niej pobraï¿½. Do odwoï¿½ywania siï¿½ do jakiegoï¿½ elementu skorzystamy z jednej z kilku metod:
 
 getElementById(id) - pobiera jeden element o danym id
 getElementsByTagName(nazwa_tagu) - pobiera elementy o danym znaczniku
 getElementsByClassName(nazwa_klasy) - pobiera elementy o danej klasie
-querySelector(css_selector) - pobiera pierwszy element pasuj¹cy do selektora css
-querySelectorAll(css_selector)- pobiera elementy pasuj¹ce do selektora css
+querySelector(css_selector) - pobiera pierwszy element pasujï¿½cy do selektora css
+querySelectorAll(css_selector)- pobiera elementy pasujï¿½ce do selektora css
 
-event DOMContentLoaded - gwarantuje nam, ¿e skrypt zacznie swoje dzia³anie wtedy, gdy ca³e drzewo DOM zostanie ju¿ wczytane
+event DOMContentLoaded - gwarantuje nam, ï¿½e skrypt zacznie swoje dziaï¿½anie wtedy, gdy caï¿½e drzewo DOM zostanie juï¿½ wczytane
 
 document.addEventListener("DOMContentLoaded", function() {
     ...tutaj pobieramy elementy...
 });
 
 document.addEventListener("DOMContentLoaded", function(event) {
-    console.log("DOM zosta³ wczytany");
-    console.log("Tutaj dopiero wy³apujemy elementy");
+    console.log("DOM zostaï¿½ wczytany");
+    console.log("Tutaj dopiero wyï¿½apujemy elementy");
 });
 
-window.addEventListener('load', ...))	//podobnie, ale dostaneimy potwiedzenie jeszcze przed za³adowaniem grafik (co czêsto generuje widoczne "dziury" na stronie)
+window.addEventListener('load', ...))	//podobnie, ale dostaneimy potwiedzenie jeszcze przed zaï¿½adowaniem grafik (co czï¿½sto generuje widoczne "dziury" na stronie)
 
 
 
 //getElementById(id) pobiera element o danym ID.
 const btn = document.getElementById('btn');
 
-//getElementsByTagName(tag) pobiera kolekcjê elementów o danym znaczniku:
+//getElementsByTagName(tag) pobiera kolekcjï¿½ elementï¿½w o danym znaczniku:
 const tab = document.getElementById('tabelka');
 
-//getElementsByClassName(tag) pobiera kolekcjê elementów po klasie:
+//getElementsByClassName(tag) pobiera kolekcjï¿½ elementï¿½w po klasie:
 const buttons = document.getElementsByClassName('btn');
 
 //querySelector(selector) 
@@ -575,30 +614,30 @@ const btn = document.querySelector('.module .btn-primary');
 //pobieramy pierwszy .btn w pierwszym li listy ul
 const btnInFirstLi = document.querySelector('ul li:fist-of-type .btn');
 
-//pobieram tytu³ w module
+//pobieram tytuï¿½ w module
 const module = document.querySelector('.module');
 const title = module.querySelector('.module-title');
 
-//pobieram element .module który nie jest divem
+//pobieram element .module ktï¿½ry nie jest divem
 const module = document.querySelector('.module:not(div)');
 
-//pobieram paragrafy, ale te które nie s¹ pierwszym dzieckiem swojego rodzica
+//pobieram paragrafy, ale te ktï¿½re nie sï¿½ pierwszym dzieckiem swojego rodzica
 const p = document.querySelector('p:not(:first-child)');
 
 
-//querySelectorAll(selector) - zwraca kolekcjê elementów lub pust¹ kolekcjê gdy nic nie znajdzie
+//querySelectorAll(selector) - zwraca kolekcjï¿½ elementï¿½w lub pustï¿½ kolekcjï¿½ gdy nic nie znajdzie
 const btns = document.querySelectorAll('.list .btn');
-for (const btn of btns) { //inny rodzaj pêtli
+for (const btn of btns) { //inny rodzaj pï¿½tli
     console.log(btn); //wypisuje dany przycisk
 }
 
-//Po pobraniu kolekcji, nie mo¿emy wykonywaæ wszystkich metod jak na tablicy (bo tablic¹ nie jest)
-//mo¿na urzyæ sztuczkê np:
+//Po pobraniu kolekcji, nie moï¿½emy wykonywaï¿½ wszystkich metod jak na tablicy (bo tablicï¿½ nie jest)
+//moï¿½na urzyï¿½ sztuczkï¿½ np:
 const divs = document.querySelectorAll('div.module');
 [].forEach.call(divs, function(el) {
     el.style.background = "red"
 });
-//Albo uzyæ funkcji która zmienia elementy iterowalne na tablicê:
+//Albo uzyï¿½ funkcji ktï¿½ra zmienia elementy iterowalne na tablicï¿½:
 Array.from(divs).forEach(el => { console.log(el); });
 Array.from(divs).filter(el => { console.log(el); });
 
@@ -608,21 +647,21 @@ Array.from(divs).filter(el => { console.log(el); });
 
 
 //-----------------------------------------------------------------------------
-//W³aœciwoœci i metody elementów:
+//Wï¿½aï¿½ciwoï¿½ci i metody elementï¿½w:
 innerHTML		zwraca lub ustawia kod HTML danego element 						//<span>Kliknij mnie!</span>
 outerHTML		zwraca lub ustawia kod HTML wraz z tagiem  						//<button class="button" type="button"><span>Kliknij mnie</span></button>
-innerText		zwraca lub ustawia tekst znajduj¹cy siê w elemencie (bez html)	//Kliknij mnie
-textContent 	Zwraca tekst z pomijaniem stylów (poka¿e te¿ ukryte i niewidoczne teksty)
-tagName			zwraca nazwê tagu
-setAttribute(nazwaAtrybutu, wartoœæ)	ustawia atrybut elementu
-getAttribute(nazwaAtrybutu)				pobiera atrybut elementu	(gdy nie ma takeigo elementu, zwróci null)
-removeAttribute(nazwaAtrybutu) 			s³u¿y do usuniêcia atrybutu.
+innerText		zwraca lub ustawia tekst znajdujï¿½cy siï¿½ w elemencie (bez html)	//Kliknij mnie
+textContent 	Zwraca tekst z pomijaniem stylï¿½w (pokaï¿½e teï¿½ ukryte i niewidoczne teksty)
+tagName			zwraca nazwï¿½ tagu
+setAttribute(nazwaAtrybutu, wartoï¿½ï¿½)	ustawia atrybut elementu
+getAttribute(nazwaAtrybutu)				pobiera atrybut elementu	(gdy nie ma takeigo elementu, zwrï¿½ci null)
+removeAttribute(nazwaAtrybutu) 			sï¿½uï¿½y do usuniï¿½cia atrybutu.
 hasAttribute	sprawdza czy element ma dany atrybut
-dataset			zwraca (obiekt) dataset, który przetrzymuje customowe atrybuty (data-...).
+dataset			zwraca (obiekt) dataset, ktï¿½ry przetrzymuje customowe atrybuty (data-...).
 
-// szczegó³owy opis na stronie: https://kursjs.pl/kurs/dom/dom-wlasciwosci.php
+// szczegï¿½owy opis na stronie: https://kursjs.pl/kurs/dom/dom-wlasciwosci.php
 
-//przyk³ad pobrania kilu przycisków i rozdzielenia za pomoc¹ "tagName", aby ka¿dy wykonywa³ swoje indywidualne zadanie:
+//przykï¿½ad pobrania kilu przyciskï¿½w i rozdzielenia za pomocï¿½ "tagName", aby kaï¿½dy wykonywaï¿½ swoje indywidualne zadanie:
 const elements = document.querySelector('div.test, .button, h2.title');
 for (let i=0; i<elements.length; i++) {
     elements[i].addEventListener('click', function() {
@@ -639,12 +678,12 @@ for (let i=0; i<elements.length; i++) {
     });
 }
 
-//Relacje miêdzy nodami: https://kursjs.pl/kurs/dom/dom-relacje.php#relacje
+//Relacje miï¿½dzy nodami: https://kursjs.pl/kurs/dom/dom-relacje.php#relacje
 
 
 //-----------------------------------------------------------------------------
-//tworzenie obiektu za pomoc¹ createElement(typ)
-//w pliku index.html trzeba wstawiæ:
+//tworzenie obiektu za pomocï¿½ createElement(typ)
+//w pliku index.html trzeba wstawiï¿½:
 	<div class="test-first"></div>
 //W poliku script.js
 	const el = document.createElement("div");
@@ -658,28 +697,28 @@ for (let i=0; i<elements.length; i++) {
 	//parentElement.appendChild(el);
 	const div = document.querySelector(".test-first"); //pobieramy miejsce docelowe
 	div.appendChild(el); //wstawiamy element do drzewa dokumentu
-	//div.insertBefore(newNode, strong); //wstawiamy go przed pierwszym elementem (nie bardzo rozkmini³em jak to dzia³a)
-	// trzeba zerkn¹æ na : https://kursjs.pl/kurs/dom/dom-tworzenie-i-usuwanie.php
+	//div.insertBefore(newNode, strong); //wstawiamy go przed pierwszym elementem (nie bardzo rozkminiï¿½em jak to dziaï¿½a)
+	// trzeba zerknï¿½ï¿½ na : https://kursjs.pl/kurs/dom/dom-tworzenie-i-usuwanie.php
 
-	//wstawienie tekstu wzglêdem stworzonego obiektu:
-	onst text = document.createTextNode("Lubiê placki");
+	//wstawienie tekstu wzglï¿½dem stworzonego obiektu:
+	onst text = document.createTextNode("Lubiï¿½ placki");
 	//div.before(text);		// przed obiektem
 	//div.after(text);		// za obiektem
-	//div.append(text);		// Na pocz¹tku
-	//div.prepend(text);	// Na koñcu
-	//dzia³a tylko jedna na raz (ciekawe dla czego?)
+	//div.append(text);		// Na poczï¿½tku
+	//div.prepend(text);	// Na koï¿½cu
+	//dziaï¿½a tylko jedna na raz (ciekawe dla czego?)
 
 
 
 //-----------------------------------------------------------------------------
-// Usuwanie elementów
+// Usuwanie elementï¿½w
 // element.remove(), lub parentNode.removeChild(element)
 
-//Przypuœæmy, ¿e z paragrafu z poprzedniego rozdzia³u chcemy usun¹æ znacznik strong:
+//Przypuï¿½ï¿½my, ï¿½e z paragrafu z poprzedniego rozdziaï¿½u chcemy usunï¿½ï¿½ znacznik strong:
 	<p id="paragraf">
-		To jest <strong>bardzo</strong> wa¿ny tekst
+		To jest <strong>bardzo</strong> waï¿½ny tekst
 	</p>
-//Kilka przyk³adów rozwi¹zania powy¿szego zadania:
+//Kilka przykï¿½adï¿½w rozwiï¿½zania powyï¿½szego zadania:
 	const p = document.querySelector("#paragraf");
 	const strong = p.querySelector("strong");
 
@@ -687,18 +726,18 @@ for (let i=0; i<elements.length; i++) {
 //lub
 	strong.parentNode.removeChild(strong);
 //lub
-	strong.remove();  //remove nie jest wspierane przez przegl¹darkê IE
+	strong.remove();  //remove nie jest wspierane przez przeglï¿½darkï¿½ IE
 
 
-//Przyk³ad:
+//Przykï¿½ad:
 //W index.html mamy:
 	<div class="div-test-remove">
-		<span>Element do usuniêcia</span>
+		<span>Element do usuniï¿½cia</span>
 	</div>
 
-	<button type="button" class="buttonUs">Usuñ powy¿szy span</button>
+	<button type="button" class="buttonUs">Usuï¿½ powyï¿½szy span</button>
 
-//w plku .js piszemy obs³ugê przycisku:
+//w plku .js piszemy obsï¿½ugï¿½ przycisku:
 	const divUs = document.querySelector(".div-test-remove");
 	const klawiszUsuwania = document.querySelector(".buttonUs");
 	klawiszUsuwania.addEventListener("click", function () {
@@ -708,17 +747,17 @@ for (let i=0; i<elements.length; i++) {
 	});
 
 
-//Aby usun¹æ wszystkie dzieci danego elementu - czyli go wyczyœciæ, powinniœmy wykonaæ pêtlê po jego dzieciach i wszystkie pousuwaæ:
+//Aby usunï¿½ï¿½ wszystkie dzieci danego elementu - czyli go wyczyï¿½ciï¿½, powinniï¿½my wykonaï¿½ pï¿½tlï¿½ po jego dzieciach i wszystkie pousuwaï¿½:
 	const div = document.querySelector("#list");
 
 	while (div.firstChild) {
 		div.removeChild(div.firstChild); //lub div.firstChild.remove()
 	}
 //lub nieco wolniejsze...
-	parentNode.innerHTML = "";  // tutaj chyba powinno byæ: div.innerHTML = "";
+	parentNode.innerHTML = "";  // tutaj chyba powinno byï¿½: div.innerHTML = "";
 
 
-// gdy pobierzemy kilak epelentów za pomoc¹ "All", to mo¿na to usun¹æ tak:
+// gdy pobierzemy kilak epelentï¿½w za pomocï¿½ "All", to moï¿½na to usunï¿½ï¿½ tak:
 	const li = document.querySelectorAll("#list li");
 	for (let i=li.length-1; i<=0; i++) {
 		li[i].remove();
@@ -727,15 +766,15 @@ for (let i=0; i<elements.length; i++) {
 
 
 //-----------------------------------------------------------------------------
-//Zastêpowanie elementów
+//Zastï¿½powanie elementï¿½w
 parent.replaceChild(newChild, oldChild):
-//Przyka³d:
+//Przykaï¿½d:
 
 //plik index.html
 	<div class="div-test-replace">
 		<span>Jestem starym elementem</span>
 	</div>
-	<button type="button" class="button" id="replaceTest">Zast¹p spana nowym elementem</button>
+	<button type="button" class="button" id="replaceTest">Zastï¿½p spana nowym elementem</button>
 
 //plik .js
 	const div = document.querySelector(".div-test-replace")
@@ -749,13 +788,13 @@ parent.replaceChild(newChild, oldChild):
 
 		div.replaceChild(newItem, oldItem);
 	});
-// w tym przyk³¹dzie w konsoli pojwia siê jakiœ b³¹d po ponownym naciœniêciu klawisza.
+// w tym przykï¿½ï¿½dzie w konsoli pojwia siï¿½ jakiï¿½ bï¿½ï¿½d po ponownym naciï¿½niï¿½ciu klawisza.
 
 
 //-----------------------------------------------------------------------------
-//Tworzenie fragmentów dokumentu
+//Tworzenie fragmentï¿½w dokumentu
 
-//Przyk³ad:
+//Przykï¿½ad:
 	const fragment = document.createDocumentFragment();
 
 	for (let i=0; i<10; i++ ) {
@@ -764,9 +803,9 @@ parent.replaceChild(newChild, oldChild):
 		fragment.appendChild(p);
 	}
 
-	document.body.appendChild(fragment); //wstawiamy 10 paragrafów
+	document.body.appendChild(fragment); //wstawiamy 10 paragrafï¿½w
 
-// przyk³ad wstawiania i kasowania elementów w dziale "Trening czyni mmistrza" na stronie:
+// przykï¿½ad wstawiania i kasowania elementï¿½w w dziale "Trening czyni mmistrza" na stronie:
 https://kursjs.pl/kurs/dom/dom-tworzenie-i-usuwanie.php#fragment
 
 
@@ -786,18 +825,18 @@ https://kursjs.pl/kurs/dom/dom-tworzenie-i-usuwanie.php#fragment
 //Klawisze 
 //keyDown, keyUp, keyPress i input
 
-//Wykrywanie nacisniêtego klawisza:
+//Wykrywanie nacisniï¿½tego klawisza:
 	document.addEventListener('keyup', function(e) {
 		console.log('Klawisz: ' + e.key);
 	});
 
-//Aby wykryæ czy dodatkowo zosta³ naciœniêty jeden z funkcyjnych klawiszy mo¿emy skorzystaæ z dodatkowych w³aœciwoœci:
-e.altKey	Czy klawisz Alt jest naciœniêty
-e.ctrlKey	Czy klawisz Ctrl jest naciœniêty
-e.shiftKey	Czy klawisz Shift jest naciœniêty
-e.keyCode	Zwraca kod klawisza. Przydatne przy sprawdzaniu zakresów klawiszy - np. klawisz to liczba
+//Aby wykryï¿½ czy dodatkowo zostaï¿½ naciï¿½niï¿½ty jeden z funkcyjnych klawiszy moï¿½emy skorzystaï¿½ z dodatkowych wï¿½aï¿½ciwoï¿½ci:
+e.altKey	Czy klawisz Alt jest naciï¿½niï¿½ty
+e.ctrlKey	Czy klawisz Ctrl jest naciï¿½niï¿½ty
+e.shiftKey	Czy klawisz Shift jest naciï¿½niï¿½ty
+e.keyCode	Zwraca kod klawisza. Przydatne przy sprawdzaniu zakresï¿½w klawiszy - np. klawisz to liczba
 
-//wykrycie naciœniêcia klawiszSpecjalny+klawisz
+//wykrycie naciï¿½niï¿½cia klawiszSpecjalny+klawisz
 	const textarea = document.querySelector('#keyTest');
 
 	textarea.addEventListener('keyup', function(e) {
@@ -814,7 +853,7 @@ e.keyCode	Zwraca kod klawisza. Przydatne przy sprawdzaniu zakresów klawiszy - np
 		}
 		keys.push(e.key);
 
-		console.log("Naciœniête klawisze: " + keys.join(" + "));
+		console.log("Naciï¿½niï¿½te klawisze: " + keys.join(" + "));
 
 		if (e.keyCode >= 48 && e.keyCode <= 57) {
 			console.log('klawisz to cyfra');
@@ -826,13 +865,13 @@ e.keyCode	Zwraca kod klawisza. Przydatne przy sprawdzaniu zakresów klawiszy - np
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //Myszka:
-mousedown 	- przycisk myszki zosta³ naciœniêty
-mouseup 	- przycisk myszki zosta³ puszczony
-click 		- przycisk myszki zosta³ naciœniêty i puszczony (czyli normalne klikniêcie)
-dblclick 	- podwójne klikniêcie
-mousemove 	- kursor porusza siê po...
-mouseover 	- kursor znalaz³ siê na elemencie
-mouseout 	- kursor opuœci³ dany element
+mousedown 	- przycisk myszki zostaï¿½ naciï¿½niï¿½ty
+mouseup 	- przycisk myszki zostaï¿½ puszczony
+click 		- przycisk myszki zostaï¿½ naciï¿½niï¿½ty i puszczony (czyli normalne klikniï¿½cie)
+dblclick 	- podwï¿½jne klikniï¿½cie
+mousemove 	- kursor porusza siï¿½ po...
+mouseover 	- kursor znalazï¿½ siï¿½ na elemencie
+mouseout 	- kursor opuï¿½ciï¿½ dany element
 
 document.addEventListener("DOMContentLoaded", function() {
     element.addEventListener('mousedown', showMe);
@@ -841,10 +880,10 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-//w³¹czamy mouseover - najechanie na element
+//wï¿½ï¿½czamy mouseover - najechanie na element
 element.addEventListener('mouseover', function() {...});
 
-//mousemove - poruszanie siê po elemencie
+//mousemove - poruszanie siï¿½ po elemencie
 element.addEventListener('mousemove', function() {...});
 
 //mouseout - opuszczamy element
@@ -852,23 +891,23 @@ element.addEventListener('mouseout', function() {...});
 
 
 //Pozycja kursora
-//Aby pobraæ pozycjê kursora na stronie mo¿emy skorzystaæ z 2 par w³aœciwoœci:
-e.pageX		Zwraca pozycjê kursora od lewej krawêdzi strony (wraz z przewiniêciem)
-e.pageY		Zwraca pozycjê kursora od górnej krawêdzi strony (wraz z przewiniêciem)
-e.clientX 	Zwraca pozycjê kursora od górnej krawêdzi widocznego obszaru strony (bez uwzglêdnienia pozycji przewiniêcia strony)
-e.clientY	Zwraca pozycjê kursora od lewej krawêdzi widocznego obszaru strony (bez uwzglêdnienia pozycji przewiniêcia strony)
-e.screenX	Zwraca pozycjê kursora od lewej krawêdzi ekranu
-e.screenY	Zwraca pozycjê kursora od górnej krawêdzi ekranu
+//Aby pobraï¿½ pozycjï¿½ kursora na stronie moï¿½emy skorzystaï¿½ z 2 par wï¿½aï¿½ciwoï¿½ci:
+e.pageX		Zwraca pozycjï¿½ kursora od lewej krawï¿½dzi strony (wraz z przewiniï¿½ciem)
+e.pageY		Zwraca pozycjï¿½ kursora od gï¿½rnej krawï¿½dzi strony (wraz z przewiniï¿½ciem)
+e.clientX 	Zwraca pozycjï¿½ kursora od gï¿½rnej krawï¿½dzi widocznego obszaru strony (bez uwzglï¿½dnienia pozycji przewiniï¿½cia strony)
+e.clientY	Zwraca pozycjï¿½ kursora od lewej krawï¿½dzi widocznego obszaru strony (bez uwzglï¿½dnienia pozycji przewiniï¿½cia strony)
+e.screenX	Zwraca pozycjï¿½ kursora od lewej krawï¿½dzi ekranu
+e.screenY	Zwraca pozycjï¿½ kursora od gï¿½rnej krawï¿½dzi ekranu
 
 
-//W³aœciwoœci e.pageX i e.pageY zwracaj¹ realn¹ pozycjê kursora od pocz¹tku strony, 
-//dlatego idealnie siê nadaj¹ do "przyklejania" elementów do kursora - np. jakiœ dymków,
-// ró¿nych menu itp.
+//Wï¿½aï¿½ciwoï¿½ci e.pageX i e.pageY zwracajï¿½ realnï¿½ pozycjï¿½ kursora od poczï¿½tku strony, 
+//dlatego idealnie siï¿½ nadajï¿½ do "przyklejania" elementï¿½w do kursora - np. jakiï¿½ dymkï¿½w,
+// rï¿½nych menu itp.
 
-//W³aœciwoœci e.clientX i e.clientY zwracaj¹ pozycjê kursora od krawêdzi widocznego obszaru strony 
-//(tego który aktualnie widaæ w oknie przegl¹darki), 
-//dlatego u¿ywaj¹c ich powinniœmy do nich doliczaæ w³aœciwoœci document.body.scrollLeft i document.body.scrollTop, 
-//poniewa¿ strona mo¿e byæ przewiniêta.
+//Wï¿½aï¿½ciwoï¿½ci e.clientX i e.clientY zwracajï¿½ pozycjï¿½ kursora od krawï¿½dzi widocznego obszaru strony 
+//(tego ktï¿½ry aktualnie widaï¿½ w oknie przeglï¿½darki), 
+//dlatego uï¿½ywajï¿½c ich powinniï¿½my do nich doliczaï¿½ wï¿½aï¿½ciwoï¿½ci document.body.scrollLeft i document.body.scrollTop, 
+//poniewaï¿½ strona moï¿½e byï¿½ przewiniï¿½ta.
 
 
 	element.addEventListener('mousemove', function(e) {
@@ -877,14 +916,14 @@ e.screenY	Zwraca pozycjê kursora od górnej krawêdzi ekranu
 		console.log('y: ', e.pageY);
 	});
 
-//inny przyk³ad
+//inny przykï¿½ad
 	element.addEventListener('click', function() {
 		console.log('Pozycja myszki:');
 		console.log('x: ', e.clientX + document.body.scrollLeft);
 		console.log('y: ', e.clientY + document.body.scrollTop);
 	});
 
-// pozycja kursoru na danym elemencie (przy robieniu gierki w ma³ym okienku)
+// pozycja kursoru na danym elemencie (przy robieniu gierki w maï¿½ym okienku)
 	const div = document.querySelector('.test');
 
 	div.addEventListener('mousemove', function(e) {
@@ -898,7 +937,7 @@ e.screenY	Zwraca pozycjê kursora od górnej krawêdzi ekranu
 		console.clear();
 	});
 
-//inny przyk³ad: (chyba lepszy od powy¿szego)
+//inny przykï¿½ad: (chyba lepszy od powyï¿½szego)
 const div = document.querySelector('.test-pos-2');
 
 div.addEventListener('mousemove', function(e) {
@@ -913,20 +952,20 @@ div.addEventListener('click', function() {
 })
 
 
-//Przyk³ad zrobienia celownika na stronie: https://kursjs.pl/kurs/events/events-mouse.php#
+//Przykï¿½ad zrobienia celownika na stronie: https://kursjs.pl/kurs/events/events-mouse.php#
 
-//Który przycisk myszki
-//Aby odczytaæ, który przycisk zosta³ naciœniêty skorzystamy z w³aœciwoœci button.
+//Ktï¿½ry przycisk myszki
+//Aby odczytaï¿½, ktï¿½ry przycisk zostaï¿½ naciï¿½niï¿½ty skorzystamy z wï¿½aï¿½ciwoï¿½ci button.
 
-//Guziki myszki zosta³y obdarowane odpowiednimi wartoœciami:
+//Guziki myszki zostaï¿½y obdarowane odpowiednimi wartoï¿½ciami:
 lewy guzik - 0
-œrodkowy guzik - 1
+ï¿½rodkowy guzik - 1
 prawy guzik - 2
 
 	function buttonMouse(e) {
 		e.preventDefault();
 
-		alert('Numer klikniêtego przycisku: '+ e.button);
+		alert('Numer klikniï¿½tego przycisku: '+ e.button);
 	}
 
 	const block = document.querySelector('#blockBtn');
@@ -934,22 +973,22 @@ prawy guzik - 2
 
 
 
-//Przyk³ad zrobienia MENU KONTEKSTOWEGO dla obiektu: https://kursjs.pl/kurs/events/events-mouse.php#
+//Przykï¿½ad zrobienia MENU KONTEKSTOWEGO dla obiektu: https://kursjs.pl/kurs/events/events-mouse.php#
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //Grafika
 
-width	szerokoœæ grafiki,
-height	wysokoœæ grafiki,
-alt		alternatywny opis grafiki (widoczny gdy siê nie wczyta),
-title	tekst, który pojawi siê po najechaniu kursorem na element,
+width	szerokoï¿½ï¿½ grafiki,
+height	wysokoï¿½ï¿½ grafiki,
+alt		alternatywny opis grafiki (widoczny gdy siï¿½ nie wczyta),
+title	tekst, ktï¿½ry pojawi siï¿½ po najechaniu kursorem na element,
 src		adres do grafiki
 
 <img src="./wietnam.jpg" class="img" alt="Kartofel w wietnamie" width="400" height="400">
 
-//Przyk³ad zrobienia podstawiania obrazka po najechaniu kursora:
+//Przykï¿½ad zrobienia podstawiania obrazka po najechaniu kursora:
 	const imageOff = new Image();
 	imageOff.src = '/images/obrazek1.jpg';
 
@@ -965,7 +1004,7 @@ src		adres do grafiki
 		this.src = imageOff.src;
 	});
 
-//lepsze rozwi¹zanie, do podstawiania wiêkszej iloœci obrazków:
+//lepsze rozwiï¿½zanie, do podstawiania wiï¿½kszej iloï¿½ci obrazkï¿½w:
 const names = [
     'obrazek.jpg',
     'kartofelek.jpg',
@@ -981,29 +1020,29 @@ for (let i=0; i<names.length; i++) {
 }
 
 
-//wiêcej przyk³adów: https://kursjs.pl/kurs/grafika/grafika-na-stronie.php
+//wiï¿½cej przykï¿½adï¿½w: https://kursjs.pl/kurs/grafika/grafika-na-stronie.php
 
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-// setTimeout(fn, time)  - funkcja RAZ wywo³ana po czasie podanym w drugim parametrze
+// setTimeout(fn, time)  - funkcja RAZ wywoï¿½ana po czasie podanym w drugim parametrze
 
 	function myFunc() {
-		console.log('Jakiœ tekst');
+		console.log('Jakiï¿½ tekst');
 	}
 	setTimeout(myFunc, 1200); //odpali po 1.2s
 
 //przerwanie timeouta
 	const time = setTimeout(function() {
-		console.log('Pe³ne zaskoczenie');
+		console.log('Peï¿½ne zaskoczenie');
 	}, 10000);
 
-	clearTimeout(time); //powy¿sza funkcja nigdy siê nie odpali, bo od razu przerwaliœmy setTimeout
+	clearTimeout(time); //powyï¿½sza funkcja nigdy siï¿½ nie odpali, bo od razu przerwaliï¿½my setTimeout
 
-//cykliczne wywo³anie funkcji, które poczeka, je¿eli kod siê nie wyrobi
+//cykliczne wywoï¿½anie funkcji, ktï¿½re poczeka, jeï¿½eli kod siï¿½ nie wyrobi
 	function longFn() {
-		//bardzo d³ugo wywo³uj¹cy siê kod, który mo¿e zaj¹c kilka sekund
+		//bardzo dï¿½ugo wywoï¿½ujï¿½cy siï¿½ kod, ktï¿½ry moï¿½e zajï¿½c kilka sekund
 		time = setTimeout(longFn, 1000);
 	}
 
@@ -1012,11 +1051,11 @@ for (let i=0; i<names.length; i++) {
 
 
 //-----------------------------------------------------------------------------
-//setInterval(fn, time) - cyklicznie wywo³uje funkcje
+//setInterval(fn, time) - cyklicznie wywoï¿½uje funkcje
 
-// co sekundê bêdzie pojawia³ siê napis
+// co sekundï¿½ bï¿½dzie pojawiaï¿½ siï¿½ napis
 	const time = setInterval(function() {
-		console.log('Przyk³adowy napis');
+		console.log('Przykï¿½adowy napis');
 	}, 1000);
 
 //zatrzymanie:
@@ -1029,7 +1068,7 @@ for (let i=0; i<names.length; i++) {
 //-----------------------------------------------------------------------------
 //Praca z RWD
 
-//wykrycie zmiany wielkoœci okna:
+//wykrycie zmiany wielkoï¿½ci okna:
 window.addEventListener('resize', function() {
     console.log(this);
 });
@@ -1038,9 +1077,9 @@ window.addEventListener('resize', function() {
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-//Okna przegl¹darki
+//Okna przeglï¿½darki
 window.open(url, name, options)
-//wiêcej na: https://kursjs.pl/kurs/okna.php
+//wiï¿½cej na: https://kursjs.pl/kurs/okna.php
 
 
 //-----------------------------------------------------------------------------
@@ -1051,38 +1090,38 @@ window.open(url, name, options)
 	Set-Cookie: value;max-age=seconds;domain=domena;path=sciezka;secure;HttpOnly
 
 //Parametry:
-Parametr    | Wymagane	| Co oznacza									| Przyk³adowa wartoœæ
+Parametr    | Wymagane	| Co oznacza									| Przykï¿½adowa wartoï¿½ï¿½
 ============|===========|===============================================|==================================
-value		|Wymagane	|Wartoœæ i nazwa ciasteczka						| username=Marcin
+value		|Wymagane	|Wartoï¿½ï¿½ i nazwa ciasteczka						| username=Marcin
 ------------|-----------|-----------------------------------------------|----------------------------------
 max-age		|Opcjonalne	|czas w sekundach								| 6050050
 ------------|-----------|-----------------------------------------------|----------------------------------
-domain		|Opcjonalne	|domena na której bêdzie dzia³aæ to ciasteczko	| kurspl.pl
-			|			|												| <http://taka.sobie.domena/œcie¿ka>
+domain		|Opcjonalne	|domena na ktï¿½rej bï¿½dzie dziaï¿½aï¿½ to ciasteczko	| kurspl.pl
+			|			|												| <http://taka.sobie.domena/ï¿½cieï¿½ka>
 ------------|-----------|-----------------------------------------------|----------------------------------
 path		|Opcjonalne	|sciezka do domeny, albo do podkatalogu			| /
 ------------|-----------|-----------------------------------------------|----------------------------------
 secure		|Opcjonalne	|Zabezpieczenia ciasteczka. 					|
-			|			|Czy ma ono siê odwo³ywaæ tylko do https		| secure
+			|			|Czy ma ono siï¿½ odwoï¿½ywaï¿½ tylko do https		| secure
 ------------|-----------|-----------------------------------------------|----------------------------------
-HttpOnly	|Opcjonalne	|Czy bêdzeimy mogli siê odwo³ywaæ do ciasteczek	|
+HttpOnly	|Opcjonalne	|Czy bï¿½dzeimy mogli siï¿½ odwoï¿½ywaï¿½ do ciasteczek	|
 			|			|z poziomu JavaScript							| HttpOnly
 ------------|-----------|--------------------------------------------------------------------------------
 
 
-//Pierwsz¹ czêœæ sk³adni ciasteczka zajmuje nazwa ciasteczka oraz jego wartoœæ. S¹ to jedyne wymagane parametry ciasteczka
-expires 	okreœla datê wygaœniêcia
-path 		ustawia œcie¿kê sk¹d zosta³o utworzone ciasteczko. Najlepszym rozwi¹zaniem jest tutaj pozostawienie domyœlnej wartoœci czyli "/".
-secure		Je¿eli ustawisz go na true, wtedy ciastka bêd¹ wysy³ane tylko w zabezpieczonych po³¹czeniach (https).
+//Pierwszï¿½ czï¿½ï¿½ skï¿½adni ciasteczka zajmuje nazwa ciasteczka oraz jego wartoï¿½ï¿½. Sï¿½ to jedyne wymagane parametry ciasteczka
+expires 	okreï¿½la datï¿½ wygaï¿½niï¿½cia
+path 		ustawia ï¿½cieï¿½kï¿½ skï¿½d zostaï¿½o utworzone ciasteczko. Najlepszym rozwiï¿½zaniem jest tutaj pozostawienie domyï¿½lnej wartoï¿½ci czyli "/".
+secure		Jeï¿½eli ustawisz go na true, wtedy ciastka bï¿½dï¿½ wysyï¿½ane tylko w zabezpieczonych poï¿½ï¿½czeniach (https).
 
-// wielkoœc ciasteczka to max4kb
-//Postaæ takiego nag³ówka mo¿e wygl¹daæ tak:
+// wielkoï¿½c ciasteczka to max4kb
+//Postaï¿½ takiego nagï¿½ï¿½wka moï¿½e wyglï¿½daï¿½ tak:
 	Cookie: username=Marcin; userid=123345; session=dasdkljasd82213213
 
 //Tworzenie cisteczka:
 document.cookie = "nazwaCookie=wartoscCookie; expires=dataWygasniecia; path=/; secure"
 
-//Najprostsz¹ wersj¹ utworzenia swojego ciastka jest u¿ycie konstrukcji:
+//Najprostszï¿½ wersjï¿½ utworzenia swojego ciastka jest uï¿½ycie konstrukcji:
 	document.cookie = "nazwaCookie=wartoscCookie"
 
 //Funkcje do tworzenia i odczytu cisteczek na stronie: https://kursjs.pl/kurs/cookies/cookie.php#postac
@@ -1090,23 +1129,23 @@ document.cookie = "nazwaCookie=wartoscCookie; expires=dataWygasniecia; path=/; s
 
 
 //-----------------------------------------------------------------------------
-//Storage  s³u¿y do przetrzymywania danych. Jest to taki swoisty schowek, w którym mo¿emy przetrzymywaæ ró¿ne dane naszej strony.
+//Storage  sï¿½uï¿½y do przetrzymywania danych. Jest to taki swoisty schowek, w ktï¿½rym moï¿½emy przetrzymywaï¿½ rï¿½ne dane naszej strony.
 
-Session storage - s³u¿y do obs³ugi danych tylko w czasie trwania sesji (czyli do zamkniêcia przegl¹darki)
-local storage - Do zapisywania danych na nieokreœlony czas (a¿ do ich usuniêcia)
+Session storage - sï¿½uï¿½y do obsï¿½ugi danych tylko w czasie trwania sesji (czyli do zamkniï¿½cia przeglï¿½darki)
+local storage - Do zapisywania danych na nieokreï¿½lony czas (aï¿½ do ich usuniï¿½cia)
 
-//Aby utworzyæ i odczytaæ element w localStorage:
-	localStorage.setItem('myElement', 'Przyk³adowa wartoœæ');
-	console.log(localStorage.getItem('myElement')); //Przyk³adowa wartoœæ
+//Aby utworzyï¿½ i odczytaï¿½ element w localStorage:
+	localStorage.setItem('myElement', 'Przykï¿½adowa wartoï¿½ï¿½');
+	console.log(localStorage.getItem('myElement')); //Przykï¿½adowa wartoï¿½ï¿½
 
-//Aby usun¹æ element:
+//Aby usunï¿½ï¿½ element:
 	localStorage.removeItem('myElement');
 	console.log(localStorage.getItem('myElement')); //null
 
-//Je¿eli chcesz wyczyœciæ ca³y localStorage dla danej witryny, skorzystaj z metody .clear():
-	if (confirm('Czy chcesz wyczyœciæ zapisane dane?')) { localStorage.clear() }
+//Jeï¿½eli chcesz wyczyï¿½ciï¿½ caï¿½y localStorage dla danej witryny, skorzystaj z metody .clear():
+	if (confirm('Czy chcesz wyczyï¿½ciï¿½ zapisane dane?')) { localStorage.clear() }
 
-//Domyœlnie localStorage umo¿liwia przetrzymywanie danych jako tekst. Aby móc przetrzymywaæ w nim obiekty, musimy je zamieniæ na tekst za pomoc¹ JSON.stringify oraz JSON.parse:
+//Domyï¿½lnie localStorage umoï¿½liwia przetrzymywanie danych jako tekst. Aby mï¿½c przetrzymywaï¿½ w nim obiekty, musimy je zamieniï¿½ na tekst za pomocï¿½ JSON.stringify oraz JSON.parse:
 	const ob = {
 		'one': 1,
 		'two': 2,
@@ -1119,19 +1158,19 @@ local storage - Do zapisywania danych na nieokreœlony czas (a¿ do ich usuniêcia)
 	console.log(JSON.parse(retrievedObject));
 
 
-//wiêcej na ten temat: https://kursjs.pl/kurs/storage/storage.php#sessionstorage
+//wiï¿½cej na ten temat: https://kursjs.pl/kurs/storage/storage.php#sessionstorage
 
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-//Wyra¿enia regularne
-// Strony do testowania wyra¿eñ: https://regex101.com/
+//Wyraï¿½enia regularne
+// Strony do testowania wyraï¿½eï¿½: https://regex101.com/
 // https://regexr.com/
 
-//Aby w Javascript korzystaæ z wyra¿eñ regularnych, musimy utworzyæ obiekt:
-	RegExp(wyra¿enie, flaga)
-// który przyjmuje 2 argumenty: wyra¿enie, którym bêdziemy testowaæ, oraz dodatkowe flagi
+//Aby w Javascript korzystaï¿½ z wyraï¿½eï¿½ regularnych, musimy utworzyï¿½ obiekt:
+	RegExp(wyraï¿½enie, flaga)
+// ktï¿½ry przyjmuje 2 argumenty: wyraï¿½enie, ktï¿½rym bï¿½dziemy testowaï¿½, oraz dodatkowe flagi
 	const reg = new RegExp("pani?" , "gi")
 // lub
 	const reg = /pani?/gi
@@ -1141,28 +1180,28 @@ local storage - Do zapisywania danych na nieokreœlony czas (a¿ do ich usuniêcia)
 //Flagi
 znak Flagi	| znaczenie
 ------------|-----------------------------------------------------------------
-	i		| Powoduje niebranie pod uwagê wielkoœci liter
+	i		| Powoduje niebranie pod uwagï¿½ wielkoï¿½ci liter
 ------------|-----------------------------------------------------------------
-	g		| Powoduje zwracanie wszystkich pasuj¹cych fragmentów, a nie tylko pierwszego
+	g		| Powoduje zwracanie wszystkich pasujï¿½cych fragmentï¿½w, a nie tylko pierwszego
 ------------|-----------------------------------------------------------------
-	m		| Powoduje wyszukiwanie w tekœcie kilku liniowym. 
-			| W trybie tym znak pocz¹tku i koñca wzorca (^$) jest wstawiany przed i po znaku nowej linii (\n).
+	m		| Powoduje wyszukiwanie w tekï¿½cie kilku liniowym. 
+			| W trybie tym znak poczï¿½tku i koï¿½ca wzorca (^$) jest wstawiany przed i po znaku nowej linii (\n).
 ------------|-----------------------------------------------------------------
-	x		| Ignoruje bia³e znaki
+	x		| Ignoruje biaï¿½e znaki
 ------------|-----------------------------------------------------------------
-	s		| Powoduje, ¿e . (kropka) zastêpuje te¿ znak CR (Enter)
+	s		| Powoduje, ï¿½e . (kropka) zastï¿½puje teï¿½ znak CR (Enter)
 ------------|-----------------------------------------------------------------
 
 
-//Przyk³ad:
+//Przykï¿½ad:
 	const text = "cat dog";
 	const reg = /cat/;
-	reg.test(text) // true - bo cat znajduje siê w tekœcie
+	reg.test(text) // true - bo cat znajduje siï¿½ w tekï¿½cie
 
 	const reg2 = /^cat$/;
-	alert(reg2.test(tekst)); //false - bo wzorzec zaczyna siê z pocz¹tkiem i koñczy z koñcem tekstu (znaki ^ i $) - jedyny pasuj¹cy tekst to "cat"
+	alert(reg2.test(tekst)); //false - bo wzorzec zaczyna siï¿½ z poczï¿½tkiem i koï¿½czy z koï¿½cem tekstu (znaki ^ i $) - jedyny pasujï¿½cy tekst to "cat"
 
-//Przyk³ad 2:
+//Przykï¿½ad 2:
 	const re = /d(b+)(d)/ig;
 	const result = re.exec("cdbBdbsbz");
 
@@ -1174,19 +1213,19 @@ znak Flagi	| znaczenie
 	console.log(re.ignoreCase) //true
 	console.log(re.source) //d(b+)(d)
  
-//Przyk³ad 3: Zastosowanie metody search()
-	const text = "Fantomas robi masê - marchewkowo-marcepanowa";
+//Przykï¿½ad 3: Zastosowanie metody search()
+	const text = "Fantomas robi masï¿½ - marchewkowo-marcepanowa";
 	const reg = /at/gi";
 
 	console.log("Search: " + text.search(reg));
 	console.log("Index of: " + text.indexOf("at"));
 
-//Przyk³ad 4:  Zastosowanie metody replace()
+//Przykï¿½ad 4:  Zastosowanie metody replace()
 	const text = "Kolorowy kolor nie jest kolorowy?...";
 	console.log(text);
 
-	const reg = /lor/g //nasze wyra¿enie
-	console.log(text.replace(reg,"ral")); //Wyszukujemy w tekœcie wszystkie wyst¹pienia "lor" i zamieniamy je na pogrubione "ral"
+	const reg = /lor/g //nasze wyraï¿½enie
+	console.log(text.replace(reg,"ral")); //Wyszukujemy w tekï¿½cie wszystkie wystï¿½pienia "lor" i zamieniamy je na pogrubione "ral"
 
 
 
@@ -1203,7 +1242,7 @@ const ob = {
 const obStr = JSON.stringify(ob);
 console.log(obStr); //"{"name":"Piotr","subname":"Nowak"}"
 
-console.log( JSON.parse(obStr) ); //nasz wczeœniejszy obiekt
+console.log( JSON.parse(obStr) ); //nasz wczeï¿½niejszy obiekt
 
 
 //-----------------------------------------------------------------------------
@@ -1212,7 +1251,7 @@ console.log( JSON.parse(obStr) ); //nasz wczeœniejszy obiekt
 //Canvas
 //w pliku index.html
 	<canvas width="200" height="200" id="canvas1">
-		...treœæ alternatywna, gdy pregl¹darka nie obs³uguje tego elementu...
+		...treï¿½ï¿½ alternatywna, gdy preglï¿½darka nie obsï¿½uguje tego elementu...
 	</canvas>
 // w pliku .js
 	const canvasElem = document.getElementById('canvas1');
@@ -1223,20 +1262,20 @@ console.log( JSON.parse(obStr) ); //nasz wczeœniejszy obiekt
 	ctx.strokeRect(50,50,50,50);	//rysujemy obramowanie drugiego kwadratu
 
 ctx.font = "italic bold 30px Arial"; 
-ctx.textBaseline = "middle";		//wyrównanie: "top", "middle", "bottom"
-ctx.fillText('Ala ma kota', 0, 30);		//pe³ne (wype³nione) litery
+ctx.textBaseline = "middle";		//wyrï¿½wnanie: "top", "middle", "bottom"
+ctx.fillText('Ala ma kota', 0, 30);		//peï¿½ne (wypeï¿½nione) litery
 ctx.strokeText('Ala ma kota', 0, 30);	//obrysowane litery
 
 
-fillRect(x, y, width, height)		rysuje wype³niony prostok¹t
-strokeRect(x, y, width, height)		rysuje obramowanie prostok¹ta
-clearRext(x, y, width, height)		czyœci okreœlony obszar i czyni go przezroczystym
+fillRect(x, y, width, height)		rysuje wypeï¿½niony prostokï¿½t
+strokeRect(x, y, width, height)		rysuje obramowanie prostokï¿½ta
+clearRext(x, y, width, height)		czyï¿½ci okreï¿½lony obszar i czyni go przezroczystym
 
-moveTo(x,y) - ustawienie piórka na dan¹ pozycjê
+moveTo(x,y) - ustawienie piï¿½rka na danï¿½ pozycjï¿½
 
 //rysowanie linni
 	ctx.beginPath();
-	ctx.moveTo(35,10); //rysowanie zaczynamy od punktów 35,10 - tam wiêc przesuwamy nasze piórko
+	ctx.moveTo(35,10); //rysowanie zaczynamy od punktï¿½w 35,10 - tam wiï¿½c przesuwamy nasze piï¿½rko
 	ctx.lineTo(60,40);
 	ctx.lineTo(10,40);
 	ctx.lineTo(35,10);
@@ -1244,13 +1283,13 @@ moveTo(x,y) - ustawienie piórka na dan¹ pozycjê
 
 ctx.closePath(); - domykanie obrysu
 
-//³uki:
+//ï¿½uki:
 arc(x, y, r, start, koniec, kierunek rysowania [false lub true])
 x, y - miejsce wbicia cyrkla, 
 start, koniec - podany w radianach, gdzie: radians = (Math.PI/180)*kat
-kierunek rysowania - czy zgodnei ze wskazówkami zegra?
+kierunek rysowania - czy zgodnei ze wskazï¿½wkami zegra?
 
-//Przyk³ad rysowanie 4 luków:
+//Przykï¿½ad rysowanie 4 lukï¿½w:
 	function radianAngle(angle) {
 		return radians = (Math.PI/180)*angle;
 	}
@@ -1275,25 +1314,25 @@ kierunek rysowania - czy zgodnei ze wskazówkami zegra?
 
 //-----------------------------------------------------------------------------
 JEST
-//strona z dokumentacj¹: https://jestjs.io/docs/en/using-matchers
+//strona z dokumentacjï¿½: https://jestjs.io/docs/en/using-matchers
 
 //filmik szkoleniowy: https://www.youtube.com/watch?v=jpV3WEi3shs&t=440s
 
-//Zak³adanie nowego projetu przez:
+//Zakï¿½adanie nowego projetu przez:
 	npm init --yes
 	npm install --save-dev jest
 
 
-//proponowane paczki do testów
+//proponowane paczki do testï¿½w
 	npm install--save - dev @babel/cli @babel/core @babel/preset-env babel-jest @babel/plugin - transform - modules - commonjs
-//trzeba zrobiæ konfiguracje bable:
-//stworzyæ plik babel.config.js a w nim wpisaæ:
+//trzeba zrobiï¿½ konfiguracje bable:
+//stworzyï¿½ plik babel.config.js a w nim wpisaï¿½:
 	module.exports = {
 		presets: [['@babel/preset-env', { targets: { node: 'current' } }]],
 		plugins: [['@babel/plugin-transform-modules-commonjs']],
 	};
 
-w folderze package.json trzeba dodaæ w: "scripts"
+w folderze package.json trzeba dodaï¿½ w: "scripts"
   "scripts": {
     "test": "jest", //edytowany
     "build": "babel ./src/index.js --out-dir build --ignore 'src/*.test.js'", //to dodane
@@ -1303,7 +1342,7 @@ w folderze package.json trzeba dodaæ w: "scripts"
 
 
 
-//aby uruchomiæ testy:
+//aby uruchomiï¿½ testy:
 npm run test
 
 
@@ -1314,7 +1353,7 @@ npm run test
 
 //-----------------------------------------------------------------------------
 //Zadanie testowe z samolotem:
-const mo¿liweMiejsca = {
+const moï¿½liweMiejsca = {
     dwieRodziny: ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'J'],
     srodek: ['D', 'E', 'F', 'G'],
     lewo: ['B', 'C', 'D', 'E'],
@@ -1350,16 +1389,16 @@ export const miejsca = (N, S) => {
 
         onlyThisRow.forEach(thisRow => {
             for (let i = 0; i < thisRow.length; i++) {
-                if (mo¿liweMiejsca.dwieRodziny.includes(thisRow[i])) {
+                if (moï¿½liweMiejsca.dwieRodziny.includes(thisRow[i])) {
                     dostepneOpcje.dwieRodziny = false;
                 }
-                if (mo¿liweMiejsca.srodek.includes(thisRow[i])) {
+                if (moï¿½liweMiejsca.srodek.includes(thisRow[i])) {
                     dostepneOpcje.srodek = false;
                 }
-                if (mo¿liweMiejsca.lewo.includes(thisRow[i])) {
+                if (moï¿½liweMiejsca.lewo.includes(thisRow[i])) {
                     dostepneOpcje.lewo = false;
                 }
-                if (mo¿liweMiejsca.prawo.includes(thisRow[i])) {
+                if (moï¿½liweMiejsca.prawo.includes(thisRow[i])) {
                     dostepneOpcje.prawo = false;
                 }
             }

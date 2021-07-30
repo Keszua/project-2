@@ -36,7 +36,7 @@ var user = {
     }
 }
 console.log(user.showMsg());  //= Witaj Uzytkownik
-// poniżej ten sam efekt z funkcją która jet zewnętrzna:
+// poniżej ten sam efekt z funkcją która jest zewnętrzna:
 function pokazywanieNapisu() {
     return "Witaj "+ this.name;
 }

@@ -913,13 +913,13 @@ const url = `http://localhost:3000/?` + params;
 \_| \_/  \___| |___/  \__| \____/  \_____/        .
                                                   .
 
-					_				 _
-				   | |				| |  
-	  ___	 ___   | |_		___    _| |
-	 / _ \  /__ \  |   \   / __\  /   |
-	|  __/  / _ |  | O |  | |___  | O |
-	 \___|	\___\  |___/   \___/  \___|
-									  
+	        _                 _             ___
+	       | |               | |           /  _|
+	 ___   | |_	    ___     _| |    ___   _| |_
+	/__ \  |   \   / __\   /   |   / _ \ |_   _|
+	/ _ |  | O  | | |___  |  O |  |  __/   | |
+	\___\  |___/   \___/   \___|   \___|   | |
+									       |_|
 
 */
 
@@ -1088,7 +1088,7 @@ npm add -D @types/react
 
 
 //-----------------------------------------------------------------------------
-//Przykład asynchronicznosći w TS
+//Przykład asynchronicznosci w TS
 function goToPkp():      Promise<void> { return new Promise(resolve => setTimeout(resolve, 1000)); }
 function waitForTrain(): Promise<void> { return new Promise(resolve => setTimeout(resolve, 1500)); }
 function travelToDest(): Promise<void> { return new Promise(resolve => setTimeout(resolve, 2000));  }

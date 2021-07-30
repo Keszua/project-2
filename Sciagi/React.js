@@ -224,6 +224,9 @@ const value = parseInt(props.number); //typowanie na Int
 
 //komponent daty
 <time>{(new Date()).toString()}</time>
+const date = new Date();  //w date jest: Tue Jul 27 2021 08:26:28 GMT+0200 (czas środkowoeuropejski letni) {}
+date.toDateString()             //=  "Tue Jul 27 2021"
+
 
 
 class Zegar extends Component {
@@ -308,7 +311,7 @@ ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 //------------------------------------------------------------
 //komponenty
 
-//kompinent bezstanowy (funkcyjny)
+//komponent bezstanowy (funkcyjny)
 	const App = () => {
 		return (
 			<div>
@@ -349,7 +352,7 @@ ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 	ReactDOM.render(<ZebraneApp />, document.getElementById('root'))
 
 //------------------------------------------------------------
-//kompinent stanowy (klasowy) rozbudowany:
+//komponent stanowy (klasowy) rozbudowany:
 	class DodajCyfre extends React.Component {
 		constructor(props) {
 			super(props); //wymagane przekazanie propsów do rodzica
@@ -360,7 +363,7 @@ ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 			this.handleClick = this.handleClick.bind(this)
 		}
 
-		handleClick(e) { // może być przypisany this w konstruktorze, albo funkcja straałkowa, 
+		handleClick(e) { // może być przypisany this w konstruktorze, albo funkcja strzałkowa, 
 		                 // albo w <button> dopisać .bind(this)
 						 // e czyli event, dodawnay jest domyślnie na końcu. Nie trzeba go dodawać
 			debugger 	 // zatrzyma program w tym miejscu
@@ -375,7 +378,7 @@ ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 		render() {
 			
 			// Tworze jeden obiekt, który zawiera wspólne cechy. 
-			// w if() dopisze ewentualne dodatkowe właściwości albo  je zmieniam
+			// w if() dopisze ewentualne dodatkowe właściwości albo je zmieniam
 			// jest to robione w render, więc za każdym razem ten obiekt jest tworzony na nowo
 			let btnStyle = {
 				border: '2px solid black',
@@ -422,7 +425,14 @@ ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 //------------------------------------------------------------
 //------------------------------------------------------------
 //------------------------------------------------------------
-HOOK
+
+   #   #    ####     ####    #   #
+   #   #   #    #   #    #   #  # 
+   #   #   #    #   #    #   # #  
+   #####   #    #   #    #   ##
+   #   #   #    #   #    #   # #
+   #   #   #    #   #    #   #  #
+   #   #    ####     ####    #   #
 
 //------------------------------
 //przechowywanie stanu (raczej typy prymitywne)
@@ -453,7 +463,7 @@ useEffect(funkcja, [tablicaZaleznosci]);
 const handleMouseMove = e => setCounter(e.clientX);
 
 useEffect(() => {  //funkcja zawierająca imperatywny kod
-	window.addEventListener('mousemove', handleMouseMove); //to wykona się raz, albo gdy zmieni się coś w tablicy zależnosci
+	window.addEventListener('mousemove', handleMouseMove); //to wykona się raz, albo gdy zmieni się coś w tablicy zależności
 	return () => { //componentWillUnmount  gdy komponent staje sie nie aktywny 
 		alert('Komponent odmontowany');
 		window.removeEventListener('mousemove', handleMouseMove);
@@ -551,7 +561,7 @@ useParms // - film 155
 
 //załużmy że jakiś komponent ma:
 	const[inputData, setInputData] = useState('');
-	const history = usehistory();
+	const history = useHistory();
 
 	cosnt handleOnClick = () => {
 		const location = { 

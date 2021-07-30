@@ -98,7 +98,7 @@ Janek.showDegrees(); //= Student Adam na stopnie: 2,3,4,5,2,3 i zaliczył już 4
 	fn(); //undefined
 
 
-// przykłąd funkcji strzałkowej i .this
+// przykład funkcji strzałkowej i .this
 	const car = {
 		brand: 'opel',
 		age: 2018,

@@ -831,8 +831,7 @@ to co jest pomiedzy znacznikami <style>
     column-rule-style   // styl linii rozdzielającej kolumny; 
        column-rule      // skrót dla trzech powyższych wartości;
 
-//fajny opis: http://www.artax.krakow.pl/flex-box-rozmieszczenie.1,14.html
-
+//fajny opis: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -1137,7 +1136,7 @@ btn-link 		//tylko dla przycisków
 	<a href="#" class="btn btn-primary">Link</a>
 
 //Card
-//Grupowaniej obrazków, teści itp w grupę:
+//Grupowaniej obrazków, treści itp w grupę:
 //filmik 183 (Zaawansowane projekty w CSS i JavaScript)
 //lub dokumantacja: https://getbootstrap.com/docs/4.4/components/card/
 	<div class="card" style="width: 18rem;">

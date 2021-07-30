@@ -92,6 +92,16 @@ git commit -a    -m "Opis zmiany"  //zrobienie add i od razu komitu (snapshota)
 git commit --all -m "Opis zmiany"  //zrobienie add i od razu komitu (snapshota) 
 git commit nazwaPliku  	    //komitowanie tylko jednego pliku
 
+
+
+  #
+  #
+  #       ###    ####
+  #      #   #  #   #
+  #      #   #  #   #
+  #   #  #   #   ####
+   ###    ###       #
+                ####
 git log                     //informacje o komitach
 git log --oneline           //skrócone informacje o komitach (tylko najważniejsze informacje)
 git log --oneline -10       //skrócone informacje o komitach - ile linii
@@ -142,15 +152,35 @@ git log -S main.py --author zgredek --before="2015-08-15 00:00" --after="2015-08
 git shortlog            //do podglądu, kto nad czym pracuje
 
 
+
+         #
+         #
+   ###   #       ###   #     #
+  #      ####   #   #  #     #
+   ###   #   #  #   #  #  #  #
+      #  #   #  #   #  # # # #
+   ###   #   #   ###    #   #
+   
 git show                //pokaz szczegóły najnowszego komitu
 git show 5d8d8d0        //pokaz szczegóły konkretnego komitu
 git show HEAD:{plik}    //pokazuje zmiany tylko w konkretnym pliku
 git show {commit} --name-only -p -5 //pokazuje 5 poprzednich comitów od podanego
+git show -5 --stat --name-only --oneline --pretty="" | sort | uniq  //pokaż w jakich plikach są zmiany w ciagu 5-ciu ostatnich comitów
 
+
+
+       #         ###    ###
+       #   #    #      #
+   #####        #      #
+  #    #  ##   ####   ####
+  #    #   #    #      #
+  #    #   #    #      #
+   #####  ###   #      #
+   
 git diff                     //pokazuje zmiamy zwzgledem katalogu roboczego a plikami w poczekalni
 git diff --cached            //pokazuje zmiamy zwzgledem plików w poczekalni z ostatim comitem
 git diff --staged            //to samo co "--cached" (dodana nazwa, która może być łatwiejsza do zapamietania)
-git diff nazwaPiku           //pokazuje zmiamy zwzgledem konkretnego pliku
+git diff nazwaPiku           //pokazuje zmiany względem konkretnego pliku
 git diff 852ff1d nazwaPliku  //porównanie wersji z komitów
 git diff HEAD nazwaGalezi    //pokazuje zmiamy zwzgledem HEAD a wybraną gałęzią
 git diff nazwaGalezi1..nazwaGalezi2      //porównanie dwóch gałęzi
@@ -161,7 +191,31 @@ git diff {commit1}..{commit2} {plik}     //pokazuje różnicę między 2 commita
 git diff {gałąź 1} {gałąź 2} -- {plik}   //dif dla pojedynczego pliku między gałęziami
 
 
+--diff-filter=ad   //zawiera dodane oraz usunięte (added and deleted paths)
+
+// Stany pliku:
+A - Added
+B  -pairing Broken
+C - coppied
+D - deleted
+M - Modified , plik śledzony zmodyfikowany
+R - Renamed 
+T - zmieniony, posiadający swój typ  (i.e. regular file, symlink, submodule, …​)
+U - Unmerged, plik nieśledzony
+   -plik śledzony niezmodyfikowany
+X - Unknown 
+
 git difftool //gdy mamy zainstalowany program do rozwiazywania konfliktów, np kdiff3 (opis instaliacji umieszczony dalej)
+
+git diff-tree [--stdin] [-m] [-s] [-v] [--no-commit-id] [--pretty]
+	      [-t] [-r] [-c | --cc] [--root] [<common diff options>]
+	      <tree-ish> [<tree-ish>] [<path>...]
+//więcej na: https://git-scm.com/docs/git-diff
+		  
+
+
+
+		  
 
 git mv stara_nazwa nowa_nazwa       //zmiana nazwy pliku
 git mv stara_lokalizacja_pliku nazwa_lokalizacja  //zmiana nazwy pliku
@@ -302,6 +356,14 @@ git config --global alias.ignored '!git ls-files -v | grep "^[[:lower:]]"'  //pr
 
 
 
+  #                                   #    
+  #                                   #
+  ###    # ###   ####   ####    ###   #
+  #   #  ##          #  #   #  #   #  ####
+  #   #  #       #####  #   #  #      #   #
+  #   #  #      #    #  #   #  #   #  #   #
+  ####   #       ### #  #   #   ###   #   #
+  
 // GAŁĘZIE
 //         ----*-----*--------                --*----*-----------*------------*------
 //        /                   \              /                                       
@@ -375,8 +437,16 @@ git merge master        //teraz jestem na gałęzi "develop" i chce do swojej ga
     //Wywołujemy git merge --continue
     //Tworzony jest wtedy nowy commit.
 
+	
 
-//STOS
+           #                   #    
+           #                   #
+   ###   #####   ####    ###   #
+  #        #         #  #      ####
+   ###     #     #####   ###   #   #
+      #    #    #    #      #  #   #
+   ###      ##   ### #   ###   #   #
+   
 git stash                   //Dodaje zmiany na stos. Zapisuje nowe i zmodyfikowane pliki do pamięci podręcznej
                             // -u lub –include-untracked dodaje również pliki nie śledzone
                             // -a lub -all dodaje wszystkie edytowane plik łącznie z ignorowanymi
@@ -649,14 +719,6 @@ C – tutaj widać zmiany popełnione przez kogoś (remote)
 
 
 
-// Są 4 stany pliku:
-U -plik nieśledzony
-  -plik śledzony niezmodyfikowany
-M -plik śledzony zmodyfikowany
-M -plik śledzony w indeksie (w stagu, w przechowalni)
-
-//jeszcze może sie pojawić;
-D - Deleted
 
 
 

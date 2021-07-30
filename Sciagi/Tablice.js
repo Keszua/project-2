@@ -30,6 +30,7 @@ console.log(tab); //[blank x 10]
 const tab = new Array(10, "Ala", "Bala", "Cala");
 console.log(tab); //["Ala", "Bala", "Cala", blank x 7]
 
+
 .split()  //zamiana stringa na tablicę:
 const text = "Jakiś tekst";
 const parts = text.split(" "); 	//split dzieli tekst, kryterium dzielenia to: spacja.  parts będzie tablicą
@@ -91,6 +92,35 @@ console.log(arr5.find(x => x>4)); //= 5   zwraca pierwszy pasujący
 console.log(arr5.find(x => x<4)); //= 1
 
 
+//-----------------------------------------------------------------------------
+const map = new Map();
+map.set('name', 'Eric');
+map.set('address', 'South Park');
+
+for (const [key, value] of map) {
+	console.log(key, value);
+}
+// logs 'name', 'Eric'
+// logs 'address', 'South Park'
+
+//-----------------------------------------------------------------------------
+const set = new Set(['blue', 'red', 'green']);
+
+for (const item of set) {
+  console.log(item);
+}
+// logs 'blue', 'red', 'green'
+
+//-----------------------------------------------------------------------------
+const numbers = [1, 3, 4];
+
+const iterator = numbers[Symbol.iterator]();
+
+iterator.next(); // => { value: 1, done: false }
+iterator.next(); // => { value: 2, done: false }
+iterator.next(); // => { value: 3, done: false }
+iterator.next(); // => { value: undefined, done: true }
+
 
 
 //-----------------------------------------------------------------------------
@@ -138,6 +168,11 @@ console.log( newTableBig2 ); //= ["Pies", "Kot", "Słoń", "Wieloryb", "Chomik n
 	const allUsers = [...users, "edyta"]
 	consloe.log(allUsers); //= ["adam", "bogdan", "czarek", "darek", "edyta"];
 
+	//przykład 2:
+	const message = 'Hi!';
+	const [firstChar, ...restChars] = message;
+	firstChar; // => 'H'
+	restChars; // => ['i', '!']
 
 
 //------------------------------
@@ -179,7 +214,7 @@ console.log( newTableBig2 ); //= ["Pies", "Kot", "Słoń", "Wieloryb", "Chomik n
     const doubleNumbers = numbers.map(el => el * 2 )
     console.log(doubleNumbers); //[4, 6, 8]
 
-
+	
 //------------------------------
 .forEach() // pracuje na tablicy, nie zwraca nowej (ZWRACA: undefine)
 //możemy przekazać 3 parametry:
@@ -466,6 +501,8 @@ const multi3 = multiply.apply(null, [2, 3]);
 
 
 
+[Symbol.iterator]()
+https://dmitripavlutin.com/javascript-iterators/
 
 
 // #####               #                                                                        #
@@ -509,7 +546,8 @@ console.log(tab); //[Marcin, Ania, Agnieszka, Piotrek]
 | tablica.splice(indexElemntu, ileUsunac);       |                                                 |                                                 |                                                 |
 |                                                |                                                 |                                                 |                                                 |
 |                                                |                                                 |                                                 |                                                 |
-//zamiana 'tekst&CosTam' na zabespieczony  'tekst%20%26%20CosTam'
+//zamiana 'tekst&CosTam' na 
+// zabespieczony:  'tekst%20%26%20CosTam'
 | encodeURIComponent('tekst & CosTam')           |                                                 |                                                 |                                                 |
 |                                                |                                                 |                                                 |                                                 |
 //Operatory logiczne:  

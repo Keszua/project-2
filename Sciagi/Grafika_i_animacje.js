@@ -1,20 +1,20 @@
 //Serwis z grafikami: http://pixabay.com/pl
 
-http://placeimg.com/  aby z tego korzystaæ, wystarczy w mijece grafiki wkleiæ link:
+http://placeimg.com/  aby z tego korzystaï¿½, wystarczy w mijece grafiki wkleiï¿½ link:
 http://placeimg.com/240/360/any - losowa grafika
 
 
-Jako Ÿródo wiedz o canvasie: mdn?
+Jako ï¿½rï¿½do wiedz o canvasie: mdn?
 
 
 //Ciekawa stronka z o Canvas:
  https://developer.mozilla.org/pl/docs/Web/API/Canvas_API/Tutorial/Optymalizacja_canvas
  
-// Kurs canvy, jak naryswaæ kartezjañski uk³ad wspó³¿êdnych:
+// Kurs canvy, jak naryswaï¿½ kartezjaï¿½ski ukï¿½ad wspï¿½ï¿½dnych:
 http://shebang.pl/kursy/html5-rzeczowo/r5-canvas/ 
 
 //-----------------------------------------------------------------------------
-//Wykonanie prostego spinera (krêc¹ce kó³ko) w scc (bez javaScript)
+//Wykonanie prostego spinera (krï¿½cï¿½ce kï¿½ko) w scc (bez javaScript)
 //plik: index.html
 	<div class="spinner v1"></div>
 //Plik .css
@@ -37,31 +37,31 @@ http://shebang.pl/kursy/html5-rzeczowo/r5-canvas/
 			transform: rotate(360deg);
 		}
 	}
-//to samo, tylko za pomoc¹ js. w pliku css musi pozostaæ zdefinowany ".spinner" 
-//ale ju¿ nie koszytamy z ".v1" ani z @keyframes  
+//to samo, tylko za pomocï¿½ js. w pliku css musi pozostaï¿½ zdefinowany ".spinner" 
+//ale juï¿½ nie koszytamy z ".v1" ani z @keyframes  
 //filmik 239 (Zaawansowane projekty w CSS i JavaScript)
 //plik .js
 const spinner = document.querySelector('.v2');
 
-const fps = (1000 / 60).toFixed(2); // wartoœæ zaokr¹glona do 2 miejsc
+const fps = (1000 / 60).toFixed(2); // wartoï¿½ï¿½ zaokrï¿½glona do 2 miejsc
 let deg = 0; //aktuana pozycja (stopnie)
 const degChange = 6;
 
 const rotate = () => {
     deg += degChange;
     spinner.style.transform = `rotate(${deg}deg)`;
-    setTimeout(rotate, fps) //ponowne wywo³anie tej funkcji po wskaznym czasie
+    setTimeout(rotate, fps) //ponowne wywoï¿½anie tej funkcji po wskaznym czasie
 }
-rotate(); // piewsze wywo³anie funkcji
+rotate(); // piewsze wywoï¿½anie funkcji
 //-------------------------------------
-//to samo, tylko inaczej wywo³ywana funkcja przerysowywania przez: setInterval(fn, time)
+//to samo, tylko inaczej wywoï¿½ywana funkcja przerysowywania przez: setInterval(fn, time)
 const rotate = () => {
     deg += degChange;
     spinner.style.transform = `rotate(${deg}deg)`;
 }
 setInterval(rotate, fps)
 //-------------------------------------
-//to samo, tylko wywo³ywana funkcja dedykowana do grafiki. Wywo³ywana przez odœwierzanie przegl¹darki (60fps)
+//to samo, tylko wywoï¿½ywana funkcja dedykowana do grafiki. Wywoï¿½ywana przez odï¿½wierzanie przeglï¿½darki (60fps)
 const rotate = () => {
     deg += degChange;
     spinner.style.transform = `rotate(${deg}deg)`;
@@ -69,7 +69,7 @@ const rotate = () => {
 }
 rotate(); 
 //-------------------------------------
-//to samo, ale regulujemy czêstotliwoœæ wywo³ywania. 
+//to samo, ale regulujemy czï¿½stotliwoï¿½ï¿½ wywoï¿½ywania. 
 const spinner5 = document.querySelector('.v5');
 let deg5 = 0; //aktualna pozycja (stopnie)
 const degChange5 = 6;
@@ -90,18 +90,18 @@ rotate5();
 //-----------------------------------------------------------------------------
 //Pobieranie i zmiana danych z pliku .CSS
 
-//Aby dobraæ siê do zmiennnej w CSS
+//Aby dobraï¿½ siï¿½ do zmiennnej w CSS
     document.documentElement.style.setProperty(--power-x, `${20 + progresPercent  70}%`);
 
-// Alternatywa do powy¿szego
-// W filmiku 248 (Zaawansowane projekty w CSS i JavaScript) jest jak przerobiæ 
+// Alternatywa do powyï¿½szego
+// W filmiku 248 (Zaawansowane projekty w CSS i JavaScript) jest jak przerobiï¿½ 
 	@keyframes fly-ball-x {
 		100% {
 			left var(--power-x, 300px);
 		}
 	}
 
-//Aby sterowaæ nim z poziomu .js
+//Aby sterowaï¿½ nim z poziomu .js
 	const myRules = document.styleSheets[0].cssRules;
 	console.log(myRules);
 	or(const i of myRules) {
@@ -121,52 +121,52 @@ rotate5();
 
 GSAP 
 //filmik 257 (Zaawansowane projekty w CSS i JavaScript)
-//obej¿a³em pobierznie.
-//Link pobiera siê ze strony GreenSock.com/docs/
+//obejï¿½aï¿½em pobierznie.
+//Link pobiera siï¿½ ze strony GreenSock.com/docs/
 //Samuraj pobiera "TweenMax"
-//Aby z niego skorzystaæ, trzeba w pliku .html w sekcji body wstawiæ:
+//Aby z niego skorzystaï¿½, trzeba w pliku .html w sekcji body wstawiï¿½:
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
 //najnowszy:
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.1.1/gsap.min.js"></script>
 
 
-// ró¿ne przejscia w czasie mo¿na zmieniæ i ustawiæ w:
+// rï¿½ne przejscia w czasie moï¿½na zmieniï¿½ i ustawiï¿½ w:
 https://greensock.com/docs/v3/Eases
 
 
-TweenMax.to(element, 1, {}) - do jakich w³aœciwoœci ma dojœæ animacja
-TweenMax.from(element, 1, {}) - od jakich w³aœciwoœci animowaæ (koñcowe w CSS)
-TweenMax.fromTo(element, 1, {}, {}) -sk¹d do k¹d
+TweenMax.to(element, 1, {}) - do jakich wï¿½aï¿½ciwoï¿½ci ma dojï¿½ï¿½ animacja
+TweenMax.from(element, 1, {}) - od jakich wï¿½aï¿½ciwoï¿½ci animowaï¿½ (koï¿½cowe w CSS)
+TweenMax.fromTo(element, 1, {}, {}) -skï¿½d do kï¿½d
 
 Metody:  // https://greensock.com/docs/v3/GSAP/Tween
-x: 10 // to samo co "transform: translateX(10px)", czyli przesuniêcie po p³aszczyŸnie x
-y: 10 // to samo co "transform: translateY(10px)", czyli przesuniêcie po p³aszczyŸnie y
+x: 10 // to samo co "transform: translateX(10px)", czyli przesuniï¿½cie po pï¿½aszczyï¿½nie x
+y: 10 // to samo co "transform: translateY(10px)", czyli przesuniï¿½cie po pï¿½aszczyï¿½nie y
 rotation: 240, //transform:rotate(240deg);
 scale: 2, //transform:scale(2)
 scaleY: 2, //transform:scaleY(2)
 ease: Bounce.easeOut // rodzaj animacji
-delay: 2 // pouŸnienie (sek)
+delay: 2 // pouï¿½nienie (sek)
 repeat: 1, //powtarzanie
-repeatDelay //opuŸnienie miêdzy kolejnymi iteracjami
+repeatDelay //opuï¿½nienie miï¿½dzy kolejnymi iteracjami
 yoyo: true, //wracanie
 backgroundColor: "yellow", //zmian koloru obiektu
 boxShadow: "0 0 120px 0 rgb(251, 255, 0)", //nadanie cienia
-onComplete //funkcja wywo³ywana po zakoñczenu aniamcji
-onStart //funkcja wywo³ywana po starcie animacji
-onRepeat // funkcja wywo³ywana przy ak¿dej interakcji
+onComplete //funkcja wywoï¿½ywana po zakoï¿½czenu aniamcji
+onStart //funkcja wywoï¿½ywana po starcie animacji
+onRepeat // funkcja wywoï¿½ywana przy akï¿½dej interakcji
 paused: true, 
-x: '+=200' // wzglêdem stanu poprzedniego
-y: () => {} //przypisane zostanie to, co zwróci funkcja
+x: '+=200' // wzglï¿½dem stanu poprzedniego
+y: () => {} //przypisane zostanie to, co zwrï¿½ci funkcja
 
 //-----------------------------------------------------------------------------
-TweenMax.set() pzwala nadac pocz¹tkowe w³aœciwoœci tu¿ przed rozpoczêciem animacji
-//Przyka³d w obiekcie (css) dajmy niewidoczoœæ visibility hidden;
-//A w skrypcie wywo³ujemy
+TweenMax.set() pzwala nadac poczï¿½tkowe wï¿½aï¿½ciwoï¿½ci tuï¿½ przed rozpoczï¿½ciem animacji
+//Przykaï¿½d w obiekcie (css) dajmy niewidoczoï¿½ï¿½ visibility hidden;
+//A w skrypcie wywoï¿½ujemy
 	TweenMax.set('div', {visibility visible });
 
-	TweenMax.killTweensOf('div')} Wy³¹czenie animacji
-//Przyk³ad
-setTimeout( () = {TweenMax.killTweensOf('div')}, 2000) wy³¹cz animacje po 2 sek
+	TweenMax.killTweensOf('div')} Wyï¿½ï¿½czenie animacji
+//Przykï¿½ad
+setTimeout( () = {TweenMax.killTweensOf('div')}, 2000) wyï¿½ï¿½cz animacje po 2 sek
 //-----------------------------------------------------------------------------
 FUNKCJE
 
@@ -181,30 +181,30 @@ TweenMax.to('.div', 1, {backgroundColor color })
 TweenMax.staggerTo()	//Animujemy wszsytkie wskazane elementy, ale nie jednoczesnie.
 TweenMax.staggerFrom()
 TweenMax.staggerFromTo()
-TweenMax.staggerTo(element, 1, {}, .6) //dochodzi 4-ty element, opuŸnienie ka¿dej animacji
+TweenMax.staggerTo(element, 1, {}, .6) //dochodzi 4-ty element, opuï¿½nienie kaï¿½dej animacji
 
 -----------------------------------------------------------------------------
-TimelineMax() - pozwala na sekwencjonowanie animacji. Tworzy oœ czasu i u³atwia tworzenia i modyfikowanie animaji
+TimelineMax() - pozwala na sekwencjonowanie animacji. Tworzy oï¿½ czasu i uï¿½atwia tworzenia i modyfikowanie animaji
 
 const rocket = document.querySelector('.rocket');
 
 TweenMax.to(rocket, 2, {x100});
 TweenMax.to(rocket, 1.5, {rotation90, delay 2});
-TweenMax.to(rocket, 1, {y100, delay 3.5}); //trzeba sumowaæ delay'e
+TweenMax.to(rocket, 1, {y100, delay 3.5}); //trzeba sumowaï¿½ delay'e
 
-//Lub to samo co powy¿ej
+//Lub to samo co powyï¿½ej
 let tl = new TimelineMax();
 tl.to(rocket, 2, {x100});
-tl.to(rocket, 1.5, {rotation90}); ju¿ bez delay
+tl.to(rocket, 1.5, {rotation90}); juï¿½ bez delay
 tl.to(rocket, 1, {y 100});
-//Lub to samo co powy¿ej
+//Lub to samo co powyï¿½ej
 tl
-	.to(rocket, 2, {x100})	bez œredników
+	.to(rocket, 2, {x100})	bez ï¿½rednikï¿½w
 	.to(rocket, 1.5, {rotation90})
 	.to(rocket, 1, {y 100});
 
 
-//Przy tworzeniu instancji, mo¿na od razu przekazaæ obiekt z w³aœciwoœciami
+//Przy tworzeniu instancji, moï¿½na od razu przekazaï¿½ obiekt z wï¿½aï¿½ciwoï¿½ciami
 const gtl = new TimelineMax({
 	repeat -1, 	infinity
 	dealy 1,
@@ -217,7 +217,7 @@ const gtl = new TimelineMax({
 tl.
 	.to(rocket, 2, {x100})	
 	.to(rocket, 1.5, {rotation90})
-	.add(half-way) tutaj ju¿ zacznie wykonywaæ siê grafika, kóra jest 3 linijki ni¿ej
+	.add(half-way) tutaj juï¿½ zacznie wykonywaï¿½ siï¿½ grafika, kï¿½ra jest 3 linijki niï¿½ej
 	.to(rocket, 1, {y 100});
 	.to(rocket, 1.5, {rotation180})
 	.to(rocket, 1, {y 200}, half-way);
@@ -239,10 +239,10 @@ SVG Scalable Vector Graphics
 //   ###     #     ###         
 
 
-Przed rozpoczêciem pracy w Visual Studio Code, proponowany jest doatek "SVG"  (SVG Language Support)
-Dodatek ten podpowiada sk³adnie i tworzy okienko z podgl¹dem (PM na plik .svg i "Preview SVG" ) 
+Przed rozpoczï¿½ciem pracy w Visual Studio Code, proponowany jest doatek "SVG"  (SVG Language Support)
+Dodatek ten podpowiada skï¿½adnie i tworzy okienko z podglï¿½dem (PM na plik .svg i "Preview SVG" ) 
 
-INKSCAPE - Jakiœ darmowy program do tworzenia grafiki SVG
+INKSCAPE - Jakiï¿½ darmowy program do tworzenia grafiki SVG
 
 //Stronka, z efektami do SVG
 https://www.w3schools.com/graphics/svg_grad_radial.asp
@@ -253,43 +253,43 @@ http://www.clker.com/inc/svgedit/svg-editor.html
 https://boxy-svg.com/app
 
 
-//    SVG ska³da sie z 3 czêœci:
-//    1. Canvas SVG - czyli "ca³a mapa poziomu"
+//    SVG skaï¿½da sie z 3 czï¿½ci:
+//    1. Canvas SVG - czyli "caï¿½a mapa poziomu"
 //    2. element SVG
 //    3. viewBox - czyli obszar widoczny na ekranie
 
-//Dodawanie SVG jako "zwyk³y" obrazek: (w pliku .html)
-	<img src="img/sun.svg" alt="s³oñce">
+//Dodawanie SVG jako "zwykï¿½y" obrazek: (w pliku .html)
+	<img src="img/sun.svg" alt="sï¿½oï¿½ce">
 
 //Dodawanie SVG jako obrazek w wersji edytowalnej (w pliku .html)
-    <!-- Trzeba dodaæ atrybut xmlns, aby korzystaæ z SVG w wersji edytowalnej -->
+    <!-- Trzeba dodaï¿½ atrybut xmlns, aby korzystaï¿½ z SVG w wersji edytowalnej -->
     <svg id="sun" xmlns="http://www.w3.org/2000/svg"
         width = "600" height="600" viewBox="0 0 600 600">  
-        <!-- Kaszta³ty: -->
+        <!-- Kasztaï¿½ty: -->
         <rect class="clips" x="150" y="250" width="100" height="20" fill="white" stroke="red" stroke-width="8" />
-        <!-- Domyœlnie jedneostki sa w px. Pozycja x i y domyœlnie jest 0 0. Stroke to obramowanie. -->
+        <!-- Domyï¿½lnie jedneostki sa w px. Pozycja x i y domyï¿½lnie jest 0 0. Stroke to obramowanie. -->
         <circle cx="200" cy="200" r="20" fill="#333" stroke="black" stroke-width="8" />
         <ellipse cx="300" cy="100" rx="50" ry="70" fill="#eee" stroke="rgba(200, 200, 100, 0.5)" stroke-width="4" />
         
         <!-- Linia
-        Polygon (wielok¹t)
-        Polyline (linia ³amana) -->
+        Polygon (wielokï¿½t)
+        Polyline (linia ï¿½amana) -->
         <polyline points="10,40 50,40 30,200" fill="white" stroke="yellow" stroke-width="8" />
 
         
         <path d="M200 200 L350 200 L275 250 Z" fill="white" stroke="yellow" stroke-width="8" />
-		// przyk³ady na https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
-		d - œcie¿ka   
+		// przykï¿½ady na https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
+		d - ï¿½cieï¿½ka   
         m - moveTo                    M x y                        <path d="M10 10"/>
 		l - lineTo                    L x y 
-		z - closepatch (³¹czy pierwszy z ostatnim) 
+		z - closepatch (ï¿½ï¿½czy pierwszy z ostatnim) 
 		h - drwa a horizontal line    H x
 		v - draw a vertical line      V y
         C - krzywa Bezjera;           C dx1 dy1, dx2 dy2, dx dy    <path d="M 10 10 C 20 20, 40 20, 50 10" stroke="black" fill="transparent"/>
 		s - Several bezier            S dx2 dy2, dx dy             <path d="M 10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80" stroke="black" fill="transparent"/>
 		q -                           Q dx1 dy1, dx dy             <path d="M 10 80 Q 95 10 180 80" stroke="black" fill="transparent"/>
-		t- krótki zapis cubic Bezjer  T x y                        <path d="M 10 80 Q 52.5 10, 95 80 T 180 80" stroke="black" fill="transparent"/>
-        a -³uk                        A rx ry x-axis-rotation large-arc-flag sweep-flag x y    
+		t- krï¿½tki zapis cubic Bezjer  T x y                        <path d="M 10 80 Q 52.5 10, 95 80 T 180 80" stroke="black" fill="transparent"/>
+        a -ï¿½uk                        A rx ry x-axis-rotation large-arc-flag sweep-flag x y    
 
 
         <!-- Grupowanie -->
@@ -300,15 +300,15 @@ https://boxy-svg.com/app
 
     </svg>
 
-//mo¿liwoœæ edycji parametrów przez CSS (nie polecane)
-// mo¿na stylowaæ gruboœc linii itp. ale nie mo¿na edytowac wspó³¿êdnych
+//moï¿½liwoï¿½ï¿½ edycji parametrï¿½w przez CSS (nie polecane)
+// moï¿½na stylowaï¿½ gruboï¿½c linii itp. ale nie moï¿½na edytowac wspï¿½ï¿½dnych
 	<style>
 		#Obrazki .clips {
 			fill: red;
 		}
     </style>
 
-//Edycja parametrów za pomoc¹ GSock
+//Edycja parametrï¿½w za pomocï¿½ GSock
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js" ></script>
     <script>
         TweenMax.set('.clips', {fill: "red"})
@@ -323,17 +323,17 @@ https://boxy-svg.com/app
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
-Przyk³ad robota ruszaj¹cego nozkami, wykorzystanei "TimelineMax()" w filmie 275 (Zaawansowane projekty w CSS i JavaScript)
+PrzykÅ‚ad robota ruszajÄ…cego nozkami, wykorzystanie "TimelineMax()" w filmie 275 (Zaawansowane projekty w CSS i JavaScript)
 
-Metoda przerabiania zwyk³ego SVG na React
+Metoda przerabiania zwykÅ‚ego SVG na React
 
 
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-//Przyka³d pi³ki spadaj¹cej w dó³ i odbijaj¹cej siê.
-//Ca³y plik .html
+//Przykaï¿½d piï¿½ki spadajï¿½cej w dï¿½ i odbijajï¿½cej siï¿½.
+//Caï¿½y plik .html
 
 <!DOCTYPE html>
 <html lang="en">
@@ -378,9 +378,9 @@ Metoda przerabiania zwyk³ego SVG na React
 </body>
 </html>
 //-----------------------------------------------------------------------------
-//Przyka³d kwadracika porudszaj¹cego siê w pêtli (UWAGA Nowsza biblioteka ni¿ powy¿ej)
-//Przycisk rozpoczynajacy i zatrzymuj¹cy animacjê
-//Ca³y plik .html
+//Przykaï¿½d kwadracika porudszajï¿½cego siï¿½ w pï¿½tli (UWAGA Nowsza biblioteka niï¿½ powyï¿½ej)
+//Przycisk rozpoczynajacy i zatrzymujï¿½cy animacjï¿½
+//Caï¿½y plik .html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -409,8 +409,8 @@ Metoda przerabiania zwyk³ego SVG na React
         const timeline = new TimelineMax({
             repeat: 2, //-1 w nieskonczonosc
             yoyo: true,
-            delay: .1,   //opuŸnienie animacji po za³adownaiu
-            repeatDelay: 1, //opuŸnienie po kazdym powturzeniu
+            delay: .1,   //opuï¿½nienie animacji po zaï¿½adownaiu
+            repeatDelay: 1, //opuï¿½nienie po kazdym powturzeniu
             onStart: () => console.log("poczatek animacji"),
             onComplete: () => console.log("koniec animacji"),
             paused: true,
@@ -444,7 +444,7 @@ Metoda przerabiania zwyk³ego SVG na React
 
 
 //-----------------------------------------------------------------------------
-//Efekt dyskotekowy (podej¿any na stronei Radwag)
+//Efekt dyskotekowy (podejï¿½any na stronei Radwag)
 
 //----- html: 
 <div class="wag1_promienie">
