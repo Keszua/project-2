@@ -22,6 +22,21 @@ chmod 777 xamp.run
 // W zakładce "Bazy danych" możemy stworzyć nowa bazę. Zalecane kodowanie utf8_polish_ci.
 // Po naciśnięciu Utwórz, pojawia się po lewo nowa gałąź 
 
+
+//SODA - Program do migracji danych:
+//Film: Building Modern Web Applications with Go (Golang)  odcinek 88  5:30
+https://gobuffalo.io/en/docs/db/getting-started/
+// instalujemy 
+	go get github.com/gobuffalo/pop/...
+//dodajemy zmienną środowiskową:
+// instrukcja dodawania:
+https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/
+C:\Users\Mich\.dnx\bin  //w miejsce Mich - twoja nazwa urzytkownika
+//Po wpisaniu:
+soda -v
+//powiniśmy otrzymać informacje o wersji 
+
+
 // W przykładzie tworzymy pytania do quizu. takie pytani będzie skałdało się z 7 kolumn:
 // 1.id   2.treść   3.A   4.B   5.C   6.D   7.Poprawna odpowiedz
 
@@ -88,6 +103,16 @@ Rodzaje komend:
 //do szybkich testów, mozna skorzystać ze strony: https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_all
 
 
+Tworzenie tabel:
+//przykład pg:
+CREATE TABLE public.people (
+	id serial NOT NULL,
+	first_name varchar NOT NULL,
+	last_name varchar NOT NULL
+);
+
+
+
 //------------------------------------------------------------
  //wyciąganie danych. Pełny opis: https://dev.mysql.com/doc/refman/8.0/en/select.html
 SELECT	
@@ -105,7 +130,8 @@ SELECT
 			     // 1:1 jedna osoba posiada tlylko jedno zameldowanie
 			     // 1:n jedna osoba posiada kilka kont bankowych (które należą tylko do niej)
 			     // n:m jedna osoba moze należeć go wielu gróp na FB jak również do jednej grópy może należeć wiele osób
-			
+					| [WHERE] // opcjonalnie można dodać kolejne warunki...
+					| [OREDER BY] // opcjonalnie posegregować
 			
 SELECT * FROM nazwaTabeli;  //pokazuje całą tabelę z danymi
 SELECT imie, nazwisko FROM nazwaTabeli;  //wypisz wybrane kolumny
@@ -117,11 +143,23 @@ SELECT CONCAT(nawisko, ' ', imie) AS 'Nazwisko i imie'
 
 
 			
-//Przykład: 			
+//Przykład sql: 			
 SELECT *
 FROM Products
 INNER JOIN Suppliers ON Products.SupplierID = Suppliers.SupplierID
-		
+
+//Przykład pg: 
+// dopasuj maile do osób, ale wypisz tylko dla człowieka o konkretnym imieniu i nazwisku:
+select 
+	p.first_name, p.last_name, e.email_addres 
+from 
+	people p 
+	left join emails e on (e.people_id = p.id) 
+where 
+	p.first_name = 'John' and p.last_name = 'Smith';	
+
+// dopasuj maile i telefon do osób:
+
 			
 			
 //------------------------------------------------------------			
@@ -132,6 +170,10 @@ INSERT	//dodawanie nowych rekordów https://dev.mysql.com/doc/refman/8.0/en/inse
 	
 	INSERT INTO tbl_name () VALUES();
 
+//Przykład pg: 			
+insert into animals (animal_name) values ('Horse');
+insert into people (first_name, last_name) values('John', 'Smith');
+
 //------------------------------------------------------------
 UPDATE // aktualizacja rekordów	
 		tbl_name 
@@ -140,6 +182,8 @@ UPDATE // aktualizacja rekordów
 	
 UPDATE nazwaTabeli SET nazwaKolumy=wartość WHERE id=2  //
 
+//Przykład pg: 			
+update animals set animal_name = 'Nowa nazwa' where id = 1;
 
 //------------------------------------------------------------
 //WYSZUKUJĄCE:
@@ -218,15 +262,22 @@ curtime()  // tylko czas
 now() + INTERVAL 14 DAY   //wstaw datę i czas, jaka będzie dokładnie za 14 dni
 
 #----------------------------------------------------------------------------------------------
-# usuń cały wiersz z id=2
-DELETE FROM zamowienia WHERE idzamowienia=2  #UWAGA bez podania WHERE, usunięta zostanie cała tabela
+// usuń cały wiersz z id=2
+DELETE FROM zamowienia WHERE idzamowienia=2  #UWAGA bez podania WHERE, usunięte zostaną wszystkie rekordy
 
-# to samo co wczesniej, ale mega szybko
+// to samo co wczesniej, ale mega szybko
 TRUNCATE TABLE zamowienia   #szybkie polecenie, któe nie usówa rekord po rekordzie, tylko usówa tabelę z bazy i tworzy nową, taką samą, pustą tabelę.
 
-#do DELETE najlepiej dodawać ORDER BY  oraz  LIMIT 
+// do DELETE najlepiej dodawać ORDER BY  oraz  LIMIT 
+
+//przykład pg:
+delete from animals where id = 5;
 
 
+drop table nazwa_tabeli; //usówa tabelę (czyli WSZYSTKO!), tabela znika!
+
+//przykład pg:
+drop table animals;
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
