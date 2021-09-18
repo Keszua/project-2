@@ -124,8 +124,8 @@ vim   // edytor  (instalacja: sudo install vim)
 :w $HOME/Skrypty/nowyKatalog.sh  //zapisz w konkretnym pliku
 :wq   // zapisz i wyjdz
 i     // aby zacząć coś pisać
-:r nazwaPliku  //wklej całą zawartość pliku
 escape // aby przestać wprowadzać dane
+:r nazwaPliku  //wklej całą zawartość pliku
 
 
 
@@ -134,7 +134,7 @@ escape // aby przestać wprowadzać dane
 echo $PATH  //podejżenie zmiennych systemowych
 echo $USER  //informacje o użytkowniku
 echo $HOME  //katalog domowy
-export PATH=$PATCH:$HOME/skrypty //dopisanie ścierzki do zmiennych systemowych
+export PATH=$PATCH:$HOME/Skrypty //dopisanie ścierzki do zmiennych systemowych
 printenv  //pokaż wszystkie zmienne środowiskowe
 
 touch $HOME/skrypty/skrypt1.sh  //stworzenie skryptu
@@ -401,7 +401,7 @@ czerwony="\033[31m"
 zielony="\033[32m"
 niebieski="\033[34m"
 reset="\033[0m"
-tydzien=(POniedziałek Wtorek Środa Czwartek Piątek Sobota Niedziela)
+tydzien=(Poniedziałek Wtorek Środa Czwartek Piątek Sobota Niedziela)
 komunikat1="${czerwony}Katalog Praca już istnieje!$reset"
 
 nasze_menu ()
@@ -445,6 +445,18 @@ funkcjaB ()
 	fi
 	
 }
+
+//---------------------------------------------------------------------
+#!/bin/bash
+tydzien=(Poniedziałek Wtorek Środa Czwartek Piątek Sobota Niedziela)
+
+for dzien in ${tydzien[*]}
+do
+	echo $dzien
+done
+
+exit 0  
+//---------------------------------------------------------------------
 
 funkcjaC ()
 {
@@ -617,37 +629,176 @@ Get-Member -InputObject $obiekt        //= wyświetli metowy i pola dostępne dl
 $obiekt.punktX                         //= 23
 $obiekt.punktX = 33                    //nadpianie
 
-
-
-Systemy Operacyjne Tydzień 5 - PowerShell - potoki  minuta 16:48
-
-
-
-
-
-
-
-
+Get-Service | Select-Object -Property Status, CanStop, Name, DisplayName | Out-GridView  //wyszukanie poleceń, które moge zatrzymać i wyświetl je w tabeli
+Get-Service | Select-Object Name, Status, @{n='Nazwa + status'; e={$PSItem.name + '+' + $PSItem.Status }}  //wyśweitli pola majace nazwę i status
+Get-Process | Sort-Object -Property CPU                               // procesy posotrowane po CPU
+Get-Process | Sort-Object -Property CPU -Descending                   // procesy posotrowane po CPU (od najbardziej czasowego)
+Get-Process | Sort-Object -Property CPU -Descending -First 5          // procesy posotrowane po CPU (od najbardziej czasowego) tylko 5 pierwszych
+Get-Process | Sort-Object -Property CPU -Descending -First 5 -Skip 1  // procesy posotrowane po CPU (od najbardziej czasowego) tylko 5 pierwszych, ale pomiń pierwszy
+Get-Process | Sort-Object -Property CPU -Descending -First 5 -Skip 1 | ConvertTo-Csv | Out-File .\procesy.txt // ...i zapisz do pliku excelowego
+Get-Process | Sort-Object -Property CPU -Descending | Select-Object CPU, id, si  -First 5 -Skip 1 | ConvertTo-Csv | Out-File .\procesy.txt // ...wybierz tylko interesujące pola
 
 
 
+# -eq ==
+# -ge >=
+# -gt >
+# -le <=
+# -lt <
+# -ne !=
+# -contains   czy zawiera (chyba do tablic)
+# -ccontains  czy zawiera (+ wielkość liter)
+# -like       czy zawiera w tekście
+# -not
+# -and
+# -or
+
+
+1 -eq 1   \\= True
+1 -eq 2   \\= False
+$tablica -contains 'vds'  //= True  (jeśli w tej tablicy jest element 'vds')
+'Wojtek Goledzinwski' -like 'ojt'    //= False
+'Wojtek Goledzinwski' -like '*ojt*'  //= True
+'Wojtek Goledzinwski' -like '?ojt*'  //= True
+
+Get-ChildItem | Where-Object -Property PSIsContainer -EQ $true   // wyświetli tylko katalogi
+Get-ChildItem | Where-Object -Property PSIsContainer -EQ $false  // wyświetli tylko pliki
+Get-ChildItem | Where-Object Extension -EQ '.py'                 // wyświetli tylko pliki z rozszeżeniem .py
+Get-ChildItem | Where-Object -FilterScript { $PSItem.PSIsContainer -eq $false -and $_.Extension -eq '.py'}     // wyświetli tylko pliki, które sa plikami i mają rozszeżeniem .py
+Get-ChildItem . -Filter "*.py" - File                                                                          // wyświetli tylko pliki, które sa plikami i mają rozszeżeniem .py (tak zrobi to samo)
+Get-ChildItem | ForEach-Object {$_.FullName; $_.LastAccessTime}
+Get-ChildItem | ForEach-Object -Begin {} -Process {} - End {}  //3 bloki: 1 Start, 2 główna pętla (tyle razy ile elementów), 3 zakońcenie
+Get-ChildItem | ForEach-Object -Begin {Get-Date;'Zestawienie plików i folderów'} -Process {$_.Name} - End {'---'} | Out-File zestawienie.txt  //1. Wyświetla datę i tytół,  2.Wypisz pliki i wyślij do pliku
+
+
+Get-Printer                            //aby wyśweitlić zainstalowane drukarki
+Get-Printer | Select-Object Name       //aby wyśweitlić zainstalowane drukarki z pełną nazwą
+Get-Printer | Select-Object Name | Out-Printer 'HPE...'  //aby wydrukować zainstalowane drukarki z pełną nazwą
+Get-PrintJob 'HPE6A...'                //Poazuje jakie mamy zadania do drukowania
+Remove-PrintJob -PrinterName 'HPE..' -id 4   //Aby anulować wydruk konkretnej strony
+Get-PrintJob 'HPE6A...' | RemovePrintJob     //Aby anulować WSZYSTKIE wydruki stron
+
+
+notepad  //ruchomienie notatnika
+Get-Proces notepad | Select-Object -Property * //wszystkie właściwości notatnika
+
+
+
+
+//skrypt:
+//uruchamianie:
+.\skrypt.ps1
+
+//przy pierwszym uruchomieniu
+Get-ExecutionPolicy  //polecenie pokazyjące co możemy robić. Domyślnie jest "Restricted", który nie pozwala uruchamiać skrypty
+//trzeba przełaczyć poleceniem:
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
+
+//Treść skryptu, bez pierwszej specjalnej linijki. Rozszeżenie musi byc .ps1
+Write-Hst "Witaj świecie"
+$imie = Read-Host "Podaj swoje imie: "           //pobieranie zmiennych (dowolnych)
+Write-Host "Witaj $imie"                         // wypisze wprowadzone imoe
+$imie = [Int32](Read-Host "Podaj swoje imie: "}  //pobieranie zmiennych liczbowych
+
+$imie.GetType()
+
+if($liczba -lt 10) {
+	Write-Host "Podana liczba jest mniejsza od 10"
+} else {
+	Write-Host "Podana liczba jest równa lub większa od 10"
+}
+
+if($liczba -lt 10) {
+	Write-Host "Podana liczba jest mniejsza od 10"
+} elsif ($liczba -gt 50) {
+	Write-Host "Podana liczba jest wieksza od 50"
+} else {
+	Write-Host "Podana liczba jest w przesizale 10 - 50"
+}
+
+
+switch ($liczba)
+{
+	1 { Write-Host "Jest 1"; break 	}
+	2 { Write-Host "Jest 2"; break	}
+	"poniedziałak" { Write-Host "Jest poniedziałek"; 	break 	}
+	default { 		Write-Host "Jakaść inna wartość"; 	}
+}
+
+
+$tablica = @('niebieski', 'biały', 'czerwony', 'zielony')
+foreach($element in $tablica) {
+	Write-Host "To jest kolor - $element";
+}
+
+$tablica.ForEach({ Write-Host "To jest kolor - $_" })  //ten sam wfekt co powyżej
+
+for($i=1; $i -lt $tablica.Lenght; $i++) {
+	Write-Host "Element nr $i";
+}
+
+while ($true) {
+	Write-Host "Wypisuj w nieskończoność";
+}
+
+
+$licznik=0
+while ($licznik -lt 10) {
+	Write-Host "Element nr $i";
+	$licznik++
+}
+
+
+do {
+	Write-Host "Wyswietlie sie tylko raz";
+} while ($false)
+
+do {
+	Write-Host "Wyswietlie sie tylko raz";
+} until ($true)      //odwrotnie sprawdza warunek
+
+
+function instaluj {
+	Write-Host "Wykonała się funkcja instaluj";
+}
+instaluj                               //wywołanie funkcji
+
+
+
+$glos = New-Object -ComObject "SAPI.PSVoice"
+
+//gadający komputer
+$glos = New-Object -ComObject "SAPI.SPVoice"
+$glos.Speak("Hello, my name is John")
+
+$glos.Rate  //wypisze, jaka jest prędkość czytania
+$glos.Rate = -3 //Zmniejsz prędkość czytania
+
+
+//czytanie z pliku (który istniej i są w nim zdania)
+$glos = New-Object -ComObject "SAPI.SPVoice"
+$glos.Rate = -3
+$plik = Get-Content .\plik.txt
+foreach($zdanie in $plik) {
+	$mull = $glos.Speak($zdanie)       //null spowoduje, ze na ekrnaie nie będzie komunikatów
+}
+
+
+//instalowanie modułów dale excela.  Po instalacji, wymaga restart powershela
+Install-Module ImportExcel -Scope CurrentUser
+
+
+systeminfo                             //zestawienie podstawowych informacjii o systemie
+Get-Proces                             //uruchomione procesy
+
+
+
+Tydzień 7 - minuta 25
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+Get-Service | ConvertTo-HTML |  Out-File .\index.html
 

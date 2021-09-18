@@ -17,6 +17,10 @@
 λ npx create-react-app nazwa-katalogu
 //Powstanie nowy katalog.
 
+//Tworzenie nowego projekty TypeScript:
+npx create-react-app my-app --template typescript
+// więcej na https://create-react-app.dev/docs/adding-typescript/
+
 //Po pomyslnej instalacji można ten projekt uruchomić poleceniem:
 λ npm start
 
