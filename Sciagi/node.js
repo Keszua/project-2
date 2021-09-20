@@ -983,7 +983,13 @@ null, undefined                        np:  const mojaDana:  null = null;
 //rzutowanie:
   as string,   as number  itp...						  
 
-
+//przekazywnaie funkcji:
+initrowDetails(danaA, (flag) => setLoading(flag));
+  
+export const initrowDetails = (danaA: any, fLoading: (flag: boolean) => void ): void => {
+    fLoading(true);
+}  
+  
 //Interfejsy									  
 enum UserType { admn, user, }
 interface UserHelloResponse {

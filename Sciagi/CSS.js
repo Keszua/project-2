@@ -126,7 +126,9 @@ contains("nazwa-klasy")		sprawdza czy element ma taką klasę
 
 .module-error {
     border:1px solid var(--color); /* a używamy ze słowem var */
-    box-shadow: 0 1px 3px var(--color);
+    box-shadow: 2px 5px 3px 5px var(--color);
+	//          x   y  blur spread color
+	// fajny edytor: https://html-css-js.com/css/generator/box-shadow/
 }
 .module-error-title {
     color: var(--color);
@@ -178,7 +180,7 @@ http://domanart.pl/dema/super-szamson/super-szamson.html
 //Aby przełaczyć sie na pisanie w .scss:
 //Trzeba załozyć sobie folder sass  (w projekcie react, zrobić to w folderze src)
 // w folderze założyć plik style.scss
-//Gdy coś w nim napiszemy i zapiszemy, to wtyczka zama powinna to wykryć, zrobić folder i plik: css/style.css
+//Gdy coś w nim napiszemy i zapiszemy, to wtyczka sama powinna to wykryć, zrobić folder i plik: css/style.css
 //Trzba oczywiście ustawić ściezkę dostepu do pliku .css aby przeglądarka z nich korzystała
 
 //-----------------------------------------------------------------------------
@@ -544,7 +546,7 @@ p {
 }
 //-----------------------------------------------------------------------------
 // WŁASNE FUNKCJE
-@function nazwa-funkcji($parametr1, $parametr1) {
+@function nazwa-funkcji($parametr1, $parametr2) {
 	//ciało funkcji
 	@return zwracna-wartość;
 };

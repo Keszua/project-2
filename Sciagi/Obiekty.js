@@ -105,6 +105,24 @@ function Get_ID() {
 } 
 
 obj.getId();  //= 1
+//------------------------------------------------------------
+// Zamiana obiektu na tablicę
+const cenyAkcji = {
+  google: 1734,
+  apple: 131,
+  microsoft: 222,
+  facebook: 267
+};
+
+const klucze = Object.keys(cenyAkcji);
+console.log(klucze);                   //=  [google, apple, microsoft, facebook]
+
+const wartosci = Object.values(cenyAkcji);
+console.log(wartosci);                 //=  [1734, 131, 222, 267]
+
+const wpisy = Object.entries(cenyAkcji);
+console.log(wpisy); // Zwróci:  [  [google, 1734], [apple, 131], [microsoft, 222], [facebook, 267]  ]
+
 
 //------------------------------------------------------------
 function fn() {
@@ -118,7 +136,7 @@ var obj1 = {
 fn.call(obj1); //= 2  wywołuje funkcje na rzecz obiektu "obj1". Jest to "jawne wiązanie"
 fn.apply(obj1); //= 2
 //------------------------------------------------------------
-//poniższy porzykład działa tylko w przeglądare, nie działa w "Visual Studio Codeę
+//poniższy porzykład działa tylko w przeglądarce, nie działa w "Visual Studio Code
 function fn() {
     console.log(this.a);
 }

@@ -130,9 +130,12 @@ produkty.pop(1)	             # usówanie elementu z podanej pozycji
 produkty.remove("mleko")     # usówanie konkretnego elementu
 produkty.clear()             # wyczyści całą tablicę
 x = produkty.count("mleko")  # zwróci, ile jest "mleko" w tej liście
-produkty.extend(inna_lista)  # sklejanie list (dodawanie kilku  elementów)
-x = produkty.index("mleko")  #=0  zwróci pozycje podanego elementu
+produkty.extend(inna_lista)  # sklejanie list (dodawanie kilku  elementów)  Ekwiwalent a[len(a):] = iterable.
+x = produkty.index("mleko")  #=0  zwróci pozycje podanego elementu          Rzuca ValueError, jeśli nie ma takiego elementu.
 print('NEW: {d[0]}, lat: {d[2]}'.format(d=produkty)) #= NEW: mleko, lat: parówki
+list.sort(*, key=None, reverse=False) # Sortuje elementy listy w miejscu (argumenty mogą służyć do dostosowania sortowania, patrz sorted() po ich wyjaśnienie).
+list.copy()                  # Zwraca płytką kopię listy. Ekwiwalent a[:].
+
 
 produkty2 = produkty.copy()  # kopiowanie i tworzenie nowej tablicy
 produkty2 = produkty[:]      # kopiowanie i tworzenie nowej tablicy
@@ -196,6 +199,9 @@ D = {}                    # pusty słownik - inicjalizacja
 D['one'] = 'jeden'        # dodawanie kluczy
 D['two'] = 'dwa'
 D['three'] = 'trzy'
+
+dict2 = {'k10': 10}   # utworzenie drugiego słownika
+dict1.update(dict2)   # aktualizacja słownika dict1 o słownik dict2
 
 # Metody słownika bez parametrów.
 D.keys()            # [k1, k2, k3]
@@ -285,6 +291,16 @@ dayDescription = 'weekend' if x == 1 else 'workday' if x == 2 else 'holiday'
 # to samo co wyżej:
 print('weekend') if x == 1 else print('workday') if x == 2 else print('holiday')
 
+
+#-----------------------------------------------------------------------------
+# taki switch case :
+match x:
+    case 1:
+        mode = "http"
+    case 2:
+        mode = "x to 2"
+    case _:
+        pass
 
 
 #-----------------------------------------------------------------------------
@@ -918,12 +934,16 @@ f = open("plik.txt", mode="a+")     # otwarcie pliku, w modzie otwórz lub stwó
                                     # "x" - zgłosi głąd, gdy plik istnieje 
 
 f.write("Dodany tekst ")            # wpisanie tekstu
+f.writelines(lines)	                # wpisanie linii
 f.close()                           # zamknij plik
 
 f = open("plik.txt", mode="r")      # tyko odczyt
 data= f.read()                      # odczytaj CAŁĄ zawartość pliku
 f.close()
 print(data)                         # wypisze zawartość pliku
+
+f.tell()                            # pobierz aktualną pozycję pliku
+f.seek(0)                           # ustaw kursor pliku na pozycji początkowej
 
 x= f.read(5)                        # odczytaj pięć znaków. Uwaga! 
                                     # Dla mode="r" kursor na poczatku, więc odczyta pierwze 5 znaków
@@ -1821,123 +1841,4 @@ uruchamiamy zieloną strzałką
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
-#Mój skrypcik do generowania napisów:
-tab = [
-{'A': '  #  ', 'B': '#### ', 'C': ' ### ', 'D': '##### ', 'E': '#####', 'F': '#####', 'G': ' ### ', 'H': '#   #'},
-{'A': ' # # ', 'B': '#   #', 'C': '#   #', 'D': ' #   #', 'E': '#    ', 'F': '#    ', 'G': '#   #', 'H': '#   #'},
-{'A': ' # # ', 'B': '#   #', 'C': '#    ', 'D': ' #   #', 'E': '#    ', 'F': '#    ', 'G': '#    ', 'H': '#   #'},
-{'A': '#   #', 'B': '#### ', 'C': '#    ', 'D': ' #   #', 'E': '#### ', 'F': '#### ', 'G': '#    ', 'H': '#####'},
-{'A': '#####', 'B': '#   #', 'C': '#    ', 'D': ' #   #', 'E': '#    ', 'F': '#    ', 'G': '#  ##', 'H': '#   #'},
-{'A': '#   #', 'B': '#   #', 'C': '#   #', 'D': ' #   #', 'E': '#    ', 'F': '#    ', 'G': '#   #', 'H': '#   #'},
-{'A': '#   #', 'B': '#### ', 'C': ' ### ', 'D': '##### ', 'E': '#####', 'F': '#    ', 'G': ' ### ', 'H': '#   #'},
-{'A': '     ', 'B': '     ', 'C': '     ', 'D': '      ', 'E': '     ', 'F': '     ', 'G': '     ', 'H': '     '},
-]
-tab2 = [
-{'I': '###', 'J': '#####', 'K': '#   #', 'L': '#    ', 'M': '#     #', 'N': '#   #', 'O': ' ### ', 'P': '#### '},
-{'I': ' # ', 'J': '    #', 'K': '#  # ', 'L': '#    ', 'M': '##   ##', 'N': '##  #', 'O': '#   #', 'P': '#   #'},
-{'I': ' # ', 'J': '    #', 'K': '# #  ', 'L': '#    ', 'M': '# # # #', 'N': '##  #', 'O': '#   #', 'P': '#   #'},
-{'I': ' # ', 'J': '    #', 'K': '##   ', 'L': '#    ', 'M': '#  #  #', 'N': '# # #', 'O': '#   #', 'P': '#### '},
-{'I': ' # ', 'J': '    #', 'K': '# #  ', 'L': '#    ', 'M': '#     #', 'N': '#  ##', 'O': '#   #', 'P': '#    '},
-{'I': ' # ', 'J': '#   #', 'K': '#  # ', 'L': '#    ', 'M': '#     #', 'N': '#  ##', 'O': '#   #', 'P': '#    '},
-{'I': '###', 'J': ' ### ', 'K': '#   #', 'L': '#####', 'M': '#     #', 'N': '#   #', 'O': ' ### ', 'P': '#    '},
-{'I': '   ', 'J': '     ', 'K': '     ', 'L': '     ', 'M': '       ', 'N': '     ', 'O': '     ', 'P': '     '},
-]
-tab3 = [
-{'R': '#### ', 'S': ' ### ', 'T': '#####', 'U': '#    #', 'W': '#     #', 'Y': '#   #', 'Z': '#####'},
-{'R': '#   #', 'S': '#   #', 'T': '  #  ', 'U': '#    #', 'W': '#     #', 'Y': '#   #', 'Z': '    #'},
-{'R': '#   #', 'S': '#    ', 'T': '  #  ', 'U': '#    #', 'W': '#     #', 'Y': ' # # ', 'Z': '   # '},
-{'R': '#### ', 'S': ' ### ', 'T': '  #  ', 'U': '#    #', 'W': '#     #', 'Y': ' # # ', 'Z': '  #  '},
-{'R': '# #  ', 'S': '    #', 'T': '  #  ', 'U': '#    #', 'W': '#  #  #', 'Y': '  #  ', 'Z': ' #   '},
-{'R': '#  # ', 'S': '#   #', 'T': '  #  ', 'U': '#    #', 'W': '# # # #', 'Y': '  #  ', 'Z': '#    '},
-{'R': '#   #', 'S': ' ### ', 'T': '  #  ', 'U': ' #### ', 'W': ' #   # ', 'Y': '  #  ', 'Z': '#####'},
-{'R': '     ', 'S': '     ', 'T': '     ', 'U': '      ', 'W': '       ', 'Y': '     ', 'Z': '     '},
-]
-tab4 = [
-{' ': '     ', 'X': '#     #'},
-{' ': '     ', 'X': ' #   # '},
-{' ': '     ', 'X': '  # #  '},
-{' ': '     ', 'X': '   #   '},
-{' ': '     ', 'X': '  # #  '},
-{' ': '     ', 'X': ' #   # '},
-{' ': '     ', 'X': '#     #'},
-{' ': '     ', 'X': '       '},
-]
-tab5 = [
-{'a': '      ', 'b': '#    ', 'c': '     ', 'd': '     #', 'e': '     ', 'f': '  ###', 'g': '     ', 'h': '#    '},
-{'a': '      ', 'b': '#    ', 'c': '     ', 'd': '     #', 'e': '     ', 'f': ' #   ', 'g': '     ', 'h': '#    '},
-{'a': ' #### ', 'b': '###  ', 'c': ' ### ', 'd': ' #####', 'e': ' ### ', 'f': ' #   ', 'g': ' ####', 'h': '#    '},
-{'a': '     #', 'b': '#   #', 'c': '#   #', 'd': '#    #', 'e': '#   #', 'f': '#### ', 'g': '#   #', 'h': '#### '},
-{'a': ' #####', 'b': '#   #', 'c': '#    ', 'd': '#    #', 'e': '#####', 'f': ' #   ', 'g': '#   #', 'h': '#   #'},
-{'a': '#    #', 'b': '#   #', 'c': '#   #', 'd': '#    #', 'e': '#    ', 'f': ' #   ', 'g': ' ####', 'h': '#   #'},
-{'a': ' ### #', 'b': '#### ', 'c': ' ### ', 'd': ' #####', 'e': ' ### ', 'f': ' #   ', 'g': '    #', 'h': '#   #'},
-{'a': '      ', 'b': '     ', 'c': '     ', 'd': '      ', 'e': '     ', 'f': '     ', 'g': '#### ', 'h': '     '},
-]
-tab6 = [
-{'i': '   ', 'j': '     ', 'k': '#    ', 'l': '#    ', 'm': '       ', 'n': '     ', 'o': '     ', 'p': '     '},
-{'i': ' # ', 'j': '    #', 'k': '#    ', 'l': '#    ', 'm': '       ', 'n': '     ', 'o': '     ', 'p': '     '},
-{'i': '   ', 'j': '     ', 'k': '#   #', 'l': '#    ', 'm': '### ## ', 'n': '#### ', 'o': ' ### ', 'p': '#### '},
-{'i': '## ', 'j': '   ##', 'k': '# #  ', 'l': '#    ', 'm': '#  #  #', 'n': '#   #', 'o': '#   #', 'p': '#   #'},
-{'i': ' # ', 'j': '    #', 'k': '##   ', 'l': '#    ', 'm': '#  #  #', 'n': '#   #', 'o': '#   #', 'p': '#   #'},
-{'i': ' # ', 'j': '    #', 'k': '# #  ', 'l': '#   #', 'm': '#  #  #', 'n': '#   #', 'o': '#   #', 'p': '#### '},
-{'i': '###', 'j': '#   #', 'k': '#   #', 'l': ' ### ', 'm': '#  #  #', 'n': '#   #', 'o': ' ### ', 'p': '#    '},
-{'i': '   ', 'j': ' ### ', 'k': '     ', 'l': '     ', 'm': '       ', 'n': '     ', 'o': '     ', 'p': '#    '},
-]
-tab7 = [
-{'r': '     ', 's': '     ', 't': '  #  ', 'u': '      ', 'w': '       ', 'y': '     ', 'z': '     '},
-{'r': '     ', 's': '     ', 't': '  #  ', 'u': '      ', 'w': '       ', 'y': '     ', 'z': '     '},
-{'r': '# ###', 's': ' ### ', 't': '#####', 'u': '#    #', 'w': '#     #', 'y': '#   #', 'z': '#####'},
-{'r': '##   ', 's': '#    ', 't': '  #  ', 'u': '#    #', 'w': '#     #', 'y': '#   #', 'z': '   # '},
-{'r': '#    ', 's': ' ### ', 't': '  #  ', 'u': '#    #', 'w': '#  #  #', 'y': ' # # ', 'z': '  #  '},
-{'r': '#    ', 's': '    #', 't': '  #  ', 'u': '#    #', 'w': '# # # #', 'y': '  #  ', 'z': ' #   '},
-{'r': '#    ', 's': ' ### ', 't': '   ##', 'u': ' #####', 'w': ' #   # ', 'y': ' #   ', 'z': '#####'},
-{'r': '     ', 's': '     ', 't': '     ', 'u': '      ', 'w': '       ', 'y': '#    ', 'z': '     '},
-]
-tab8 = [
-{'x': '     '},
-{'x': '     '},
-{'x': '#   #'},
-{'x': ' # # '},
-{'x': '  #  '},
-{'x': ' # # '},
-{'x': '#   #'},
-{'x': '     '},
-]
 
-for i in range(len(tab)):
-    tab[i].update(tab2[i])
-
-for i in range(len(tab)):
-    tab[i].update(tab3[i])
-
-for i in range(len(tab)):
-    tab[i].update(tab4[i])
-
-for i in range(len(tab)):
-    tab[i].update(tab5[i])
-
-for i in range(len(tab)):
-    tab[i].update(tab6[i])
-
-for i in range(len(tab)):
-    tab[i].update(tab7[i])
-
-for i in range(len(tab)):
-    tab[i].update(tab8[i])
-
-def wypisz(napis, spacje=1):
-    indeks = list(napis)
-    print(indeks)
-
-    space = ' '
-    if spacje > 1:
-        for i in range(spacje-1):
-            space += ' '
-
-    for t in tab:
-        line = [' ']
-        for i in indeks:
-            line.append(t[i])
-        line2 = space.join(line)
-        print(line2)
-
-wypisz('Context manager', 2)

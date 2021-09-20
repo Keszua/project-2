@@ -472,7 +472,7 @@ useEffect(() => {  //funkcja zawierająca imperatywny kod
 
 
 useLayoutEffect( () => {
- () => consloe.log('Funkcja wywoła się PRZED wyrenderowaniem DOM'),
+ () => console.log('Funkcja wywoła się PRZED wyrenderowaniem DOM');
 }, [] );
 
 

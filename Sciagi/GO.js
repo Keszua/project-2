@@ -1098,7 +1098,148 @@ func main() {  //main is the main appliction function
 
 //--------------------------------------------------------------------------------------
 
+  ####                   #                          ###    #####   #    
+  #   #                  #                         #   #  #     #  #
+  #   #   ###    ###   #####   ####  # ###   ###   #      #     #  #
+  ####   #   #  #        #    #   #  ##     #   #   ###   #     #  #
+  #      #   #   ###     #    #   #  #      #####      #  #     #  #
+  #      #   #      #    #     ####  #      #      #   #  #  #  #  #
+  #       ###    ###      ##      #  #       ###    ###    #####   #####
+                              ####                             ##
 
+Instalacja PostgreSQL
+https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+
+pasy zaq1
+port 5432
+
+Progamik do podglądu i edycj bazy:
+https://dbeaver.io/download/
+
+
+
+// Jak stworzyć przykladowa bazę - Film 86  Building Modern Web Applications with Go (Golang)
+
+// stworzenie nowej bazy:
+// Po lewej PM, na 'postgres' -> Create -> Database
+
+// Dodanie nowej kolumny w 'properties': 
+// Schemas -> public -> Tables -> nazwaTabeli -> Coluns -> PM -> Create New Column
+id           typu 'serial' oraz Not Null [v]
+animal_name  typu 'varchar' 
+
+//Podglad rekordów w 'Data'
+
+// Przykładowe zapytanie w '<postgres> Script';
+select * from animal where id = 1;
+
+//Dodanie nowego rekordu:
+insert into animals (animal_name) values ('Horse');
+
+// zmiana wartości w polu 'animal_name':
+update animals set animal_name = 'Nowa nazwa' where id = 1;
+
+//Skasowanie konkretnego rekordu:
+delete from animals where id = 5;
+
+// usuń wszystkei rekordy z kolumny:
+delete from animals;
+
+// mamy dwie tabele: people oraz emails i chcemy wypisać powiązania: (Film 87 Building Modern Web Applications with Go (Golang) )
+select 
+    p.first_name, p.last_name, e.email_address 
+from 
+    people p 
+    left join emails e on (e.people_id = p.id);
+
+// wypisz maile tylko dla konkretnego urzytkownika:
+select 
+    p.first_name, p.last_name, e.email_address 
+from 
+    people p 
+    left join emails e on (e.people_id = p.id) 
+where p.first_name = 'John' ans p.last_name = 'Smith';
+
+// dodajemy powiżanie z bazą 'phone_number'
+select 
+    p.first_name, p.last_name, e.email_address, p2.phone_number 
+from people p
+	left join emails e on (e.people_id = p.id)
+	left join phones p2 on (p.id = p2.people_id);
+where
+	p.id = 2;
+
+// wypisz wszsytkie pozycje, posegregowane
+select p.first_name, p.last_name, e.email_address, p2.phone_number 
+from people p
+	left join emails e on (e.people_id = p.id)
+	left join phones p2 on (p.id = p2.people_id)
+order by p.last_name;
+	
+	
+	
+	
+	
+	
+	
+
+   ###               #        
+  #   #              #        
+  #       ###    #####   #### 
+   ###   #   #  #    #       #
+      #  #   #  #    #   #####
+  #   #  #   #  #    #  #    #
+   ###    ###    #####   ### #
+   
+//Soda to jakies narzędzia do obsługi baz danych
+https://gobuffalo.io/en/docs/db/getting-started
+
+// w pierw trzeba zainstalować gobuffalo
+$ go get github.com/gobuffalo/pop/...
+   
+// dodać do zmiennych środowiskowych, według instrukcji:
+https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/
+
+
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
 
 
 //--------------------------------------------------------------------------------------

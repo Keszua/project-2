@@ -64,17 +64,17 @@ alert('Hejka');
 confirm('Czy jesteś pewien, że chcesz kontynuować?')  //zwraca true albo false
 
 
-//czasami b�dziemy chcieli sprawdzi� jak szybko wykona si� nasz skrypt...
-console.time('Pierwszy test'); //rozpoczyna test - zaczyna liczy� czas
+//czasami bedziemy chcieli sprawdzic jak szybko wykona sie nasz skrypt...
+console.time('Pierwszy test'); //rozpoczyna test - zaczyna liczyc czas
 for (let i=0; i<100000; i++) { ... }
-console.timeEnd('Pierwszy test'); //ko�czy test
+console.timeEnd('Pierwszy test'); //konczy test
 
-//wi�cej o consloe.log na: https://medium.com/javascript-in-plain-english/mastering-js-console-log-like-a-pro-1c634e6393f9
+//wiecej o consloe.log na: https://medium.com/javascript-in-plain-english/mastering-js-console-log-like-a-pro-1c634e6393f9
 
-//czasami te� b�dziemy chcieli zatrzyma� na chwil� dzia�anie skryptu w danym miejscu
+//czasami tez bedziemy chcieli zatrzymac na chwile dzialanie skryptu w danym miejscu
 function test() {
     let i = 0;
-    debugger; //taki breakpoint - przerywam dzia�anie skryptu w tym miejscu, dzi�ki czemu mog� spokojnie go bada� w zak�adce Source. Dodatkowo w konsoli mam dost�p do zmiennych z danego scope - np. je tam wpisuj�c
+    debugger; //taki breakpoint - przerywam dzialanie skryptu w tym miejscu, dzieki czemu moge spokojnie go badac w zakladce Source. Dodatkowo w konsoli mam dostep do zmiennych z danego scope - np. je tam wpisujac
 }
 test();
 
@@ -215,7 +215,7 @@ const text = "Ala ma kota, a kot ma Ale";
 
 console.log(text.charAt(0)); 		//A
 console.log(text.charAt(4)); 		//m
-//poni�ej to samo:
+//ponizej to samo:
 console.log(text[0]); 				//A
 console.log(text[4]); 				//m
 console.log(text.charAt(text.length-1)); //e
@@ -224,42 +224,42 @@ console.log(text.substr(0, 3)); 	//= Ala  od indeksu 0 pobiera 3 znaki
 console.log(text.substring(0, 3)); 	//= Ala  od indeksu 0 do indeksu 3
 console.log("Ala ma kota".slice(4, 6)); //= ma  od indeksu 4 do indeksu 6
 console.log("Ala ma kota".substring(6, 4)); //= ma  od indeksu 4 do indeksu 6 tak jak slice, ale potrafi odwrocic mijecami indeksy
-console.log(encodeURI(text)); 		//= Ala%20ma%20kota%2C%20a%20kot%20ma%20Al%u0119...  kodowanie wszystkich znak�w specjalnych
+console.log(encodeURI(text)); 		//= Ala%20ma%20kota%2C%20a%20kot%20ma%20Al%u0119...  kodowanie wszystkich znakow specjalnych
 let textkodowany = encodeUrl(text);
-console.log(decodeURI(text)); 		//=Ala ma kota, a kot ma Al�...  odkodowanie
+console.log(decodeURI(text)); 		//=Ala ma kota, a kot ma Ale...  odkodowanie
 
-//toUpperCase() i toLowerCase() s�u�� odpowiednio do zamieniania tekstu na du�e i ma�e litery.
+//toUpperCase() i toLowerCase() sluzy odpowiednio do zamieniania tekstu na duze i male litery.
 const text = "Ala ma kota";
 console.log(text.toUpperCase()); 	//= ALA MA KOTA  
 console.log(text.toLowerCase()); 	//= ala ma kota
 const name = "marcin";
 console.log( name.charAt(0).toUpperCase() + text.slice(1) ); //= Marcin
 
-//indexOf s�u�y do podawania pozycji szukanego fragmentu w tek�cie (ale tak�e w tablicy, bo metoda ta dost�pna jest dla string�w i tablic).
-//Je�eli zwr�con� warto�ci� jest -1, to szukanego tekstu nie ma:
+//indexOf sluzy do podawania pozycji szukanego fragmentu w tekscie (ale takze w tablicy, bo metoda ta dostepna jest dla stringow i tablic).
+//Jezeli zwrocona wartoscia jest -1, to szukanego tekstu nie ma:
 "Ala ma kota".indexOf("kot"); 		//= 7
 "Ala ma kota".includes("kot"); 		//= true
 
-console.log("Ala ma kota i tak ju� jest".lastIndexOf("a")); //= a
+console.log("Ala ma kota i tak juz jest".lastIndexOf("a")); //= a
 
 const url = "http://nazwastrony.pl/przykladowaNazwaPliku.php";
-//tniemy url na cz�ci:
+//tniemy url na czeci:
 console.log( url.slice(url.lastIndexOf(".")+1) ); //php
 console.log( url.slice(url.lastIndexOf("/")+1, url.lastIndexOf(".")) ); //przykladowaNazwaPliku
 
 console.log("G" + "o".repeat(10) + "l!"); //Gooooooooool!
 
-const text = "Ala ma kota, a kot ma Al�, Ala go kocha, a Kot j� wcale ;(";
+const text = "Ala ma kota, a kot ma Ale, Ala go kocha, a Kot ja wcale ;(";
 const parts = text.split(", "); 	//split dzieli tekst, kryterium dzielenia: to przecinek i spacja. parts b�dzie tablic�
-console.log(text); 					//= Ala ma kota, a kot ma Al�, Ala go kocha, a Kot j� wcale ;(
-console.log(parts); 				//= ["Ala ma kota", "a kot ma Al�", "Ala go kocha", "a Kot j� wcale ;("]
+console.log(text); 					//= Ala ma kota, a kot ma Ale, Ala go kocha, a Kot ja wcale ;(
+console.log(parts); 				//= ["Ala ma kota", "a kot ma Ale", "Ala go kocha", "a Kot ja wcale ;("]
 const textChanged = text.replace("Ala", "Ola"); // wyszukanie i zamiana tekstu
-console.log(textChanged); 			//= Ola ma kota, a kot ma Al�, Ala go kocha, a Kot j� wcale ;(
+console.log(textChanged); 			//= Ola ma kota, a kot ma Ale, Ala go kocha, a Kot ja wcale ;(
 //Aby zamienic wszysktie "Ale" na "Ole", trzeba zastsowac wyra�enie regularne:
 const textChangedAll = text.replace(/Al/g,"Ol");
-console.log(textChangedAll); 		//= Ola ma kota, a kot ma Ol�, Ola go kocha, a Kot j� wcale ;(
+console.log(textChangedAll); 		//= Ola ma kota, a kot ma Ol�, Ola go kocha, a Kot ja wcale ;(
 
-//funkcja kt�ra odwraca stringa:
+//funkcja ktora odwraca stringa:
 function reverseString(stringToRevers) { stringToRevers.split('').reverse().join(''); }
 
 //-----------------------------------------------------------------------------
@@ -269,7 +269,7 @@ function myFunc() {  				// jest to deklaracja funkcji
     ...
 }
 
-const myFunc = function() {			// jest to wyra�enie funkcyjne z  tak zwan� funkcj� anonimow�
+const myFunc = function() {			// jest to wyrazenie funkcyjne z  tak zwana funkcja anonimowa
     ...
 }
 
@@ -281,34 +281,34 @@ const myFunction = function(a, b) {
 const myFunction = () => {
     console.log(a, b);
 }
-// Funkcja strza�kowa tyczy si� tylko wyra�e� funkcyjnych. Dla definicji nie mo�e by� u�yta.
+// Funkcja strzalkowa tyczy się tylko wyrażeń funkcyjnych. Dla definicji nie moze być użyta.
 
-//je�eli funkcja nie ma parametr�w, dajemy nawiasy i strza�k� (fat arrow)
+//jezeli funkcja nie ma parametrow, dajemy nawiasy i strzalke (fat arrow)
 const myF = function() { ... }
 const myF = () => { ... }
 
-//je�eli funkcja wymaga tylko jednego parametru pomijamy nawiasy
+//jezeli funkcja wymaga tylko jednego parametru pomijamy nawiasy
 const myF = function(a) { ... }
 const myF = a => { ... }
 
-//je�eli funkcja wymaga wi�kszej ilo�ci parametr�w, dajemy nawiasy
+//jezeli funkcja wymaga wiekszej ilosci parametrow, dajemy nawiasy
 const myF = function(a, b) { ... }
 const myF = (a, b) => { ... }
 
-//je�eli funkcja zwraca tylko jedn� instrukcj� mo�emy pomin�� klamry
+//jezeli funkcja zwraca tylko jedna instrukcje mozemy pominac klamry
 const myF = function(a) { console.log(a); }
 const myF = a => console.log(a);
 
-//je�eli funkcja tylko co� zwraca, mo�emy pomin�� instrukcj� return
+//jezeli funkcja tylko cos zwraca, mozemy pominac instrukcje return
 const myF = function(a) { return a * a; }
 const myF = a => a * a;
 
 
-//Samo wywo�uj�ca si� funkcja - IIFE
+//Samo wywolujaca sie funkcja - IIFE
 (function() {...})();
-(function() {...}()); //Alternatywny zapis (nawiasy w �rodku)
+(function() {...}()); //Alternatywny zapis (nawiasy w srodku)
 
-//Przyk�ad:
+//Przyklad:
 
 (function(a) {
     console.log(a)
@@ -353,8 +353,8 @@ function cosTam() {
 //Najcz�ciej urzywane zdarzenia:
 
 Typ zdarzenia:		Opis:
-click				gdy element zosta� klikni�ty (np. input)
-change				gdy opu�cili�my element, i zmieni� on swoj� zawarto�� (np. pole tekstowe)
+click				gdy element został kliknięty (np. input)
+change				gdy opuściliśmy element, i zmienił on swoją zawartość (np. pole tekstowe)
 mouseover			gdy kursor znalaz� si� na elemencie
 mouseout			gdy kursor opu�ci� element
 mouseenter			gdy kursor znalaz� si� na elemencie
@@ -659,9 +659,9 @@ removeAttribute(nazwaAtrybutu) 			s�u�y do usuni�cia atrybutu.
 hasAttribute	sprawdza czy element ma dany atrybut
 dataset			zwraca (obiekt) dataset, kt�ry przetrzymuje customowe atrybuty (data-...).
 
-// szczeg�owy opis na stronie: https://kursjs.pl/kurs/dom/dom-wlasciwosci.php
+// szczegolowy opis na stronie: https://kursjs.pl/kurs/dom/dom-wlasciwosci.php
 
-//przyk�ad pobrania kilu przycisk�w i rozdzielenia za pomoc� "tagName", aby ka�dy wykonywa� swoje indywidualne zadanie:
+//przyklad pobrania kilu przyciskow i rozdzielenia za pomoca "tagName", aby kazdy wykonywal swoje indywidualne zadanie:
 const elements = document.querySelector('div.test, .button, h2.title');
 for (let i=0; i<elements.length; i++) {
     elements[i].addEventListener('click', function() {
@@ -682,8 +682,8 @@ for (let i=0; i<elements.length; i++) {
 
 
 //-----------------------------------------------------------------------------
-//tworzenie obiektu za pomoc� createElement(typ)
-//w pliku index.html trzeba wstawi�:
+//tworzenie obiektu za pomoca createElement(typ)
+//w pliku index.html trzeba wstawic:
 	<div class="test-first"></div>
 //W poliku script.js
 	const el = document.createElement("div");
@@ -697,11 +697,11 @@ for (let i=0; i<elements.length; i++) {
 	//parentElement.appendChild(el);
 	const div = document.querySelector(".test-first"); //pobieramy miejsce docelowe
 	div.appendChild(el); //wstawiamy element do drzewa dokumentu
-	//div.insertBefore(newNode, strong); //wstawiamy go przed pierwszym elementem (nie bardzo rozkmini�em jak to dzia�a)
-	// trzeba zerkn�� na : https://kursjs.pl/kurs/dom/dom-tworzenie-i-usuwanie.php
+	//div.insertBefore(newNode, strong); //wstawiamy go przed pierwszym elementem (nie bardzo rozkminilem jak to dziala)
+	// trzeba zerknac na : https://kursjs.pl/kurs/dom/dom-tworzenie-i-usuwanie.php
 
-	//wstawienie tekstu wzgl�dem stworzonego obiektu:
-	onst text = document.createTextNode("Lubi� placki");
+	//wstawienie tekstu wzgledem stworzonego obiektu:
+	onst text = document.createTextNode("Lubie placki");
 	//div.before(text);		// przed obiektem
 	//div.after(text);		// za obiektem
 	//div.append(text);		// Na pocz�tku
@@ -714,9 +714,9 @@ for (let i=0; i<elements.length; i++) {
 // Usuwanie element�w
 // element.remove(), lub parentNode.removeChild(element)
 
-//Przypu��my, �e z paragrafu z poprzedniego rozdzia�u chcemy usun�� znacznik strong:
+//Przypuscmy, ze z paragrafu z poprzedniego rozdzialu chcemy usunac znacznik strong:
 	<p id="paragraf">
-		To jest <strong>bardzo</strong> wa�ny tekst
+		To jest <strong>bardzo</strong> wazny tekst
 	</p>
 //Kilka przyk�ad�w rozwi�zania powy�szego zadania:
 	const p = document.querySelector("#paragraf");
@@ -1020,35 +1020,40 @@ for (let i=0; i<names.length; i++) {
 }
 
 
-//wi�cej przyk�ad�w: https://kursjs.pl/kurs/grafika/grafika-na-stronie.php
+//wiecej przykladow: https://kursjs.pl/kurs/grafika/grafika-na-stronie.php
 
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-// setTimeout(fn, time)  - funkcja RAZ wywo�ana po czasie podanym w drugim parametrze
+// setTimeout(fn, time)  - funkcja RAZ wywolana po czasie podanym w drugim parametrze
 
 	function myFunc() {
-		console.log('Jaki� tekst');
+		console.log('Jakis tekst');
 	}
 	setTimeout(myFunc, 1200); //odpali po 1.2s
 
 //przerwanie timeouta
 	const time = setTimeout(function() {
-		console.log('Pe�ne zaskoczenie');
+		console.log('Pelne zaskoczenie');
 	}, 10000);
 
-	clearTimeout(time); //powy�sza funkcja nigdy si� nie odpali, bo od razu przerwali�my setTimeout
+	clearTimeout(time); //powyzsza funkcja nigdy sie nie odpali, bo od razu przerwalismy setTimeout
 
-//cykliczne wywo�anie funkcji, kt�re poczeka, je�eli kod si� nie wyrobi
+//cykliczne wywolanie funkcji, ktora poczeka, jezeli kod sie nie wyrobi
 	function longFn() {
-		//bardzo d�ugo wywo�uj�cy si� kod, kt�ry mo�e zaj�c kilka sekund
+		//bardzo dlugo wywolujacy sie kod, ktory moze zajac kilka sekund
 		time = setTimeout(longFn, 1000);
 	}
 
 	let time = setTimeout(longFn, 1000);
 
+//Przekazanie argumentów do funkcji
+	function sayHello(message, person) {
+	   console.log('Jakis tekst i parametry: ', message + ', '+ person);
+	}
 
+	setTimeout(sayHello, 1000, "This works", "reader"); // This works reader
 
 //-----------------------------------------------------------------------------
 //setInterval(fn, time) - cyklicznie wywo�uje funkcje
@@ -1090,38 +1095,38 @@ window.open(url, name, options)
 	Set-Cookie: value;max-age=seconds;domain=domena;path=sciezka;secure;HttpOnly
 
 //Parametry:
-Parametr    | Wymagane	| Co oznacza									| Przyk�adowa warto��
+Parametr    | Wymagane	| Co oznacza									| Przykladowa wartosc
 ============|===========|===============================================|==================================
-value		|Wymagane	|Warto�� i nazwa ciasteczka						| username=Marcin
+value		|Wymagane	|Wartosc i nazwa ciasteczka						| username=Marcin
 ------------|-----------|-----------------------------------------------|----------------------------------
 max-age		|Opcjonalne	|czas w sekundach								| 6050050
 ------------|-----------|-----------------------------------------------|----------------------------------
-domain		|Opcjonalne	|domena na kt�rej b�dzie dzia�a� to ciasteczko	| kurspl.pl
-			|			|												| <http://taka.sobie.domena/�cie�ka>
+domain		|Opcjonalne	|domena na ktorej bedzie dzialac to ciasteczko	| kurspl.pl
+			|			|												| <http://taka.sobie.domena/sciezka>
 ------------|-----------|-----------------------------------------------|----------------------------------
 path		|Opcjonalne	|sciezka do domeny, albo do podkatalogu			| /
 ------------|-----------|-----------------------------------------------|----------------------------------
 secure		|Opcjonalne	|Zabezpieczenia ciasteczka. 					|
-			|			|Czy ma ono si� odwo�ywa� tylko do https		| secure
+			|			|Czy ma ono sie odwolywac tylko do https		| secure
 ------------|-----------|-----------------------------------------------|----------------------------------
-HttpOnly	|Opcjonalne	|Czy b�dzeimy mogli si� odwo�ywa� do ciasteczek	|
+HttpOnly	|Opcjonalne	|Czy bedzeimy mogli sie odwolywac do ciasteczek	|
 			|			|z poziomu JavaScript							| HttpOnly
 ------------|-----------|--------------------------------------------------------------------------------
 
 
-//Pierwsz� cz�� sk�adni ciasteczka zajmuje nazwa ciasteczka oraz jego warto��. S� to jedyne wymagane parametry ciasteczka
-expires 	okre�la dat� wyga�ni�cia
-path 		ustawia �cie�k� sk�d zosta�o utworzone ciasteczko. Najlepszym rozwi�zaniem jest tutaj pozostawienie domy�lnej warto�ci czyli "/".
-secure		Je�eli ustawisz go na true, wtedy ciastka b�d� wysy�ane tylko w zabezpieczonych po��czeniach (https).
+//Pierwsza czesc skladni ciasteczka zajmuje nazwa ciasteczka oraz jego wartosc. Sa to jedyne wymagane parametry ciasteczka
+expires 	okresla date wygaaniecia
+path 		ustawia sciezke skad zostalo utworzone ciasteczko. Najlepszym rozwiazaniem jest tutaj pozostawienie domyslnej wartosci czyli "/".
+secure		Jezeli ustawisz go na true, wtedy ciastka beda wysylane tylko w zabezpieczonych polaczeniach (https).
 
-// wielko�c ciasteczka to max4kb
-//Posta� takiego nag��wka mo�e wygl�da� tak:
+// wielkosc ciasteczka to max 4kb
+//Postac takiego naglowka moze wygladac tak:
 	Cookie: username=Marcin; userid=123345; session=dasdkljasd82213213
 
 //Tworzenie cisteczka:
 document.cookie = "nazwaCookie=wartoscCookie; expires=dataWygasniecia; path=/; secure"
 
-//Najprostsz� wersj� utworzenia swojego ciastka jest u�ycie konstrukcji:
+//Najprostsza wersja utworzenia swojego ciastka jest uzycie konstrukcji:
 	document.cookie = "nazwaCookie=wartoscCookie"
 
 //Funkcje do tworzenia i odczytu cisteczek na stronie: https://kursjs.pl/kurs/cookies/cookie.php#postac
@@ -1129,23 +1134,23 @@ document.cookie = "nazwaCookie=wartoscCookie; expires=dataWygasniecia; path=/; s
 
 
 //-----------------------------------------------------------------------------
-//Storage  s�u�y do przetrzymywania danych. Jest to taki swoisty schowek, w kt�rym mo�emy przetrzymywa� r�ne dane naszej strony.
+//Storage  sluzy do przetrzymywania danych. Jest to taki swoisty schowek, w ktorym mozemy przetrzymywa� rone dane naszej strony.
 
-Session storage - s�u�y do obs�ugi danych tylko w czasie trwania sesji (czyli do zamkni�cia przegl�darki)
-local storage - Do zapisywania danych na nieokre�lony czas (a� do ich usuni�cia)
+Session storage - sluzy do obslugi danych tylko w czasie trwania sesji (czyli do zamkniecia przegladarki)
+local storage - Do zapisywania danych na nieokreslony czas (az do ich usuniecia)
 
-//Aby utworzy� i odczyta� element w localStorage:
-	localStorage.setItem('myElement', 'Przyk�adowa warto��');
-	console.log(localStorage.getItem('myElement')); //Przyk�adowa warto��
+//Aby utworzyc i odczytac element w localStorage:
+	localStorage.setItem('myElement', 'Przykladowa wartosc');
+	console.log(localStorage.getItem('myElement')); //Przykladowa wartosc
 
-//Aby usun�� element:
+//Aby usunac element:
 	localStorage.removeItem('myElement');
 	console.log(localStorage.getItem('myElement')); //null
 
-//Je�eli chcesz wyczy�ci� ca�y localStorage dla danej witryny, skorzystaj z metody .clear():
-	if (confirm('Czy chcesz wyczy�ci� zapisane dane?')) { localStorage.clear() }
+//Jezeli chcesz wyczyscic caay localStorage dla danej witryny, skorzystaj z metody .clear():
+	if (confirm('Czy chcesz wyczyscic zapisane dane?')) { localStorage.clear() }
 
-//Domy�lnie localStorage umo�liwia przetrzymywanie danych jako tekst. Aby m�c przetrzymywa� w nim obiekty, musimy je zamieni� na tekst za pomoc� JSON.stringify oraz JSON.parse:
+//Domyslnie localStorage umozliwia przetrzymywanie danych jako tekst. Aby moc przetrzymywac w nim obiekty, musimy je zamienic na tekst za pomoca JSON.stringify oraz JSON.parse:
 	const ob = {
 		'one': 1,
 		'two': 2,
@@ -1353,7 +1358,7 @@ npm run test
 
 //-----------------------------------------------------------------------------
 //Zadanie testowe z samolotem:
-const mo�liweMiejsca = {
+const mozliweMiejsca = {
     dwieRodziny: ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'J'],
     srodek: ['D', 'E', 'F', 'G'],
     lewo: ['B', 'C', 'D', 'E'],
@@ -1389,16 +1394,16 @@ export const miejsca = (N, S) => {
 
         onlyThisRow.forEach(thisRow => {
             for (let i = 0; i < thisRow.length; i++) {
-                if (mo�liweMiejsca.dwieRodziny.includes(thisRow[i])) {
+                if (mozliweMiejsca.dwieRodziny.includes(thisRow[i])) {
                     dostepneOpcje.dwieRodziny = false;
                 }
-                if (mo�liweMiejsca.srodek.includes(thisRow[i])) {
+                if (mozliweMiejsca.srodek.includes(thisRow[i])) {
                     dostepneOpcje.srodek = false;
                 }
-                if (mo�liweMiejsca.lewo.includes(thisRow[i])) {
+                if (mozliweMiejsca.lewo.includes(thisRow[i])) {
                     dostepneOpcje.lewo = false;
                 }
-                if (mo�liweMiejsca.prawo.includes(thisRow[i])) {
+                if (mozliweMiejsca.prawo.includes(thisRow[i])) {
                     dostepneOpcje.prawo = false;
                 }
             }

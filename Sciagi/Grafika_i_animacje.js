@@ -37,31 +37,31 @@ http://shebang.pl/kursy/html5-rzeczowo/r5-canvas/
 			transform: rotate(360deg);
 		}
 	}
-//to samo, tylko za pomoc� js. w pliku css musi pozosta� zdefinowany ".spinner" 
-//ale ju� nie koszytamy z ".v1" ani z @keyframes  
+//to samo, tylko za pomoca js. w pliku css musi pozostac zdefinowany ".spinner" 
+//ale juz nie koszytamy z ".v1" ani z @keyframes  
 //filmik 239 (Zaawansowane projekty w CSS i JavaScript)
 //plik .js
 const spinner = document.querySelector('.v2');
 
-const fps = (1000 / 60).toFixed(2); // warto�� zaokr�glona do 2 miejsc
+const fps = (1000 / 60).toFixed(2); // wartosc zaokraglona do 2 miejsc
 let deg = 0; //aktuana pozycja (stopnie)
 const degChange = 6;
 
 const rotate = () => {
     deg += degChange;
     spinner.style.transform = `rotate(${deg}deg)`;
-    setTimeout(rotate, fps) //ponowne wywo�anie tej funkcji po wskaznym czasie
+    setTimeout(rotate, fps) //ponowne wywolanie tej funkcji po wskaznym czasie
 }
-rotate(); // piewsze wywo�anie funkcji
+rotate(); // piewsze wywolanie funkcji
 //-------------------------------------
-//to samo, tylko inaczej wywo�ywana funkcja przerysowywania przez: setInterval(fn, time)
+//to samo, tylko inaczej wywolywana funkcja przerysowywania przez: setInterval(fn, time)
 const rotate = () => {
     deg += degChange;
     spinner.style.transform = `rotate(${deg}deg)`;
 }
 setInterval(rotate, fps)
 //-------------------------------------
-//to samo, tylko wywo�ywana funkcja dedykowana do grafiki. Wywo�ywana przez od�wierzanie przegl�darki (60fps)
+//to samo, tylko wywolywana funkcja dedykowana do grafiki. Wywolywana przez odswierzanie przegladarki (60fps)
 const rotate = () => {
     deg += degChange;
     spinner.style.transform = `rotate(${deg}deg)`;
@@ -69,7 +69,7 @@ const rotate = () => {
 }
 rotate(); 
 //-------------------------------------
-//to samo, ale regulujemy cz�stotliwo�� wywo�ywania. 
+//to samo, ale regulujemy czestotliwosc wywolywania. 
 const spinner5 = document.querySelector('.v5');
 let deg5 = 0; //aktualna pozycja (stopnie)
 const degChange5 = 6;
@@ -90,18 +90,18 @@ rotate5();
 //-----------------------------------------------------------------------------
 //Pobieranie i zmiana danych z pliku .CSS
 
-//Aby dobra� si� do zmiennnej w CSS
+//Aby dobrac sie do zmiennnej w CSS
     document.documentElement.style.setProperty(--power-x, `${20 + progresPercent  70}%`);
 
-// Alternatywa do powy�szego
-// W filmiku 248 (Zaawansowane projekty w CSS i JavaScript) jest jak przerobi� 
+// Alternatywa do powyzszego
+// W filmiku 248 (Zaawansowane projekty w CSS i JavaScript) jest jak przerobic 
 	@keyframes fly-ball-x {
 		100% {
 			left var(--power-x, 300px);
 		}
 	}
 
-//Aby sterowa� nim z poziomu .js
+//Aby sterowac nim z poziomu .js
 	const myRules = document.styleSheets[0].cssRules;
 	console.log(myRules);
 	or(const i of myRules) {
@@ -121,33 +121,33 @@ rotate5();
 
 GSAP 
 //filmik 257 (Zaawansowane projekty w CSS i JavaScript)
-//obej�a�em pobierznie.
-//Link pobiera si� ze strony GreenSock.com/docs/
+//obejzalem pobierznie.
+//Link pobiera sie ze strony GreenSock.com/docs/
 //Samuraj pobiera "TweenMax"
-//Aby z niego skorzysta�, trzeba w pliku .html w sekcji body wstawi�:
+//Aby z niego skorzystac, trzeba w pliku .html w sekcji body wstawic:
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
 //najnowszy:
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.1.1/gsap.min.js"></script>
 
 
-// r�ne przejscia w czasie mo�na zmieni� i ustawi� w:
+// rone przejscia w czasie mozna zmienic i ustawic w:
 https://greensock.com/docs/v3/Eases
 
 
-TweenMax.to(element, 1, {}) - do jakich w�a�ciwo�ci ma doj�� animacja
-TweenMax.from(element, 1, {}) - od jakich w�a�ciwo�ci animowa� (ko�cowe w CSS)
+TweenMax.to(element, 1, {}) - do jakich wlasciwosci ma dojsc animacja
+TweenMax.from(element, 1, {}) - od jakich wlasciwosci animowac (koncowe w CSS)
 TweenMax.fromTo(element, 1, {}, {}) -sk�d do k�d
 
 Metody:  // https://greensock.com/docs/v3/GSAP/Tween
-x: 10 // to samo co "transform: translateX(10px)", czyli przesuni�cie po p�aszczy�nie x
-y: 10 // to samo co "transform: translateY(10px)", czyli przesuni�cie po p�aszczy�nie y
+x: 10 // to samo co "transform: translateX(10px)", czyli przesuniecie po plaszczyznie x
+y: 10 // to samo co "transform: translateY(10px)", czyli przesuniecie po plaszczyznie y
 rotation: 240, //transform:rotate(240deg);
 scale: 2, //transform:scale(2)
 scaleY: 2, //transform:scaleY(2)
 ease: Bounce.easeOut // rodzaj animacji
-delay: 2 // pou�nienie (sek)
+delay: 2 // opuznienie (sek)
 repeat: 1, //powtarzanie
-repeatDelay //opu�nienie mi�dzy kolejnymi iteracjami
+repeatDelay //opuznienie miedzy kolejnymi iteracjami
 yoyo: true, //wracanie
 backgroundColor: "yellow", //zmian koloru obiektu
 boxShadow: "0 0 120px 0 rgb(251, 255, 0)", //nadanie cienia
@@ -242,7 +242,7 @@ SVG Scalable Vector Graphics
 Przed rozpocz�ciem pracy w Visual Studio Code, proponowany jest doatek "SVG"  (SVG Language Support)
 Dodatek ten podpowiada sk�adnie i tworzy okienko z podgl�dem (PM na plik .svg i "Preview SVG" ) 
 
-INKSCAPE - Jaki� darmowy program do tworzenia grafiki SVG
+INKSCAPE - Jakis darmowy program do tworzenia grafiki SVG
 
 //Stronka, z efektami do SVG
 https://www.w3schools.com/graphics/svg_grad_radial.asp
@@ -253,21 +253,25 @@ http://www.clker.com/inc/svgedit/svg-editor.html
 https://boxy-svg.com/app
 
 
-//    SVG ska�da sie z 3 cz�ci:
-//    1. Canvas SVG - czyli "ca�a mapa poziomu"
+//    SVG sklada sie z 3 czeci:
+//    1. Canvas SVG - czyli "cala mapa poziomu"
 //    2. element SVG
 //    3. viewBox - czyli obszar widoczny na ekranie
 
-//Dodawanie SVG jako "zwyk�y" obrazek: (w pliku .html)
-	<img src="img/sun.svg" alt="s�o�ce">
+//Dodawanie SVG jako "zwykly" obrazek: (w pliku .html)
+	<img src="img/sun.svg" alt="slonce">
 
 //Dodawanie SVG jako obrazek w wersji edytowalnej (w pliku .html)
     <!-- Trzeba doda� atrybut xmlns, aby korzysta� z SVG w wersji edytowalnej -->
     <svg id="sun" xmlns="http://www.w3.org/2000/svg"
         width = "600" height="600" viewBox="0 0 600 600">  
-        <!-- Kaszta�ty: -->
+        <!-- Kasztalty: -->
         <rect class="clips" x="150" y="250" width="100" height="20" fill="white" stroke="red" stroke-width="8" />
-        <!-- Domy�lnie jedneostki sa w px. Pozycja x i y domy�lnie jest 0 0. Stroke to obramowanie. -->
+        <!-- Domyslnie jedneostki sa w px. Pozycja x i y domyslnie jest 0 0. 
+			Stroke to obramowanie. 
+			stroke-linecap: 'butt' | 'round' | 'square'   zakończenei linii
+			stroke-linejoin   polaczenia linii  -->
+		
         <circle cx="200" cy="200" r="20" fill="#333" stroke="black" stroke-width="8" />
         <ellipse cx="300" cy="100" rx="50" ry="70" fill="#eee" stroke="rgba(200, 200, 100, 0.5)" stroke-width="4" />
         
@@ -278,18 +282,19 @@ https://boxy-svg.com/app
 
         
         <path d="M200 200 L350 200 L275 250 Z" fill="white" stroke="yellow" stroke-width="8" />
-		// przyk�ady na https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
-		d - �cie�ka   
+		// przyklady na https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
+		                            //wielkie litery - Bezwzględne, małe litery - względne  Do przesówania całości, lepsze małe literki
+		d - sciezka   
         m - moveTo                    M x y                        <path d="M10 10"/>
 		l - lineTo                    L x y 
-		z - closepatch (��czy pierwszy z ostatnim) 
+		z - closepatch (laczy pierwszy z ostatnim) 
 		h - drwa a horizontal line    H x
 		v - draw a vertical line      V y
         C - krzywa Bezjera;           C dx1 dy1, dx2 dy2, dx dy    <path d="M 10 10 C 20 20, 40 20, 50 10" stroke="black" fill="transparent"/>
 		s - Several bezier            S dx2 dy2, dx dy             <path d="M 10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80" stroke="black" fill="transparent"/>
 		q -                           Q dx1 dy1, dx dy             <path d="M 10 80 Q 95 10 180 80" stroke="black" fill="transparent"/>
-		t- kr�tki zapis cubic Bezjer  T x y                        <path d="M 10 80 Q 52.5 10, 95 80 T 180 80" stroke="black" fill="transparent"/>
-        a -�uk                        A rx ry x-axis-rotation large-arc-flag sweep-flag x y    
+		t- krotki zapis cubic Bezjer  T x y                        <path d="M 10 80 Q 52.5 10, 95 80 T 180 80" stroke="black" fill="transparent"/>
+        a -luk                        A rx ry x-axis-rotation large-arc-flag sweep-flag x y    
 
 
         <!-- Grupowanie -->

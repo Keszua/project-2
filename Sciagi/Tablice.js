@@ -345,6 +345,13 @@ lineItems.reduce((sum, li) => sum + li.total, 0); //= 17.5   UWAGA! trzeba poda�
 
 //.lastIndexOf()  która działa jak indexOf(), ale zwraca ostatnią pozycję szukanego tekstu
 
+.substr(start, end); // zwróci wycinek (razem z podanymi znakami)
+    var dateString = 'Tue Aug 24 2021 00:00:00 GMT+0200 (czas środkowoeuropejski letni)'
+    var start = dateString.indexOf('(');
+    var end = dateString.indexOf(')');
+    var additional = dateString.substr(start, end);  //= '(czas środkowoeuropejski letni)'
+		  
+
 .includes()  //zwraca prawdę lub fałsz w zależności czy szukana wartość znajduje się w tablicy, czy element jest zawarty, czy zawiera się w tablicy
 	const tab = ['Marcin', 'Ania', 'Agnieszka', 'Monika'];
 	if (tab.includes('Ania')) {

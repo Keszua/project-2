@@ -5,6 +5,8 @@ Potrek poleca Redux
 ZobaczyÄ‡ co to: 
 - Redux Thunk
 
+Do rozsyÅ‚ania komunikatÃ³w: web Socket (czy jakoÅ› tak)
+
 Piotrek poleca:  https://material-ui.com/
 
 eslint - sprawdza poprawnosc napisanego kodu, w tym sprawdza sredniki, niezadeklarowane zmienne, niedomkniete nawiasy...
@@ -548,7 +550,7 @@ function getValues(...Args) {  // operator Rest
     var values = Args.sort();
     return values;
 }
-console.log(getValues('zod','mat','dd')); //= (3) ["dd", "mat", "zod"]
+console.log(getValues('zod','mat','dd')); //= (3)ï¿½["dd", "mat", "zod"]
 
 //------------------------------------------------------------
 //Operator Spred
@@ -566,7 +568,7 @@ console.log(sumValues(...values) );  //= 12  (opwerator Spred)
 var array1 = [10, 20, 30];
 var array2 = [1,  2,  3];
 array1.push(...array2);
-console.log(array1); //= (6) [10, 20, 30, 1, 2, 3]
+console.log(array1); //= (6)ï¿½[10, 20, 30, 1, 2, 3]
 
 
 //------------------------------------------------------------
@@ -577,7 +579,7 @@ function setOptions(options) {
     return [env, db];
 }
 let opt = setOptions({env: 'DEV', db: 'SQL' });
-console.log(opt); //= (2) ["DEV", "SQL"]
+console.log(opt); //= (2)ï¿½["DEV", "SQL"]
 //Zamiast powyÅ¼szego moÅ¼na zrobiÄ‡ tak:
 function setOptions({env, db}) {
     return [env, db];
@@ -624,7 +626,7 @@ m.set(1, 'React');
 m.set(2, 'Angular');
 m.set(3, 'Ember');
 m.set(4, 'Babel');
-console.log(m); //= Map(4) {1 => "React", 2 => "Angular", 3 => "Ember", 4 => "Babel"}
+console.log(m); //= Map(4)ï¿½{1 => "React", 2 => "Angular", 3 => "Ember", 4 => "Babel"}
 console.log(m.size); //= 4
 for (const v of m) {
 	console.log(v);
