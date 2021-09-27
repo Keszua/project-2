@@ -829,7 +829,7 @@ app.get('/logout', (req, res) => {
 //-----------------------------------------------------------------------------
 //MIDDLEWARE
 
-//Nalezy pamiętać, aby zastowować midleware przed naszymi śceiżkami
+//Nalezy pamiętać, aby zastowować midleware przed naszymi ścieżkami
     app.use(jakiśMiddleware());
 
 //Mmddleware dla JSONA:
@@ -977,19 +977,62 @@ number
 string
 Array<number>  lub  number[]
 enum UserType { admin, user, guest }   np:  const mojaDana: UserType = UserType.user;
+object
+function
 any - brak typowania
 void                                   np:  function testf():void { } 
 null, undefined                        np:  const mojaDana:  null = null;
+unknown            //podobnie jak any, ale nie możemy puźneij tej zmiennej przypisać typu
 //rzutowanie:
   as string,   as number  itp...						  
 
-//przekazywnaie funkcji:
+//odczytywanie typów:
+	let logical :boolean = true;
+	typeof(logical);  //= boolean
+  
+let something :any;
+
+if (typeof something === 'string') {
+    console.log(`Wpisałeś tekst ${something}`);    
+} else if (typeof something === 'number') {
+    console.log(`Wpisałeś liczbę ${something}`);    
+} else if (typeof something === 'function') {
+    something();
+}
+
+  
+//przekazywanie funkcji:
 initrowDetails(danaA, (flag) => setLoading(flag));
   
 export const initrowDetails = (danaA: any, fLoading: (flag: boolean) => void ): void => {
     fLoading(true);
 }  
+
+//Aliasy
+type k6 = 1 | 2 | 3 | 4 | 5 | 6;
+let dice1 :k6;
+let dice2 :k6;
+
+type k8 = k6 | 7 | 8;
+let dice3 :k8;
+
+type basicType = number | string | boolean;
+type extendBoolean = boolean | 'y' | 'Y' | 'n' | 'N' | 1 | 0;  
   
+// typowanie obiektów:  
+const person : { name: string, age: number, email ?:string } = {
+	name: "Paweł",
+	age: 32
+}
+  
+//przykąłd funkcji, która ma wysłaś maila tylko tym, którzy podali maila (mail jest podany w person)
+const sendEmail = ( people: { name: string, age: number, email ?:string}[] ) => {
+	people.filter(person => person.email).forEach(person => {
+			console.log(`send email to ${person.email}`);
+	})
+}
+  
+//-----------------------------------------------------------
 //Interfejsy									  
 enum UserType { admn, user, }
 interface UserHelloResponse {
@@ -1004,6 +1047,7 @@ interface SpecialUserHelloResponse extends UserHelloResponse {
     adminName?: string;   // dany element nie zawsze będzie dostępny (pytajnik przed dwukropkiem)
 }
 
+//-----------------------------------------------------------
 //urzycie interfejsu:   (od tej pory, po Ctrl+space są podpowiedzi, co zawiera ten obiekt)
 fetch('/user-hello')
     .then(r => r.json())

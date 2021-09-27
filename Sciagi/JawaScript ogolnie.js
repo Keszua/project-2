@@ -853,7 +853,7 @@ e.keyCode	Zwraca kod klawisza. Przydatne przy sprawdzaniu zakres�w klawiszy - 
 		}
 		keys.push(e.key);
 
-		console.log("Naci�ni�te klawisze: " + keys.join(" + "));
+		console.log("Nacisniete klawisze: " + keys.join(" + "));
 
 		if (e.keyCode >= 48 && e.keyCode <= 57) {
 			console.log('klawisz to cyfra');
@@ -1347,7 +1347,7 @@ w folderze package.json trzeba doda� w: "scripts"
 
 
 
-//aby uruchomi� testy:
+//aby uruchomic testy:
 npm run test
 
 

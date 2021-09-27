@@ -37,7 +37,7 @@ Przenoszenie projektu:
 //film 41 Building modern Web Applications with Go 
 Kopiujemy wszsytkie pliki oprócz go.mod  i  go.sum
 Otwieramy Folder w VSC
-Wpiwujemy w wierszu poleceń:
+Wpisujemy w wierszu poleceń:
 go mod init github.com/karol/bookings
 
 Ręcznie trzeba pozmieniać ścieżki w "import" (we wszystkich plikach)
@@ -935,7 +935,7 @@ go test - coverprofile=coverage.out && go tool cover - html=coverage.out
 
 
 
-//w pliku "zwykłym" mamy funkcję dzeilenia:
+//w pliku "zwykłym" mamy funkcję dzielenia:
 func divide(x, y float32)(float32, error) {
     var result float32
     if y == 0 {

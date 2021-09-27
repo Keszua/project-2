@@ -239,10 +239,10 @@ Application -> Clear storage -> Clear site data
     |-- index.js
     |-- users.js
 
-//do automatycznego stworzenia takeij struktóry, można zainstalwoać wtyczkę:
+//do automatycznego stworzenia takiej struktóry, można zainstalwoać wtyczkę:
 npm install express-generator -g
 
-//i wywoiłać funkcję:
+//i wywołać funkcję:
 express --no-view --git nazwa_projektu_i_folderu
 //        |         |                            
 //        |         wygeneruje plik .gitignor                            
