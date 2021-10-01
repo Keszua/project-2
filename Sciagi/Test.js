@@ -46,6 +46,8 @@ test ('Pierwszy test dodawania:',  () => {
 	npx jest			//jednorazowe uruchomienie
 	npx jest --watch	// 
 
+// aby w VSC działały podpowiedzi (Ctrl+space), trzeba doinstlować npm i -D @types/jest
+
 //-----------------------------------------------------------------------------
 //grupowanie testów:
 describe("Grupa testow: kalkulator", () => {
@@ -131,6 +133,136 @@ test.each(liczby)('Dodaj %i do %i',  (x, y, wynik) => {
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+// Sprawdzenie, czy renderuje się komponent
+// plik Hello.js:
+    // ...jakieś importy i takie tam...
+    export const Hello = () => {
+        const [imie, setImie] = useState('');
+        return(
+            <div>
+                <h1 data-testid="helloId1">Hello</h1>
+                <button onClick={ () => console.log('kliknięty')}> Click me</button>
+                <input type='text' value={imie} onChange={ evt => setImie(evt.target.value)} /> 
+
+            </div>
+        )
+    }
+
+// plik Hello.test.js:
+    import React from 'react';
+    import { render, fireEvent } from '@testing-library/react';
+    import { Hello } from './Hello';
+
+    test("Component się wyrenderował", () => {
+        render(<Hello />);
+    });
+
+    test("Component Panel wyświetla tekst ", () => {
+        const wrapper = render(<Hello />);
+        wrapper.debug(); //pokaże w teście szczegóły, jak został wyrenderowany ten element
+        const naszText = wrapper.getByText('Hello');
+        expect(naszText).toBeTruthy();  //sprawdz czy znaleziony konkretny tekst (ani literki mniej, ani więcej)
+        expect(naszText.tagName).toBe('H1'); // czy to tag H1?
+        expect(naszText.textContent).toBe('Hello');
+
+        const naszTextId = getByTestId('helloId1'); //z wykorzystaniem znacznika data-testid="helloId1"
+        expect(naszTextId.textContent).toBe('Hello');
+
+        expect(queryByText('Zapamiętaj mnie')).toBeTruthy(); // czy na stronie wyświetlony jest taki tekst? (nie jestem pewien czy w tym przykłądzie zadziała, poniżej przykład gdzie powinno działać)
+    });
+//więcej metod na https://testing-library.com/docs/react-testing-library/cheatsheet
+
+    test("Component Panel wyświetla tekst (destrukturyzacją)", () => {
+        const { getByText, queryByText, getByTestId } = render(<Hello />);
+        const naszText = getByText('Hello');  // znajdz uchwyt do elelemtu z takim tekstem
+        expect(queryByText('Zapamiętaj mnie')).toBeTruthy(); // czy gdzieś na stronie wyświetlony jest taki tekst?
+        expect(getByTestId('helloId1').innerHTML).toBe(`(${imie})`); // zawiera wewątrz span albo div konkretny tekst
+    
+    });
+
+    getBy  //zwraca nam element lub błąd (dwa elementy to też błąd)
+    queryBy // zwraca nam element lub null. Kiedy spodziewamy się, że elementu może nie być na stronie (dwa elementy to błąd)
+    findBy // asynchroniczne. Działa podobnie jak getBy
+
+    getAllBy  //zwraca nam elementy lub błąd
+    queryAllBy // zwraca nam elementy lub []. Kiedy spodziewamy się, że elementu może nie być na stronie
+    findAllBy // asynchroniczne. Działa podobnie jak getAllBy
+
+//-----------------------------------------------------------------------------
+//zamiast destrukturyzacji render(< />), można urzyć screen 
+//wtedy trzeba urzywać składni: screen.getByTestId
+
+//test czy wyrenderowana struktóra jest identyczna (zmieniam sposób budowania straony, 
+// ale wynik budowania ma pozostać identyczny)
+// Film 22
+// Za pierwszym testem tworzy się obraz (snapshots) do którego od tej chwili będziemy potrnywać
+test("Component Panel wyświetla tekst ", () => {
+    const { container } = render(<Hello />);
+    expect(container).tomatchSnapshot(); //czy aktualan wersja pokrywa się z poprzednią?
+});
+
+//-----------------------------------------------------------------------------
+// Szukanie elementu po klasie
+test("Component Panel wyświetla tekst (destrukturyzacją)", () => {
+    const { container } = render(<Hello />);
+    const element1 =  container.querySelectorAll('.orange');  //szukaj wszytkich o klasie .orange
+    expect(element1.length).toBe(2); //powinny być na stronie dwa elementy z klasa .orange
+
+});
+
+
+//-----------------------------------------------------------------------------
+//test na kliknięcie:
+    test("Component Panel wyświetla tekst ", () => {
+        const { getByRole } = render(<Hello />);
+        const button = getByRole('button');
+        // const button = getByRole('button', {name: /kliknij/i});  //można sprawdzać parametry, nie wiem czy  działa to przy wyszukiwaniu
+        fireEvent.click(button);    //wywołanie kliknięcia  - w raporcie 
+        
+        const imie = 'Franek';
+        const input = getByRole('textbox');
+        expect(input).toHaveValue(''); //zakładam że na początku powinien być pusty
+        fireEvent.change( input, { target: { value: imie} }); //wpisuje w to pole konkretny tekst
+        expect(input).toHaveValue(imie); //oczekuje, że w tym polu jest dokładnie ten tekst
+    });
+
+//test na najechanie myszką:
+    test("najedz na element", () => {
+        const { container } = render(<Hello />);
+        const stars = container.querySelectorAll('.rate-container svg'); //Wewnątrz rate-container zaznacz wsystkie svg
+        stars.forEach( (star, index) => {
+            fireEvent.mouseOver(star); //kolejno, najeżdźam na kazdzą gwiazdkę (Film 25)
+            const starsNajechana = container.querySelectorAll('.purple');
+            expected(starsNajechana.length).toBe(index +1); //sprawdzam, czy po najechaniu kolejnej gwiazdki, zmienia mi się konkretna ilość gwiazdek
+            //fireEvent.mouseOut(star); //zdejmuje kursor z obiektu
+            //expected(starsNajechana.length).toBe(0); //oczekuje że po zjechaniu kursorem, powinno być zero zaznaczonych.
+        })
+    } )
+
+
+//-----------------------------------------------------------------------------
+//mocking  (Film 26 )
+
+    test("kliknij tu, aby wpłynąć na inny obiekt", () => {
+        const loadMovie = jest.fn() // funkcja robiąca nic
+        const {container} = render( <MovieDetails movie={selectedMovie} updateMovie={loadMovie}/> )
+
+        const stars = container.querySelectorAll('.rate-container svg');
+        stars.forEach( star => {
+            fireEvent.click(star);
+        
+        });
+        setTimeout( () => {
+            expect(loadMovie).toBeCalledTimes(5); //sprawdzi, ile razy była wywołana funkcja
+        })
+    });
+
+
+
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 //Sprawdzenie wykonania się pliku app.js:
 it('works', async () => {
     const response = await request(app).get('/')
@@ -202,6 +334,34 @@ npm run test
 	// function compileAndroidCode() {  throw new Error('you are using the wrong JDK'); }
 	expect(() => compileAndroidCode()).toThrow(); // zwróci wyjątek?
 
+// przykład 2 z rzuceniem błędu:
+    function sprawdzam() {
+        throw new Error("Totalny haos");
+    }
+
+    test("Bledy", () => {
+        expect(sprawdzam).toThrow(); //czy funkcja rzuci (czym kolwiek)
+        expect(sprawdzam).toThrow(Error); //czy funkcja rzuci błędem
+        expect(sprawdzam).toThrow("Totalny haos"); //czy funkcja rzuci błędem z konkretnym komunikatem
+        expect(sprawdzam).toThrow(/haos/i); //czy funkcja rzuci błędem zawierający słowo "haos"
+    });
+
+//dla atrybutów:
+    expect(element).toHaveAttribute('type', 'password');
+//dla wartości:
+    expect(element).toHaveValue('login');
+
+
+
+
+
+
+
+
+
+
+
+
 
 //-----------------------------------------------------------------------------
 //Co można sprawdzić? :
@@ -251,6 +411,31 @@ test('Funkcja addNumbers ze stringami (ma zwrócić sumę)', () => {
 test('Funkcja addNumbers z numerami i stringami (ma zwrócić sumę)', () => {
     expect(addNumbers(1, '4', 3)).toBe(8);
 });
+
+
+
+
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+//zainstalowałem:
+yarn add -D jest-fetch-mock 
+//https://github.com/jefflau/jest-fetch-mock
+// pod importami, trzeba zrobić globalne wywołanie:
+global.fetch = require('jest-fetch-mock');
+
+// Od tej pory, zamist w teście robić tak:
+    jest.spyOn(global, "fetch").mockImplementation( () => 
+        Promise.resolve( {
+            json: () => Promise.resolve({id: 1})
+        })
+    );
+// można zrobić tak:
+    fetch.mockResponseOnce(JSON.stringify({id: 1}));
+
+
 
 
 
