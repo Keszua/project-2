@@ -269,6 +269,14 @@ elif [ $imie = "Adam" ] ; then
 else
 	echo "Cześć nieznajomy"
 
+//-------------------------------------------------------------------------------------------------
+plik z kolorami:
+#!/bin/bash
+red="\033[31m"
+green="\033[32m"
+blue="\033[34m"
+reset="\033[0m"
+//-------------------------------------------------------------------------------------------------
 
 source ~/skrypty/kolory.sh  // import pliku zkolorami (oczywiście musimy sobie taki napisać)
 if [ $# -lt 1 ] ; then //jeśli brak parametru, to wypisz ostrzeżenie  ( $# - liczba parametrów)
@@ -695,7 +703,7 @@ Get-ExecutionPolicy  //polecenie pokazyjące co możemy robić. Domyślnie jest 
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
 
 //Treść skryptu, bez pierwszej specjalnej linijki. Rozszeżenie musi byc .ps1
-Write-Hst "Witaj świecie"
+Write-Host "Witaj swiecie"
 $imie = Read-Host "Podaj swoje imie: "           //pobieranie zmiennych (dowolnych)
 Write-Host "Witaj $imie"                         // wypisze wprowadzone imoe
 $imie = [Int32](Read-Host "Podaj swoje imie: "}  //pobieranie zmiennych liczbowych
@@ -780,7 +788,7 @@ $glos = New-Object -ComObject "SAPI.SPVoice"
 $glos.Rate = -3
 $plik = Get-Content .\plik.txt
 foreach($zdanie in $plik) {
-	$mull = $glos.Speak($zdanie)       //null spowoduje, ze na ekrnaie nie będzie komunikatów
+	$mull = $glos.Speak($zdanie)       //null spowoduje, ze na ekranie nie będzie komunikatów
 }
 
 
@@ -793,12 +801,38 @@ Get-Proces                             //uruchomione procesy
 
 
 
-Tydzień 7 - minuta 25
-
-
-
-
-
 
 Get-Service | ConvertTo-HTML |  Out-File .\index.html
+
+Uruchomienie skryptu z harmonogramu zadań:
+1. Tworzysz folder: c:\skrypty
+2. W nim plik witaj.ps1
+3. Otwierasz harmonogram zadań:
+    a) Zaznacza Bibloteka harmonogramu zadań
+    b) N apolu z zadaniami PM->Utwórz nowe zadaie...
+    c)  Ogólne -> Nazwa -> Wpisz nazwę
+        Wyzwalacze -> Nowy... -> Ustaw jak ma sie uruchamiać
+        Akce -> Nowy... 
+            -> Akcja uruchom program
+            -> progra/skrypt:  Powershell.exe
+            -> Dodaj argumenty:  -windowstyle hidden -ExecutionPolicy Bypass -File c:\skrypty\witam.ps1
+                                 
+        OK, OK
+
+		
+		
+# tworze plik z zawartością w folderze c:\skrypty
+New-Item -Path "c:\skrypty" -Name "talker.ps1" -ItemType "file" -Value '$glos = New-Object -ComObject "SAPI.SPVoice" 
+$glos.Speak("Witaj Bartku, mistrzu klawiatury. Czeka na Ciebie React.") 
+$glos.Speak("Pamietaj, zamiast spedzic 6 godzin na szukaniu problemu, lepiej przez 5 minut poczytaj instrukcje!")'
+
+
+# dodanie zadania do harmonogramu zadań https://searchwindowsserver.techtarget.com/tutorial/Learn-how-to-create-a-scheduled-task-with-PowerShell
+$Action = New-ScheduledTaskAction -Execute 'pwsh.exe' -Argument '-NonInteractive -NoLogo -NoProfile -File "C:\talker.ps1"'
+$Trigger = New-ScheduledTaskTrigger -Once -At 3am
+$Settings = New-ScheduledTaskSettingsSet
+$Task = New-ScheduledTask -Action $Action -Trigger $Trigger -Settings $Settings
+Register-ScheduledTask -TaskName 'My PowerShell Script' -InputObject $Task -User 'Humansoft' -Password 'zaq1'
+
+
 

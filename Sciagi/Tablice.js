@@ -128,6 +128,14 @@ iterator.next(); // => { value: undefined, done: true }
 //-----------------------------------------------------------------------------
 //METODY TABLIC
 
+//jak sprawdzić czy mamy do czynienia z tablicą
+const mojaTab = []
+Object.prototype.toString.call(mojaTab) == '[object Array]'
+
+//obiekt wykrywamy tak:
+const mojObj = {a: 'a'}
+Object.prototype.toString.call(mojObj) == '[object Object]'
+
 
 .join() // - elementy tablicy przerabia na jeden długi string  
 	const users = ["adam", "bogdan", "czarek", "darek"];
@@ -285,7 +293,7 @@ document.body.appendChild(section);
 //to samo co wyżej:
 [0,1,2,3].reduce( (sum, li) => sum + li, 10);
 
-//przykład z tablicą obiektów. Chcemy zsumować tylko wybrane eleenty:
+//przykład z tablicą obiektów. Chcemy zsumować tylko wybrane elementy:
 const lineItems = [
   { description: 'Eggs (Dozen)', quantity: 1, price: 3, total: 3 },
   { description: 'Cheese', quantity: 0.5, price: 5, total: 2.5 },

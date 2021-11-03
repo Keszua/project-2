@@ -24,6 +24,11 @@ go run cmd/web/main.go
 go run cmd/web/*.go
 */
 
+// budowanie pliku .exe:
+go build
+go build -o mojaNazwa.exe main.go
+
+
 //------------------------------------------------------------
 instalowanie wtyczek, np, wtyczka chi:
 go get -u github.com/go-chi/chi/v5
@@ -51,6 +56,26 @@ go get -u github.com/go-chi/chi/v5
 go get -u github.com/alexedwards/scs/v2
 go get -u github.com/justinas/nosurf
 
+
+//------------------------------------------------------------
+//------------------------------------------------------------
+//------------------------------------------------------------
+package main
+import("fmt"; "os" )
+func main() {
+	const name, age = "Kim", 22
+	fmt.Print(name, " is ", age, " years old.\n")   // Kim is 22 years old.
+	fmt.Println(name, "is", age, "years old.")      // Kim is 22 years old.
+	fmt.Printf("%s is %d years old.\n", name, age)  // Kim is 22 years old.
+
+	n, err := fmt.Fprint(os.Stdout, name, " is ", age, " years old.\n")  // Kim is 22 years old.
+	n, err := fmt.Fprintln(os.Stdout, name, "is", age, "years old.")     // Kim is 22 years old.
+	n, err := fmt.Fprintf(os.Stdout, "%s is %d years old.\n", name, age) // Kim is 22 years old.
+	
+	text1 := fmt.Sprint(name, " is ", age, " years old.\n")
+	text2 := fmt.Sprintln(name, "is", age, "years old.")  
+	text3 := fmt.Sprintf("%s is %d years old.\n", name, age)
+}
 
 
 //------------------------------------------------------------
@@ -99,6 +124,12 @@ complex64  liczby zespolone(1 + 2i)   var n complex64 = 1 + 2i      real(n)   im
 
 time.Time  //typ daty. Wymaga import ("time")
 
+//Rodzje typów:
+basic Types - numbers, strings, booleans
+Agregate Types = arrays, structs
+Reference Types - Pointers, slices, maps, functions, chanels
+Interface Type
+
 
 // Aby wyświetlić typ danej:
 var i int = 4
@@ -121,7 +152,7 @@ u, err := strconv.ParseUint("42", 10, 64)
 s:= "this is a string"
 b:= []byte(s)   //= [116 104 105 115 32 105 115 32 97 32 115 116 114 105 110 103]
 
-
+	
 var arr [5]int
 arr:= [5]int { 1, 3, 5, 6, 6 }    //ten sam efekt co wyżej
 arr:= [...]int { 1, 3, 5, 6, 6 }  //ten sam efekt co wyżej
@@ -211,7 +242,7 @@ myMap2:= make(map[string]interface{}) //mapa przechowująca dowolny typ (nie zal
 
 me:= User{
     FirstName: "Trevor",
-        LastName: "Sawler",
+    LastName: "Sawler",
   }
 
 myMap["me"] = me
@@ -248,7 +279,7 @@ sum:= func(a, b int) int { return a + b } (3, 4)  // w sum będzie wartość 7
 //funkcja zwracajaca dwa elementy (trzeba do importu dodać "errors")	
 func sqrt(x float64)(float64, error) {
     if x < 0 {
-        return 0, errors.New("Undefined for negarive numbers")
+        return 0, errors.New("Undefined for negative numbers")
     }
     return x * x, nil
 }
@@ -418,6 +449,9 @@ func main() {
 func divide(a, b float64)(float64, error) {
     if b == 0.0 {
         return 0.0, fmt.Errorf("Cannot divide by zero")
+		//przykład 2:
+		// err := errors.New("Cannot divide by zero")
+		// return 0, err
     }
     return a / b, nil
 }
@@ -1203,15 +1237,171 @@ https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/
 
    
    
+/*   
+  #     #                                             #                                                                                                  #    
+  #     #                                             #                         #                                #                                       #    
+  #     #  ####   # ###   ###   #     #   ####    #####  #####   ####   ####         ###        #####  ### ##         ###   ####   ####   #    #   ###   #    
+  #     #  #   #  ##     #   #  #     #       #  #    #     #        #  #   #  ##   #   #          #   #  #  #  ##   #   #  #   #  #   #  #   #   #   #  #### 
+  #  #  #  #   #  #      #   #  #  #  #   #####  #    #    #     #####  #   #   #   #####         #    #  #  #   #   #####  #   #  #   #   # #    #      #   #
+  # # # #  ####   #      #   #  # # # #  #    #  #    #   #     #    #  #   #   #   #            #     #  #  #   #   #      #   #  #   #    #     #   #  #   #
+   #   #   #      #       ###    #   #    ### #   #####  #####   ### #  #   #  ###   ###        #####  #  #  #  ###   ###   #   #  #   #   #       ###   #   #
+           #                                                                                                                              #   
+*/ 
    
+// Wprowadzanie zmiennych (czekanie na enter)
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("-> ")
+	wprowadzanaDana, _ := reader.ReadString('\n')
+	fmt.Println(wprowadzanaDana)
+	
+	
+// wprowadzanei w pętli z poleceniem quit do wyjścia:
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Println("Wpisz quit aby wyjść")
+
+	for {
+		fmt.Print("-> ")
+		wprowadzanaDana, _ := reader.ReadString('\n')
+		wprowadzanaDana = strings.Replace(wprowadzanaDana, "\r\n", "", -1)
+		wprowadzanaDana = strings.Replace(wprowadzanaDana, "\n", "", -1)
+
+		if wprowadzanaDana == "quit" {
+			break
+		} else {
+			fmt.Println(wprowadzanaDana)
+		}
+	}
+	
+// przechwytywanie pojedynczych znaków, za pomocą 	github.com/eiannone/keyboard
+	for {
+		char, key, err := keyboard.GetSingleKey()
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("You chose %q\n", char) // wyświetli naciśnięty znak
+		
+		i, _ := strconv.Atoi(string(char))
+		fmt.Printf("You chose number %d\n", i) // wyswietli naciśniętą cyfrę
+
+		if char == 'q' || char == 'Q' || key == keyboard.KeyEsc {
+			break
+		}
+	}   
    
+//-------------------------------------------------------------------------------------------------
+//Program, do wprowadzania różnych typów danych przez konsolę
    
-   
-   
-   
-   
-   
-   
+import ( "bufio"; "fmt"; "log"; "os"; "strconv"; "strings"; "github.com/eiannone/keyboard" )
+
+var reader *bufio.Reader
+
+type User struct {
+	Name            string
+	Age             int
+	FavouriteNumber float64
+	OwnsDog         bool
+}
+
+func main() {
+	reader = bufio.NewReader(os.Stdin)
+
+	var user User
+	user.Name = readString("Podaj imie ")
+	user.Age = readInt("Podaj wiek: ")
+	user.FavouriteNumber = readFloat("Ulubiona liczba: ")
+	user.OwnsDog = readBool("Masz psa? (y/n)?")
+
+	fmt.Printf("Twoje imie: %s. Lat: %d. Ulubiona liczba: %.2f. Posiadanie psa:%t.\n",
+		user.Name,
+		user.Age,
+		user.FavouriteNumber,
+		user.OwnsDog,
+	)
+}
+
+func prompt() {
+	fmt.Print("-> ")
+
+}
+
+func readString(s string) string {
+	for {
+		fmt.Println(s)
+		prompt()
+
+		userInput, _ := reader.ReadString('\n')
+		userInput = strings.Replace(userInput, "\r\n", "", -1)
+		userInput = strings.Replace(userInput, "\n", "", -1)
+		if userInput == "" {
+			//fmt.Println("?")
+		} else {
+			return userInput
+		}
+	}
+}
+
+func readInt(s string) int {
+	for {
+		fmt.Println(s)
+		prompt()
+
+		userInput, _ := reader.ReadString('\n')
+		userInput = strings.Replace(userInput, "\r\n", "", -1)
+		userInput = strings.Replace(userInput, "\n", "", -1)
+
+		num, err := strconv.Atoi(userInput)
+		if err != nil {
+			fmt.Println("Oczekuje na cyfry.")
+		} else {
+			return num
+		}
+	}
+}
+
+func readFloat(s string) float64 {
+	for {
+		fmt.Println(s)
+		prompt()
+
+		userInput, _ := reader.ReadString('\n')
+		userInput = strings.Replace(userInput, "\r\n", "", -1)
+		userInput = strings.Replace(userInput, "\n", "", -1)
+
+		num, err := strconv.ParseFloat(userInput, 64)
+		if err != nil {
+			fmt.Println("Oczekuje na cyfrę zmiennoprzecinkową, np: 3.14")
+		} else {
+			return num
+		}
+	}
+}
+
+func readBool(s string) bool {
+	err := keyboard.Open()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer func() {
+		_ = keyboard.Close()
+	}()
+
+	for {
+		fmt.Println(s)
+		char, _, err := keyboard.GetSingleKey()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		if strings.ToLower(string(char)) != "y" && strings.ToLower(string(char)) != "n" {
+			fmt.Println("Oczekuje na y = yes, n = no")
+		} else if char == 'n' || char == 'N' {
+			return false
+		} else if char == 'y' || char == 'Y' {
+			return true
+		}
+	}
+}   
    
    
    

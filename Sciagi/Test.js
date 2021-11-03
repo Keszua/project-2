@@ -194,7 +194,7 @@ test.each(liczby)('Dodaj %i do %i',  (x, y, wynik) => {
 
 //test czy wyrenderowana struktóra jest identyczna (zmieniam sposób budowania straony, 
 // ale wynik budowania ma pozostać identyczny)
-// Film 22
+// Film 22 (React - testowanie)
 // Za pierwszym testem tworzy się obraz (snapshots) do którego od tej chwili będziemy potrnywać
 test("Component Panel wyświetla tekst ", () => {
     const { container } = render(<Hello />);
@@ -231,7 +231,7 @@ test("Component Panel wyświetla tekst (destrukturyzacją)", () => {
         const { container } = render(<Hello />);
         const stars = container.querySelectorAll('.rate-container svg'); //Wewnątrz rate-container zaznacz wsystkie svg
         stars.forEach( (star, index) => {
-            fireEvent.mouseOver(star); //kolejno, najeżdźam na kazdzą gwiazdkę (Film 25)
+            fireEvent.mouseOver(star); //kolejno, najeżdźam na kazdzą gwiazdkę  (Film 25 [React - testowanie])
             const starsNajechana = container.querySelectorAll('.purple');
             expected(starsNajechana.length).toBe(index +1); //sprawdzam, czy po najechaniu kolejnej gwiazdki, zmienia mi się konkretna ilość gwiazdek
             //fireEvent.mouseOut(star); //zdejmuje kursor z obiektu
@@ -241,7 +241,7 @@ test("Component Panel wyświetla tekst (destrukturyzacją)", () => {
 
 
 //-----------------------------------------------------------------------------
-//mocking  (Film 26 )
+//mocking  (Film 26  [React - testowanie])
 
     test("kliknij tu, aby wpłynąć na inny obiekt", () => {
         const loadMovie = jest.fn() // funkcja robiąca nic
@@ -257,6 +257,9 @@ test("Component Panel wyświetla tekst (destrukturyzacją)", () => {
         })
     });
 
+// wygenerowany loadMovie, zawiera w sobie:
+// loadMovie.mock.calls      -> [[{ id:3, title: 'Pierwszy film', description: 'Opis pierwszego filmu' }]]
+// loadMovie.mock.calls[0][0]  -> { id:3, title: 'Pierwszy film', description: 'Opis pierwszego filmu' }
 
 
 
@@ -314,6 +317,7 @@ npm run test
 	expect( sum(1, 2) ).toBeGreaterThanOrEqual(3); 	// >= 3
 	expect( sum(1, 2) ).toBeLessThan(3);  			// < 3
 	expect( sum(1, 2) ).toBeLessThanOrEqual(4.5);   // <= 4.5
+	
 //dla true/false
 	.toBeUndefined(); 	//czy zwróci undefined (ma zwrócić undefined)
 	.toBeNull();  		// czy zwróci null (ma zwrócić null,  false nie przejdzie tego testu)
@@ -323,10 +327,15 @@ npm run test
 	.toBeDefined();  	// czy jest zdefiniowany? Czy ma warość? 
 	.toBeUndefined();  	// czy nie jest zdefiniowana? undefined
     // falsy: 0, null, undefined, NaN, ""
+
 //dla stringów:
 	expect('team').not.toMatch(/I/); // nie zawiera litery
 	expect('Christoph').toMatch(/stop/); // zawiera ciąg znaków
 	expect('Christoph').toMatch(/stop/i); // zawiera ciąg znaków (i - nie zwracaj uwagi na wielkość liter)
+	
+	const linkElement = screen.getByText(/learn react/i);
+	expect(linkElement).toBeInTheDocument();
+	
 //dla tablic:
 	expect(shoppingList).toContain('milk'); // czy tablica zawiera element?
 //dla wyjątków:
@@ -350,7 +359,11 @@ npm run test
     expect(element).toHaveAttribute('type', 'password');
 //dla wartości:
     expect(element).toHaveValue('login');
-
+//dla porównania obiektów:
+    const movie = {id: 3, title: 'pierwszy film', description: 'Opis pierwszego filmu'}; // Film 31 (React - testowanie)
+    expect(movieCreated.mock.calls[0][0]).toStrictEqual(movie); 
+// lub:
+    expect(movieCreated).toHaveBeenCalledWith(movie);
 
 
 
@@ -439,11 +452,23 @@ global.fetch = require('jest-fetch-mock');
 
 
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+Apache Bench
+
+ad -n 500  -c 5 http://zwierzu.tech/
+	-n ilośc testów
+	-c ilość watków równoległych
+
+Vegeta
+https://github.com/tsenart/vegeta
+
+vegeta cat urle.txt | vegeta attack -duration=60s -rate 5 timeout 20s > results.bin | vegeta report
 
 
-
-
-
-
-
+JMeter - https://jmeter.apache.org/
+AB (Apache Bench) - http://httpd.apache.org/download.cgi
+Vegeta - https://github.com/tsenart/vegeta
+Grafana - https://grafana.com/oss/graphite/
 //-----------------------------------------------------------------------------

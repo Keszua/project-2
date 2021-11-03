@@ -125,16 +125,15 @@ iterator.next(); // => { value: undefined, done: true }
 //-----------------------------------------------------------------------------
 //Kotrolki:
 // pole do wprowadzania danych:
-<input type="text" id="testValue" value="Domy�lna warto��">
-
+ <input type="text" id="testValue" value="Domyslna wartosc"/>
 //Przycisk
 <button type="button" class="button" id="buttonTestValue">Poka� value</button>
 
 // zaznaczenie tylko jednego elemetu z grupy (RADIO)
-<input type="radio" value="lubie radio">
+<input type="radio" value="lubie radio"/>
 
 //zaznaczenie kilku opcji:
-<input type="checkbox" value="lubie checkbox">
+<input type="checkbox" value="lubie checkbox"/>
 
 // okienko combi z wyborem opcji:
 <select>
@@ -157,7 +156,7 @@ const min = 1;
 const max = 15;
 const random = Math.floor(Math.random()*(max-min+1)+min);
 console.log(random);
-// prawdopodobnei to samo co wyzej, skrucony zapis Math.floor
+// prawdopodobnie to samo co wyzej, skrucony zapis Math.floor
 //const random = ~~(Math.random()*(max-min+1)+min);
 
 function Random(min=0, max=100) {
@@ -184,14 +183,14 @@ console.log( randomColor() );
 const color =  "#" + Math.random().toString(16).substr(2,6);
 
 /*
-Powy�sze r�wnanie mo�emy rozpisa� na kroki:
+Powyzsze rownanie mozemy rozpisac na kroki:
 
 1)
-Math.random() - zwraca liczb� z przedzia�u 0-1
+Math.random() - zwraca liczbe z przedzialu 0-1
 0.0264363764209139
 
 2)
-Number.toString(16) - zapisuje liczb� w danym systemie jako string
+Number.toString(16) - zapisuje liczbe w danym systemie jako string
 0.0264363764209139.toString(16) da nam "0.06c488cc270ee"
 
 3)
@@ -203,7 +202,7 @@ Dodajemy # i mamy kolor
 "#" + "06c488" === "#06c488"
 */
 
-//Losowanie kolor�w rzywych w formacie hsl:
+//Losowanie kolorow rzywych w formacie hsl:
 function randomColor() {
     const deg = Math.random() * 360;
     return `hsl(${deg}, 60%, 50%)`;
@@ -228,9 +227,18 @@ console.log(encodeURI(text)); 		//= Ala%20ma%20kota%2C%20a%20kot%20ma%20Al%u0119
 let textkodowany = encodeUrl(text);
 console.log(decodeURI(text)); 		//=Ala ma kota, a kot ma Ale...  odkodowanie
 
+text.length; //zwraca dlugosc tekstu
+text.includes('Jakis'); //czy w danym stringu zawarty jest podany ciag znakow (zwraca true albo false)
+//nie ważne jest połóżenie szukanego ciągu. Ważna jest wielkość liter
+text.endsWith('kst'); // sprawdza czy na końcu znajduej się dana fraza
+text.startsWith('Jakis'); //sprawdz czy na poczatku jest fraza tu bedzie TRUE
+text.startsWith('Jakis', 1); //FALSE bo indeksuje sie od 0
+text.repeat(10); // wypisze to samo 10 razy
+
+
 //toUpperCase() i toLowerCase() sluzy odpowiednio do zamieniania tekstu na duze i male litery.
 const text = "Ala ma kota";
-console.log(text.toUpperCase()); 	//= ALA MA KOTA  
+console.log(text.toUpperCase()); 	//= ALA MA KOTA
 console.log(text.toLowerCase()); 	//= ala ma kota
 const name = "marcin";
 console.log( name.charAt(0).toUpperCase() + text.slice(1) ); //= Marcin
@@ -255,12 +263,39 @@ console.log(text); 					//= Ala ma kota, a kot ma Ale, Ala go kocha, a Kot ja wc
 console.log(parts); 				//= ["Ala ma kota", "a kot ma Ale", "Ala go kocha", "a Kot ja wcale ;("]
 const textChanged = text.replace("Ala", "Ola"); // wyszukanie i zamiana tekstu
 console.log(textChanged); 			//= Ola ma kota, a kot ma Ale, Ala go kocha, a Kot ja wcale ;(
-//Aby zamienic wszysktie "Ale" na "Ole", trzeba zastsowac wyra�enie regularne:
+//Aby zamienic wszysktie "Ale" na "Ole", trzeba zastsowac wyrazenie regularne:
 const textChangedAll = text.replace(/Al/g,"Ol");
-console.log(textChangedAll); 		//= Ola ma kota, a kot ma Ol�, Ola go kocha, a Kot ja wcale ;(
+console.log(textChangedAll); 		//= Ola ma kota, a kot ma Ola, Ola go kocha, a Kot ja wcale ;(
+
+
+// .splice  - modyfikuje tablicę i zwraca tablicę z usuniętymi elementami
+// const remove = array.splice(start, deleteCount[, item1[, item2[, ...]]]) 
+//         |                   |      |             +  Elementy dodawane do tablicy. Jeżeli nie określimy żadnych elementów, splice usunie tylko podaną liczbę elementów.
+//         |                   |      +  Liczba całkowita określająca liczbę starych elementów tablicy do usunięcia. Gdy podamy 0 - to nic nie usówamy. Gdy nie podamy, to usówamy wszsytko powyżej "start"
+//         |                   +  Indeks od którego rozpoczynamy modyfikację tablicy
+//         + zwróci tablicę z usuniętymi elementami
+myFish = ["anioł", "klaun", "mandarynka", "jesiotr"];
+console.log("myFish: " + myFish);                        //= myFish: ["anioł", "klaun", "mandarynka", "jesiotr"]
+    
+removed = myFish.splice(2, 0, "bęben");
+console.log("Po dodaniu 1: " + myFish);                  //= Po dodaniu 1: ["anioł", "klaun", "bęben", "mandarynka", "jesiotr"]
+console.log("Usunięty jest: " + removed);                //= Usunięty jest: undefined
+   
+removed = myFish.splice(3, 1)
+console.log("Po usunięciu 1: " + myFish);                //= Po usunięciu 1: ["anioł", "klaun", "bęben, "jesiotr"]
+console.log("Usunięty jest: " + removed);                //= Usunięty jest: mandarynka
+    
+removed = myFish.splice(2, 1, "trąba")
+console.log("Po zastąpieniu 1: " + myFish);              //= Po zastąpieniu 1: ["anioł", "klaun", "trąba", "jesiotr"]
+console.log("Usunięty jest: " + removed);                //= Usunięty jest: bęben
+    
+removed = myFish.splice(0, 2, "papuga", "zawilec", "niebieski")
+console.log("Po zastąpieniu 2: " + myFish);              //= Po zastąpieniu 2: ["papuga", "zawilec", "niebieski", "trąba", "jesiotr"]
+console.log("Usunięty jest: " + removed);                //= Usunięty jest: ["anioł", "klaun"]
+
 
 //funkcja ktora odwraca stringa:
-function reverseString(stringToRevers) { stringToRevers.split('').reverse().join(''); }
+function reverseString(stringToRevers) { stringToRevers.split('').reverse().join('') }
 
 //-----------------------------------------------------------------------------
 //Funckje
@@ -627,7 +662,7 @@ const p = document.querySelector('p:not(:first-child)');
 
 //querySelectorAll(selector) - zwraca kolekcj� element�w lub pust� kolekcj� gdy nic nie znajdzie
 const btns = document.querySelectorAll('.list .btn');
-for (const btn of btns) { //inny rodzaj p�tli
+for (const btn of btns) { //inny rodzaj petli
     console.log(btn); //wypisuje dany przycisk
 }
 
@@ -637,7 +672,7 @@ const divs = document.querySelectorAll('div.module');
 [].forEach.call(divs, function(el) {
     el.style.background = "red"
 });
-//Albo uzy� funkcji kt�ra zmienia elementy iterowalne na tablic�:
+//Albo uzyc funkcji ktura zmienia elementy iterowalne na tablice:
 Array.from(divs).forEach(el => { console.log(el); });
 Array.from(divs).filter(el => { console.log(el); });
 
@@ -647,17 +682,17 @@ Array.from(divs).filter(el => { console.log(el); });
 
 
 //-----------------------------------------------------------------------------
-//W�a�ciwo�ci i metody element�w:
+//Wlasciwosci i metody elementow:
 innerHTML		zwraca lub ustawia kod HTML danego element 						//<span>Kliknij mnie!</span>
 outerHTML		zwraca lub ustawia kod HTML wraz z tagiem  						//<button class="button" type="button"><span>Kliknij mnie</span></button>
-innerText		zwraca lub ustawia tekst znajduj�cy si� w elemencie (bez html)	//Kliknij mnie
-textContent 	Zwraca tekst z pomijaniem styl�w (poka�e te� ukryte i niewidoczne teksty)
-tagName			zwraca nazw� tagu
-setAttribute(nazwaAtrybutu, warto��)	ustawia atrybut elementu
+innerText		zwraca lub ustawia tekst znajdujacy sie w elemencie (bez html)	//Kliknij mnie
+textContent 	Zwraca tekst z pomijaniem stylow (pokaze tez ukryte i niewidoczne teksty)
+tagName			zwraca nazwe tagu
+setAttribute(nazwaAtrybutu, wartosc)	ustawia atrybut elementu
 getAttribute(nazwaAtrybutu)				pobiera atrybut elementu	(gdy nie ma takeigo elementu, zwr�ci null)
-removeAttribute(nazwaAtrybutu) 			s�u�y do usuni�cia atrybutu.
+removeAttribute(nazwaAtrybutu) 			sluzy do usuniecia atrybutu.
 hasAttribute	sprawdza czy element ma dany atrybut
-dataset			zwraca (obiekt) dataset, kt�ry przetrzymuje customowe atrybuty (data-...).
+dataset			zwraca (obiekt) dataset, ktory przetrzymuje customowe atrybuty (data-...).
 
 // szczegolowy opis na stronie: https://kursjs.pl/kurs/dom/dom-wlasciwosci.php
 
@@ -704,21 +739,21 @@ for (let i=0; i<elements.length; i++) {
 	onst text = document.createTextNode("Lubie placki");
 	//div.before(text);		// przed obiektem
 	//div.after(text);		// za obiektem
-	//div.append(text);		// Na pocz�tku
-	//div.prepend(text);	// Na ko�cu
-	//dzia�a tylko jedna na raz (ciekawe dla czego?)
+	//div.append(text);		// Na poczatku
+	//div.prepend(text);	// Na koncu
+	//dziala tylko jedna na raz (ciekawe dla czego?)
 
 
 
 //-----------------------------------------------------------------------------
-// Usuwanie element�w
+// Usuwanie elementow
 // element.remove(), lub parentNode.removeChild(element)
 
 //Przypuscmy, ze z paragrafu z poprzedniego rozdzialu chcemy usunac znacznik strong:
 	<p id="paragraf">
 		To jest <strong>bardzo</strong> wazny tekst
 	</p>
-//Kilka przyk�ad�w rozwi�zania powy�szego zadania:
+//Kilka przykaadow rozwiazania powyzszego zadania:
 	const p = document.querySelector("#paragraf");
 	const strong = p.querySelector("strong");
 
@@ -732,12 +767,12 @@ for (let i=0; i<elements.length; i++) {
 //Przyk�ad:
 //W index.html mamy:
 	<div class="div-test-remove">
-		<span>Element do usuni�cia</span>
+		<span>Element do usuniecia</span>
 	</div>
 
-	<button type="button" class="buttonUs">Usu� powy�szy span</button>
+	<button type="button" class="buttonUs">Usun powyzszy span</button>
 
-//w plku .js piszemy obs�ug� przycisku:
+//w plku .js piszemy obsluga przycisku:
 	const divUs = document.querySelector(".div-test-remove");
 	const klawiszUsuwania = document.querySelector(".buttonUs");
 	klawiszUsuwania.addEventListener("click", function () {
@@ -754,10 +789,10 @@ for (let i=0; i<elements.length; i++) {
 		div.removeChild(div.firstChild); //lub div.firstChild.remove()
 	}
 //lub nieco wolniejsze...
-	parentNode.innerHTML = "";  // tutaj chyba powinno by�: div.innerHTML = "";
+	parentNode.innerHTML = "";  // tutaj chyba powinno byc: div.innerHTML = "";
 
 
-// gdy pobierzemy kilak epelent�w za pomoc� "All", to mo�na to usun�� tak:
+// gdy pobierzemy kilak epelentow za pomoca "All", to mozna to usunac tak:
 	const li = document.querySelectorAll("#list li");
 	for (let i=li.length-1; i<=0; i++) {
 		li[i].remove();
@@ -766,9 +801,9 @@ for (let i=0; i<elements.length; i++) {
 
 
 //-----------------------------------------------------------------------------
-//Zast�powanie element�w
+//Zastepowanie elementow
 parent.replaceChild(newChild, oldChild):
-//Przyka�d:
+//Przykald:
 
 //plik index.html
 	<div class="div-test-replace">
