@@ -152,16 +152,22 @@ u, err := strconv.ParseUint("42", 10, 64)
 s:= "this is a string"
 b:= []byte(s)   //= [116 104 105 115 32 105 115 32 97 32 115 116 114 105 110 103]
 
+// Wskaźniki
+x := 10
+pointer := &x
+*pointer = 15
+
+
 	
 var arr [5]int
-arr:= [5]int { 1, 3, 5, 6, 6 }    //ten sam efekt co wyżej
-arr:= [...]int { 1, 3, 5, 6, 6 }  //ten sam efekt co wyżej
-arrB:= arr                      //stworzenie nowej tablicy i skopiownie zawarosci z arr
-arrC:= & arr                     //referencja ro arr  //= &[1, 3, 5, 6, 6]
-sl1:= []int { 1, 3, 5, 6, 6 }     //stworzenie SLICES - zawiera len i capacity = 5
-sl2:= make([]int, 3)            //stworzenie SLICES - zawiera len i capacity = 3
-sl3:= make([]int, 3, 100)       //slice with length == 3 and capacity == 100
-arR:= arS                       //to będzie referencją (inaczej niż dla tablicy). Zmiana w arR zmieni też arS
+arr:= [5]int { 1, 3, 5, 6, 6 }   //ten sam efekt co wyżej
+arr:= [...]int { 1, 3, 5, 6, 6 } //ten sam efekt co wyżej
+arrB:= arr                       //stworzenie nowej tablicy i skopiownie zawarosci z arr
+arrC:= & arr                     //referencja do arr  //= &[1, 3, 5, 6, 6]
+sl1:= []int { 1, 3, 5, 6, 6 }    //stworzenie SLICES - zawiera len i capacity = 5
+sl2:= make([]int, 3)             //stworzenie SLICES - zawiera len i capacity = 3
+sl3:= make([]int, 3, 100)        //slice with length == 3 and capacity == 100
+arR:= arS                        //to będzie referencją (inaczej niż dla tablicy). Zmiana w arR zmieni też arS
 arr = append(arr, 13)            //dodanie nowego elementu
 arr = append(arr, 13, 5, 8)      //dodanie kilku elementów
 arN = append(arr[: 2], arr[4:]...) //tworzy nową tablicę, na podstawie wycinków z innej
@@ -169,7 +175,7 @@ len(arr)                         // zwróci ilość elementów tablicy
 b:= arr[:]    //= [1 3 5 6 6]   wszytkie elementy            UWAGA! te i poniższe "wyłuskania" tworzą referencje (nie kopie z wyłuskanymi elementami)
 c:= arr[2:]   //= [5 6 6]       od trzciego                  Nawet gdy arr jest tablicą a nie slice
 d:= arr[: 3]   //= [1 3 5]       pierwsze trzy elementy
-e:= arr[2: 3]  //= [5]           od trzeciego do trzeciego
+e:= arr[2: 3]  //= [5]           od drugiego do trzeciego
 
 
 var identiMatrix [3][3]int = [3][3]int{ [3]int{ 1, 0, 0 }, [3]int{ 0, 1, 0 }, [3]int{ 0, 0, 1 } }  //= [[1 0 0] [0 1 0] [0 0 1]]
@@ -188,6 +194,9 @@ var mySlice []string
 mySlice = append(mySlice, "Trevor")
 mySlice = append(mySlice, "John")
 fmt.Println(mySlice)  //= [Trevor John]
+fmt.Println(sort.StringsAreSorted(mySlice)) //= false
+sort.Strings(mySlice)		//sortowanie stringów
+fmt.Println(sort.StringsAreSorted(mySlice)) //= true
 
 
 var mySlice2 []int
@@ -336,31 +345,61 @@ func main() {
 
 
 //------------------------------------------------------------
-//ENUMY:
+/*
+    ###    ####    #   #   ### ##
+   #   #   #   #   #   #   #  #  #
+   #####   #   #   #   #   #  #  #
+   #       #   #   #   #   #  #  #
+    ###    #   #    ####   #  #  #
+*/
 const (
     a = iota   // aby olać zerowy indeks, treba zapisać to tak: _ = iota
     b
-c
+    c
 )
 
 const (
-    _ = iota  //ignore first value
+     _ = iota  //ignore first value
     KB = 1 << (10 * iota)
-MB
-GB
-TB
-PB
-EB
-ZB
-YB
+    MB
+    GB
+    TB
+    PB
+    EB
+    ZB
+    YB
 )
 
 fileSize:= 4000000000
 fmt.Printf("%.2fGB", fileSize / GB) //= 3.73GB
 
+//--------------------------------------------------------------------------------------
+//deklaracja ENUMa
+type StopienPracowniczy int
+const (
+	Starzysta StopienPracowniczy = iota
+	Poczatkujacy
+	Samodzielny
+	Starszy
+	Specjalista
+)
 
+//przykładowa struktóra, któa korzsta z tego enuma
+type Employee struct {
+	Name string
+	Age  int
+	Ranga StopienPracowniczy
+}
 
+jack := Employee{
+	Name: "Jack",
+	Age:  27,
+	Ranga: Poczatkujacy,  //skorzystanie z enuma
+}
 
+//tablica z pracownikami (tak przy okazji)
+var employees []Employee
+employees = append(employees, jack)
 
 
 /* --------------------------------------------------------------------------------------
@@ -584,6 +623,75 @@ func NewBufferedCloser() * BufferedWriterCloser {
     }
 }
 
+
+
+/* --------------------------------------------------------------------------------------
+   ###                                               #
+  #   #                                        #     #     #
+  #       ###   ### ##   ####    ###    ###        #####        ###   #### 
+  #      #   #  #  #  #  #   #  #   #  #      ##     #    ##   #   #  #   #
+  #      #   #  #  #  #  #   #  #   #   ###    #     #     #   #   #  #   #
+  #   #  #   #  #  #  #  ####   #   #      #   #     #     #   #   #  #   #
+   ###    ###   #  #  #  #       ###    ###   ###     ##  ###   ###   #   #
+                         #
+Kompozycja, czyli takie dziedziczenie właściwości w typie				 
+*/
+
+package main
+import ( "fmt" )
+
+type Vehicle struct {
+	NumberOfWhels      int
+	NumberOfPassengers int
+}
+
+type Car struct {
+	Model      string
+	IsElectirc bool
+	Vehicle    Vehicle //zastosowanie kompozycji (czyli takie dziedziczenie)
+}
+
+func (v Vehicle) ShowDetails() {
+	fmt.Println("Pasażerowie:", v.NumberOfPassengers)
+	fmt.Println("Koła:", v.NumberOfWhels)
+}
+
+func (c Car) show() {
+	fmt.Println("Model:", c.Model)
+	fmt.Println("Is Electric:", c.IsElectirc)
+	c.Vehicle.ShowDetails()
+}
+
+func main() {
+	suv := Vehicle{
+		NumberOfWhels:      4,
+		NumberOfPassengers: 5,
+	}
+
+	volvoXC90 := Car{
+		Model:      "XC90 T8",
+		IsElectirc: false,
+		Vehicle:    suv,
+	}
+
+	volvoXC90.show()  //= Model: XC90 T8  Is Electric: false  Pasażerowie: 5  Koła: 4
+
+	teslaX := Car{
+		Model:      "tesla X",
+		IsElectirc: true,
+		Vehicle:    suv,
+	}
+	teslaX.Vehicle.NumberOfPassengers = 7 //edycja kompozycji dla instancji teslaX
+
+	teslaX.show() //= Model: tesla X  Is Electric: true  Pasażerowie: 7  Koła: 4
+}
+
+
+
+//--------------------------------------------------------------------------------------
+
+
+
 /* --------------------------------------------------------------------------------------
    ###    ####   ####    ####   #    #  #####  ###  #   #  #####   ### 
   #   #  #    #  #   #  #    #  #    #    #     #   ##  #  #      #   #
@@ -593,6 +701,29 @@ func NewBufferedCloser() * BufferedWriterCloser {
   #   #  #    #  #  #   #    #  #    #    #     #   #  ##  #      #   #
    ###    ####   #   #   ####    ####     #    ###  #   #  #####   ###
 */
+
+//--------------------------------------------------------------------------------------
+
+f() // wywołanie funkcji f(); oczekiwanie na jej powrót
+go f() // utworzenie funkcji goroutine, która wywołuje funkcję f(); nie czekamy
+
+
+//--------------------------------------------------------------------------------------
+// funkcja oznaczona "go" wykonuje się równolegle z petlą główną
+// w poniższym przykładzie, na przemian będą wyśweitlać się komunikaty raz z jednego raz z drugiego
+func main() {
+	go doSomething("doSomething")
+	for {
+		fmt.Println("Pętla głowna")
+	}
+}
+func doSomething(s string) {
+	for {
+		fmt.Printf("%s", s)
+	}
+}
+
+//--------------------------------------------------------------------------------------
 
 import("fmt"; "time" )
 
@@ -691,18 +822,18 @@ ch = make(chan int, 3) // kanał buforowany z pojemnością 3
 import("fmt"; "math/rand"; "time")
 
 func CalculateValue(intChan chan int) {
-    rand.Seed(time.Now().UnixNano()) // bez tego będzie losował cały czas tę samą liczbę
-    randomNumber:= rand.Intn(10)    // losuje liczbę 
-    intChan < - randomNumber          // funkcja niczego nie zwraca, tylko przekazuje wartośc do kanału
+    rand.Seed(time.Now().UnixNano())  // bez tego będzie losował cały czas tę samą liczbę
+    randomNumber := rand.Intn(10)      // losuje liczbę 
+    intChan <- randomNumber          // funkcja niczego nie zwraca, tylko przekazuje wartośc do kanału
 }
 
 func main() {
-    intChan:= make(chan int)  // tworze nowy kanał
+    intChan:= make(chan int)   // tworze nowy kanał
     defer close(intChan)       // sam zamknie kanał gdy bedzie już zakończony
 
     go CalculateValue(intChan) // ywołanie funkcji z kanałem (gorutine)
 
-    num:= < -intChan           // nasłuchiwanie kanału
+    num := <- intChan           // nasłuchiwanie kanału
     fmt.Println("num", num)
 }
 
@@ -791,9 +922,9 @@ func logger() {
 //--------------------------------------------------------------------------------------
 POTOKI
 Fajnie opisane potoki w książce s225
-    | -----------| 0, 1, 2, 3 | ---------------| 0, 1, 4, 9 | ---------------|
-| Licznik | ------------>| Potęgowanie | ------------>| Wyświetlacz |
-| -----------|             | ---------------|             | ---------------|
+    |-----------| 0, 1, 2, 3   |--------------| 0, 1, 4, 9   |---------------|
+    | Licznik   | ------------>| Potęgowanie  | ------------>| Wyświetlacz   |
+    |-----------|              |--------------|              |---------------|
 
     func main() {
     naturals:= make(chan int)
@@ -822,16 +953,16 @@ Fajnie opisane potoki w książce s225
 }
 //--------------------------------------------------------------------------------------
 // To samo co wyżej, ale przerobione na funkcje i kanały jednokierunkowe 
-func counter(out chan < - int) {
+func counter(out chan<- int) {
     for x := 0; x < 100; x++ {
         out < - x
     }
     close(out)
 }
 
-func squarer(out chan < - int, in < -chan int) {
+func squarer(out chan<- int, in <-chan int) {
     for v := range in {
-        out<- v * v
+        out <- v * v
 }
 close(out)
 }
@@ -866,7 +997,9 @@ func mirroredQuery() string {
 
 func request(hostname string)(response string) { /* ... */ }
 
-
+fmt.Println(cap(chanels))  // zwróci pojemnosć kanału 
+fmt.Println(len(chanels))  // zwróci liczbę aktualnie zbuforowanych elementów. UWAGA! w momencie odebrania jej, ta informacja może być już przestarzała.
+fmt.Println(<-chanels)	   // zwróci 
 
 //--------------------------------------------------------------------------------------
 /*

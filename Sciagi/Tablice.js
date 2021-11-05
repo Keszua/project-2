@@ -575,9 +575,9 @@ console.log(tab); //[Marcin, Ania, Agnieszka, Piotrek]
 //dekodowanie JSONA
 |                                                |                                                 |                                                 | json_encode($text);                             |
 |                                                |                                                 |                                                 |                                                 |
-|                                                |                                                 |                                                 |                                                 |
-|                                                |                                                 |                                                 |                                                 |
-|                                                |                                                 |                                                 |                                                 |
+//sortowanie
+|                                                |                                                 | sort.Ints(tab)                                  |                                                 |
+|                                                |                                                 | sort.Strings()                                  |                                                 |
 |                                                |                                                 |                                                 |                                                 |
 |                                                |                                                 |                                                 |                                                 |
 |                                                |                                                 |                                                 |                                                 |
