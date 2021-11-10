@@ -27,7 +27,7 @@ Struktura katalogów:
 pwd    // gdzie jeteśmy //= /home/wojtek
 ~$     // katalog domowy, katalog urzytkownika, czyli:  /home/wojtek
 /$     // katalog "główny"
-cd     // przechodznei do katlaogów, albo .. aby cofnąć
+cd     // przechodzenie do katlaogów, albo .. aby cofnąć
 cd /   // przejdz do katalogu głownego
 cd ~   // przejdz do katalogu domowego
 clear  // czyść ekral, lub Ctrl+l
@@ -43,7 +43,7 @@ g - grupa
 o - pozstali
 a - wsystkie te części
 
-//opsis literek przy kalatlochac/plikach:
+//opis literek przy kalatlochac/plikach:
 drwxrwxrwx
 ||  |  |
 ||  |  inni
@@ -80,8 +80,8 @@ mv Folder/* . 	        // kropka. oznacza "przenies do bierzączego"   */
 
 cp ./Temat*  ..Tydzien  //kopiowanie plików
 cp ./*1*  ..Tydzien     //kopiowanie tyko tego, co w nazwie ma jedynkę, tez na poczatku lub na końcu  */
-cp * /studiuje\  TI/    //sopiuj wszystko ze studiuje do IT
-cp * /studiuje\  TI/ -R //sopiuj wszystko ze studiuje do IT z podkatalogami
+cp * /studiuje\  TI/    //skopiuj wszystko ze studiuje do IT
+cp * /studiuje\  TI/ -R //skopiuj wszystko ze studiuje do IT z podkatalogami
 
 cat plik.txt            // pokaż zawartosc pliku tekstowego
 cat >> plik.txt         // po enterze, mozemy wpisywac zawartość do pliku. Aby przerwać wpisywanie Ctrl+C
@@ -113,7 +113,12 @@ ssh komput@192.168.0.140  //połączenie z innym komputerem w sieci (potwiedzić
 top //procesy w systemie
 kill 4284  // zabiajnie wątku (numer z PID)
 
-sudo apt install g++  //instalowanie jakiś pakietów/programó
+sudo apt update       // odśierzenie repozytorium
+apt search openssh    // sprawdz czy istnieje dny program w repozytorium
+systemctl status sshd // sprawdz czy program jest zainstalowany i w jakim stanie
+sudo apt install g++  // instalowanie jakiś pakietów/programów
+apt install mc        // instalacj coś jak Norton Commander (Total Commander)
+
 
 // Tydzień 2 Film 2
 vim   // edytor  (instalacja: sudo install vim)
@@ -835,4 +840,177 @@ $Task = New-ScheduledTask -Action $Action -Trigger $Trigger -Settings $Settings
 Register-ScheduledTask -TaskName 'My PowerShell Script' -InputObject $Task -User 'Humansoft' -Password 'zaq1'
 
 
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+Wirtualne maszyny w PROXMOX
+https://pve3.humansoft.pl:8006/
+Maszyna linuxowa:
+	Utwórz VM ->
+		Głowne:
+			Węzeł: pve3
+			VM ID: kolejny wolny, np 313
+			Nazwa: 
+			Pula zasobów: web
+		OS:
+			Use CD/DVD disc (iso)
+				Przestrzeń: dysk_Arch
+				ISO image: debian-11....
+			Typ: Linux
+			Wersja: 4.X/3.X/2.6 Kernel
+		Dysk:
+			Bus/Device: SCSI
+			Przestrzeń: dysk_web
+			Rozmiar 5GB
+			Format QEMU image format (qcow2)
+			Cache: Domyślnie (No cache)
+		CPU:
+			Sockets: 1
+			Cores: 1
+			Typ: Domyslnie (kvm64)
+		Pamięć:
+			pamięć: 1024
+		Sieć:
+			bridge: vmbr0
 
+
+Instalacja linuxa
+	Instal   (Nie graficzny)
+	
+	Sieć:
+		10.10.10.182/24
+		Brama 10.10.10.252
+			
+			
+		Adresy serwerów: 1.1.1.1
+		Nazwa hosta: ihermes-dev
+		Nazwa domeny: (pusta)
+		
+		Administrator root
+		Hasło: Haselko123
+			
+		Nazwa urzytkownika: user1
+		Hasło: user1
+		
+		Cały dysk
+		"Wszsytko na jednej partycji"
+		
+			
+		Server lustrzany: polska -> somyslny -> bez HTTP Proxy
+		
+		
+		
+		Zainstaloać GRUB: TAK  // grub to program rozruchowy
+		Urządzenia do instalacji programuu rozruchowego: /dev/sda ...
+		
+			
+Instalacja Windowsa:
+	ISO: pl_win10_multiple_editons_64
+	
+		Dysk 50G
+		Ram 4GB
+			
+			
+			
+			
+			
+			
+Konfiguracja sieci:
+// trzeba buć w katalogu głównym
+/# cd etc/network/
+ip a   // wyświetla konfigurację kart siecowych (coś jak ipconfig)
+nano interfaces   //edycja ustawień sieci:
+	
+	#The primary network interface
+	allow-hotplug ens18
+	iface ens18 inet static
+		address 10.10.10.182/24
+		gateway 10.10.10.252
+		# dns-* options are implemented by the resolvconf package, if installed
+		dns=nameserver 1.1.1.1
+		#dns-search ihermes.humansoft.pl
+
+
+//restart usługi z karta siecową: (aby nie stracić połączenia zdalnego)
+/# ifdown ens18 && ifup ens18    // ens18 - to nazwa katy sieciowej
+
+// pingownaie w jakś stroną:
+ping wp.pl
+
+
+
+systemctl  //do zarządzania usługami
+systemctl status sshd  // suługa do zdalnego połączenia
+
+
+// nadanie uprawnień dla zdalego użytkownika (na oryginalmym sprzęcie przez klawieturę):
+app install sudo           // instalacja usługi
+usermod -a -G sudo user1   // dodaj urzytkownika do grupy sudo
+
+// przy płaczeniu przez SSH:
+sudo -i   // zmiana urzytkownika na root i przejdz do katalogu root/
+sudo -s   // zmiana urzytkownika na root i pozostań tam gdzie jesteś
+
+
+
+//-------------------------------------------------------------------------------------------------
+// Kompilacja pliku wynikowego dla linuxa:
+// stworzyć lik build_linux.bat
+// Zawartość pliku:
+	set GOOS=linux
+	go build
+// uruchomić plik:
+	.\build_linux.bat
+	
+	
+//-------------------------------------------------------------------------------------------------
+// Przesłanie pliku do zdalnej maszyny:
+// Przez program WinSCP
+
+W WinSCP po stronie linuxa, mam dostęp tylko do katalogu /home/user1
+W SSH:
+Stworzyć nowy folder w /opt   (można to zrobić w mc) Czyli tworze katalog ihermes-test
+	
+Przenieść ten plik do /opt/ihermes-test 
+Nadać uprawnienia do uruchomienia:
+	chmod +x ihermesTest
+Uruchomić plik:
+	./ihermesTest
+
+//-------------------------------------------------------------------------------------------------
+//Aby serwer uruchamiał się sam po restarcie, należy:
+
+// Zakładam że mam plik który będe uruchamiał w katalogu:  /opt/ihermes-test/ihermesTest
+
+
+//W katalogu
+	/etc/systemd/system
+//zakładam plik:
+	ihermes.service
+
+	//zawartość pliku dystrlicdev.service
+		[Unit]
+		Description=ihermes 
+
+		[Service]
+		ExecStart=/opt/dystrlic-dev/dystrlic
+		WorkingDirectory=/opt/dystrlic-dev
+		Restart=always
+
+		[Install]
+		WantedBy=multi-user.target
+
+
+//W katalogu  /etc/systemd/system  wywołuje polecenia:
+	systemctl enable ihermes.service
+	systemctl start ihermes
+
+
+
+//-------------------------------------------------------------------------------------------------
+
+
+b2b: 10.10.10.181  -> root  -> Ha...
+ 
+
+			

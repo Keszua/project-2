@@ -1552,9 +1552,16 @@ func readBool(s string) bool {
    
    
    
+//--------------------------------------------------------------------------------------
+//Przygotowanie programu dla linuxa:
+
+//przygotowacv plik build_linux.bat
+// Zawartość pliku:
+	set GOOS=linux
+	go build
    
-   
-   
+// uruchomić plik poleceniem:
+.\build_linux.bat
    
    
    
