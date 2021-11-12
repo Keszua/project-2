@@ -114,10 +114,10 @@ top //procesy w systemie
 kill 4284  // zabiajnie wątku (numer z PID)
 
 sudo apt update       // odśierzenie repozytorium
-apt search openssh    // sprawdz czy istnieje dny program w repozytorium
+apt search openssh    // sprawdz czy istnieje dany program w repozytorium
 systemctl status sshd // sprawdz czy program jest zainstalowany i w jakim stanie
 sudo apt install g++  // instalowanie jakiś pakietów/programów
-apt install mc        // instalacj coś jak Norton Commander (Total Commander)
+apt install mc        // instalacj coś jak Norton Commander (Total Commander) Ctrl+O - aby przełączyć go do tła
 
 
 // Tydzień 2 Film 2
@@ -918,7 +918,11 @@ Instalacja Windowsa:
 Konfiguracja sieci:
 // trzeba buć w katalogu głównym
 /# cd etc/network/
-ip a   // wyświetla konfigurację kart siecowych (coś jak ipconfig)
+ip address   // wyświetla konfigurację kart siecowych (coś jak ipconfig)
+ip a         // wyświetla konfigurację kart siecowych (to samo co wyżej, tylko skrocone)
+
+ip route    // routing - czyli jak skonfigurowana jest brama domyślna
+
 nano interfaces   //edycja ustawień sieci:
 	
 	#The primary network interface
@@ -982,7 +986,6 @@ Uruchomić plik:
 
 // Zakładam że mam plik który będe uruchamiał w katalogu:  /opt/ihermes-test/ihermesTest
 
-
 //W katalogu
 	/etc/systemd/system
 //zakładam plik:
@@ -1002,10 +1005,19 @@ Uruchomić plik:
 
 
 //W katalogu  /etc/systemd/system  wywołuje polecenia:
-	systemctl enable ihermes.service
+	systemctl enable ihermes.service  
 	systemctl start ihermes
+	
+	systemctl status ihermes   // żeby sprawdzić, czy się uruchomiło. Gdy nei, sprawdz, czy sa uprawnienia do uruchamiania.
+	systemctl stop ihermes     
+	
+	
 
+//po uruchomieniu usługi, po wpisaniu do przeglądarki http://10.10.10.182:8000/ powiniśmy widzieć odpowiedz serwera
 
+//aby sprawdzić, na jakich portach aktualnie działamy:
+	netstat -tulpn
+	
 
 //-------------------------------------------------------------------------------------------------
 
@@ -1013,4 +1025,42 @@ Uruchomić plik:
 b2b: 10.10.10.181  -> root  -> Ha...
  
 
-			
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+VIM
+Esc        // przejdz do trybu komend
+hjkl       // Poruszanie się 
+i Insert   // pisz tekst w miejscu kurora
+a          //append - dopisz 
+x          // kasuj jeden znak
+d d        //kasuj cąła linijkę
+
+v        // zacznij kopiowanie (teraz zaznacz co kopiować)
+y        // zakończ kopiwanie 
+p        // wklej zawarość schowka
+ 
+/szukany tekst  //szukanie tekstu i Enter żeby przejść do pierwszego znalezionego
+n               // przejdz na kolejne znalezione
+N               // przejdz na poprzednie znalezione
+:s/txt1/txt2    // odszukaj i zmaień zamiana jednego tekst
+:s/txt1/txt2/g  // odszukaj i zmaień zamiana wystkich wystapień w JEDNEJ linijce
+:%s/txt1/txt2/g  // odszukaj i zmaień zamiana wystkich wystapień w JEDNEJ linijce
+u               // cofnij (taki Ctrl+Z)
+
+ 
+:w         // zapisz plik
+:q         // wyjdz z pliku
+:q!        // wyjdz z pliku bez zapisywania
+:x!        // wyjdz z pliku bez zapisywania
+
+
+
+
+
+
+
+
+
+

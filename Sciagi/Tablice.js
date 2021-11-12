@@ -577,7 +577,7 @@ console.log(tab); //[Marcin, Ania, Agnieszka, Piotrek]
 |                                                |                                                 |                                                 |                                                 |
 //sortowanie
 |                                                |                                                 | sort.Ints(tab)                                  |                                                 |
-|                                                |                                                 | sort.Strings()                                  |                                                 |
+|                                                |                                                 | sort.Strings(tablicaStringow)                   |                                                 |
 |                                                |                                                 |                                                 |                                                 |
 |                                                |                                                 |                                                 |                                                 |
 |                                                |                                                 |                                                 |                                                 |
