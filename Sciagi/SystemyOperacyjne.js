@@ -35,8 +35,16 @@ dir    // przegladaj katalog
 vdir   // pełne informacje o katalogach
 ls     // zawartość katalogu (jak dir)
 ls -l  // pełne informacje o katalogach
-ls -la // pokaz pliki i katalogi uryte
+ll     // to samo co ls -l  (nie działą w Debianie)
+ls -a  // pokaz pliki i katalogi ukryte
+ls -la // pokaz pliki i katalogi ukryte w formie listy ze szczegułami
 ls -jh // ładnie poakzuje wielkość plików
+ls -ld // informacje o tym katalogu (bez zawartości)
+ls -lt // posegregowane według czasu na górze najmłodsze
+ls -ltr// posegregowane według czasu (reverse) 
+ls -lt --time=atime  // posegregowane według data modyfikacji (access time) 
+ls -lt --time=ctime  // posegregowane według daty utworzenia (create time) 
+
 // nadawianie uprawnień:
 u - własiciel
 g - grupa 
@@ -814,7 +822,7 @@ Uruchomienie skryptu z harmonogramu zadań:
 2. W nim plik witaj.ps1
 3. Otwierasz harmonogram zadań:
     a) Zaznacza Bibloteka harmonogramu zadań
-    b) N apolu z zadaniami PM->Utwórz nowe zadaie...
+    b) N apolu z zadaniami PM->Utwórz nowe zadanie...
     c)  Ogólne -> Nazwa -> Wpisz nazwę
         Wyzwalacze -> Nowy... -> Ustaw jak ma sie uruchamiać
         Akce -> Nowy... 
@@ -878,7 +886,7 @@ Instalacja linuxa
 	Instal   (Nie graficzny)
 	
 	Sieć:
-		10.10.10.182/24
+		10.10.10.182/24  (na maszynie skoleniowej ustawić .185)
 		Brama 10.10.10.252
 			
 			
@@ -935,6 +943,10 @@ nano interfaces   //edycja ustawień sieci:
 		#dns-search ihermes.humansoft.pl
 
 
+// na windowsie, dns taki dam jak brama domyslna		
+// Maposwanie dysku: przez muj komputer -> mapowanie sysku. Wybrać sysk S i naswa folderu:  \\ad.humansoft.pl\s
+
+		
 //restart usługi z karta siecową: (aby nie stracić połączenia zdalnego)
 /# ifdown ens18 && ifup ens18    // ens18 - to nazwa katy sieciowej
 
@@ -959,7 +971,7 @@ sudo -s   // zmiana urzytkownika na root i pozostań tam gdzie jesteś
 
 //-------------------------------------------------------------------------------------------------
 // Kompilacja pliku wynikowego dla linuxa:
-// stworzyć lik build_linux.bat
+// stworzyć link build_linux.bat
 // Zawartość pliku:
 	set GOOS=linux
 	go build
@@ -1023,7 +1035,54 @@ Uruchomić plik:
 
 
 b2b: 10.10.10.181  -> root  -> Ha...
- 
+iHermes: 10.10.10.182  -> user1  -> user1
+
+
+//mapowanie dysku, wpisać \\ad.humansoft.pl\s
+// Moja baza jest ustawiona na 
+port: 2150
+// Port bazy ustawia sie w SQL Server Configurator ->  SQL Sever Network Configutraotr -> Protocol for SQL2017 -> TCP/IP -> PM -> Właściwości -> IP Addresses -> TCP Port
+
+//Kopia bazy:
+// W programie Microsoft SQL Server manager
+// Rozwinąć 10.10.10.10.218,2150 -> Databases -> konkretna baza -> PM -> Tasks -> Back Up...
+// W Source będzie domyślnie wybrana baza z której klikneliśmy. Wskazuemy miejsce, gdzie ma się wykonać i OK
+
+// Załadownie bazy z kopii:
+// Rozwinąć 10.10.10.10.218,2150 -> Databases -> PM -> Restore Databases...
+// Wybrac Device i wskazać plik
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+// Generowanie klucza 
+// W pliku:  /etc/ssh/sshd_config
+// Odkomentować linijkę     AuthorizedkeysFile  ..ssh/authorized_keys  ..ssh/authorized_keys2
+// zrestarować usługe:
+service sshd restart
+
+// generownaie klucza:  -t wersja kodowania, obenie chyba ed25519 jest najnowszy. 
+// gdy poprosi o hasło, dać puste, wskazać, wskazać ścieżkę dla urzytkownika, czyli: /home/user1/.ssh
+ssh-keygen -t ed25519 
+// stworzy dwa pliki: user1  i  user.pub
+
+//zawartość user.pub trzeba skopiować do authorized_keys  (zakładam że jestem w folderze /home/user1/.ssh)
+cat user1.pub > authorized_keys
+
+//klucz (nie publiczny) trzeba wyciągnąć i w formie pliku umieciś w projekcie windowsowym
+// można to zrobić przez program WinSCP, ale on nie widzi ukrytych, więc trzeba skopiować ten plik wyżej:
+cp ./.ssh/user1 user1_klucz
+// i zmienić urzytkownika i grupy dla pliku:
+chown user1:user1 user1_klucz
+
+
+// zmiana urzytkownika (przelogowanie)
+su user1
+// przelogowanie na roota:
+su -
+
+//zmiana ustawień urzytkownika i grupy dla pliku:
+chown user1:user1 .ssh
 
 
 //-------------------------------------------------------------------------------------------------
@@ -1032,7 +1091,7 @@ b2b: 10.10.10.181  -> root  -> Ha...
 VIM
 Esc        // przejdz do trybu komend
 hjkl       // Poruszanie się 
-i Insert   // pisz tekst w miejscu kurora
+i Insert   // pisz tekst w miejscu kursora
 a          //append - dopisz 
 x          // kasuj jeden znak
 d d        //kasuj cąła linijkę
