@@ -848,6 +848,19 @@ $Task = New-ScheduledTask -Action $Action -Trigger $Trigger -Settings $Settings
 Register-ScheduledTask -TaskName 'My PowerShell Script' -InputObject $Task -User 'Humansoft' -Password 'zaq1'
 
 
+//Zmiana wielkości dysku twardego, zmiana partycji
+// w cmd uruchomić:
+	diskpart
+	list disk           // wyświetla wszystkie dostępne fizyczne dyski
+	selest disk 0       // wybieram konkretny dysk
+	list partition      // lista partycji na WYBRANYM dysku
+	select partition 1  // od tej pory, po wywołaniu list partition, będzie zaznaczona konkretna partycja
+	delete partition    // usówa ZAZNACZONA partycję 
+	delete partition override  // usówa partycję chronioną
+
+
+
+
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -885,11 +898,18 @@ Maszyna linuxowa:
 Instalacja linuxa
 	Instal   (Nie graficzny)
 	
+	W pierwszym okienku wybrać język angielski
+	Następnie lokalizacja: Europa ->  Poland -> United states -> Polish
+
+
 	Sieć:
-		10.10.10.182/24  (na maszynie skoleniowej ustawić .185)
+		10.10.10.182/24  (na maszynie szkoleniowej ustawić .185)
 		Brama 10.10.10.252
 			
-			
+		Name serwer: 10.10.10.252
+		Hostname: tu będzie nazwa cały czas widoczna w konsoli
+		Domain name: - zostawić puste
+	
 		Adresy serwerów: 1.1.1.1
 		Nazwa hosta: ihermes-dev
 		Nazwa domeny: (pusta)
@@ -900,16 +920,25 @@ Instalacja linuxa
 		Nazwa urzytkownika: user1
 		Hasło: user1
 		
-		Cały dysk
-		"Wszsytko na jednej partycji"
+		Ustawienie dysku:
+		Partitoning method: -> Maual
+		Wybrać dysk (SCSI3….)
+		TP - >Tak
+		Mniejszą na primary  -> Use as  -> wsap area  -> potwierdzić (przez Done setting up the partision)
+
+		Resztę dysku na Primary (w formacie Ext4)
+		Po zaplanowaniu partycjonowania -> Finish…  -> potwierdzić
+
+		Czy mam więcej dysków (Scan extra instal….) -> NO
+
 		
 			
-		Server lustrzany: polska -> somyslny -> bez HTTP Proxy
-		
+		Server lustrzany: polska -> domyslny -> bez HTTP Proxy
+		Software selection -> domyślne (tylko SSH i standard)
 		
 		
 		Zainstaloać GRUB: TAK  // grub to program rozruchowy
-		Urządzenia do instalacji programuu rozruchowego: /dev/sda ...
+		Urządzenia do instalacji programu rozruchowego: /dev/sda ...
 		
 			
 Instalacja Windowsa:
@@ -967,7 +996,10 @@ usermod -a -G sudo user1   // dodaj urzytkownika do grupy sudo
 sudo -i   // zmiana urzytkownika na root i przejdz do katalogu root/
 sudo -s   // zmiana urzytkownika na root i pozostań tam gdzie jesteś
 
-
+// Aby nie trzeba było wpisywać hasła za każdym razem, gdzieś w plku trzeba ustawić: (jeszcze nie wiem w którym)
+chyba w: /etc/sudoers 	
+// Edytować linijkę i wpisać:
+username ALL=(ALL) NOPASSWD:ALL
 
 //-------------------------------------------------------------------------------------------------
 // Kompilacja pliku wynikowego dla linuxa:

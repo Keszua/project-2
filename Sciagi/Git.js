@@ -337,7 +337,7 @@ git clone https://github.com/Codeinwp/Ideal-Image-Slider-JS.git . 	//(z kropką)
 
 // GITIGNORE
 .gitignore  -plik z ignorowanymi elementami
-//Dodajemy nazwę pliku bez żadnych cudzsłowiów, przykład:
+//Dodajemy nazwę pliku bez żadnych cudzysłowiów, przykład:
 //jeden plik w jednej linijce:
 plik1.txt
 /folder
