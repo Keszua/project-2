@@ -1,0 +1,35 @@
+Proces biznesowy - ciąg uporządkowanych czynności, których celem jest osiagnięcie konkretnego efektu, cy wykonania jakiejs pracy.
+
+Modelowanie procesów biznesoych - jest to zbiór czynności, zwiazanych z transformacją wiedzy o funkcjonowaniu wybranego obszaru biznesowego w modele odwzorowujące procesy realizowane w firmie.
+
+BPMN - graficzna notacja służąca do opisywaia procesów biznesowych.
+
+O   zdarzenia (Events)
+ _
+|_| aktywności
+->  Przepływ sekwencji
+<>  bramki
+
+
+www.draw.io
+https://app.diagrams.net/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

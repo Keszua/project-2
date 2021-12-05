@@ -1,0 +1,280 @@
+
+# Trzeba sciagnac i zainstalowac dockera 
+https://www.docker.com/get-started
+
+# oraz WSL2  (taki linux na windowsa)
+https://docs.microsoft.com/pl-pl/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package
+
+# zakladanie konta na:
+https://hub.docker.com/signup
+
+
+# link do repo z kursu: 
+https://github.com/pnowy/docker-course
+#-------------------------------------------------------------------------------------------------
+docker version
+docker info       # liczba kontenerow i obrazow
+
+
+docker            # wyswietli liste polecen
+
+docker image pull nazwaObrau  # sciagnieci danego obrazu, bez uruchamiania
+docker image pull nazwaObrau:mojTag  # sciagnieci danego obrazu + nadaj tag ale tez jakos koles sciagal odpowiednie wersje za pomocc tagu (film 18)
+docker run
+docker container run   # uruchomienie NOWEGO kontenera. Jezeli nie posiadamy obrazu, zostanie on sciagniety i uruchomiony
+docker container run --publish 8080:80 --detach nginx  
+#                      |       |    |    |      |- nazwa obrazu
+#                      |       |    |    |- uruchomienie kontenera w tle
+#                      |       |    |- port po stronie kontenera
+#                      |       |- port, na ktorym kontener bedzie dostepny na naszym hoscie (zwykle localhost:8080)
+#                      |- przekierowanie 
+#  zatrzymanie kontenera przez:  Ctrl+C
+
+docker container run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -d --name=myName docker.elastic.co/elasticsearch/elasticsearch:6.5.4
+#                                               |                                   |           |                                             |- wersja albo tag
+#                                               |                                   |           |- nazwa obrazu
+#                                               |                                   |- nazwa kontenera
+#                                               |- przekazanie zmiennej srodowiskowej
+
+#  uruchom w trybie interaktywnym z terminalem (wyjscie komenda exit)
+docker container run -it nginx bash 
+docker container start -ai idkontenera
+docker container exec -it idkontenera bash  #  odpalenie konsoli na dzialajacym kontenerze
+
+docker stop idkontenera
+
+docker container ls     #  wyswietli liste kontenerow URUCHOMIONYCH
+docker ps               #  po staremu 
+docker container ls -a  #  wyswietli liste wszsytkich kontenerow, czyli nie uruchominych tez
+docker image ls         #  lista obrazow
+
+docker container start idkontenera  #  uruchominie istniejacego kontenera
+docker rm idkontenera               #  usowanie kontenera
+docker system prune --all           #  usowanie WSZYTKICH obrazów jednym poleceniem:
+
+
+docker container logs nazwaKontenera
+docker container logs nazwaKontenera -f # ciagla obserwacja (zablokuje CLI)
+
+curl localhost:8080  # zwroci kod HTML strony
+curl localhost:9200  # zwroci JSON (jezli mamy odpalony elastic)
+
+# curl - taka przegladarka z linii komend
+curl -H "Content-Type: application/json" -XPOST "http://localhost:9200/docker/image/1" -d "{ \"name\" : \"elasticsearch\"}"
+curl localhost:9200/docker/_search
+
+#  do obserwowania, co sis dzieje w kolejkach
+docker run -d --name rabbit-in-the-hole -p 8081:15672 rabbitmq:3-managment
+#  po wejsciu na przegladarce, mozna sie zalogowac L: guest  H: guest
+
+
+docker container top idkontenera      #  obserwacja procesow
+docker container inspect idkontenera  #  wyswietla pelna konfiguracje kontenera (w formacie JSON)
+docker container stats                #  "live striming" ogolny status wszystkich uruchominych kontenerow
+
+
+#  -------------------------------------------------------------------------------------------------
+docker network ls 
+docker network inspect nazwaSieci
+
+#  tworzenie sieci:
+docker network create --driver=bridge mojaNowaNazwaSieci
+
+#  uruchomienie kontenera "nginx" w konkretnej sieci (tutaj nazwa seici to: skynet)
+docker container run -d --network=skynet nginx
+docker network connect skynet first   #  podlaczenie do sieci, kontenera first
+docker network disconnect bridge first #  odpiecie kontenera od domyslnej sieci (bo teraz byly dwie sieci)
+
+#  Usuwanie sieci:
+#  w pierszej kolejnosci trzeba odpiac lub usunac kontenery
+
+#  DNS
+#  Film 17 (Docker od podstaw)
+#  Trzeba sprawdzic IPAddress  (polecenie docker network inspect ...)
+#  Endpoint informujacy o stanie serwisu: (w konsoli linuxa)
+curl http://172.17.0.3:8080/actuator/health
+
+#  do wywyłania postów curlem:
+curl -X POST http://localhost:3000/parametr
+
+
+#  urzycie opcji link ... na przykladzie polaczenia ado bazy MSQL
+docker run --name wordpressdb -e MYSQL_ROOT_PASSWORD=wordpress -e MYSQL_DATABASE=wordpress -d mysql:5.7
+docker run -e WORDPRESS_DB_PASSWORD=wordpress -d --name wordpress --link wordpressdb:mysql -p 80:80  wordpress:5-php7.2
+#                                   |                   |                |                    |- port zewnetrzny dla przegladarki
+#                                   |                   |                |           |- wewnetrzny alias, domyslnia nazwa dla bazy danych to mysql
+#                                   |                   |                |- nazwa kontenera
+#                                   |                   |- nazwa kontenera
+#                                   |- nazwa bazy danych
+
+
+#  -------------------------------------------------------------------------------------------------
+#  Budowanie obrazow
+
+docker image history nazwaObrazu   #  mozna podejzec, kiedy i z jakich warstwy zostal stworzony obraz
+docker image inspect idKontenera  #  wyswietla pelna konfiguracje obrzu (w formacie JSON)
+
+#  nadawanie nowego tagu
+docker image tag nazwa:aTagiem nazwaKontaDockerHub/nazwa
+#                                                   |- nazwa z ewentualnym tagiem
+
+#  wyslanie obrazu na wlasne repozytorium:
+#  trzeba byc zalogowanym, te same dane co na https://hub.docker.com/ :
+docker login 
+docker image push nazwaKontaDockerHub/nazwaObrazu:zTagiem
+docker logout #  jezli chcemy sie wylogowac 
+
+#  pobranie ze swojego repo
+docker image pull nazwaKontaDockerHub/nazwaObrazu:zEwentualnymTagiem
+
+#  tworzenie obrazu na podstawie kontenera:
+docker container commit idKontenera nazwaKontaDockerHub/nazwaObrazu:zTagiem
+
+
+#  -------------------------------------------------------------------------------------------------
+#  Dockerfile
+#  tworzenie kontenera z wykorzystaneim pliku Dockerfile
+#  w filmie 21 koles pokazuje plik Dockerfile gdzie definiuje sie, jak przerobic i skonfigurowac obraz
+https://docs.docker.com/engine/reference/builder/
+#  trzeba bylo konsole otworzyc w folderze w ktorym jest plik Dockerfile
+docker image build -t nowaNazwaObrazu:tag .
+
+
+#  Przykład pliku:
+FROM node:10-slim
+WORKDIR /app             #  Create app directory WORKDIR to tak jak RUN cd /app   Dla noda: /app   dla nginx: /usr/share/nginx/html
+
+COPY package*.json ./    #   Kopiuje pliki Z lokalnego host DO obrazu
+
+RUN npm install --only=production   #   RUN wykonuje komendę
+
+COPY . .   #   Kopiuj wszystko z folderu, oprucz elementów zdefiniowanych 
+
+EXPOSE 3000  #  port do nasłuchu
+
+ENV NODE_ENV production  #   Zmienne srowowiskowe przekazane do obrazu
+
+#   ENTRYPOINT [ "entrypoint.sh" ]  Gdy nie podamy Entrypoint, wywołą się poelcenie domyślne: /bin/sh -c
+#   "entrypoint.sh" - to plik, który powninen być obok Dockerfile
+#   CMD ["trafik"] specyfikuje argument, jaki będzie przekazywany do ENTRYPOINTa
+CMD ["node", "app.js"]
+
+LABEL   #  - metadane do obrazu
+
+
+
+#--------------------------------------------------------------------------------------------------
+#  Volumes
+docker volume ls     #  wyświetl wszytkie volumeny
+docker volume prune  #  usuwanie wszytkie volumeny
+
+#  aby sprawdzić czy volumen jest podpięty, wywołac polecenie:
+docker container inspect idKontenera
+#  w "Mounts": [    powinien być "Type": "volume"  z jego nazwą (id)
+
+#  aby do kontenera podpiąć istniejący wolumen:
+docker container run -d --mount 'src=idVolumenu,dst=/appdata' -p 3000:3000 nazwaObrazu
+
+#  starsza metoda podpinania volumenu, przez literę -v
+docker container run -d -v idVolumenu:/appdata' -p 3000:3000 nazwaObrazu
+
+#  uruchomienie kontenera i stworzenie volumenu z "ludzką" nazwą
+docker container run -d --mount 'src=nazwa-volumenu,dst=/appdata' -p 3000:3000 nazwaObrazu
+
+
+
+
+#--------------------------------------------------------------------------------------------------
+#  Bind mounnts
+#  coś jak Volumes dla wersji developerskiej
+
+#  uruchamiamy kontener z flagą -v
+docker run -d -p 80:80 -v $(pwd):/usr/share/nginx/html nginx
+#  w przypadku windowsa:
+docker run -d -p 80:80 -v //c/User/przemek/data:/path/data
+#  u mnie zadziałało tak: (w konsoli bash)
+docker run -d -p 80:80 -v //d/Karolek/Docker/dockerfiles/nginx-simple:/usr/share/nginx/html nginx
+
+
+
+#--------------------------------------------------------------------------------------------------
+#  Docker compose
+#  Definicja w pliku: docker-compose.yml  #  może być inna nazwa, ale będzie trzeba ją podać w komendzie
+
+#  ogólny pos:
+version: '3.7'
+
+services:               # definicja kontenerów (odpowiednik docker container run)
+
+  servicename1:         # nazwa serwisu (np. "db" lub "elasticsearch" ), będzie to także DNS serwisu w sieci
+    image: mysql:5.7    # nazwa obrazu którego użyć do uruchomienia kontenera (opcjonalny w przypadku użycia build)
+    environment:        # zmienne środowiskowe przekazywane do kontenera przy jego uruchomieniu
+      KEY: value
+      KEY2: value2
+      # - KEY=value
+      # - KEY2=value2
+      # MYSQL_ROOT_PASSWORD: somewordpress
+      # MYSQL_DATABASE: wordpress
+      # MYSQL_USER: wordpress
+      # MYSQL_PASSWORD: wordpress
+    env_file:           # zmienne środowiskowe
+      - a.env           # zmienne środowiskowe z pliku
+    command:            # nadpisanie domyślnego polecenia kontenera/obrazu
+    volumes:            # odpowiednik -v z docker run (wsparcie zarówno starszej jak i nowszej składni)
+      - db_data:/var/lib/mysql
+  
+  servicename2:         # kolejny serwis (np: "wordpress")
+    depends_on:         # okreslamy zależność pomiędzy kontenerami. Ten jest zależny od "db", czyli uruchomi się, jak ten poprzedni już będzie działał
+      - db
+    image: wordpress:latest
+
+    ports:
+      - "8000:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306   # adres serwera i port. Adres przez DNS jest taką nazwą jak nazwa kontenera
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+
+
+volumes:                # definicja wolumenu (docker volume create)
+  db_data:              # przyklad z nazwa volumenu (pusta nazwa po dwukropku (chyba))
+
+networks:               # definicja sieci (docker network create)
+
+
+Przykałdowy wordpress
+localhost:8000
+Użytkownik: karol
+H: karol
+
+
+# Aby uruchomić:
+# W konsoli upewnij sie ze jestes na dobrej sciezce i uruchom poleceniem:
+docker-compose up       # tworzy i uruchamia
+# jeśli nie uruchomiony w trybie -d, to konczymy Ctrl+C
+docker-compose start    # uruchomienie stworzonych kontenerów
+# jeśli w trybie -d, zatrzymujemy komendą:
+docker-compose stop
+docker-compose down     # zatrzymanie i usunięcie wszytkich kontenerów i zależności
+
+docker-compose ps       # liste kontenerów
+docker-compose top      # obserwacja procesów
+docker-compose logs     # obserwacja logów
+
+
+
+#--------------------------------------------------------------------------------------------------
+
+https://github.com/veggiemonk/awesome-docker
+
+#  poczytac o Kubernetes znany też jako: K8s
+https://kubernetes.io/
+
+
+Instalacja Minikube : https://www.youtube.com/watch?v=X48VuDVv0do&t=453s   40:23
+
+
+https://ihermes.humansoft.pl/login
+
+
+
