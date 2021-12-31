@@ -184,7 +184,7 @@ TweenMax.staggerFromTo()
 TweenMax.staggerTo(element, 1, {}, .6) //dochodzi 4-ty element, opu�nienie ka�dej animacji
 
 -----------------------------------------------------------------------------
-TimelineMax() - pozwala na sekwencjonowanie animacji. Tworzy o� czasu i u�atwia tworzenia i modyfikowanie animaji
+TimelineMax() - pozwala na sekwencjonowanie animacji. Tworzy os czasu i ulatwia tworzenia i modyfikowanie animaji
 
 const rocket = document.querySelector('.rocket');
 
@@ -192,14 +192,14 @@ TweenMax.to(rocket, 2, {x100});
 TweenMax.to(rocket, 1.5, {rotation90, delay 2});
 TweenMax.to(rocket, 1, {y100, delay 3.5}); //trzeba sumowa� delay'e
 
-//Lub to samo co powy�ej
+//Lub to samo co powyzej
 let tl = new TimelineMax();
 tl.to(rocket, 2, {x100});
-tl.to(rocket, 1.5, {rotation90}); ju� bez delay
+tl.to(rocket, 1.5, {rotation90}); juz bez delay
 tl.to(rocket, 1, {y 100});
-//Lub to samo co powy�ej
+//Lub to samo co powyzej
 tl
-	.to(rocket, 2, {x100})	bez �rednik�w
+	.to(rocket, 2, {x100})	bez srednikow
 	.to(rocket, 1.5, {rotation90})
 	.to(rocket, 1, {y 100});
 
@@ -217,7 +217,7 @@ const gtl = new TimelineMax({
 tl.
 	.to(rocket, 2, {x100})	
 	.to(rocket, 1.5, {rotation90})
-	.add(half-way) tutaj ju� zacznie wykonywa� si� grafika, k�ra jest 3 linijki ni�ej
+	.add(half-way) tutaj juz zacznie wykonywac sie grafika, kora jest 3 linijki nizej
 	.to(rocket, 1, {y 100});
 	.to(rocket, 1.5, {rotation180})
 	.to(rocket, 1, {y 200}, half-way);
@@ -239,8 +239,8 @@ SVG Scalable Vector Graphics
 //   ###     #     ###         
 
 
-Przed rozpocz�ciem pracy w Visual Studio Code, proponowany jest doatek "SVG"  (SVG Language Support)
-Dodatek ten podpowiada sk�adnie i tworzy okienko z podgl�dem (PM na plik .svg i "Preview SVG" ) 
+Przed rozpoczeciem pracy w Visual Studio Code, proponowany jest doatek "SVG"  (SVG Language Support)
+Dodatek ten podpowiada skladnie i tworzy okienko z podgladem (PM na plik .svg i "Preview SVG" ) 
 
 INKSCAPE - Jakis darmowy program do tworzenia grafiki SVG
 
@@ -262,7 +262,7 @@ https://boxy-svg.com/app
 	<img src="img/sun.svg" alt="slonce">
 
 //Dodawanie SVG jako obrazek w wersji edytowalnej (w pliku .html)
-    <!-- Trzeba doda� atrybut xmlns, aby korzysta� z SVG w wersji edytowalnej -->
+    <!-- Trzeba dodac atrybut xmlns, aby korzystac z SVG w wersji edytowalnej -->
     <svg id="sun" xmlns="http://www.w3.org/2000/svg"
         width = "600" height="600" viewBox="0 0 600 600">  
         <!-- Kasztalty: -->
@@ -276,8 +276,8 @@ https://boxy-svg.com/app
         <ellipse cx="300" cy="100" rx="50" ry="70" fill="#eee" stroke="rgba(200, 200, 100, 0.5)" stroke-width="4" />
         
         <!-- Linia
-        Polygon (wielok�t)
-        Polyline (linia �amana) -->
+        Polygon (wielokat)
+        Polyline (linia lamana) -->
         <polyline points="10,40 50,40 30,200" fill="white" stroke="yellow" stroke-width="8" />
 
         

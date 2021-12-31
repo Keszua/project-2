@@ -352,7 +352,7 @@ git rm --cached nazwaPliku  //Jeżeli jakiś plik jest śledzony i chcemy go prz
 git update-index --assume-unchanged nazwa_pliku     // wstrzyma śledzenie zmian w pliku
 git update-index --no-assume-unchanged nazwa_pliku  // wstrzymanie wstrzymania :)
 git ls-files -v | grep "^[[:lower:]]"               // listę plików w których zmiany są ignorowane przez GIT-a.
-git config --global alias.ignored '!git ls-files -v | grep "^[[:lower:]]"'  //proponowany alisa do powyższego polecenia
+git config --global alias.ignored '!git ls-files -v | grep "^[[:lower:]]"'  //proponowany alias do powyższego polecenia
 
 
 

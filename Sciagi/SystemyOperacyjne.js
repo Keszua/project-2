@@ -7,10 +7,10 @@ https://www.virtualbox.org/wiki/Downloads
 W przykladzie instalujemy Ubuntu Desktop
 https://ubuntu.com/download/desktop
 
-Po odpaleniu virtual xoxa, wybieramy:
+Po odpaleniu virtual boxa, wybieramy:
 Maszyna -> Nowa -> nadajemy nazwę, i wybieramy Typ: Linux  -> Dalej
 Przydzielamy 4G Ramu i 10GB dysku i rozmiar stały. 
-Po anciśnięciu "utwórz", powinna się poajwiąc nowa ikona po lewo z napisaem "Ubuntu" i można ją "Uruchom"
+Po naciśnięciu "utwórz", powinna się poajwiąc nowa ikona po lewo z napisaem "Ubuntu" i można ją "Uruchom"
 Wybieramy dysk, rzez "dodaj" i odszukujemy obraz (nazwa ubuntu-data-desktop-amd64.iso). 
 Po otworzeniu wybieramy "Choose".
 
@@ -24,8 +24,8 @@ Maszyna -> Tools -> Snapshots
 //-------------------------------------------------------------------------------------------------
 //Film 2
 Struktura katalogów:
-pwd    // gdzie jeteśmy //= /home/wojtek
-~$     // katalog domowy, katalog urzytkownika, czyli:  /home/wojtek
+pwd    // gdzie jeteśmy //= /home/wojtek (print work directory)
+~$     // katalog domowy, katalog uzytkownika, czyli:  /home/wojtek
 /$     // katalog "główny"
 cd     // przechodzenie do katlaogów, albo .. aby cofnąć
 cd /   // przejdz do katalogu głownego
@@ -44,20 +44,24 @@ ls -lt // posegregowane według czasu na górze najmłodsze
 ls -ltr// posegregowane według czasu (reverse) 
 ls -lt --time=atime  // posegregowane według data modyfikacji (access time) 
 ls -lt --time=ctime  // posegregowane według daty utworzenia (create time) 
+ls -F  // doda do katalogów slesz a do linków doda @
+ls /etc > etc.txt // wynik plecenia ls zostanie zapisany do pliku etc.txt
 
-// nadawianie uprawnień:
+tree   //tali ls ale w formie drzewa ( w Debianie trzeba to doinstalwoać sudo apt install tree)
+
+// nadawanie uprawnień:
 u - własiciel
 g - grupa 
-o - pozstali
-a - wsystkie te części
+o - pozostali
+a - wszystkie te części
 
 //opis literek przy kalatlochac/plikach:
 drwxrwxrwx
 ||  |  |
 ||  |  inni
 ||  grupa
-|urzytkownik
-"-" to plik, "d" to katalog
+|uzytkownik
+"-" to plik, "d" to katalog, "l" to link (skrót)
 
 rwx
 |||
@@ -65,82 +69,170 @@ rwx
 |modyfikacja
 odczyt
 
-touch nowy.txt          // stworzenie nowego pliku
+touch nowy.txt              // stworzenie nowego pliku (pustego pliku)
 chmod u g o 
-chmod a+rw nowy.txt     // nadanie uprawneiń odczytu i zapisu dla wszystkich "sekcji"
-chmod o-rw nowy.txt     // usuń uprwnienia dla pozostałych
-chmod o+r,g-rx          // mix uprawnień
-chmod 000 nowy.txt      // usuń wszystkie uprawnienia: --- --- ---
-chmod 741 nowy.txt      // nadanie: rwx r-- --x
+chmod a+rw nowy.txt         // nadanie uprawneiń odczytu i zapisu dla wszystkich "sekcji"
+chmod o-rw nowy.txt         // usuń uprwnienia dla pozostałych
+chmod o+r,g-rx              // mix uprawnień
+chmod 000 nowy.txt          // usuń wszystkie uprawnienia: --- --- ---
+chmod 741 nowy.txt          // nadanie: rwx r-- --x
 
-mkdir nazwakatalogu     // zakładanie katalogu
-mkdir katalog1 katalog2 // zakałdamy dwa katalogi na raz 
-mkdir 'Nazwaz ze spacjami' // zakałdamy katalogi z nazwą ze spacją
-mkdir 'kata 1' 'kata 2' // zakałdamy dwa katalogi na raz ze spacjami
+mkdir nazwakatalogu         // zakładanie katalogu
+mkdir katalog1 katalog2     // zakałdamy dwa katalogi na raz 
+mkdir 'Nazwaz ze spacjami'  // zakałdamy katalogi z nazwą ze spacją
+mkdir 'kata 1' 'kata 2'     // zakałdamy dwa katalogi na raz ze spacjami
 mkdir -m 777 NazwaKatalogu  //zakładznie katalogu + nadanie uprawnień
-mkdir $USER             //stworzy atalog o nazwie użytkownika
+mkdir $USER                 //stworzy atalog o nazwie użytkownika
+mkdir -p data/finance/2020  //tworzenie potoku katalogów (katalog w katalogu)
 
-rmdir pustyKatalog      // usuwanie pustego katalogu
-rm -r pełnyKatalog      // usówa katalog wraz z zawartością
-mv nazwa NowaNazwa      // zmiana nazwy katalogu
-mv Kot/reksio.txt Pies/  //przenieś "reksia" z kota do psa
-mv Folder/* . 	        // kropka. oznacza "przenies do bierzączego"   */
+rmdir pustyKatalog          // usuwanie pustego katalogu
+rm -r pełnyKatalog          // usówa katalog wraz z zawartością
+rm -ri pełnyKatalog         // usówa katalog interaktywnie, czyli pyta o każdy plik oddzielnie
+rm A*                       // usówa wszystko zaczynające sie od litery A
+ 
+mv nazwa NowaNazwa          // zmiana nazwy katalogu
+mv -b nazwa NowaNazwa       // zmiana nazwy katalogu z zabespieczeniem (backup), gdyby już istniał taki plik (lub katalog)
+mv Kot/reksio.txt Pies/     // przenieś "reksia" z kota do psa
+mv Folder/* .               // kropka. oznacza "przenies do bierzączego"   */
 
-cp ./Temat*  ..Tydzien  //kopiowanie plików
-cp ./*1*  ..Tydzien     //kopiowanie tyko tego, co w nazwie ma jedynkę, tez na poczatku lub na końcu  */
-cp * /studiuje\  TI/    //skopiuj wszystko ze studiuje do IT
-cp * /studiuje\  TI/ -R //skopiuj wszystko ze studiuje do IT z podkatalogami
+cp file.txt copy.txt        // przygotowanie kopii pliku
+cp ./Temat*  ..Tydzien      // kopiowanie plików
+cp ./*1*  ..Tydzien         // kopiowanie tyko tego, co w nazwie ma jedynkę, tez na poczatku lub na końcu  */
+cp * /studiuje\  TI/        // skopiuj wszystko ze studiuje do IT
+cp * /studiuje\  TI/ -R     // skopiuj wszystko ze studiuje do IT z podkatalogami
 
-cat plik.txt            // pokaż zawartosc pliku tekstowego
-cat >> plik.txt         // po enterze, mozemy wpisywac zawartość do pliku. Aby przerwać wpisywanie Ctrl+C
+ln źródło cel               // tworzenie linku, tak samo jak przy kopiowaniu. Zwiekszy się licznik dowiązania (linki twarde)
+ln -s /tmp/new_lindex ~my_copy.txt //link symboliczny pomiedzy dyskami (filesystemami, podgląd przez df)
 
-echo "tekst na ekran"   // wypisze tekst na ekranie
-echo "To jest treścc wiadomości" >> ./Bazy\ danych/Plik.txt  //wpisz treść do pliku 
 
-find . -name *.txt      // szukaj w folderze bierzączym nazw plików o rozszeżeniu *txt
+cat                         // Standardowe wejście (klawiatura) i standardowe wyjście (ekran). Aby przerwać Ctrl+d  
+cat plik.txt                // pokaż zawartość pliku tekstowego (wejście to plik a wyjscie to domślnie ekran)
+cat >> plik.txt             // po enterze, mozemy wpisywac zawartość do pliku. Aby przerwać wpisywanie Ctrl+C
+cat /plik.txt > plikWyjsciowy.txt  // ustawienie wejścia jako plik, wyjścia jako plik. Wywołanie spowodowało skopiowanie zawartości pliku
+cat /plik.txt >> plikWyjsciowy.txt // Jeszcze raz dopisze to samo
+cat plik1 plik2 > plik_z_obiema_zawartosciami
+cat < plik.txt              // przekierowanie pliku na standardowe wyjście, czyli wyświetli zawartość pliku na ekranie
+ls /etc | cat > etc.txt     // wynik plecenia ls zostanie zapisany do pliku etc.txt
+
+
+echo "tekst na ekran"       // wypisze tekst na ekranie
+echo "To jest treść wiadomości" >> ./Bazy\ danych/Plik.txt  //wpisz treść do pliku 
+
+find . -name *.txt          // szukaj w folderze bierzączym nazw plików o rozszeżeniu *txt
 find . -name *.txt -exec ls -l {} \:  // odszuka i wyświetli pliki
 find . -name *.txt -exec chmod u-w,g-x,o-rw {} \:  // odszuka i zmieni uprawnienia plików
 
 
 // Tydzień 2 Film 1
 
-sudo - //komendy administratora
-sudo passwd root  //zmiana chasła dla administrtora
-su //zmiana urzytkownika
-su root   //przełącz się na administratora
-//po zalogowaniu jako admin, będzie na początku root@urzytkownik i # na końcu
-exit  // wylolgowanie się z admina
-sudo adduser agata  //tworzenie nowego użytkownika (tylko admin może tworzyć nowych urzytkowników)
-su agata  // zaloguj sie na "agata"
-id // wyświetla GRUPY
+sudo -        //komendy administratora
+sudo passwd root  //zmiana chasła dla administratora
+su            //zmiana uzytkownika
+su root       //przełącz się na administratora
+//po zalogowaniu jako admin, będzie na początku root@uzytkownik i # na końcu
+exit          // wylolgowanie się z admina
+sudo adduser agata  //tworzenie nowego użytkownika (tylko admin może tworzyć nowych uzytkowników)
+su agata      // zaloguj sie na "agata"
+id            // wyświetla GRUPY
+whoami        // wyświetli, nazwę uzytkownika
+groups        // do jakich grup nalezy uzytkownik
 sudo adduser agata wojtek // dodaj użytkownika do grupy "wojtek"
 
-ip a  // adresy sieci
+useradd       //dodawanie kont uzytkownikow
+sudo useradd -G student student01  // utworz w gropie student, uzytkownika o nazwie "student01"
+sudo useradd candidte              // utworz uzytkownika o nazwie "candidte", ale on nie nalezy do zadnej grupy
+sudo passwd student01              // nadawanie hasla dla "student01"
+
+
+ip a          // adresy sieci
 ssh komput@192.168.0.140  //połączenie z innym komputerem w sieci (potwiedzić Y i podać hasło)
 
-top //procesy w systemie
-kill 4284  // zabiajnie wątku (numer z PID)
+top           //procesy w systemie
+kill 4284     // zabiajnie wątku (numer z PID)
 
-sudo apt update       // odśierzenie repozytorium
+sudo apt update       // odświerzenie repozytorium
 apt search openssh    // sprawdz czy istnieje dany program w repozytorium
 systemctl status sshd // sprawdz czy program jest zainstalowany i w jakim stanie
 sudo apt install g++  // instalowanie jakiś pakietów/programów
 apt install mc        // instalacj coś jak Norton Commander (Total Commander) Ctrl+O - aby przełączyć go do tła
 
 
-// Tydzień 2 Film 2
-vim   // edytor  (instalacja: sudo install vim)
-:q    // wyjście z edytora
-:q !  // wyjście bez zapisywania i porzucenie zmian
-:w    // zapisz plik
-:w nazwaPliku.txt   // zapisz plik jako
-:w $HOME/Skrypty/nowyKatalog.sh  //zapisz w konkretnym pliku
-:wq   // zapisz i wyjdz
-i     // aby zacząć coś pisać
-escape // aby przestać wprowadzać dane
-:r nazwaPliku  //wklej całą zawartość pliku
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+//    #     #    ###    #     #
+//    #     #     #     ##   ##
+//    #     #     #     # # # #
+//    #     #     #     #  #  #
+//     #   #      #     #     #
+//      # #       #     #     #
+//       #       ###    #     #
+VIM
+vim        // edytor  (instalacja: sudo install vim)
+Esc        // przejdz do trybu komend
+hjkl       // Poruszanie się 
+i Insert   // pisz tekst w miejscu kursora
+a          // append - dopisz 
+x          // kasuj jeden znak
+d d        // kasuj cąła linijkę
+
+v          // zacznij kopiowanie (teraz zaznacz co kopiować)
+y          // zakończ kopiwanie 
+p          // wklej zawarość schowka
+:r nazwaPliku    //wklej całą zawartość pliku
+ 
+/szukany tekst   //szukanie tekstu i Enter żeby przejść do pierwszego znalezionego
+n                // przejdz na kolejne znalezione
+N                // przejdz na poprzednie znalezione
+:s/txt1/txt2     // odszukaj i zmaień zamiana jednego tekst
+:s/txt1/txt2/g   // odszukaj i zmaień zamiana wystkich wystapień w JEDNEJ linijce
+:%s/txt1/txt2/g  // odszukaj i zmaień zamiana wystkich wystapień w JEDNEJ linijce
+u                // cofnij (taki Ctrl+Z)
+
+ 
+:w         // zapisz plik
+:w nazwaPliku.txt                 // zapisz plik jako
+:w $HOME/Skrypty/nowyKatalog.sh   //zapisz w konkretnym pliku
+:wq        // zapisz i wyjdz
+:q         // wyjdz z pliku
+:q!        // wyjdz z pliku bez zapisywania
+:x!        // wyjdz z pliku bez zapisywania
 
 
+
+
+
+
+Film 20 (Linux - linia komend dla początkujących...)
+man ls - help dla polecenia ls
+ls --help
+ls --help | more  //wyświetlanie helpa strona po stronie
+	Przewijanie po linice: enter i strzełaka
+	Przewijanie po stronie: spacja
+	Wyjście: q
+
+
+df // Filesystem
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+//         ###         #   #        ####         #   #        ####         #####        #   #
+//        #   #        #  #         #   #        #   #        #   #          #          #   #
+//        #            # #          #   #         # #         #   #          #           # #
+//         ###         ##           ####          # #         ####           #           # #
+//            #        # #          # #            #          #              #            #
+//        #   #        #  #         #  #           #          #              #            #
+//         ###         #   #        #   #          #          #              #            #
+//-------------------------------------------------------------------------------------------------
 
 // SKRYPTY:
 //tworzymy katalog: mkdir skrypty
@@ -917,7 +1009,7 @@ Instalacja linuxa
 		Administrator root
 		Hasło: Haselko123
 			
-		Nazwa urzytkownika: user1
+		Nazwa uzytkownika: user1
 		Hasło: user1
 		
 		Ustawienie dysku:
@@ -979,7 +1071,7 @@ nano interfaces   //edycja ustawień sieci:
 //restart usługi z karta siecową: (aby nie stracić połączenia zdalnego)
 /# ifdown ens18 && ifup ens18    // ens18 - to nazwa katy sieciowej
 
-// pingownaie w jakś stroną:
+// pingowanie z jakas stroną:
 ping wp.pl
 
 
@@ -990,11 +1082,11 @@ systemctl status sshd  // suługa do zdalnego połączenia
 
 // nadanie uprawnień dla zdalego użytkownika (na oryginalmym sprzęcie przez klawieturę):
 app install sudo           // instalacja usługi
-usermod -a -G sudo user1   // dodaj urzytkownika do grupy sudo
+usermod -a -G sudo user1   // dodaj uzytkownika do grupy sudo
 
 // przy płaczeniu przez SSH:
-sudo -i   // zmiana urzytkownika na root i przejdz do katalogu root/
-sudo -s   // zmiana urzytkownika na root i pozostań tam gdzie jesteś
+sudo -i   // zmiana uzytkownika na root i przejdz do katalogu root/
+sudo -s   // zmiana uzytkownika na root i pozostań tam gdzie jesteś
 
 // Aby nie trzeba było wpisywać hasła za każdym razem, gdzieś w plku trzeba ustawić: (jeszcze nie wiem w którym)
 chyba w: /etc/sudoers 	
@@ -1052,7 +1144,7 @@ Uruchomić plik:
 	systemctl enable ihermes.service  
 	systemctl start ihermes
 	
-	systemctl status ihermes   // żeby sprawdzić, czy się uruchomiło. Gdy nei, sprawdz, czy sa uprawnienia do uruchamiania.
+	systemctl status ihermes   // żeby sprawdzić, czy się uruchomiło. Gdy nie, sprawdz, czy sa uprawnienia do uruchamiania.
 	systemctl stop ihermes     
 	
 	
@@ -1094,7 +1186,7 @@ port: 2150
 service sshd restart
 
 // generownaie klucza:  -t wersja kodowania, obenie chyba ed25519 jest najnowszy. 
-// gdy poprosi o hasło, dać puste, wskazać, wskazać ścieżkę dla urzytkownika, czyli: /home/user1/.ssh
+// gdy poprosi o hasło, dać puste, wskazać ścieżkę dla uzytkownika, czyli: /home/user1/.ssh
 ssh-keygen -t ed25519 
 // stworzy dwa pliki: user1  i  user.pub
 
@@ -1104,52 +1196,29 @@ cat user1.pub > authorized_keys
 //klucz (nie publiczny) trzeba wyciągnąć i w formie pliku umieciś w projekcie windowsowym
 // można to zrobić przez program WinSCP, ale on nie widzi ukrytych, więc trzeba skopiować ten plik wyżej:
 cp ./.ssh/user1 user1_klucz
-// i zmienić urzytkownika i grupy dla pliku:
+// i zmienić uzytkownika i grupy dla pliku:
 chown user1:user1 user1_klucz
 
 
-// zmiana urzytkownika (przelogowanie)
+// zmiana uzytkownika (przelogowanie)
 su user1
 // przelogowanie na roota:
 su -
 
-//zmiana ustawień urzytkownika i grupy dla pliku:
+//zmiana ustawień uzytkownika i grupy dla pliku:
 chown user1:user1 .ssh
 
 
+
+
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-VIM
-Esc        // przejdz do trybu komend
-hjkl       // Poruszanie się 
-i Insert   // pisz tekst w miejscu kursora
-a          //append - dopisz 
-x          // kasuj jeden znak
-d d        //kasuj cąła linijkę
+B2B na linuksie, wystarczy ustwić adres w postbuild
 
-v        // zacznij kopiowanie (teraz zaznacz co kopiować)
-y        // zakończ kopiwanie 
-p        // wklej zawarość schowka
- 
-/szukany tekst  //szukanie tekstu i Enter żeby przejść do pierwszego znalezionego
-n               // przejdz na kolejne znalezione
-N               // przejdz na poprzednie znalezione
-:s/txt1/txt2    // odszukaj i zmaień zamiana jednego tekst
-:s/txt1/txt2/g  // odszukaj i zmaień zamiana wystkich wystapień w JEDNEJ linijce
-:%s/txt1/txt2/g  // odszukaj i zmaień zamiana wystkich wystapień w JEDNEJ linijce
-u               // cofnij (taki Ctrl+Z)
+API - tu podegrać 3 pliki: HermesApi32, HermesApi64 i hermesdll.dll
 
- 
-:w         // zapisz plik
-:q         // wyjdz z pliku
-:q!        // wyjdz z pliku bez zapisywania
-:x!        // wyjdz z pliku bez zapisywania
-
-
-
-
-
+Hermes - pobrać z J:\ServerCI_Rozw i zainstalować na maszynie z "hermes"
 
 
 

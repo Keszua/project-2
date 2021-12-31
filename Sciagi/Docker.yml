@@ -45,12 +45,12 @@ docker stop idkontenera
 
 docker container ls     #  wyswietli liste kontenerow URUCHOMIONYCH
 docker ps               #  po staremu 
-docker container ls -a  #  wyswietli liste wszsytkich kontenerow, czyli nie uruchominych tez
+docker container ls -a  #  wyswietli liste wszystkich kontenerow, czyli nie uruchominych tez
 docker image ls         #  lista obrazow
 
 docker container start idkontenera  #  uruchominie istniejacego kontenera
 docker rm idkontenera               #  usowanie kontenera
-docker system prune --all           #  usowanie WSZYTKICH obrazów jednym poleceniem:
+docker system prune --all           #  usowanie WSZYSTKICH obrazów jednym poleceniem:
 
 
 docker container logs nazwaKontenera
@@ -275,6 +275,32 @@ Instalacja Minikube : https://www.youtube.com/watch?v=X48VuDVv0do&t=453s   40:23
 
 
 https://ihermes.humansoft.pl/login
+
+
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+przez SSH:
+docker1
+
+portainer.io
+https://10.10.10.186:9443/#!/home
+admin  
+docker123
+
+
+Nginx Proxy Manager
+http://10.10.10.186:81/
+m.zalecki@humansoft.pl
+docker123
+
+
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+
+
+
 
 
 

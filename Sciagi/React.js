@@ -482,7 +482,30 @@ useLayoutEffect( () => {
 
 //------------------------------
 useRef
+	//Można używać na dwa sposoby. Po pierwsze, pozwala na bezpośredni dostęp do elementu DOM, dzięki czemu możemy nim manipulować. Po drugie, może zachować dowolną zmienną wartość w swojej właściwości .current, która nie zmienia się między renderowaniami.
+	//Zmiana wartości parametru useRef nie spowoduje ponownego renderowania komponentu.
+// troszkę więcej na ten temat: https://love-coding.pl/hooki-react-useref-tutorial/
 
+//Przykład 1:
+const HookExample = () => {    
+    const inputEl = useRef(null);
+    const paragraphEl = useRef(null);
+    
+    console.log("component has just rendered");
+
+    return (
+        <div className="App">
+            <input ref={inputEl} type="text" /> {/* pole w którym wpisujemy tekst */}
+            <div>
+                <button onClick={() => {
+                            paragraphEl.current.innerText = inputEl.current.value;  {/* Przepisanie wartosci z inputa do wyśweitlanej treści paragrafu, poprzez paragraphEl */}
+                            inputEl.current.value = ""; {/* Czyszczenie pola input */}
+                        }}>Display input value</button>
+                <p ref={paragraphEl} >Display input value here </p>
+            </div>
+        </div>
+    );
+}
 
 //------------------------------
 ReactContext // - coś w stylu globalnych zmiennych
