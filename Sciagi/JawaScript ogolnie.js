@@ -81,14 +81,14 @@ test();
 if (typeof x === "undefined") {...} //Czy dana zmienna istnieje
 
 
-let numer = parseInt('4');  //konwersja, rzutowanie na liczbę
+let numer = parseInt('4');      //konwersja, rzutowanie na liczbę
 let numer = parseInt('4', 10);  //drugi parametr to "radix", określa podstawę powyższego 
                                 //łańcucha (np. 2 - system dwujkowy, 10 - system dziesiętny)
 
-							
+       
 
 
-								
+        
 //-----------------------------------------------------------------------------
 const map = new Map();
 map.set('name', 'Eric');
@@ -1150,7 +1150,7 @@ HttpOnly	|Opcjonalne	|Czy bedzeimy mogli sie odwolywac do ciasteczek	|
 
 
 //Pierwsza czesc skladni ciasteczka zajmuje nazwa ciasteczka oraz jego wartosc. Sa to jedyne wymagane parametry ciasteczka
-expires 	okresla date wygaaniecia
+expires 	okresla date wygasniecia
 path 		ustawia sciezke skad zostalo utworzone ciasteczko. Najlepszym rozwiazaniem jest tutaj pozostawienie domyslnej wartosci czyli "/".
 secure		Jezeli ustawisz go na true, wtedy ciastka beda wysylane tylko w zabezpieczonych polaczeniach (https).
 

@@ -70,16 +70,25 @@ rwx
 odczyt
 
 touch nowy.txt              // stworzenie nowego pliku (pustego pliku)
-chmod u g o 
+chmod u g o                 // u-user g-group 0-other  a-all
 chmod a+rw nowy.txt         // nadanie uprawneiń odczytu i zapisu dla wszystkich "sekcji"
 chmod o-rw nowy.txt         // usuń uprwnienia dla pozostałych
 chmod o+r,g-rx              // mix uprawnień
 chmod 000 nowy.txt          // usuń wszystkie uprawnienia: --- --- ---
 chmod 741 nowy.txt          // nadanie: rwx r-- --x
 
+chown user1:group1 plik_1   // zmiana własiciela: uzytkownik który ma się stac własicielem pliku : grupa dla pliku (poprzedzic sudo)
+chgrp nazwaGrupy nazwaPliku // zmiana grupy dla pliku
+newgrp nazwaGrupy           // zmiana grupy na podstawowa (domyslna)
+umask                       // wyświetli domyślne uprawniena dla tworzonych plików, np: 0000 (uprawnienia 666, czyli rw-rw-rw), katalog domyśłnie ma 777
+umask 006                   // odejmij uprawnienia dla "inni" ( wzór:  666 -006 = 660)
+
+groupadd                    // dodawanie nowej grupy (przez sudo)
+groupdel nazwagrupy         // usuwanie pustej grupy
+
 mkdir nazwakatalogu         // zakładanie katalogu
 mkdir katalog1 katalog2     // zakałdamy dwa katalogi na raz 
-mkdir 'Nazwaz ze spacjami'  // zakałdamy katalogi z nazwą ze spacją
+mkdir 'Nazwa ze spacjami'   // zakałdamy katalogi z nazwą ze spacją
 mkdir 'kata 1' 'kata 2'     // zakałdamy dwa katalogi na raz ze spacjami
 mkdir -m 777 NazwaKatalogu  //zakładznie katalogu + nadanie uprawnień
 mkdir $USER                 //stworzy atalog o nazwie użytkownika
@@ -91,15 +100,15 @@ rm -ri pełnyKatalog         // usówa katalog interaktywnie, czyli pyta o każd
 rm A*                       // usówa wszystko zaczynające sie od litery A
  
 mv nazwa NowaNazwa          // zmiana nazwy katalogu
-mv -b nazwa NowaNazwa       // zmiana nazwy katalogu z zabespieczeniem (backup), gdyby już istniał taki plik (lub katalog)
+mv -b nazwa NowaNazwa       // zmiana nazwy katalogu z zabezpieczeniem (backup), gdyby już istniał taki plik (lub katalog)
 mv Kot/reksio.txt Pies/     // przenieś "reksia" z kota do psa
 mv Folder/* .               // kropka. oznacza "przenies do bierzączego"   */
 
 cp file.txt copy.txt        // przygotowanie kopii pliku
 cp ./Temat*  ..Tydzien      // kopiowanie plików
 cp ./*1*  ..Tydzien         // kopiowanie tyko tego, co w nazwie ma jedynkę, tez na poczatku lub na końcu  */
-cp * /studiuje\  TI/        // skopiuj wszystko ze studiuje do IT
-cp * /studiuje\  TI/ -R     // skopiuj wszystko ze studiuje do IT z podkatalogami
+cp * /studiuje\  IT/        // skopiuj wszystko ze studiuje do IT
+cp * /studiuje\  IT/ -R     // skopiuj wszystko ze studiuje do IT z podkatalogami
 
 ln źródło cel               // tworzenie linku, tak samo jak przy kopiowaniu. Zwiekszy się licznik dowiązania (linki twarde)
 ln -s /tmp/new_lindex ~my_copy.txt //link symboliczny pomiedzy dyskami (filesystemami, podgląd przez df)
@@ -135,14 +144,22 @@ sudo adduser agata  //tworzenie nowego użytkownika (tylko admin może tworzyć 
 su agata      // zaloguj sie na "agata"
 id            // wyświetla GRUPY
 whoami        // wyświetli, nazwę uzytkownika
+who           // wyświetli, kto jest zalogowany
+who --boot    // informacja, kiedy ten serwer był ostatanio restartowany
+logname       // wyświetli, nazwę uzytkownika, jka się zalogowałem (nie w momencie uruchamiania polecenia) 
+uptime        // kiedy system był ostatnio uruchomiony, jaki czas jest już online, ilu pracuje uzytkownikow, jakie obciążenie było w ciągu ostatniej minuty, pięciu i pietnastu
 groups        // do jakich grup nalezy uzytkownik
 sudo adduser agata wojtek // dodaj użytkownika do grupy "wojtek"
 
-useradd       //dodawanie kont uzytkownikow
+useradd       // dodawanie kont uzytkownikow
+userdel       // usuwanie kont uzytkownikow
 sudo useradd -G student student01  // utworz w gropie student, uzytkownika o nazwie "student01"
 sudo useradd candidte              // utworz uzytkownika o nazwie "candidte", ale on nie nalezy do zadnej grupy
 sudo passwd student01              // nadawanie hasla dla "student01"
-
+// informacje o uzytkownikach znadują się w pliku /etc/passwd
+// hasła znajduja się w /etc/shadow 
+users         // lista zalogowanych uzytkownikow
+uname -a      // informacje o systemie
 
 ip a          // adresy sieci
 ssh komput@192.168.0.140  //połączenie z innym komputerem w sieci (potwiedzić Y i podać hasło)
@@ -155,6 +172,50 @@ apt search openssh    // sprawdz czy istnieje dany program w repozytorium
 systemctl status sshd // sprawdz czy program jest zainstalowany i w jakim stanie
 sudo apt install g++  // instalowanie jakiś pakietów/programów
 apt install mc        // instalacj coś jak Norton Commander (Total Commander) Ctrl+O - aby przełączyć go do tła
+
+
+last                  // lista o połączeniach
+last --limit 20       // ostatnie 20 zdarzeń
+last  --system --fulltimes --since 20220103120000
+//               |           +tylko te zdarzenia które były po 2022.01.03 12:00:00
+//               +pelny czas
+lastb                 // nieudane logowania 
+
+which nazwapolecenia  // pokazuje z jakiego katalogu uruchamiane jest polecenie
+set                   // lista zmiennych środowiskowych (polecane z potokiem | more)
+
+VARIABLE=VALUE        // definowanie zmiennych. Zmienne trwają tylko sesje
+export VARIABLE       // eksport zmiennych do innych procesów (czy jakos tak)
+
+expr                  // taki kalkulator
+expr 1 + 2            //= 3
+expr 4 \> 2           //= 1 (1 to true)
+WOLNE_MIEJSCE=`expr $FREE_SPACE - $BACKUP_SIZE`   // do zmiennej przypisze wynik
+WOLNE_MIEJSCE=$(expr $FREE_SPACE - $BACKUP_SIZE)  // to samo co wyżej
+
+bc                    // taki lepszy kalkulator (w debianie nalezy go zainstalować:  sudo apt install bc)
+                      // wychodzimy Ctrl+C lub quit
+echo "1+2+3" | bc     // na ekranie wyswietli sie wynik dodawania
+echo "$FREE_SPACE - $BACKUP_SIZE" | bc  
+WOLNE_MIEJSCE=`(echo "$FREE_SPACE - $BACKUP_SIZE" | bc)`  // przypisanie wyniku do zmiennej
+echo "sqrt(81)" | bc  //= 9
+echo "4*a(1)" | bc -l //= 3.14   4*arcus(1) -l przywołuje biblioteki matematyczne
+
+date                    // wywwietli aktualna date
+date +%Y%m%d		    //= 20220105
+date "+%Y-%m-%d %H:%M"  //= 2022-01-05 15:12
+date 010512052022.30    //reczna zmaina daty: miesiac dzien godzina minuta rok.sekundy 
+cal                     // wyświetla "kalendarz" (aktulany miesiąc)
+cal 2020                // wyśweitli cały klendarz
+cal 12 2020             // wyśweitli tylko grudzien
+
+nl nazwaPliku           // wyświetla  plik z numerowaniem linii
+head nazwaPliku         // wyswietla domyślnie 10 pierwszych linijek
+head -n 20 nazwaPliku   // wyswietl pierwsze 20 linijek
+head -n -20 nazwaPliku  // pomiń pierwsze 20 linijek.
+
+
+
 
 
 //-------------------------------------------------------------------------------------------------
@@ -174,10 +235,10 @@ hjkl       // Poruszanie się
 i Insert   // pisz tekst w miejscu kursora
 a          // append - dopisz 
 x          // kasuj jeden znak
-d d        // kasuj cąła linijkę
+d d        // kasuj cała linijkę
 
 v          // zacznij kopiowanie (teraz zaznacz co kopiować)
-y          // zakończ kopiwanie 
+y          // zakończ kopiowanie 
 p          // wklej zawarość schowka
 :r nazwaPliku    //wklej całą zawartość pliku
  
@@ -234,6 +295,7 @@ df // Filesystem
 //         ###         #   #        #   #          #          #              #            #
 //-------------------------------------------------------------------------------------------------
 
+
 // SKRYPTY:
 //tworzymy katalog: mkdir skrypty
 echo $PATH  //podejżenie zmiennych systemowych
@@ -259,6 +321,16 @@ bash -v ./skrypt1.sh      // uruchomienie skryptu + podgląd tego skryptu (bez p
 ./skrypt1.sh parametr  // uruchom skrypt z parametrem (uruchamainiae bez przedrostka ./ gdy jestesmy w innym katalogu)
 echo $?  // wyświetli informację, co zwróćił skrypt
 
+//-------------------------------------------------------------------------------------------------
+.bash_profile  //domyślny skrypt, który uruchamia się przy logowaniu
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------
 //przykładowy skrypt 2
 #!/bin/bash
 liczba=1997
@@ -682,7 +754,9 @@ Set-StrictMode -Version Latest  -przełącz w tryb ścisły
 $wojtek = "To jest przypisanie stringu do zmiennej"
 $LASTEXITCODE  - co ostatnio zwrócił ostatnio zamknięty program
 
-ping.exe -n 1 studiuje.it  -pingowanie strony internetowej
+ping -n 1 studiuje.it               // pingowanie strony internetowej
+ping -c 3 studiuje.it               // pingowanie strony tylko 3 razy
+
 
 #typy danych:
 $liczba = 1
@@ -1082,6 +1156,7 @@ systemctl status sshd  // suługa do zdalnego połączenia
 
 // nadanie uprawnień dla zdalego użytkownika (na oryginalmym sprzęcie przez klawieturę):
 app install sudo           // instalacja usługi
+usermod                    // ustawienia dotyczące uzytkownika
 usermod -a -G sudo user1   // dodaj uzytkownika do grupy sudo
 
 // przy płaczeniu przez SSH:

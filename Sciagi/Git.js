@@ -427,6 +427,9 @@ git cherry-pick 5a33dd3             //Cherry pick kopiuje tylko commit, który m
 git cherry -v                       //Wyświetla informacje, jakie commity zostały dodane przez komendę cherry-pick
            --continue   --skip   --quit   --abort
 
+git rebase main -p                  // merdzowanie zmiany z maina na swoją gałaź bez zostawiania śladu
+
+
 //Przykład: Chce POŁĄCZYĆ develop z masterem, musze być na gałęzi develop i "pochłonąć" zmiany z master
 git switch develop      //przełaczam się na gałąź, do której chce pochłaniać zmiany.
 git merge master        //teraz jestem na gałęzi "develop" i chce do swojej gałęzi doać zmiany ze "stabilnego programu", 

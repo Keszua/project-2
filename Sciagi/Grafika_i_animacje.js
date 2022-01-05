@@ -303,17 +303,32 @@ https://boxy-svg.com/app
             <rect class="clips" x="100" y="100" width="100" height="100" fill="none" stroke="blue" stroke-width="8" />
         </g>
 
+
+		// opis tekstu:  https://www.w3.org/TR/SVG/text.html#TextElement
+		<text x="250" y="180" font-family="Verdana" font-size="64" fill="blue" >
+			Hello, out there!
+		</text>
+  
+		<g font-family="Verdana" font-size="64" >
+			<text x="160" y="180" fill="blue" >
+				You are
+				<tspan dx="2em" dy="-50" font-weight="bold" fill="red" > not </tspan>
+				a banana.
+			</text>
+		</g>
+		
+
     </svg>
 
-//mo�liwo�� edycji parametr�w przez CSS (nie polecane)
-// mo�na stylowa� grubo�c linii itp. ale nie mo�na edytowac wsp��dnych
+//mozliwosc edycji parametrow przez CSS (nie polecane)
+// mozna stylowac grubosc linii itp. ale nie mozna edytowac wspolrzednych
 	<style>
 		#Obrazki .clips {
 			fill: red;
 		}
     </style>
 
-//Edycja parametr�w za pomoc� GSock
+//Edycja parametrow za pomoca GSock
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js" ></script>
     <script>
         TweenMax.set('.clips', {fill: "red"})
