@@ -1,0 +1,15 @@
+Zadania dzienne: - odwiedz jeden punkt aby zdobyć 10pkt rankingu. Punkt losowy.
+  Można pobrać kolejne zadanie (odwiedz punkt), ale za 5 punktów.
+
+
+
+
+Co potrzebuje:
+- obsługa mapy
+- obsługa aparatu i qrkodu
+- panel gracza: - informacje o dostepnych zadaniach, ingormacje o dostepnych grach,
+- panel rankingowy: - informacje o postępach innych graczy
+- panel administratora: - podgląd graczy, - dodawanie zadań
+- backend z obsługa bazy
+- system rejstracji i logowania
+- pozycja GPS

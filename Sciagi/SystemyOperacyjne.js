@@ -207,15 +207,22 @@ date "+%Y-%m-%d %H:%M"  //= 2022-01-05 15:12
 date 010512052022.30    //reczna zmaina daty: miesiac dzien godzina minuta rok.sekundy 
 cal                     // wyświetla "kalendarz" (aktulany miesiąc)
 cal 2020                // wyśweitli cały klendarz
-cal 12 2020             // wyśweitli tylko grudzien
+cal 12 2020             // wyświetli tylko grudzien
 
 nl nazwaPliku           // wyświetla  plik z numerowaniem linii
 head nazwaPliku         // wyswietla domyślnie 10 pierwszych linijek
 head -n 20 nazwaPliku   // wyswietl pierwsze 20 linijek
-head -n -20 nazwaPliku  // pomiń pierwsze 20 linijek.
+head -n -20 nazwaPliku  // pomin pierwsze 20 linijek.
+tail nazwaPliku         // wyświetli 10 ostatnich
+tail -n 20 nazwaPliku   // wyświetli 20 ostatnich
+tail -n +20 nazwaPliku  // Zacznij od 20 linijki i wyswietl wszystko az do konca pliku
+head -n 20 nazwaPliku | tail -n 10 // wyswielt od 11 do 20 linijki
 
+more nazwaPliku         // wyswietli plik strona po stronie
+less                    // wyswietli plik. f-nastepna strona b-poprzednia strona +wiele innych funkcji do nawigacji
 
-
+cmp ./plik1 ./plik2     // dostane informacje o pierwszej różnicy w plikach
+diff plik1 plik2        // porownanie plikow prawie jak w gicie.  -y wyswietli w postaci dwoch okienek
 
 
 //-------------------------------------------------------------------------------------------------
