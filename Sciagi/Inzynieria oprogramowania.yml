@@ -16,6 +16,336 @@ https://app.diagrams.net/
 
 
 
++ publkic
+# protected
+- private
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+Zarządzanie projektami IT
+
+ #####                                #                                                                #       #                          ### #####
+     #                                #                     #                                  #       #       #                   #       #    #  
+    #   ####  # ### #####  ####   ##### #####  ####  ####       ###      ####  # ###  ###         ###  #   # #####  ####  ### ##           #    #  
+   #        # ##       #       # #    #    #       # #   # ##  #   #     #   # ##    #   #    ## #   # # #     #        # #  #  # ##       #    #  
+  #     ##### #       #    ##### #    #   #    ##### #   #  #  #####     #   # #     #   #     # ##### ##      #    ##### #  #  #  #       #    #  
+ #     #    # #      #    #    # #    #  #    #    # #   #  #  #         ####  #     #   #     # #     # #     #   #    # #  #  #  #       #    #  
+ #####  ### # #     #####  #####  ##### #####  ### # #   # ###  ###      #     #      ###  #   #  ###  #   #    ##  ### # #  #  # ###     ###   #  
+                             ##                                          #                  ###
+#--------------------------------------------------------------------------------------------------
+ #1 Zasady, etapy, elementy
+
+Zasady skutecznego działania w tworzeniu projektu IT
+  - Czas to najważniejszy zasób (czas to pieniądz)
+    # Koszty działania wykonawcy 
+      Każda godzina pracy zespłu jest kosztem. Oszacowanie liczby godzin z podziałem na poszczególne prace jest kluczowe przy wycenie projektu. Niedoszacowanie moze być przyczyną straty.
+    # Wymagania klienta 
+      Bardzo często istnieje termin zrealizowania danego projektu, który jest obok budżetu kluczowym parametrem rozliczenia.
+    # Czas podzielony na etapy
+      W interesie klienta jk i interesie wykonawcy jest określić sobie daty dla uzyskania danych etapów
+    # Zmieniajaca sie sytuacja i wymagania biznesowe
+      Coś co dziś  jest potrzebne jutro moze już nie być lub jutro może cy już nieaktualne.
+
+  - Nie zaduj o co chodzi klientowi
+    # Analiza potrzeb klienta i kontakt z klientem. Zabespiecz się. Zbiór wymagań i zakres prac. Umowa.
+    # Harmonogram prac
+    # Specyfikacja i MVP
+    
+  - Wymagaj od siebie wiele, a od innych tylko trochę mniej
+    # Podział zadań
+    # Zachowac kontrolę
+    # Scrum master - kluczonwa rola?
+
+  - Skupienie
+  - Odpowiedzialność zespołu vs odpowiedzialność osoby
+  - Małe kroki są najważnejsze
+  - Cały czas sprawdzaj, czu idziesz w dobtym kierunku. Rozliczanie i ocenianie na bierząco na bierząco.
+  - Unikanie niepotrzebnych kosztów i ograniczenie ryzyka.
+
+
+Elementy propjektu IT
+  - Pomysł
+  - Produkt
+  - Zespół i Klient
+  - Praca - o byciu skutecznym
+  - Sprzedaż
+  - Rozwój
+  - Obsługa klienta / uzytkownika
+  - Budżet
+
+Istotne aspekty projektu IT
+  - Zlecenie
+  - Praca z klientem (specyfikacja / budżet projektu) - klient zewnętrzny i klent wewnętrzny
+  - Umowa
+  - Realizacj / MVP / produkt
+  - Utrzymanie / Rozwój
+  - klient / wykonawcy / product owner / scrum mater / tester / UX / programista / project manager - account manager / prawnik
+
+
+
+
+
+
+
+
+
+
+
+
+My ours - progrm do liczenia czasu pracy
+
+Specyfikacja ma za zadanie określić wymagania projektu - zakres pracy wykonania - stanowi źródło prawdy o projuekcie.
+Specyfikacja pozwala również lepiej wyestymowac projekt.
+
+Wstępna weryfikacja klienta
+- przybliżony rząd wielkości kosztów - szerokie widełkami
+- analiza biznesu klienta - żeby sprawszić czy wogóle byłby wypłacalny
+
+Historyjka użytkownika
+Jako <użytkownik> chcę <potrzeba> aby <cel do osiągnięcia>  + kryteria akceptacyjne
+
+Kryteria akceptacyjne
+1. użytkownik widzi najpierw najnowsze wydatki
+2. Na liście widzi nazwę wydatku, kategorię i wysokość
+3. Z pozimu listy Uzytkownik może przejść do szczegółów wydatku.
+
+Proces
+- Lista kroków
+- Schemat blokowy
+
+Krok 1:
+Spotkanie warsztatowe np. z użyciem Miro http://miro.com
+Krok 2:
+Identyfikacja aktorów systemu, procesów i historyjek na posdstawie zaebrancyh wymagań na warsztatach.
+Krok 3:
+Weryfikacja z klientem - podejście iteracyjne
+Krok 4:
+Określenie ddoatkowych wymagań - np dostyczących desingu, ostatecznego terminu itp.
+Krok 5:
+Odbiór dokumentu - klient musi jasno zatwierdzić domument - musi zostać po tym ślad.
+
+
+SPECYFIKACJA PROJEKTU
+Zarządzanie domowymi finansami
+
+Spis treści...
+
+Wstęp:
+  Informacja o dokumencie:
+    Typ dokumentu - Specyfikacja projektu
+    Autor - Karol M.
+    Sygnatura - SPEC_1
+
+  Wersja dokumentu:
+    Wersja - 1.0
+    Data - 10.10.2021
+    Przeznaczenie - pierwsza wersja dla klienta
+    Autor zmiany - Karol M
+
+  Lista zmian:
+    10.10.2021
+      1. Pierwsza wersja specyfikacji przygotowana po spotkaniu z klientem
+
+  Cel dokumentu:
+    Celem dokumentu jest sporządzenie zakresu funkcjonalności systemu.
+
+  Zakres dokumentu:
+    Dokunet zawiera zakres funkcjonalności projektowanego systemu ustalony na podstawie przeprowadzonych rozmów, spotkań oraz wcześneijszych analiz.
+
+  Cel projektu:
+    opis projektu - jaki jest jego cel, do czego służy.
+
+  Wymagania funkconalne:
+    Opis funkcjonalności które należy wdrożyć - np. przy pomocy user stories. Można w tym miejscu okreslić również priorytety.
+
+  Aktorzy systemu:
+    (np. Administrator - Posiada dostęp do całości. 
+        Członek - nie ma dostępu do raportowania)
+
+  User stories:
+    (tabelka)
+    (np. USER1.  |  Jako dowolny urzytkownik chcę mieć możliwość zalogowania się do styemu przy pomocy maila oraz hasła                    |  Hałso musi mieć min 10 znaków. Po poprawnej autoryzacji, zostaje przeniesiony do widoku listy wydatków
+      USER2      |  Jako zalogowany użytkownik, che mieć możliwość wylogowania z systemu, aby nik nie powołany nie widziął moich wydatków  |  Po poprawnym wylogowaniu, dostaje infomrację o powodzeniu. następnie przekierowanie do ekranu logowania )
+      EXP1       |  Jako zalogowany użytkownik, chcę mieć możłwiść dodania nowego wydatku w celu kontroli mojego budrzetu.                 |  Musi podać nazwę, kwotę i wybrać z listy
+      EXP2       |  Jako zalogownay użytkownik, chce mieć możliwość przejścia z listy wydatków do widoku szczegółów pojedynczego wydatku aby zobaczyć szczegółowe informacje na jego temat  ||  Uzytkownik widzi przycisk "przejsz do szczegłów"
+      EXP3       |  Jako admin, Chce pobrać CSV aby zaimportowac go do excela                                                              |  Plik CSV zawiera poprawne polskie znaki. Plik zawiera poprawnie zapisane przecinki. 
+
+  Procesy:
+    Dodawanie wydatku
+      1. Użytkownik autoryzuje się przy pomocy emaila oraz hasła
+      2. Z Ekranu głównego wybiera opcję "Dodaj nowy wydatek"
+      3. Użytkownik podaje nazwę, wysokość wydatku oraz wybiera kategorię
+      4. Potwierdza przyciskiem "Dodaj"
+
+  Wymagania niefunkcjonalne:
+    Kwestia dotycząca integracji, kwestii bespieczeństwa. Urządzenia na których ma działać aplikacja.
+
+  Język aplikacji:
+    Apikacja działa tylko w jezyku polskim
+
+  Środowisko uruchomieniowe:
+    - urządzenia mobilna z systemem Android powyzej wersji 8 oraz iOS powyżej wersji 13
+    - brak obsługi iPone X
+    - minimalna obsługa rozdzielczość to 480 x 960, a maksymalna to 720 x 1024
+
+  Dystrybucja:
+    - aplikacja będzie rozpowszechniana przy pomocy sklepu App Store oraz Google Play.
+
+  Rejestr zmian:
+
+#SYMULACJA PROCESU
+MVP  - minimalne podejście funkcjonalne
+MoSCoW - określenie priorytetów w poszczególnych fazach życia projektu
+
+
+
+
+
+
+
+
+
+
+
+
+Tech lid - ekspert od techologii - określa technologie i weryfikuje wytworzone oprogramowanie
+
+SCRAM - w każdym zespole jest scram master 
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------
+Waterfall:
+1. Planowanie (przygotownaie specyfikacji)
+2. Analiza wymagań
+3. Projektowanie (arhitektura)
+4. Implementacja (kod)
+5. Testowanie
+6. Utrzymanie/Użytkowanie
+
+
+  - Przed przejściem do kolejnego etapu, poperzedni musi być ukończony
+  - Projekt W trakcie tworzenia nie zmienia specyfikacji
+
+Problemy:
+  - Kosztowne wykrycie błędu
+  - Podatne na błędy
+  - Klient na pierwszym i ostatnim etapie
+
+Częściowe rozwiązania problemów:
+  - dobra dokumentacja
+  - Stworzenie prototypu
+  - Zaangarzowanie zleceniodawcy na każdym etapie
+  - Brak istotnych zmian po etapie analizy
+
+
+//-------------------------------------------------------------------------------------------------
+Agile:
+Metody zwinne (najbardziej popularna to Scrum)
+
+Manifest Agile:
+  Ludzie i interacje ważniejsze od procesów i narzędzi
+  Działające oprogramownie od szczegółowej dokumentacji
+  Współpracę z klientem wązneijsza od umów i negocjacji
+  Reagowanie na zmiany ponad realizację założónego planu
+
+1. Najwyższy priorytet ma dla nas zadowolenie klienta, osiągane dzięki wzesnemu i ciągłemu wdrażaniu wartościowego oprogramowania.
+2. Zmiana jest nei tylko dobra ale i konieczna - Bądzicei gotowi na zmaię wyamgań, nawet na póżnymetapie jego rozwoju.
+3. Praca w krótkich interwałach czasowych - Dostarczajcie funkcjonujące oprogramowanie często, w kilkutygodniowych lub miesięcznych odstępach. Im częciej, tym lepiej.
+4. Zespoły biznesowe i deelpoerskie musza ściśle ze sobą współpracować w codziennej pracy przez cły czas trwania projektu.
+5. Twórcie prjekty wokół zmotywowanych ludzi. Zapenijcie im potrzebne środowsko oraz wsparcie i zaufanie, że wykonują powierzone zadanie.
+6. Ludzie musza się komunikować - najbardziej efektywnym i wydajnym sposobem przekazywania informacji zaspołowi dewepoperskiemu i wewnątrz niego jest rozmowa twarzą w twarz.
+7. Dziłajace oprogramowanie jest podstwową mirą postępu.
+8. Zeby nie przesadzić w żadną stornę - Deweloperzy, sponoży i użytkonicy powinni być w stanie równe tempo pracy. 
+9. Twórz produkt, który daje sie rozwijać - Ciągłe skupienie na technicznej doskonałości i dobrym projektowaniu zwiększa zwinność.
+10. Robimy tylko to, co niezbędne - prostota, sztuka minimalizowania ilości koniecznej pracy - jest kluczowa.
+11. Najpepsze rozwiązania architektoniczne, wymagania i projekty pochodzą od samoorgnizujących się zespołów.
+12. Nauka poprzez działanie i spojrzenie z zewnątrz - W regularnych odstępach czasu zespół analizuje możliwości poprawy swojej wydajności a najstępnie dostraja i dostowowuje swoje działąnia do wyciągniętych wnisoków.
+
+Agile 2:
+  1. Planowanie (zbieranie i analiza wymagań)
+  2. Projektowanie (architektóra rozwiązań)
+  3. Programownie (kod)
+  4. Testowanie (przez zespół i klienta)
+  5. Implementacja (wersja produkcyjna)
+  6. Informacja zwrotna (błędy, zmiana wymagań, usprawnienia)
+
+
+//-------------------------------------------------------------------------------------------------
+Watergile:
+Hybryda pomiędzy Waterfall oraz Agile (firmy którym wydaje się że są zwinne).
+
+
+Lean - minimalizacja ryzyka i strat, skupienie się na jak największej wartości dla użytkownika. W pewnym sensie lean jest fundamentem dla Agile.
+
+//-------------------------------------------------------------------------------------------------
+Scrum:
+1. Narzuca konkretne role
+2. Praca w sprintach by default
+3. Ograniczenie pracy przez zakres sprintu
+
+  SPRINT:  2 - 4 tygodni (nieprzekraczalne!)
+  PRZYROST: namacalny efekt pracy
+  ROLE: 
+    Product owner: reprezentuje klienta, opiekuje się produktem, przekazuje wymagania
+    Scrum Master: pilnuje całej "ceremonii", dba o odpowiedni przebieg procesów, usuwa przeszkody które może napotkac zespół
+    Zespół Deweloperski: samoorganizujący się, wspólnie dba o finalne efekty, kazdy jest deweloperem
+  ZDARZENMIA:
+    Planowanie: przygotowanie backlogu (listy zadań)  sprintu na podstawie backlogu projektu
+    Daily: dzienne krótkie spotkania
+    Przegląd sprintu: prezentacja interesariuszom, zebranie feedbacku, "inspekcja przyrostu"
+    Retrospektywa: spotkanie podsumowywujące sprint
+
+36 minuta
+
+Kanban:
+1. Nie narzuca ról
+2. Praca ciągła by default
+3. ograniczenie poprzez limity WIP
+
+  BRAK SPRINTÓW:
+  BRAK NARZUCONYCH RÓL:
+  BRAK WYSZCZEGÓLNIONYCH ZDARZEŃ:
+  TABLICA KANBAN:
+    Metoda KANBAN: polega przede wszystktkim na wizualizacji przepływu pracy. Nawet nazwa poczhodzi od od japońskich słów "Kan" - widoczny, "Ban" - kartka papieru
+    Kanban z złożeniaw wymusza wykorzystanei jakiegoś rodzaju tablicy, czego nie robi scrum (w którym zespół decyduje jak będzie kontrolowana praca)
+
+  Propozycja tabel na tablicy kanbanowej:
+  1. To do;   2. In progress;   3. Review;   4. Ready to test;   5. In test;   6. Done
+
+  Limity WIP (Work in Progress) - należy ograniczać ilość zadań wykonywanych jednoczesnie, ponieważ:
+   - brak możliwości dobierania dużej ilości zadań przez co trzeba się skupić na aktualnych zadaniach żeby je skończyć i wziąć kolejne.
+   - niwelowanie waskich gardeł
+
+
+Narzędzia do zarządzania:
+ Jira, Trello, Clickup, YouTrack, Asana
+ https://analytics.actionableagile.com/twig/index.html
+ 
+
+
+
 
 
 
