@@ -579,8 +579,9 @@ console.log(tab); //[Marcin, Ania, Agnieszka, Piotrek]
 |                                                |                                                 | sort.Ints(tab)                                  |                                                 |
 |                                                |                                                 | sort.Strings(tablicaStringow)                   |                                                 |
 |                                                |                                                 |                                                 |                                                 |
-|                                                |                                                 |                                                 |                                                 |
-|                                                |                                                 |                                                 |                                                 |
+// usówa białe znaki na końcu
+| .trim()                                        |  strip()                                        |                                                 |                                                 |
+| const value = input.value.trim();              |                                                 |                                                 |                                                 |
 |                                                |                                                 |                                                 |                                                 |
 |                                                |                                                 |                                                 |                                                 |
 |                                                |                                                 |                                                 |                                                 |
