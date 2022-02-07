@@ -37,7 +37,7 @@ undefined
 
 
 
-//Po wpisanu polecenia:
+//Po wpisaniu polecenia:
     node   
 //Wchodzimy w tryb REPL
 //Aby w konsoli wpisać instrukcje/polecenia więcej niz 1 linijkowe, trzeba wywołać:
@@ -84,7 +84,7 @@ Przykłady:
 //-----------------------------------------------------------------------------
 
 
-//gdy ściągniemy projekt z gita, albo "przypadkiem" usuneliśmy plik node_modules, odzyskuemy wszystkot poleceniem:
+//gdy ściągniemy projekt z gita, albo "przypadkiem" usuneliśmy plik node_modules, odzyskujemy wszystko poleceniem:
 npm install
 
 //Przykładowa instalacja pakietów z npm:
@@ -124,7 +124,7 @@ server.addListener('request', (request, response) => {  // addListener  zamienni
                //inne typy: { 'Content-Type': 'application/json' 'text/css'  'text/plain'  'text/html; charset=utf-8'   'video/mp4'   'image/png'   'image/jpeg'
                //Samuraj cos wspomniał, że gdy urzywamy -, to rzeba klucz pisać w apostrofach
     //response.statusCode //można wprowadzić kod odpowiedzi
-    //response.write( /* zawartość*/ )  //wewnętrzna metoda definiująca zawartosć
+    //response.write( /* zawartość*/ )  //wewnętrzna metoda definiująca zawartość
     response.end('<h1>Hello Node!<h1>') // tresc odpowiedzi
 });
 
@@ -135,7 +135,7 @@ server.listen(3000, '127.0.0.1', () => console.log("Serwer wystartował")); //na
 //i uruchomić ten plik przez node poleceniem:
 λ node app.js
 //Cały czas będzie migał kursor, to oznacza że prawdopodobnie już działa serwer,
-//Za pomocą przeglądarki wejść an stronę: 
+//Za pomocą przeglądarki wejść na stronę: 
 localhost:3000
 //W przeglądarce powiniśmy zobaczyć treść odpowiedzi, czyli: Hello Node!
 //Aby zatrzymać serwer, urzyć Ctrl+C
@@ -198,7 +198,7 @@ module.exports = "coś zwrócine z tego modułu :) ";
 
 //przykład eksportu kilku właściwości
 let counter = 0;
-exports.ob = {	//proponowana skałądnia "module.exports", bo jakieś wiązania sa zrywane w "exports"
+exports.ob = {	//proponowana składnia "module.exports", bo jakieś wiązania sa zrywane w "exports"
     add() { console.log(++counter) },
     actualNumber() { console.log(counter) }
 }
@@ -296,7 +296,7 @@ try{
 }
 
 //-----------------------------------------------------------------------------
-//WRITEFILE - nadpisuje zawartośc pliku
+//WRITEFILE - nadpisuje zawartość pliku
 
 fs.writeFile('nowyPlik.txt', "Tresc w nowym pliku", (err) => {
     if(err) console.log(ree);
@@ -350,10 +350,10 @@ const pathToFile2 =__dirname + '\\' + 'indeks.js'; //to samo co wyżej
 const pathToFile3 =__filename;                     //to samo co wyżej
 //console.log(pathToFile2);    //wyświetli całą ścieżkę gdzie jesteśmy
 
-const anotherPath = path.join('/users/pl', 'active', 'user.json') //ręczne układnaie śceizki
+const anotherPath = path.join('/users/pl', 'active', 'user.json') //ręczne układnaie ścieżki
 //console.log(anotherPath);
 
-const parse = path.parse(__filename);   //śceizka w postaci obiektu z kilkoma danymi
+const parse = path.parse(__filename);   //ściezka w postaci obiektu z kilkoma danymi
 //console.log(parse); 
 
 const parse2 = path.parse(path.join(__filename, 'index.js'));
@@ -447,7 +447,7 @@ function gotujWode(clb) {
 const fetch = require('node-fetch');
 
 const number = process.argv[2] || Math.floor(Math.random() * 2000);  //odczytanie parametru, gdy wpiszemy: node nazwaPliku.js 2000
-//można zabespieczyć, ze jak ne licznba, to wywołaj process.exit();
+//można zabespieczyć, ze jak nie liczba, to wywołaj process.exit();
 
 fetch(`http://numbersapi.com/${number}/year?json`)
     .then(response => { //Gdy pozytywne rozwiązanie obietnicy, to zwróci kolejny promis
@@ -548,7 +548,7 @@ Instalację NPM można zrobić:
 - lokalnie tylko dla danego projektu (folderu)
 - globalnie z parametrem -g czyli wszystkie projekty będą mogły z niego korzystać
 
-Przykładowa instalacja programu ze ztrony: 
+Przykładowa instalacja programu ze strony: 
 https://www.npmjs.com/package/http-server
 w wierszu poleceń wpisujemy:
 npm install http-server -g
@@ -582,7 +582,7 @@ w pliku script.js
 var add = require('./functions/add.js'); //importowanie funkcji z pliku
 var divide = require('./functions/divide.js');
 
-w wierszu poleceń trzeba prejść do folderu z projektem i wpisać:
+w wierszu poleceń trzeba przejść do folderu z projektem i wpisać:
 λ browserify script.js -o bundle.js // plik wejściowy z parametrem -o czyli Output i plik wyjściowy (bundle to pakiet)
 
 w pliku index.html zamiast pliku script.js podpinam bundle.js

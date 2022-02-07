@@ -400,6 +400,10 @@ git branch -m "Nowa-zanzwa"         //Zmiana nazwy gałęzi, na której jesteśm
 git -m oldbranch newbranch          //Zmiana nazwy gałęzi, na której nas nie ma. Nie testowałem, wydaje mi się, że działac powinno: git branch -m oldbranch newbranch
 
 git checkout istniejącyBrancha      //przełaczenie się na inną gałąź
+git checkout main^                  //przełaczenie się na rodzica, commita main
+git checkout main^^                 //przełaczenie się na dziadka, commita main
+git checkout main~2                 //to co wyżej. Można podac dowolną liczbę
+git checkout HEAD^                  //przełaczenie się o jeden commit wyżej
 git checkout -b nowyBrancha         //tworzy nowy branch i przełącza sie na niego
 git checkout user -- User.cs        // jesteśmy na gałęzi 'master' i chcemy z innej gałęzi 'user' zaktualizować TYLKO JEDN PLIK o nazwie "User.cs"
 git switch istniejącyBrancha        //przełaczenie się na inną gałąź

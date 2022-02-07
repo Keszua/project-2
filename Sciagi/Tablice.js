@@ -424,27 +424,39 @@ const tab.sort((a, b) => a - b);
 //.slice(od, do*) tak samo jak przy stringach, 
 //zwraca nową tablicę zawierającą elementy z tablicy na której została wywołana.
 const tab = ['Marcin', 'Ania', 'Agnieszka', 'Monika', 'Magda'];
-const tab2 = tab.slice(0, 1);
-console.log(tab2); //[Marcin]
-console.log(tab); //[Marcin, Ania, Agnieszka, Monika, Magda]
-const tab3 = tab.slice(2);
-console.log(tab3); //[Agnieszka, Monika]
-const tab4 = tab.slice(0, 5);
-console.log(tab4); //[Marcin, Ania, Agnieszka, Monika, Magda]
-const tab5 = tab.slice(-2); //od końca
-console.log(tab5); //[Monika, Magda]
-const tab6 = tab.slice(2, -1);
-console.log(tab6); //[Agnieszka, Monika]
+const tab2 = tab.slice(0, 1);  //= ['Marcin']
+const tab3 = tab.slice(2);     //= ['Agnieszka', 'Monika', 'Magda']
+const tab4 = tab.slice(0, 4);  //= ['Marcin', 'Ania', 'Agnieszka', 'Monika']
+const tab5 = tab.slice(-2);    //od końca  //= ['Monika', 'Magda']
+const tab6 = tab.slice(1, -1); //= ['Ania', 'Agnieszka', 'Monika'] czyli bez pierwszego i bez ostatniego
 //kopiowanie można zrobić za pomocą .slice:  (albo map(), patrz niżej)
-const tab3 = tab.slice(); // skopiuje całą tablicę
+const tab7 = tab.slice(); // skopiuje całą tablicę
 
 
-//.splice(index, ileUsunąć, noweElementy*...) służy zarówno do usuwania jak i wstawiania nowych elementów do tablicy.
-const tab = ['Marcin', 'Ania', 'Agnieszka'];
-tab.splice(1, 1); //od indexu 1 usuwam 1 element
-console.log(tab); //wypisze "Marcin, Agnieszka"
-tab.splice(1, 0, 'Monika', 'Magda') //nic nie usuwam i wstawiam nowe elementy przed index 1
-console.log(tab); //wypisze "Marcin, Monika, Magda, Agnieszka"
+// .splice  - modyfikuje tablicę i zwraca tablicę z usuniętymi elementami
+// const remove = array.splice(start, deleteCount[, item1[, item2[, ...]]]) 
+//         |                   |      |             +  Elementy dodawane do tablicy. Jeżeli nie określimy żadnych elementów, splice usunie tylko podaną liczbę elementów.
+//         |                   |      +  Liczba całkowita określająca liczbę starych elementów tablicy do usunięcia. Gdy podamy 0 - to nic nie usówamy. Gdy nie podamy, to usówamy wszsytko powyżej "start"
+//         |                   +  Indeks od którego rozpoczynamy modyfikację tablicy
+//         + zwróci tablicę z usuniętymi elementami
+myFish = ["anioł", "klaun", "mandarynka", "jesiotr"];
+console.log("myFish: " + myFish);                        //= myFish: ["anioł", "klaun", "mandarynka", "jesiotr"]
+    
+removed = myFish.splice(2, 0, "bęben");
+console.log("Po dodaniu 1: " + myFish);                  //= Po dodaniu 1: ["anioł", "klaun", "bęben", "mandarynka", "jesiotr"]
+console.log("Usunięty jest: " + removed);                //= Usunięty jest: undefined
+   
+removed = myFish.splice(3, 1)
+console.log("Po usunięciu 1: " + myFish);                //= Po usunięciu 1: ["anioł", "klaun", "bęben, "jesiotr"]
+console.log("Usunięty jest: " + removed);                //= Usunięty jest: mandarynka
+    
+removed = myFish.splice(2, 1, "trąba")
+console.log("Po zastąpieniu 1: " + myFish);              //= Po zastąpieniu 1: ["anioł", "klaun", "trąba", "jesiotr"]
+console.log("Usunięty jest: " + removed);                //= Usunięty jest: bęben
+    
+removed = myFish.splice(0, 2, "papuga", "zawilec", "niebieski")
+console.log("Po zastąpieniu 2: " + myFish);              //= Po zastąpieniu 2: ["papuga", "zawilec", "niebieski", "trąba", "jesiotr"]
+console.log("Usunięty jest: " + removed);                //= Usunięty jest: ["anioł", "klaun"]
 
 
 
@@ -541,49 +553,75 @@ tab[3] = "Piotrek";
 tab[tab.length] = "Piotrek";
 console.log(tab); //[Marcin, Ania, Agnieszka, Piotrek]
 
-=========================================================================================================================================================================================================================================================
-|              JavaScript                        |                Python                           |                  GO                             |                  PHP                            |                      Java                      |
-=========================================================================================================================================================================================================================================================
-|                                                |                                                 |                                                 |                                                 |
-/*deklaracja tablicy */                          |                                                 | var tab [5]int                                  |
-| const tab = ["Marcin", "Ania", "Agnieszka"];   |                                                 | tab := [5]int {1, 2, 5, 6, 7}                   |                                                 |
-|                                                |                                                 | tab := []int {2, 5, 6}                          |                                                 |
+=================================================================================================================================================================================================================================================================================================
+|                   JavaScript                             |                       Python                              |                           GO                              |                          PHP                              |                      Java                      |
+=================================================================================================================================================================================================================================================================================================
+|                                                          |                                                           |                                                           |                                                           |
+//deklaracja tablicy
+| const tab = ["Marcin", "Ania", "Agnieszka"];             |                                                           | var tab [5]int                                            |          
+|                                                          |                                                           | tab := [5]int {1, 2, 5, 6, 7}                             |                                                           |
+|                                                          |                                                           | tab := []int {2, 5, 6}                                    |                                                           |
 //dodanie nowego elemntu do tablicy
-| tab.push("Piotrek"); /* zwroci dlugosc tab */  |                                                 | tab = append(tab, 13)                           |                                                 |
-| tab[4] = "Krysia";                             |                                                 |                                                 |                                                 |
-| tab[tab.length] = "Marek";                     |                                                 |                                                 |                                                 |
-|                                                |                                                 |                                                 |                                                 |
+| tab.push("Piotrek"); /* zwroci dlugosc tab */            |                                                           | tab = append(tab, 13)                                     |                                                           |
+| tab[4] = "Krysia";                                       |                                                           |                                                           |                                                           |
+| tab[tab.length] = "Marek";                               |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
 
-// nowa tablica z wybranymi elementami           |
-| tablica.filter(callback)                       |                                                 |                                                 |                                                 |
-|                                                |                                                 |                                                 |                                                 |
-// usuwanie jednego elemntu z tablicy
-| tablica.splice(indexElemntu, ileUsunac);       |                                                 |                                                 |                                                 |
-|                                                |                                                 |                                                 |                                                 |
-|                                                |                                                 |                                                 |                                                 |
+// nowa tablica z wybranymi elementami           
+| tablica.filter(callback)                                 |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+// usuwanie jednego elemntu z tablicy; modyfikuje tablicę i zwraca tablicę z usuniętymi elementami (zależnie od podanych argumentów może nawet dodawać elementy)
+| tablica.splice(indexElemntu, ileUsunac);                 |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+// usuwa ostatni element i zwraca jego wartość
+| .pop()                                                   |                                                           |                                                           |                                                           |
+| var myFish = ['clown', 'mandarin', 'sturgeon'];          |                                                           |                                                           |                                                           |
+| var popped = myFish.pop();                               |                                                           |                                                           |                                                           |
+| console.log(myFish); /*['clown', 'mandarin' ]*/          |                                                           |                                                           |                                                           |
+| console.log(popped); /* 'sturgeon' */                    |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
 //zamiana 'tekst&CosTam' na 
 // zabespieczony:  'tekst%20%26%20CosTam'
-| encodeURIComponent('tekst & CosTam')           |                                                 |                                                 |                                                 |
-|                                                |                                                 |                                                 |                                                 |
+| encodeURIComponent('tekst & CosTam')                     |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
 //Operatory logiczne:  
-|                                                |                                                 |                                                 | &&  ||  xor                                     |
+|                                                          |                                                           |                                                           | &&  ||  xor                                               |
 //długość łańcucha. 
-|                                                |                                                 |                                                 | strlen();                                       | 
-|                                                |                                                 |                                                 | $len = strlen((string) $liczba);                |
+|                                                          |                                                           |                                                           | strlen();                                                 | 
+|                                                          |                                                           |                                                           | $len = strlen((string) $liczba);                          |
 //zamiana liczby na łańcuch
-|                                                |                                                 |                                                 | $txt = (string) $liczba                         |
+|                                                          |                                                           |                                                           | $txt = (string) $liczba                                   |
 //dekodowanie JSONA
-|                                                |                                                 |                                                 | json_encode($text);                             |
-|                                                |                                                 |                                                 |                                                 |
+|                                                          |                                                           |                                                           | json_encode($text);                                       |
+|                                                          |                                                           |                                                           |                                                           |
 //sortowanie
-|                                                |                                                 | sort.Ints(tab)                                  |                                                 |
-|                                                |                                                 | sort.Strings(tablicaStringow)                   |                                                 |
-|                                                |                                                 |                                                 |                                                 |
-// usówa białe znaki na końcu
-| .trim()                                        |  strip()                                        |                                                 |                                                 |
-| const value = input.value.trim();              |                                                 |                                                 |                                                 |
-|                                                |                                                 |                                                 |                                                 |
-|                                                |                                                 |                                                 |                                                 |
-|                                                |                                                 |                                                 |                                                 |
+| tab.sort();                                              |                                                           | sort.Ints(tab)                                            |                                                           |
+| /*UWAGA! Cyfry posortuje jak litery*/                    |                                                           | sort.Strings(tablicaStringow)                             |                                                           |
+| /* Aby posegregowac cyfry, mozna przekazac funkcje */    |                                                           |                                                           |                                                           |
+| const tab = [1, 2, 21, 2.1, 32, 3.1];                    |                                                           |                                                           |                                                           |
+| const tab3 = tab.sort((a, b) => a - b);                  |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+// usuwa białe znaki na końcu
+| .trim()                                                  | strip()                                                   |                                                           |                                                           |
+| const value = input.value.trim();                        |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
 
 

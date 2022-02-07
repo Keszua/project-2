@@ -38,7 +38,7 @@ ls -l  // pełne informacje o katalogach
 ll     // to samo co ls -l  (nie działą w Debianie)
 ls -a  // pokaz pliki i katalogi ukryte
 ls -la // pokaz pliki i katalogi ukryte w formie listy ze szczegułami
-ls -jh // ładnie poakzuje wielkość plików
+ls -lh // ładnie poakzuje wielkość plików
 ls -ld // informacje o tym katalogu (bez zawartości)
 ls -lt // posegregowane według czasu na górze najmłodsze
 ls -ltr// posegregowane według czasu (reverse) 
@@ -47,7 +47,7 @@ ls -lt --time=ctime  // posegregowane według daty utworzenia (create time)
 ls -F  // doda do katalogów slesz a do linków doda @
 ls /etc > etc.txt // wynik plecenia ls zostanie zapisany do pliku etc.txt
 
-tree   //tali ls ale w formie drzewa ( w Debianie trzeba to doinstalwoać sudo apt install tree)
+tree   //tali ls ale w formie drzewa ( w Debianie trzeba to doinstalować sudo apt install tree)
 
 // nadawanie uprawnień:
 u - własiciel
@@ -126,8 +126,26 @@ ls /etc | cat > etc.txt     // wynik plecenia ls zostanie zapisany do pliku etc.
 
 echo "tekst na ekran"       // wypisze tekst na ekranie
 echo "To jest treść wiadomości" >> ./Bazy\ danych/Plik.txt  //wpisz treść do pliku 
+OPERATION='jakas tresc'
+echo $OPERATION             //= jakas tresc
+echo "Operacja $OPERATION"  //= Operacja jakas tresc
+echo 'Operacja $OPERATION'  //= Operacja $OPERATION    -nie podmienia zmiennych
+echo "Operacja \$OPERATION = $OPERATION"  //= Operacja $OPERATION = jakas tresc
+echo -e "jedn\tdwa\ttrzty"  // -e aby działay zpecjalne znaki, typu \t \n \a 
+echo -n . ; echo -n . ; echo -n . ; echo . //= ....    -n nie generuj nowej linii
+echo -n . ; sleep 1 ; echo -n . ; sleep 1 ;  echo -n . ; sleep 1 ;  echo . //= .... wypisze kropki co sekunde
+echo -n '|' ; sleep 1 ; echo -ne '\b/' ; sleep 1 ;  echo -n '\b-'. ; sleep 1 ;  echo -e '\b\\' //= wypisze "wiatraczek" co sekunde
 
-find . -name *.txt          // szukaj w folderze bierzączym nazw plików o rozszeżeniu *txt
+read -p 'Wprowadz dane' ZMIENNA1 ZMIENNA2
+
+tty                          // wysweitli informacje o terminalu
+mesg                         // wyswietli, czy zezwalam na otrzymywanie komunikatów
+write mariusz                // wejdzie w tryb konwersacji z mariuszem   Ctrl+d  aby przerwać rozmowę
+who -T                       // wypisze, kto hce otrzymywać komunikaty
+wall "Komunikat do wszystkich" // gdy dodamy sudo, to na pewno poleci so wszsytkich (nie trzeb podawać cudzysłowiów)
+
+
+find . -name *.txt           // szukaj w folderze bierzączym nazw plików o rozszeżeniu *txt
 find . -name *.txt -exec ls -l {} \:  // odszuka i wyświetli pliki
 find . -name *.txt -exec chmod u-w,g-x,o-rw {} \:  // odszuka i zmieni uprawnienia plików
 
@@ -221,8 +239,74 @@ head -n 20 nazwaPliku | tail -n 10 // wyswielt od 11 do 20 linijki
 more nazwaPliku         // wyswietli plik strona po stronie
 less                    // wyswietli plik. f-nastepna strona b-poprzednia strona +wiele innych funkcji do nawigacji
 
-cmp ./plik1 ./plik2     // dostane informacje o pierwszej różnicy w plikach
+
+grep sukaneSlowo plik        // przejżyj (przeszukaj) plik i wyświetl wskazany fragment pliku
+grep sukaneSlowo plik1 plik2 // przejżyj pliki i wyświetl wskazany fragment pliku
+grep root /etc/passwd        // wyswietli tylko linijki zawierajace słowo "root"
+grep root * | more           // wyswietli liste plików zawierających słowo "root" i KAŻDE wystapienie (| more tylko dla stronizowania)
+grep -c root *               // wyswietli liste plików zawierających słowo "root" i ilość wystąpień (c-count)
+grep -r root *               // przeszukaj pliki i podkatalogi (r-rekurencyjnie)
+grep -r -n root *            // przeszukaj pliki i podkatalogi i w jakiej linijce wystepuje (n-number line)
+grep -r -E ".*root" *        // E-regular Expression (wyrazenia regularne)
+
+cmp ./plik1 ./plik2     // porownanie plikow: dostane informacje o pierwszej różnicy w plikach. Czyli tylko mam info, że się różnią  
+
 diff plik1 plik2        // porownanie plikow prawie jak w gicie.  -y wyswietli w postaci dwoch okienek
+diff -y plik1 plik2     // porownanie plikow wyswietli w postaci dwoch okienek
+diff -q plik1 plik2     // porownanie plikow zwróci informacje, że się roznią, troche jak cmp
+
+
+Film 20 (Linux - linia komend dla początkujących...)
+man ls - help dla polecenia ls
+ls --help
+ls --help | more        //wyświetlanie helpa strona po stronie
+	Przewijanie po linice: enter i strzełaka
+	Przewijanie po stronie: spacja
+	Wyjście: q
+
+
+df                      // Filesystem - informacja o dyskach
+df -h                   // Fajniej przeliczone wartosci bajtów
+df -h .                 // informacja o dysku, na którym aktulanie się znajduje
+df -i                   // informacja o zajętości dysku w inodach (takich sektorach)
+		                   ufs - system plików w linuxie
+du -sh .                // disk used - ile miejsca zajmuja pliki
+du -sh . 2>/dev/null    // disk used - informacje o błędach wyślij do "czarnej dziury"  0-standard input  1-standard output  2-standard error output
+du -ha --exclude="*.journal" // wypisz szczegoły plików bez rozszezenia .journal
+
+
+tar  // arhiwizacja plików (takie pakowanie bez kompresji)
+tar -cvf log.tar log    // c-create - stwórz arhiwum, v-gadatliwe f-okresli nazwe pliku, natepnie nazwa pliku jaki powstanie, nastepnie katalog do spakowania
+tar -xvf log.tar log    // x-wypakuj
+tar -cvzf log.tgz log   // utwórz SPAKOWANE arhiwum
+tar -xvzf log.tgz log   // x-wypakuj i ROZKOMPRESUJ
+tar -xvzf log.tgz log plik  // x-wypakuj i ROZKOMPRESUJ tylko jeden plik
+tar -tzf log.tgz        // tylko podglad zawartosci
+
+gzip log.tar            // podstawoe polecenie do kompresji (UWAGA! usuwa oryginalny plik)
+gunzip log.tar.gz       // rozkompresowanie 
+
+zip README.zip README   // skompresuj plik README
+zip -r log.zip log      // skompresuj rekurencyjnie katalog "log" wraz z podkatalogami i plikami
+zip log.zip -u log/README // aktualizuj (u-update) w arhiwum jeden zmieniony plik 
+zip log.zip -d log/README // usuń z arhiwum jeden, niepotrzebny plik
+unzip README.zip          // rozkompresuj plik README
+unzip -l log.zip          // rozkompresuj cały folder i wylistuj co robisz
+unzip log.zip log/README  // rozpakuj tylko jeden plik 
+unzip -t log.zip          // przeczytaj i skontroluj arhiwum (bez rozpakowywania)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //-------------------------------------------------------------------------------------------------
@@ -271,16 +355,8 @@ u                // cofnij (taki Ctrl+Z)
 
 
 
-Film 20 (Linux - linia komend dla początkujących...)
-man ls - help dla polecenia ls
-ls --help
-ls --help | more  //wyświetlanie helpa strona po stronie
-	Przewijanie po linice: enter i strzełaka
-	Przewijanie po stronie: spacja
-	Wyjście: q
 
 
-df // Filesystem
 
 
 

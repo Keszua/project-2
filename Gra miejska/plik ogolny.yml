@@ -13,3 +13,44 @@ Co potrzebuje:
 - backend z obsługa bazy
 - system rejstracji i logowania
 - pozycja GPS
+
+
+https://react-leaflet.js.org/docs/start-setup/
+
+<MapContainer center={[51.4097, 21.1301]} zoom={18} scrollWheelZoom={false}>
+  <TileLayer
+    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+  />
+  <Marker position={[51.505, -0.09]}>
+    <Popup>
+      A pretty CSS3 popup. <br /> Easily customizable.
+    </Popup>
+  </Marker>
+</MapContainer>
+
+
+
+# pobieranei pozycji:
+# https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
+
+var options = {
+  enableHighAccuracy: true, // true-dokładna pozycja; false-zgrubna pozycja, ale może być szybsza, lub zurzywać mniej energii
+  timeout: 5000,  // max czas, w jakim urządzenie zwróci pozycje;  Infinity-getCurrentPosition() nie zostanie zwrócona, dopóki pozycja nie będzie dostępna.
+  maximumAge: 0,  // 0-zawsze pobieraj i podawaj aktualną pozycje. Wartosci doatnie (w milisekundach)-korzytaj z pamięci podręcznej. Infinity-zawsze korzystaj z pamięci podręcznej, nawet gdy GPS jest wyłączony
+};
+
+function success(pos) {
+  var crd = pos.coords;
+
+  console.log('Your current position is:');
+  console.log(`Latitude : ${crd.latitude}`);
+  console.log(`Longitude: ${crd.longitude}`);
+  console.log(`More or less ${crd.accuracy} meters.`);
+}
+
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+navigator.geolocation.getCurrentPosition(success, error, options);

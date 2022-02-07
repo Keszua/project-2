@@ -3,9 +3,10 @@ Ostatnia zmiana 2019.10.10
 //kurs ze strony: https://kursjs.pl/index.php
 // kurs o samym debagowaniu: https://developers.google.com/web/tools/chrome-devtools/javascript/
 
-//Piotrek pracuje w Acaisoft
+//Mariusz wspominał coś o Next i Vercel do tworzenia sklepów (chyba samemu)
+//Stripe - coś do płatności online
 
-//zbi�r podstawowych zada� i algorym�w, np. na drzewko, kolejk�, sortowanie itp : https://github.com/trekhleb/javascript-algorithms
+//zbior podstawowych zadan i algorymow, np. na drzewko, kolejka, sortowanie itp : https://github.com/trekhleb/javascript-algorithms
 
 
 Znaki specjalne dla printf 
@@ -29,15 +30,21 @@ Znaki specjalne dla printf
 
 
 
-console.log('Witaj');	// tekst zwykły
-console.warn('Uwaga!'); //tekst zwracający uwagę - pisany na żółym tle i z wykrzyknikiem
-console.error('Błąd!'); //tekst błędu - czerwony, na czerwonym tle
-console.info('Informacja!'); //tekst informacyjny z ikonką info
-console.dir(someButton);  // Gdy chcemy wypisać więcej detali o tym obiekcie
-console.table([1,2,3,4,5]); //do przyjemnego wypisywania tablicy
+console.log('Witaj');	     // tekst zwykły
+console.warn('Uwaga!');      // tekst zwracający uwagę - pisany na żółym tle i z wykrzyknikiem
+console.error('Błąd!');      // tekst błędu - czerwony, na czerwonym tle
+console.info('Informacja!'); // tekst informacyjny z ikonką info
+console.dir(someButton);     // Gdy chcemy wypisać więcej detali o tym obiekcie
+console.table([1,2,3,4,5]);  // do przyjemnego wypisywania tablicy
+let devices = [
+  { name: 'iPhone', brand: 'Apple' },
+  { name: 'Galaxy', brand: 'Samsung'}
+]
+console.table(devices);      // do przyjemnego wypisywania tablicy - wiele kolumn
+console.table(devices, ['brand']); // do przyjemnego wypisywania tablicy - wybrana kolumna
 console.assert(false, "Jakis warunek false");  //wyświetli się TYLKO gdy warunek zwróci false
-console.count(); //do policzenia czegoś
-console.trace(); // coś jak debug tree w Atolicu
+console.count();             // do policzenia czegoś
+console.trace();             // coś jak debug tree w Atolicu
 
 //grupowanie wielu tekstów (console.log etc) w konsoli w jedną grupę
 console.group('Nazwa grupy');
@@ -57,8 +64,7 @@ console.log("Hejka w %cKolorze %ci po za kolorem ", 'color: blue; font-size: x-l
 %d - dodane liczby
 
 
-//Wyświetli coś w "wyskakującym okienku"
-alert('Hejka');
+alert('Hejka'); //Wyświetli coś w "wyskakującym okienku"
 
 //Wprowadzanie TAK/NIE przez "wyskakujące okno"
 confirm('Czy jesteś pewien, że chcesz kontynuować?')  //zwraca true albo false
@@ -69,7 +75,15 @@ console.time('Pierwszy test'); //rozpoczyna test - zaczyna liczyc czas
 for (let i=0; i<100000; i++) { ... }
 console.timeEnd('Pierwszy test'); //konczy test
 
+for(let i=0; i<10; i++){
+  console.count('Komunikat wyswietlony po raz')  // gdy chcemy wiedziec, ile razy wyswietli sie komunikat
+}
+console.countReset('Komunikat wyswietlony po raz') // kasowanie licznika dla console.count
+
+console.clear();           // czysci konsole
+
 //wiecej o consloe.log na: https://medium.com/javascript-in-plain-english/mastering-js-console-log-like-a-pro-1c634e6393f9
+// oraz https://www.freecodecamp.org/news/javascript-console-log-example-how-to-print-to-the-console-in-js/
 
 //czasami tez bedziemy chcieli zatrzymac na chwile dzialanie skryptu w danym miejscu
 function test() {
@@ -951,14 +965,14 @@ e.screenY	Zwraca pozycj� kursora od g�rnej kraw�dzi ekranu
 		console.log('y: ', e.pageY);
 	});
 
-//inny przyk�ad
+//inny przyklad
 	element.addEventListener('click', function() {
 		console.log('Pozycja myszki:');
 		console.log('x: ', e.clientX + document.body.scrollLeft);
 		console.log('y: ', e.clientY + document.body.scrollTop);
 	});
 
-// pozycja kursoru na danym elemencie (przy robieniu gierki w ma�ym okienku)
+// pozycja kursoru na danym elemencie (przy robieniu gierki w malym okienku)
 	const div = document.querySelector('.test');
 
 	div.addEventListener('mousemove', function(e) {

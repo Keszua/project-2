@@ -500,14 +500,14 @@ func main() {
     g:= greeter {
         name: "Karol",
     }
-    g.greet()               //= Karol
+    g.drukujImie()              //= Karol
 }
 
 type greeter struct {
     name string
 }
 
-func(g greeter) greet() {  //metody dla struktury. Można przekazać wskaźnik do struktury, aby zmieniac besposrednio zawartosc struktury
+func(g greeter) drukujImie() {  //metody dla struktury. Można przekazać wskaźnik do struktury, aby zmieniac besposrednio zawartosc struktury
     fmt.Println(g.name)
 }
 
