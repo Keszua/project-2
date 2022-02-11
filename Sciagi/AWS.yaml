@@ -1,0 +1,74 @@
+https://aws.amazon.com/
+
+Filmik, dla początkujacych, od 30:00 https://www.youtube.com/watch?v=yTZUOOshUU0&list=PLlPEMsbWPA6-ICdmH_YHvlCeqNzv5RPzJ&index=1
+
+Polecenia W konsoli AWS CloudShell:
+
+aws s3 ls                    # wylistuj wszystkie backety
+aws s3 mb s3://rolkizausmiech # stworz backet (nazwa musi byc globalnie unikatowa)
+To co stworzyliśmy widać w: Storage -> s3 -> rolkizausmiech
+Możńa tam dodać pliki. Zawsze są zablkowane i niedostepne. 
+Udostępnianie w: Permison -> Edit -> Everyon (public access) -> Read -> Potwierdzić
+lub: zaznaczyć plik -> Actions -> Make public
+Możliwość wystawienia strony www: Static website hosting -> Edit -> Enable -> wpisać nazwę   Film YT 33:00 https://www.youtube.com/watch?v=yTZUOOshUU0&list=PLlPEMsbWPA6-ICdmH_YHvlCeqNzv5RPzJ&index=1
+
+Front zrobiony na s3
+Backend na EC2
+EC2 -> instances (running) -> Launch instances -> Amazon Linux 2 AMI  Sporo ustawień... Film YT 36:50 https://www.youtube.com/watch?v=yTZUOOshUU0&list=PLlPEMsbWPA6-ICdmH_YHvlCeqNzv5RPzJ&index=1
+W okienku (na dole przy Advanced Details) można wstawić skrypt, który zautomatyzuje niktóre funkcje:
+#!/bin/bash
+yum update -y
+yum install httpd -y
+service httpd start
+chkconfig httpd on
+
+
+Przykład wstawienia odrobine większej strony na s3: Film YT 4:00   https://www.youtube.com/watch?v=SG-O-4Z3wTk&list=PLlPEMsbWPA6-ICdmH_YHvlCeqNzv5RPzJ&index=2  
+
+Serverless: - pozwala na mały backend
+AWS Lambda: - trzeba sotarczyć plik (może też być kontener)
+AWS Fargate: - do uruchomienia kontenera bez powoływania serwera
+Amazon EventBride: - np do wysyłania maila zawsze w poniedziałek rano
+Amazon DynamoDB: - baza danych
+Amazon CloudWatch: możzna zdefinować alarmy, np:. baza zaweira już 1000.000 rekordów
+
+
+DDoS: - zabespieczenie przed atakiem ilościowym 
+
+Sztuczna inteligencja, Film FB https://www.youtube.com/watch?v=uwZlGYaC5b4&list=PLlPEMsbWPA6-ICdmH_YHvlCeqNzv5RPzJ&index=4
+Amazon Polly: - IA do czytania tekstu
+Amazon Rekognition: - przetwarzanie obrazu, wykrywanie obiektu
+Amazon Forecast: - buduje prognoze biznesową, na:, prognoza zuzycia energii elektrycznej
+
+Kontenery, propozycja 1: Film YT 45:00 https://www.youtube.com/watch?v=uwZlGYaC5b4&list=PLlPEMsbWPA6-ICdmH_YHvlCeqNzv5RPzJ&index=4
+Usługi kontenerowe: ECS i EKS
+ECS: Elastic container servicess
+EKS: Elastic Kubernetess servicess
+
+
+# Jak ztworzyc projekt CDK  Film YT 3:00 https://www.youtube.com/watch?v=2GQretYSQ2Q&list=PLlPEMsbWPA6-M06KxNFaBUNAmAsbTGcBW&index=4
+# Tworze nowy folsder i wchodze do niego:
+mkdir webapp
+cd webapp
+# Tworzenie projektu w języku python:
+cdk init app --language=python
+
+# Jakiś konkretny film jak zainstalowac kontener na AWS  Film YT 10:00  https://www.youtube.com/watch?v=lO2wU2rcGUw
+# Gdy już założymy usługę EC2, stworzymy grupę i wchodzimy w konsolę
+# Sciagamy obraz kontenera
+docker pull nginx
+docker run -p 80:80 nginx
+
+# Zakładanie kontenera w ECS Film YT 14:20  https://www.youtube.com/watch?v=lO2wU2rcGUw
+
+
+
+
+
+
+
+
+
+
+
+

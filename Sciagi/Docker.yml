@@ -40,8 +40,11 @@ docker container run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -
 docker container run -it nginx bash 
 docker container start -ai idkontenera
 docker container exec -it idkontenera bash  #  odpalenie konsoli na dzialajacym kontenerze
+docker attach  [id lub nazwa kontenera]     #  odpalenie konsoli na dzialajacym kontenerze. Przerywamy Ctrl+C (cos było że nie polecane)
+
 
 docker stop idkontenera
+docker container stop idkontenera
 
 docker container ls     #  wyswietli liste kontenerow URUCHOMIONYCH
 docker ps               #  po staremu 
@@ -63,7 +66,7 @@ curl localhost:9200  # zwroci JSON (jezli mamy odpalony elastic)
 curl -H "Content-Type: application/json" -XPOST "http://localhost:9200/docker/image/1" -d "{ \"name\" : \"elasticsearch\"}"
 curl localhost:9200/docker/_search
 
-#  do obserwowania, co sis dzieje w kolejkach
+#  do obserwowania, co sie dzieje w kolejkach
 docker run -d --name rabbit-in-the-hole -p 8081:15672 rabbitmq:3-managment
 #  po wejsciu na przegladarce, mozna sie zalogowac L: guest  H: guest
 
@@ -80,10 +83,10 @@ docker network inspect nazwaSieci
 #  tworzenie sieci:
 docker network create --driver=bridge mojaNowaNazwaSieci
 
-#  uruchomienie kontenera "nginx" w konkretnej sieci (tutaj nazwa seici to: skynet)
+#  uruchomienie kontenera "nginx" w konkretnej sieci (tutaj nazwa sieci to: skynet)
 docker container run -d --network=skynet nginx
-docker network connect skynet first   #  podlaczenie do sieci, kontenera first
-docker network disconnect bridge first #  odpiecie kontenera od domyslnej sieci (bo teraz byly dwie sieci)
+docker network connect skynet first      #  podlaczenie do sieci, kontenera first
+docker network disconnect bridge first   #  odpiecie kontenera od domyslnej sieci (bo teraz byly dwie sieci)
 
 #  Usuwanie sieci:
 #  w pierszej kolejnosci trzeba odpiac lub usunac kontenery
@@ -98,21 +101,37 @@ curl http://172.17.0.3:8080/actuator/health
 curl -X POST http://localhost:3000/parametr
 
 
-#  urzycie opcji link ... na przykladzie polaczenia ado bazy MSQL
+#  urzycie opcji link ... na przykladzie polaczenia do bazy MSQL
 docker run --name wordpressdb -e MYSQL_ROOT_PASSWORD=wordpress -e MYSQL_DATABASE=wordpress -d mysql:5.7
 docker run -e WORDPRESS_DB_PASSWORD=wordpress -d --name wordpress --link wordpressdb:mysql -p 80:80  wordpress:5-php7.2
-#                                   |                   |                |                    |- port zewnetrzny dla przegladarki
+#                                   |                   |                |           |        |- port zewnetrzny dla przegladarki
 #                                   |                   |                |           |- wewnetrzny alias, domyslnia nazwa dla bazy danych to mysql
 #                                   |                   |                |- nazwa kontenera
 #                                   |                   |- nazwa kontenera
 #                                   |- nazwa bazy danych
 
 
+# konfiguracja PrestaShop z bazą przez zmienną środowiskową (nie przez link)
+# create a network for containers to communicate
+$ docker network create prestashop-net
+# launch mysql 5.7 container
+$ docker run -ti --name some-mysql --network prestashop-net -e MYSQL_ROOT_PASSWORD=admin -p 3307:3306 -d mysql:5.7
+# launch prestashop container
+$ docker run -ti --name some-prestashop --network prestashop-net -e DB_SERVER=some-mysql -p 8080:80 -d prestashop/prestashop
+# UWAGA! Gdy zmienie nazwę bazy, to tez trzeba ta nazwe zmienic w DB_SERVER=some-mysql
+
+
+Nazwa klepu: Karol_test
+Imie: Karol
+Nazwisko: M
+Email: k.michalczyk@humansoft.pl
+H 12345678
+
 #  -------------------------------------------------------------------------------------------------
 #  Budowanie obrazow
 
-docker image history nazwaObrazu   #  mozna podejzec, kiedy i z jakich warstwy zostal stworzony obraz
-docker image inspect idKontenera  #  wyswietla pelna konfiguracje obrzu (w formacie JSON)
+docker image history nazwaObrazu   # mozna podejzec, kiedy i z jakich warstwy zostal stworzony obraz
+docker image inspect idKontenera   # wyswietla pelna konfiguracje obrazu (w formacie JSON)
 
 #  nadawanie nowego tagu
 docker image tag nazwa:aTagiem nazwaKontaDockerHub/nazwa
@@ -154,7 +173,7 @@ EXPOSE 3000  #  port do nasłuchu
 
 ENV NODE_ENV production  #   Zmienne srowowiskowe przekazane do obrazu
 
-#   ENTRYPOINT [ "entrypoint.sh" ]  Gdy nie podamy Entrypoint, wywołą się poelcenie domyślne: /bin/sh -c
+#   ENTRYPOINT [ "entrypoint.sh" ]  Gdy nie podamy Entrypoint, wywoła się polecenie domyślne: /bin/sh -c
 #   "entrypoint.sh" - to plik, który powninen być obok Dockerfile
 #   CMD ["trafik"] specyfikuje argument, jaki będzie przekazywany do ENTRYPOINTa
 CMD ["node", "app.js"]
@@ -181,12 +200,18 @@ docker container run -d -v idVolumenu:/appdata' -p 3000:3000 nazwaObrazu
 #  uruchomienie kontenera i stworzenie volumenu z "ludzką" nazwą
 docker container run -d --mount 'src=nazwa-volumenu,dst=/appdata' -p 3000:3000 nazwaObrazu
 
+# przykład z filmu https://www.youtube.com/watch?v=p2PH_YPCsis&list=PLy7NrYWoggjzfAHlUusx2wuDwfCrmJYcs&index=12
+docker run -v /home/mount/data:/var/lib/mysql/data
+#              |                |- sceizka do kataogu w maszynie (wnętrze kontenera)
+#              |- Host Volumes. Jezeli tego nie podam, doker wygeneruje losową nazwę: /var/lib/docker/volumes/random-hash/_data
 
+# Sztuczka na kopiowanie volumenu:
+docker container run --rm -it -v staraNazwa:/from -v nowaNazwa:/to alpine ash -c "cd /from; cp -av . /to"
 
 
 #--------------------------------------------------------------------------------------------------
 #  Bind mounnts
-#  coś jak Volumes dla wersji developerskiej
+#  coś jak Volumes dla wersji developerskiej (starsze podejście)
 
 #  uruchamiamy kontener z flagą -v
 docker run -d -p 80:80 -v $(pwd):/usr/share/nginx/html nginx
@@ -262,7 +287,104 @@ docker-compose top      # obserwacja procesów
 docker-compose logs     # obserwacja logów
 
 
+#--------------------------------------------------------------------------------------------------
+#Przykład pliku dla App Service i MySQL z kursu: https://docs.microsoft.com/pl-pl/visualstudio/docker/tutorials/use-docker-compose
 
+version: "3.7"
+
+services:
+  # docker run -dp 3000:3000 -w /app -v ${PWD}:/app --network todo-app -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=secret -e MYSQL_DB=todos node:12-alpine sh -c "yarn install && yarn run dev"
+  # Definiowanie App Service.
+  app:                                 # Nazwa serwisu (dowolna, ale ona będzie aliasem sieciowym)
+    image: node:12-alpine              # wpis usługi i obraz kontenera
+    command: sh -c "yarn install && yarn run dev"   
+    ports:
+      - 3000:3000                      # zmigrowane polecenie: -p 3000:3000
+    working_dir: /app                  # zmigruj katalog roboczy ( -w /app )
+    volumes:
+      - ./:/app                        # mapowanie woluminów ( -v ${PWD}:/app )  Docker Compose używa ścierzek względnych
+    environment:                       # zmienne środowiskowe
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_DB: todos
+
+  # docker run -d --network todo-app --network-alias mysql -v todo-mysql-data:/var/lib/mysql  -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=todos mysql:5.7
+  # Definiowanie usługi MySQL
+  mysql:                               # nazwa: mysql
+    image: mysql:5.7                   # określ obraz do użycia.
+    volumes:                           # zdefiniuj mapowanie woluminów.
+      - todo-mysql-data:/var/lib/mysql # określić punkt instalacji w konfiguracji usług
+    environment: 
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: todos
+
+
+volumes:                          
+  todo-mysql-data: 
+
+# Uruchamianie stosu aplikacji:
+# Najpierw upewnij się, że nie są uruchomione żadne inne kopie aplikacji i bazy danych ( docker ps i docker rm -f <ids> ).
+# Uruchom stos aplikacji przy użyciu polecenia docker-compose up  Dodaj -d flagę , aby uruchomić wszystko w tle. Alternatywnie możesz kliknąć prawym przyciskiem myszy plik Compose i wybrać opcję Utwórz dla VS Code bocznym.
+docker-compose up -d
+
+docker-compose logs -f       # Przyjrzyj się dziennikom za pomocą polecenia 
+docker-compose logs -f app   # dziennik dla konkretnej usługi
+
+docker-compose down          # zatrzymanie kontenerów i usówanie sieci
+
+
+#--------------------------------------------------------------------------------------------------
+# Przykład działającej konfiguracji PrestaShop:
+version: '3.9'
+
+services:
+    prestashop_mysql:
+        # image: mysql:5.7
+        image: prestashop-db:5.7_3
+        container_name: prestashop-db
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_DATABASE: prestashop
+            MYSQL_ROOT_PASSWORD: admin
+        volumes:
+            # - ./.docker/data/mysql/:/var/lib/mysql
+            # - ./.docker/logs/mysql/:/var/log/mysql
+            - db_data:/var/lib/mysql
+        ports:
+            - 3307:3306
+        networks:
+            - presta-net
+        
+    prestashop:
+        # image: prestashop/prestashop:1.7
+        image: prestashop:1.7_3
+        container_name: prestashop
+        ports:
+          - 8080:80
+          - 2202:2202
+        environment:
+            DB_SERVER: prestashop_mysql
+            MYSQL_HOST: mysql
+            MYSQL_USER: root
+            MYSQL_PASSWORD: admin
+            MYSQL_DB: prestashop
+        networks:
+            - presta-net
+
+networks:
+  presta-net:
+    external: false #needs to be created by other file
+    driver: bridge
+    name: prestashop-net
+
+volumes:
+  db_data:
+    name: docker_test1_db_data
+
+
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
 https://github.com/veggiemonk/awesome-docker
@@ -299,8 +421,77 @@ docker123
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
+# jakiś filmik, jak stworzyć front w React i backend w Node.js  https://www.youtube.com/watch?v=-pTel5FojAQ
+
+# W jednym folderze normalnie instaluje React
+# Robie drugi folder backend (na tym poziomie co cały React). 
+# Wchodze do tego folderu, tam wywołuje 
+npm init
+# powatanie plik package.json, do kturego dopisuje zalezności:
+{
+  ...
+  "dependencies": {
+    "express": "4.16.3",
+    "pg": "8.0.3",
+    "cors": "2.8.4",
+    "nodemon": "1.18.3",
+    "body-parser": "*"
+  },
+  "scripts": {
+    "dev": "nodemon",
+    "start": "node index.js"
+  }
+}
+# wywołujemy instalecję, aby zalezności się zainstlowały:
+npm i
+
+# Utwórz plik keys.js ze zmiennymi potrzebnymi dla kontenera
+# Utwórz plik index.js z prostym serwerem
+
+#  uruchomienie serwera poleeniem:
+npm run dev
 
 
+# w package.json reacta do zalezności dopisujemy:
+{
+  ...
+  "dependencies": {
+    ...
+    "axios": "0.18.0",
+    "react-router-dom": "4.3.1"
+  },
+}
+
+# Projekt reacta odpalam przez:
+npm run start
 
 
+# Aby wsadzić projekt reacta  do kontenera, trzba dodac plik (na poziomie .gitignore) Deckerfile.dev
+# Zawartość pliku:   Film YT 18:30  https://www.youtube.com/watch?v=-pTel5FojAQ
+FROM node:14.14.0-alpine
+WORKDIR /app
+COPY ./package.json ./
+RUM npm i
+COPY . .
+CMD ["npm", "run", "start"]
 
+# Buduje obraz projektu:
+docker build -f Dockerfile.dev -t stylerhunt/multi-client
+
+# Odpalam kontener:
+docker run -it -p 4002:3000 stylerhun/multi-client
+
+
+# Teraz tworze kontener dla backendu, plik Deckerfile.dev jest podobny:
+FROM node:14.14.0-alpine
+WORKDIR /app
+COPY ./package.json ./
+RUM npm i
+COPY . .
+CMD ["npm", "run", "dev"]
+
+# Buduje obraz projektu:
+docker build -f Dockerfile.dev -t stylerhunt/multi-server
+
+# Odpalam kontener:
+docker run -it -p 4002:3000 stylerhun/multi-client

@@ -71,14 +71,14 @@ DROP TABLE nazwaTabeli; // usówanie tabeli
 CREATE DATABASE nazwaBazy // tworzenie nowej bazy
 CREATE TABLE nazwaTabeli  \n
   -> ( id_dzial INT NOT NULL PRIMARY KEY AUTO_INCREMENT
-  ->   nazwa VARCHR(30) UNIQUE   //UNIQUE zapewni, że nie może być taich samych 
+  ->   nazwa VARCHR(30) UNIQUE   //UNIQUE zapewni, że nie może być takich samych 
   -> );
 USE nazwaTabeli;          // wejście do tabeli
 SHOW TABLES;              // Pokazuej zawrtość tabeli w której jestesmy
 DESCRIBE nazwaTabeli      // wyświetli właściwości tabeli w formie tabeli   | Field | Type | Null | Key | Def |
 INSERT INTO nazwaTabeli (nazwa) VALUES ( 'bajki'), (druga_tabela)  // dodawanie nowych rekordów
 SET SESSION sql_mode='traditional';  // zabespiecza przed dodawaniem pustych pól
-DELETE FROM nazwaTabeli WHERE id_dzial=5;  //kasownaie rekordu
+DELETE FROM nazwaTabeli WHERE id_dzial=5;  //kasowanie rekordu
 ALTER TABLE nazwaTabeli + ADD UNIQUE(pesel)  //nada key; UNI
                         + CHANGE nazwaKolumny nowyTypPola
                         + ADD COLUMN nazwaKolumny typPola

@@ -8,6 +8,9 @@ PSR-12  -styl formatowania tekstu (taki "czysty kod")
 reCAPTHA
 https://codelabs.developers.google.com/codelabs/reCAPTCHA/index.html#5
 
+Kurs PHP od Mariusza:
+http://pl.phptherightway.com/
+
 /*
 Sugerowana wtyczka: PHP IntelliSense
 Ta wtyczka wymaga wyłączenia "azowych sugestii" 
@@ -48,6 +51,41 @@ Tryby:
  - strict - ścisły, który nie dopuszcza rzutowania		
 Tryb ścisły uruchamiamy za pomoca komendy, umieszczonej na początku pliku:
 declare(strict_types=1);
+
+//--------------------------------------------------------------------------------------
+Uruchomienie PHP przed DOCKER (czyli kontener z Debianem)
+
+Jeżeli nie mam kontenera, tworze go za pomocą komendy:
+docker run -d -it -p 8084:8084 debian
+docker run -d -it -p 8084:8084 --name=debain_PHP debian
+
+Kontenetrpo winien się odpalić, jeśli nie to:
+docker container start -ai idkontenera 
+
+W konsoli, przy pierwszym uruchomieniu, zaktualizować repozytorium 
+apt update
+Następnie zainstlować PHP
+apt install PHP
+
+Utworzyć plik index.php
+
+Zawartosc pliku:
+<?php
+    echo "blablabla"
+
+Odpalić:
+php -S 0.0.0.0:8084
+
+W przeglądarce odpalić:
+http://10.10.110.129:8084/
+lub
+http://localhost:8084/
+
+
+
+//--------------------------------------------------------------------------------------
+
+
 
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
@@ -712,8 +750,22 @@ PDO   // https://www.php.net/manual/en/book.pdo.php
     }	
 	
 	
+
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+Data i czas
+
+<?php
+$raw = '22.11.1968';
+$start = \DateTime::createFromFormat('d.m.Y', $raw);
+
+echo "Data rozpoczęcia: " . $start->format('Y-m-d') . "\n";
+
 	
-	
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------	
 YII
 
 https://www.yiiframework.com/doc/guide/2.0/en/start-installation

@@ -31,7 +31,7 @@ https://react-leaflet.js.org/docs/start-setup/
 
 
 
-# pobieranei pozycji:
+# pobieranie pozycji:
 # https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
 
 var options = {
@@ -54,3 +54,14 @@ function error(err) {
 }
 
 navigator.geolocation.getCurrentPosition(success, error, options);
+
+
+Dokumentacja geolocation: https://w3c.github.io/geolocation-api/#getcurrentposition-method
+
+
+
+
+
+
+
+

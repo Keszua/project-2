@@ -66,12 +66,13 @@ git config --global user.email "keszua@gmail.com"
 git config --global core.editor         //pokaze ścieżkę do Visual Studio Code (lub innego edytora)
 git config --global core.editor notepad //aby przestawić domyślny edytor
            --local lub --system         //poziomy zmian
-git config --unset user.email           //usówanie danych z pliku konfiguracyjnym (będąc w folderze głównym ~)
-git config --global --unset user.email  //usówanie danych z pliku konfiguracyjnego
+git config --unset user.email           //usuwanie danych z pliku konfiguracyjnym (będąc w folderze głównym ~)
+git config --global --unset user.email  //usuwanie danych z pliku konfiguracyjnego
 git config --list                       //wyświetli pełną konfigurację
 
 git remote show                         //sprawdz ścierzkę do repozytorium
 git config --get remote.origin.url      //sprawdz ścierzkę do konkretnego repozytorium
+git remote add nazwa linkDoRepo         // dodanie repozytorium
 
 
 notepad .gitconfig      //aby podejżeć plik konfiguracyjny w notatniku (będąc w folderze głównym ~)
@@ -278,8 +279,8 @@ git revert --quit            //przerywa i przywraca stan do poprzedniego (gdy wy
 git revert --abort           //cofnięcie ostatniego reverta (nie wiem czy jest zaleznosc z konfliktami?)
 
 git restore nazwaPliku       //cofnięcie zmina (Gdy zrobie jakieś zmiany i che wrocic do czystego comita )
-rm nazwaPliku                //usówanie pliku (tylko z katalogu roboczego)
-git rm nazwaPliku            //usówanie pliku z indeksu (staging) i z katalogu roboczego (nie bedzie pliku na dysku)
+rm nazwaPliku                //usuwanie pliku (tylko z katalogu roboczego)
+git rm nazwaPliku            //usuwanie pliku z indeksu (staging) i z katalogu roboczego (nie bedzie pliku na dysku)
 git rm --cached nazwaPliku   //przestań śledzić plik (usunięcie pliku z poczekalni, uzyskuje status: nieśledzony). Plik bedzie cały czas na dysku w flderze roboczym. 
 git reset                    //kopiuje pliki z ostatniego commita do przechowalni (stage), nadpisując jej stan
 git reset HEAD               //aby upewnić się do jakiego stanu wrócić (do ostatniego commitu)
@@ -478,8 +479,8 @@ git stash show stash@{x}    //pozkazuje zmiany. 0,1,2,..,x, gdzie 0 to ostatnio 
 git stash push -m "Opis zmian w pliku nie śledzonym" -u
 git stash apply             //Nakładanie zmian ze schowka na obecny stan HEAD
 git stash apply stash@{1}   //przywrócenie do katalogu roboczego i zmiany cały czas pozostają na stosie
-git stash drop              //usówanie zmian ze stosu nr 0, bez przywracania ich do folderu roboczego (Czyszczenie stasch'a)
-git stash drop stash@{1}    //usówanie zmian ze stosu nr 1, bez przywracania ich do folderu roboczego (Czyszczenie stasch'a)
+git stash drop              //usuwanie zmian ze stosu nr 0, bez przywracania ich do folderu roboczego (Czyszczenie stasch'a)
+git stash drop stash@{1}    //usuwanie zmian ze stosu nr 1, bez przywracania ich do folderu roboczego (Czyszczenie stasch'a)
 git stash drop 1            //to samo co wyżej
 git stash clear             //czyszczenie całego stosu (bez przywracania zmian do folderu roboczego)
 git stash branch nazwaNowejGalezi  //stworzenie nowej gałęzi na bazie plików na stosie
@@ -538,7 +539,7 @@ git remote -v               //sprawdzenie ścieżki na serwer
 git remote show             //wyswietli dostępne repozytoria
 git remote show origin      //pokazuje informacje o gałęziach oraz która gałąź jest podpięta pod "pull"
 git remote rename pb paul   //zmiana nazwy pb na paul
-git remote rm paul          //usówanie odnośnika
+git remote rm paul          //usuwanie odnośnika
 git push                    //kolejne wypchnięcia projektu an serwer
 
 git fetch                   //pobieramy informacje ze zdalnego repozytorium
@@ -576,6 +577,8 @@ git push origin v1.0.0      //wysłanie informacji o tylko jednym tagu
 
 git push origin -d v1.0.0   //usuwanie tagów z repozytorium
 
+git describe <ref>          // zwróci info o najbliższym tagu.    <ref>-gdy pusty, to HEAD, można wpisac co kolwiek (hasz, gałąź)
+                            // zwróci: <tag>_<numCommits>_g<hash> gdzie: <tag> jest znacznikiem najbliższego przodka w historii, <numCommits> jest liczbą commitów od tego znacznika, a <hash> jest haszem opisywanego commitu.
 
 //ALIASY 
 //Aliasy - czyli definiowanie skrótów
