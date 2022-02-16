@@ -874,18 +874,18 @@ https://kursjs.pl/kurs/dom/dom-tworzenie-i-usuwanie.php#fragment
 //Klawisze 
 //keyDown, keyUp, keyPress i input
 
-//Wykrywanie nacisni�tego klawisza:
+//Wykrywanie nacisnietego klawisza:
 	document.addEventListener('keyup', function(e) {
 		console.log('Klawisz: ' + e.key);
 	});
 
-//Aby wykry� czy dodatkowo zosta� naci�ni�ty jeden z funkcyjnych klawiszy mo�emy skorzysta� z dodatkowych w�a�ciwo�ci:
-e.altKey	Czy klawisz Alt jest naci�ni�ty
-e.ctrlKey	Czy klawisz Ctrl jest naci�ni�ty
-e.shiftKey	Czy klawisz Shift jest naci�ni�ty
-e.keyCode	Zwraca kod klawisza. Przydatne przy sprawdzaniu zakres�w klawiszy - np. klawisz to liczba
+//Aby wykryc czy dodatkowo zostal nacisniety jeden z funkcyjnych klawiszy mozemy skorzystac z dodatkowych wlasciwosci:
+e.altKey	Czy klawisz Alt jest nacisniety
+e.ctrlKey	Czy klawisz Ctrl jest nacisniety
+e.shiftKey	Czy klawisz Shift jest nacisniety
+e.keyCode	Zwraca kod klawisza. Przydatne przy sprawdzaniu zakresow klawiszy - np. klawisz to liczba
 
-//wykrycie naci�ni�cia klawiszSpecjalny+klawisz
+//wykrycie nacisniecia klawiszSpecjalny+klawisz
 	const textarea = document.querySelector('#keyTest');
 
 	textarea.addEventListener('keyup', function(e) {
@@ -914,13 +914,13 @@ e.keyCode	Zwraca kod klawisza. Przydatne przy sprawdzaniu zakres�w klawiszy - 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //Myszka:
-mousedown 	- przycisk myszki zosta� naci�ni�ty
-mouseup 	- przycisk myszki zosta� puszczony
-click 		- przycisk myszki zosta� naci�ni�ty i puszczony (czyli normalne klikni�cie)
-dblclick 	- podw�jne klikni�cie
-mousemove 	- kursor porusza si� po...
-mouseover 	- kursor znalaz� si� na elemencie
-mouseout 	- kursor opu�ci� dany element
+mousedown 	- przycisk myszki zostal nacisniety
+mouseup 	- przycisk myszki zostal puszczony
+click 		- przycisk myszki zostal nacisniety i puszczony (czyli normalne klikniecie)
+dblclick 	- podwojne klikniecie
+mousemove 	- kursor porusza sie po...
+mouseover 	- kursor znalazl sie na elemencie
+mouseout 	- kursor opuscil dany element
 
 document.addEventListener("DOMContentLoaded", function() {
     element.addEventListener('mousedown', showMe);
@@ -929,10 +929,10 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-//w��czamy mouseover - najechanie na element
+//wlaczamy mouseover - najechanie na element
 element.addEventListener('mouseover', function() {...});
 
-//mousemove - poruszanie si� po elemencie
+//mousemove - poruszanie sie po elemencie
 element.addEventListener('mousemove', function() {...});
 
 //mouseout - opuszczamy element
@@ -940,23 +940,23 @@ element.addEventListener('mouseout', function() {...});
 
 
 //Pozycja kursora
-//Aby pobra� pozycj� kursora na stronie mo�emy skorzysta� z 2 par w�a�ciwo�ci:
-e.pageX		Zwraca pozycj� kursora od lewej kraw�dzi strony (wraz z przewini�ciem)
-e.pageY		Zwraca pozycj� kursora od g�rnej kraw�dzi strony (wraz z przewini�ciem)
-e.clientX 	Zwraca pozycj� kursora od g�rnej kraw�dzi widocznego obszaru strony (bez uwzgl�dnienia pozycji przewini�cia strony)
-e.clientY	Zwraca pozycj� kursora od lewej kraw�dzi widocznego obszaru strony (bez uwzgl�dnienia pozycji przewini�cia strony)
-e.screenX	Zwraca pozycj� kursora od lewej kraw�dzi ekranu
-e.screenY	Zwraca pozycj� kursora od g�rnej kraw�dzi ekranu
+//Aby pobrac pozycje kursora na stronie mozemy skorzystac z 2 par wlasciwosci:
+e.pageX		Zwraca pozycje kursora od lewej krawedzi strony (wraz z przewinieciem)
+e.pageY		Zwraca pozycje kursora od gornej krawadzi strony (wraz z przewinieciem)
+e.clientX 	Zwraca pozycje kursora od gornej krawadzi widocznego obszaru strony (bez uwzglednienia pozycji przewiniecia strony)
+e.clientY	Zwraca pozycje kursora od lewej krawedzi widocznego obszaru strony (bez uwzglednienia pozycji przewiniecia strony)
+e.screenX	Zwraca pozycje kursora od lewej krawedzi ekranu
+e.screenY	Zwraca pozycje kursora od gornej krawedzi ekranu
 
 
-//W�a�ciwo�ci e.pageX i e.pageY zwracaj� realn� pozycj� kursora od pocz�tku strony, 
-//dlatego idealnie si� nadaj� do "przyklejania" element�w do kursora - np. jaki� dymk�w,
-// r�nych menu itp.
+//Wlasciwosci e.pageX i e.pageY zwracaja realna pozycje kursora od poczatku strony, 
+//dlatego idealnie sie nadaje do "przyklejania" elementow do kursora - np. jakis dymkow,
+// ronych menu itp.
 
-//W�a�ciwo�ci e.clientX i e.clientY zwracaj� pozycj� kursora od kraw�dzi widocznego obszaru strony 
-//(tego kt�ry aktualnie wida� w oknie przegl�darki), 
-//dlatego u�ywaj�c ich powinni�my do nich dolicza� w�a�ciwo�ci document.body.scrollLeft i document.body.scrollTop, 
-//poniewa� strona mo�e by� przewini�ta.
+//Wlasciwosci e.clientX i e.clientY zwracaja pozycje kursora od krawedzi widocznego obszaru strony 
+//(tego ktory aktualnie widac w oknie przegladarki), 
+//dlatego uzywajac ich powinnismy do nich doliczac wlasciwosci document.body.scrollLeft i document.body.scrollTop, 
+//poniewaz strona moze byc przewinieta.
 
 
 	element.addEventListener('mousemove', function(e) {
@@ -986,7 +986,7 @@ e.screenY	Zwraca pozycj� kursora od g�rnej kraw�dzi ekranu
 		console.clear();
 	});
 
-//inny przyk�ad: (chyba lepszy od powy�szego)
+//inny przyklad: (chyba lepszy od powyzszego)
 const div = document.querySelector('.test-pos-2');
 
 div.addEventListener('mousemove', function(e) {
@@ -1001,20 +1001,20 @@ div.addEventListener('click', function() {
 })
 
 
-//Przyk�ad zrobienia celownika na stronie: https://kursjs.pl/kurs/events/events-mouse.php#
+//Przyklad zrobienia celownika na stronie: https://kursjs.pl/kurs/events/events-mouse.php#
 
-//Kt�ry przycisk myszki
-//Aby odczyta�, kt�ry przycisk zosta� naci�ni�ty skorzystamy z w�a�ciwo�ci button.
+//Ktory przycisk myszki
+//Aby odczytac, ktory przycisk zostal nacisniety skorzystamy z wlasciwosci button.
 
-//Guziki myszki zosta�y obdarowane odpowiednimi warto�ciami:
+//Guziki myszki zostaly obdarowane odpowiednimi wartosciami:
 lewy guzik - 0
-�rodkowy guzik - 1
+srodkowy guzik - 1
 prawy guzik - 2
 
 	function buttonMouse(e) {
 		e.preventDefault();
 
-		alert('Numer klikni�tego przycisku: '+ e.button);
+		alert('Numer kliknietego przycisku: '+ e.button);
 	}
 
 	const block = document.querySelector('#blockBtn');
@@ -1022,17 +1022,17 @@ prawy guzik - 2
 
 
 
-//Przyk�ad zrobienia MENU KONTEKSTOWEGO dla obiektu: https://kursjs.pl/kurs/events/events-mouse.php#
+//Przyklad zrobienia MENU KONTEKSTOWEGO dla obiektu: https://kursjs.pl/kurs/events/events-mouse.php#
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //Grafika
 
-width	szeroko�� grafiki,
-height	wysoko�� grafiki,
-alt		alternatywny opis grafiki (widoczny gdy si� nie wczyta),
-title	tekst, kt�ry pojawi si� po najechaniu kursorem na element,
+width	szerokosc grafiki,
+height	wysokosc grafiki,
+alt		alternatywny opis grafiki (widoczny gdy sie nie wczyta),
+title	tekst, ktory pojawi sie po najechaniu kursorem na element,
 src		adres do grafiki
 
 <img src="./wietnam.jpg" class="img" alt="Kartofel w wietnamie" width="400" height="400">
@@ -1053,7 +1053,7 @@ src		adres do grafiki
 		this.src = imageOff.src;
 	});
 
-//lepsze rozwi�zanie, do podstawiania wi�kszej ilo�ci obrazk�w:
+//lepsze rozwiazanie, do podstawiania wiekszej ilosci obrazkow:
 const names = [
     'obrazek.jpg',
     'kartofelek.jpg',
@@ -1105,11 +1105,11 @@ for (let i=0; i<names.length; i++) {
 	setTimeout(sayHello, 1000, "This works", "reader"); // This works reader
 
 //-----------------------------------------------------------------------------
-//setInterval(fn, time) - cyklicznie wywo�uje funkcje
+//setInterval(fn, time) - cyklicznie wywoluje funkcje
 
-// co sekund� b�dzie pojawia� si� napis
+// co sekunde bedzie pojawiac sie napis
 	const time = setInterval(function() {
-		console.log('Przyk�adowy napis');
+		console.log('Przykladowy napis');
 	}, 1000);
 
 //zatrzymanie:
@@ -1122,7 +1122,7 @@ for (let i=0; i<names.length; i++) {
 //-----------------------------------------------------------------------------
 //Praca z RWD
 
-//wykrycie zmiany wielko�ci okna:
+//wykrycie zmiany wielkosci okna:
 window.addEventListener('resize', function() {
     console.log(this);
 });
@@ -1131,9 +1131,9 @@ window.addEventListener('resize', function() {
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-//Okna przegl�darki
+//Okna przegladarki
 window.open(url, name, options)
-//wi�cej na: https://kursjs.pl/kurs/okna.php
+//wiecej na: https://kursjs.pl/kurs/okna.php
 
 
 //-----------------------------------------------------------------------------
@@ -1212,50 +1212,52 @@ local storage - Do zapisywania danych na nieokreslony czas (az do ich usuniecia)
 	console.log(JSON.parse(retrievedObject));
 
 
-//wi�cej na ten temat: https://kursjs.pl/kurs/storage/storage.php#sessionstorage
+//wiecej na ten temat: https://kursjs.pl/kurs/storage/storage.php#sessionstorage
 
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-//Wyra�enia regularne
-// Strony do testowania wyra�e�: https://regex101.com/
+//Wyrazenia regularne
+// Strony do testowania wyrazen: https://regex101.com/
 // https://regexr.com/
 
-//Aby w Javascript korzysta� z wyra�e� regularnych, musimy utworzy� obiekt:
-	RegExp(wyra�enie, flaga)
-// kt�ry przyjmuje 2 argumenty: wyra�enie, kt�rym b�dziemy testowa�, oraz dodatkowe flagi
+//Aby w Javascript korzystac z wyrazen regularnych, musimy utworzyc obiekt:
+	RegExp(wyrazenie, flaga)
+// ktory przyjmuje 2 argumenty: wyrazenie, ktorym bedziemy testowac, oraz dodatkowe flagi
 	const reg = new RegExp("pani?" , "gi")
 // lub
 	const reg = /pani?/gi
 
 //Meta znaki w tabeli na stronie: https://kursjs.pl/kurs/regular.php
+// Podsumowanie od Mariusza: https://developer.mozilla.org/pl/docs/Web/JavaScript/Reference/Global_Objects/RegExp
+
 
 //Flagi
 znak Flagi	| znaczenie
 ------------|-----------------------------------------------------------------
-	i		| Powoduje niebranie pod uwag� wielko�ci liter
+	i		| Powoduje niebranie pod uwage wielkosci liter
 ------------|-----------------------------------------------------------------
-	g		| Powoduje zwracanie wszystkich pasuj�cych fragment�w, a nie tylko pierwszego
+	g		| Powoduje zwracanie wszystkich pasujacych fragmentow, a nie tylko pierwszego
 ------------|-----------------------------------------------------------------
-	m		| Powoduje wyszukiwanie w tek�cie kilku liniowym. 
-			| W trybie tym znak pocz�tku i ko�ca wzorca (^$) jest wstawiany przed i po znaku nowej linii (\n).
+	m		| Powoduje wyszukiwanie w tekscie kilku liniowym. 
+			| W trybie tym znak poczatku i konca wzorca (^$) jest wstawiany przed i po znaku nowej linii (\n).
 ------------|-----------------------------------------------------------------
-	x		| Ignoruje bia�e znaki
+	x		| Ignoruje biale znaki
 ------------|-----------------------------------------------------------------
-	s		| Powoduje, �e . (kropka) zast�puje te� znak CR (Enter)
+	s		| Powoduje, ze . (kropka) zastepuje tez znak CR (Enter)
 ------------|-----------------------------------------------------------------
 
 
-//Przyk�ad:
+//Przyklad:
 	const text = "cat dog";
 	const reg = /cat/;
-	reg.test(text) // true - bo cat znajduje si� w tek�cie
+	reg.test(text) // true - bo cat znajduje sie w tekscie
 
 	const reg2 = /^cat$/;
-	alert(reg2.test(tekst)); //false - bo wzorzec zaczyna si� z pocz�tkiem i ko�czy z ko�cem tekstu (znaki ^ i $) - jedyny pasuj�cy tekst to "cat"
+	alert(reg2.test(tekst)); //false - bo wzorzec zaczyna sie z poczatkiem i konczy z koncem tekstu (znaki ^ i $) - jedyny pasujacy tekst to "cat"
 
-//Przyk�ad 2:
+//Przyklad 2:
 	const re = /d(b+)(d)/ig;
 	const result = re.exec("cdbBdbsbz");
 
@@ -1267,19 +1269,19 @@ znak Flagi	| znaczenie
 	console.log(re.ignoreCase) //true
 	console.log(re.source) //d(b+)(d)
  
-//Przyk�ad 3: Zastosowanie metody search()
-	const text = "Fantomas robi mas� - marchewkowo-marcepanowa";
+//Przyklad 3: Zastosowanie metody search()
+	const text = "Fantomas robi mase - marchewkowo-marcepanowa";
 	const reg = /at/gi";
 
 	console.log("Search: " + text.search(reg));
 	console.log("Index of: " + text.indexOf("at"));
 
-//Przyk�ad 4:  Zastosowanie metody replace()
+//Przyklad 4:  Zastosowanie metody replace()
 	const text = "Kolorowy kolor nie jest kolorowy?...";
 	console.log(text);
 
-	const reg = /lor/g //nasze wyra�enie
-	console.log(text.replace(reg,"ral")); //Wyszukujemy w tek�cie wszystkie wyst�pienia "lor" i zamieniamy je na pogrubione "ral"
+	const reg = /lor/g //nasze wyrazenie
+	console.log(text.replace(reg,"ral")); //Wyszukujemy w tekscie wszystkie wystapienia "lor" i zamieniamy je na pogrubione "ral"
 
 
 
@@ -1296,7 +1298,7 @@ const ob = {
 const obStr = JSON.stringify(ob);
 console.log(obStr); //"{"name":"Piotr","subname":"Nowak"}"
 
-console.log( JSON.parse(obStr) ); //nasz wcze�niejszy obiekt
+console.log( JSON.parse(obStr) ); //nasz wczesniejszy obiekt
 
 
 //-----------------------------------------------------------------------------
@@ -1305,7 +1307,7 @@ console.log( JSON.parse(obStr) ); //nasz wcze�niejszy obiekt
 //Canvas
 //w pliku index.html
 	<canvas width="200" height="200" id="canvas1">
-		...tre�� alternatywna, gdy pregl�darka nie obs�uguje tego elementu...
+		...tresc alternatywna, gdy pregladarka nie obsluguje tego elementu...
 	</canvas>
 // w pliku .js
 	const canvasElem = document.getElementById('canvas1');
@@ -1316,20 +1318,20 @@ console.log( JSON.parse(obStr) ); //nasz wcze�niejszy obiekt
 	ctx.strokeRect(50,50,50,50);	//rysujemy obramowanie drugiego kwadratu
 
 ctx.font = "italic bold 30px Arial"; 
-ctx.textBaseline = "middle";		//wyr�wnanie: "top", "middle", "bottom"
-ctx.fillText('Ala ma kota', 0, 30);		//pe�ne (wype�nione) litery
-ctx.strokeText('Ala ma kota', 0, 30);	//obrysowane litery
+ctx.textBaseline = "middle";            //wyrownanie: "top", "middle", "bottom"
+ctx.fillText('Ala ma kota', 0, 30);	    //pelne (wypelnione) litery
+ctx.strokeText('Ala ma kota', 0, 30);   //obrysowane litery
 
 
-fillRect(x, y, width, height)		rysuje wype�niony prostok�t
-strokeRect(x, y, width, height)		rysuje obramowanie prostok�ta
-clearRext(x, y, width, height)		czy�ci okre�lony obszar i czyni go przezroczystym
+fillRect(x, y, width, height)		rysuje wypelniony prostokat
+strokeRect(x, y, width, height)		rysuje obramowanie prostokata
+clearRext(x, y, width, height)		czysci okreslony obszar i czyni go przezroczystym
 
-moveTo(x,y) - ustawienie pi�rka na dan� pozycj�
+moveTo(x,y) - ustawienie pionka na dana pozycje
 
 //rysowanie linni
 	ctx.beginPath();
-	ctx.moveTo(35,10); //rysowanie zaczynamy od punkt�w 35,10 - tam wi�c przesuwamy nasze pi�rko
+	ctx.moveTo(35,10); //rysowanie zaczynamy od punktow 35,10 - tam wiec przesuwamy nasze piorko
 	ctx.lineTo(60,40);
 	ctx.lineTo(10,40);
 	ctx.lineTo(35,10);
@@ -1337,13 +1339,13 @@ moveTo(x,y) - ustawienie pi�rka na dan� pozycj�
 
 ctx.closePath(); - domykanie obrysu
 
-//�uki:
+//luki:
 arc(x, y, r, start, koniec, kierunek rysowania [false lub true])
 x, y - miejsce wbicia cyrkla, 
 start, koniec - podany w radianach, gdzie: radians = (Math.PI/180)*kat
-kierunek rysowania - czy zgodnei ze wskaz�wkami zegra?
+kierunek rysowania - czy zgodnei ze wskazowkami zegra?
 
-//Przyk�ad rysowanie 4 luk�w:
+//Przyklad rysowanie 4 lukow:
 	function radianAngle(angle) {
 		return radians = (Math.PI/180)*angle;
 	}
@@ -1368,25 +1370,25 @@ kierunek rysowania - czy zgodnei ze wskaz�wkami zegra?
 
 //-----------------------------------------------------------------------------
 JEST
-//strona z dokumentacj�: https://jestjs.io/docs/en/using-matchers
+//strona z dokumentacja: https://jestjs.io/docs/en/using-matchers
 
 //filmik szkoleniowy: https://www.youtube.com/watch?v=jpV3WEi3shs&t=440s
 
-//Zak�adanie nowego projetu przez:
+//Zakladanie nowego projetu przez:
 	npm init --yes
 	npm install --save-dev jest
 
 
-//proponowane paczki do test�w
+//proponowane paczki do testow
 	npm install--save - dev @babel/cli @babel/core @babel/preset-env babel-jest @babel/plugin - transform - modules - commonjs
-//trzeba zrobi� konfiguracje bable:
-//stworzy� plik babel.config.js a w nim wpisa�:
+//trzeba zrobic konfiguracje bable:
+//stworzyc plik babel.config.js a w nim wpisac:
 	module.exports = {
 		presets: [['@babel/preset-env', { targets: { node: 'current' } }]],
 		plugins: [['@babel/plugin-transform-modules-commonjs']],
 	};
 
-w folderze package.json trzeba doda� w: "scripts"
+w folderze package.json trzeba dodac w: "scripts"
   "scripts": {
     "test": "jest", //edytowany
     "build": "babel ./src/index.js --out-dir build --ignore 'src/*.test.js'", //to dodane

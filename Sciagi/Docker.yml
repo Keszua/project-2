@@ -424,10 +424,11 @@ docker123
 # jakiś filmik, jak stworzyć front w React i backend w Node.js  https://www.youtube.com/watch?v=-pTel5FojAQ
 
 # W jednym folderze normalnie instaluje React
+npx create-react-app forntend
 # Robie drugi folder backend (na tym poziomie co cały React). 
 # Wchodze do tego folderu, tam wywołuje 
 npm init
-# powatanie plik package.json, do kturego dopisuje zalezności:
+# powatanie plik package.json, do kturego dopisuje zalezności (stare scripts usunąć):
 {
   ...
   "dependencies": {
@@ -442,17 +443,25 @@ npm init
     "start": "node index.js"
   }
 }
-# wywołujemy instalecję, aby zalezności się zainstlowały:
+# wywołujemy instalecję, aby zalezności się zainstalowały:
 npm i
 
 # Utwórz plik keys.js ze zmiennymi potrzebnymi dla kontenera
+# Zawartość pliku:
+module.exports = {
+    pgUser: process.env.PGUSER,
+    pgHost: process.env.PGHOST,
+    pgDatabase: process.env.PGDATABASE,
+    pgPassword: process.env.PGPASSWORD,
+    pgPort: process.env.PGPORT,
+}
 # Utwórz plik index.js z prostym serwerem
 
-#  uruchomienie serwera poleeniem:
+#  uruchomienie serwera poleceniem:
 npm run dev
 
 
-# w package.json reacta do zalezności dopisujemy:
+# FRONT w package.json reacta do zalezności dopisujemy:   Film 9:20  https://www.youtube.com/watch?v=-pTel5FojAQ
 {
   ...
   "dependencies": {
@@ -466,32 +475,66 @@ npm run dev
 npm run start
 
 
-# Aby wsadzić projekt reacta  do kontenera, trzba dodac plik (na poziomie .gitignore) Deckerfile.dev
+# Aby wsadzić projekt reacta  do kontenera, trzeba dodac plik (na poziomie .gitignore) Deckerfile.dev
 # Zawartość pliku:   Film YT 18:30  https://www.youtube.com/watch?v=-pTel5FojAQ
 FROM node:14.14.0-alpine
 WORKDIR /app
 COPY ./package.json ./
-RUM npm i
+RUN npm i
 COPY . .
 CMD ["npm", "run", "start"]
 
 # Buduje obraz projektu:
-docker build -f Dockerfile.dev -t stylerhunt/multi-client
+docker build -f Dockerfile.dev -t stylerhun/multi-client .
 
 # Odpalam kontener:
-docker run -it -p 4002:3000 stylerhun/multi-client
+docker run -it -p 4002:3000 --name=P1Front stylerhun/multi-client
 
 
-# Teraz tworze kontener dla backendu, plik Deckerfile.dev jest podobny:
+# Teraz tworze kontener dla backendu, plik Dockerfile.dev jest podobny:
 FROM node:14.14.0-alpine
 WORKDIR /app
 COPY ./package.json ./
-RUM npm i
+RUN npm i
 COPY . .
 CMD ["npm", "run", "dev"]
 
 # Buduje obraz projektu:
-docker build -f Dockerfile.dev -t stylerhunt/multi-server
+docker build -f Dockerfile.dev -t stylerhun/multi-server .
 
 # Odpalam kontener:
-docker run -it -p 4002:3000 stylerhun/multi-client
+docker run -it -p 4003:5000 --name=P1Back stylerhun/multi-server
+
+
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+KUBERNEST
+
+kubectl version  # sprawdzenie, czy jest zainstalowany kubernest i w jakiej wersjii
+
+# tworzenie podów zdefiniowanych w folderze k8s ( trzeba być na takim poziomi, żeby po wpisaniu ls widac było folder 'k8s')
+kubectl apply -f k8s
+
+kubectl get pods
+kubectl get services  # lista serwisów z IP oraz portami
+
+# szyfrowanie haseł:
+kubectl create secret generic pgpassword --from-literal PGPASSWORD=12345test
+
+# odczyt tokenów z hasłami:
+kubectl get secret
+
+# Pogubiłem się na Filmie YT 17:20 https://www.youtube.com/watch?v=OVVGwc90guo
+# Nie znalazłem linku instalacyjnego, takiego jak koles z filmu.
+
+kubectl get pv
+
+kubectl delete -f k8s
+
+
+
+
+
+
+
