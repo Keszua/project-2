@@ -154,6 +154,7 @@ find . -name *.txt -exec chmod u-w,g-x,o-rw {} \:  // odszuka i zmieni uprawnien
 
 sudo -        //komendy administratora
 sudo passwd root  //zmiana chasła dla administratora
+passwd        // ustaw nowe haslo na aktualnym koncie  
 su            //zmiana uzytkownika
 su root       //przełącz się na administratora
 //po zalogowaniu jako admin, będzie na początku root@uzytkownik i # na końcu
@@ -810,7 +811,13 @@ done
 
 
 //-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
+   ####    ####     ####    #     #   #     #    ####    #     #
+   #   #   #   #   #    #    #   #    ##   ##   #    #    #   #
+   #   #   #   #   #    #     # #     # # # #   #    #     # #
+   ####    ####    #    #      #      #  #  #   #    #      #
+   #       # #     #    #     # #     #     #   #    #     # #
+   #       #  #    #    #    #   #    #     #   #    #    #   #
+   #       #   #    ####    #     #   #     #    ####    #     #
 //-------------------------------------------------------------------------------------------------
 Wirtualne maszyny w PROXMOX
 https://pve3.humansoft.pl:8006/
@@ -920,8 +927,8 @@ nano interfaces   //edycja ustawień sieci:
 		#dns-search ihermes.humansoft.pl
 
 
-// na windowsie, dns taki dam jak brama domyslna		
-// Maposwanie dysku: przez muj komputer -> mapowanie sysku. Wybrać sysk S i naswa folderu:  \\ad.humansoft.pl\s
+// na windowsie, dns taki sam jak brama domyslna		
+// Mapowanie dysku: przez moj komputer -> mapowanie dysku. Wybrać dysk S i nazwa folderu:  \\ad.humansoft.pl\s
 
 		
 //restart usługi z karta siecową: (aby nie stracić połączenia zdalnego)

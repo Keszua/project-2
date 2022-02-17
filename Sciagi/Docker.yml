@@ -18,8 +18,8 @@ docker info       # liczba kontenerow i obrazow
 
 docker            # wyswietli liste polecen
 
-docker image pull nazwaObrau  # sciagnieci danego obrazu, bez uruchamiania
-docker image pull nazwaObrau:mojTag  # sciagnieci danego obrazu + nadaj tag ale tez jakos koles sciagal odpowiednie wersje za pomocc tagu (film 18)
+docker image pull nazwaObrau         # sciagniecie danego obrazu, bez uruchamiania
+docker image pull nazwaObrau:mojTag  # sciagniecie danego obrazu + nadaj tag ale tez jakos koles sciagal odpowiednie wersje za pomocc tagu (film 18)
 docker run
 docker container run   # uruchomienie NOWEGO kontenera. Jezeli nie posiadamy obrazu, zostanie on sciagniety i uruchomiony
 docker container run --publish 8080:80 --detach nginx  
@@ -27,14 +27,16 @@ docker container run --publish 8080:80 --detach nginx
 #                      |       |    |    |- uruchomienie kontenera w tle
 #                      |       |    |- port po stronie kontenera
 #                      |       |- port, na ktorym kontener bedzie dostepny na naszym hoscie (zwykle localhost:8080)
-#                      |- przekierowanie 
+#                      |- przekierowanie, -p [host-port:container-port]
 #  zatrzymanie kontenera przez:  Ctrl+C
 
 docker container run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -d --name=myName docker.elastic.co/elasticsearch/elasticsearch:6.5.4
-#                                               |                                   |           |                                             |- wersja albo tag
-#                                               |                                   |           |- nazwa obrazu
-#                                               |                                   |- nazwa kontenera
-#                                               |- przekazanie zmiennej srodowiskowej
+#                     |                         |                                   |           |                                             |- wersja albo tag
+#                     |                         |                                   |           |- nazwa obrazu
+#                     |                         |                                   |- nazwa kontenera
+#                     |                         |- przekazanie zmiennej srodowiskowej
+#                     |-[host-port:container-port]
+
 
 #  uruchom w trybie interaktywnym z terminalem (wyjscie komenda exit)
 docker container run -it nginx bash 
@@ -187,9 +189,19 @@ LABEL   #  - metadane do obrazu
 docker volume ls     #  wyświetl wszytkie volumeny
 docker volume prune  #  usuwanie wszytkie volumeny
 
+
 #  aby sprawdzić czy volumen jest podpięty, wywołac polecenie:
 docker container inspect idKontenera
 #  w "Mounts": [    powinien być "Type": "volume"  z jego nazwą (id)
+
+
+# przykład ze strony https://adamtheautomator.com/docker-windows/
+# Parametr --mount wymaga trzech argumentów; 
+docker run --mount type=bind,source="E:/",target=/home/TEST -it alpine
+#                  |         |            |-ścieżka do katalogu docelowego. Ścieżka docelowa będzie dowiązaniem symbolicznym w kontenerze.
+#                  |         |-ścieżka do źródłowego katalogu hosta
+#                  |-typ montowania
+
 
 #  aby do kontenera podpiąć istniejący wolumen:
 docker container run -d --mount 'src=idVolumenu,dst=/appdata' -p 3000:3000 nazwaObrazu
@@ -202,11 +214,17 @@ docker container run -d --mount 'src=nazwa-volumenu,dst=/appdata' -p 3000:3000 n
 
 # przykład z filmu https://www.youtube.com/watch?v=p2PH_YPCsis&list=PLy7NrYWoggjzfAHlUusx2wuDwfCrmJYcs&index=12
 docker run -v /home/mount/data:/var/lib/mysql/data
-#              |                |- sceizka do kataogu w maszynie (wnętrze kontenera)
+#              |                |- sciezka do kataogu w maszynie (wnętrze kontenera)
 #              |- Host Volumes. Jezeli tego nie podam, doker wygeneruje losową nazwę: /var/lib/docker/volumes/random-hash/_data
 
 # Sztuczka na kopiowanie volumenu:
 docker container run --rm -it -v staraNazwa:/from -v nowaNazwa:/to alpine ash -c "cd /from; cp -av . /to"
+
+
+# Tworzenie kopii zapasowej danych Jenkinsa z kontenera do hosta https://adamtheautomator.com/jenkins-docker/
+docker cp <container id>:/path/in/container /path/in/host
+# przyklad:
+docker cp my-jenkins-1:/var/jenkins_home ~/jenkins_backup
 
 
 #--------------------------------------------------------------------------------------------------
@@ -508,6 +526,13 @@ docker run -it -p 4003:5000 --name=P1Back stylerhun/multi-server
 
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
+  #   #         #                                           #  
+  #  #          #                                           #  
+  # #    #   #  ###     ###   # ###  ####    ###    ###   #####
+  ##     #   #  #   #  #   #  ##     #   #  #   #  #        #
+  # #    #   #  #   #  #####  #      #   #  #####   ###     #
+  #  #   #   #  #   #  #      #      #   #  #          #    #
+  #   #   ####  ####    ###   #      #   #   ###    ###      ##
 #--------------------------------------------------------------------------------------------------
 KUBERNEST
 
