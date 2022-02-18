@@ -176,8 +176,8 @@ echo $tekst .= "1.4";                         //= PHP1.4
 $age = 11;
 $age++;  //postinkrementacja
 $++age;  //preinkrementacja
-$age++;  //postdekrementacja
-$++age;  //predekrementacja
+$age--;  //postdekrementacja
+$--age;  //predekrementacja
 
 == porównuje wartości             echo 9 == '9';  //= true
 === porównuje wartości i TYPY     echo 9 == '9';  //= false

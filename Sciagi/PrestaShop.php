@@ -23,6 +23,7 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
+
 class MyModule extends Module
 {
 	public function __construct()
@@ -39,13 +40,30 @@ class MyModule extends Module
 # Wiecej na: https://devdocs.prestashop.com/1.7/modules/creation/tutorial/
 
 
+#--------------------------------------------------------------------------------------------------
+HOOK
+https://devdocs.prestashop.com/1.7/modules/concepts/hooks/use-hooks-on-modern-pages/
 
 
+Filmik z przykładem, ale u mnie nie zadziałał...   https://www.youtube.com/watch?v=CdnJpLqqvcM
 
 
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+//korzystanie z bazy:
+Configuration::get('myVariable')
+Configuration::updateValue('myVariable', $value)
+Configuration::deleteByName('myVariable')
 
 
+if (Shop::isFeatureActive()) {              // sprawdz, czy dwa sklepy sa aktywne
+    Shop::setContext(Shop::CONTEXT_ALL);    // zmień kontekst dla wszystkich sklepów
+}
 
+
+CREATE TABLEPo instrukcjach SQL musi następować, IF NOT EXISTSaby uniknąć błędów SQL
+DROP TABLEPo instrukcjach SQL musi następować, IF EXISTSaby uniknąć błędów SQL
 
 
 

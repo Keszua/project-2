@@ -344,8 +344,11 @@ plik1.txt
 /folder
 # wszystko z tym znaczkiem to komentarz
 //Do listy .gitignore, można dodac TYLKO pliki i foldery nie śledzone. 
-git rm --cached nazwaPliku  //Jeżeli jakiś plik jest śledzony i chcemy go przestać śledzić
+git rm --cached nazwaPliku        //Jeżeli jakiś plik jest śledzony i chcemy go przestać śledzić
+git rm -r --cached nazwaPliku     //Jeżeli jakiś plik jest śledzony i chcemy go przestać śledzić
 
+// Jeśli chcemy ignorowac pliki tylko lokalnie, trzeba dodac te pliki do .git/info/exclude
+git update-index –assume-unchanged NazwaPliku       // pozwala na nie śledzenie pliku bez wykonywania komita.
 
 
 //na https://porady-it.pl/programowanie/git-jak-wstrzymac-sledzenie-zmian-w-pliku-np-konfiguracyjnym/
