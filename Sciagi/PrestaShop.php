@@ -30,8 +30,17 @@ class MyModule extends Module
 	public function __construct()
     {
         $this->name = 'mymodule';                # ta nazwa musi byc taka jak nazwa pliku
+        $this->tab = 'front_office_features';
+        $this->version = '1.0.0';
         $this->author = 'Karol M';
         $this->need_instance = 0;                # gdy wymagane jakieś wyświetlenei komunikatu z ostrzeżeniem
+        $this->ps_versions_compliancy = [
+            'min' => '1.6',
+            'max' => '1.7.99',
+        ];
+        $this->bootstrap = true;
+
+        parent::__construct();
 
         $this->displayName = $this->l('Moduł Karolka :)');
         $this->description = $this->l('Świetny, nic nie robiący modół ;)');
