@@ -1,5 +1,8 @@
 //Serwis z grafikami: http://pixabay.com/pl
 
+glb - jakiś format do 3D
+https://threejs.org/docs/#examples/en/loaders/GLTFLoader
+
 http://placeimg.com/  aby z tego korzysta�, wystarczy w mijece grafiki wklei� link:
 http://placeimg.com/240/360/any - losowa grafika
 
@@ -10,11 +13,11 @@ Jako �r�do wiedz o canvasie: mdn?
 //Ciekawa stronka z o Canvas:
  https://developer.mozilla.org/pl/docs/Web/API/Canvas_API/Tutorial/Optymalizacja_canvas
  
-// Kurs canvy, jak naryswa� kartezja�ski uk�ad wsp��dnych:
+// Kurs canvy, jak naryswac kartezjanski uklad wspolrzednych:
 http://shebang.pl/kursy/html5-rzeczowo/r5-canvas/ 
 
 //-----------------------------------------------------------------------------
-//Wykonanie prostego spinera (kr�c�ce k�ko) w scc (bez javaScript)
+//Wykonanie prostego spinera (krecace koklo) w scc (bez javaScript)
 //plik: index.html
 	<div class="spinner v1"></div>
 //Plik .css

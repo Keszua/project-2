@@ -14,6 +14,7 @@ class CustomerFormatter extends CustomerFormatterCore implements FormFormatterIn
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 # stworzenie nowego MODUŁU
+# https://devdocs.prestashop.com/1.7/modules/creation/tutorial/
 # w folderze /modules  trzeba stworzyć folder z nazwa modulu (male litery) a w nim plik z ta samą nazwą.php (małe litery)
 
 # zawartość plku:
@@ -35,7 +36,88 @@ class MyModule extends Module
         $this->displayName = $this->l('Moduł Karolka :)');
         $this->description = $this->l('Świetny, nic nie robiący modół ;)');
     }
+	
+    public function install()
+    {
+       return (
+            parent::install()
+            && $this->registerHook('displayHome')  # podpiecie sie pod hook na stronie głónej
+        ); 
+    }
+
+    public function uninstall()
+    {
+        return (
+            parent::uninstall() 
+            // && Configuration::deleteByName('MYMODULE_NAME')
+        );
+    }
+
+    public function hookDisplayHome()	# wykonanie hoka, nazwa musi zaczynać się od hook i nazwa wczesneij zarejstrowanego hooka
+    {
+        $this->context->controller->addCSS($this->_path . 'views/css/multipurpose.css', 'all'); # lub $this->context->controller->addCSS(array($this->_path . 'views/css/multipurpose.css'));
+        $this->context->controller->addJS($this->_path . 'views/js/multipurpose.js', 'all');
+
+        return "Jakiś tekst wstawiony recznie... ";
+		return $this->display(__FILE__, 'views/templates/hook/home.tpl'); # wyswietl zawartość .tpl
+    }
+
+    public function getContent()  // tutaj zawartość, po wciśnięciu klawisza "konfiguruj"
+    {
+		if(Tools::isSubmit('savemultipurposesting')) { //to się wywoła po naciśnieciu klawisza "Zapisz" (w Konfiguruj)
+            $name = Tools::getValue('print');
+            Configuration::updateValue('MULTIPURPOSE_STR', $name);
+        }
+        
+        $this->context->smarty->assign(array(  //wysłanie z powrotem do szablony konfiguracji
+            'MULTIPURPOSE_STR' => Configuration::get('MULTIPURPOSE_STR')
+        ));
+		
+        return $this->display(__FILE__, 'views/templates/admin/configure.tpl');
+    }
+	
 }
+
+
+# zawartość  modules/nazwaMjegoModulu/views/js/nazwaMjegoModulu.js
+$(document).ready( function() {
+    alert("elo");
+})
+
+# zawartość modules/nazwaMjegoModulu/views/templates/hook/home.tpl
+<div class="row">
+    <div class="col-lg-12">
+        <img src="http://via.placeholder.com/1920x350" class="multipurpose-img" />
+    </div>
+</div>
+
+# zawartość modules/nazwaMjegoModulu/views/templates/admin/configure.tpl
+<form method="POST">
+    <div class="panel">
+        <div class="panel-heading">
+            Hejka
+            {l s='Configuration' mod='multipurpose'} 
+        </div>
+
+        <div class="panel-body">
+            <label for="print"> Co wyswietlić? </label>
+
+            <input type="text" name="print" id="print" class=""form-control value="{$MULTIPURPOSE_STR}"/>
+        </div>
+
+        <div class="panel-footer">
+            <button type="submit" name="savemultipurposesting" class="btn btn-default pull-right" >
+                <i class="process-icon-save"></i>
+                Zapisz
+            </button>
+        </div>
+    </div>
+</form>
+
+
+
+
+nazwaMjegoModulu
 
 # Wiecej na: https://devdocs.prestashop.com/1.7/modules/creation/tutorial/
 
@@ -44,9 +126,57 @@ class MyModule extends Module
 HOOK
 https://devdocs.prestashop.com/1.7/modules/concepts/hooks/use-hooks-on-modern-pages/
 
+Podstawowe hooki na stronie głównej:
+Header
+Top
+Nawigation
+Slider
+Product
+Home
+Footer
 
-Filmik z przykładem, ale u mnie nie zadziałał...   https://www.youtube.com/watch?v=CdnJpLqqvcM
 
+Filmik gdzie koleś wyjaśnia strukturę plików + DZIALAJACY moduł https://www.youtube.com/watch?v=WQ_FVVQVE4o&list=PLfw-LlX2j6_NN6MzWa78YdomeKvkGGlBp
+
+Wychodzi na to, ze własne hooki trzeba tworzyć w folderze:
+modules/nazwaMjegoModulu/views/templates/hook/home.tpl
+
+
+nazwaMjegoModulu
+├── config
+│   ├── admin
+│   │   └── services.yml
+│   ├── front
+│   │   └── services.yml
+│   └── services.yml
+├── controllers
+│   ├── admin
+│   └── front
+├── override
+├── src
+│   ├── Controller
+│   └── Entity
+├── translations
+├── upgrade
+├── vendor
+├── views
+│   ├── css
+│   │   └── nazwaMjegoModulu.css
+│   ├── img
+│   ├── js
+│   │   └── nazwaMjegoModulu.js
+│   └── templates
+│       ├── admin
+│       │   └── configure.tpl
+│       ├── front
+│       └── hook
+│           └── home.tpl
+├── config.xml
+├── logo.png
+└── mymodule.php
+
+
+skończyłem na filmie 7, minuta 9:00  https://www.youtube.com/watch?v=DItBvzYcI9I&list=PLfw-LlX2j6_NN6MzWa78YdomeKvkGGlBp&index=7
 
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------

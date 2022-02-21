@@ -23,19 +23,19 @@ docker image pull nazwaObrau:mojTag  # sciagniecie danego obrazu + nadaj tag ale
 docker run
 docker container run   # uruchomienie NOWEGO kontenera. Jezeli nie posiadamy obrazu, zostanie on sciagniety i uruchomiony
 docker container run --publish 8080:80 --detach nginx  
-#                      |       |    |    |      |- nazwa obrazu
-#                      |       |    |    |- uruchomienie kontenera w tle
-#                      |       |    |- port po stronie kontenera
-#                      |       |- port, na ktorym kontener bedzie dostepny na naszym hoscie (zwykle localhost:8080)
-#                      |- przekierowanie, -p [host-port:container-port]
+#                      |       |    |    |      └ nazwa obrazu
+#                      |       |    |    └ uruchomienie kontenera w tle
+#                      |       |    └ port po stronie kontenera
+#                      |       └ port, na ktorym kontener bedzie dostepny na naszym hoscie (zwykle localhost:8080)
+#                      └ przekierowanie, -p [host-port:container-port]
 #  zatrzymanie kontenera przez:  Ctrl+C
 
 docker container run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -d --name=myName docker.elastic.co/elasticsearch/elasticsearch:6.5.4
 #                     |                         |                                   |           |                                             |- wersja albo tag
 #                     |                         |                                   |           |- nazwa obrazu
-#                     |                         |                                   |- nazwa kontenera
-#                     |                         |- przekazanie zmiennej srodowiskowej
-#                     |-[host-port:container-port]
+#                     |                         |                                   └ nazwa kontenera
+#                     |                         └ przekazanie zmiennej srodowiskowej
+#                     └[host-port:container-port]
 
 
 #  uruchom w trybie interaktywnym z terminalem (wyjscie komenda exit)
@@ -106,11 +106,11 @@ curl -X POST http://localhost:3000/parametr
 #  urzycie opcji link ... na przykladzie polaczenia do bazy MSQL
 docker run --name wordpressdb -e MYSQL_ROOT_PASSWORD=wordpress -e MYSQL_DATABASE=wordpress -d mysql:5.7
 docker run -e WORDPRESS_DB_PASSWORD=wordpress -d --name wordpress --link wordpressdb:mysql -p 80:80  wordpress:5-php7.2
-#                                   |                   |                |           |        |- port zewnetrzny dla przegladarki
-#                                   |                   |                |           |- wewnetrzny alias, domyslnia nazwa dla bazy danych to mysql
-#                                   |                   |                |- nazwa kontenera
-#                                   |                   |- nazwa kontenera
-#                                   |- nazwa bazy danych
+#                                   |                   |                |           |        └ port zewnetrzny dla przegladarki
+#                                   |                   |                |           └ wewnetrzny alias, domyslnia nazwa dla bazy danych to mysql
+#                                   |                   |                └ nazwa kontenera
+#                                   |                   └ nazwa kontenera
+#                                   └ nazwa bazy danych
 
 
 # konfiguracja PrestaShop z bazą przez zmienną środowiskową (nie przez link)
@@ -198,9 +198,9 @@ docker container inspect idKontenera
 # przykład ze strony https://adamtheautomator.com/docker-windows/
 # Parametr --mount wymaga trzech argumentów; 
 docker run --mount type=bind,source="E:/",target=/home/TEST -it alpine
-#                  |         |            |-ścieżka do katalogu docelowego. Ścieżka docelowa będzie dowiązaniem symbolicznym w kontenerze.
-#                  |         |-ścieżka do źródłowego katalogu hosta
-#                  |-typ montowania
+#                  |         |            └ścieżka do katalogu docelowego. Ścieżka docelowa będzie dowiązaniem symbolicznym w kontenerze.
+#                  |         └ścieżka do źródłowego katalogu hosta
+#                  └typ montowania
 
 
 #  aby do kontenera podpiąć istniejący wolumen:
@@ -214,8 +214,8 @@ docker container run -d --mount 'src=nazwa-volumenu,dst=/appdata' -p 3000:3000 n
 
 # przykład z filmu https://www.youtube.com/watch?v=p2PH_YPCsis&list=PLy7NrYWoggjzfAHlUusx2wuDwfCrmJYcs&index=12
 docker run -v /home/mount/data:/var/lib/mysql/data
-#              |                |- sciezka do kataogu w maszynie (wnętrze kontenera)
-#              |- Host Volumes. Jezeli tego nie podam, doker wygeneruje losową nazwę: /var/lib/docker/volumes/random-hash/_data
+#              |                └ sciezka do kataogu w maszynie (wnętrze kontenera)
+#              └ Host Volumes. Jezeli tego nie podam, doker wygeneruje losową nazwę: /var/lib/docker/volumes/random-hash/_data
 
 # Sztuczka na kopiowanie volumenu:
 docker container run --rm -it -v staraNazwa:/from -v nowaNazwa:/to alpine ash -c "cd /from; cp -av . /to"
