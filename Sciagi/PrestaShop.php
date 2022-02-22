@@ -62,12 +62,12 @@ class MyModule extends Module
         );
     }
 
-    public function hookDisplayHome()	# wykonanie hoka, nazwa musi zaczynać się od hook i nazwa wczesneij zarejstrowanego hooka
+    public function hookDisplayHome()	# wykonanie hoka, nazwa musi zaczynać się od hook i nazwa wcześniej zarejstrowanego hooka
     {
         $this->context->controller->addCSS($this->_path . 'views/css/multipurpose.css', 'all'); # lub $this->context->controller->addCSS(array($this->_path . 'views/css/multipurpose.css'));
         $this->context->controller->addJS($this->_path . 'views/js/multipurpose.js', 'all');
 
-        return "Jakiś tekst wstawiony recznie... ";
+        //return "Jakiś tekst wstawiony recznie... ";
 		return $this->display(__FILE__, 'views/templates/hook/home.tpl'); # wyswietl zawartość .tpl
     }
 
@@ -319,6 +319,47 @@ passwd
 
 
 
+
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+
+Zawartość home.tpl
+
+<div class="profity" >
+    <div class="profity_item">1</div>
+    <div class="profity_item">2</div>
+    <div class="profity_item">3</div>
+    <div class="profity_item">4</div>
+    <div class="profity_item">5</div>
+    <div class="profity_item">6</div>
+    <div class="profity_item">7</div>
+    <div class="profity_item">8</div>
+</div>
+
+
+Zawartość .css
+.profity {
+    display: flex; 
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+}
+
+.profity_item {
+    display: flex; 
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+
+    margin: 10px;
+    padding: 5px 5px;
+    background-color: rgba(0, 255, 136, 0.418);
+
+    height: 50px;
+    
+}
 
 
 

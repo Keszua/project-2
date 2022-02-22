@@ -957,7 +957,6 @@ y= f.readlines()[1]                 # czytamy tylko 2-gą linijkę
 for line in f.readlines():          # wypisze wszystkie linijki z pliku
     print(line.rstrip())            # .rstrip() usówa białe znaki (efekt jak z end="") jest też .strip() i .lstrip()   tak jak .trim() w React
 
-# ciekawa ściaga: http://users.uj.edu.pl/~ufkapano/algorytmy/lekcja02/file.html
 
 
 
@@ -1579,7 +1578,7 @@ print(os.path.dirname(path))                #= pliki/01   Wypisze tylko foldery
 print(os.path.basename(path))               #= dane.txt   Wypisze tylko plik
 print(os.path.abspath(path))                #= D:\Klamoty\Web\Git\book\python\pliki\01\dane.txt  ściezka absolutna
 
-# tworzenie pliku na podstawie podanej śecieżki (trzeba odrożnić foldery od plików)
+# tworzenie pliku na podstawie podanej ścieżki (trzeba odrożnić foldery od plików)
 path = "pliki/01/dane.txt"
 dir_path = os.path.dirname(path)        # odziela same foldery
 os.makedirs(dir_path)                   # tworzy same foldery 
