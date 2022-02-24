@@ -1,4 +1,14 @@
 <?php
+
+
+
+// var_dump($this->_path);
+// die();
+
+
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
 Edycja FORMULARZA REJESTRACJI:
 Formulaż jest w: .../classes/form/CustomerFormatter.php
 Po aktualizacji znikną te zmiany, dla tego trzeba skopiować sobie do ten plik do:

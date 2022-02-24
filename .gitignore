@@ -16,3 +16,6 @@ config.php
 
 PHP/Zelent/connect.php
 Ewa/debug.log
+
+PrestaShop/*
+!PrestaShop/generator_modulow.py

@@ -7,7 +7,7 @@ Koleś poleca zaznaczenie "Add python 3.8 to PATH" pozwoli to na dostęp z CMD
 
 Dokumentacja do funkcji: https://docs.python.org/3/library/functions.html
 
-
+Fajna strona z kursem: https://ggoralski.gitlab.io/python-wprowadzenie/
 
 proponowane IDE: PyCharm - wersje darmową Community 
 
