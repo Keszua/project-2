@@ -30,14 +30,13 @@ def generuj(nazwaModulu, CG):
     # logo ----------------------------------------------------------------------------------------
     try:
         os.popen(f'copy .\\Dodatki\\logo.png .\\{nazwa_maleLitery}\\logo.png')
-        print ("logo.png - skopiowane")
     except FileExistsError:
         pass
     except OSError:
         print ("Logo - FAILD creation")
         return
     else:
-        print ("Logo skopiowane")
+        pass
 
 
     folderProjektu_nazwaModulu = os.path.join(folderProjektu, nazwa_maleLitery+'.php') 
@@ -83,6 +82,7 @@ class {nazwa_pierwszaWielka} extends Module
             parent::install()
             && $this->registerHook('header')     // hyba tylko po to, żeby załadować css i js
             { "&& $this->registerHook('displayHome')" if "hookDisplayHome" in CG else ""}
+            { "&& $this->registerHook('displayAfterDescription')" if 'wlasny_hook' in CG else ""}
             { "&& $this->createTabLink()" if "frontController" in CG else ""}
         ); 
     }}
@@ -129,19 +129,40 @@ class {nazwa_pierwszaWielka} extends Module
             $name = Tools::getValue('print');
             Configuration::updateValue('{nazwa_wielkieLitery}_STR', $name);
             {"$this->sendTestEmail(Tools::getValue('customer_email'));" if "wyslij_maila" in CG else ""}
-        }}
-        
+        }}\n
+        if (Tools::isSubmit('submit' . $this->name)) {{ //ten if wykona się tylko, gdy formularz się załaduje \n}}\n
+        {"\n$this->generateAdminToken();" if "pobieranie_tokenu_sesji" in CG else ""}
+'''
+    if 'wyswietl_liste_obrakow' in CG:
+        zawartoscPliku += '''
+        $products = Product::getProducts($this->context->language->id, 0, 100, 'id_product', 'ASC');
+        $images_array = array();
+        $link = new Link;
+        foreach($products as $p) {
+            $images = Image::getImages($this->context->language->id, $p['id_product']);
+            $name = Db::getInstance()->getValue(
+               'SELECT `link_rewrite` 
+                FROM `'._DB_PREFIX_.'product_lang` 
+                WHERE `id_product`='.(int)$p['id_product'].' AND `id_lang`='.(int)$this->context->language->id.'  ');
+            // echo '<pre>'; print_r($name); die;\n  // odkomentuj to, aby sprawdzić czy prawidłowo pobrała się liata obrazków
+            foreach($images as $i) {
+                $images_array[] = $link->getImageLink($name, $i['id_image'], 'home_default');
+            }
+        }
+'''
+    zawartoscPliku += f'''
         $this->context->smarty->assign(array(  //wysłanie z powrotem do szablonu konfiguracji
             '{nazwa_wielkieLitery}_STR' => Configuration::get('{nazwa_wielkieLitery}_STR'),
             {"'token' => $this->generateAdminToken()," if "pobieranie_tokenu_sesji" in CG else ""}
-        ));
-		
+            {"'images_array' => $images_array," if "wyswietl_liste_obrakow" in CG else ""}
+        ));\n
         return $this->display(__FILE__, 'views/templates/admin/configure.tpl');
     }}
 '''
 
     if 'frontController' in CG:
         zawartoscPliku += f'''
+    // Na treść kontrolera można wejść przez link: /module/{nazwa_maleLitery}/task
     public function createTabLink()
     {{\n\t\t$tab = new Tab;
         foreach (Language::getLanguages(false) as $language) {{
@@ -220,6 +241,21 @@ class {nazwa_pierwszaWielka} extends Module
             
         );
     }}
+'''
+
+    if 'wlasny_hook' in CG:
+        zawartoscPliku += '''
+    public function hookDisplayAfterDescription()
+    {
+        return "To jest własny hook z modułu MULTIPURPOSE";
+    }
+    // własny hook można podpiąć w dowolne miejsce, np: w kartę produktu 
+    //   /themes/classic/templates/catalog/product.tpl
+    //      <div class="product-information">
+    //        {block name='product_description_short'}
+    // TU ->    {hook h='displayAfterDescription'}
+    //          <div id="product-description-short-{$product.id}" class="product-description">{$product.description_short nofilter}</div>
+    //        {/block}
 '''
 
     zawartoscPliku += f'''
@@ -489,16 +525,95 @@ class {nazwa_pierwszaWielka}TaskModuleFrontController extends ModuleFrontControl
 
 
     # mymodule > override -------------------------------------------------------------------------
-    folderProjektu_override = os.path.join(folderProjektu, 'override')
-    try:
-        os.mkdir(folderProjektu_override)
-    except FileExistsError:
-        pass
-    except OSError:
-        print ("Directory " , folderProjektu_override , "FAILD creation")
-        return
-    else:
-        pass
+    if 'dodaj_override_controller' in CG:
+        folderProjektu_override = os.path.join(folderProjektu, 'override')
+        try:
+            os.mkdir(folderProjektu_override)
+        except FileExistsError:
+            pass
+        except OSError:
+            print ("Directory " , folderProjektu_override , "FAILD creation")
+            return
+        else:
+            pass
+
+
+        folderProjektu_override_controllers = os.path.join(folderProjektu_override, 'controllers')
+        try:
+            os.mkdir(folderProjektu_override_controllers)
+        except FileExistsError:
+            pass
+        except OSError:
+            print ("Directory " , folderProjektu_override_controllers , "FAILD creation")
+            return
+        else:
+            pass
+
+
+        folderProjektu_override_controllers_front = os.path.join(folderProjektu_override_controllers, 'front')
+        try:
+            os.mkdir(folderProjektu_override_controllers_front)
+        except FileExistsError:
+            pass
+        except OSError:
+            print ("Directory " , folderProjektu_override_controllers_front , "FAILD creation")
+            return
+        else:
+            pass
+
+        folderProjektu_override_controllers_front_CmsControllerPhp = os.path.join(folderProjektu_override_controllers_front, 'CmsController.php')
+
+        file = open(folderProjektu_override_controllers_front_CmsControllerPhp, mode="w+", encoding="utf-8")
+        file.write('''<?php\n\nclass CmsController extends CmsControllerCore\n{\n\n\tpublic function initContent()\n\t{
+        parent::initContent();\n
+        if ($this->assignCase == 1) {
+            $cmsVar = $this->objectPresenter->present($this->cms);\n
+            $filteredCmsContent = Hook::exec(
+                'filterCmsContent',
+                ['object' => $cmsVar],
+                $id_module = null,
+                $array_return = false,
+                $check_exceptions = true,
+                $use_push = false,
+                $id_shop = null,
+                $chain = true
+            );
+            if (!empty($filteredCmsContent['object'])) {
+                $cmsVar = $filteredCmsContent['object'];
+            } \n
+            Tools::dieObject($cmsVar);
+            $cmsVar['content'] = str_replace('Shipments and returns', "Pan Janek X", $cmsVar['content'] );
+            //$cmsVar['content'] = str_replace(array('Shipments and returns', 'Jakiś tekst z tablicy'), "Pan Janek X", $cmsVar['content'] );\n
+            $this->context->smarty->assign([
+                'cms' => $cmsVar,
+            ]);\n
+            if ($this->cms->indexation == 0) {
+                $this->context->smarty->assign('nobots', true);
+            }\n
+            $this->setTemplate(
+                'cms/page',
+                ['entity' => 'cms', 'id' => $this->cms->id]
+            );
+        } elseif ($this->assignCase == 2) {
+            $cmsCategoryVar = $this->getTemplateVarCategoryCms();\n
+            $filteredCmsCategoryContent = Hook::exec(
+                'filterCmsCategoryContent',
+                ['object' => $cmsCategoryVar],
+                $id_module = null,
+                $array_return = false,
+                $check_exceptions = true,
+                $use_push = false,
+                $id_shop = null,
+                $chain = true
+            );
+            if (!empty($filteredCmsCategoryContent['object'])) {
+                $cmsCategoryVar = $filteredCmsCategoryContent['object'];
+            }\n
+            $this->context->smarty->assign($cmsCategoryVar);
+            $this->setTemplate('cms/category');
+        }\n\t}\n}        
+        ''')
+        file.close()
 
 
     if 'wlasna_tabela_sql' in CG:
@@ -731,8 +846,6 @@ foreach ($sqls as $query) {{
             os.popen(f'copy .\\Dodatki\\jquery.dataTables.js .\\{nazwa_maleLitery}\\views\\js\\jquery.dataTables.js')
 
             os.popen(f'copy .\\Dodatki\\images .\\{nazwa_maleLitery}\\views\\img')
-
-            print ("dataTables.bootstrap.css - skopiowane")
         except FileExistsError:
             pass
         except OSError:
@@ -795,7 +908,7 @@ foreach ($sqls as $query) {{
     # mymodule > views > templates > admin > configure.tpl
     folderProjektu_views_templates_admin_configureTpl = os.path.join(folderProjektu_views_templates_admin, 'configure.tpl') 
     file = open(folderProjektu_views_templates_admin_configureTpl, mode="w+", encoding="utf-8")
-    file.write(f'''
+    content = f'''
 <form method="POST">
     <div class="panel">
         <div class="panel-heading">
@@ -811,6 +924,14 @@ foreach ($sqls as $query) {{
 
             {'<br/>' if "pobieranie_tokenu_sesji" in CG else ""}
             {'<a class="btn btn-default" href="index.php?controller=AdminOrders&token={$token}" > {$token} </a>' if "pobieranie_tokenu_sesji" in CG else ""}
+'''        
+    if 'wyswietl_liste_obrakow' in CG:
+        content += '''\t\t\t<br/>
+            {foreach from=$images_array item=ia}
+                <img src="//{$ia}" />
+            {/foreach}
+'''
+    content += f'''
         </div> \n
         <div class="panel-footer">
             <button type="submit" name="{nazwa_maleLitery}SaveSesting" class="btn btn-default pull-right" >
@@ -820,7 +941,8 @@ foreach ($sqls as $query) {{
         </div>
     </div>
 </form>
-''')
+'''
+    file.write(content)
     file.close()
 
 
@@ -872,7 +994,7 @@ foreach ($sqls as $query) {{
         folderProjektu_views_templates_front_taskTpl = os.path.join(folderProjektu_views_templates_front, 'home.tpl') 
         file = open(folderProjektu_views_templates_front_taskTpl, mode="w+", encoding="utf-8")
         contain = f'''
-{{* Na treść modułu można wejść przez link: /module/{nazwa_maleLitery}/task *}}
+{{* Na treść kontrolera można wejść przez link: /module/{nazwa_maleLitery}/task *}}
 {{* Aby edytować treś, wejdz na: {folderProjektu_views_templates_front_taskTpl} *}}
 {{extends file="page.tpl"}}
 {{block name="page_content_container"}}
@@ -973,7 +1095,7 @@ foreach ($sqls as $query) {{
 
 
 
-    print(f"Tworzenie {nazwaModulu} ukończone pomyślnie")
+    print(f'Tworzenie projektu "{nazwaModulu}" - ukończone pomyślnie.')
 
 
 #--------------------------------------------------------------------------------------------------
@@ -984,9 +1106,12 @@ coGenerowac = (                   # niepotrzebne zakomentuj
     'hookDisplayHome',            # podpięcie przestrzeni, widocznej na stronie głownej
     #'frontController',            # kontroler wyświetlający ilość produktów w bazie
     #'wlasna_tabela_sql',          # przy instalacji modulu, tworzy tabele. Przy odinstalowaniu - kasuje ją.
-    #'pobieranie_tokenu_sesji',    # pobiera token i tworze przykłądowy przycisk, przenoszacy do "SPRZEDAŻ > Zamowienia"
     #'uzyj_ajax',                  # Jak stworzyć pole wyboru + interaktywną listę + tabela. W ajax.php wypisuje dane; w .js wywołuje POST, przechwytuje tą liczbę, podstawiam do kontrolki i wypisuje ja w task.tpl
-    #'wyslij_maila',               # Wysyła testowego maila, po wpisaniu adresu w "ustawieniach" modułu
+    #'wlasny_hook',                # bardzo proty, własny hook podpięty do karty produktu (lub wszędzie gdzie chcesz)
+    #'pobieranie_tokenu_sesji',    # W "konfiguruj": pobiera token i tworze przykładowy przycisk, przenoszacy do "SPRZEDAŻ > Zamowienia"
+    #'wyslij_maila',               # W "konfiguruj": Wysyła testowego maila, po wpisaniu adresu w "Podaj maila"
+    #'wyswietl_liste_obrakow',     # W "konfiguruj": Pobierze i wyświetli obrazki pobrane z produktów. (nic konkretnego, po prostu jak pobrac obrazki z bazy i wyśweitlić)
+    #'dodaj_override_controller'   # przy instalacji dodaje plik do override/controllers/front/CmsController.php, który zastepuje tekst w "Delivery"
 )
 
 generuj("Wtyczka_Kuby", coGenerowac)

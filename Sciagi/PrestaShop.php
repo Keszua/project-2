@@ -4,7 +4,16 @@
 
 // var_dump($this->_path);
 // die();
+// Tools::dieObject($cmsVar);
 
+
+// Sposób na zamianę jakiegoś tekstu:
+// np, w CmsController.php
+$cmsVar['content'] = str_replace('Shipments and returns', "Pan Janek", $cmsVar['content'] );
+// zamiast try catch, koleś zrobił:
+{if siset($zmienna) && count($produkty)}
+	<table> bla bla...
+{/if}
 
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
