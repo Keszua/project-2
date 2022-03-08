@@ -130,8 +130,9 @@ class {nazwa_pierwszaWielka} extends Module
             Configuration::updateValue('{nazwa_wielkieLitery}_STR', $name);
             {"$this->sendTestEmail(Tools::getValue('customer_email'));" if "wyslij_maila" in CG else ""}
         }}\n
-        if (Tools::isSubmit('submit' . $this->name)) {{ //ten if wykona się tylko, gdy formularz się załaduje \n}}\n
-        {"\n$this->generateAdminToken();" if "pobieranie_tokenu_sesji" in CG else ""}
+        if (Tools::isSubmit('submit' . $this->name)) {{ //ten if wykona się tylko, gdy formularz się załaduje \n}}\n\t\t
+        {'$this->generateAdminToken();' if "pobieranie_tokenu_sesji" in CG else ""}
+        
 '''
     if 'wyswietl_liste_obrakow' in CG:
         zawartoscPliku += '''
@@ -769,7 +770,7 @@ foreach ($sqls as $query) {{
     background: #001;
     font-weight: bold;
 }}
-)''')
+''')
     f_services.close()
 
 
@@ -1114,4 +1115,4 @@ coGenerowac = (                   # niepotrzebne zakomentuj
     #'dodaj_override_controller'   # przy instalacji dodaje plik do override/controllers/front/CmsController.php, który zastepuje tekst w "Delivery"
 )
 
-generuj("Wtyczka_Kuby", coGenerowac)
+generuj("Karol", coGenerowac)

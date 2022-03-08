@@ -23,11 +23,113 @@ Formulaż jest w: .../classes/form/CustomerFormatter.php
 Po aktualizacji znikną te zmiany, dla tego trzeba skopiować sobie do ten plik do:
 .../override/classes/form/CustomerFormatter.php
 
-class CustomerFormatterCore implements FormFormatterInterface
+class CustomerFormatterCore implements FormFormatterInterface {}
 // edytować na
-class CustomerFormatter extends CustomerFormatterCore implements FormFormatterInterface
+class CustomerFormatter extends CustomerFormatterCore implements FormFormatterInterface {}
 # następnie w panelAdmina > Zaawansowane > Wydajnosc > Wyczysc pamiec podreczna
 # więcej na https://devdocs.prestashop.com/1.7/modules/concepts/overrides/
+
+
+#--------------------------------------------------------------------------------------------------
+HOOK
+https://devdocs.prestashop.com/1.7/modules/concepts/hooks/use-hooks-on-modern-pages/
+
+Podstawowe hooki na stronie głównej:
+Header
+Top
+Nawigation
+Slider
+Product
+Home
+Footer
+
+
+Filmik gdzie koleś wyjaśnia strukturę plików + DZIALAJACY moduł https://www.youtube.com/watch?v=WQ_FVVQVE4o&list=PLfw-LlX2j6_NN6MzWa78YdomeKvkGGlBp
+
+Wychodzi na to, ze własne hooki trzeba tworzyć w folderze:
+modules/nazwaMojegoModulu/views/templates/hook/home.tpl
+
+
+nazwaMojegoModulu
+├── config
+│   ├── admin
+│   │   └── services.yml
+│   ├── front
+│   │   └── services.yml
+│   └── services.yml
+├── controllers
+│   ├── admin
+│   └── front
+├── override
+├── src
+│   ├── Controller
+│   └── Entity
+├── translations
+├── upgrade
+├── vendor
+├── views
+│   ├── css
+│   │   └── nazwaMojegoModulu.css
+│   ├── img
+│   ├── js
+│   │   └── nazwaMojegoModulu.js
+│   └── templates
+│       ├── admin
+│       │   └── configure.tpl
+│       ├── front
+│       └── hook
+│           └── home.tpl
+├── config.xml
+├── logo.png
+└── mymodule.php
+
+
+skończyłem na filmie 7, minuta 9:00  https://www.youtube.com/watch?v=DItBvzYcI9I&list=PLfw-LlX2j6_NN6MzWa78YdomeKvkGGlBp&index=7
+
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+//korzystanie z bazy:
+Configuration::get('myVariable')
+Configuration::updateValue('myVariable', $value)
+Configuration::deleteByName('myVariable')
+
+
+if (Shop::isFeatureActive()) {              // sprawdz, czy dwa sklepy sa aktywne
+    Shop::setContext(Shop::CONTEXT_ALL);    // zmień kontekst dla wszystkich sklepów
+}
+
+// Aby wysłać zmienne do formularzy .tpl
+$this->context->smarty->assign(array(  //wysłanie z powrotem do szablonu konfiguracji
+    'MULTIPURPOSE_STR' => Configuration::get('MULTIPURPOSE_STR')
+));
+
+// wyśweitlenie wartośći w .tpl
+<label class="notice"> {$MULTIPURPOSE_STR} </label>
+
+// aktualizowanie zmiennych, wpisanych przez urzytkownika (przez okineko na stronie)
+<form method="POST">
+    <input type="text" name="print" id="print" class="form-control" value="{$MULTIPURPOSE_STR}"/>
+    <button type="submit" name="savemultipurposesting" class="btn btn-default pull-right" > Zapisz </button>
+</form>
+// w pliku główmyn moduły .php, w funkcji getContent() trzeba dopisać:
+    if(Tools::isSubmit('savemultipurposesting')) { //to się wywoła po naciśnieciu klawisza "Zapisz" (w Konfiguruj)
+        $name = Tools::getValue('print');
+        Configuration::updateValue('MULTIPURPOSE_STR', $name);
+    }
+
+
+CREATE TABLEPo instrukcjach SQL musi następować, IF NOT EXISTSaby uniknąć błędów SQL
+DROP TABLEPo instrukcjach SQL musi następować, IF EXISTSaby uniknąć błędów SQL
+
+
+Parametry pobierane/zapisywane metodami POST lub GET:
+$configValue = (string) Tools::getValue('MYMODULE_CONFIG');
+
+// wyśweitlenie wartośći w .tpl
+<label class="notice"> {$MULTIPURPOSE_STR} </label>
+
+
 
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
@@ -107,19 +209,19 @@ class MyModule extends Module
 }
 
 
-# zawartość  modules/nazwaMjegoModulu/views/js/nazwaMjegoModulu.js
+# zawartość  modules/nazwaMojegoModulu/views/js/nazwaMojegoModulu.js
 $(document).ready( function() {
     alert("elo");
 })
 
-# zawartość modules/nazwaMjegoModulu/views/templates/hook/home.tpl
+# zawartość modules/nazwaMojegoModulu/views/templates/hook/home.tpl
 <div class="row">
     <div class="col-lg-12">
         <img src="http://via.placeholder.com/1920x350" class="multipurpose-img" />
     </div>
 </div>
 
-# zawartość modules/nazwaMjegoModulu/views/templates/admin/configure.tpl
+# zawartość modules/nazwaMojegoModulu/views/templates/admin/configure.tpl
 <form method="POST">
     <div class="panel">
         <div class="panel-heading">
@@ -145,91 +247,9 @@ $(document).ready( function() {
 
 
 
-nazwaMjegoModulu
+nazwaMojegoModulu
 
 # Wiecej na: https://devdocs.prestashop.com/1.7/modules/creation/tutorial/
-
-
-#--------------------------------------------------------------------------------------------------
-HOOK
-https://devdocs.prestashop.com/1.7/modules/concepts/hooks/use-hooks-on-modern-pages/
-
-Podstawowe hooki na stronie głównej:
-Header
-Top
-Nawigation
-Slider
-Product
-Home
-Footer
-
-
-Filmik gdzie koleś wyjaśnia strukturę plików + DZIALAJACY moduł https://www.youtube.com/watch?v=WQ_FVVQVE4o&list=PLfw-LlX2j6_NN6MzWa78YdomeKvkGGlBp
-
-Wychodzi na to, ze własne hooki trzeba tworzyć w folderze:
-modules/nazwaMjegoModulu/views/templates/hook/home.tpl
-
-
-nazwaMjegoModulu
-├── config
-│   ├── admin
-│   │   └── services.yml
-│   ├── front
-│   │   └── services.yml
-│   └── services.yml
-├── controllers
-│   ├── admin
-│   └── front
-├── override
-├── src
-│   ├── Controller
-│   └── Entity
-├── translations
-├── upgrade
-├── vendor
-├── views
-│   ├── css
-│   │   └── nazwaMjegoModulu.css
-│   ├── img
-│   ├── js
-│   │   └── nazwaMjegoModulu.js
-│   └── templates
-│       ├── admin
-│       │   └── configure.tpl
-│       ├── front
-│       └── hook
-│           └── home.tpl
-├── config.xml
-├── logo.png
-└── mymodule.php
-
-
-skończyłem na filmie 7, minuta 9:00  https://www.youtube.com/watch?v=DItBvzYcI9I&list=PLfw-LlX2j6_NN6MzWa78YdomeKvkGGlBp&index=7
-
-#--------------------------------------------------------------------------------------------------
-#--------------------------------------------------------------------------------------------------
-#--------------------------------------------------------------------------------------------------
-//korzystanie z bazy:
-Configuration::get('myVariable')
-Configuration::updateValue('myVariable', $value)
-Configuration::deleteByName('myVariable')
-
-
-if (Shop::isFeatureActive()) {              // sprawdz, czy dwa sklepy sa aktywne
-    Shop::setContext(Shop::CONTEXT_ALL);    // zmień kontekst dla wszystkich sklepów
-}
-
-
-CREATE TABLEPo instrukcjach SQL musi następować, IF NOT EXISTSaby uniknąć błędów SQL
-DROP TABLEPo instrukcjach SQL musi następować, IF EXISTSaby uniknąć błędów SQL
-
-
-
-
-
-
-
-
 
 
 
@@ -343,41 +363,109 @@ passwd
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-Zawartość home.tpl
+Zawartość  views/templates/hook/home.tpl
 
 <div class="profity" >
-    <div class="profity_item">1</div>
-    <div class="profity_item">2</div>
-    <div class="profity_item">3</div>
-    <div class="profity_item">4</div>
-    <div class="profity_item">5</div>
-    <div class="profity_item">6</div>
-    <div class="profity_item">7</div>
-    <div class="profity_item">8</div>
+    <div class="profity_item">
+        <div class="profity_item__img">
+            <img src="/modules/karol/views/img/tem.jpg" width="100" height="100"/>
+        </div>
+        <div class="profity_item__opis">
+            Opis 1
+        </div>
+    </div>
+
+    <div class="profity_item">
+        <div class="profity_item__img">
+            <img src="/modules/karol/views/img/tem.jpg" width="100" height="100"/>
+        </div>
+        <div class="profity_item__opis">
+            Opis 2
+        </div>
+    </div>
+
+    <div class="profity_item">
+        <div class="profity_item__img">
+            <img src="/modules/karol/views/img/tem.jpg" width="100" height="100"/>
+        </div>
+        <div class="profity_item__opis">
+            Opis 3
+        </div>
+    </div>
+
+    <div class="profity_item">
+        <div class="profity_item__img">
+            <img src="/modules/karol/views/img/tem.jpg" width="100" height="100"/>
+        </div>
+        <div class="profity_item__opis">
+            Opis 4
+        </div>
+    </div>
+
+    <div class="profity_item">
+        <div class="profity_item__img">
+            <img src="/modules/karol/views/img/tem.jpg" width="100" height="100"/>
+        </div>
+        <div class="profity_item__opis">
+            Opis 5
+        </div>
+    </div>
+
+    <div class="profity_item">
+        <div class="profity_item__img">
+            <img src="/modules/karol/views/img/tem.jpg" width="100" height="100"/>
+        </div>
+        <div class="profity_item__opis">
+            Opis 6
+        </div>
+    </div>
+
+    <div class="profity_item">
+        <div class="profity_item__img">
+            <img src="/modules/karol/views/img/tem.jpg" width="100" height="100"/>
+        </div>
+        <div class="profity_item__opis">
+            Opis 7
+        </div>
+    </div>
+
+    <div class="profity_item">
+        <div class="profity_item__img">
+            <img src="/modules/karol/views/img/tem.jpg" width="100" height="100"/>
+        </div>
+        <div class="profity_item__opis">
+            Opis 8
+        </div>
+    </div>
+
 </div>
 
 
 Zawartość .css
-.profity {
-    display: flex; 
-    justify-content: space-around;
-    flex-direction: row;
-    flex-wrap: wrap;
-    
-}
-
 .profity_item {
     display: flex; 
+    flex-direction: column;
     flex-grow: 1;
     justify-content: center;
     align-items: center;
 
-    margin: 10px;
-    padding: 5px 5px;
-    background-color: rgba(0, 255, 136, 0.418);
+    height: 150px;
+    width: 105px;
 
-    height: 50px;
-    
+    margin: 3px;
+    padding: 3px 3px;
+    /* background-color: rgba(0, 255, 136, 0.418); */
+    background-color: rgb(255, 183, 100);
+}
+
+.profity_item__img {
+    background-color: rgb(200, 200, 200);
+}
+
+.profity_item__opis {
+    margin: 3px;
+    padding: 5px 5px;
+    background-color: rgb(77, 165, 55);
 }
 
 
