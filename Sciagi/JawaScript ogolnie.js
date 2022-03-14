@@ -141,7 +141,7 @@ iterator.next(); // => { value: undefined, done: true }
 // pole do wprowadzania danych:
  <input type="text" id="testValue" value="Domyslna wartosc"/>
 //Przycisk
-<button type="button" class="button" id="buttonTestValue">Poka� value</button>
+<button type="button" class="button" id="buttonTestValue">Pokaz value</button>
 
 // zaznaczenie tylko jednego elemetu z grupy (RADIO)
 <input type="radio" value="lubie radio"/>

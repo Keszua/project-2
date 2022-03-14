@@ -24,28 +24,28 @@ Maszyna -> Tools -> Snapshots
 //-------------------------------------------------------------------------------------------------
 //Film 2
 Struktura katalogów:
-pwd    // gdzie jeteśmy //= /home/wojtek (print work directory)
-~$     // katalog domowy, katalog uzytkownika, czyli:  /home/wojtek
-/$     // katalog "główny"
-cd     // przechodzenie do katlaogów, albo .. aby cofnąć
-cd /   // przejdz do katalogu głownego
-cd ~   // przejdz do katalogu domowego
-clear  // czyść ekral, lub Ctrl+l
-dir    // przegladaj katalog
-vdir   // pełne informacje o katalogach
-ls     // zawartość katalogu (jak dir)
-ls -l  // pełne informacje o katalogach
-ll     // to samo co ls -l  (nie działą w Debianie)
-ls -a  // pokaz pliki i katalogi ukryte
-ls -la // pokaz pliki i katalogi ukryte w formie listy ze szczegułami
-ls -lh // ładnie poakzuje wielkość plików
-ls -ld // informacje o tym katalogu (bez zawartości)
-ls -lt // posegregowane według czasu na górze najmłodsze
+pwd    # gdzie jeteśmy //= /home/wojtek (print work directory)
+~$     # katalog domowy, katalog uzytkownika, czyli:  /home/wojtek
+/$     # katalog "główny"
+cd     # przechodzenie do katlaogów, albo .. aby cofnąć
+cd /   # przejdz do katalogu głownego
+cd ~   # przejdz do katalogu domowego
+clear  # czyść ekral, lub Ctrl+l
+dir    # przegladaj katalog
+vdir   # pełne informacje o katalogach
+ls     # zawartość katalogu (jak dir)
+ls -l  # pełne informacje o katalogach
+ll     # to samo co ls -l  (nie dziala w Debianie)
+ls -a  # pokaz pliki i katalogi ukryte
+ls -la # pokaz pliki i katalogi ukryte w formie listy ze szczegułami
+ls -lh # ładnie poakzuje wielkość plików
+ls -ld # informacje o tym katalogu (bez zawartości)
+ls -lt # posegregowane według czasu na górze najmłodsze
 ls -ltr// posegregowane według czasu (reverse) 
-ls -lt --time=atime  // posegregowane według data modyfikacji (access time) 
-ls -lt --time=ctime  // posegregowane według daty utworzenia (create time) 
-ls -F  // doda do katalogów slesz a do linków doda @
-ls /etc > etc.txt // wynik plecenia ls zostanie zapisany do pliku etc.txt
+ls -lt --time=atime  # posegregowane według data modyfikacji (access time) 
+ls -lt --time=ctime  # posegregowane według daty utworzenia (create time) 
+ls -F  # doda do katalogów slesz a do linków doda @
+ls /etc > etc.txt # wynik plecenia ls zostanie zapisany do pliku etc.txt
 
 tree   //tali ls ale w formie drzewa ( w Debianie trzeba to doinstalować sudo apt install tree)
 
@@ -69,193 +69,280 @@ rwx
 |modyfikacja
 odczyt
 
-touch nowy.txt              // stworzenie nowego pliku (pustego pliku)
-chmod u g o                 // u-user g-group 0-other  a-all
-chmod a+rw nowy.txt         // nadanie uprawneiń odczytu i zapisu dla wszystkich "sekcji"
-chmod o-rw nowy.txt         // usuń uprwnienia dla pozostałych
-chmod o+r,g-rx              // mix uprawnień
-chmod 000 nowy.txt          // usuń wszystkie uprawnienia: --- --- ---
-chmod 741 nowy.txt          // nadanie: rwx r-- --x
+touch nowy.txt              # stworzenie nowego pliku (pustego pliku)
+chmod u g o                 # u-user g-group 0-other  a-all
+chmod a+rw nowy.txt         # nadanie uprawneiń odczytu i zapisu dla wszystkich "sekcji"
+chmod o-rw nowy.txt         # usuń uprwnienia dla pozostałych
+chmod o+r,g-rx              # mix uprawnień
+chmod 000 nowy.txt          # usuń wszystkie uprawnienia: --- --- ---
+chmod 741 nowy.txt          # nadanie: rwx r-- --x
 
-chown user1:group1 plik_1   // zmiana własiciela: uzytkownik który ma się stac własicielem pliku : grupa dla pliku (poprzedzic sudo)
-chgrp nazwaGrupy nazwaPliku // zmiana grupy dla pliku
-newgrp nazwaGrupy           // zmiana grupy na podstawowa (domyslna)
-umask                       // wyświetli domyślne uprawniena dla tworzonych plików, np: 0000 (uprawnienia 666, czyli rw-rw-rw), katalog domyśłnie ma 777
-umask 006                   // odejmij uprawnienia dla "inni" ( wzór:  666 -006 = 660)
+chown user1:group1 plik_1   # zmiana własiciela: uzytkownik który ma się stac własicielem pliku : grupa dla pliku (poprzedzic sudo)
+chgrp nazwaGrupy nazwaPliku # zmiana grupy dla pliku
+newgrp nazwaGrupy           # zmiana grupy na podstawowa (domyslna)
+umask                       # wyświetli domyślne uprawniena dla tworzonych plików, np: 0000 (uprawnienia 666, czyli rw-rw-rw), katalog domyśłnie ma 777
+umask 006                   # odejmij uprawnienia dla "inni" ( wzór:  666 -006 = 660)
 
-groupadd                    // dodawanie nowej grupy (przez sudo)
-groupdel nazwagrupy         // usuwanie pustej grupy
+groupadd                    # dodawanie nowej grupy (przez sudo)
+groupdel nazwagrupy         # usuwanie pustej grupy
 
-mkdir nazwakatalogu         // zakładanie katalogu
-mkdir katalog1 katalog2     // zakałdamy dwa katalogi na raz 
-mkdir 'Nazwa ze spacjami'   // zakałdamy katalogi z nazwą ze spacją
-mkdir 'kata 1' 'kata 2'     // zakałdamy dwa katalogi na raz ze spacjami
+mkdir nazwakatalogu         # zakładanie katalogu
+mkdir katalog1 katalog2     # zakałdamy dwa katalogi na raz 
+mkdir 'Nazwa ze spacjami'   # zakałdamy katalogi z nazwą ze spacją
+mkdir 'kata 1' 'kata 2'     # zakałdamy dwa katalogi na raz ze spacjami
 mkdir -m 777 NazwaKatalogu  //zakładznie katalogu + nadanie uprawnień
-mkdir $USER                 //stworzy atalog o nazwie użytkownika
+mkdir $USER                 //stworzy katalog o nazwie użytkownika
 mkdir -p data/finance/2020  //tworzenie potoku katalogów (katalog w katalogu)
 
-rmdir pustyKatalog          // usuwanie pustego katalogu
-rm -r pełnyKatalog          // usówa katalog wraz z zawartością
-rm -ri pełnyKatalog         // usówa katalog interaktywnie, czyli pyta o każdy plik oddzielnie
-rm A*                       // usówa wszystko zaczynające sie od litery A
+rmdir pustyKatalog          # usuwanie pustego katalogu
+rm -r pełnyKatalog          # usówa katalog wraz z zawartością
+rm -ri pełnyKatalog         # usówa katalog interaktywnie, czyli pyta o każdy plik oddzielnie
+rm A*                       # usówa wszystko zaczynające sie od litery A
  
-mv nazwa NowaNazwa          // zmiana nazwy katalogu
-mv -b nazwa NowaNazwa       // zmiana nazwy katalogu z zabezpieczeniem (backup), gdyby już istniał taki plik (lub katalog)
-mv Kot/reksio.txt Pies/     // przenieś "reksia" z kota do psa
-mv Folder/* .               // kropka. oznacza "przenies do bierzączego"   */
+mv nazwa NowaNazwa          # zmiana nazwy katalogu
+mv -b nazwa NowaNazwa       # zmiana nazwy katalogu z zabezpieczeniem (backup), gdyby już istniał taki plik (lub katalog)
+mv Kot/reksio.txt Pies/     # przenieś "reksia" z kota do psa
+mv Folder/* .               # kropka. oznacza "przenies do bierzączego"   */
 
-cp file.txt copy.txt        // przygotowanie kopii pliku
-cp ./Temat*  ..Tydzien      // kopiowanie plików
-cp ./*1*  ..Tydzien         // kopiowanie tyko tego, co w nazwie ma jedynkę, tez na poczatku lub na końcu  */
-cp * /studiuje\  IT/        // skopiuj wszystko ze studiuje do IT
-cp * /studiuje\  IT/ -R     // skopiuj wszystko ze studiuje do IT z podkatalogami
+cp file.txt copy.txt        # przygotowanie kopii pliku
+cp ./Temat*  ..Tydzien      # kopiowanie plików
+cp ./*1*  ..Tydzien         # kopiowanie tyko tego, co w nazwie ma jedynkę, tez na poczatku lub na końcu  */
+cp * /studiuje\  IT/        # skopiuj wszystko ze studiuje do IT
+cp * /studiuje\  IT/ -R     # skopiuj wszystko ze studiuje do IT z podkatalogami
 
-ln źródło cel               // tworzenie linku, tak samo jak przy kopiowaniu. Zwiekszy się licznik dowiązania (linki twarde)
+ln źródło cel               # tworzenie linku, tak samo jak przy kopiowaniu. Zwiekszy się licznik dowiązania (linki twarde)
 ln -s /tmp/new_lindex ~my_copy.txt //link symboliczny pomiedzy dyskami (filesystemami, podgląd przez df)
 
 
-cat                         // Standardowe wejście (klawiatura) i standardowe wyjście (ekran). Aby przerwać Ctrl+d  
-cat plik.txt                // pokaż zawartość pliku tekstowego (wejście to plik a wyjscie to domślnie ekran)
-cat >> plik.txt             // po enterze, mozemy wpisywac zawartość do pliku. Aby przerwać wpisywanie Ctrl+C
-cat /plik.txt > plikWyjsciowy.txt  // ustawienie wejścia jako plik, wyjścia jako plik. Wywołanie spowodowało skopiowanie zawartości pliku
-cat /plik.txt >> plikWyjsciowy.txt // Jeszcze raz dopisze to samo
+cat                         # Standardowe wejście (klawiatura) i standardowe wyjście (ekran). Aby przerwać Ctrl+d  
+cat plik.txt                # pokaż zawartość pliku tekstowego (wejście to plik a wyjscie to domślnie ekran)
+cat >> plik.txt             # po enterze, mozemy wpisywac zawartość do pliku. Aby przerwać wpisywanie Ctrl+C
+cat /plik.txt > plikWyjsciowy.txt  # ustawienie wejścia jako plik, wyjścia jako plik. Wywołanie spowodowało skopiowanie zawartości pliku
+cat /plik.txt >> plikWyjsciowy.txt # Jeszcze raz dopisze to samo
 cat plik1 plik2 > plik_z_obiema_zawartosciami
-cat < plik.txt              // przekierowanie pliku na standardowe wyjście, czyli wyświetli zawartość pliku na ekranie
-ls /etc | cat > etc.txt     // wynik plecenia ls zostanie zapisany do pliku etc.txt
+cat < plik.txt              # przekierowanie pliku na standardowe wyjście, czyli wyświetli zawartość pliku na ekranie
+ls /etc | cat > etc.txt     # wynik plecenia ls zostanie zapisany do pliku etc.txt
 
 
-echo "tekst na ekran"       // wypisze tekst na ekranie
+echo "tekst na ekran"       # wypisze tekst na ekranie
 echo "To jest treść wiadomości" >> ./Bazy\ danych/Plik.txt  //wpisz treść do pliku 
 OPERATION='jakas tresc'
 echo $OPERATION             //= jakas tresc
 echo "Operacja $OPERATION"  //= Operacja jakas tresc
 echo 'Operacja $OPERATION'  //= Operacja $OPERATION    -nie podmienia zmiennych
 echo "Operacja \$OPERATION = $OPERATION"  //= Operacja $OPERATION = jakas tresc
-echo -e "jedn\tdwa\ttrzty"  // -e aby działay zpecjalne znaki, typu \t \n \a 
+echo -e "jedn\tdwa\ttrzty"  # -e aby działay zpecjalne znaki, typu \t \n \a 
 echo -n . ; echo -n . ; echo -n . ; echo . //= ....    -n nie generuj nowej linii
 echo -n . ; sleep 1 ; echo -n . ; sleep 1 ;  echo -n . ; sleep 1 ;  echo . //= .... wypisze kropki co sekunde
 echo -n '|' ; sleep 1 ; echo -ne '\b/' ; sleep 1 ;  echo -n '\b-'. ; sleep 1 ;  echo -e '\b\\' //= wypisze "wiatraczek" co sekunde
 
 read -p 'Wprowadz dane' ZMIENNA1 ZMIENNA2
 
-tty                          // wysweitli informacje o terminalu
-mesg                         // wyswietli, czy zezwalam na otrzymywanie komunikatów
-write mariusz                // wejdzie w tryb konwersacji z mariuszem   Ctrl+d  aby przerwać rozmowę
-who -T                       // wypisze, kto hce otrzymywać komunikaty
-wall "Komunikat do wszystkich" // gdy dodamy sudo, to na pewno poleci do wszystkich (nie trzeb podawać cudzysłowiów)
+tty                          # wyswietli informacje o terminalu
+mesg                         # wyswietli, czy zezwalam na otrzymywanie komunikatów
+write mariusz                # wejdzie w tryb konwersacji z mariuszem   Ctrl+d  aby przerwać rozmowę
+who -T                       # wypisze, kto hce otrzymywać komunikaty
+wall "Komunikat do wszystkich" # gdy dodamy sudo, to na pewno poleci do wszystkich (nie trzeb podawać cudzysłowiów)
 
 
-find . -name *.txt           // szukaj w folderze bierzączym nazw plików o rozszeżeniu *txt
-find . -name *.txt -exec ls -l {} \:  // odszuka i wyświetli pliki
-find . -name *.txt -exec chmod u-w,g-x,o-rw {} \:  // odszuka i zmieni uprawnienia plików
 
 
 // Tydzień 2 Film 1
 
 sudo -        //komendy administratora
 sudo passwd root  //zmiana chasła dla administratora
-passwd        // ustaw nowe haslo na aktualnym koncie  
+passwd        # ustaw nowe haslo na aktualnym koncie  
 su            //zmiana uzytkownika
 su root       //przełącz się na administratora
 //po zalogowaniu jako admin, będzie na początku root@uzytkownik i # na końcu
-exit          // wylolgowanie się z admina
+exit          # wylolgowanie się z admina
 sudo adduser agata  //tworzenie nowego użytkownika (tylko admin może tworzyć nowych uzytkowników)
-su agata      // zaloguj sie na "agata"
-id            // wyświetla GRUPY
-whoami        // wyświetli, nazwę uzytkownika
-who           // wyświetli, kto jest zalogowany
-who --boot    // informacja, kiedy ten serwer był ostatanio restartowany
-logname       // wyświetli, nazwę uzytkownika, jka się zalogowałem (nie w momencie uruchamiania polecenia) 
-uptime        // kiedy system był ostatnio uruchomiony, jaki czas jest już online, ilu pracuje uzytkownikow, jakie obciążenie było w ciągu ostatniej minuty, pięciu i pietnastu
-groups        // do jakich grup nalezy uzytkownik
-sudo adduser agata wojtek // dodaj użytkownika do grupy "wojtek"
+su agata      # zaloguj sie na "agata"
+id            # wyświetla GRUPY
+whoami        # wyświetli, nazwę uzytkownika
+who           # wyświetli, kto jest zalogowany
+who --boot    # informacja, kiedy ten serwer był ostatanio restartowany
+logname       # wyświetli, nazwę uzytkownika, jka się zalogowałem (nie w momencie uruchamiania polecenia) 
+uptime        # kiedy system był ostatnio uruchomiony, jaki czas jest już online, ilu pracuje uzytkownikow, jakie obciążenie było w ciągu ostatniej minuty, pięciu i pietnastu
+groups        # do jakich grup nalezy uzytkownik
+sudo adduser agata wojtek # dodaj użytkownika do grupy "wojtek"
 
-useradd       // dodawanie kont uzytkownikow
-userdel       // usuwanie kont uzytkownikow
-sudo useradd -G student student01  // utworz w gropie student, uzytkownika o nazwie "student01"
-sudo useradd candidte              // utworz uzytkownika o nazwie "candidte", ale on nie nalezy do zadnej grupy
-sudo passwd student01              // nadawanie hasla dla "student01"
+useradd       # dodawanie kont uzytkownikow
+userdel       # usuwanie kont uzytkownikow
+sudo useradd -G student student01  # utworz w gropie student, uzytkownika o nazwie "student01"
+sudo useradd candidte              # utworz uzytkownika o nazwie "candidte", ale on nie nalezy do zadnej grupy
+sudo passwd student01              # nadawanie hasla dla "student01"
 // informacje o uzytkownikach znadują się w pliku /etc/passwd
 // hasła znajduja się w /etc/shadow 
-users         // lista zalogowanych uzytkownikow
-uname -a      // informacje o systemie
+users         # lista zalogowanych uzytkownikow
+uname -a      # informacje o systemie
 
-ip a          // adresy sieci
+ip a          # adresy sieci
 ssh komput@192.168.0.140  //połączenie z innym komputerem w sieci (potwiedzić Y i podać hasło)
 
-top           //procesy w systemie
-kill 4284     // zabiajnie wątku (numer z PID)
 
-sudo apt update       // odświerzenie repozytorium
-apt search openssh    // sprawdz czy istnieje dany program w repozytorium
-systemctl status sshd // sprawdz czy program jest zainstalowany i w jakim stanie
-sudo apt install g++  // instalowanie jakiś pakietów/programów
-apt install mc        // instalacj coś jak Norton Commander (Total Commander) Ctrl+O - aby przełączyć go do tła
+sudo apt update       # odświerzenie repozytorium
+apt search openssh    # sprawdz czy istnieje dany program w repozytorium
+systemctl status sshd # sprawdz czy program jest zainstalowany i w jakim stanie
+sudo apt install g++  # instalowanie jakiś pakietów/programów
+apt install mc        # instalacj coś jak Norton Commander (Total Commander) Ctrl+O - aby przełączyć go do tła
 
 
-last                  // lista o połączeniach
-last --limit 20       // ostatnie 20 zdarzeń
+last                  # lista o połączeniach
+last --limit 20       # ostatnie 20 zdarzeń
 last  --system --fulltimes --since 20220103120000
 //               |           +tylko te zdarzenia które były po 2022.01.03 12:00:00
 //               +pelny czas
-lastb                 // nieudane logowania 
+lastb                 # nieudane logowania 
 
-which nazwapolecenia  // pokazuje z jakiego katalogu uruchamiane jest polecenie
-set                   // lista zmiennych środowiskowych (polecane z potokiem | more)
+which nazwapolecenia  # pokazuje z jakiego katalogu uruchamiane jest polecenie
+set                   # lista zmiennych środowiskowych (polecane z potokiem | more)
 
-VARIABLE=VALUE        // definowanie zmiennych. Zmienne trwają tylko sesje
-export VARIABLE       // eksport zmiennych do innych procesów (czy jakos tak)
+VARIABLE=VALUE        # definowanie zmiennych. Zmienne trwają tylko sesje
+export VARIABLE       # eksport zmiennych do innych procesów (czy jakos tak)
 
-expr                  // taki kalkulator
+expr                  # taki kalkulator
 expr 1 + 2            //= 3
 expr 4 \> 2           //= 1 (1 to true)
-WOLNE_MIEJSCE=`expr $FREE_SPACE - $BACKUP_SIZE`   // do zmiennej przypisze wynik
-WOLNE_MIEJSCE=$(expr $FREE_SPACE - $BACKUP_SIZE)  // to samo co wyżej
+WOLNE_MIEJSCE=`expr $FREE_SPACE - $BACKUP_SIZE`   # do zmiennej przypisze wynik
+WOLNE_MIEJSCE=$(expr $FREE_SPACE - $BACKUP_SIZE)  # to samo co wyżej
 
-bc                    // taki lepszy kalkulator (w debianie nalezy go zainstalować:  sudo apt install bc)
-                      // wychodzimy Ctrl+C lub quit
-echo "1+2+3" | bc     // na ekranie wyswietli sie wynik dodawania
+bc                    # taki lepszy kalkulator (w debianie nalezy go zainstalować:  sudo apt install bc)
+                      # wychodzimy Ctrl+C lub quit
+echo "1+2+3" | bc     # na ekranie wyswietli sie wynik dodawania
 echo "$FREE_SPACE - $BACKUP_SIZE" | bc  
-WOLNE_MIEJSCE=`(echo "$FREE_SPACE - $BACKUP_SIZE" | bc)`  // przypisanie wyniku do zmiennej
+WOLNE_MIEJSCE=`(echo "$FREE_SPACE - $BACKUP_SIZE" | bc)`  # przypisanie wyniku do zmiennej
 echo "sqrt(81)" | bc  //= 9
 echo "4*a(1)" | bc -l //= 3.14   4*arcus(1) -l przywołuje biblioteki matematyczne
 
-date                    // wywwietli aktualna date
+date                    # wywwietli aktualna date
 date +%Y%m%d		    //= 20220105
 date "+%Y-%m-%d %H:%M"  //= 2022-01-05 15:12
 date 010512052022.30    //reczna zmaina daty: miesiac dzien godzina minuta rok.sekundy 
-cal                     // wyświetla "kalendarz" (aktulany miesiąc)
-cal 2020                // wyśweitli cały klendarz
-cal 12 2020             // wyświetli tylko grudzien
+cal                     # wyświetla "kalendarz" (aktulany miesiąc)
+cal 2020                # wyśweitli cały klendarz
+cal 12 2020             # wyświetli tylko grudzien
 
-nl nazwaPliku           // wyświetla  plik z numerowaniem linii
-head nazwaPliku         // wyswietla domyślnie 10 pierwszych linijek
-head -n 20 nazwaPliku   // wyswietl pierwsze 20 linijek
-head -n -20 nazwaPliku  // pomin pierwsze 20 linijek.
-tail nazwaPliku         // wyświetli 10 ostatnich
-tail -n 20 nazwaPliku   // wyświetli 20 ostatnich
-tail -n +20 nazwaPliku  // Zacznij od 20 linijki i wyswietl wszystko az do konca pliku
-head -n 20 nazwaPliku | tail -n 10 // wyswielt od 11 do 20 linijki
+nl nazwaPliku           # wyświetla  plik z numerowaniem linii
+head nazwaPliku         # wyswietla domyślnie 10 pierwszych linijek
+head -n 20 nazwaPliku   # wyswietl pierwsze 20 linijek
+head -n -20 nazwaPliku  # pomin pierwsze 20 linijek.
+tail nazwaPliku         # wyświetli 10 ostatnich
+tail -n 20 nazwaPliku   # wyświetli 20 ostatnich
+tail -n +20 nazwaPliku  # Zacznij od 20 linijki i wyswietl wszystko az do konca pliku
+head -n 20 nazwaPliku | tail -n 10 # wyswielt od 11 do 20 linijki
 
-more nazwaPliku         // wyswietli plik strona po stronie
-less                    // wyswietli plik. f-nastepna strona b-poprzednia strona +wiele innych funkcji do nawigacji
+more nazwaPliku         # wyswietli plik strona po stronie
+less                    # wyswietli plik. f-nastepna strona b-poprzednia strona +wiele innych funkcji do nawigacji
 
 
-grep sukaneSlowo plik        // przejżyj (przeszukaj) plik i wyświetl wskazany fragment pliku
-grep sukaneSlowo plik1 plik2 // przejżyj pliki i wyświetl wskazany fragment pliku
-grep root /etc/passwd        // wyswietli tylko linijki zawierajace słowo "root"
-grep root * | more           // wyswietli liste plików zawierających słowo "root" i KAŻDE wystapienie (| more tylko dla stronizowania)
-grep -c root *               // wyswietli liste plików zawierających słowo "root" i ilość wystąpień (c-count)
-grep -r root *               // przeszukaj pliki i podkatalogi (r-rekurencyjnie)
-grep -r -n root *            // przeszukaj pliki i podkatalogi i w jakiej linijce wystepuje (n-number line)
-grep -r -E ".*root" *        // E-regular Expression (wyrazenia regularne)
-grep -E -v ".*nologin$" passwd // przedzukaj plik passwd i odzukaj wpisy nie kończące się na "nologin", -v odwraca to co wyszukujemy
+Film 82 (Linux - linia komend dla początkujących...)
+grep sukaneSlowo plik        # przejżyj (przeszukaj) plik i wyświetl wskazany fragment pliku
+grep sukaneSlowo plik1 plik2 # przejżyj pliki i wyświetl wskazany fragment pliku
+grep root /etc/passwd        # wyswietli tylko linijki zawierajace słowo "root"
+grep root * | more           # wyswietli liste plików zawierających słowo "root" i KAŻDE wystapienie (| more tylko dla stronizowania)
+grep -c root *               # wyswietli liste plików zawierających słowo "root" i ilość wystąpień (c-count)
+grep -r root *               # przeszukaj pliki i podkatalogi (r-rekurencyjnie)
+grep -r -n root *            # przeszukaj pliki i podkatalogi i w jakiej linijce wystepuje (n-number line)
+grep -r -E ".*root" *        # E-regular Expression (wyrazenia regularne)
+grep -E -v ".*nologin$" passwd # przedzukaj plik passwd i odzukaj wpisy nie kończące się na "nologin", -v odwraca to co wyszukujemy
 
-cmp ./plik1 ./plik2     // porownanie plikow: dostane informacje o pierwszej różnicy w plikach. Czyli tylko mam info, że się różnią  
 
-diff plik1 plik2        // porownanie plikow prawie jak w gicie.  -y wyswietli w postaci dwoch okienek
-diff -y plik1 plik2     // porownanie plikow wyswietli w postaci dwoch okienek
-diff -q plik1 plik2     // porownanie plikow zwróci informacje, że się roznią, troche jak cmp
+cmp ./plik1 ./plik2     # porownanie plikow: dostane informacje o pierwszej różnicy w plikach. Czyli tylko mam info, że się różnią  
+
+
+diff plik1 plik2        # porownanie plikow prawie jak w gicie.  -y wyswietli w postaci dwoch okienek
+diff -y plik1 plik2     # porownanie plikow wyswietli w postaci dwoch okienek
+diff -q plik1 plik2     # porownanie plikow zwróci informacje, że się roznią, troche jak cmp
+
+
+Film 84 (Linux - linia komend dla początkujących...)
+find . -name *.txt                               # szukaj w folderze bierzączym (i podkatalogach) nazw plików o rozszeżeniu *txt
+find . -iname *.tXt                              # szukaj w folderze bierzączym (i podkatalogach) nazw plików o rozszeżeniu *txt (nie zwracaj uwagi na wielkośc liter)
+find . -name *.txt  2>/dev/null                  # szukaj w folderze bierzączym (i podkatalogach) nazw plików o rozszeżeniu *txt i ignoruj błędy
+find . -name *.txt -maxdepth 1                   # szukaj w folderze bierzączym (BEZ podkatalogow) nazw plików o rozszeżeniu *txt
+find . -not -name *.txt                          # szukaj w folderze bierzączym (i podkatalogach) nazw plików o rozszeżeniu INNYM niż *txt
+find . ! -name *.txt                             # to samo co wyżej: szukaj w folderze bierzączym (i podkatalogach) nazw plików o rozszeżeniu INNYM niż *txt
+find . -name "conf*" -type f                     # szukaj; f: plików; d: katalogów
+find /var/log -name "*.old" -o -name "*.log"     # szukaj w konkretnej sciezce plikow z rozszezeniem .old oraz .log  (-o to OR). AND jest domyślny, czyli gdy nie podam, to bedzie AND
+find /var/log -mtime -1                          # szukaj plikow, gdzie dzien modyfikacji mnijsza niż 1 dzien; -5 to mniej niż 5 dni; +1 większa niż 1 dzień
+find /var/log -mtime -5 -mtime +1                # szukaj plikow, gdzie dzien modyfikacji 1 < x < 5 (nie były modyfikowane dzisiaj, ale mniej niż 5 dni temu)
+find /usr/bin -perm 755                          # szukaj pliki o konkretnych uprawnieniach
+find /usr/bin -perm /o=w                         # szukaj pliki gdzie inni moga zapisywac (other = write)
+find /var/log -user student                      # szukaj plikow, nalezacych do urzytkownika student
+find /var/log -group student                     # szukaj plikow, nalezacych do gropy student
+find /var/log -size +50M                         # szukaj plikow, wiekszych niz 50MB
+find /var/log -size +50M -exec ls -lh {} \;      # szukaj plikow, wiekszych niz 50MB i wyswietl liste ze szczegolami + ladna miara (zakonczyc serdnikiem i backsleshem)
+find /var/log -size +50M -exec echo '====' \; -exec ls -lh {} \;   # polaczenie dwoch polecen exec
+find /var/log -size +50M -exec echo "Moving {}" \; -exec mv {} /tmp/bigfiles/ \;   # wyszukaj pliki < 50M i przenies je do katalogu (wczesniej trzeba stworzyc katalog)
+find . -name *.txt -exec ls -l {} \;             # odszuka i wyświetli pliki
+find . -name *.txt -exec chmod u-w,g-x,o-rw {} \;  # odszuka i zmieni uprawnienia plików
+
+
+cut                                              # wycina fragmenty...
+ls -ld /etc/p* | cut -c 1                        # wyswietl liste ze szczegolami, ale wytnj z tego tylko pierwsza literke
+ls -ld /etc/p* | cut -c 1-10                     # wyswietl liste ze szczegolami, ale wytnj z tego znaki od pierwszego do dziesiatego 
+ls -ld /etc/p* | cut -d ' ' -f 1,3               # -d ~delimiter, okreslenie separatora; -f ~field, i wyswietl kolumne pierwsza i trzecia
+ls -ld /etc/p* | cut -d ' ' -f 1-9               # -d ~delimiter, okreslenie separatora; -f ~field, i wyswietl kolumne od pierwszej do dziewiatej
+ls -ld /etc/p* | cut -c 1-10,43-                 # pobierz wartosci ze znakami od 1do9 i wszsytkie znaki powyzej 43 
+ls -ld /etc/p* | cut -c 1-10,43- --output-delimiter '|'   # pobierz wartosci ze znakami od 1do9 i wszsytkie znaki powyzej 43 i dodaj rozdzielenie
+ls -ld /etc/p* | cut -c 1-10,43- --output-delimiter $'\t' # pobierz wartosci ze znakami od 1do9 i wszsytkie znaki powyzej 43 i dodaj rozdzielenie za pomoca tab
+cut -c 1-10,43- --output-delimiter $'\t' /tmp/files       # wykonaj to samo, ale na konkretnych plikach
+
+
+wc #woru count - zlicza linijki, słowa i znaki w pliku
+wc /var/log/README                               #=> 26 42 1040; 26 linijek,  42 wyrazy 1040 znaków;  można chciec tylko wybrane parametry -l linie; -w slowa; -c znaki
+wc -l /var/log/README | cut -d ' ' -f 1          #=> wyswietli TYLKO: 26 
+
+
+sort /etc/passwd                                 # wypisze zawartosc pliku, linijki poukladane alfabetycznie
+sort /etc/passwd > /tmp/passwd_sorted            # przeslanie posorotwnej zawartosc do innego pliku
+sort -r /etc/passwd                              # wypisze zawartosc pliku, linijki poukladane alfabetycznie od Z
+sort -t ';' -k 3 /etc/passwd                     # rozdzielamy separatorem i poukladaj po kluczu 3-cim alfabetycznie
+sort -t ';' -k 3 -n /etc/passwd                  # rozdzielamy separatorem i poukladaj po kluczu 3-cim NUMERYCZNIE (-n informuje ze dane sa numeryczne)
+ls -ldh /etc/p* | sort -t ' ' -k 5 -h -r         # wyswietli pliki wzgledem zajetosci miejsca, najwiekszy na gorze.
+ls -ldh /etc/p* | sort -t ' ' -k 5 -h -r > /tmp/list_sorted   #─┐
+ls -ldh /etc/p* | sort -t ' ' -k 5 -h -r -o /tmp/list_sorted  #─┴─ wyniki do pliku    ┌ └ ├  ┘ ┼
+
+
+uniq
+cat results.txt | sort | uniq -u                 # wypisze tylko unikalne wartosci, czyli ominie powtarzane
+cat results.txt | sort | uniq -d                 # wypisze tylko wartosci, ktore sie powtorzyly
+# przeszukaj plik, znajsz linijki tylko z okresloneymi wyrazami, policz i wypisz tylko posortowane od najwiekszej
+grep -E 'INFO|CRITICAL|DEBUG' /var/log/dnf.log | cut -d ' ' -f 2 | sort | uniq -d -c | sort -t ' ' -k 1 -n -r
+
+
+tr                                               # polecenie tlumaczace
+cat /var/log/README | tr 'abcd' 'ABCD'           # we wskazanym pliku zamien wskazane male literki na wielkie litery (tylko te wypisane)
+cat /var/log/README | tr 'a-z' 'A-Z'             #─┐ 
+cat /var/log/README | tr [:lower:] [:upper:]     #─┴─ zamieni wsystkie male litery na wielkie
+ls -ld /etc/p* | tr -s ' ' ' '                   # wszystkie powtarzane spacje, zamien na jedna spacje
+ls -ld /etc/p* | tr -d '.'                       # wypisz listing i usun wszystkie kropki
+
+
+tee
+cat /var/log/README | tr '()' '[]' | tee /tmp/new_Readme # zamieni nawiasy, WYPISZE wynik na ekranie i zapisze te wyniki w pliku
+
+
+ps                                               # process status - procesy w ramach tej sesji
+ps -f                                            # pelne informacje
+ps -l                                            # pelne (dlugie) informacje
+ps -e                                            # wypsz wszystkie mozliwe procesy
+ps -e -o user,uid,comm,pid,pcpu,cputime,pmem,vsize,tty --sort=-pcpu | head -n 5 # wypsz 5 najbardziej obciazajacych procesow
+ps -t pts/0                                      # wyswietli proecesy przypisane do okreslonego terminala 
+ps -u root                                       # procesy pracujące na rzecz urzytkownika root
+ps -p 71                                         # sledz konkretny proces (numer id)
+ps -eH                                           #─┐ 
+pstree                                           #─┴─ pokaze strukture (drzewo) procesow
+
+top                                              # procesy w systemie, taki menager zadan; q -wyjscie
+# gdy pracuje, mozna nacisnac t - do obserwacji procesora;  m- do obserwacni pamieci; k -kill; u -wybierz uzytkownika; o -filtrowanie = -wyczysc filtrowanie
+# sortowanie: M -wedlug zuzycia pamieci; P -wedlug zuzycia procesora; N -PIN; T -time; R -odwraca kolejnosc ostatnio wybranego sortowania; c -pelne sciezki
+
+kill 4284                                        # zabiajnie watku (numer z PID)
+ps -u stasiek | grep vim                         #─┐ 
+pgrep -u stasiek vim                             #─┴─ wypisze tylko jeden, konkretny PID procesu
+pkill -u stasiek vim                             # zabijanie watku po nazwie
 
 
 Film 20 (Linux - linia komend dla początkujących...)
@@ -267,35 +354,35 @@ ls --help | more        //wyświetlanie helpa strona po stronie
 	Wyjście: q
 
 
-df                      // Filesystem - informacja o dyskach
-df -h                   // Fajniej przeliczone wartosci bajtów
-df -h .                 // informacja o dysku, na którym aktulanie się znajduje
-df -i                   // informacja o zajętości dysku w inodach (takich sektorach)
+df                      # Filesystem - informacja o dyskach
+df -h                   # Fajniej przeliczone wartosci bajtów
+df -h .                 # informacja o dysku, na którym aktulanie się znajduje
+df -i                   # informacja o zajętości dysku w inodach (takich sektorach)
 		                   ufs - system plików w linuxie
-du -sh .                // disk used - ile miejsca zajmuja pliki
-du -sh . 2>/dev/null    // disk used - informacje o błędach wyślij do "czarnej dziury"  0-standard input  1-standard output  2-standard error output
-du -ha --exclude="*.journal" // wypisz szczegoły plików bez rozszezenia .journal
+du -sh .                # disk used - ile miejsca zajmuja pliki
+du -sh . 2>/dev/null    # disk used - informacje o błędach wyślij do "czarnej dziury"  0-standard input  1-standard output  2-standard error output
+du -ha --exclude="*.journal" # wypisz szczegoły plików bez rozszezenia .journal
 
 
-tar  // arhiwizacja plików (takie pakowanie bez kompresji)
-tar -cvf log.tar log    // c-create - stwórz arhiwum, v-gadatliwe f-okresli nazwe pliku, natepnie nazwa pliku jaki powstanie, nastepnie katalog do spakowania
-tar -xvf log.tar log    // x-wypakuj
-tar -cvzf log.tgz log   // utwórz SPAKOWANE arhiwum
-tar -xvzf log.tgz log   // x-wypakuj i ROZKOMPRESUJ
-tar -xvzf log.tgz log plik  // x-wypakuj i ROZKOMPRESUJ tylko jeden plik
-tar -tzf log.tgz        // tylko podglad zawartosci
+tar  # arhiwizacja plików (takie pakowanie bez kompresji)
+tar -cvf log.tar log    # c-create - stwórz arhiwum, v-gadatliwe f-okresli nazwe pliku, natepnie nazwa pliku jaki powstanie, nastepnie katalog do spakowania
+tar -xvf log.tar log    # x-wypakuj
+tar -cvzf log.tgz log   # utwórz SPAKOWANE arhiwum
+tar -xvzf log.tgz log   # x-wypakuj i ROZKOMPRESUJ
+tar -xvzf log.tgz log plik  # x-wypakuj i ROZKOMPRESUJ tylko jeden plik
+tar -tzf log.tgz        # tylko podglad zawartosci
 
-gzip log.tar            // podstawoe polecenie do kompresji (UWAGA! usuwa oryginalny plik)
-gunzip log.tar.gz       // rozkompresowanie 
+gzip log.tar            # podstawoe polecenie do kompresji (UWAGA! usuwa oryginalny plik)
+gunzip log.tar.gz       # rozkompresowanie 
 
-zip README.zip README   // skompresuj plik README
-zip -r log.zip log      // skompresuj rekurencyjnie katalog "log" wraz z podkatalogami i plikami
-zip log.zip -u log/README // aktualizuj (u-update) w arhiwum jeden zmieniony plik 
-zip log.zip -d log/README // usuń z arhiwum jeden, niepotrzebny plik
-unzip README.zip          // rozkompresuj plik README
-unzip -l log.zip          // rozkompresuj cały folder i wylistuj co robisz
-unzip log.zip log/README  // rozpakuj tylko jeden plik 
-unzip -t log.zip          // przeczytaj i skontroluj arhiwum (bez rozpakowywania)
+zip README.zip README   # skompresuj plik README
+zip -r log.zip log      # skompresuj rekurencyjnie katalog "log" wraz z podkatalogami i plikami
+zip log.zip -u log/README # aktualizuj (u-update) w arhiwum jeden zmieniony plik 
+zip log.zip -d log/README # usuń z arhiwum jeden, niepotrzebny plik
+unzip README.zip          # rozkompresuj plik README
+unzip -l log.zip          # rozkompresuj cały folder i wylistuj co robisz
+unzip log.zip log/README  # rozpakuj tylko jeden plik 
+unzip -t log.zip          # przeczytaj i skontroluj arhiwum (bez rozpakowywania)
 
 
 
@@ -322,35 +409,35 @@ unzip -t log.zip          // przeczytaj i skontroluj arhiwum (bez rozpakowywania
 //      # #       #     #     #
 //       #       ###    #     #
 VIM
-vim        // edytor  (instalacja: sudo install vim)
-Esc        // przejdz do trybu komend
-hjkl       // Poruszanie się 
-i Insert   // pisz tekst w miejscu kursora
-a          // append - dopisz 
-x          // kasuj jeden znak
-d d        // kasuj cała linijkę
+vim        # edytor  (instalacja: sudo install vim)
+Esc        # przejdz do trybu komend
+hjkl       # Poruszanie się 
+i Insert   # pisz tekst w miejscu kursora
+a          # append - dopisz 
+x          # kasuj jeden znak
+d d        # kasuj cała linijkę
 
-v          // zacznij kopiowanie (teraz zaznacz co kopiować)
-y          // zakończ kopiowanie 
-p          // wklej zawarość schowka
+v          # zacznij kopiowanie (teraz zaznacz co kopiować)
+y          # zakończ kopiowanie 
+p          # wklej zawarość schowka
 :r nazwaPliku    //wklej całą zawartość pliku
  
 /szukany tekst   //szukanie tekstu i Enter żeby przejść do pierwszego znalezionego
-n                // przejdz na kolejne znalezione
-N                // przejdz na poprzednie znalezione
-:s/txt1/txt2     // odszukaj i zmaień zamiana jednego tekst
-:s/txt1/txt2/g   // odszukaj i zmaień zamiana wystkich wystapień w JEDNEJ linijce
-:%s/txt1/txt2/g  // odszukaj i zmaień zamiana wystkich wystapień w JEDNEJ linijce
-u                // cofnij (taki Ctrl+Z)
+n                # przejdz na kolejne znalezione
+N                # przejdz na poprzednie znalezione
+:s/txt1/txt2     # odszukaj i zmaień zamiana jednego tekst
+:s/txt1/txt2/g   # odszukaj i zmaień zamiana wystkich wystapień w JEDNEJ linijce
+:%s/txt1/txt2/g  # odszukaj i zmaień zamiana wystkich wystapień w JEDNEJ linijce
+u                # cofnij (taki Ctrl+Z)
 
  
-:w         // zapisz plik
-:w nazwaPliku.txt                 // zapisz plik jako
+:w         # zapisz plik
+:w nazwaPliku.txt                 # zapisz plik jako
 :w $HOME/Skrypty/nowyKatalog.sh   //zapisz w konkretnym pliku
-:wq        // zapisz i wyjdz
-:q         // wyjdz z pliku
-:q!        // wyjdz z pliku bez zapisywania
-:x!        // wyjdz z pliku bez zapisywania
+:wq        # zapisz i wyjdz
+:q         # wyjdz z pliku
+:q!        # wyjdz z pliku bez zapisywania
+:x!        # wyjdz z pliku bez zapisywania
 
 
 
@@ -398,13 +485,13 @@ echo "To jest nasz pierwszy program"
 exit 0                //taki return
 // escape, :w,  :q 
 
-bash ./skrypt1.sh      // uruchomienie skryptu
-bash -x ./skrypt1.sh      // uruchomienie skryptu + podgląd tego skryptu (z plusami polecenia skryptu)
-bash -v ./skrypt1.sh      // uruchomienie skryptu + podgląd tego skryptu (bez plusów)
+bash ./skrypt1.sh      # uruchomienie skryptu
+bash -x ./skrypt1.sh      # uruchomienie skryptu + podgląd tego skryptu (z plusami polecenia skryptu)
+bash -v ./skrypt1.sh      # uruchomienie skryptu + podgląd tego skryptu (bez plusów)
 
-./skrypt1.sh           // uruchomienie skryptu gdy nadamy mu wcześniej uprawnienia chmod +x skrypt1.sh
-./skrypt1.sh parametr  // uruchom skrypt z parametrem (uruchamainiae bez przedrostka ./ gdy jestesmy w innym katalogu)
-echo $?  // wyświetli informację, co zwróćił skrypt
+./skrypt1.sh           # uruchomienie skryptu gdy nadamy mu wcześniej uprawnienia chmod +x skrypt1.sh
+./skrypt1.sh parametr  # uruchom skrypt z parametrem (uruchamainiae bez przedrostka ./ gdy jestesmy w innym katalogu)
+echo $?  # wyświetli informację, co zwróćił skrypt
 
 //-------------------------------------------------------------------------------------------------
 .bash_profile  //domyślny skrypt, który uruchamia się przy logowaniu
@@ -423,12 +510,12 @@ tekst="To jest tekst!"
 cena=4.47
 tablica=(1988 "jakieś zdanie" 9.99)
 parametrWejsciowy=$1
-sciezka=$(pwd)              // zmiennna przechowa informację: gdzie jesteśmy
-source ~/skrypty/kolory.sh  // import plików
+sciezka=$(pwd)              # zmiennna przechowa informację: gdzie jesteśmy
+source ~/skrypty/kolory.sh  # import plików
 echo "To jest nasz pierwszy program"
 echo "To jest pierwszy parametr: $1"
 echo "To jest ilość parametrów: $#"
-echo "To jest drugi parametr ${2}"  // inna forma zapisu $2 lub ${2}
+echo "To jest drugi parametr ${2}"  # inna forma zapisu $2 lub ${2}
 echo "Wszystkie parametry ${*}"
 echo "Nasz login: $USER"
 echo "Katalog domowy: $HOME"
@@ -540,7 +627,7 @@ blue="\033[34m"
 reset="\033[0m"
 //-------------------------------------------------------------------------------------------------
 
-source ~/skrypty/kolory.sh  // import pliku zkolorami (oczywiście musimy sobie taki napisać)
+source ~/skrypty/kolory.sh  # import pliku zkolorami (oczywiście musimy sobie taki napisać)
 if [ $# -lt 1 ] ; then //jeśli brak parametru, to wypisz ostrzeżenie  ( $# - liczba parametrów)
 if (( $# != 1 )) ; then //to samo co wyżej, tylko inny zapis
 	echo -e "${red} Składnia: $0 < nazwa użytkownika>$reset"
@@ -788,7 +875,7 @@ source funkcje.sh
 while true
 do
 	clear
-	nasze_menu  // tu wyświetli całą zawartość funkcji
+	nasze_menu  # tu wyświetli całą zawartość funkcji
 	read -sn1 zmienna 
 	
 	case $zmienna in 
@@ -892,7 +979,7 @@ Instalacja linuxa
 		Software selection -> domyślne (tylko SSH i standard)
 		
 		
-		Zainstaloać GRUB: TAK  // grub to program rozruchowy
+		Zainstaloać GRUB: TAK  # grub to program rozruchowy
 		Urządzenia do instalacji programu rozruchowego: /dev/sda ...
 		
 			
@@ -907,15 +994,33 @@ Instalacja Windowsa:
 			
 			
 			
+  #   #                  ###
+  #  #                  #      #                                          #                       #                  #
+  # #     ###   ####    #           ####  #   #  # ###   ####    ###          ####         ###         ###    ###
+  ##     #   #  #   #  ####   ##   #   #  #   #  ##          #  #   #    ##       #       #      ##   #   #  #   #  ##
+  # #    #   #  #   #   #      #   #   #  #   #  #       #####  #         #   #####        ###    #   #####  #       #
+  #  #   #   #  #   #   #      #    ####  #   #  #      #    #  #   #     #  #    #           #   #   #      #   #   #
+  #   #   ###   #   #   #     ###      #   ####  #       ### #   ###   #  #   ### #        ###   ###   ###    ###   ###
+                                   ####                                 ##
 Konfiguracja sieci:
-// trzeba buć w katalogu głównym
-/# cd etc/network/
-ip address   // wyświetla konfigurację kart siecowych (coś jak ipconfig)
-ip a         // wyświetla konfigurację kart siecowych (to samo co wyżej, tylko skrocone)
+// trzeba być w katalogu głównym
+cd etc/network/
+ip address                             #─┐ 
+ip a                                   #─┴─ wyświetla konfigurację kart siecowych
 
-ip route    // routing - czyli jak skonfigurowana jest brama domyślna
 
-nano interfaces   //edycja ustawień sieci:
+ip link show                           # informacje o dostepnych kartah sieciowych
+ip link set eth0 down                  # wylacz karte eth0
+ip link set eth0 up                    # wlacz karte eth0
+ip address add dev eth0 192.168.137.100/24       # dodaj nowe IP dla danej karty (do restartu karty)
+ip -s -h address show                  # statystyka z wyslanych/odebranych pakietow
+
+ip route                               #─┐
+ip r                                   #─┴─ routing - czyli jak skonfigurowana jest brama domyślna
+
+
+nano interfaces                        # edycja ustawień sieci, gdy wczesniej wywolamy   cd etc/network/
+nano /etc/network/interfaces           # edycja ustawień sieci
 	
 	#The primary network interface
 	allow-hotplug ens18
@@ -927,30 +1032,33 @@ nano interfaces   //edycja ustawień sieci:
 		#dns-search ihermes.humansoft.pl
 
 
-// na windowsie, dns taki sam jak brama domyslna		
-// Mapowanie dysku: przez moj komputer -> mapowanie dysku. Wybrać dysk S i nazwa folderu:  \\ad.humansoft.pl\s
+# na windowsie, dns taki sam jak brama domyslna		
+# Mapowanie dysku: przez moj komputer -> mapowanie dysku. Wybrać dysk S i nazwa folderu:  \\ad.humansoft.pl\s
 
-		
-//restart usługi z karta siecową: (aby nie stracić połączenia zdalnego)
-/# ifdown ens18 && ifup ens18    // ens18 - to nazwa katy sieciowej
 
-// pingowanie z jakas stroną:
-ping wp.pl
+
+
+ifdown ens18 && ifup ens18                 #─┐   (ens18 - to nazwa katy sieciowej)
+nmcli networking off ; nmcli networking on #─┴─ restart usługi z karta siecową, aby nie stracić połączenia zdalnego
+
+
+ping wp.pl                             # pingowanie z jakas stroną:
+ping -c 5 wp.pl                        # wyslij tylko 5 razy
 
 
 
 systemctl  //do zarządzania usługami
-systemctl status sshd  // suługa do zdalnego połączenia
+systemctl status sshd  # suługa do zdalnego połączenia
 
 
 // nadanie uprawnień dla zdalego użytkownika (na oryginalmym sprzęcie przez klawieturę):
-app install sudo           // instalacja usługi
-usermod                    // ustawienia dotyczące uzytkownika
-usermod -a -G sudo user1   // dodaj uzytkownika do grupy sudo
+app install sudo           # instalacja usługi
+usermod                    # ustawienia dotyczące uzytkownika
+usermod -a -G sudo user1   # dodaj uzytkownika do grupy sudo
 
 // przy połaczeniu przez SSH:
-sudo -i   // zmiana uzytkownika na root i przejdz do katalogu root/
-sudo -s   // zmiana uzytkownika na root i pozostań tam gdzie jesteś
+sudo -i   # zmiana uzytkownika na root i przejdz do katalogu root/
+sudo -s   # zmiana uzytkownika na root i pozostań tam gdzie jesteś
 
 // Aby nie trzeba było wpisywać hasła za każdym razem, gdzieś w plku trzeba ustawić: (jeszcze nie wiem w którym)
 chyba w: /etc/sudoers 	
@@ -1008,7 +1116,7 @@ Uruchomić plik:
 	systemctl enable ihermes.service  
 	systemctl start ihermes
 	
-	systemctl status ihermes   // żeby sprawdzić, czy się uruchomiło. Gdy nie, sprawdz, czy sa uprawnienia do uruchamiania.
+	systemctl status ihermes   # żeby sprawdzić, czy się uruchomiło. Gdy nie, sprawdz, czy sa uprawnienia do uruchamiania.
 	systemctl stop ihermes     
 	
 	

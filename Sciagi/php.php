@@ -225,7 +225,7 @@ var_dump(count($tablicaTestowa));                //= int(4)   zwróci ilość el
 
 
 // TABLICE ASOCJACYJNE ------------------------------------------------------------------------------------------------
-- indeksami noga być stringi
+- indeksami moga być stringi
 $user = [
     'firstName' =>'Jan',
     'lastName' => "Kowalski",

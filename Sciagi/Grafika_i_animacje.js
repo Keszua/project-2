@@ -3,11 +3,13 @@
 glb - jakiś format do 3D
 https://threejs.org/docs/#examples/en/loaders/GLTFLoader
 
-http://placeimg.com/  aby z tego korzysta�, wystarczy w mijece grafiki wklei� link:
+http://placeimg.com/  aby z tego korzystac, wystarczy w mijece grafiki wkleic link:
 http://placeimg.com/240/360/any - losowa grafika
 
+//Proste animacje np: do kliknięcia, przejści, rozwiajnego drzewka   https://react-spring.io/    https://react-spring.io/hooks/use-spring#demos
 
-Jako �r�do wiedz o canvasie: mdn?
+
+Jako zrodo wiedz o canvasie: mdn?
 
 
 //Ciekawa stronka z o Canvas:
