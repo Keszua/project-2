@@ -9,7 +9,7 @@
 // TWORZENIE NOWEGO PROJEKTU
 // Trzeba byc w folderze z projektami i wywołać polecenie: (nazwa folderu z malej litery)
 
-
+/*
 //Instaluje CRA globalnie poleceniem:
 λ npm install create-react-app --global
 
@@ -28,7 +28,7 @@ npx create-react-app my-app --template typescript
 
 //Tworzenie wersji produkcyjnej:
 λ npm run build
-
+*/
 
 
 
@@ -56,7 +56,7 @@ const footer = (
  
 const app = [header, main, footer]
  
-ReactDOM.render(app, document.getElementById('root'))
+ReactDOM.render(app, document.getElementById('root'));
 
 //------------------------------------------------------------
 //------------------------------------------------------------
@@ -76,10 +76,11 @@ const handleClick = () => alert("klik")
 		disabled={jakasFlaga ? false : true  } //wyszarzenie przycisku
 	> OK </button>
 
-
-  __________________________         ___
-  | input                  |         |v| checkbox
-  --------------------------         ---
+/*
+  ┌─────────────────┐         ┌─┐
+  | input           |         |v| checkbox
+  └─────────────────┘         └─┘                       */
+  
 	state = {
 		inputValue: ""
 	}
@@ -106,24 +107,23 @@ const handleClick = () => alert("klik")
 	}
 
 
-  __________________________
-  | textarea               | 
-  |                        | 
-  |                        | 
-  --------------------------
+/*  ┌─────────────────┐
+    | textarea        |
+    |                 |
+    └─────────────────┘  */
+
 	<label>
 		napisz coś o mieście
 		<textarea value={this.state.text}
 				onChange={this.handleTextChange}
 		>
 		</textarea>
-	<label>
+	</label>
 	
 
-
-  ___
-  |v| checkbox
-  ---
+/* ┌─┐
+   |v| checkbox
+   └─┘             */
 	state = {
 		isChecked: false,
 	}
@@ -150,9 +150,9 @@ const handleClick = () => alert("klik")
 	}
 
 
-  _____________
-  |         |v| select  (pole kombi)
-  -------------
+/* ┌─────────┬─┐
+   |         |v| select  (pole kombi)
+   └─────────┴─┘                        */
 	state = {
 		number: "0",
 	}
@@ -168,12 +168,12 @@ const handleClick = () => alert("klik")
 		<select value={this.state.number}
 			onChange={this.handleSelectChange}
 		>
-			<option value="0">0</opton>
-			<option value="1">1</opton>
-			<option value="5">5</opton>
-			<option value="more">Więcej</opton>
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="5">5</option>
+			<option value="more">Więcej</option>
 		</select>
-	<label>
+	</label>
 
 
 //biblioteki do tworzenia formularzy: 
@@ -217,8 +217,15 @@ const value = parseInt(props.number); //typowanie na Int
 	//Wyodrebniam user1 i w "users" jest reszta elementów (w formie krótszej tablicy):
 	let [user1, ...users] = players; 
 
-
-
+    
+	const ItemListP1 = props => (  //bez destrukturyzaji propsow
+		<li>{props.name} - {props.example}</li>
+	)
+    //to samo ale destrukturyzacja na propsach
+	const ItemListP2 = ({name, example}) => (
+		<li>{name} - {example}</li>
+	)
+	
 
 
 //------------------------------------------------------------
@@ -264,12 +271,22 @@ const index = setInterval(() => { console.log("Hejka") }, 1000)  //wywołuje co 
 clearInterval(index); //ady wyłączyć interwał
 
 
-KOMPONENTY
-* stateless functional component, - SFC, komponent bezstanowy
-* stateful functional component - komponent stanowy
+
+/*-------------------------------------------------------------------------------------------------
+   #                                                                  #
+   #                                                                  #
+   #  #    ###    ### ##    ####     ###    ####     ###    ####    #####   #    #
+   # #    #   #   #  #  #   #   #   #   #   #   #   #   #   #   #     #     #   #
+   ##     #   #   #  #  #   #   #   #   #   #   #   #####   #   #     #      # #
+   # #    #   #   #  #  #   ####    #   #   #   #   #       #   #     #       #
+   #  #    ###    #  #  #   #        ###    #   #    ###    #   #      ##    #
+                            #                                               #
+-------------------------------------------------------------------------------------------------*/
+// * stateless functional component, - SFC, komponent bezstanowy
+// * stateful functional component - komponent stanowy
 
 
-W strefie kursów jest:
+// W strefie kursów jest:
  var UserTable = React.createClass({
  	render: function() {
  		return (
@@ -346,7 +363,7 @@ ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 
 	const ZebraneApp = () => {
 		return (
-			<> // to jest to samo co <React.Fragment>
+			<>  {/*to jest to samo co <React.Fragment> */}
 				<App1 />
 				<App2 />
 			</>
@@ -357,6 +374,7 @@ ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 
 //------------------------------------------------------------
 //komponent stanowy (klasowy) rozbudowany:
+{
 	class DodajCyfre extends React.Component {
 		constructor(props) {
 			super(props); //wymagane przekazanie propsów do rodzica
@@ -424,11 +442,9 @@ ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 			<h1>{props.text}: {props.children}</h1> //to co jest między znacznikami, jest przekazane jako props.children
 		)
 	}
-	
+}	
 
-//------------------------------------------------------------
-//------------------------------------------------------------
-//------------------------------------------------------------
+/*-----------------------------------------------------------------------------
 
    #   #    ####     ####    #   #
    #   #   #    #   #    #   #  # 
@@ -438,28 +454,29 @@ ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
    #   #   #    #   #    #   #  #
    #   #    ####     ####    #   #
 
-//------------------------------
+-----------------------------------------------------------------------------*/
 //przechowywanie stanu (raczej typy prymitywne)
-const [stan, funkcja] = React.useState(stanPoczatkowy);  
+	const [stan, funkcja] = React.useState(stanPoczatkowy);  
 
-
-const [counter, setCounter] = useState(0);
-const handlerClick = () => setCounter(counter + 1);
-return (
-    <div onClick={handlerClick}>
-        <p>counter: {counter}</p>
-    </div>
-    );
-
-const [object, setObject] = useState({ a: 0, b: 0 });
-const handlerClick = () => setObject({ ...object, a: object.a + 1 });
-return (
-	<div onClick={handlerClick}>
-		<p>a: {object.a}</p>
-		<p>b: {object.b}</p>
-	</div>
-);
-
+{
+	const [counter, setCounter] = useState(0);
+	const handlerClick = () => setCounter(counter + 1);
+	return (
+		<div onClick={handlerClick}>
+			<p>counter: {counter}</p>
+		</div>
+		);
+}
+{
+	const [object, setObject] = useState({ a: 0, b: 0 });
+	const handlerClick = () => setObject({ ...object, a: object.a + 1 });
+	return (
+		<div onClick={handlerClick}>
+			<p>a: {object.a}</p>
+			<p>b: {object.b}</p>
+		</div>
+	);
+}
 //------------------------------
 //Zastępuje montowanie, odmontowywanie komponentów
 useEffect(funkcja, [tablicaZaleznosci]);
@@ -570,8 +587,10 @@ const Component = () => {
 	const handleOnClickBack = () => history.goBack(); //metoda do powracanie do poprzedniej ścieżki
 
 	return (
-		<button onClick={handleOnClick}> Idz do strony </button>
-		<button onClick={handleOnClickBack}> Powrót do poprzedniej strony </button>
+		<>
+			<button onClick={handleOnClick}> Idz do strony </button>
+			<button onClick={handleOnClickBack}> Powrót do poprzedniej strony </button>
+		</>
 	);
 }
 
@@ -581,7 +600,7 @@ useLocation  // - okrojona wersja useHistory
 	const location = useLocation();  //domyślnie undefine
 	const isActive = Boolean(location.state && location.state.isActive);
 
-<p1> Przesłana informacja: {String(isActive)} <p>
+<p> Przesłana informacja: {String(isActive)} </p>
 
 //------------------------------
 useParms // - film 155
@@ -590,7 +609,7 @@ useParms // - film 155
 	const[inputData, setInputData] = useState('');
 	const history = useHistory();
 
-	cosnt handleOnClick = () => {
+	const handleOnClick = () => {
 		const location = { 
 			pathname: '/typeScript/${inputData}', //UWAGA, w Route będzie ścieżka: "/typeScript/:message"
 		};
@@ -603,17 +622,17 @@ useParms // - film 155
 
 	const paramsObject = useParams();
 
-	<p> paramsObject.message </P> //tutaj zobaczymy odebrane parametry. Nazwa zależna od nazwy parametru w ścieżce
+	<p> paramsObject.message </p> //tutaj zobaczymy odebrane parametry. Nazwa zależna od nazwy parametru w ścieżce
 
 
 
 //------------------------------------------------------------
 //------------------------------------------------------------
-//------------------------------------------------------------
+/*------------------------------------------------------------
 REDUX - //zewnętrzna biblioteka do zarządzania przesyłanymi danymi. Film 157
 // instalacja:
 	npm i redux
-
+*/
 //akcja w reduksie jest obiektem, który ma obowiżakowe pole type:
 {
 	type: ADD, //obowiązkowy element
@@ -623,7 +642,7 @@ REDUX - //zewnętrzna biblioteka do zarządzania przesyłanymi danymi. Film 157
 
 //------------------------------------------------------------
 //------------------------------------------------------------
-//------------------------------------------------------------
+/*------------------------------------------------------------
 React router
 //Filmik 102 (React od podstaw)
 //Instalujemy go poleceniem:
@@ -631,10 +650,11 @@ React router
 //Po zainstalowaniu, trzeba zaimportować kilka komponentów:
 	import { BrowserRouter, Link } from 'react-router-dom';
 //Następnie w komponent BrowserRouter "owijamy" jedno dziecko (najlepiej jeden <div>)
+*/
 	<BrowserRouter> 
 		<div>
 			...
-		</div
+		</div>
 	</BrowserRouter> 
 //Teraz zamist tradycyjnych linków: <a href="/start">Start</a>
 //Wprowadzamy: <Link to="/start">Start</Link>
@@ -644,9 +664,19 @@ React router
 	<Router> 
 		<div>
 			...
-		</div
+		</div>
 	</Router> 
 //------------------------------------------------------------
+/*
+ ####                     #     #                 #                               #                          ###  ####    #  
+ #   #                    #     # #               #                               #                         #   # #   #  # #
+ #   # # ### ##### #    # #  #  ##     ####   #####     ####  # ###  ###   ###  #####  ###   ####  ###      #     #   #  # #
+ ####  ##       #  #   #  # #  ##          # #    #     #   # ##    #   # #       #   #   # #   # #   #      ###  ####  #   #
+ #     #       #    # #   ##    #      ##### #    #     #   # #     #   #  ###    #   ##### #   # #   #         # #     #####
+ #     #      #      #    # #   #   # #    # #    #     ####  #     #   #     #   #   #      #### #   #     #   # #     #   #
+ #     #     #####  #     #  #   ###   ### #  #####     #     #      ###   ###     ##  ###      #  ###       ###  #     #   #
+                   #                                    #                                   ####
+*/
 //Przykład prostego SPA (calutki plik App.js)
 	import React from 'react';
 	import './App.css';
@@ -711,15 +741,6 @@ React router
 			<li>{props.name} - {props.example}</li>
 		)
 	}
-    //to samo ale jeszcze krócej zapisane:
-	const ItemList = props => (
-		<li>{props.name} - {props.example}</li>
-	)
-    //to samo ale urzyta destrukturyzacja
-	const ItemList = ({name, example}) => (
-		<li>{name} - {example}</li>
-	)
-	
 
 	class ItemListC extends React.Component {
 		render() {
@@ -732,6 +753,7 @@ React router
 	ReactDOM.render(<ShoppingList />, document.getElementById('root2'))
 //------------------------------
 //Lista zakupów - z urzyciem hook
+{
 	const ShoppingList = () => {
 		const [items] = React.useState({
 			items1: 'ogórki',
@@ -758,7 +780,7 @@ React router
 	)
 	
 	ReactDOM.render(<ShoppingList />, document.getElementById('root2'))
-
+}
 
 
 //------------------------------------------------------------
@@ -799,7 +821,7 @@ const PanelResult = (props) => {    // poprzez props, otrzymałem przekazany arg
 ReactDOM.render(<App2 />, document.getElementById('root2'))
 
 //------------------------------
-to samo z hookami:
+//to samo z hookami:
 const Hooks = () => {
     const [text, setText] = React.useState("");
    
@@ -1028,7 +1050,7 @@ ReactDOM.render(<TicketShop name="Witaj świecie" />, document.getElementById('r
 
 // nie wiem dla czego, w komponencie "OrderForm" działa "checked" oraz "isConfirmed"
 // na filmiku koleś urzył "isConfirmed" a w moim odczuciu powinno być "checked" 
-
+{
 const ValidationMessage = (props) => <p>{props.txt}</p>
 
 const OrderForm = (props) => {
@@ -1095,6 +1117,7 @@ class TicketShop extends React.Component {
 }
 
 ReactDOM.render(<TicketShop name="Witaj świecie" />, document.getElementById('root5'));
+}
 //------------------------------------------------------------
 // Sklep. Prosty przykład, dodawania produktów do koszyka
 
@@ -1154,54 +1177,56 @@ class App extends React.Component {
 ReactDOM.render(<App/>, document.getElementById('root6'));
 //------------------------------------------------------------
 //Proste wyświetlenie listy elementów z tablicy
+{
+	class ListItems extends React.Component {
 
-class ListItems extends React.Component {
+		state = {
+			items: ["jabłko", "śliwka", "gruszka"]
+		}
 
-    state = {
-        items: ["jabłko", "śliwka", "gruszka"]
-    }
+		render() {
 
-    render() {
+			return (
+				<>
+					<ul>
+						{this.state.items.map((item) => <li key={item}>{`Owoc ${item}`}</li> )}
+					</ul>
+				</>
+			)
+		}
+	}
 
-        return (
-            <>
-                <ul>
-                    {this.state.items.map((item) => <li key={item}>{`Owoc ${item}`}</li> )}
-                </ul>
-            </>
-        )
-    }
+	ReactDOM.render(<ListItems />, document.getElementById('root7'));
 }
-
-ReactDOM.render(<ListItems />, document.getElementById('root7'));
 //------------------------------------------------------------
 //Proste wyświetlenie listy elementów z tablicy
 //Part II
+{
+	const Item = (props) => <li>{`Owoc: ${props.content}`}</li>
 
-const Item = (props) => <li>{`Owoc: ${props.content}`}</li>
+	class ListItems extends React.Component {
 
-class ListItems extends React.Component {
+		state = {
+			items: ["jabłko", "śliwka", "gruszka"]
+		}
 
-    state = {
-        items: ["jabłko", "śliwka", "gruszka"]
-    }
+		render() {
 
-    render() {
+			// tworze nową tablicę która zawiera <li> z elementami "sforatowanymi"
+			const Items = this.state.items.map((item) => <Item key={item} content={item}/> )
 
-        // tworze nową tablicę która zawiera <li> z elementami "sforatowanymi"
-        const Items = this.state.items.map((item) => <Item key={item} content={item}/> )
+			return (
+				<>
+					<ul>
+						{Items}
+					</ul>
+				</>
+			)
+		}
+	}
 
-        return (
-            <>
-                <ul>
-                    {Items}
-                </ul>
-            </>
-        )
-    }
+	ReactDOM.render(<ListItems />, document.getElementById('root7'));
 }
-
-ReactDOM.render(<ListItems />, document.getElementById('root7'));
 //------------------------------------------------------------
 // na bazie tego co wcześniej, ale przekzauje tablicę obiektów
 //Part III
@@ -1236,7 +1261,6 @@ const Item = ({content}) => ( //zrobiona destrukturyzacja na props
     <div>
         <h1>Użytkownik {content.name}</h1>
         <h2>Ma {content.age} lat</h2>
-
     </div>
 )
 
@@ -1834,7 +1858,7 @@ ReactDOM.render(<Wrozba />, document.getElementById("root4"));
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //Konwencja nazenictwa, nazewnictwo
-
+/*
 handleSubmit() - 
 hamdle - obsługa
 on - event, zdarzenie
@@ -1842,7 +1866,7 @@ on - event, zdarzenie
 handleLoginClick() {} - obsługa logowanie poprzez kliknięcie
 handleFormSubmit() {} - potwierzenie wypełnienia formulaża
 buttonClicked() {} - przycisk kliknięty (bez handle)
-
+*/
 
 
 
@@ -1871,6 +1895,7 @@ const Button = styled.button`
 
 //------------------------------------------------------------
 // REDUX
+/*
 Filmik nr 4 - React dla średnio zaawansowanych
 Aby w sandboxie skorzystać z Redux, trzeba go dodac w dependensis, wpisując react-redux
 oraz redux
@@ -1879,28 +1904,8 @@ oraz redux
 
 Redux MIDDLEWARES - takie wstrzyknięcie pomiędzy wykonanie akcji a reduserem,
   funkcje w których możemy dodać logikę.
-
+*/
 //------------------------------------------------------------
-HOOKS
-// Polecane zajżenie na dokumentację:
-	https://reactjs.org/docs/hooks-intro.html
-//oraz stronę:
-	https://wattenberger.com/blog/react-hooks
-
-Do Hooks należą funkcje:
-useState, useEffect, które pobieram z biblioteki "react":
-	import React, { useState, useEffect } from "react";
-
-
-Zamiast komponentu stanowego, tworze komponent bezstanowy:
-ClassComponentExample extends React.Component | 
-                                              |
-                                              |
-
-Zamiast 
-	this.setState({ data }); 
-używam:
-	setData({ data });
 
 
 

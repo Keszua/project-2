@@ -8,6 +8,16 @@ Ostatnia zmiana 2019.10.10
 
 //zbior podstawowych zadan i algorymow, np. na drzewko, kolejka, sortowanie itp : https://github.com/trekhleb/javascript-algorithms
 
+// Aby dodać skrot do VSC w menu kontekstowym:
+// regedit -> Komputer\HKEY_CLASSES_ROOT\Directory\Background\shell
+// ----------------------------------------------
+// Aby dodać do "uruchom za pomocą"
+// regedit -> Komputer\HKEY_CLASSES_ROOT\*\shell
+// ----------------------------------------------
+// -> stworzyc nowy klucz o nazwie VSC (lub podobnej)
+// -> w kluczu VSC dodać klucz command (tu nazwa istotna)
+// -> w polu klucza dodać Nowy -> Wartosc ciagu
+
 
 Znaki specjalne dla printf 
 '\0' - ostatni znak w łańcuchu 
@@ -54,7 +64,7 @@ console.groupEnd(); //kończenie grupy
 
 console.groupCollapsed('Nazwa grupy'); //grupa domyślnie zwinięta
 console.log('Ala ma kota');
-console.log('Kot ma Al�');
+console.log('Kot ma Ale');
 console.groupEnd(); //kończenie grupy
 
 %c - nadanie koloru i stylu
@@ -134,20 +144,31 @@ iterator.next(); // => { value: undefined, done: true }
 
 
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+/*-----------------------------------------------------------------------------
+                                   #  
+    #                              #
+         ####    ####    #   #   #####
+   ##    #   #   #   #   #   #     #
+    #    #   #   #   #   #   #     #
+    #    #   #   ####    #   #     #
+   ###   #   #   #        ####      ##
+                 #
+-----------------------------------------------------------------------------*/
 //Kotrolki:
+<input> // podobno  Element zamykający jest Zabroniony  </>
+// kontrolki trzeba zebrać w form, który definiuje formularz, sposób i adres wysłania danych.
+
 // pole do wprowadzania danych:
- <input type="text" id="testValue" value="Domyslna wartosc"/>
-//Przycisk
-<button type="button" class="button" id="buttonTestValue">Pokaz value</button>
+<input type="text" id="testValue" value="Domyslna wartosc"/>
 
 // zaznaczenie tylko jednego elemetu z grupy (RADIO)
 <input type="radio" value="lubie radio"/>
 
 //zaznaczenie kilku opcji:
 <input type="checkbox" value="lubie checkbox"/>
+
+//Przycisk
+<button type="button" class="button" id="buttonTestValue">Pokaz value</button>
 
 // okienko combi z wyborem opcji:
 <select>
@@ -156,15 +177,43 @@ iterator.next(); // => { value: undefined, done: true }
     <option value="option-3">Option 3</option>
 </select>
 
+//typy input'a :
+type=text	        // Pole tekstowe
+type=number	        // Pole numeryczne.
+type=password       // Pole na hasło lub inny tekst wymagający zasłonięcia.
+type=email          // Pole na adres email.
+type=search	        // Pole na wyszukiwane hasła.
+type=tel            // Pole na numer telefonu.
+type=url            // Pole na bezwzględny adres URL.
+type=radio	        // Pole wyboru jednej pozycji z listy (okrągłe).
+type=checkbox       // Pole wyboru wielu pozycji z listy (kwadratowe).
+type=range          // Pole z suwakiem.
+type=file           // Pole z wyborem pliku do wysłania.
+type=color	        // Pole z wyborem koloru.
+type=time           // Pole na czas w formacie HH:ii.
+type=datetime       // Pole na datę i czas globalny w formacie YYYY-mm-dd[T]HH:ii:ss.
+type=datetime-local	// Pole na datę i czas lokalny w formacie YYYY-mm-dd[T]HH:ii:ss.
+type=week           // Pole na numer tygodnia określonego roku w formacie YYYY-[W]WW.
+type=month          // Pole na numer miesiąca określonego roku w formacie mm-YYYY.
+type=button	        // Przycisk, idealnie nadaje się do uruchomienia skryptu.
+type=reset          // Przycisk resetujący dane w formularzu.
+type=image          // Przycisk graficzny wysłania formularza.
+type=submit         // Przycisk wysłania formularza.
+// wiecej na temat inputa: http://skarbowski.pl/_projects/w3e_html/files/tag/input+type=date.php
 
-
-//Fajny przyk�ad okienka z przyciskiem do zwijania (ukrywania) tekstu i rozwijania (na samym ko�cu):
+//Fajny przyklad okienka z przyciskiem do zwijania (ukrywania) tekstu i rozwijania (na samym koncu):
 // https://kursjs.pl/kurs/dom/dom-relacje.php#relacje
 
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+/*-------------------------------------------------------------------------------------------------
+#     #            #    #                                    #                   #  # 
+##   ##            #    #                                    #                  #    #
+# # # #   ####   #####  #         # ###   ####   ####    #####   ###   ### ##   #    #
+#  #  #       #    #    ####      ##          #  #   #  #    #  #   #  #  #  #  #    #
+#     #   #####    #    #   #     #       #####  #   #  #    #  #   #  #  #  #  #    #
+#     #  #    #    #    #   #     #      #    #  #   #  #    #  #   #  #  #  #  #    #
+#     #   ### #     ##  #   #  #  #       ### #  #   #   #####   ###   #  #  #   #  #
+//-----------------------------------------------------------------------------------------------*/
 //losowanie liczby:
 const min = 1;
 const max = 15;
@@ -223,7 +272,18 @@ function randomColor() {
 }
 const color = randomColor();
 
-//String
+//Fajne triki CSS z random: https://css-tricks.com/lots-of-ways-to-use-math-random-in-javascript/
+
+/*
+    ###      #
+   #   #     #              #
+   #       #####   # ###         ####     ####
+    ###      #     ##      ##    #   #   #   #
+       #     #     #        #    #   #   #   #
+   #   #     #     #        #    #   #    ####
+    ###       ##   #       ###   #   #       #
+                                         #### 
+*/ //String
 const text = "Ala ma kota, a kot ma Ale";
 
 console.log(text.charAt(0)); 		//A
@@ -363,7 +423,7 @@ const myF = a => a * a;
     console.log(a)
 })("ala");
 
-//jest praktycznie r�wnoznaczne z
+//jest praktycznie rownoznaczne z
 function fn1(a) {
     console.log(a);
 }
@@ -397,43 +457,51 @@ function cosTam() {
 
 
 
-//-----------------------------------------------------------------------------
+/*-------------------------------------------------------------------------------------------------
+                                       #  
+                                       #
+    ###    #     #    ###    ####    #####
+   #   #   #     #   #   #   #   #     #
+   #####    #   #    #####   #   #     #
+   #         # #     #       #   #     #
+    ###       #       ###    #   #      ##
+-------------------------------------------------------------------------------------------------*/
 //EVENT
-//Najcz�ciej urzywane zdarzenia:
+//Najczesciej urzywane zdarzenia:
 
 Typ zdarzenia:		Opis:
 click				gdy element został kliknięty (np. input)
 change				gdy opuściliśmy element, i zmienił on swoją zawartość (np. pole tekstowe)
-mouseover			gdy kursor znalaz� si� na elemencie
-mouseout			gdy kursor opu�ci� element
-mouseenter			gdy kursor znalaz� si� na elemencie
-mouseleave			gdy kursor opu�ci� element
-dblclick			gdy podw�jnie klikniemy na element (np. input)
-submit				gdy formularz jest wysy�any
-resize				gdy rozmiar okna przegl�darki jest zmieniany
-focus				gdy element sta� si� wybrany (np. pole tekstowe, link, button, element z tabindex) (jak za pomoc� klawiatury)
-blur				gdy element przesta� by� aktywny (np. opu�cili�my input)
-keydown				gdy zosta� naci�ni�ty klawisz na klawiaturze
-keyup				gdy pu�cimy klawisz na klawiaturze
-input				podobne do powy�szego, ale odpalane synchronicznie w czasie trzymania klawisza (np. przytrzymanie klawisza A w polu tekstowym)
-load				gdy obiekt zosta� za�adowany (np. ca�a strona, pojedyncza grafika)
-contextmenu			gdy klikni�to prawym klawiszem myszki i pojawi�o si� menu kontekstowe
-wheel				gdy kr�cimy k�eczkiem myszki
-select				gdy zawarto�� obiektu zosta�a zaznaczona
-unload				gdy u�ytkownik opuszcza dana stron�
-animationstart		gdy animacja css si� zacznie
-animationend		gdy animacja css si� zacznie
-animationiteration	gdy animacja css zrobi jedn� iteracj�
-transitionstart		gdy transition css si� zacznie
-transitionend		gdy transition css si� zacznie
-transitionrun		gdy transition css si� zacznie (odpalane przed op�nieniem transition)
+mouseover			gdy kursor znalazl sie na elemencie
+mouseout			gdy kursor opuscil element
+mouseenter			gdy kursor znalazl sie na elemencie
+mouseleave			gdy kursor opuscil element
+dblclick			gdy podwojnie klikniemy na element (np. input)
+submit				gdy formularz jest wysylany
+resize				gdy rozmiar okna przegladarki jest zmieniany
+focus				gdy element stal sie wybrany (np. pole tekstowe, link, button, element z tabindex) (jak za pomoca klawiatury)
+blur				gdy element przestal byc aktywny (np. opuscilismy input)
+keydown				gdy zostal nacisniety klawisz na klawiaturze
+keyup				gdy puscimy klawisz na klawiaturze
+input				podobne do powyzszego, ale odpalane synchronicznie w czasie trzymania klawisza (np. przytrzymanie klawisza A w polu tekstowym)
+load				gdy obiekt zostal zaladowany (np. cala strona, pojedyncza grafika)
+contextmenu			gdy kliknieto prawym klawiszem myszki i pojawilo sie menu kontekstowe
+wheel				gdy krecimy koleczkiem myszki
+select				gdy zawartosc obiektu zostala zaznaczona
+unload				gdy uzytkownik opuszcza dana strone
+animationstart		gdy animacja css sie zacznie
+animationend		gdy animacja css sie zacznie
+animationiteration	gdy animacja css zrobi jedna iteracje
+transitionstart		gdy transition css sie zacznie
+transitionend		gdy transition css sie zacznie
+transitionrun		gdy transition css sie zacznie (odpalane przed opznieniem transition)
 
 
 
-//Funkcj� podpianmy do w�a�ciwo�ci zaczynaj�cych si� od ON, np: onclick, onmousemove...
+//Funkcje podpianmy do wlasciwosci zaczynajacych sie od ON, np: onclick, onmousemove...
 
 function showText() {
-    console.log('Klikni�to przycisk');
+    console.log('Kliknieto przycisk');
 }
 
 const element = document.querySelector('#przycisk');
@@ -470,10 +538,10 @@ element.addEventListener('click', function() {
 element.removeEventListener('click', showMe);
 element.removeEventListener('click', showSomething);
 
-//wi�cej o tym: https://kursjs.pl/kurs/events/events.php
+//wiecej o tym: https://kursjs.pl/kurs/events/events.php
 
 
-//przyk�ad z przyciskami:
+//przyklad z przyciskami:
 Mamy prosty html:
 
 <div class="element">
@@ -486,7 +554,7 @@ Mamy prosty html:
     <button data-color="#f349eb">pink</button>
 </div>
 
-//Po klikni�ciu na buttony chcemy by w elemencie o klasie .big ustawia�o si� t�o o kolorze z data-color klikni�tego elementu.
+//Po kliknieciu na buttony chcemy by w elemencie o klasie .big ustawialo sie tlo o kolorze z data-color kliknietego elementu.
 //krok 0
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -495,11 +563,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const buttons = document.querySelectorAll(".ex1 button");
 
     //krok 2
-    //mamy kolekcj� button�w - koniecznie p�tla po nich
+    //mamy kolekcja buttonow - koniecznie petla po nich
     for (const btn of buttons) {
         btn.addEventListener("click", function() {
             //krok 4
-            //dzia�amy
+            //dzialamy
             big.style.background = this.dataset.color;
             big.innerText = this.dataset.color;
         })
@@ -507,7 +575,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
-//Przyk�ad:
+//Przyklad:
 // w pliku index.html mamy fragment kodu:
 	<div class="element">
 	    <div class="big"></div>
@@ -520,19 +588,19 @@ document.addEventListener("DOMContentLoaded", function() {
 		<button id="buttonTestClick" class="button" type="button">Kliknij na du�ym przycisku</button>
 	</div>
 
-// w pliku script.js piszemy obs�ug� przycisk�w, kt�re maj� za zadanie zmienia� kolor obiektu "big"
-document.addEventListener("DOMContentLoaded", function() {	//czekam a� strona si� za�aduje
+// w pliku script.js piszemy obsluge przyciskow, ktore maja za zadanie zmienial kolor obiektu "big"
+document.addEventListener("DOMContentLoaded", function() {	//czekam az strona sie zaladuje
 
-	const big = document.querySelector(".baner"); //pobieram element (klas�) "baner" (dla tego z kropk�)
+	const big = document.querySelector(".baner"); //pobieram element (klasy) "baner" (dla tego z kropka)
 	console.log(big);
 	const buttonTestC = document.querySelectorAll("#buttonTestClick");
-	const buttons = document.querySelectorAll("button");	//pobieram wszystkie przyciski (to obiekty, wi�c bez kropki [chyba]).
+	const buttons = document.querySelectorAll("button");	//pobieram wszystkie przyciski (to obiekty, wiec bez kropki [chyba]).
 	console.log(buttons);
 	const buttonTestC = document.querySelectorAll("#buttonTestClick");	//z # pobieram id
 
 	//buttons[1].addEventListener("click", function() {
 	//	big.style.background = this.dataset.color; 	})
-	//zamiast powy�szego kodu, mo�na zrobi� to w p�tli:
+	//zamiast powyzszego kodu, mozna zrobic to w petli:
 	buttons.forEach( function(el) {
 		el.addEventListener("click", function() {
 			big.style.background = this.dataset.color;
@@ -541,20 +609,20 @@ document.addEventListener("DOMContentLoaded", function() {	//czekam a� strona 
 	})
 });
 
-//wiekszy przyk�ad z przyciskami na: https://kursjs.pl/kurs/events/events.php
+//wiekszy przyklad z przyciskami na: https://kursjs.pl/kurs/events/events.php
 
 
-//Wstrzymanie domy�lnej akcji
+//Wstrzymanie domyslnej akcji
 link.addEventListener('click', function(e) {
     e.preventDefault();
     console.log('Ten przycisk nigdzie nie przeniesie.');
 });
 
 
-//Przyk�ad dodawania elementu:
+//Przyklad dodawania elementu:
 // w pliku index.html
 <div class="elements-list">
-    <!-- tutaj trafi� nowe elementy -->
+    <!-- tutaj trafia nowe elementy -->
 </div>
 
 <div class="add-element-bar">
@@ -581,11 +649,11 @@ document.addEventListener("DOMContentLoaded", function() {
 		
         list.appendChild(el); //dodaje element do listy
 
-		//tworze przycisk z napisem "Usu�"
+		//tworze przycisk z napisem "Usun"
         const del = document.createElement('button');
-        del.innerText = "Usu�";
+        del.innerText = "Usuń";
         del.classList.add('delete');
-        //od razu dodaje zdarzenie do przycisku, ale lepiej zrobic jak poni�ej:
+        //od razu dodaje zdarzenie do przycisku, ale lepiej zrobic jak ponizej:
         //del.addEventListener('click', function() {
         //	const element = this.parentElement;
         //   element.parentElement.removeChild(element);
@@ -596,26 +664,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	const delBtns = document.querySelectorAll('.delete');
 
-	//lepsze rozwizanie, aby zdarzenia dodac do elementu w kturym dodawane s� elementy
+	//lepsze rozwizanie, aby zdarzenia dodac do elementu w kturym dodawane sa elementy
 	list.addEventListener('click', function(e) {
-		if(e.target.classList.contains('delete')) { //tutaj nie tylko klas� mo�emy sprawdza�
+		if(e.target.classList.contains('delete')) { //tutaj nie tylko klasa mozemy sprawdzac
 			const element = e.target.parentElement;
 			counter--;
 			element.parentElement.removeChild(element);
 		}
 	});
 });
-// powy�szy przyk�ad pod linkiem: https://kursjs.pl/kurs/events/events-test3.html
+// powyzszy przyklad pod linkiem: https://kursjs.pl/kurs/events/events-test3.html
 
-//  e.isTrusted  - mo�na sprawdzi�, czy dany event zosta� realnie wykonany przez u�ytkownika, czy wywo�ali�my go poprzez skrypt
+//  e.isTrusted  - mozna sprawdzic, czy dany event zostac realnie wykonany przez uzytkownika, czy wywolalismy go poprzez skrypt
 const btn = document.querySelector("#testTrusted");
 const btn2 = document.querySelector("#testTrustedClick");
 
-btn.addEventListener('click', function(e) {	//jak klikniemy w ten przycisk, to zw�ric nam: true
+btn.addEventListener('click', function(e) {	//jak klikniemy w ten przycisk, to zworic nam: true
     console.log(`e.isTrusted: ${e.isTrusted}`);
 });
 btn2.addEventListener('click', function(e) {
-    btn.click();	//wywo�anie klikniecia przycisku "pierwszego", co zwr�ci w konsoli: false
+    btn.click();	//wywolanie klikniecia przycisku "pierwszego", co zwroci w konsoli: false
 });
 
 
@@ -624,23 +692,23 @@ btn2.addEventListener('click', function(e) {
 //-----------------------------------------------------------------------------
 //DOM i zdarzenia
 
-//Aby dzia�a� na elementach strony, musimy je wcze�niej pobra�. Do odwo�ywania si� do jakiego� elementu skorzystamy z jednej z kilku metod:
+//Aby dzialac na elementach strony, musimy je wczesniej pobrac. Do odwolywania sie do jakiegos elementu skorzystamy z jednej z kilku metod:
 
 getElementById(id) - pobiera jeden element o danym id
 getElementsByTagName(nazwa_tagu) - pobiera elementy o danym znaczniku
 getElementsByClassName(nazwa_klasy) - pobiera elementy o danej klasie
-querySelector(css_selector) - pobiera pierwszy element pasuj�cy do selektora css
-querySelectorAll(css_selector)- pobiera elementy pasuj�ce do selektora css
+querySelector(css_selector) - pobiera pierwszy element pasujacy do selektora css
+querySelectorAll(css_selector)- pobiera elementy pasujace do selektora css
 
-event DOMContentLoaded - gwarantuje nam, �e skrypt zacznie swoje dzia�anie wtedy, gdy ca�e drzewo DOM zostanie ju� wczytane
+event DOMContentLoaded - gwarantuje nam, ze skrypt zacznie swoje dzialanie wtedy, gdy cale drzewo DOM zostanie juz wczytane
 
 document.addEventListener("DOMContentLoaded", function() {
     ...tutaj pobieramy elementy...
 });
 
 document.addEventListener("DOMContentLoaded", function(event) {
-    console.log("DOM zosta� wczytany");
-    console.log("Tutaj dopiero wy�apujemy elementy");
+    console.log("DOM zostal wczytany");
+    console.log("Tutaj dopiero wylapujemy elementy");
 });
 
 window.addEventListener('load', ...))	//podobnie, ale dostaneimy potwiedzenie jeszcze przed za�adowaniem grafik (co cz�sto generuje widoczne "dziury" na stronie)
@@ -650,10 +718,10 @@ window.addEventListener('load', ...))	//podobnie, ale dostaneimy potwiedzenie je
 //getElementById(id) pobiera element o danym ID.
 const btn = document.getElementById('btn');
 
-//getElementsByTagName(tag) pobiera kolekcj� element�w o danym znaczniku:
+//getElementsByTagName(tag) pobiera kolekcja elementow o danym znaczniku:
 const tab = document.getElementById('tabelka');
 
-//getElementsByClassName(tag) pobiera kolekcj� element�w po klasie:
+//getElementsByClassName(tag) pobiera kolekcje elementow po klasie:
 const buttons = document.getElementsByClassName('btn');
 
 //querySelector(selector) 
@@ -1035,9 +1103,9 @@ alt		alternatywny opis grafiki (widoczny gdy sie nie wczyta),
 title	tekst, ktory pojawi sie po najechaniu kursorem na element,
 src		adres do grafiki
 
-<img src="./wietnam.jpg" class="img" alt="Kartofel w wietnamie" width="400" height="400">
+<img src="./wietnam.jpg" class="img" alt="Kartofel w wietnamie" width="400" height="400" />
 
-//Przyk�ad zrobienia podstawiania obrazka po najechaniu kursora:
+//Przyklad zrobienia podstawiania obrazka po najechaniu kursora:
 	const imageOff = new Image();
 	imageOff.src = '/images/obrazek1.jpg';
 
@@ -1365,10 +1433,16 @@ kierunek rysowania - czy zgodnei ze wskazowkami zegra?
 
 
 
-//-----------------------------------------------------------------------------
-//React - formularz
-
-//-----------------------------------------------------------------------------
+/*-------------------------------------------------------------------------------------------------
+   #####                     #                          #####   #####    ###    #####
+     #                       #                              #   #       #   #     #
+     #      ###     ###    #####   #    #                   #   #       #         #
+     #     #   #   #         #     #   #                    #   ####     ###      #
+     #     #####    ###      #      # #                     #   #           #     #
+     #     #           #     #       #                  #   #   #       #   #     #
+     #      ###     ###       ##    #                    ###    #####    ###      #
+                                   #
+-------------------------------------------------------------------------------------------------*/
 JEST
 //strona z dokumentacja: https://jestjs.io/docs/en/using-matchers
 
@@ -1402,12 +1476,19 @@ w folderze package.json trzeba dodac w: "scripts"
 npm run test
 
 
-//-----------------------------------------------------------------------------
 
 
 
 
-//-----------------------------------------------------------------------------
+/*-----------------------------------------------------------------------------------------------------------------------------------------
+  #####               #                                                                             #               #
+      #               #                  #                                                          #               #
+     #    ####    #####   ####   ####         ###        #####        ###    ####   ### ##    ###   #       ###   #####   ###   ### ## 
+    #         #  #    #       #  #   #  ##   #   #          #        #           #  #  #  #  #   #  #      #   #    #    #   #  #  #  #
+   #      #####  #    #   #####  #   #   #   #####         #          ###    #####  #  #  #  #   #  #      #   #    #    #####  #  #  #
+  #      #    #  #    #  #    #  #   #   #   #            #              #  #    #  #  #  #  #   #  #   #  #   #    #    #      #  #  #
+  #####   ### #   #####   ### #  #   #  ###   ###        #####        ###    ### #  #  #  #   ###    ###    ###      ##   ###   #  #  #
+-----------------------------------------------------------------------------------------------------------------------------------------*/
 //Zadanie testowe z samolotem:
 const mozliweMiejsca = {
     dwieRodziny: ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'J'],

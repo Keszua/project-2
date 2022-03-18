@@ -949,6 +949,8 @@ yarn start // dla instalacji z paczkami yarn (nie npm) Najstarsza wersja
                   controller //co  // generuje kontroler
                   service    //s //generuje serwis (usługę)
 
+                </nazwa> //to tylko zeby dalej skladnie pliku utrzymac
+
     nest build // tworzy produkcyjną aplikację w folderze dist
 //aby uruchomić:
     node ./dist/main.js
@@ -980,13 +982,13 @@ enum UserType { admin, user, guest }   np:  const mojaDana: UserType = UserType.
 object
 function
 any - brak typowania
-void                                   np:  function testf():void { } 
-null, undefined                        np:  const mojaDana:  null = null;
-unknown            //podobnie jak any, ale nie możemy puźneij tej zmiennej przypisać typu
-//rzutowanie:
+void                                   // np:  function testf():void { } 
+null, undefined                        // np:  const mojaDana:  null = null;
+unknown                                // podobnie jak any, ale nie możemy puźneij tej zmiennej przypisać typu
+// rzutowanie:
   as string,   as number  itp...						  
 
-//odczytywanie typów:
+// odczytywanie typów:
 	let logical :boolean = true;
 	typeof(logical);  //= boolean
   
@@ -1035,12 +1037,12 @@ const sendEmail = ( people: { name: string, age: number, email ?:string}[] ) => 
 //-----------------------------------------------------------
 //Interfejsy									  
 enum UserType { admn, user, }
-interface UserHelloResponse {
+interface IUserHelloResponse {
     name: string;
     sayHello: (anotherPerson: string) => void;
 }
 //dziedziczenie interfejsów:
-interface SpecialUserHelloResponse extends UserHelloResponse {
+interface ISpecialUserHelloResponse extends UserHelloResponse {
     age: number;
     isEnabled: boolean;
     accountType: UserType;

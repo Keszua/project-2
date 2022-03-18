@@ -162,7 +162,7 @@ id            # wyświetla GRUPY
 whoami        # wyświetli, nazwę uzytkownika
 who           # wyświetli, kto jest zalogowany
 who --boot    # informacja, kiedy ten serwer był ostatanio restartowany
-logname       # wyświetli, nazwę uzytkownika, jka się zalogowałem (nie w momencie uruchamiania polecenia) 
+logname       # wyświetli, nazwę uzytkownika, jak się zalogowałem (nie w momencie uruchamiania polecenia) 
 uptime        # kiedy system był ostatnio uruchomiony, jaki czas jest już online, ilu pracuje uzytkownikow, jakie obciążenie było w ciągu ostatniej minuty, pięciu i pietnastu
 groups        # do jakich grup nalezy uzytkownik
 sudo adduser agata wojtek # dodaj użytkownika do grupy "wojtek"
@@ -176,6 +176,11 @@ sudo passwd student01              # nadawanie hasla dla "student01"
 // hasła znajduja się w /etc/shadow 
 users         # lista zalogowanych uzytkownikow
 uname -a      # informacje o systemie
+lshw          # szczegulowe informacje o sprzecie (trzeba doinstalowac)
+lshw -short   # szczegulowe informacje o sprzecie (skrocone)
+lscpu         # szczegulowe informacje o procesorze/procesor
+# wiecej o szczegulach sprzetu: https://www.tecmint.com/commands-to-collect-system-and-hardware-information-in-linux/
+
 
 ip a          # adresy sieci
 ssh komput@192.168.0.140  //połączenie z innym komputerem w sieci (potwiedzić Y i podać hasło)
@@ -186,7 +191,7 @@ apt search openssh    # sprawdz czy istnieje dany program w repozytorium
 systemctl status sshd # sprawdz czy program jest zainstalowany i w jakim stanie
 sudo apt install g++  # instalowanie jakiś pakietów/programów
 apt install mc        # instalacj coś jak Norton Commander (Total Commander) Ctrl+O - aby przełączyć go do tła
-
+yum install mc        # instalacja w centos
 
 last                  # lista o połączeniach
 last --limit 20       # ostatnie 20 zdarzeń
@@ -302,7 +307,7 @@ sort -t ';' -k 3 /etc/passwd                     # rozdzielamy separatorem i pou
 sort -t ';' -k 3 -n /etc/passwd                  # rozdzielamy separatorem i poukladaj po kluczu 3-cim NUMERYCZNIE (-n informuje ze dane sa numeryczne)
 ls -ldh /etc/p* | sort -t ' ' -k 5 -h -r         # wyswietli pliki wzgledem zajetosci miejsca, najwiekszy na gorze.
 ls -ldh /etc/p* | sort -t ' ' -k 5 -h -r > /tmp/list_sorted   #─┐
-ls -ldh /etc/p* | sort -t ' ' -k 5 -h -r -o /tmp/list_sorted  #─┴─ wyniki do pliku    ┌ └ ├  ┘ ┼
+ls -ldh /etc/p* | sort -t ' ' -k 5 -h -r -o /tmp/list_sorted  #─┴─ wyniki do pliku
 
 
 uniq
@@ -993,21 +998,24 @@ Instalacja Windowsa:
 			
 			
 			
-			
+#--------------------------------------------------------------------------------------------------		
   #   #                  ###
-  #  #                  #      #                                          #                       #                  #
-  # #     ###   ####    #           ####  #   #  # ###   ####    ###          ####         ###         ###    ###
-  ##     #   #  #   #  ####   ##   #   #  #   #  ##          #  #   #    ##       #       #      ##   #   #  #   #  ##
-  # #    #   #  #   #   #      #   #   #  #   #  #       #####  #         #   #####        ###    #   #####  #       #
-  #  #   #   #  #   #   #      #    ####  #   #  #      #    #  #   #     #  #    #           #   #   #      #   #   #
-  #   #   ###   #   #   #     ###      #   ####  #       ### #   ###   #  #   ### #        ###   ###   ###    ###   ###
-                                   ####                                 ##
+  #  #                  #      #                       #                  #
+  # #     ###   ####    #           ####        ###         ###    ###
+  ##     #   #  #   #  ####   ##   #   #       #      ##   #   #  #   #  ##
+  # #    #   #  #   #   #      #   #   #        ###    #   #####  #       #
+  #  #   #   #  #   #   #      #    ####           #   #   #      #   #   #
+  #   #   ###   #   #   #     ###      # #      ###   ###   ###    ###   ###
+                                   ####                                       
+#--------------------------------------------------------------------------------------------------
 Konfiguracja sieci:
 // trzeba być w katalogu głównym
 cd etc/network/
 ip address                             #─┐ 
 ip a                                   #─┴─ wyświetla konfigurację kart siecowych
+cat etc/hosts  # IP kontenera
 
+etc/resolv.conf                        # informacja z adresem DNS
 
 ip link show                           # informacje o dostepnych kartah sieciowych
 ip link set eth0 down                  # wylacz karte eth0
@@ -1016,7 +1024,8 @@ ip address add dev eth0 192.168.137.100/24       # dodaj nowe IP dla danej karty
 ip -s -h address show                  # statystyka z wyslanych/odebranych pakietow
 
 ip route                               #─┐
-ip r                                   #─┴─ routing - czyli jak skonfigurowana jest brama domyślna
+ip r                                   #─┼─ routing - czyli jak skonfigurowana jest brama domyślna
+ip route list                          #─┘ 
 
 
 nano interfaces                        # edycja ustawień sieci, gdy wczesniej wywolamy   cd etc/network/
@@ -1036,7 +1045,20 @@ nano /etc/network/interfaces           # edycja ustawień sieci
 # Mapowanie dysku: przez moj komputer -> mapowanie dysku. Wybrać dysk S i nazwa folderu:  \\ad.humansoft.pl\s
 
 
+# w Centos pliki konfiguracyjne sieci znajduja sie w /etc/sysconfig/network-scripts/  -kazdy plik, to oddzielna konfiguracja
 
+nmcli                                  # (network manager command line interface)
+nmcli connection show                  # aktualne polaczenia/karty sieciowe
+# konfiguracja nowego połaczenia ze stałym IP
+nmcli connection add ip4.addresses 172.17.0.4/16 ipv4.gateway 172.17.0.1 ip4.dns 8.8.8.8 type ethernet con-name prod ifname eth0
+nmcli connection up prod               # uruchomienie tego polaczenia (gdzie prod to nazwa polaczenia/karty sieciowej)
+nmcli connection reload                # przeladowanie plikow dla tej uslugi
+systemctl restart NetworkMenager       # restart uslugi
+
+
+nmtui                                  # (network manager text-based user interface)
+
+nm-connection-editor                   # (network manager graphical user interface)
 
 ifdown ens18 && ifup ens18                 #─┐   (ens18 - to nazwa katy sieciowej)
 nmcli networking off ; nmcli networking on #─┴─ restart usługi z karta siecową, aby nie stracić połączenia zdalnego
@@ -1045,12 +1067,24 @@ nmcli networking off ; nmcli networking on #─┴─ restart usługi z karta si
 ping wp.pl                             # pingowanie z jakas stroną:
 ping -c 5 wp.pl                        # wyslij tylko 5 razy
 
+dig www.google.com
+
+systemd
+
+systemctl                              # do zarządzania usługami
+systemctl status sshd                  # suługa do zdalnego połączenia
+systemctl list-unit-files --type target # wszystkie unity 
+systemctl -t help                      # wypisze dostepne typy unitow
 
 
-systemctl  //do zarządzania usługami
-systemctl status sshd  # suługa do zdalnego połączenia
+# usługi / targety znajduja się: ─┬─ Debian: /etc/systemd/system *.service
+#                                 └─ Centos: /usr/lib/systemd/system *.target
 
 
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 // nadanie uprawnień dla zdalego użytkownika (na oryginalmym sprzęcie przez klawieturę):
 app install sudo           # instalacja usługi
 usermod                    # ustawienia dotyczące uzytkownika
@@ -1192,7 +1226,7 @@ API - tu podegrać 3 pliki: HermesApi32, HermesApi64 i hermesdll.dll
 
 Hermes - pobrać z J:\ServerCI_Rozw i zainstalować na maszynie z "hermes"
 
-
+┌ └ ├  ┘ ┼ ┬
 
 
 

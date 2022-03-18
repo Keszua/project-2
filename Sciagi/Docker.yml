@@ -38,6 +38,18 @@ docker container run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -
 #                     └[host-port:container-port]
 
 
+# kontener z centosem:
+docker run -it centos:8 bash
+# aby naprawić instalację trzeba zrobić:
+cd /etc/yum.repos.d/
+sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+yum update -y
+yum install NetworkManager
+# od teraz dzial polecenie:
+nmcli -h
+
+
 #  uruchom w trybie interaktywnym z terminalem (wyjscie komenda exit)
 docker container run -it nginx bash 
 docker container start -ai idkontenera

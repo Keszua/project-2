@@ -217,8 +217,8 @@ onresize - zmiana rozmiarów okna
 
 Najpopularniejsze biblioteki:
 jQuery - wspomaga DOM
-//Aby z niej korzystac, trzeba ją podpiąć w <head>:
-<script src="jquery-3.0.0.min.js".></script>
+//Aby z niej korzystac, trzeba ją podpiąć w <head>  :
+<script src="jquery-3.0.0.min.js"></script>
 
 zamiast:
     var top = document.getElementById('top');
@@ -229,7 +229,7 @@ $('#top').html('<h2>To jest nowa zawartosc Top</h2>').css('color','red');
 
 a całość ze sprawdeniem czy dokument się załadował:
 $(document).ready(function(){
-    $('#top').html('<h2>To jest nowa zawartosc Top</h2>').css('color','red');
+    $('#top').html('<h2>To jest nowa zawartosc Top</h2>').css('color','red')
 });
 
 
