@@ -1,5 +1,3 @@
-Ostatnia zmiana 2019.10.10
-
 //kurs ze strony: https://kursjs.pl/index.php
 // kurs o samym debagowaniu: https://developers.google.com/web/tools/chrome-devtools/javascript/
 
@@ -7,6 +5,10 @@ Ostatnia zmiana 2019.10.10
 //Stripe - coś do płatności online
 
 //zbior podstawowych zadan i algorymow, np. na drzewko, kolejka, sortowanie itp : https://github.com/trekhleb/javascript-algorithms
+
+// NOTATKI:
+// Etap 1 Tydzień 1 cały https://www.evernote.com/shard/s669/client/snv?noteGuid=3cfd17a1-6a77-fcf7-842b-52f6977802bb&noteKey=3d7326b34b9ce73cdfb74cd630221b7c&sn=https%3A%2F%2Fwww.evernote.com%2Fshard%2Fs669%2Fsh%2F3cfd17a1-6a77-fcf7-842b-52f6977802bb%2F3d7326b34b9ce73cdfb74cd630221b7c&title=Etap%2B1%2BTydzie%25C5%2584%2B1%2Bca%25C5%2582y
+
 
 // Aby dodać skrot do VSC w menu kontekstowym:
 // regedit -> Komputer\HKEY_CLASSES_ROOT\Directory\Background\shell
@@ -19,6 +21,9 @@ Ostatnia zmiana 2019.10.10
 // -> w polu klucza dodać Nowy -> Wartosc ciagu
 
 
+about:blank // odpalenie pustej strony w hrome
+
+/*
 Znaki specjalne dla printf 
 '\0' - ostatni znak w łańcuchu 
 '\a' - alarm (sygnał akustyczny terminala)
@@ -36,7 +41,7 @@ Znaki specjalne dla printf
 '\xhh' - liczba zapisana w systemie heksadecymalnym (szesnastkowym), gdzie 'hh' należy zastąpić dwucyfrową liczbą w tym systemie
 '\unnnn' - uniwersalna nazwa znaku, gdzie 'nnnn' naleąy zastąpić czterocyfrowym identyfikatorem znaku w systemie szesnatkowym. 'nnnn' odpowiada d�u�szej formie w postaci '0000nnnn'
 '\unnnnnnnn' - uniwersalna nazwa znaku, gdzie 'nnnnnnnn' należy zastąpić ośmiocyfrowym identyfikatorem znaku w systemie szesnatkowym.
-
+*/
 
 
 
@@ -67,14 +72,19 @@ console.log('Ala ma kota');
 console.log('Kot ma Ale');
 console.groupEnd(); //kończenie grupy
 
-%c - nadanie koloru i stylu
+/*
+%c - nadanie koloru i stylu  */
 console.log("Hejka w %cKolorze %ci po za kolorem ", 'color: blue; font-size: x-large', 'color: black')
+/*
 %o - dodanie obiektu 
 %s - dodanie tekstu
-%d - dodane liczby
+%d - dodane liczby 
+*/
 
 
-alert('Hejka'); //Wyświetli coś w "wyskakującym okienku"
+alert('Hejka');                        // Wyświetli coś w "wyskakującym okienku"
+let answer = prompt("Podaj liczbę");   // Okienko z polem do podania danych
+
 
 //Wprowadzanie TAK/NIE przez "wyskakujące okno"
 confirm('Czy jesteś pewien, że chcesz kontynuować?')  //zwraca true albo false
@@ -82,7 +92,7 @@ confirm('Czy jesteś pewien, że chcesz kontynuować?')  //zwraca true albo fals
 
 //czasami bedziemy chcieli sprawdzic jak szybko wykona sie nasz skrypt...
 console.time('Pierwszy test'); //rozpoczyna test - zaczyna liczyc czas
-for (let i=0; i<100000; i++) { ... }
+for (let i=0; i<100000; i++) { /*...*/ }
 console.timeEnd('Pierwszy test'); //konczy test
 
 for(let i=0; i<10; i++){
@@ -102,11 +112,11 @@ function test() {
 }
 test();
 
-if (typeof x === "undefined") {...} //Czy dana zmienna istnieje
+if (typeof x === "undefined") { /*...*/ } //Czy dana zmienna istnieje
 
 
-let numer = parseInt('4');      //konwersja, rzutowanie na liczbę
-let numer = parseInt('4', 10);  //drugi parametr to "radix", określa podstawę powyższego 
+let numer1 = parseInt('4');      //konwersja, rzutowanie na liczbę
+let numer2 = parseInt('4', 10);  //drugi parametr to "radix", określa podstawę powyższego 
                                 //łańcucha (np. 2 - system dwujkowy, 10 - system dziesiętny)
 
        
@@ -243,7 +253,7 @@ console.log( randomColor() );
 console.log( randomColor() );
 console.log( randomColor() );
 
-const color =  "#" + Math.random().toString(16).substr(2,6);
+const color2 =  "#" + Math.random().toString(16).substr(2,6);
 
 /*
 Powyzsze rownanie mozemy rozpisac na kroki:
@@ -286,28 +296,28 @@ const color = randomColor();
 */ //String
 const text = "Ala ma kota, a kot ma Ale";
 
-console.log(text.charAt(0)); 		//A
-console.log(text.charAt(4)); 		//m
+console.log(text.charAt(0)); 		   // A
+console.log(text.charAt(4)); 		   // m
 //ponizej to samo:
-console.log(text[0]); 				//A
-console.log(text[4]); 				//m
-console.log(text.charAt(text.length-1)); //e
-console.log(text[text.length-1]); 	//e
-console.log(text.substr(0, 3)); 	//= Ala  od indeksu 0 pobiera 3 znaki
-console.log(text.substring(0, 3)); 	//= Ala  od indeksu 0 do indeksu 3
+console.log(text[0]); 				   // A
+console.log(text[4]); 				   // m
+console.log(text.charAt(text.length-1)); // e
+console.log(text[text.length-1]); 	   // e
+console.log(text.substr(0, 3)); 	   //= Ala  od indeksu 0 pobiera 3 znaki
+console.log(text.substring(0, 3)); 	   //= Ala  od indeksu 0 do indeksu 3
 console.log("Ala ma kota".slice(4, 6)); //= ma  od indeksu 4 do indeksu 6
 console.log("Ala ma kota".substring(6, 4)); //= ma  od indeksu 4 do indeksu 6 tak jak slice, ale potrafi odwrocic mijecami indeksy
-console.log(encodeURI(text)); 		//= Ala%20ma%20kota%2C%20a%20kot%20ma%20Al%u0119...  kodowanie wszystkich znakow specjalnych
+console.log(encodeURI(text)); 		   //= Ala%20ma%20kota%2C%20a%20kot%20ma%20Al%u0119...  kodowanie wszystkich znakow specjalnych
 let textkodowany = encodeUrl(text);
-console.log(decodeURI(text)); 		//=Ala ma kota, a kot ma Ale...  odkodowanie
+console.log(decodeURI(text)); 		   //= Ala ma kota, a kot ma Ale...  odkodowanie
 
-text.length; //zwraca dlugosc tekstu
-text.includes('Jakis'); //czy w danym stringu zawarty jest podany ciag znakow (zwraca true albo false)
+text.length;                           // zwraca dlugosc tekstu
+text.includes('Jakis');                // czy w danym stringu zawarty jest podany ciag znakow (zwraca true albo false)
 //nie ważne jest połóżenie szukanego ciągu. Ważna jest wielkość liter
-text.endsWith('kst'); // sprawdza czy na końcu znajduej się dana fraza
-text.startsWith('Jakis'); //sprawdz czy na poczatku jest fraza tu bedzie TRUE
-text.startsWith('Jakis', 1); //FALSE bo indeksuje sie od 0
-text.repeat(10); // wypisze to samo 10 razy
+text.endsWith('kst');                  // sprawdza czy na końcu znajduej się dana fraza
+text.startsWith('Jakis');              // sprawdz czy na poczatku jest fraza tu bedzie TRUE
+text.startsWith('Jakis', 1);           // FALSE bo indeksuje sie od 0
+text.repeat(10);                       // wypisze to samo 10 razy
 
 
 //toUpperCase() i toLowerCase() sluzy odpowiednio do zamieniania tekstu na duze i male litery.
@@ -375,47 +385,47 @@ function reverseString(stringToRevers) { stringToRevers.split('').reverse().join
 //Funckje
 
 function myFunc() {  				// jest to deklaracja funkcji
-    ...
+    //...
 }
 
 const myFunc = function() {			// jest to wyrazenie funkcyjne z  tak zwana funkcja anonimowa
-    ...
+    //...
 }
 
 
-const myFunction = function(a, b) {
+const myFunction1 = function(a, b) {
     console.log(a, b);
 }
 
-const myFunction = () => {
+const myFunction2 = () => {
     console.log(a, b);
 }
 // Funkcja strzalkowa tyczy się tylko wyrażeń funkcyjnych. Dla definicji nie moze być użyta.
 
 //jezeli funkcja nie ma parametrow, dajemy nawiasy i strzalke (fat arrow)
-const myF = function() { ... }
-const myF = () => { ... }
+const myF1 = function() { /*...*/ }
+const myF1p = () => { /*...*/ }
 
 //jezeli funkcja wymaga tylko jednego parametru pomijamy nawiasy
-const myF = function(a) { ... }
-const myF = a => { ... }
+const myF2 = function(a) { /*...*/ }
+const myF2p = a => { /*...*/ }
 
 //jezeli funkcja wymaga wiekszej ilosci parametrow, dajemy nawiasy
-const myF = function(a, b) { ... }
-const myF = (a, b) => { ... }
+const myF3 = function(a, b) { /*...*/ }
+const myF3p = (a, b) => { /*...*/ }
 
 //jezeli funkcja zwraca tylko jedna instrukcje mozemy pominac klamry
-const myF = function(a) { console.log(a); }
-const myF = a => console.log(a);
+const myF4 = function(a) { console.log(a); }
+const myF4p = a => console.log(a);
 
 //jezeli funkcja tylko cos zwraca, mozemy pominac instrukcje return
-const myF = function(a) { return a * a; }
-const myF = a => a * a;
+const myF5 = function(a) { return a * a; }
+const myF5p = a => a * a;
 
 
 //Samo wywolujaca sie funkcja - IIFE
-(function() {...})();
-(function() {...}()); //Alternatywny zapis (nawiasy w srodku)
+(function() { /*...*/ })();
+(function() { /*...*/ }()); //Alternatywny zapis (nawiasy w srodku)
 
 //Przyklad:
 
@@ -432,7 +442,7 @@ fn1("ala");
 
 //optional chaining (składnia ze znakiem zapytania)
 function cosTam() {
-	...
+	/*...*/
 	return response?.data //gdy nie odnajdzie "response", to zwróci undefined (zamiast null)
 }
 
@@ -468,7 +478,7 @@ function cosTam() {
 -------------------------------------------------------------------------------------------------*/
 //EVENT
 //Najczesciej urzywane zdarzenia:
-
+/*
 Typ zdarzenia:		Opis:
 click				gdy element został kliknięty (np. input)
 change				gdy opuściliśmy element, i zmienił on swoją zawartość (np. pole tekstowe)
@@ -495,7 +505,7 @@ animationiteration	gdy animacja css zrobi jedna iteracje
 transitionstart		gdy transition css sie zacznie
 transitionend		gdy transition css sie zacznie
 transitionrun		gdy transition css sie zacznie (odpalane przed opznieniem transition)
-
+*/
 
 
 //Funkcje podpianmy do wlasciwosci zaczynajacych sie od ON, np: onclick, onmousemove...
@@ -676,10 +686,10 @@ document.addEventListener("DOMContentLoaded", function() {
 // powyzszy przyklad pod linkiem: https://kursjs.pl/kurs/events/events-test3.html
 
 //  e.isTrusted  - mozna sprawdzic, czy dany event zostac realnie wykonany przez uzytkownika, czy wywolalismy go poprzez skrypt
-const btn = document.querySelector("#testTrusted");
+const btn1 = document.querySelector("#testTrusted");
 const btn2 = document.querySelector("#testTrustedClick");
 
-btn.addEventListener('click', function(e) {	//jak klikniemy w ten przycisk, to zworic nam: true
+btn1.addEventListener('click', function(e) {	//jak klikniemy w ten przycisk, to zworic nam: true
     console.log(`e.isTrusted: ${e.isTrusted}`);
 });
 btn2.addEventListener('click', function(e) {
@@ -711,12 +721,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
     console.log("Tutaj dopiero wylapujemy elementy");
 });
 
-window.addEventListener('load', ...))	//podobnie, ale dostaneimy potwiedzenie jeszcze przed za�adowaniem grafik (co cz�sto generuje widoczne "dziury" na stronie)
+window.addEventListener('load', ...);	//podobnie, ale dostaniemy potwiedzenie jeszcze przed zaladowaniem grafik (co cz�sto generuje widoczne "dziury" na stronie)
 
 
 
 //getElementById(id) pobiera element o danym ID.
-const btn = document.getElementById('btn');
+const btn3 = document.getElementById('btn');
 
 //getElementsByTagName(tag) pobiera kolekcja elementow o danym znaczniku:
 const tab = document.getElementById('tabelka');
@@ -726,30 +736,30 @@ const buttons = document.getElementsByClassName('btn');
 
 //querySelector(selector) 
 //pobieramy pierwszy element .btn-primary w elemencie .module
-const btn = document.querySelector('.module .btn-primary');
+const btn5 = document.querySelector('.module .btn-primary');
 
 //pobieramy pierwszy .btn w pierwszym li listy ul
 const btnInFirstLi = document.querySelector('ul li:fist-of-type .btn');
 
-//pobieram tytu� w module
-const module = document.querySelector('.module');
+//pobieram tytul w module
+const module1 = document.querySelector('.module');
 const title = module.querySelector('.module-title');
 
-//pobieram element .module kt�ry nie jest divem
-const module = document.querySelector('.module:not(div)');
+//pobieram element .module ktory nie jest divem
+const module2 = document.querySelector('.module:not(div)');
 
-//pobieram paragrafy, ale te kt�re nie s� pierwszym dzieckiem swojego rodzica
+//pobieram paragrafy, ale te ktore nie sa pierwszym dzieckiem swojego rodzica
 const p = document.querySelector('p:not(:first-child)');
 
 
-//querySelectorAll(selector) - zwraca kolekcj� element�w lub pust� kolekcj� gdy nic nie znajdzie
+//querySelectorAll(selector) - zwraca kolekcja elementow lub pusta kolekcja gdy nic nie znajdzie
 const btns = document.querySelectorAll('.list .btn');
 for (const btn of btns) { //inny rodzaj petli
     console.log(btn); //wypisuje dany przycisk
 }
 
-//Po pobraniu kolekcji, nie mo�emy wykonywa� wszystkich metod jak na tablicy (bo tablic� nie jest)
-//mo�na urzy� sztuczk� np:
+//Po pobraniu kolekcji, nie mozemy wykonywac wszystkich metod jak na tablicy (bo tablica nie jest)
+//mozna urzyc sztuczki np:
 const divs = document.querySelectorAll('div.module');
 [].forEach.call(divs, function(el) {
     el.style.background = "red"
@@ -757,7 +767,6 @@ const divs = document.querySelectorAll('div.module');
 //Albo uzyc funkcji ktura zmienia elementy iterowalne na tablice:
 Array.from(divs).forEach(el => { console.log(el); });
 Array.from(divs).filter(el => { console.log(el); });
-
 
 
 

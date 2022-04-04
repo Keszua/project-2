@@ -1,19 +1,4 @@
 
-//Stringi
-
-.split()  //zamiana stringa na tablicę:
-const text = "Jakiś tekst";
-const parts = text.split(" "); 	//split dzieli tekst, kryterium dzielenia to: spacja.  parts będzie tablicą
-parts //= ["Jakiś", "tekst"]
-
-//usówanie spacji:
-const text = "Jakiś tek     st";
-const textBezSpacji = text.split(' ').join('');
-
-let numer = parseInt('4');  //konwersja, rzutowanie na liczbę
-
-
-
 
 //Tablice
 const tab = []; //pusta tablica
@@ -31,15 +16,10 @@ const tab = new Array(10, "Ala", "Bala", "Cala");
 console.log(tab); //["Ala", "Bala", "Cala", blank x 7]
 
 
-.split()  //zamiana stringa na tablicę:
-const text = "Jakiś tekst";
-const parts = text.split(" "); 	//split dzieli tekst, kryterium dzielenia to: spacja.  parts będzie tablicą
-parts //= ["Jakiś", "tekst"]
+//usówanie spacji:
+const text = "Jakiś tek     st";
+const textBezSpacji = text.split(' ').join('');
 
-//odwołanie się do danego lementu
-alert(myArray);  //= 56, tekst, true, 90
-alert(myArray[0]);  //= 56
-alert(myArray.length); //= 4 
 
 //tablica 2 wymiarowa:
 const tab = [
@@ -63,19 +43,6 @@ const tab = [
     [[[8,9], [10,11]]]
 ]
 
-
-//Dodawanie elementów:
-const tab = ["Marcin", "Ania", "Agnieszka"];
-tab.push("Piotrek");  //dodaje element i zwaca ilosc elementów:  let numer = tab.push("Piotr"); zwróci 4 
-console.log(tab); //[Marcin, Ania, Agnieszka, Piotrek]
-tab.push("Y", "Z");
-console.log(tab); //[Marcin, Ania, Agnieszka, Piotrek, Y, Z]
-//lub:
-const tab = ["Marcin", "Ania", "Agnieszka"];
-tab[3] = "Piotrek";
-//lub
-tab[tab.length] = "Piotrek";
-console.log(tab); //[Marcin, Ania, Agnieszka, Piotrek]
 
 
 const arr = 'Header';
@@ -186,18 +153,18 @@ console.log( newTableBig2 ); //= ["Pies", "Kot", "Słoń", "Wieloryb", "Chomik n
 //------------------------------
 .map() // - metoda iterująca. Robi pętlę po tablicy i każdorazowo zwraca nowy element tablicy.
 	//W wyniku po zakończeniu całej pętli zwracana jest nowa tablica z taką samą liczbą elementów
-	const tab = ['Marcin', 'Ania', 'Agnieszka'];
-	const tab2 = tab.map(function(el) {
+	const tabm = ['Marcin', 'Ania', 'Agnieszka'];
+	const tabm2 = tab.map(function(el) {
 		return el
 	});
-	const tab3 = tab.map(function(el) {
+	const tabm3 = tab.map(function(el) {
 		return el.toUpperCase()
 	});
-	const tab4 = tab.map(el => el[0].toUpperCase())
-	console.log(tab); //[Marcin, Ania, Agnieszka]
-	console.log(tab2); //[Marcin, Ania, Agnieszka]
-	console.log(tab3); //[MARCIN, ANIA, AGNIESZKA]
-	console.log(tab4); //[M, A, A]
+	const tabm4 = tab.map(el => el[0].toUpperCase())
+	console.log(tabm); //[Marcin, Ania, Agnieszka]
+	console.log(tabm2); //[Marcin, Ania, Agnieszka]
+	console.log(tabm3); //[MARCIN, ANIA, AGNIESZKA]
+	console.log(tabm4); //[M, A, A]
 
 	const users = ["adam", "bogdan", "czarek", "darek"];
 	const usersFirstLetterUpperCase = users.map(user => user[0].toUpperCase())
@@ -414,23 +381,23 @@ function compareNr(a, b) {
     return a - b
 }
 const tab = [1, 2, 21, 2.1, 32, 3.1];
-const tab3 = tab.sort(compareNr);
-console.log( tab3 ); //= [1, 2, 2.1, 3.1, 21, 32]
+const tabso = tab.sort(compareNr);
+console.log( tabso ); //= [1, 2, 2.1, 3.1, 21, 32]
 //lub:
-const tab.sort((a, b) => a - b);
+const tabso2 = tab.sort((a, b) => a - b);
 //inne metody sortowania: https://kursjs.pl/kurs/super-podstawy/tablice.php
 
 
 //.slice(od, do*) tak samo jak przy stringach, 
 //zwraca nową tablicę zawierającą elementy z tablicy na której została wywołana.
-const tab = ['Marcin', 'Ania', 'Agnieszka', 'Monika', 'Magda'];
-const tab2 = tab.slice(0, 1);  //= ['Marcin']
-const tab3 = tab.slice(2);     //= ['Agnieszka', 'Monika', 'Magda']
-const tab4 = tab.slice(0, 4);  //= ['Marcin', 'Ania', 'Agnieszka', 'Monika']
-const tab5 = tab.slice(-2);    //od końca  //= ['Monika', 'Magda']
-const tab6 = tab.slice(1, -1); //= ['Ania', 'Agnieszka', 'Monika'] czyli bez pierwszego i bez ostatniego
+const tabsl = ['Marcin', 'Ania', 'Agnieszka', 'Monika', 'Magda'];
+const tabsl2 = tab.slice(0, 1);  //= ['Marcin']
+const tabsl3 = tab.slice(2);     //= ['Agnieszka', 'Monika', 'Magda']
+const tabsl4 = tab.slice(0, 4);  //= ['Marcin', 'Ania', 'Agnieszka', 'Monika']
+const tabsl5 = tab.slice(-2);    //od końca  //= ['Monika', 'Magda']
+const tabsl6 = tab.slice(1, -1); //= ['Ania', 'Agnieszka', 'Monika'] czyli bez pierwszego i bez ostatniego
 //kopiowanie można zrobić za pomocą .slice:  (albo map(), patrz niżej)
-const tab7 = tab.slice(); // skopiuje całą tablicę
+const tabsl7 = tab.slice(); // skopiuje całą tablicę
 
 
 // .splice  - modyfikuje tablicę i zwraca tablicę z usuniętymi elementami
@@ -461,18 +428,18 @@ console.log("Usunięty jest: " + removed);                //= Usunięty jest: ["
 
 
 //.fill() - wypełnianie tablicy.  Pierwszy jej parametr to wartość, którą zostanie wypełniona tablica. Dwa pozostałe opcjonalne parametry wskazują na index początku i końca wypełniania. 
-const tab = new Array(20);
-console.log(tab); //[empty x 20]
-tab.fill(0);
-console.log(tab); //[0, 0, 0, ...]
+const tabf = new Array(20);
+console.log(tabf); //[empty x 20]
+tabf.fill(0);
+console.log(tabf); //[0, 0, 0, ...]
 
-const tab2 = [];
-tab2.length = 15;
-console.log(tab2); //[empty x 15]
-tab2.fill(0, 2, 5);
-console.log(tab2); //[empty × 2, 0, 0, 5, empty × 10]
+const tabf2 = [];
+tabf2.length = 15;
+console.log(tabf2); //[empty x 15]
+tabf2.fill(0, 2, 5);
+console.log(tabf2); //[empty × 2, 0, 0, 5, empty × 10]
 
-const tab3 = [1,2,3,4,5];
+const tabf3 = [1,2,3,4,5];
 tab3.fill("x", 2);
 console.log(tab3); //[1, 2,"x", "x", "x"]
 
@@ -553,22 +520,40 @@ tab[3] = "Piotrek";
 tab[tab.length] = "Piotrek";
 console.log(tab); //[Marcin, Ania, Agnieszka, Piotrek]
 
-=================================================================================================================================================================================================================================================================================================
-|                   JavaScript                             |                       Python                              |                           GO                              |                          PHP                              |                      Java                      |
-=================================================================================================================================================================================================================================================================================================
-|                                                          |                                                           |                                                           |                                                           |
+╔══════════════════════════════════════════════════════════╦═══════════════════════════════════════════════════════════╦═══════════════════════════════════════════════════════════╦═══════════════════════════════════════════════════════════╦═════════════════════════════════════════════════╗
+║                 JavaScript                               ║                       Python                              ║                           GO                              ║                          PHP                              ║                       Java                      ║
+╚══════════════════════════════════════════════════════════╩═══════════════════════════════════════════════════════════╩═══════════════════════════════════════════════════════════╩═══════════════════════════════════════════════════════════╩═════════════════════════════════════════════════╝
+│                                                          │                                                           |                                                           │                                                           │
 //deklaracja tablicy
-| const tab = ["Marcin", "Ania", "Agnieszka"];             |                                                           | var tab [5]int                                            |          
-|                                                          |                                                           | tab := [5]int {1, 2, 5, 6, 7}                             |                                                           |
-|                                                          |                                                           | tab := []int {2, 5, 6}                                    |                                                           |
-//dodanie nowego elemntu do tablicy
+│ const tab = ["Marcin", "Ania", "Agnieszka"];             │                                                           | var tab [5]int                                            |          
+│                                                          │                                                           | tab := [5]int {1, 2, 5, 6, 7}                             |                                                           |
+│                                                          │                                                           | tab := []int {2, 5, 6}                                    |                                                           |
+// dodanie nowego elemntu do tablicy
 | tab.push("Piotrek"); /* zwroci dlugosc tab */            |                                                           | tab = append(tab, 13)                                     |                                                           |
 | tab[4] = "Krysia";                                       |                                                           |                                                           |                                                           |
 | tab[tab.length] = "Marek";                               |                                                           |                                                           |                                                           |
 |                                                          |                                                           |                                                           |                                                           |
-
+// dlugos tablicy
+| let len = array.length;                                  |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
 // nowa tablica z wybranymi elementami           
 | tablica.filter(callback)                                 |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+// kopiowanie tablicy
+| const strCopy = str.split();                             |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+// dzielenie tekstu
+const tablicaZeSlowami = "Jakiś tekst".split(" "); 
+|                                                          |                                                           |                                                           |                                                           |
+// zamiana stringa na tablicę ze znakami
+const tablicaZeZnakami = "Jakiś tekst".split(); 
+|                                                          |                                                           |                                                           |                                                           |
+//usówanie spacji:
+const text = "Jakiś tek     st";
+const textBezSpacji = text.split(' ').join('');
+|                                                          |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
 |                                                          |                                                           |                                                           |                                                           |
 // usuwanie jednego elemntu z tablicy; modyfikuje tablicę i zwraca tablicę z usuniętymi elementami (zależnie od podanych argumentów może nawet dodawać elementy)
 | tablica.splice(indexElemntu, ileUsunac);                 |                                                           |                                                           |                                                           |
@@ -580,8 +565,7 @@ console.log(tab); //[Marcin, Ania, Agnieszka, Piotrek]
 | console.log(myFish); /*['clown', 'mandarin' ]*/          |                                                           |                                                           |                                                           |
 | console.log(popped); /* 'sturgeon' */                    |                                                           |                                                           |                                                           |
 |                                                          |                                                           |                                                           |                                                           |
-//zamiana 'tekst&CosTam' na 
-// zabespieczony:  'tekst%20%26%20CosTam'
+//zamiana 'tekst&CosTam' na zabespieczony:  'tekst%20%26%20CosTam'
 | encodeURIComponent('tekst & CosTam')                     |                                                           |                                                           |                                                           |
 |                                                          |                                                           |                                                           |                                                           |
 //Operatory logiczne:  

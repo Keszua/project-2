@@ -15,6 +15,10 @@ $cmsVar['content'] = str_replace('Shipments and returns', "Pan Janek", $cmsVar['
 	<table> bla bla...
 {/if}
 
+//Nadanie uprawnień do nadpisywania:
+chown -R www-data:www-data ./
+
+
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
@@ -136,6 +140,7 @@ $configValue = (string) Tools::getValue('MYMODULE_CONFIG');
 #--------------------------------------------------------------------------------------------------
 # stworzenie nowego MODUŁU
 # https://devdocs.prestashop.com/1.7/modules/creation/tutorial/
+# https://prestapros.com/blog/jak-napisac-modul-prestashop
 # w folderze /modules  trzeba stworzyć folder z nazwa modulu (male litery) a w nim plik z ta samą nazwą.php (małe litery)
 
 # zawartość plku:
@@ -471,4 +476,23 @@ Zawartość .css
 
 
 
+#--------------------------------------------------------------------------------------------------
+      #      ####     ###
+     # #     #   #     # 
+     # #     #   #     # 
+    #   #    ####      # 
+    #####    #         # 
+    #   #    #         # 
+    #   #    #        ###
+#--------------------------------------------------------------------------------------------------
 
+// Trzeba wejśc do Zaawansowane -> API 
+// Tam wygenerować klócz i właczyć API PrestaShop
+
+Działajacy odbiór danych z kontenera:
+http://BGHYA7SXLC1Z68WQWXUUJBBN39E8ME7Q@localhost:8080/api/
+http://BGHYA7SXLC1Z68WQWXUUJBBN39E8ME7Q@localhost:8080/api/?output_format=JSON
+http://BGHYA7SXLC1Z68WQWXUUJBBN39E8ME7Q@localhost:8080/api/?schema=synopsis&output_format=JSON
+
+
+/admin_9282/cron_currency_rates.php?secure_key={my_secure_key}

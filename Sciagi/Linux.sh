@@ -1,28 +1,24 @@
 
-//Film 1
+# VirtualBox 6.1 ze srtony:
+# https://www.virtualbox.org/wiki/Downloads
 
-//VirtualBox 6.1 ze srtony:
-https://www.virtualbox.org/wiki/Downloads
+# W przykladzie instalujemy Ubuntu Desktop
+# https://ubuntu.com/download/desktop
 
-W przykladzie instalujemy Ubuntu Desktop
-https://ubuntu.com/download/desktop
+# Po odpaleniu virtual boxa, wybieramy:
+# Maszyna -> Nowa -> nadajemy nazwę, i wybieramy Typ: Linux  -> Dalej
+# Przydzielamy 4G Ramu i 10GB dysku i rozmiar stały. 
+# Po naciśnięciu "utwórz", powinna się poajwiąc nowa ikona po lewo z napisaem "Ubuntu" i można ją "Uruchom"
+# Wybieramy dysk, rzez "dodaj" i odszukujemy obraz (nazwa ubuntu-data-desktop-amd64.iso). 
+# Po otworzeniu wybieramy "Choose".
 
-Po odpaleniu virtual boxa, wybieramy:
-Maszyna -> Nowa -> nadajemy nazwę, i wybieramy Typ: Linux  -> Dalej
-Przydzielamy 4G Ramu i 10GB dysku i rozmiar stały. 
-Po naciśnięciu "utwórz", powinna się poajwiąc nowa ikona po lewo z napisaem "Ubuntu" i można ją "Uruchom"
-Wybieramy dysk, rzez "dodaj" i odszukujemy obraz (nazwa ubuntu-data-desktop-amd64.iso). 
-Po otworzeniu wybieramy "Choose".
+# Prełączanie na pełny ekran: Prawy Ctrl+F
 
-Prełączanie na pełny ekran: Prawy Ctrl+F
-
-//-------------------------------------------------------------------------------------------------
-Robienie kopii zapasowej:
-Maszyna -> Tools -> Snapshots
+# Robienie kopii zapasowej:
+# Maszyna -> Tools -> Snapshots
 
 
-//-------------------------------------------------------------------------------------------------
-//Film 2
+# -------------------------------------------------------------------------------------------------
 Struktura katalogów:
 pwd    # gdzie jeteśmy //= /home/wojtek (print work directory)
 ~$     # katalog domowy, katalog uzytkownika, czyli:  /home/wojtek
@@ -49,13 +45,13 @@ ls /etc > etc.txt # wynik plecenia ls zostanie zapisany do pliku etc.txt
 
 tree   //tali ls ale w formie drzewa ( w Debianie trzeba to doinstalować sudo apt install tree)
 
-// nadawanie uprawnień:
+# nadawanie uprawnień:
 u - własiciel
 g - grupa 
 o - pozostali
 a - wszystkie te części
 
-//opis literek przy kalatlochac/plikach:
+# opis literek przy kalatlochac/plikach:
 drwxrwxrwx
 ||  |  |
 ||  |  inni
@@ -146,15 +142,12 @@ wall "Komunikat do wszystkich" # gdy dodamy sudo, to na pewno poleci do wszystki
 
 
 
-
-// Tydzień 2 Film 1
-
-sudo -        //komendy administratora
-sudo passwd root  //zmiana chasła dla administratora
-passwd        # ustaw nowe haslo na aktualnym koncie  
-su            //zmiana uzytkownika
-su root       //przełącz się na administratora
-//po zalogowaniu jako admin, będzie na początku root@uzytkownik i # na końcu
+sudo                         # komendy administratora
+sudo passwd root             # zmiana chasła dla administratora
+passwd                       # ustaw nowe haslo na aktualnym koncie  
+su                           # zmiana uzytkownika
+su root                      # przełącz się na administratora
+# po zalogowaniu jako admin, będzie na początku root@uzytkownik i # na końcu
 exit          # wylolgowanie się z admina
 sudo adduser agata  //tworzenie nowego użytkownika (tylko admin może tworzyć nowych uzytkowników)
 su agata      # zaloguj sie na "agata"
@@ -169,11 +162,11 @@ sudo adduser agata wojtek # dodaj użytkownika do grupy "wojtek"
 
 useradd       # dodawanie kont uzytkownikow
 userdel       # usuwanie kont uzytkownikow
-sudo useradd -G student student01  # utworz w gropie student, uzytkownika o nazwie "student01"
-sudo useradd candidte              # utworz uzytkownika o nazwie "candidte", ale on nie nalezy do zadnej grupy
-sudo passwd student01              # nadawanie hasla dla "student01"
-// informacje o uzytkownikach znadują się w pliku /etc/passwd
-// hasła znajduja się w /etc/shadow 
+sudo useradd -G student student01      # utworz w gropie student, uzytkownika o nazwie "student01"
+sudo useradd candidte                  # utworz uzytkownika o nazwie "candidte", ale on nie nalezy do zadnej grupy
+sudo passwd student01                  # nadawanie hasla dla "student01"
+# informacje o uzytkownikach znadują się w pliku /etc/passwd
+# hasła znajduja się w /etc/shadow 
 users         # lista zalogowanych uzytkownikow
 uname -a      # informacje o systemie
 lshw          # szczegulowe informacje o sprzecie (trzeba doinstalowac)
@@ -182,8 +175,7 @@ lscpu         # szczegulowe informacje o procesorze/procesor
 # wiecej o szczegulach sprzetu: https://www.tecmint.com/commands-to-collect-system-and-hardware-information-in-linux/
 
 
-ip a          # adresy sieci
-ssh komput@192.168.0.140  //połączenie z innym komputerem w sieci (potwiedzić Y i podać hasło)
+ssh komput@192.168.0.140               # połączenie z innym komputerem w sieci (potwiedzić Y i podać hasło)
 
 
 sudo apt update       # odświerzenie repozytorium
@@ -403,16 +395,15 @@ unzip -t log.zip          # przeczytaj i skontroluj arhiwum (bez rozpakowywania)
 
 
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-//    #     #    ###    #     #
-//    #     #     #     ##   ##
-//    #     #     #     # # # #
-//    #     #     #     #  #  #
-//     #   #      #     #     #
-//      # #       #     #     #
-//       #       ###    #     #
+# -------------------------------------------------------------------------------------------------
+    #     #    ###    #     #
+    #     #     #     ##   ##
+    #     #     #     # # # #
+    #     #     #     #  #  #
+     #   #      #     #     #
+      # #       #     #     #
+       #       ###    #     #
+# -------------------------------------------------------------------------------------------------
 VIM
 vim        # edytor  (instalacja: sudo install vim)
 Esc        # przejdz do trybu komend
@@ -460,17 +451,15 @@ u                # cofnij (taki Ctrl+Z)
 
 
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-//         ###         #   #        ####         #   #        ####         #####        #   #
-//        #   #        #  #         #   #        #   #        #   #          #          #   #
-//        #            # #          #   #         # #         #   #          #           # #
-//         ###         ##           ####          # #         ####           #           # #
-//            #        # #          # #            #          #              #            #
-//        #   #        #  #         #  #           #          #              #            #
-//         ###         #   #        #   #          #          #              #            #
-//-------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------
+         ###         #   #        ####         #   #        ####         #####       #     #
+        #   #        #  #         #   #        #   #        #   #          #         #     #
+        #            # #          #   #         # #         #   #          #          #   #
+         ###         ##           ####          # #         ####           #           # #
+            #        # #          # #            #          #              #            #
+        #   #        #  #         #  #           #          #              #            #
+         ###         #   #        #   #          #          #              #            #
+#-------------------------------------------------------------------------------------------------
 
 
 // SKRYPTY:
@@ -1008,11 +997,12 @@ Instalacja Windowsa:
   #   #   ###   #   #   #     ###      # #      ###   ###   ###    ###   ###
                                    ####                                       
 #--------------------------------------------------------------------------------------------------
-Konfiguracja sieci:
-// trzeba być w katalogu głównym
+# Konfiguracja sieci:
+# trzeba być w katalogu głównym
 cd etc/network/
 ip address                             #─┐ 
-ip a                                   #─┴─ wyświetla konfigurację kart siecowych
+ip a                                   #─┴─ wyświetla konfigurację kart siecowych i adresy sieci
+
 cat etc/hosts  # IP kontenera
 
 etc/resolv.conf                        # informacja z adresem DNS
@@ -1069,17 +1059,34 @@ ping -c 5 wp.pl                        # wyslij tylko 5 razy
 
 dig www.google.com
 
+
+#-------------------------------------------------------------------------------------------------
+                              #                                 #     #    
+                              #                                 #     #    
+    ###    #    #    ###    #####    ###    ### ##     ###    #####   #    
+   #       #   #    #         #     #   #   #  #  #   #   #     #     #    
+    ###     # #      ###      #     #####   #  #  #   #         #     #    
+       #     #          #     #     #       #  #  #   #   #     #     #   #
+    ###     #        ###       ##    ###    #  #  #    ###       ##    ### 
+           #
+#-------------------------------------------------------------------------------------------------
 systemd
 
 systemctl                              # do zarządzania usługami
-systemctl status sshd                  # suługa do zdalnego połączenia
-systemctl list-unit-files --type target # wszystkie unity 
+
+systemctl list-unit-files              # lista dostepnych unitow w  /usr/lib/systemd/system
+systemctl list-unit-files --type target # wszystkie unity typu target | socet | timer | 
 systemctl -t help                      # wypisze dostepne typy unitow
 
-
-# usługi / targety znajduja się: ─┬─ Debian: /etc/systemd/system *.service
-#                                 └─ Centos: /usr/lib/systemd/system *.target
-
+systemctl start [nazwaUslugi]
+systemctl status [nazwaUslugi]
+systemctl stop [nazwaUslugi]           # zatrzymanie uslugi w tej sesji (do nastepnego restartu)
+systemctl edit [nazwaUslugi]  
+systemctl enable [nazwaUslugi]         # tworzy link symboliczny, ktory definiuje, jakie uslugi maja sie uruchomic przy starcie w /etc/systemd/system
+# lista uslug znajduje sie w:    /usr/lib/systemd/system
+# pliki z linkiem symbolicznym:      /etc/systemd/system  
+systemctl enable --now [nazwaUslugi]   # polaczenie start i enble
+systemctl disable [nazwaUslugi]        # wylaczyc automatyczne uruchamianie
 
 
 //-------------------------------------------------------------------------------------------------
@@ -1094,9 +1101,8 @@ usermod -a -G sudo user1   # dodaj uzytkownika do grupy sudo
 sudo -i   # zmiana uzytkownika na root i przejdz do katalogu root/
 sudo -s   # zmiana uzytkownika na root i pozostań tam gdzie jesteś
 
-// Aby nie trzeba było wpisywać hasła za każdym razem, gdzieś w plku trzeba ustawić: (jeszcze nie wiem w którym)
-chyba w: /etc/sudoers 	
-// Edytować linijkę i wpisać:
+# Aby nie trzeba było wpisywać hasła za każdym razem, gdzieś w pliku /etc/sudoers.d 	
+# Edytować linijkę i wpisać:
 username ALL=(ALL) NOPASSWD:ALL
 
 //-------------------------------------------------------------------------------------------------

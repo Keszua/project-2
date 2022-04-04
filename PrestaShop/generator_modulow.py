@@ -1,6 +1,7 @@
 
 
-import os                    # importing os module
+import os
+from time import clock_getres                    # importing os module
 
 def generuj(nazwaModulu, CG):
     nazwa_maleLitery = nazwaModulu.lower()
@@ -53,7 +54,7 @@ class {nazwa_pierwszaWielka} extends Module
     public function __construct()
     {{
         $this->name = '{nazwa_maleLitery}';
-        $this->tab = 'front_office_features';
+        $this->tab = 'front_office_features'; // administration | front_office_features | merchandizing
         $this->version = '1.0.0';
         $this->author = 'Karol';
         $this->need_instance = 0;
@@ -84,6 +85,7 @@ class {nazwa_pierwszaWielka} extends Module
             { "&& $this->registerHook('displayHome')" if "hookDisplayHome" in CG else ""}
             { "&& $this->registerHook('displayAfterDescription')" if 'wlasny_hook' in CG else ""}
             { "&& $this->createTabLink()" if "frontController" in CG else ""}
+            { "&& $this->installTab()" if "dodajDoMenu" in CG else ""}
         ); 
     }}
 
@@ -93,6 +95,7 @@ class {nazwa_pierwszaWielka} extends Module
         return (
             parent::uninstall() 
             && Configuration::deleteByName('MYMODULE_NAME')
+            { "&& $this->uninstallTab()" if "dodajDoMenu" in CG else ""}
         );
     }}
 
@@ -125,7 +128,7 @@ class {nazwa_pierwszaWielka} extends Module
     zawartoscPliku += f'''
     public function getContent()  // tutaj zawartość, po wciśnięciu klawisza "konfiguruj"
     {{
-		if(Tools::isSubmit('{nazwa_maleLitery}SaveSesting')) {{ //to się wywoła po naciśnieciu klawisza "Zapisz" (w Konfiguruj)
+		if(Tools::isSubmit('{nazwa_maleLitery}SaveSeting')) {{ //to się wywoła po naciśnieciu klawisza "Zapisz" (w Konfiguruj)
             $name = Tools::getValue('print');
             Configuration::updateValue('{nazwa_wielkieLitery}_STR', $name);
             {"$this->sendTestEmail(Tools::getValue('customer_email'));" if "wyslij_maila" in CG else ""}
@@ -134,7 +137,7 @@ class {nazwa_pierwszaWielka} extends Module
         {'$this->generateAdminToken();' if "pobieranie_tokenu_sesji" in CG else ""}
         
 '''
-    if 'wyswietl_liste_obrakow' in CG:
+    if 'wyswietl_liste_obrazkow' in CG:
         zawartoscPliku += '''
         $products = Product::getProducts($this->context->language->id, 0, 100, 'id_product', 'ASC');
         $images_array = array();
@@ -155,7 +158,7 @@ class {nazwa_pierwszaWielka} extends Module
         $this->context->smarty->assign(array(  //wysłanie z powrotem do szablonu konfiguracji
             '{nazwa_wielkieLitery}_STR' => Configuration::get('{nazwa_wielkieLitery}_STR'),
             {"'token' => $this->generateAdminToken()," if "pobieranie_tokenu_sesji" in CG else ""}
-            {"'images_array' => $images_array," if "wyswietl_liste_obrakow" in CG else ""}
+            {"'images_array' => $images_array," if "wyswietl_liste_obrazkow" in CG else ""}
         ));\n
         return $this->display(__FILE__, 'views/templates/admin/configure.tpl');
     }}
@@ -175,6 +178,47 @@ class {nazwa_pierwszaWielka} extends Module
         return true;
     }}
 '''
+
+    if 'dodajDoMenu' in CG:
+        zawartoscPliku += f'''
+    public function enable($force_all = false)
+    {{
+        return parent::enable($force_all)
+            && $this->installTab();
+    }} \n
+    public function disable($force_all = false)
+    {{
+        return parent::disable($force_all)
+            && $this->uninstallTab();
+    }} \n
+    private function installTab()
+    {{
+        $tabId = (int) Tab::getIdFromClassName('AdminWidokGlowny');
+        if (!$tabId) {{
+            $tabId = null;
+        }} \n
+        $tab = new Tab($tabId);
+        $tab->active = 1;
+        $tab->class_name = 'AdminWidokGlowny';
+        $tab->name = array();
+        foreach (Language::getLanguages() as $lang) {{
+            $tab->name[$lang['id_lang']] = 'KAROL';
+        }}
+        $tab->id_parent = (int) Tab::getIdFromClassName('AdminCatalog'); // AdminCatalog | AdminParentOrders | spis pozycji: https://devdocs.prestashop.com/1.7/modules/concepts/controllers/admin-controllers/tabs/
+        $tab->module = $this->name; \n
+        return $tab->save();
+    }} \n
+    private function uninstallTab()
+    {{
+        $tabId = (int) Tab::getIdFromClassName('AdminWidokGlowny');
+        if (!$tabId) {{
+            return true;
+        }} \n
+        $tab = new Tab($tabId); \n
+        return $tab->delete();
+    }}
+'''
+
 
     if 'pobieranie_tokenu_sesji' in CG:
         zawartoscPliku += f'''
@@ -248,15 +292,16 @@ class {nazwa_pierwszaWielka} extends Module
         zawartoscPliku += '''
     public function hookDisplayAfterDescription()
     {
+        // własny hook można podpiąć w dowolne miejsce, np: w kartę produktu 
+        //   /themes/classic/templates/catalog/product.tpl
+        //      <div class="product-information">
+        //        {block name='product_description_short'}
+        // TU ->    {hook h='displayAfterDescription'}
+        //          <div id="product-description-short-{$product.id}" class="product-description">{$product.description_short nofilter}</div>
+        //        {/block} \n
         return "To jest własny hook z modułu MULTIPURPOSE";
     }
-    // własny hook można podpiąć w dowolne miejsce, np: w kartę produktu 
-    //   /themes/classic/templates/catalog/product.tpl
-    //      <div class="product-information">
-    //        {block name='product_description_short'}
-    // TU ->    {hook h='displayAfterDescription'}
-    //          <div id="product-description-short-{$product.id}" class="product-description">{$product.description_short nofilter}</div>
-    //        {/block}
+
 '''
 
     zawartoscPliku += f'''
@@ -361,6 +406,7 @@ switch(Tools::getValue('action'))
         pass
 
 
+    #----------------------------------------------------------------------------------------------
     if 'frontController' in CG:
         # mymodule > controllers > admin
         folderProjektu_controllers_admin = os.path.join(folderProjektu_controllers, 'admin')
@@ -401,7 +447,6 @@ class AdminOriginController extends ModuleAdminController
     }}
 
 }}
-
 
 '''
         f_controller.write(zawartoscPliku)
@@ -469,6 +514,55 @@ class {nazwa_pierwszaWielka}TaskModuleFrontController extends ModuleFrontControl
         f_controller.close()
 
 
+    #----------------------------------------------------------------------------------------------
+    if "dodajDoMenu" in CG:
+        # mymodule > controllers > admin
+        folderProjektu_controllers_admin = os.path.join(folderProjektu_controllers, 'admin')
+        try:
+            os.mkdir(folderProjektu_controllers_admin)
+        except FileExistsError:
+            pass
+        except OSError:
+            print ("Directory " , folderProjektu_controllers_admin , "FAILD creation")
+            return
+        else:
+            pass
+
+
+        # mymodule > controllers > admin > AdminWidokGlownyController.php
+        folderProjektu_controllers_admin_AdminWidokGlownyControllerPhp = os.path.join(folderProjektu_controllers_admin, 'AdminWidokGlownyController.php') 
+        f_controller = open(folderProjektu_controllers_admin_AdminWidokGlownyControllerPhp, mode="a+", encoding="utf-8")
+        zawartoscPliku = f'''
+<?php
+class AdminWidokGlownyController extends ModuleAdminController
+{{
+    public function __construct()
+    {{
+        parent::__construct();
+    }} \n
+    public function init()
+    {{
+        parent::init();
+        $this->bootstrap = true;
+        //Tools::redirect('https://www.google.com'); //przekierowanie na zewnetrzna strone
+    }} \n
+    public function initContent()
+    {{
+        parent::initContent();
+        $this->context->smarty->assign(array(
+        ));
+    }} \n
+    public function renderList()
+    {{
+        return $this->module->display(_PS_MODULE_DIR_.'mi_ceny', 'views/templates/admin/widok_glowny.tpl');
+    }}
+}}
+
+'''
+        f_controller.write(zawartoscPliku)
+        f_controller.close()
+
+    #----------------------------------------------------------------------------------------------
     if "wyslij_maila" in CG:
         folderProjektu_mail = os.path.join(folderProjektu, 'mail')
         try:
@@ -804,7 +898,7 @@ foreach ($sqls as $query) {{
     folderProjektu_views_js_mymoduleJs = os.path.join(folderProjektu_views_js, nazwa_maleLitery+'.js') 
     f_services = open(folderProjektu_views_js_mymoduleJs, mode="w+", encoding="utf-8")
     content = f'''$(document).ready( function() {{
-    alert("komuniakt z pliku: {nazwa_maleLitery}/views/js/{nazwa_maleLitery}.js");
+    alert("komuniakt z pliku: PrestaShop/modules/{nazwa_maleLitery}/views/js/{nazwa_maleLitery}.js");
     '''
 
     if 'uzyj_ajax' in CG :
@@ -926,7 +1020,7 @@ foreach ($sqls as $query) {{
             {'<br/>' if "pobieranie_tokenu_sesji" in CG else ""}
             {'<a class="btn btn-default" href="index.php?controller=AdminOrders&token={$token}" > {$token} </a>' if "pobieranie_tokenu_sesji" in CG else ""}
 '''        
-    if 'wyswietl_liste_obrakow' in CG:
+    if 'wyswietl_liste_obrazkow' in CG:
         content += '''\t\t\t<br/>
             {foreach from=$images_array item=ia}
                 <img src="//{$ia}" />
@@ -935,7 +1029,7 @@ foreach ($sqls as $query) {{
     content += f'''
         </div> \n
         <div class="panel-footer">
-            <button type="submit" name="{nazwa_maleLitery}SaveSesting" class="btn btn-default pull-right" >
+            <button type="submit" name="{nazwa_maleLitery}SaveSeting" class="btn btn-default pull-right" >
                 <i class="process-icon-save"></i>
                 Zapisz
             </button>
@@ -945,6 +1039,26 @@ foreach ($sqls as $query) {{
 '''
     file.write(content)
     file.close()
+
+
+    if "dodajDoMenu" in CG:
+        # mymodule > views > templates > admin > widok_glowny.tpl
+        folderProjektu_views_templates_admin_widok_glownyTpl = os.path.join(folderProjektu_views_templates_admin, 'widok_glowny.tpl') 
+        file = open(folderProjektu_views_templates_admin_widok_glownyTpl, mode="w+", encoding="utf-8")
+        content = f'''
+<div class="panel">
+    <div class="panel-heading">
+        Origin configuration
+    </div>
+    <div class="panel-body">
+        Wzór strony glownej dla wtyczki po stronie administratora dla modułu {nazwaModulu}<br/>
+        Aby edytować, wejdz do pliku: PrestaShop/modules/{nazwa_maleLitery}/views/templates/admin/widok_glowny.tpl
+    </div>
+</div>
+
+'''
+        file.write(content)
+        file.close()
 
 
     if 'frontController' in CG:
@@ -971,11 +1085,12 @@ foreach ($sqls as $query) {{
     </div>
     <div class="panel-body">
         Wzór kontrolera admin origin dla modułu {nazwaModulu}<br/>
-        Aby edytować, wejdz do pliku: {folderProjektu_views_templates_admin_origin_originTpl}
+        Aby edytować, wejdz do pliku: PrestaShop/modules/{nazwa_maleLitery}/views/templates/admin/origin/origin.tpl
     </div>
 </div>
 ''')
         file.close()
+
 
 
     # mymodule > views > templates > front
@@ -1105,14 +1220,15 @@ foreach ($sqls as $query) {{
 
 coGenerowac = (                   # niepotrzebne zakomentuj
     'hookDisplayHome',            # podpięcie przestrzeni, widocznej na stronie głownej
-    #'frontController',            # kontroler wyświetlający ilość produktów w bazie
-    #'wlasna_tabela_sql',          # przy instalacji modulu, tworzy tabele. Przy odinstalowaniu - kasuje ją.
+    'frontController',            # kontroler wyświetlający ilość produktów w bazie
+    'dodajDoMenu',                # dodaj pozycje do menu w panelu administratora (domyslnie w SPRZEDAZ/Katalog)
+    'wlasna_tabela_sql',          # przy instalacji modulu, tworzy tabele. Przy odinstalowaniu - kasuje ją.
     #'uzyj_ajax',                  # Jak stworzyć pole wyboru + interaktywną listę + tabela. W ajax.php wypisuje dane; w .js wywołuje POST, przechwytuje tą liczbę, podstawiam do kontrolki i wypisuje ja w task.tpl
     #'wlasny_hook',                # bardzo proty, własny hook podpięty do karty produktu (lub wszędzie gdzie chcesz)
-    #'pobieranie_tokenu_sesji',    # W "konfiguruj": pobiera token i tworze przykładowy przycisk, przenoszacy do "SPRZEDAŻ > Zamowienia"
+    'pobieranie_tokenu_sesji',    # W "konfiguruj": pobiera token i tworze przykładowy przycisk, przenoszacy do "SPRZEDAŻ > Zamowienia"
     #'wyslij_maila',               # W "konfiguruj": Wysyła testowego maila, po wpisaniu adresu w "Podaj maila"
-    #'wyswietl_liste_obrakow',     # W "konfiguruj": Pobierze i wyświetli obrazki pobrane z produktów. (nic konkretnego, po prostu jak pobrac obrazki z bazy i wyśweitlić)
-    #'dodaj_override_controller'   # przy instalacji dodaje plik do override/controllers/front/CmsController.php, który zastepuje tekst w "Delivery"
+    'wyswietl_liste_obrazkow',     # W "konfiguruj": Pobierze i wyświetli obrazki pobrane z produktów. (nic konkretnego, po prostu jak pobrac obrazki z bazy i wyśweitlić)
+    #'dodaj_override_controller'   # przy instalacji dodaje plik do override/controllers/front/CmsController.php, który zastepuje tekst w stopce w "Delivery"
 )
 
-generuj("Karol", coGenerowac)
+generuj("mi_ceny", coGenerowac)
