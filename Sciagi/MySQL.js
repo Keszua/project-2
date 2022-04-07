@@ -79,11 +79,11 @@ DESCRIBE nazwaTabeli      // wyświetli właściwości tabeli w formie tabeli   
 INSERT INTO nazwaTabeli (nazwa) VALUES ( 'bajki'), (druga_tabela)  // dodawanie nowych rekordów
 SET SESSION sql_mode='traditional';  // zabespiecza przed dodawaniem pustych pól
 DELETE FROM nazwaTabeli WHERE id_dzial=5;  //kasowanie rekordu
-ALTER TABLE nazwaTabeli + ADD UNIQUE(pesel)  //nada key; UNI
-                        + CHANGE nazwaKolumny nowyTypPola
-                        + ADD COLUMN nazwaKolumny typPola
-                        + RENAME TO 
-                        + DROP nazwaKolumny
+ALTER TABLE nazwaTabeli ┬ ADD UNIQUE(pesel)  //nada key; UNI
+                        ├ CHANGE nazwaKolumny nowyTypPola
+                        ├ ADD COLUMN nazwaKolumny typPola
+                        ├ RENAME TO 
+                        └ DROP nazwaKolumny
 						
 ALTER TABLE staraNazwaKolumny RENAME TO nowaNazwaKolumny						
 

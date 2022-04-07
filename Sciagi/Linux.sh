@@ -1105,6 +1105,9 @@ sudo -s   # zmiana uzytkownika na root i pozostań tam gdzie jesteś
 # Edytować linijkę i wpisać:
 username ALL=(ALL) NOPASSWD:ALL
 
+# mariusz znalazł, żeby nei wołał hasła: 
+sudo su
+
 //-------------------------------------------------------------------------------------------------
 // Kompilacja pliku wynikowego dla linuxa:
 // stworzyć link build_linux.bat

@@ -223,9 +223,9 @@ najważneijsze metody:
 - __dirname / __filename
 
 //Obiekt global.proces 
-global.process.argv - zwróci tablicę ze ścieżką i podanymi ARGUMENTAMI (w formie stringów)
-global.process.env - chyba wszystkie dane o urzytkowniku, kodowaniu, cieżki, jaki windows itp.
-const port = process.env.PORT || 3000   // gdy chcemy wsatwić stronke na serwerze
+global.process.argv                    // zwróci tablicę ze ścieżką i podanymi ARGUMENTAMI (w formie stringów)
+global.process.env                     // chyba wszystkie dane o urzytkowniku, kodowaniu, cieżki, jaki windows itp.
+const port = process.env.PORT || 3000  // gdy chcemy wsatwić stronke na serwerze
 //można wpisywać bez "global", czyli: console.log(process.env);
 
 
