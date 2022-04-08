@@ -4,6 +4,9 @@
 //Mariusz wspominał coś o Next i Vercel do tworzenia sklepów (chyba samemu)
 //Stripe - coś do płatności online
 
+// gra na szukanie CSS-ów https://flukeout.github.io/
+// mdn accesskey  - co wpisac w syszukiwarkę, aby dowiedzieć się co oznaczają metody dla obiektów DOM
+
 //zbior podstawowych zadan i algorymow, np. na drzewko, kolejka, sortowanie itp : https://github.com/trekhleb/javascript-algorithms
 
 // NOTATKI:
@@ -1221,23 +1224,24 @@ window.open(url, name, options)
 	Set-Cookie: value;max-age=seconds;domain=domena;path=sciezka;secure;HttpOnly
 
 //Parametry:
-Parametr    | Wymagane	| Co oznacza									| Przykladowa wartosc
-============|===========|===============================================|==================================
-value		|Wymagane	|Wartosc i nazwa ciasteczka						| username=Marcin
-------------|-----------|-----------------------------------------------|----------------------------------
-max-age		|Opcjonalne	|czas w sekundach								| 6050050
-------------|-----------|-----------------------------------------------|----------------------------------
-domain		|Opcjonalne	|domena na ktorej bedzie dzialac to ciasteczko	| kurspl.pl
-			|			|												| <http://taka.sobie.domena/sciezka>
-------------|-----------|-----------------------------------------------|----------------------------------
-path		|Opcjonalne	|sciezka do domeny, albo do podkatalogu			| /
-------------|-----------|-----------------------------------------------|----------------------------------
-secure		|Opcjonalne	|Zabezpieczenia ciasteczka. 					|
-			|			|Czy ma ono sie odwolywac tylko do https		| secure
-------------|-----------|-----------------------------------------------|----------------------------------
-HttpOnly	|Opcjonalne	|Czy bedzeimy mogli sie odwolywac do ciasteczek	|
-			|			|z poziomu JavaScript							| HttpOnly
-------------|-----------|--------------------------------------------------------------------------------
+════════════╦═══════════╦═══════════════════════════════════════════════╦═════════════════════════════════╗
+Parametr    ║ Wymagane	║ Co oznacza									║ Przykladowa wartosc             ║
+════════════╬═══════════╬═══════════════════════════════════════════════╬═════════════════════════════════╝
+value		│Wymagane	│Wartosc i nazwa ciasteczka						│ username=Marcin                 │
+────────────┼───────────┼───────────────────────────────────────────────┼─────────────────────────────────┤
+max-age		│Opcjonalne	│czas w sekundach								│ 6050050                         │ 
+────────────┼───────────┼───────────────────────────────────────────────┼─────────────────────────────────┤
+domain		│Opcjonalne	│domena na ktorej bedzie dzialac to ciasteczko	│ kurspl.pl                       │
+			│			│												│ <http://taka.sobie.domena/sciezka>
+────────────┼───────────┼───────────────────────────────────────────────┼─────────────────────────────────┤
+path		│Opcjonalne	│sciezka do domeny, albo do podkatalogu			│ /                               │
+────────────┼───────────┼───────────────────────────────────────────────┼─────────────────────────────────┤
+secure		│Opcjonalne	│Zabezpieczenia ciasteczka. 					│                                 │
+            │			│Czy ma ono sie odwolywac tylko do https		│ secure                          │
+────────────┼───────────┼───────────────────────────────────────────────┼─────────────────────────────────┤
+HttpOnly	│Opcjonalne	│Czy bedzeimy mogli sie odwolywac do ciasteczek	│                                 │
+			│			│z poziomu JavaScript							│ HttpOnly                        │
+────────────┴───────────┴───────────────────────────────────────────────┴─────────────────────────────────┘
 
 
 //Pierwsza czesc skladni ciasteczka zajmuje nazwa ciasteczka oraz jego wartosc. Sa to jedyne wymagane parametry ciasteczka
