@@ -234,17 +234,17 @@ document.body.appendChild(section);
 	const tab = [1, 2, 3, 4];
 	const result = tab.reduce(function(prev, next) {
 		return prev + next;
-	});
-//1 iteracja => prev = 1, next = 2
-//2 iteracja => prev = 3, next = 3
-//3 iteracja => prev = 6, next = 4
-//wynik = 10
+	}, 0);  //tutaj wartos poczatkowa. Gdy nie podamy, to wstawi się tutaj pierwszy element.
 
-//według Samuraja, było by prawdą, gdybyśmy podali initialValue = 0:
-//1 iteracja => prev = 0, next = 1   czyli 0+1=1
+//1 iteracja => prev = 0, next = 1   czyli 0+1=1  // tego by nie było, gdybyśmy nie podali wartosci poczatkowej
 //2 iteracja => prev = 1, next = 2   czyli 1+2=3
 //3 iteracja => prev = 3, next = 3   czyli 3+3=6
 //4 iteracja => prev = 6, next = 4   czyli 6+4=10
+//wynik = 10
+
+// to samo tylko w 1 linijce:
+const result = tab.reduce( (a, b) =>  return a + b, 0);
+ 
 
 //Można dodać parametr "wartość poczatkową", np:
 	const sum2 = [1, 2, 3].reduce(function(a, b) {
@@ -499,6 +499,7 @@ const multi3 = multiply.apply(null, [2, 3]);
 https://dmitripavlutin.com/javascript-iterators/
 
 
+//-----------------------------------------------------------------------------
 // #####               #                                                                        #
 //     #               #                   #               #                #                   #        #
 //    #   ###   ###  #####  ####  #     #      ###  ####       ###             ###  ##### #   # #   #  ###  #     #

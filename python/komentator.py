@@ -241,4 +241,4 @@ def wypisz(napis, spacje=1):
         print(line2)
 
 
-wypisz('Przykład prostego SPA', 1)
+wypisz('Dockerfile', 2)

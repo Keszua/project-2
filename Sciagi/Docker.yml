@@ -9,6 +9,34 @@ https://docs.microsoft.com/pl-pl/windows/wsl/install-manual#step-4---download-th
 https://hub.docker.com/signup
 
 
+#-------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------
+# Przykladowe kontenery
+docker container run -d -p 8080:80 --name mynginx nginx:latest
+docker container run -d -e POSTGRES_USER=user1 -e POSTGRES_PASSWORD=pass123 -p 5444:5432 postgres:latest
+
+
+# tworzenie sieci i uruchomienie kontenera wordpresa z mySql
+docker network create --driver=bridge skynet
+docker container run -d -p 3308:3306 --name db -e MYSQL_DATABASE=exampledb -e MYSQL_USER=exampleuser -e MYSQL_PASSWORD=12345678 -e MYSQL_RANDOM_ROOT_PASSWORD=1 --network=skynet --restart=always mysql:5:7
+#                                                 └ Jak ma sie nazywac baza                                                        └ wygeberuj automatycznei bespieczne haslo dla roota
+docker container run -d -p 8080:80 -e WORDPRESS_DB_HOST=db:3306 -e WORDPRESS_DB_USER=exampleuser -e WORDPRESS_DB_PASSWORD=12345678 -e WORDPRESS_DB_NAME=exampledb --network=skynet  --restart=always wordpress:latest
+#                                                          └ port besposredni (nie do lokalnego przekierowania)
+
+
+
+#-------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
 # link do repo z kursu: 
 https://github.com/pnowy/docker-course
 #-------------------------------------------------------------------------------------------------
@@ -164,6 +192,14 @@ docker image pull nazwaKontaDockerHub/nazwaObrazu:zEwentualnymTagiem
 docker container commit idKontenera nazwaKontaDockerHub/nazwaObrazu:zTagiem
 
 
+
+  #####                 #                     ###       #
+   #   #                #                    #      #   #
+   #   #   ###    ###   #  #   ###   # ###   #          #       ###
+   #   #  #   #  #   #  # #   #   #  ##     ####   ##   #      #   #
+   #   #  #   #  #      ##    #####  #       #      #   #      #####
+   #   #  #   #  #   #  # #   #      #       #      #   #   #  #
+  #####    ###    ###   #  #   ###   #       #     ###   ###    ###
 #  -------------------------------------------------------------------------------------------------
 #  Dockerfile
 #  tworzenie kontenera z wykorzystaneim pliku Dockerfile
@@ -171,31 +207,38 @@ docker container commit idKontenera nazwaKontaDockerHub/nazwaObrazu:zTagiem
 https://docs.docker.com/engine/reference/builder/
 #  trzeba bylo konsole otworzyc w folderze w ktorym jest plik Dockerfile
 docker image build -t nowaNazwaObrazu:tag .
-
+# po zbudowaniu, mozna go uruchomic: docker container run -d -p 8080:8080 --name=nazwaKontenera nowaNazwaObrazu:tag
 
 #  Przykład pliku:
 FROM node:10-slim
 WORKDIR /app             #  Create app directory WORKDIR to tak jak RUN cd /app   Dla noda: /app   dla nginx: /usr/share/nginx/html
 
-COPY package*.json ./    #   Kopiuje pliki Z lokalnego host DO obrazu
+COPY package*.json ./    #   Kopiuje pliki Z lokalnego host DO obrazu. Inny przyklad: COPY package.json package-lock.json /code/
 
 RUN npm install --only=production   #   RUN wykonuje komendę
 
-COPY . .   #   Kopiuj wszystko z folderu, oprucz elementów zdefiniowanych 
+COPY . .   #   Kopiuj wszystko z folderu, oprucz elementów zdefiniowanych   lub: COPY src /code/src
 
-EXPOSE 3000  #  port do nasłuchu
+EXPOSE 3000  #  port do nasłuchu, w innym przykladzie dla node byl port:  8080
 
 ENV NODE_ENV production  #   Zmienne srowowiskowe przekazane do obrazu
 
 #   ENTRYPOINT [ "entrypoint.sh" ]  Gdy nie podamy Entrypoint, wywoła się polecenie domyślne: /bin/sh -c
 #   "entrypoint.sh" - to plik, który powninen być obok Dockerfile
 #   CMD ["trafik"] specyfikuje argument, jaki będzie przekazywany do ENTRYPOINTa
-CMD ["node", "app.js"]
+CMD ["node", "app.js"]     # w innym przykladzie:  CMD [ "npm", "start" ]
 
 LABEL   #  - metadane do obrazu
 
 
 
+  #     #         #
+  #     #         #
+  #     #   ###   #      #   #  ### ##    ###    ###
+  #     #  #   #  #      #   #  #  #  #  #   #  #
+   #   #   #   #  #      #   #  #  #  #  #####   ###
+    # #    #   #  #   #  #   #  #  #  #  #          #
+     #      ###    ###    ####  #  #  #   ###    ###
 #--------------------------------------------------------------------------------------------------
 #  Volumes
 docker volume ls     #  wyświetl wszytkie volumeny
@@ -252,6 +295,14 @@ docker run -d -p 80:80 -v //d/Karolek/Docker/dockerfiles/nginx-simple:/usr/share
 
 
 
+  #####                 #
+   #   #                #
+   #   #   ###    ###   #  #   ###   # ###        ###    ###   ### ##   ####    ###    ###    ### 
+   #   #  #   #  #   #  # #   #   #  ##          #   #  #   #  #  #  #  #   #  #   #  #      #   #
+   #   #  #   #  #      ##    #####  #           #      #   #  #  #  #  #   #  #   #   ###   #####
+   #   #  #   #  #   #  # #   #      #           #   #  #   #  #  #  #  ####   #   #      #  #    
+  #####    ###    ###   #  #   ###   #            ###    ###   #  #  #  #       ###    ###    ### 
+                                                                        #
 #--------------------------------------------------------------------------------------------------
 #  Docker compose
 #  Definicja w pliku: docker-compose.yml  #  może być inna nazwa, ale będzie trzeba ją podać w komendzie
@@ -261,40 +312,45 @@ version: '3.7'
 
 services:               # definicja kontenerów (odpowiednik docker container run)
 
-  servicename1:         # nazwa serwisu (np. "db" lub "elasticsearch" ), będzie to także DNS serwisu w sieci
+  db:         # nazwa serwisu (np. "db" lub "elasticsearch" ), będzie to także DNS serwisu w sieci
     image: mysql:5.7    # nazwa obrazu którego użyć do uruchomienia kontenera (opcjonalny w przypadku użycia build)
+    restart: always     # always-po wykryciu bledu, restartuj do skutku.
     environment:        # zmienne środowiskowe przekazywane do kontenera przy jego uruchomieniu
-      KEY: value
-      KEY2: value2
-      # - KEY=value
-      # - KEY2=value2
-      # MYSQL_ROOT_PASSWORD: somewordpress
-      # MYSQL_DATABASE: wordpress
-      # MYSQL_USER: wordpress
-      # MYSQL_PASSWORD: wordpress
+      # KEY: value
+      # KEY2: value2
+      MYSQL_PASSWORD: db_password
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'  # dla automatycznego generowania hasla  # lub MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: db_password
     env_file:           # zmienne środowiskowe
       - a.env           # zmienne środowiskowe z pliku
     command:            # nadpisanie domyślnego polecenia kontenera/obrazu
     volumes:            # odpowiednik -v z docker run (wsparcie zarówno starszej jak i nowszej składni)
-      - db_data:/var/lib/mysql
+      - db_data:/var/lib/mysql  # lub - db-vol:/var/lib/mysql
   
-  servicename2:         # kolejny serwis (np: "wordpress")
+  mywordpress:          # kolejny serwis (np: "wordpress")
+    image: wordpress:latest
+    container_name: mywordpess   # OPCJONALNIE
+    #command: # OPCJONALNIE, zastepuje CMD z Dockerfile
+    restart: always
     depends_on:         # okreslamy zależność pomiędzy kontenerami. Ten jest zależny od "db", czyli uruchomi się, jak ten poprzedni już będzie działał
       - db
-    image: wordpress:latest
 
     ports:
       - "8000:80"
     environment:
       WORDPRESS_DB_HOST: db:3306   # adres serwera i port. Adres przez DNS jest taką nazwą jak nazwa kontenera
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
-
+      WORDPRESS_DB_USER: db_user
+      WORDPRESS_DB_PASSWORD: db_password
+    volumes:
+      - wordpress-volume:/var/www/html
 
 volumes:                # definicja wolumenu (docker volume create)
   db_data:              # przyklad z nazwa volumenu (pusta nazwa po dwukropku (chyba))
+  wordpress-volume:
 
-networks:               # definicja sieci (docker network create)
+networks:               # definicja sieci (docker network create). Jesli tego nie podamy, to zostanie stworzona nowa siec
 
 
 Przykałdowy wordpress
@@ -305,12 +361,14 @@ H: karol
 
 # Aby uruchomić:
 # W konsoli upewnij sie ze jestes na dobrej sciezce i uruchom poleceniem:
-docker-compose up       # tworzy i uruchamia
+docker-compose up       # tworzy i uruchamia. Jeśli korzytam z DockerDesktop lub RangerDesktop, moge urzyc skladni ze spacja:  docker compose
+docker-compose up -d    # uruchomi kontenery w tle
 # jeśli nie uruchomiony w trybie -d, to konczymy Ctrl+C
 docker-compose start    # uruchomienie stworzonych kontenerów
 # jeśli w trybie -d, zatrzymujemy komendą:
-docker-compose stop
+docker-compose stop     # mozna urzyc z nazwa konkretnego, pojedynczego kontenera
 docker-compose down     # zatrzymanie i usunięcie wszytkich kontenerów i zależności
+docker-compose down -v  # zatrzymanie i usunięcie wszytkich kontenerów i zależności + usun volumeny
 
 docker-compose ps       # liste kontenerów
 docker-compose top      # obserwacja procesów
@@ -538,26 +596,181 @@ docker build -f Dockerfile.dev -t stylerhun/multi-server .
 docker run -it -p 4003:5000 --name=P1Back stylerhun/multi-server
 
 
-#--------------------------------------------------------------------------------------------------
-#--------------------------------------------------------------------------------------------------
-  #   #         #                                           #  
-  #  #          #                                           #  
-  # #    #   #  ###     ###   # ###  ####    ###    ###   #####
-  ##     #   #  #   #  #   #  ##     #   #  #   #  #        #
-  # #    #   #  #   #  #####  #      #   #  #####   ###     #
-  #  #   #   #  #   #  #      #      #   #  #          #    #
-  #   #   ####  ####    ###   #      #   #   ###    ###      ##
+  #   #           #                                         #
+  #  #            #                                         #
+  # #     #   #   ####     ###    # ###   ####     ###    #####    ###     ###
+  ##      #   #   #   #   #   #   ##      #   #   #   #     #     #   #   #
+  # #     #   #   #   #   #####   #       #   #   #####     #     #####    ###
+  #  #    #   #   #   #   #       #       #   #   #         #     #           #
+  #   #    ####   ####     ###    #       #   #    ###       ##    ###     ###
 #--------------------------------------------------------------------------------------------------
 KUBERNEST
 
-kubectl version  # sprawdzenie, czy jest zainstalowany kubernest i w jakiej wersjii
+komendy na: https://kubernetes.io/docs/reference/kubectl/
 
-# tworzenie podów zdefiniowanych w folderze k8s ( trzeba być na takim poziomi, żeby po wpisaniu ls widac było folder 'k8s')
+kubectl version  # sprawdzenie, czy jest zainstalowany kubernest i w jakiej wersjii
+kubectl version --client --output=yaml    # 
+
+# tworzenie podów zdefiniowanych w folderze k8s ( trzeba być na takim poziomie, żeby po wpisaniu ls widac było folder 'k8s')
 kubectl apply -f k8s
 
-kubectl get pods
-kubectl get services  # lista serwisów z IP oraz portami
 
+╔══════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                     Kubernetes Cluster                                           ║
+║ ╔════════════════════╗    ╔═════════════════════════════════════════════════════╗                ║
+║ ║ Control plane      ║    ║ Data plane                                          ║                ║
+║ ║ (mózg Kubernetesa) ║    ║ (worker nodes)                                      ║                ║
+║ ║  ┌─────────┐       ║    ║  ┌─────────────────────────────┐    ┌─-----------┐  ║                ║ 
+║ ║  │ Master  │       ║    ║  │ Node                        │    │ Node       │  ║                ║ 
+║ ║  └─────────┘       ║    ║  │ ┌─────────────┐ ┌-----┐     │                    ║                ║ 
+║ ║  ┌─────────┐       ║    ║  │ │    POD      │   POD       │    │            │  ║                ║ 
+║ ║  │ Master  │       ║    ║  │ │┌-----------┐│ │     │     │                    ║                ║ 
+║ ║  └─────────┘       ║    ║  │ ││ localhost ││             │    │            │  ║                ║ 
+║ ║  ┌─────────┐       ║    ║  │ │ ┌─────────┐││ │     │     │                    ║                ║ 
+║ ║  │ Master  │       ║    ║  │ │││ Kontener│ │             │    │            │  ║                ║ 
+║ ║  └─────────┘       ║    ║  │ │ └─────────┘││ │     │     │                    ║                ║ 
+║ ║                    ║    ║  │ ││┌─────────┐ │             │    │            │  ║                ║ 
+║ ║                    ║    ║  │ │ │ Kontener│││ │     │     │                    ║                ║
+║ ║                    ║    ║  │ ││└─────────┘ │             │    │            │  ║                ║
+║ ║                    ║    ║  │ │└───────────┘│             │                    ║                ║
+║ ║                    ║    ║  │ └─────────────┘ └-----┘     │                    ║                ║
+║ ║                    ║    ║  │                             │    │            │  ║                ║
+║ ║                    ║    ║  │                             │                    ║                ║
+║ ║                    ║    ║  └─────────────────────────────┘    └------------┘  ║                ║
+║ ╚════════════════════╝    ╚═════════════════════════════════════════════════════╝                ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+Control plane - przyjmuje rozkazy od użytkownika, monitoruje cały stan, reaguje na wydażenia, decyduje, gdzie kontener ma byc uruchomiony
+Worker odpowiada za uruchamianie kontenerów (tu beda dzialac nasze aplikacje)
+
+Skalowanie ze względy na dochodzcych urzytkowników odbywa się przez dodawanie/odejmowanie POD'ów
+Gdy skończy się przepustowość, a urzytkowników nadal przybywa, skalowanie odbedzie się przez Node
+
+
+
+#            [LISTA]
+kubectl get ┬ all            # 
+            ├ pods           # lista podów  z -A pokazuje ukryte systemowe
+            ├ nodes          # lista wezlow
+            ├ services       # lista serwisów z IP oraz portami
+            ├ deployments    # aplikacja
+            ├ namespaces     # 
+            └ rc             # replication controllers
+kubectl get [LISTA] -o widge # troszke wiecej informccji
+kubectl get [LISTA] -o yaml  # szczegóły
+kubectl describe [LISTA] [NAME] # szczegóły konkretnego poda/noda.  NAME - to nazwa z wyświetlonego polecenia, no get pods
+kubectl cluster-info         # informacje o klastrze
+
+
+#--------------------------------------------------------------------------------------------------
+Replica Set - przywraca uszkodzone kontenery. Dba o to, aby okreslona liczba podow dzialala. Rowniez pomaga w skalowaniu podow
+Reploica Controller - podobne narzedzie jak Replica Set, ale już nei rekomedowany.
+Przykładowy plik ReplicaSet
+
+┌───────────────────
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: rs-webapp
+  labels:
+    app: k8smaestro-webapp
+
+spec:
+  replicas: 3 # ilosc podow, iloma ma sie opiekowac
+  
+  template: # jaki pod ma byc uruchomiony w ramach tego replicasetu
+    metadata:
+      labels:
+        app: k8smaestro-webapp
+    spec:
+      containers:
+      - name: webapp
+        image: k8smaestro/web-app:1.0
+  
+  selector:  # jakimi konkretnie podami ma sie zaopiekowac (chyba zamiast template?)
+    matchLabels:
+      app: k8smaestro-webapp  # tu odajemy nazwe, jaka jest w pliku definujacym poda:
+                              ┌─────────────────────────┐      
+                              │ apiVersion: v1           \    
+                              │ kind: Pod                 \   
+                              │ metadata:                  \ 
+                              │   labels:                   │
+                              │     app: k8smaestro-webapp  │
+                              │                             │
+                              └─────────────────────────────┘
+
+#--------------------------------------------------------------------------------------------------                                          
+Deployment - "spina" w całosc nasza aplikację (troszkę jak docker-compose). 
+Możemy za jego pomoca skalować, podnosić wersję, cofac się.
+╔═════════════════════════╗ 
+║  Deployment             ║ 
+║  ┌───────────────────┐  ║ 
+║  │ ReplicaSet        │  ║ 
+║  │ ┌─────────────┐   │  ║ 
+║  │ │    POD      │   │  ║ 
+║  │ │             │   │  ║ 
+║  │ │ ┌─────────┐ │   │  ║ 
+║  │ │ │Kontener │ │   │  ║ 
+║  │ │ │ <app>   │ │   │  ║ 
+║  │ │ └─────────┘ │   │  ║ 
+║  │ └─────────────┘   │  ║ 
+║  └───────────────────┘  ║ 
+╚═════════════════════════╝ 
+
+┌───────────────────
+apiVersion: apps/v1          
+kind: Deployment             
+metadata:                   
+  #namespace: webapp-namespace
+  name: deployment-moja-nazwa       
+  labels:                   
+    app: k8smaestro-webapp  
+spec:                       
+  replicas: 3  
+  template:                 
+    metadata:
+      labels:
+        app: k8smaestro-webapp         # na podstawie tych etykiet, wiadomo ktore pody naleza do jakich deploymentow
+        #name: app-2048
+    spec:
+      containers:
+      - name: webapp                   # obraz bazowy
+        image: k8smaestro/web-app:1.0
+        #- image: k8smaestro/2048
+        #imagePullPolicy: Always       # polityka pobierania obazu na klaster. Always - zawsze pobiera obraz
+        #name: app-2048
+        #ports:
+        #- containerPort: 80
+  selector:  
+    matchLabels:
+      app: k8smaestro-webapp           # na podstawie tych etykiet, wiadomo ktore pody naleza do jakich deploymentow
+└───────────────────        
+                              
+#--------------------------------------------------------------------------------------------------
+Namespace - taki "wirtualny klaster" w ramach tego samego fizycznego klastra
+Rodzaje namespace: Pod, ReplicaSet, Deployment, Service, itp...
+Domyślnie trafia on do namestace default
+Gdy tworzony jest Service, twory sie wpis w DNS:
+<service-name>.<namespace-name>.svc.cluster.local
+
+
+┌───────────────────
+apiVersion: v1          
+kind: Namespace
+metadata:                   
+  name: webapp-namespace  # dowolna nazwa
+└───────────────────
+
+kubectl get ┬ namespaces                   # lista przestrzeni nazw
+            ├ pods -n webapp-namespace     # jakie pody naleza do tej przestrzeni nazw
+            └ all -n webapp-namespace      # wszystkie elementy przypisane do danej przestrzeni nazw
+
+
+
+
+
+
+#--------------------------------------------------------------------------------------------------
 # szyfrowanie haseł:
 kubectl create secret generic pgpassword --from-literal PGPASSWORD=12345test
 
@@ -570,6 +783,247 @@ kubectl get secret
 kubectl get pv
 
 kubectl delete -f k8s
+
+
+
+
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+# Dzialjacy przyklad.
+# Zakladam, ze mam uruchomiony minikube.
+# W dowolnym folderze. Tworze plik 'all-in-one.yml' z zawartoscią poniżej (oczywiscie nazwa dowolna)
+# Z poziou tego folderu odpalam sobie konsole (np git bash) i wywołuje polecenia
+kubectl apply -f all-in-one.yml
+kubectl proxy
+
+Dostęp do Podów przez przeglądarkę: 
+http://localhost:8001/api/v1/namespaces/game-2048/services/http:service-2048:/proxy/
+
+kubectl get all -n game-2048
+
+
+# zawartosc pliku:
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: game-2048
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: game-2048
+  name: deployment-2048
+spec:
+  selector:
+    matchLabels:
+      name: app-2048
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        name: app-2048
+    spec:
+      containers:
+      - image: k8smaestro/2048
+        imagePullPolicy: Always
+        name: app-2048
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: game-2048
+  name: service-2048
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  type: ClusterIP
+  selector:
+    name: app-2048
+
+
+
+
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+
+
+# Tworzenie poda z kontenerem ngix
+kubectl run nginx --image=nginx
+
+
+JSON
+{
+  Servers: [
+    {
+      name: Server1,
+      owner: John,
+      created: 12232012,
+      status: active,
+    }
+  ]
+}
+
+YAML
+Servers:
+  - name: Server1
+    owner: John
+    created: 12232012
+    status: active
+
+pod-definition.yaml
+# zawsze zawiera 4 podstawowe pola:
+apiVersion: v1  # wersja kubernetes
+kind:           # rodzaj
+metadata:
+
+spec:
+
+
+
+
+
+
+
+#--------------------------------------------------------------------------------------------------
+# instalacja VirtualBox na Widowsie - Film 11 7:50 (Kubernetes for the Absolute Beginners - Hands-on)
+# Odpaliłem sobie Cygwin64 Terminal:
+# Przeprowadziłem instalację ma Windows według: https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/
+Install kubectl binary with curl on Windows:
+curl -LO "https://dl.k8s.io/release/v1.23.0/bin/windows/amd64/kubectl.exe"
+
+Już mi działa polecenie:
+kubectl version --client --output=yaml
+
+Zainstalowałem choco (w PowerShelu), pleceniem:
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+Zainstalowałem kubernetes-cli:
+choco install kubernetes-cli
+
+W nowym oknie PowerShel działa polecenie:
+kubectl version --client
+
+
+Uruchamiam PowerShell w trubie administratora i wpisuje polecenia:
+New-Item -Path 'c:\' -Name 'minikube' -ItemType Directory -Force
+Invoke-WebRequest -OutFile 'c:\minikube\minikube.exe' -Uri 'https://github.com/kubernetes/minikube/releases/latest/download/minikube-windows-amd64.exe' -UseBasicParsing
+
+$oldPath = [Environment]::GetEnvironmentVariable('Path', [EnvironmentVariableTarget]::Machine)
+if ($oldPath.Split(';') -inotcontains 'C:\minikube'){ `
+  [Environment]::SetEnvironmentVariable('Path', $('{0};C:\minikube' -f $oldPath), [EnvironmentVariableTarget]::Machine) `
+}
+
+Gdy wywołam polecenie:
+minikube start --driver=virtualbox
+  # Otrzymuje błąd: This computer doesn't have VT-X/AMD-v enabled. Enabling it in the BIOS is mandatory 
+Gdy wywołam polecenie:
+minikube start --driver=docker
+  # Niby jest Done, ale po tym sypie błedami...
+
+Po sprawdzeniu statusu:
+minikube status 
+  # otrzymałem statusy Runing (czyli dobrze)
+  # Jeśli otrzymam Stoped, to trzeba go uruchomić poleceniem  'minikube start' w PowerShelu
+
+Jeśli status jest Runing, działaja polecenia w PowerShel oraz w Cygwin:
+kubectl get po -A
+  # kilka linijek: kube-system   coredns-64897985d-wx2jf            1/1     Running   1 (2m34s ago)   67m 
+kubectl get nodes
+  # minikube   Ready    control-plane,master   77m   v1.23.3
+kubectl cluster-info
+  # CoreDNS is running at https://127.0.0.1:58175/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+
+
+
+4. Zakładam przykładowa aplikację:
+kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.4
+Ustawiam dostęp:
+kubectl expose deployment hello-minikube --type=NodePort --port=8080
+
+Przy prubie pobrania tunelu, konsola zostaje zawieszona:
+minikube service hello-minikube --url
+  # http://192.168.49.2:30535   - teoretycznie, pod tym adresem powinienem widzieć coś.
+
+Usunięcie serwisu hello-minikube:
+kubectl delete services hello-minikube
+Usunięcie deployment hello-minikube:
+kubectl delete deployment hello-minikube
+
+
+Komendy dostepne dla CLUSTER:
+minikube pause
+minikube unpause
+minikube stop
+minikube delete --all
+
+
+
+
+kubectl run myNginx --image=nginx  # Stworzy POD z kontenerem nginxa
+kubectl get pods -o wide 
+  # NAME    READY   STATUS    RESTARTS   AGE     IP           NODE       NOMINATED NODE   READINESS GATES
+  # mtNginx 1/1     Running   0          5m22s   172.17.0.3   minikube   <none>           <none>
+kubectl describe pod nginx   # wyświetl szczegóły konkretnego poda
+
+
+
+
+
+
+
+
+
+
+
+
+
+#--------------------------------------------------------------------------------------------------
+# Instalacja na ProxMox (nie udana)
+# zainstalowałem kubectl według https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+1. Download the latest release with the command:
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+2. Validate the binary (optional):
+curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+  kubectl: OK
+
+3. Install kubectl:
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+chmod +x kubectl
+mkdir -p ~/.local/bin
+mv ./kubectl ~/.local/bin/kubectl
+
+Sprawdzenie, czy dostępan jest wirtualizacja:
+grep -E --color 'vmx|svm' /proc/cpuinfo
+
+# Instalacja minikube
+1. Installation:
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+    na filmie 11 koles miał inne polecenia:
+    curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    chmod +x minikube
+    ls -ld /usr/local/bin/
+
+2. Start your cluster:
+minikube start
+minikube start --driver=ssh --ssh-ip-address=10.10.10.186
+
+    Jakiś przykład:
+    minikube start --driver=ssh --ssh-ip-address=vm.example.com
+
+3. gdy sie zainstaluje, można spawdzic:
+minikube status
+
 
 
 

@@ -832,8 +832,9 @@ print('Trwało to:', time.time() - time_start)
 print(Factorial.cache_info())
 
 #-----------------------------------------------------------------------------
-LAMBDA
-#przykład 1 bez lambda:
+LAMBDA  # taka szybka funkcja
+#przykład 1 
+# bez lambda:
 def double(x):
     return x * 2
 
@@ -845,7 +846,8 @@ x = 10
 f = lambda x: x * 2
 print(f(x))					#= 20
 #----------------------------------
-#przykład 2 bez lambda:
+#przykład 2 
+# bez lambda:
 def power(x, y):
     return x ** y
 
@@ -858,7 +860,8 @@ y = 3
 f = lambda x, y: x ** y
 print(f(x,y))				#= 125
 #----------------------------------
-#przykład 3 bez lambda:
+#przykład 3 
+# bez lambda:
 lit_numbers = [1, 2, 3, 4, 11, 14, 15, 20, 21]
 
 def is_odd(x):

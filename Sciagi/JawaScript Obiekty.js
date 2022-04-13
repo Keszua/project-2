@@ -106,7 +106,7 @@ function Get_ID() {
 
 obj.getId();  //= 1
 //------------------------------------------------------------
-// Zamiana obiektu na tablicę
+// Zamiana obiektu na tablicę     for of    forof
 const cenyAkcji = {
   google: 1734,
   apple: 131,
@@ -122,6 +122,27 @@ console.log(wartosci);                 //=  [1734, 131, 222, 267]
 
 const wpisy = Object.entries(cenyAkcji);
 console.log(wpisy); // Zwróci:  [  [google, 1734], [apple, 131], [microsoft, 222], [facebook, 267]  ]
+
+const entries = Object.entries(cenyAkcji);
+for (const entry of entries) {
+	const [name, value] = entry;       // destrukturyzacja tablicy
+	console.log('name', name, ' value', value);
+}
+
+// to samo, tylko krocej
+for (const [name, value] of entries) { // destrukturyzacja tablicy już w tej linijce
+	console.log('klucz', name, ' vartosc', value);         //= klucz google vartosc 1734 itd...
+}
+
+// to samo, ale tylko po kluczach i odwołujemy sie do oryginalnego obiektu
+for (const key of klucze) {
+	console.log('klucz', key, ' vartosc', cenyAkcji[key]); //= klucz google vartosc 1734 itd...
+}
+
+// to samo, tylko inny rodzaj fora
+for (const key in cenyAkcji) {
+	console.log('klucz', key, 'wartosc', cenyAkcji[key]);  //= klucz google vartosc 1734 itd...
+}
 
 
 //------------------------------------------------------------
