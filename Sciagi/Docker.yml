@@ -606,6 +606,16 @@ docker run -it -p 4003:5000 --name=P1Back stylerhun/multi-server
 #--------------------------------------------------------------------------------------------------
 KUBERNEST
 
+# Proponowana wtyczk: YAML Language Support by Red Hat, with built-in Kubernetes syntax support 
+# Następnie trzeba wejsc do ustawien tej wtyczki, znaleźć "Yaml:Schemas" -> Edit in settings.json
+# dopisać:
+    "yaml.schemas": {
+        "kubernetes": "*.yaml"
+    }
+
+
+
+
 komendy na: https://kubernetes.io/docs/reference/kubectl/
 
 kubectl version  # sprawdzenie, czy jest zainstalowany kubernest i w jakiej wersjii
@@ -649,13 +659,14 @@ Gdy skończy się przepustowość, a urzytkowników nadal przybywa, skalowanie o
 
 
 #            [LISTA]
-kubectl get ┬ all            # 
+kubectl get ┬ all            # pokaze pody, serwisy 
             ├ pods           # lista podów  z -A pokazuje ukryte systemowe
             ├ nodes          # lista wezlow
             ├ services       # lista serwisów z IP oraz portami
             ├ deployments    # aplikacja
             ├ namespaces     # 
-            └ rc             # replication controllers
+            ├ rc             # replicationcontrollers
+            └ rs             # replicaSet
 kubectl get [LISTA] -o widge # troszke wiecej informccji
 kubectl get [LISTA] -o yaml  # szczegóły
 kubectl describe [LISTA] [NAME] # szczegóły konkretnego poda/noda.  NAME - to nazwa z wyświetlonego polecenia, no get pods
@@ -663,52 +674,112 @@ kubectl cluster-info         # informacje o klastrze
 
 
 #--------------------------------------------------------------------------------------------------
+Pod
+┌───────────────────
+apiVersion: v1               # String
+kind: Pod                    # String
+metadata:                    #
+  name: myapp-pod            # \
+  labels:                    # ├ Dictionary
+    app: myapp               # /
+    tier: frontend           # etykieta do zgrupowania 
+    #env: production
+spec:
+  containers:                # List/Array
+  - name: nginx-container    # 1st item in List
+    image: nginx             # nazwa z DockerHuba
+  #- name: busybox           # opcjonalnie kolejny kontener
+  #  image: busybox  
+└───────────────────
+
+# stworzenie poda:
+kubectl create -f pod-definition.yml
+
+# kasowanie poda
+kubectl delete pod myapp-pod
+
+
+
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
 Replica Set - przywraca uszkodzone kontenery. Dba o to, aby okreslona liczba podow dzialala. Rowniez pomaga w skalowaniu podow
-Reploica Controller - podobne narzedzie jak Replica Set, ale już nei rekomedowany.
+Replication Controller - podobne narzedzie jak Replica Set, ale już nie rekomedowany.
 Przykładowy plik ReplicaSet
 
 ┌───────────────────
 apiVersion: apps/v1
-kind: ReplicaSet
+kind: ReplicaSet  # ReplicationController
 metadata:
   name: rs-webapp
   labels:
-    app: k8smaestro-webapp
+    app: myapp
+    type: front-end
 
 spec:
-  replicas: 3 # ilosc podow, iloma ma sie opiekowac
+  replicas: 3                # ilosc podow, iloma ma sie opiekowac
   
-  template: # jaki pod ma byc uruchomiony w ramach tego replicasetu
-    metadata:
-      labels:
-        app: k8smaestro-webapp
-    spec:
-      containers:
-      - name: webapp
-        image: k8smaestro/web-app:1.0
+  template:                  # jaki pod ma byc uruchomiony w ramach tego replicasetu
+    metadata:                          # \
+      labels:                          # |
+        app: myapp                     # |
+    spec:                              # ├ Zawartosc taka jak w Pod
+      containers:                      # |
+      - name: webapp                   # |
+        image: k8smaestro/web-app:1.0  # /
   
-  selector:  # jakimi konkretnie podami ma sie zaopiekowac (chyba zamiast template?)
-    matchLabels:
-      app: k8smaestro-webapp  # tu odajemy nazwe, jaka jest w pliku definujacym poda:
-                              ┌─────────────────────────┐      
+  selector:                  # jakimi konkretnie podami ma sie zaopiekowac (chyba zamiast template?)
+    matchLabels:             # matchLabels albo matchExpressions
+      type: front-end
+      tier: front-end        # etykieta do grupowania. (To tylko na kursie Udemy)
+      app: myapp             # tu odajemy nazwe, jaka jest w pliku definujacym poda:
+                              ┌────────────────────────┐      
+                              │ #pod-definition.yml     \    
                               │ apiVersion: v1           \    
                               │ kind: Pod                 \   
                               │ metadata:                  \ 
+                              │   name:  myapp-pod          │ # (to tylko na kursie Udemy)
                               │   labels:                   │
-                              │     app: k8smaestro-webapp  │
-                              │                             │
+                              │     app: myapp   <---       │
+                              │     tier: front-end         │ # (to tylko na kursie Udemy)
                               └─────────────────────────────┘
 
+# stworzenie Repliki
+kubectl create -f rc-definition.yml
+
+# sprawdzenie istniejących replik:
+kubectl get rc
+
+# przeładowanie pliku
+kubectl replace -f rc-definition.yml
+
+# przeskalowanie ilosci replik
+kubectl scale --replicas=6 -f rc-definition.yml       # lub:
+kubectl scale replicaset myapp-replicaset --replicas=2 
+kubectl scale --replicas=6 replicaset myapp-replicaset 
+#                           └type      └name
+
+
+# edytowanie (u mnie stacjonarnie nie zadzialalo)
+kubectl edit replicaset myapp-replicaset
+
+
+# usuwanie
+kubectl delete replicaset myapp
+kubectl delete replicaset rs-webapp
+kubectl delete -f rc-definition.yml
+
+
+#--------------------------------------------------------------------------------------------------                                          
 #--------------------------------------------------------------------------------------------------                                          
 Deployment - "spina" w całosc nasza aplikację (troszkę jak docker-compose). 
 Możemy za jego pomoca skalować, podnosić wersję, cofac się.
+Stworzenie deployment - automatycznei stworzy ReplicaSet
 ╔═════════════════════════╗ 
 ║  Deployment             ║ 
 ║  ┌───────────────────┐  ║ 
 ║  │ ReplicaSet        │  ║ 
 ║  │ ┌─────────────┐   │  ║ 
-║  │ │    POD      │   │  ║ 
-║  │ │             │   │  ║ 
+║  │ │  POD        │   │  ║ 
 ║  │ │ ┌─────────┐ │   │  ║ 
 ║  │ │ │Kontener │ │   │  ║ 
 ║  │ │ │ <app>   │ │   │  ║ 
@@ -745,7 +816,40 @@ spec:
     matchLabels:
       app: k8smaestro-webapp           # na podstawie tych etykiet, wiadomo ktore pody naleza do jakich deploymentow
 └───────────────────        
-                              
+
+# stworzenie/uruchomienie nowego deploymentu
+kubectl create -f deployment-def.yml
+
+# kasowanie
+kubectl delete -f deployment-def.yml
+#--------------------------------------------------------------------------------------------------
+Rollout and Versioning
+
+kubectl rollout status deployment/myapp-deployment
+kubectl rollout history deployment/myapp-deployment
+
+# Aby zmienić wersję, trzeba wskazac na nowy kontener w:
+spec:                       
+  template:                 
+    spec:
+      containers:
+        image: k8smaestro/web-app:1.1  <----
+
+
+kubectl apply -f deployment-definiton.yml        
+# drugi, niezalecany sposób:
+kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1
+
+# Rollback:
+kubectl rollout undo deployment/myapp-deployment
+kubectl rollout status deployment/myapp-deployment
+kubectl rollout status deployment.app/myapp-deployment
+kubectl rollout history deployment/myapp-deployment
+kubectl rollout undo deployment/myapp-deployment
+
+
+
+#--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 Namespace - taki "wirtualny klaster" w ramach tego samego fizycznego klastra
 Rodzaje namespace: Pod, ReplicaSet, Deployment, Service, itp...
@@ -795,12 +899,17 @@ kubectl delete -f k8s
 # W dowolnym folderze. Tworze plik 'all-in-one.yml' z zawartoscią poniżej (oczywiscie nazwa dowolna)
 # Z poziou tego folderu odpalam sobie konsole (np git bash) i wywołuje polecenia
 kubectl apply -f all-in-one.yml
+  #jeżeli wyskoczy blad "Unable to connect to the server..." to pewnie trzeba odpalic minikube: minikube start
 kubectl proxy
 
-Dostęp do Podów przez przeglądarkę: 
+# Dostęp do Podów przez przeglądarkę: 
 http://localhost:8001/api/v1/namespaces/game-2048/services/http:service-2048:/proxy/
 
+# Aby sprawdzic wszystkie odpalone "serwisy/usługi"? zwiazane z 
 kubectl get all -n game-2048
+
+# Aby usunac calosc:
+kubectl delete -f all-in-one.yml
 
 
 # zawartosc pliku:
@@ -813,21 +922,21 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: game-2048
+  namespace: game-2048       # musi byc jak wyzej
   name: deployment-2048
 spec:
   selector:
     matchLabels:
-      name: app-2048
+      name: app-2048         # jakimi podami deployment ma sie zaopiekowac (wykrywa wszystkie pody o takiej nazwie)
   replicas: 5
   template:
     metadata:
       labels:
-        name: app-2048
+        name: app-2048       # jaka jest nazwa naszych podow
     spec:
       containers:
-      - image: k8smaestro/2048
-        imagePullPolicy: Always
+      - image: k8smaestro/2048  # obraz z dockerHub
+        imagePullPolicy: Always # polityka pobierania obrazow na klaster (zawsze pobieraj obraz)
         name: app-2048
         ports:
         - containerPort: 80
@@ -839,10 +948,10 @@ metadata:
   name: service-2048
 spec:
   ports:
-    - port: 80
-      targetPort: 80
+    - port: 80               # jaki port ma byc wystawiony
+      targetPort: 80         # port kontenera (containerPort z Deployment, do jakiego porty ma przekierowac ruch)
       protocol: TCP
-  type: ClusterIP
+  type: ClusterIP            # ClusterIP: udostepnij aplikacje tylko w obrebie klastra. (serwi otrzymuje unikalny IP tylko w sieci wewnetrznej )
   selector:
     name: app-2048
 

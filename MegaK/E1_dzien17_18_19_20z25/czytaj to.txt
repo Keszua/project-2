@@ -1,0 +1,14 @@
+Etap 1 - tydzień 4 - dzień 17 z 25 
+Pętle i OOP
+
+Opis projektu
+Faza 1. projektu - logika
+1. Tworzymy koszyk sklepu internetowego.
+2. Do koszyka można dodawać nowe pozycje, w których zawiera się nazwa produktu i jego cena.
+3. Można wyświetlić zawartość koszyka odpowiednią metodą.
+4. Można usunąć element z koszyka odpowiednią metodą.
+5. Można wyświetlić wartość koszyka odpowiednią metodą.
+
+
+link do WS
+https://www.youtube.com/watch?v=f8sAC3Y-SgU

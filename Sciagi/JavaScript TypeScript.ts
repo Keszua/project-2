@@ -74,7 +74,7 @@ interface IUserHelloResponse {
     sayHello: (anotherPerson: string) => void;
 }
 //dziedziczenie interfejsów:
-interface ISpecialUserHelloResponse extends UserHelloResponse {
+interface ISpecialUserHelloResponse extends IUserHelloResponse {
     age: number;
     isEnabled: boolean;
     accountType: UserType;
@@ -85,10 +85,10 @@ interface ISpecialUserHelloResponse extends UserHelloResponse {
 //urzycie interfejsu:   (od tej pory, po Ctrl+space są podpowiedzi, co zawiera ten obiekt)
 fetch('/user-hello')
     .then(r => r.json())
-    .then((data: UserHelloResponse) => {  console.log(data.name)  });
+    .then((data: IUserHelloResponse) => {  console.log(data.name)  });
 
 // interfejsach narzuca, co musi być w klasie (jak funckje czysto witrualne)
-class User implements UserHelloResponse {
+class User implements IUserHelloResponse {
     name: string = '';
     constructor(name: string) { this.name = name; }
     sayHello(anotherPerson: string) { console.log(this.name, 'say hello', anotherPerson); }
@@ -177,7 +177,7 @@ function goToPkp():      Promise<void> { return new Promise(resolve => setTimeou
 function waitForTrain(): Promise<void> { return new Promise(resolve => setTimeout(resolve, 1500)); }
 function travelToDest(): Promise<void> { return new Promise(resolve => setTimeout(resolve, 2000));  }
 
-console.log('Ryszam!');
+console.log('Ruszam!');
 (async () => {
     await goToPkp();
     console.log('Dotarłem do PKP!');

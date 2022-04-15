@@ -217,6 +217,44 @@ type=submit         // Przycisk wysłania formularza.
 //Fajny przyklad okienka z przyciskiem do zwijania (ukrywania) tekstu i rozwijania (na samym koncu):
 // https://kursjs.pl/kurs/dom/dom-relacje.php#relacje
 
+/*-------------------------------------------------------------------------------------------------
+  ###
+ #
+ #       ###    # ###   ### ## 
+####    #   #   ##      #  #  #
+ #      #   #   #       #  #  #
+ #      #   #   #       #  #  #
+ #       ###    #       #  #  #
+-------------------------------------------------------------------------------------------------*/
+// Zawartość .html
+
+<form class="form-add-product">
+	<input 
+		type="text" 
+		name="product-name" 
+		placeholder="Podaj nazwę"      //szary tekst sugestji: co wpisac
+		required		               //wymagany
+	> 
+	<input type="number" name="product-price" placeholder="Podaj cenę" required>
+	<input type="submit">              //to robi za przycisk
+</form>
+
+</input> </input> </input> //te linijki tylo żeby nie psuł okolorów (nie kopiować)
+//-------------------------------------------------------------------------------------------------
+// Zawartosc .js
+
+const addProductForm = document.querySelector('.form-add-product');
+const nameInput = document.querySelector('[name="product-name" ]');   // dla sposobu II
+const priceInput = document.querySelector('[name="product-price" ]');
+
+
+addProductForm.addEventListener('submit', (event) => {
+	event.preventDefault(); //nie odswierzaj strony
+	const name = event.target.elements['product-name'].value;         // sposob I
+	const price =  Number(priceInput.value);						  // sposob II
+});
+
+
 
 /*-------------------------------------------------------------------------------------------------
 #     #            #    #                                    #                   #  # 
@@ -532,7 +570,7 @@ p.forEach(function(el) {
     el.onclick = function() {
         this.classList.add('mark');
     }
-}
+})
 
 //Aby usunąć wcześniej przypisane zdarzenie, wystarczy pod daną właściwość podstawić null:
 element.onclick = null;
@@ -555,7 +593,7 @@ element.removeEventListener('click', showSomething);
 
 
 //przyklad z przyciskami:
-Mamy prosty html:
+//Mamy prosty html:
 
 <div class="element">
     <div class="big"></div>
@@ -579,8 +617,6 @@ document.addEventListener("DOMContentLoaded", function() {
     //mamy kolekcja buttonow - koniecznie petla po nich
     for (const btn of buttons) {
         btn.addEventListener("click", function() {
-            //krok 4
-            //dzialamy
             big.style.background = this.dataset.color;
             big.innerText = this.dataset.color;
         })
@@ -630,6 +666,52 @@ link.addEventListener('click', function(e) {
     e.preventDefault();
     console.log('Ten przycisk nigdzie nie przeniesie.');
 });
+
+
+
+
+
+/*-------------------------------------------------------------------------------------------------
+       #                                                #                                      #           #####  #                                      #  
+       #                                                #                                      #           #      #                                      #
+   #####   ###    ###   #   #  ### ##    ###   ####   #####      ###   # ###   ###    ####   #####   ###   #      #       ###   ### ##    ###   ####   #####
+  #    #  #   #  #   #  #   #  #  #  #  #   #  #   #    #       #   #  ##     #   #       #    #    #   #  ####   #      #   #  #  #  #  #   #  #   #    #
+  #    #  #   #  #      #   #  #  #  #  #####  #   #    #       #      #      #####   #####    #    #####  #      #      #####  #  #  #  #####  #   #    #
+  #    #  #   #  #   #  #   #  #  #  #  #      #   #    #       #   #  #      #      #    #    #    #      #      #   #  #      #  #  #  #      #   #    #
+   #####   ###    ###    ####  #  #  #   ###   #   #     ##  #   ###   #       ###    ### #     ##   ###   #####   ###    ###   #  #  #   ###   #   #     ##
+-------------------------------------------------------------------------------------------------*/
+document.createElement()
+
+// do istniejacego <ul>, dodamy  <li> z tekstem i przyciskiem
+╔═══════════════════════════════════════════════════════════════╦══════════════════════════════════════════╗
+║  admin-ui.js                                                  ║  index.html                              ║
+╠═══════════════════════════════════════════════════════════════╬══════════════════════════════════════════╣
+│const prList = document.querySelector('.pr-list');             │ <ul class="pr-list">                     │
+│const newLi = document.createElement('li');                    │   <li>                                   │
+│const newStrong = document.createElement('strong');            │     <strong>                             │
+│newStrong.innerText = 'Pomidor';                               │       Pomidor                            │
+│                                                               │     </strong>                            │
+│let price = 7.5099999;                                         │                                          │
+│const newPric = document.createTextNode(`${price.toFixed(2)}`) │     7.51                                 │
+│const newBtn = document.createElement('button');               │     <button                              │
+│newBtn.classList.add('btn-buy-product');                       │       class="btn-buy-product"            │
+│newBtn.dataset.name = 'Pomidor';                               │       data-name="Pomidor"                │
+│newBtn.dataset.price = String(price);                          │       data-price="7.50"                  │
+│                                                               │     >                                    │
+│newBtn.innerText = 'Kup';                                      │       Kup                                │
+│                                                               │     </button>                            │
+│newBtn.addEventListener('click', addProductToBasket);          │                                          │
+│//ważna kolejnosc dodawania tych elementow do li               │                                          │
+│newLi.appendChild(newStrong);                                  │   </li>                                  │
+│newLi.appendChild(newPric);                                    │                                          │
+│newLi.appendChild(newBtn);                                     │                                          │
+│                                                               │                                          │
+│productList.appendChild(newLi);                                │ </ul>                                    │
+│                                                               │                                          │
+│                                                               │ <script src="src/admin-ui.js"> </script> │
+└───────────────────────────────────────────────────────────────┴──────────────────────────────────────────┘
+
+
 
 
 //Przyklad dodawania elementu:
@@ -1224,25 +1306,25 @@ window.open(url, name, options)
 	Set-Cookie: value;max-age=seconds;domain=domena;path=sciezka;secure;HttpOnly
 
 //Parametry:
-════════════╦═══════════╦═══════════════════════════════════════════════╦═════════════════════════════════╗
-Parametr    ║ Wymagane	║ Co oznacza									║ Przykladowa wartosc             ║
-════════════╬═══════════╬═══════════════════════════════════════════════╬═════════════════════════════════╝
-value		│Wymagane	│Wartosc i nazwa ciasteczka						│ username=Marcin                 │
-────────────┼───────────┼───────────────────────────────────────────────┼─────────────────────────────────┤
-max-age		│Opcjonalne	│czas w sekundach								│ 6050050                         │ 
-────────────┼───────────┼───────────────────────────────────────────────┼─────────────────────────────────┤
-domain		│Opcjonalne	│domena na ktorej bedzie dzialac to ciasteczko	│ kurspl.pl                       │
-			│			│												│ <http://taka.sobie.domena/sciezka>
-────────────┼───────────┼───────────────────────────────────────────────┼─────────────────────────────────┤
-path		│Opcjonalne	│sciezka do domeny, albo do podkatalogu			│ /                               │
-────────────┼───────────┼───────────────────────────────────────────────┼─────────────────────────────────┤
-secure		│Opcjonalne	│Zabezpieczenia ciasteczka. 					│                                 │
-            │			│Czy ma ono sie odwolywac tylko do https		│ secure                          │
-────────────┼───────────┼───────────────────────────────────────────────┼─────────────────────────────────┤
-HttpOnly	│Opcjonalne	│Czy bedzeimy mogli sie odwolywac do ciasteczek	│                                 │
-			│			│z poziomu JavaScript							│ HttpOnly                        │
-────────────┴───────────┴───────────────────────────────────────────────┴─────────────────────────────────┘
-
+╔════════════╦═══════════╦═══════════════════════════════════════════════╦═════════════════════════════════╗
+║ Parametr   ║ Wymagane  ║ Co oznacza                                    ║ Przykladowa wartosc             ║
+╚════════════╬═══════════╬═══════════════════════════════════════════════╬═════════════════════════════════╝
+│ value      │Wymagane   │Wartosc i nazwa ciasteczka                     │ username=Marcin                 │
+├────────────┼───────────┼───────────────────────────────────────────────┼─────────────────────────────────┤
+│ max-age    │Opcjonalne │czas w sekundach                               │ 6050050                         │ 
+├────────────┼───────────┼───────────────────────────────────────────────┼─────────────────────────────────┤
+│ domain     │Opcjonalne │domena na ktorej bedzie dzialac to ciasteczko  │ kurspl.pl                       │
+│            │	         │											     │ <http://taka.sobie.domena/sciezka>
+├────────────┼───────────┼───────────────────────────────────────────────┼─────────────────────────────────┤
+│ path       │Opcjonalne │sciezka do domeny, albo do podkatalogu         │ /                               │
+├────────────┼───────────┼───────────────────────────────────────────────┼─────────────────────────────────┤
+│ secure     │Opcjonalne │Zabezpieczenia ciasteczka.                     │                                 │
+│            │           │Czy ma ono sie odwolywac tylko do https        │ secure                          │
+├────────────┼───────────┼───────────────────────────────────────────────┼─────────────────────────────────┤
+│ HttpOnly   │Opcjonalne │Czy bedzeimy mogli sie odwolywac do ciasteczek │                                 │
+│            │			 │z poziomu JavaScript							 │ HttpOnly                        │
+└────────────┴───────────┴───────────────────────────────────────────────┴─────────────────────────────────┘
+ 
 
 //Pierwsza czesc skladni ciasteczka zajmuje nazwa ciasteczka oraz jego wartosc. Sa to jedyne wymagane parametry ciasteczka
 expires 	okresla date wygasniecia
@@ -1441,52 +1523,6 @@ kierunek rysowania - czy zgodnei ze wskazowkami zegra?
 
 //wieej na: https://kursjs.pl/kurs/canvas/canvas.php#curve
 
-
-
-
-
-
-/*-------------------------------------------------------------------------------------------------
-   #####                     #                          #####   #####    ###    #####
-     #                       #                              #   #       #   #     #
-     #      ###     ###    #####   #    #                   #   #       #         #
-     #     #   #   #         #     #   #                    #   ####     ###      #
-     #     #####    ###      #      # #                     #   #           #     #
-     #     #           #     #       #                  #   #   #       #   #     #
-     #      ###     ###       ##    #                    ###    #####    ###      #
-                                   #
--------------------------------------------------------------------------------------------------*/
-JEST
-//strona z dokumentacja: https://jestjs.io/docs/en/using-matchers
-
-//filmik szkoleniowy: https://www.youtube.com/watch?v=jpV3WEi3shs&t=440s
-
-//Zakladanie nowego projetu przez:
-	npm init --yes
-	npm install --save-dev jest
-
-
-//proponowane paczki do testow
-	npm install--save - dev @babel/cli @babel/core @babel/preset-env babel-jest @babel/plugin - transform - modules - commonjs
-//trzeba zrobic konfiguracje bable:
-//stworzyc plik babel.config.js a w nim wpisac:
-	module.exports = {
-		presets: [['@babel/preset-env', { targets: { node: 'current' } }]],
-		plugins: [['@babel/plugin-transform-modules-commonjs']],
-	};
-
-w folderze package.json trzeba dodac w: "scripts"
-  "scripts": {
-    "test": "jest", //edytowany
-    "build": "babel ./src/index.js --out-dir build --ignore 'src/*.test.js'", //to dodane
-    "start": "npm run build && node ./build/index.js"  //to dodane
-  },
-
-
-
-
-//aby uruchomic testy:
-npm run test
 
 
 

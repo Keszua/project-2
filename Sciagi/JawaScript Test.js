@@ -1,8 +1,64 @@
+
+/*-------------------------------------------------------------------------------------------------
+   #####                     #                          #####   #####    ###    #####
+     #                       #                              #   #       #   #     #
+     #      ###     ###    #####   #    #                   #   #       #         #
+     #     #   #   #         #     #   #                    #   ####     ###      #
+     #     #####    ###      #      # #                     #   #           #     #
+     #     #           #     #       #                  #   #   #       #   #     #
+     #      ###     ###       ##    #                    ###    #####    ###      #
+                                   #
+-------------------------------------------------------------------------------------------------*/
+JEST
+//strona z dokumentacja: https://jestjs.io/docs/en/using-matchers
+
+//filmik szkoleniowy: https://www.youtube.com/watch?v=jpV3WEi3shs&t=440s
+
+//Zakladanie nowego projetu przez:
+	npm init --yes
+	npm install --save-dev jest
+
+
+//proponowane paczki do testow
+	npm install--save - dev @babel/cli @babel/core @babel/preset-env babel-jest @babel/plugin - transform - modules - commonjs
+//trzeba zrobic konfiguracje bable:
+//stworzyc plik babel.config.js a w nim wpisac:
+	module.exports = {
+		presets: [['@babel/preset-env', { targets: { node: 'current' } }]],
+		plugins: [['@babel/plugin-transform-modules-commonjs']],
+	};
+
+w folderze package.json trzeba dodac w: "scripts"
+  "scripts": {
+    "test": "jest", //edytowany
+    "build": "babel ./src/index.js --out-dir build --ignore 'src/*.test.js'", //to dodane
+    "start": "npm run build && node ./build/index.js"  //to dodane
+  },
+
+
+
+
+//aby uruchomic testy:
+npm run test
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------
 Filmik 106 (Node.js, Express i MongoDB)
 
 npm init - inicjalizuje projekt
 
-W package.json można dodać pole  "private": true zby zablokowac możliwoś opublikowania paczki
+W package.json można dodać pole  "private": true zeby zablokowac możliwoś opublikowania paczki
 Instaluje npm install express
 //Tworze plik app.js  treść pliku:
 	const express = require('express');
