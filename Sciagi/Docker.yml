@@ -596,13 +596,18 @@ docker build -f Dockerfile.dev -t stylerhun/multi-server .
 docker run -it -p 4003:5000 --name=P1Back stylerhun/multi-server
 
 
-  #   #           #                                         #
-  #  #            #                                         #
-  # #     #   #   ####     ###    # ###   ####     ###    #####    ###     ###
-  ##      #   #   #   #   #   #   ##      #   #   #   #     #     #   #   #
-  # #     #   #   #   #   #####   #       #   #   #####     #     #####    ###
-  #  #    #   #   #   #   #       #       #   #   #         #     #           #
-  #   #    ####   ####     ###    #       #   #    ###       ##    ###     ###
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+  #   #           #                                         #                           .
+  #  #            #                                         #                           .
+  # #     #   #   ####     ###    # ###   ####     ###    #####    ###     ###          .
+  ##      #   #   #   #   #   #   ##      #   #   #   #     #     #   #   #             .
+  # #     #   #   #   #   #####   #       #   #   #####     #     #####    ###          .
+  #  #    #   #   #   #   #       #       #   #   #         #     #           #         .
+  #   #    ####   ####     ###    #       #   #    ###       ##    ###     ###          .
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 KUBERNEST
 
@@ -618,7 +623,7 @@ KUBERNEST
 
 komendy na: https://kubernetes.io/docs/reference/kubectl/
 
-kubectl version  # sprawdzenie, czy jest zainstalowany kubernest i w jakiej wersjii
+kubectl version  # sprawdzenie, czy jest zainstalowany kubernetes i w jakiej wersjii
 kubectl version --client --output=yaml    # 
 
 # tworzenie podów zdefiniowanych w folderze k8s ( trzeba być na takim poziomie, żeby po wpisaniu ls widac było folder 'k8s')
@@ -662,7 +667,7 @@ Gdy skończy się przepustowość, a urzytkowników nadal przybywa, skalowanie o
 kubectl get ┬ all            # pokaze pody, serwisy 
             ├ pods           # lista podów  z -A pokazuje ukryte systemowe
             ├ nodes          # lista wezlow
-            ├ services       # lista serwisów z IP oraz portami
+            ├ svc            # services  # lista serwisów z IP oraz portami
             ├ deployments    # aplikacja
             ├ namespaces     # 
             ├ rc             # replicationcontrollers
@@ -673,6 +678,26 @@ kubectl describe [LISTA] [NAME] # szczegóły konkretnego poda/noda.  NAME - to 
 kubectl cluster-info         # informacje o klastrze
 
 
+
+
+
+
+# pliki definicji .yaml  lub .yml
+# zawsze zawiera 4 podstawowe pola:
+apiVersion: v1  # wersja kubernetes
+kind:           # rodzaj
+metadata:
+spec:
+
+
+#--------------------------------------------------------------------------------------------------
+  ####                   #
+  #   #                  #
+  #   #     ###      #####
+  ####     #   #    #    #
+  #        #   #    #    #
+  #        #   #    #    #
+  #         ###      #####
 #--------------------------------------------------------------------------------------------------
 Pod
 ┌───────────────────
@@ -695,12 +720,23 @@ spec:
 # stworzenie poda:
 kubectl create -f pod-definition.yml
 
+# Tworzenie poda z kontenerem ngix (z filmiku od Mariusza)
+kubectl run nginx --image=nginx
+
 # kasowanie poda
 kubectl delete pod myapp-pod
 
 
 
 #--------------------------------------------------------------------------------------------------
+   ####                    #                               ###              #  
+   #   #                   #        #                     #   #             #
+   #   #    ###    ####    #              ###     ####    #        ###    #####
+   ####    #   #   #   #   #       ##    #   #        #    ###    #   #     #
+   # #     #####   #   #   #        #    #        #####       #   #####     #
+   #  #    #       ####    #   #    #    #   #   #    #   #   #   #         #
+   #   #    ###    #        ###    ###    ###     ### #    ###     ###       ##
+                   #
 #--------------------------------------------------------------------------------------------------
 Replica Set - przywraca uszkodzone kontenery. Dba o to, aby okreslona liczba podow dzialala. Rowniez pomaga w skalowaniu podow
 Replication Controller - podobne narzedzie jak Replica Set, ale już nie rekomedowany.
@@ -770,10 +806,18 @@ kubectl delete -f rc-definition.yml
 
 
 #--------------------------------------------------------------------------------------------------                                          
+   #####                    #                                                    #  
+    #   #                   #                                                    #
+    #   #    ###    ####    #        ###    #    #   ### ##     ###    ####    #####
+    #   #   #   #   #   #   #       #   #   #   #    #  #  #   #   #   #   #     #
+    #   #   #####   #   #   #       #   #    # #     #  #  #   #####   #   #     #
+    #   #   #       ####    #   #   #   #     #      #  #  #   #       #   #     #
+   #####     ###    #        ###     ###     #       #  #  #    ###    #   #      ##
+                    #                       #
 #--------------------------------------------------------------------------------------------------                                          
 Deployment - "spina" w całosc nasza aplikację (troszkę jak docker-compose). 
 Możemy za jego pomoca skalować, podnosić wersję, cofac się.
-Stworzenie deployment - automatycznei stworzy ReplicaSet
+Stworzenie deployment - automatycznie stworzy ReplicaSet
 ╔═════════════════════════╗ 
 ║  Deployment             ║ 
 ║  ┌───────────────────┐  ║ 
@@ -822,6 +866,18 @@ kubectl create -f deployment-def.yml
 
 # kasowanie
 kubectl delete -f deployment-def.yml
+
+# kasowanie wszystkiego
+kubectl delete deployment --all
+
+#--------------------------------------------------------------------------------------------------
+   ####            #       #                         #  
+   #   #           #       #                         #
+   #   #    ###    #       #        ###    #   #   #####
+   ####    #   #   #       #       #   #   #   #     #
+   # #     #   #   #       #       #   #   #   #     #
+   #  #    #   #   #   #   #   #   #   #   #   #     #
+   #   #    ###     ###     ###     ###     ####      ##
 #--------------------------------------------------------------------------------------------------
 Rollout and Versioning
 
@@ -838,18 +894,143 @@ spec:
 
 kubectl apply -f deployment-definiton.yml        
 # drugi, niezalecany sposób:
-kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1
+kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1 --record
+#                                                                 └tylko, gdy chcemy, zeby się zapisywała i odczytywała hostoria poprzez rollout
 
-# Rollback:
+# Rollback:  film 35 ok 10:00 (Kubernetes for the Absolute Beginners - Hands-on)
 kubectl rollout undo deployment/myapp-deployment
 kubectl rollout status deployment/myapp-deployment
 kubectl rollout status deployment.app/myapp-deployment
 kubectl rollout history deployment/myapp-deployment
-kubectl rollout undo deployment/myapp-deployment
+kubectl rollout undo deployment/myapp-deployment           # przywrócenie poprzedniej wersji. Przydatne najbardziej, gdy wprowadzimy złą wersję i wywali błąd przy próbie wdrożenia (zastąpienia)
+
+
+#--------------------------------------------------------------------------------------------------
+   #   #             #                               #
+   ##  #             #                               #       #
+   ##  #    ###    #####   #     #    ###    # ###   #  #         ####     ####
+   # # #   #   #     #     #     #   #   #   ##      # #    ##    #   #   #   #
+   #  ##   #####     #     #  #  #   #   #   #       ##      #    #   #   #   #
+   #  ##   #         #     # # # #   #   #   #       # #     #    #   #    ####
+   #   #    ###       ##    #   #     ###    #       #  #   ###   #   #       #
+                                                                          ####
+#--------------------------------------------------------------------------------------------------
+Networking
+# film 37 (Kubernetes for the Absolute Beginners - Hands-on)
+# Kazdy pod otrzymuje swój adres IP: 10.244.0.2, 10.244.0.3 itd
+# Wszsytkie pody na naszym lokalnym kompie, widziane są przez chmórę: 10.244.0.0
+
+# Narzędzia do konfiguracji sieci:
+Cisco, cilium, flannel Vilmer, vmware NSX, Psyllium, Big Cloud fabric, Kalikow
 
 
 
 #--------------------------------------------------------------------------------------------------
+    ###
+   #   #                              #
+   #        ###    # ###   #     #          ###     ###     ###
+    ###    #   #   ##      #     #   ##    #   #   #   #   #
+       #   #####   #        #   #     #    #       #####    ###
+   #   #   #       #         # #      #    #   #   #           #
+    ###     ###    #          #      ###    ###     ###     ###
+#--------------------------------------------------------------------------------------------------
+Services
+# film 38 (Kubernetes for the Absolute Beginners - Hands-on)
+# Usługi umożliwiają komunikację między róznymi komponentami w ramach aplikacji i po za nią
+# My łączymy się za pomocą asrestu i portu, a Service, ten port przełaczy z IP konkretnego Poda
+
+Service Types:
+  - NodePort
+  - ClusterIP
+  - LoadBalancer
+
+#--------------------------------------
+NodePort
+#                                     ╔════════════════════════════════════════╗ 
+#                                     ║        192.168.1.2                     ║
+# mój laptop                          ║─────┐    ┌────────┬──┐    ┌──┬───────┐ ║
+# curl http://192.168.1.2:30008 ----> ║30008│ -->│Service │80│ -->│80│    POD│ ║
+#   Zakres: 30000 - 32767             ║─────┘    └───────────┘    │10.244.0.2│ ║
+#                                     ║ Node                      └──────────┘ ║
+#                                     ╚════════════════════════════════════════╝ 
+#                                     nodePort            port     targetPort
+┌───────────────────
+apiVersion: v1          
+kind: Service
+metadata:                   
+  name: myapp-service     # dowolna nazwa
+  #labels:
+    #name:
+    #app:
+spec:
+  type: NodePort
+  ports:
+  - targetPort: 80
+    port: 80
+    nodePort: 30008
+ 
+  selector:  
+    app: myapp       #─┬─ dane takie, jak w "Pod" w sekcji metadata->labels
+    type: front-end  #─┘ 
+└───────────────────
+
+#--------------------------------------
+ClusterIP  # film 40. Zastosowany gdy projekt podzielony na front, back i baza danych
+┌───────────────────
+apiVersion: v1          
+kind: Service
+metadata:                   
+  name: back-end     # dowolna nazwa
+spec:
+  type: ClusterIP
+  ports:
+  - targetPort: 80
+    port: 80
+  
+  selector:
+    app: myapp       #─┬─ dane takie, jak w "Pod" w sekcji metadata->labels
+    type: front-end  #─┘ 
+└───────────────────
+
+#--------------------------------------
+LoadBalancer # film 41. To działa tylko z usługami chmurowymi
+┌───────────────────
+apiVersion: v1          
+kind: Service
+metadata:                   
+  name: myapp-service     # dowolna nazwa
+spec:
+  type: LoadBalancer
+  ports:
+  - targetPort: 80
+    port: 80
+    nodePort: 30008
+└───────────────────
+
+
+#--------------------------------------
+# tworzenie servisu
+kubectl creatae -f service-definition.yml
+
+# pobireanie informacji o uruchomionych serwisach
+kubectl get services
+
+# pobranie adresu url w minikube (film 39)
+minikube service myapp-service --url
+
+# jeżeli istnieje serwis, powinno udac sie pobrac strone (nie wiem skąd ten adres)
+curl http://192.168.1.2:30008
+
+
+#--------------------------------------------------------------------------------------------------
+   #   #
+   ##  #
+   ##  #    ####    ### ##     ###     ###    ####     ####     ###     ###
+   # # #        #   #  #  #   #   #   #       #   #        #   #   #   #   #
+   #  ##    #####   #  #  #   #####    ###    #   #    #####   #       #####
+   #  ##   #    #   #  #  #   #           #   ####    #    #   #   #   #
+   #   #    ### #   #  #  #    ###     ###    #        ### #    ###     ###
+                                              #
 #--------------------------------------------------------------------------------------------------
 Namespace - taki "wirtualny klaster" w ramach tego samego fizycznego klastra
 Rodzaje namespace: Pod, ReplicaSet, Deployment, Service, itp...
@@ -868,6 +1049,45 @@ metadata:
 kubectl get ┬ namespaces                   # lista przestrzeni nazw
             ├ pods -n webapp-namespace     # jakie pody naleza do tej przestrzeni nazw
             └ all -n webapp-namespace      # wszystkie elementy przypisane do danej przestrzeni nazw
+
+
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+Microservices  # film 44 (Kubernetes for the Absolute Beginners - Hands-on)
+
+Tworzenie serwisu do głosowania
+
+# tworzymy kontener z redisem, port 6379 
+docker run -d --name=redis redis
+# tworzymy kontener z bazą danych, port 5432
+docker run -d --name=db postgres:9.4
+# plikacj Web dla frontu, na której jest formulaz do głosowania (napisany w Pythonie), port 80
+docker run -d --name=vote -p 5000:80 --link redis:redis  voting-app
+# aplikacja do wyswietlanai wyników (napisana w node.js), port 80
+docker run -d --name=result -p 5001:80 --link db:db  result-app
+# aplikacja która będzie zbierała głosy i zapisywała ja w bazie (napisana w .NET)
+docker run -d --name=worker --link db:db --link redis:redis  worker
+
+# kroki do osiągniecia celu:
+1. Deploy PODs
+2. Create Services (ClusterIP)
+  1. redis
+  2. db
+3. Create Services (NodePort)
+  1. voting-app
+  2. result-app
+
+# sprawdzenie czy się wutworzył:
+kubectl get pods,svc
+
+# utworzenie tunelu, aby sprawdzić przez stronę, czy coś widać (w CMD w trybie administratora):
+minikube service voting-service --url
+# u mnie nie zadziałało
+
+
+
+
+
 
 
 
@@ -894,7 +1114,7 @@ kubectl delete -f k8s
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
-# Dzialjacy przyklad.
+# Dzialajacy przyklad.
 # Zakladam, ze mam uruchomiony minikube.
 # W dowolnym folderze. Tworze plik 'all-in-one.yml' z zawartoscią poniżej (oczywiscie nazwa dowolna)
 # Z poziou tego folderu odpalam sobie konsole (np git bash) i wywołuje polecenia
@@ -961,40 +1181,17 @@ spec:
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
+MINIKUBE
+# Uruchomienie minikube na windowsie.
+# Trzeba odpalić CMD w trybie administratora i uruchomic polecenie: (zakąłdam ze mam zainstalowany hyperV)
+minikube start --driver=hyperv
 
+#od tej pory powinny działać poelcenia:
+minikube start
+minikube stop
 
-# Tworzenie poda z kontenerem ngix
-kubectl run nginx --image=nginx
-
-
-JSON
-{
-  Servers: [
-    {
-      name: Server1,
-      owner: John,
-      created: 12232012,
-      status: active,
-    }
-  ]
-}
-
-YAML
-Servers:
-  - name: Server1
-    owner: John
-    created: 12232012
-    status: active
-
-pod-definition.yaml
-# zawsze zawiera 4 podstawowe pola:
-apiVersion: v1  # wersja kubernetes
-kind:           # rodzaj
-metadata:
-
-spec:
-
-
+# aby skasować minikube:
+minikube delete
 
 
 

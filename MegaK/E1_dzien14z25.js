@@ -1,6 +1,6 @@
-//najlepiej w DOM-u
+// najlepiej w DOM-u
 // gra na szukanie CSS-ów https://flukeout.github.io/
-// mdn accesskey  - co wpisac w syszukiwarkę, aby dowiedzieć się co oznaczają metody dla obiektów DOM
+// mdn accesskey  - co wpisac w wyszukiwarkę, aby dowiedzieć się co oznaczają metody dla obiektów DOM
 
 document.querySelector('h1'); 	       //wyszuka pierwszy pasujacy
 document.querySelectorAll('h1');       //wyszuka wszystkie

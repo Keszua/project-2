@@ -13,29 +13,23 @@ Faza 1. projektu - logika
 
 class Basket {
 	constructor() {
-		this.items = [];
-		this.totalValue = 0;
-		
-		const storageBasket = localStorage.getItem('basket');
-		if(storageBasket) {
-			this.items =JSON.parse(storageBasket);
-			
-		}
-		
+		this.items = this.loadFromLocalStorage() ?? []; // to samo co:   ls ? ls : [];
 	}
 
 	clear() {
 		this.items.length = 0; // lub this.items.splice(0); lub this.items = []; lub this.items.length = 0;
 	
-		localStorage.removeItem('basket');
+		//localStorage.removeItem('basket-items');
+		saveToLocalStorage();
 	}
 	
 	add(item) {
 		this.items.push(item);
 		this.totalValue += item.price;
 
-		const storage = JSON.stringify(this.items);
-		localStorage.setItem('basket', storage);
+		//const storage = JSON.stringify(this.items);
+		//localStorage.setItem('basket-items', storage);
+		this.saveToLocalStorage();
 	}
 
 	getTotalValue() {
@@ -55,9 +49,27 @@ class Basket {
 	remove(number) {
 		this.items.splice(number -1, 1);
 
-		const storage = JSON.stringify(this.items);
-		localStorage.setItem('basket', storage);
+		//const storage = JSON.stringify(this.items);
+		//localStorage.setItem('basket-items', storage);
+		this.saveToLocalStorage();
 	}
+
+	saveToLocalStorage() {
+		localStorage.setItem('basket-items',JSON.stringify(this.items));
+	}
+
+	loadFromLocalStorage() {
+		// this.items = JSON.parse(localStorage.getItem('basket-items'));
+		// console.log('koszyk',this.items);
+
+		const itemJson = localStorage.getItem('basket-items');
+		if(itemJson) {
+			return JSON.parse(itemJson);
+		} else {
+			return [];
+		}
+	}
+
 }
 
 class Product {

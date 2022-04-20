@@ -53,17 +53,15 @@ a - wszystkie te części
 
 # opis literek przy kalatlochac/plikach:
 drwxrwxrwx
-||  |  |
-||  |  inni
-||  grupa
-|uzytkownik
-"-" to plik, "d" to katalog, "l" to link (skrót)
+│└┬┘└┬┘└─┴ inni
+│ │  └ grupa
+│ └ uzytkownik
+└ "-" to plik; "d" to katalog; "l" to link (skrót)
 
 rwx
-|||
-||uruchomienie
-|modyfikacja
-odczyt
+││└ uruchomienie
+│└ modyfikacja
+└ odczyt
 
 touch nowy.txt              # stworzenie nowego pliku (pustego pliku)
 chmod u g o                 # u-user g-group 0-other  a-all
