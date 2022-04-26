@@ -139,7 +139,7 @@ docker network disconnect bridge first   #  odpiecie kontenera od domyslnej siec
 #  Endpoint informujacy o stanie serwisu: (w konsoli linuxa)
 curl http://172.17.0.3:8080/actuator/health
 
-#  do wywyłania postów curlem:
+#  do wywołania postów curlem:
 curl -X POST http://localhost:3000/parametr
 
 
@@ -176,7 +176,7 @@ docker image history nazwaObrazu   # mozna podejzec, kiedy i z jakich warstwy zo
 docker image inspect idKontenera   # wyswietla pelna konfiguracje obrazu (w formacie JSON)
 
 #  nadawanie nowego tagu
-docker image tag nazwa:aTagiem nazwaKontaDockerHub/nazwa
+docker image tag nazwa:zTagiem nazwaKontaDockerHub/nazwa
 #                                                   |- nazwa z ewentualnym tagiem
 
 #  wyslanie obrazu na wlasne repozytorium:
@@ -618,7 +618,8 @@ KUBERNEST
         "kubernetes": "*.yaml"
     }
 
-
+# chymura na google:
+https://cloud.google.com/free/docs/gcp-free-tier
 
 
 komendy na: https://kubernetes.io/docs/reference/kubectl/
@@ -634,23 +635,23 @@ kubectl apply -f k8s
 ║                                     Kubernetes Cluster                                           ║
 ║ ╔════════════════════╗    ╔═════════════════════════════════════════════════════╗                ║
 ║ ║ Control plane      ║    ║ Data plane                                          ║                ║
-║ ║ (mózg Kubernetesa) ║    ║ (worker nodes)                                      ║                ║
-║ ║  ┌─────────┐       ║    ║  ┌─────────────────────────────┐    ┌─-----------┐  ║                ║ 
-║ ║  │ Master  │       ║    ║  │ Node                        │    │ Node       │  ║                ║ 
-║ ║  └─────────┘       ║    ║  │ ┌─────────────┐ ┌-----┐     │                    ║                ║ 
-║ ║  ┌─────────┐       ║    ║  │ │    POD      │   POD       │    │            │  ║                ║ 
-║ ║  │ Master  │       ║    ║  │ │┌-----------┐│ │     │     │                    ║                ║ 
-║ ║  └─────────┘       ║    ║  │ ││ localhost ││             │    │            │  ║                ║ 
-║ ║  ┌─────────┐       ║    ║  │ │ ┌─────────┐││ │     │     │                    ║                ║ 
-║ ║  │ Master  │       ║    ║  │ │││ Kontener│ │             │    │            │  ║                ║ 
-║ ║  └─────────┘       ║    ║  │ │ └─────────┘││ │     │     │                    ║                ║ 
-║ ║                    ║    ║  │ ││┌─────────┐ │             │    │            │  ║                ║ 
-║ ║                    ║    ║  │ │ │ Kontener│││ │     │     │                    ║                ║
-║ ║                    ║    ║  │ ││└─────────┘ │             │    │            │  ║                ║
-║ ║                    ║    ║  │ │└───────────┘│             │                    ║                ║
-║ ║                    ║    ║  │ └─────────────┘ └-----┘     │                    ║                ║
-║ ║                    ║    ║  │                             │    │            │  ║                ║
-║ ║                    ║    ║  │                             │                    ║                ║
+║ ║ (mózg Kubernetesa) ║    ║ (worker nodes)    kubelet     Kube-proxy            ║                ║
+║ ║                    ║    ║                     Container Runtime Engine        ║                ║  
+║ ║  ┌──────────────┐  ║    ║  ┌─────────────────────────────┐    ┌─-----------┐  ║                ║ 
+║ ║  │ Master       │  ║    ║  │ Node                        │    │ Node       │  ║                ║ 
+║ ║  │──────────────│  ║    ║  │ ┌─────────────┐ ┌-----┐     │                    ║                ║ 
+║ ║  │ETCD CLUSTER  │  ║    ║  │ │    POD      │   POD       │    │            │  ║                ║ 
+║ ║  │kube-apiserver│  ║    ║  │ │┌-----------┐│ │     │     │                    ║                ║ 
+║ ║ │Kube Controller│  ║    ║  │ ││ localhost ││             │    │            │  ║                ║ 
+║ ║ │Manager        │  ║    ║  │ │ ┌─────────┐││ │     │     │                    ║                ║ 
+║ ║  │kube-scheduler│  ║    ║  │ │││Kontener │ │             │    │            │  ║                ║ 
+║ ║  └──────────────┘  ║    ║  │ │ └─────────┘││ │     │     │                    ║                ║ 
+║ ║  ┌─────────┐       ║    ║  │ ││┌─────────┐ │             │    │            │  ║                ║ 
+║ ║  │ Master  │       ║    ║  │ │ │Kontener │││ │     │     │                    ║                ║
+║ ║  └─────────┘       ║    ║  │ ││└─────────┘ │             │    │            │  ║                ║
+║ ║  ┌─────────┐       ║    ║  │ │└───────────┘│             │                    ║                ║
+║ ║  │ Master  │       ║    ║  │ └─────────────┘ └-----┘     │    │            │  ║                ║
+║ ║  └─────────┘       ║    ║  │                             │                    ║                ║
 ║ ║                    ║    ║  └─────────────────────────────┘    └------------┘  ║                ║
 ║ ╚════════════════════╝    ╚═════════════════════════════════════════════════════╝                ║
 ╚══════════════════════════════════════════════════════════════════════════════════════════════════╝
@@ -669,16 +670,18 @@ kubectl get ┬ all            # pokaze pody, serwisy
             ├ nodes          # lista wezlow
             ├ svc            # services  # lista serwisów z IP oraz portami
             ├ deployments    # aplikacja
-            ├ namespaces     # 
+            ├ ns             # namespaces
             ├ rc             # replicationcontrollers
-            └ rs             # replicaSet
+            ├ rs             # replicaSet
+            ├ job            # job, to taki jednorazowy pod
+            └ cronejob
 kubectl get [LISTA] -o widge # troszke wiecej informccji
 kubectl get [LISTA] -o yaml  # szczegóły
 kubectl describe [LISTA] [NAME] # szczegóły konkretnego poda/noda.  NAME - to nazwa z wyświetlonego polecenia, no get pods
 kubectl cluster-info         # informacje o klastrze
+kubectl edit pod nazwa-poda  # 
 
-
-
+watch -n 1 kubectl get pods  # stały podgląd 
 
 
 
@@ -688,6 +691,8 @@ apiVersion: v1  # wersja kubernetes
 kind:           # rodzaj
 metadata:
 spec:
+
+
 
 
 #--------------------------------------------------------------------------------------------------
@@ -701,30 +706,50 @@ spec:
 #--------------------------------------------------------------------------------------------------
 Pod
 ┌───────────────────
-apiVersion: v1               # String
-kind: Pod                    # String
-metadata:                    #
-  name: myapp-pod            # \
-  labels:                    # ├ Dictionary
-    app: myapp               # /
-    tier: frontend           # etykieta do zgrupowania 
+apiVersion: v1                    # String
+kind: Pod                         # String
+metadata:                         #
+  name: myapp-pod                 # \
+  labels:                         # ├ Dictionary
+    app: myapp                    # /
+    tier: frontend                # etykieta do zgrupowania 
     #env: production
 spec:
-  containers:                # List/Array
-  - name: nginx-container    # 1st item in List
-    image: nginx             # nazwa z DockerHuba
-  #- name: busybox           # opcjonalnie kolejny kontener
-  #  image: busybox  
+  containers:                     # List/Array
+  - name: nginx-container         # pierwszy kontener. Dowolna nazwa
+    image: nginx                  # nazwa z DockerHuba
+    command: [ "sleep", "inf"]    # opcjonalnie. Te opcje "przytrzymują kontener przy życiu"
+  - name: nginx                   # opcjonalnie kolejny kontener
+    image: nginx
+    ports:
+      - containerPort: 80
+  - name: ubuntu
+    image: ubuntu:18.04
+    command: [ "/bin/sh", "-c" ]
+    args: [ "sleep 5; exit 1" ]   # to ustawienie ma zasymulować błędne zakończenie programu, Nie urzyzwac tego
+    env:                          # [opcja] zmienne środowiskowe
+    - name: LINK_MY               # mozna je podejzec poleceniem: kubectla logs nazwa uruchomionego poda
+      value: "https://strefakursow.pl"
+    - name: LICZBA_KURSOW
+      value: "100" 
+  restartPolicy: Always / Never / OnFailure  # [opcjonalnie] kiedy ma sie zretartować
 └───────────────────
 
-# stworzenie poda:
-kubectl create -f pod-definition.yml
+# stworzenie poda:   To polecenie również aktualizuje zmiany wprowadzine w pliku .yaml
+kubectl create -f pod-definition.yml        # uruchomienie imperatywne
 
-# Tworzenie poda z kontenerem ngix (z filmiku od Mariusza)
+# Tworzenie poda w konsoli, bez pliku .yaml Tutaj pod z kontenerem ngix
 kubectl run nginx --image=nginx
 
-# kasowanie poda
-kubectl delete pod myapp-pod
+kubectl apply pod myapp-pod                 # uruchomienie deklaratywne poda (zwykle, gdy wprowadzimy zmiany w pliku .yaml)
+
+kubectl delete pod myapp-pod                # kasowanie poda
+
+kubectl exec -it nazwa-poda bash            # jak wejść do środka kontenera w podzie
+kubectl exec -c nginx -it nazwa-poda bash   # gdy mamy kilka kontenerów
+
+kubectl logs nazwa-poda                     # wyswietli logi   -f automatyczne odświerzanie
+kubectl logs nazwa-poda -c nazwaKontenera   # wyswietli logi dla konkretnego kontenera
 
 
 
@@ -740,8 +765,10 @@ kubectl delete pod myapp-pod
 #--------------------------------------------------------------------------------------------------
 Replica Set - przywraca uszkodzone kontenery. Dba o to, aby okreslona liczba podow dzialala. Rowniez pomaga w skalowaniu podow
 Replication Controller - podobne narzedzie jak Replica Set, ale już nie rekomedowany.
-Przykładowy plik ReplicaSet
+ReplicaSet trzyma ostatnio działające DEPLOYMNTY przy podnoszeniu wersji za pomocą   kubectl set image deployment nazwa-deploymentu httpd=httpd:2.4 --record=true 
+ReplicaSet może istnieć (kubectl get rs) i mieć 0 uruchomionych uszkodzonych kontenerów. Po to, aby przywrócić działóajaca wersję poleceniem   kubectl rollout undo deployment nazwa-deploymentu
 
+Przykładowy plik ReplicaSet
 ┌───────────────────
 apiVersion: apps/v1
 kind: ReplicaSet  # ReplicationController
@@ -762,7 +789,8 @@ spec:
       containers:                      # |
       - name: webapp                   # |
         image: k8smaestro/web-app:1.0  # /
-  
+        #ports
+        #- containerPorts: 80
   selector:                  # jakimi konkretnie podami ma sie zaopiekowac (chyba zamiast template?)
     matchLabels:             # matchLabels albo matchExpressions
       type: front-end
@@ -791,8 +819,8 @@ kubectl replace -f rc-definition.yml
 # przeskalowanie ilosci replik
 kubectl scale --replicas=6 -f rc-definition.yml       # lub:
 kubectl scale replicaset myapp-replicaset --replicas=2 
-kubectl scale --replicas=6 replicaset myapp-replicaset 
-#                           └type      └name
+kubectl scale rs --replicas=6 myapp-replicaset 
+#             └type           └name
 
 
 # edytowanie (u mnie stacjonarnie nie zadzialalo)
@@ -866,6 +894,7 @@ kubectl create -f deployment-def.yml
 
 # kasowanie
 kubectl delete -f deployment-def.yml
+kubectl delete nazwa-deploymentu  
 
 # kasowanie wszystkiego
 kubectl delete deployment --all
@@ -879,10 +908,18 @@ kubectl delete deployment --all
    #  #    #   #   #   #   #   #   #   #   #   #     #
    #   #    ###     ###     ###     ###     ####      ##
 #--------------------------------------------------------------------------------------------------
-Rollout and Versioning
+# Rollout and Versioning
+# skalowanie
+
+kubectl scale deployment voting-app-deploy --replicas=2
+
+kubectl set image deployment nazwa-deploymentu httpd=httpd:2.4 --record=true  # przykładowa zmiana wersji kontenera podczas działania 
+kubectl rollout undo deployment nazwa-deploymentu   # cofnięcie do porzedniej wersji (przed set image). wydaje mi się, że wcześniej trzeba dodać --record=true
+
 
 kubectl rollout status deployment/myapp-deployment
 kubectl rollout history deployment/myapp-deployment
+kubectl rollout history deployment myapp-deployment  # na sterfie kursów, zapis rozdzielony spacją
 
 # Aby zmienić wersję, trzeba wskazac na nowy kontener w:
 spec:                       
@@ -894,7 +931,7 @@ spec:
 
 kubectl apply -f deployment-definiton.yml        
 # drugi, niezalecany sposób:
-kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1 --record
+kubectl set image deployment/myapp-deployment nginx=nginx:1.9.1 --record=true
 #                                                                 └tylko, gdy chcemy, zeby się zapisywała i odczytywała hostoria poprzez rollout
 
 # Rollback:  film 35 ok 10:00 (Kubernetes for the Absolute Beginners - Hands-on)
@@ -1047,11 +1084,246 @@ metadata:
 └───────────────────
 
 kubectl get ┬ namespaces                   # lista przestrzeni nazw
+            ├ ns                           # skrócony zapis
             ├ pods -n webapp-namespace     # jakie pody naleza do tej przestrzeni nazw
             └ all -n webapp-namespace      # wszystkie elementy przypisane do danej przestrzeni nazw
 
 
+kubectl apply -f nazwaPliku.yaml           # zwykłe uruchomienie
+kubectl apply -f nazwaPliku.yaml -n nazwaNamespace    # uruchomienie w podanej przestrzeni nazw
+
+# kasowanie namespace
+kubectl delete ns nazwaNamespace
+
+
+
+
+
+
 #--------------------------------------------------------------------------------------------------
+    #####             #    
+        #             #
+        #     ###     ####
+        #    #   #    #   #
+        #    #   #    #   #
+    #   #    #   #    #   #
+     ###      ###     ####
+#--------------------------------------------------------------------------------------------------
+JOB - taki pod, uruchomiony raz. Nie bedzie ponownie uruchamiany.
+# Prosyt job, liczący od 10 w dóły:
+┌───────────────────
+apiVersion: batch/v1
+kind: Job
+metadata: 
+  name: strefakursow-odliczanie
+spec:
+  ttlSecondsAfterFinished: 10  # [opcjonalnie*] po 10 sekundach, powinien się automatycznie usunąć
+  template:
+    metadata:
+      name: odliczanie
+    spec:
+      containers:
+      - name: container-odliczanie
+        image: centos:7
+        command:
+        - "bin/bash"
+        - "-c"
+        - "for i in 9 8 7 6 5 4 3 2 1 ; do echo $i ; done"
+      restartPolicy: Never    
+└───────────────────
+# uruchomienie:
+kubectla apply -f ./nazwa-pliku.yaml
+
+# Aby działało autowyłącznie, trzeba je aktywować poleceniem:
+minikube --feature-gates="TTLAfterFinished=true"
+
+
+# Job, który ma dla nas pobrac coś z YT:
+┌───────────────────
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: strefakursow-yt-pobranie
+spec:
+  template:
+    metadata:
+      name: yt-pobranie
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: yt-download
+        image: wernight/youtube-dl
+        # pierwszy sposob
+        #command: ["youtube-dl", "adres_ktory_chcemy-pobrac_https://www.youtube.com/watch?v=dkfjdkjfk"]
+        # Drugi sposob. Wywołana aktualizacja wtyczki
+        command:
+        - "/bin/bash"
+        - "-c"
+        - "pip install -U youtube-dl; youtube-dl https:/youtube.com/watch?v=dfjkfjdk"
+
+
+apiVersion: batch/v1
+kind: Job
+metadata: 
+  name: strefakursow-yt-pobranie
+spec:
+  template:
+    metadata:
+      name: yt-pobranie
+    spec:
+      restartPolicy: Never        
+      containers:
+      - name: yt-download
+        image: wernight/youtube-dl
+        # pierwszy sposob
+        #command: ["youtube-dl", "adres_ktory_chcemy-pobrac_https://www.youtube.com/watch?v=dkfjdkjfk"]
+        # Drugi sposob. Wywołana aktualizacja wtyczki
+        # command:
+        # - "/bin/bash"
+        # - "-c"
+        # - "pip install -U youtube-dl; youtube-dl https:/youtube.com/watch?v=dfjkfjdk"
+        # Trzeci sposób:
+        command:
+        - "/bin/sh"
+        - "-c"
+        - "youtube-dl -n --cookies /cookies.txt https://youtu.be/zAPjjx05Y3k"
+└───────────────────
+
+
+
+
+#    ███                            █████           █    
+#   █   █                               █           █
+#   █       █ ███    ███    ████        █    ███    ████
+#   █       ██      █   █   █   █       █   █   █   █   █
+#   █       █       █   █   █   █       █   █   █   █   █
+#   █   █   █       █   █   █   █   █   █   █   █   █   █
+#    ███    █        ███    █   █    ███     ███    ████
+
+
+# Job, który ma się wykonać o określonej porze
+┌───────────────────
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: strefakursow-cron
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: strefakursow-pogoda-cron
+            image: ubuntu:18.04
+            command:
+            - "/bin/bash"
+            - "-c"
+            - "apt-get update > /dev/null; apt-get install curl -y > /dev/null; curl -s http://wttr.in/Radom"
+#                                                                └ od razu potwierdz  └ silent dla error messages
+└───────────────────
+
+# uruchomienie:
+kubectl create -f nazwaPliku.yaml
+
+# podgląd logów (oczywiście trzeba zdobyć id aktualnie uruchomionego poda)
+kubectl logs job.batch/strefakursow-cron-27516178
+
+# kasowanie:
+kubectl delete cronjob strefakursow-cron
+
+
+#--------------------------------------------------------------------------------------------------
+#                  █
+#                  █
+#  █     █   ███   █      █   █  ███ ██    ███    ███
+#  █     █  █   █  █      █   █  █  █  █  █   █  █
+#   █   █   █   █  █      █   █  █  █  █  █████   ███
+#    █ █    █   █  █   █  █   █  █  █  █  █          █
+#     █      ███    ███    ████  █  █  █   ███    ███
+#--------------------------------------------------------------------------------------------------
+# Przykład z filmu [5:00] 5_4 Zmienne środowiskowe i wolumeny w podach (Kurs Kubernetes od podstaw - zarządzanie i automatyzacja kontenerów )
+# 
+┌───────────────────
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-strefakursow-env
+spec:
+  containers:
+  - name: ubuntu-once
+    env:
+    - name: LINK_MY
+      value: "https://strefakursow.pl"
+    - name: LICZBA_KURSOW
+      value: "20"
+    volumeMounts: 
+    - mountPath: /mntvol          # informacja, w jakim miejscu ma zostać zamontowany
+      name: volume-no1            # nazwa musi być taka sama jak w 'volumes'
+    image: ubuntu:18.04
+    command:
+    - "/bin/bash"
+    - "-c"
+    - "env; echo  ; for (( i=1 ; $i<=$LICZBA_KURSOW ; i++ )); do echo 'To jest pozycja numer: ' $i >> /mntvol/logs.test; done "
+    # to co wypisze ten kontener, ma zapisać w pliku /mntvol/logs.test
+    # następnie, ten plik jest podpięty do volumenu
+    # aby kontener nie wyłaczyl się, możemy dodać do linni komend: sleep inf
+
+    # drugi kontener
+  - name: ubuntu-work
+    image: ubuntu:18.04
+    volumeMounts:
+    - mountPath: /strefakursow
+      name: volume-no1
+    command:
+    - "/bin/bash"
+    - "-c"
+    - "sleep inf"
+
+  restartPolicy: Never
+  volumes:                        #     volumen
+  - name: volume-no1              #
+    hostPath:                     # Jest kilka typów wolumenów. Tutaj skorzystamy z lokalnego storage na naszym danym nodzie
+      path: /srv/persistent/
+      type: DirectoryOrCreate     # Directory -musi istnieć.   DirectoryOrCreate -jeśli nie ma, to go stworzy. Więcej o typach: https://kubernetes.io/docs/concepts/storage/volumes/
+└───────────────────
+
+# UWAGA! Przed uruchominieniem tego pliku, trzeba dla volume stworzyć folder /srv/persistent/
+# Tworzenie ręcznie:
+# 1. Wejdz na minikube
+minikube ssh
+# 2. stwórz folder
+sudo mkdir -p /stv/persistent/
+# 3. wyjdz z minikube
+exit
+
+
+#--------------------------------------------------------------------------------------------------
+#   ███                                 █  
+#  █   █                                █
+#  █       ███    ███   █ ███   ███   █████
+#   ███   █   █  █   █  ██     █   █    █
+#      █  █████  █      █      █████    █
+#  █   █  █      █   █  █      █        █
+#   ███    ███    ███   █       ███      ██
+#--------------------------------------------------------------------------------------------------
+# 
+
+
+
+
+
+
+
+#--------------------------------------------------------------------------------------------------
+#  █     █
+#  ██   ██   █                                                       █
+#  █ █ █ █        ███   █ ███   ███    ███    ███   █ ███  █     █        ███    ███    ███
+#  █  █  █  ██   █   █  ██     █   █  █      █   █  ██     █     █  ██   █   █  █   █  █
+#  █     █   █   █      █      █   █   ███   █████  █       █   █    █   █      █████   ███
+#  █     █   █   █   █  █      █   █      █  █      █        █ █     █   █   █  █          █
+#  █     █  ███   ███   █       ███    ███    ███   █         █     ███   ███    ███    ███
 #--------------------------------------------------------------------------------------------------
 Microservices  # film 44 (Kubernetes for the Absolute Beginners - Hands-on)
 
@@ -1148,7 +1420,7 @@ spec:
   selector:
     matchLabels:
       name: app-2048         # jakimi podami deployment ma sie zaopiekowac (wykrywa wszystkie pody o takiej nazwie)
-  replicas: 5
+  replicas: 3
   template:
     metadata:
       labels:
@@ -1183,10 +1455,10 @@ spec:
 #--------------------------------------------------------------------------------------------------
 MINIKUBE
 # Uruchomienie minikube na windowsie.
-# Trzeba odpalić CMD w trybie administratora i uruchomic polecenie: (zakąłdam ze mam zainstalowany hyperV)
+# Trzeba odpalić CMD w trybie administratora i uruchomic polecenie: (zakładam ze mam zainstalowany hyperV)
 minikube start --driver=hyperv
 
-#od tej pory powinny działać poelcenia:
+#od tej pory powinny działać polecenia:
 minikube start
 minikube stop
 
@@ -1197,6 +1469,62 @@ minikube delete
 
 
 
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+# Opis, jak wstawić projkt na google cloud
+# Film 49 (Kubernetes for the Absolute Beginners - Hands-on)
+https://cloud.google.com/free/docs/gcp-free-tier
+
+# 1. menu -> Kuberbetes Engin
+# 2. Clusters -> Create cluster
+# 3. Wpisujemy indywidualną nazwę, reszta ustawień domyślna.  -> Create  (może to portrwać kilka minut)
+# 4. W części "Cluster" pojawi się nowa pozycja z zielonym znaczkiem statusu. -> Connect -> na dole powinna otworzyć się konsola.
+# 5. W konsoli powinno pojawić się domyślne polecenie do konfiguracji połaczenia
+gcloud container clusters get-credentials example-voting-app --zone us-central1-c --project example-voting-app-283506
+# 6. W przykłądzie, projekt jest na githubie
+https://github.com/kodekloudhub/example-voting-app
+# 7. W konsoli chmury, kopiuje projekt
+git clone https://github.com/kodekloudhub/example-voting-app.git
+# 8. Po skopiowaniu projektu, wchodzi do folderu projektu, następnei do folderu k8s-specifications z plikami xxx-deploy.yaml i xxx-service.yaml
+# 9. W plikach voting-app-service.yaml i result-service.yaml, pozmieniał spec: type: LoadBalancer i usunięty jest "nodePort"
+# 10. W konsoli chmury, uruchamiam deploymenty i servisy:
+kubectl create -f voting-app-deploy.yaml
+kubectl create -f voting-app-service.yaml
+    # to samo dla redis, postgres, worker, result
+# 11. Po wejściu w zakładkę Kubernetes Engine -> Services & Ingress, 
+    # powinienem widzieć uruchomione serwisy i ich statusy
+    # Po kliknięciu do Endpoinds, powinno odesłać nas na stronę, gdzie będą widoczne rezultaty
+
+#--------------------------------------------------------------------------------------------------
+# Opis, jak wstawić projkt na AWS
+# Film 51 (Kubernetes for the Absolute Beginners - Hands-on)
+https://docs.aws.amazon.com/eks/latest/userguide/getting-started-console.html
+# 1. Po zalogowaniu się, przechodzimy do AWS Managment Console
+# 2. Wysukujemy i tworzymy EKS (Elastic Kubernetes Service) 
+#   - nadajemy nazwę
+#   - W polu Cluster configuration -> Cluster Service Role -> wybieramy EKSRole -> Next
+#   - Reszta ustawień domyślna. Kilka razy Next i tworzymy klaster. Może to potrwac kilka minut
+# 3. Wchodzimy w EKS > Clusters > nazwa_projektu  i tutaj mamy panel naszego projektu
+# 4. W lokalnej konsoli wpisuje polecenie: (chyba w lokalnej)
+aws eks --region us-west-2 update-kubeconfig --name example-voting-app
+# po wykoaniu komendy 
+kubectl get nodes
+# powinny pojawic się węzly z opsem: xxx.us-west-2.compute.internal
+# reszta poleceń, odbywa sie chyba lokalnie??
+# resztę tylko obejżałem...
+
+
+
+
+#--------------------------------------------------------------------------------------------------
+  #     #                #                   #      ####
+  #     #   #            #                   #      #   #
+  #     #       # ###  #####  #   #   ####   #      #   #   ###   #   #
+  #     #  ##   ##       #    #   #       #  #      ####   #   #   # #
+   #   #    #   #        #    #   #   #####  #      #   #  #   #    #
+    # #     #   #        #    #   #  #    #  #   #  #   #  #   #   # #
+     #     ###  #         ##   ####   ### #   ###   ####    ###   #   #
 #--------------------------------------------------------------------------------------------------
 # instalacja VirtualBox na Widowsie - Film 11 7:50 (Kubernetes for the Absolute Beginners - Hands-on)
 # Odpaliłem sobie Cygwin64 Terminal:
@@ -1292,6 +1620,13 @@ kubectl describe pod nginx   # wyświetl szczegóły konkretnego poda
 
 
 #--------------------------------------------------------------------------------------------------
+#                          _             _
+#             _         _ ( )           ( )
+#   ___ ___  (_)  ___  (_)| |/')  _   _ | |_      __
+# /' _ ` _ `\| |/' _ `\| || , <  ( ) ( )| '_`\  /'__`\
+# | ( ) ( ) || || ( ) || || |\`\ | (_) || |_) )(  ___/
+# (_) (_) (_)(_)(_) (_)(_)(_) (_)`\___/'(_,__/'`\____)
+#--------------------------------------------------------------------------------------------------
 # Instalacja na ProxMox (nie udana)
 # zainstalowałem kubectl według https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 1. Download the latest release with the command:
@@ -1308,7 +1643,7 @@ chmod +x kubectl
 mkdir -p ~/.local/bin
 mv ./kubectl ~/.local/bin/kubectl
 
-Sprawdzenie, czy dostępan jest wirtualizacja:
+Sprawdzenie, czy dostępna jest wirtualizacja:
 grep -E --color 'vmx|svm' /proc/cpuinfo
 
 # Instalacja minikube
@@ -1324,16 +1659,69 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube
 minikube start
 minikube start --driver=ssh --ssh-ip-address=10.10.10.186
 
-    Jakiś przykład:
-    minikube start --driver=ssh --ssh-ip-address=vm.example.com
+    Na sterfie kursów, kongiguracja nastapiła przez polecenie:
+    minikube config set driver docker
+
+    Na moim Windowsie, działa konfiguracja:
+    minikube start --driver=hyperv
+
 
 3. gdy sie zainstaluje, można spawdzic:
 minikube status
 
 
+#-------------------
+# W filmie 2, kubectl instalacja (Strefa Kursów Kurs: Kubernetes od podstaw - zarządzanie i automatyzacja kontenerów)
+# Koles instaluje kubectl poleceniem:
+curl -LO https://storage.googleapis.com/kubernetes-relase/relase/$(curl -s curl https://storage.googleapis.com/kubernetes-relase/relase/stable.txt)/bin/linux/am64/kubectl"
+
+# następnei, trzeba nadac uprawienia
+chmod +x ./kubectl
+
+# przeneiść plik do sceizki projektu ??
+sudo mv ./kubectl /usr/local/bin/kubectl
+
+#Sprawdzenie wersji:
+kubectl version --client
+
+
+
+# Po zainstalowanieu minikube, mozna do niego wejść poleceniem:
+$ minikube ssh
+
+#aby wyjść z tego trybu:
+exit
+
+# działa tu polecenie:
+docker ps
+docker container ls
+
+# aby podejżec plik konfguracyjny (w Windowsie). uruchom gitbash w trybie administratora.
+# po wspisaniu pwd, powinienem mieć ścieżkę: /c/Users/Humansoft
+# po wpisaniu ls -la  powinienem widzieć plik .kube
+# Konfiguracja jest w pliku config, który można podejżeć, pn: za pomocą nano lub less:
+nano .kube/config
+
+
+# Po wydaniu polecenia
+minikube dashboard
+# powinno nam się udac wejsc na stroę:
+http://127.0.0.1:46257/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/
+
+
+# Mariusz!
+# Film 3-Kubectl  (sterfa kurów) jest tam informacja, że wymagany jest plik .kube/config
+# od 4:30 minuty.
+# Tego pliku nam brakuje. On jest gdzieś indziej? Bo bez neigo, wuświetla kominikat 
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+# Jest to dokładnie w minucie 8:00
+# W minucie 10:30 jest, że możemy wymusić korzystanei z innego pliku konfiguracyjnego poleceniem:
+export KUBECONFIG=~/.kube/plikKonfiguracyjny 
 
 
 
 
 
+Skończyłem na 4 
+Rolling Update / Rolling Back Deploymentu
 

@@ -26,6 +26,16 @@
 
 about:blank // odpalenie pustej strony w hrome
 
+// Aby sprawdzić, jak przeglądarka co obsługuje:
+https://caniuse.com/
+
+//co działa (albo nie) w node
+https://node.green/
+
+// Babel - transpilator "nowoczesnego" kodu na starsze wersje
+https://babeljs.io/
+
+
 /*
 Znaki specjalne dla printf 
 '\0' - ostatni znak w łańcuchu 
@@ -127,6 +137,7 @@ let numer2 = parseInt('4', 10);  //drugi parametr to "radix", określa podstawę
 
         
 //-----------------------------------------------------------------------------
+// Map  - takie prote obiekty, zawierające klucz i wartość
 const map = new Map();
 map.set('name', 'Eric');
 map.set('address', 'South Park');
@@ -137,14 +148,52 @@ for (const [key, value] of map) {
 // logs 'name', 'Eric'
 // logs 'address', 'South Park'
 
-//-----------------------------------------------------------------------------
-const set = new Set(['blue', 'red', 'green']);
+// const myMap = { coś podobnego to tego obiektu. Ale mapy sa szybsze.
+// 	cucumber: 7.5,
+// 	tomato: 8,
+// 	mercedes: 15000,
+// };
+// const itemToCheck = 'cucumber';
+// console.log('Checked item is worth', map[itemToCheck]);
+const myMap = new Map();
+myMap.set('cucumber', 7.5);
+myMap.set('tomato', 8);
+myMap.set('mercedes', 15000);
+const itemToCheck = 'cucumber';
+console.log('Checked item is worth', map.get(itemToCheck));
 
-for (const item of set) {
+const myMap2 = new Map([  // ten sam efekt co wyżej
+	['cucumber', 7.5],
+	['tomato', 8],
+	['mercedes', 15000],
+]);
+
+// zamiana obiektu na Map:
+const objZwykly = {
+	cucumber: 7.5,
+	tomato: 8,
+	mercedes: 15000,
+}
+const myMap3 = new Map(Object.entries(objZwykly));
+
+
+//-----------------------------------------------------------------------------
+// Set - kolekcja. Taka tablca, przechowyjąca unikalne elementy
+const mySet = new Set(['blue', 'red', 'green', 'red']);  // tu nastapi zmian tablicy na Set
+mySet.add('Bartek');         // dodawanie elementu
+
+for (const item of mySet) {
   console.log(item);
 }
 // logs 'blue', 'red', 'green'
 
+mySet.size                   // ile zawiera elementów. Taki length
+mySet.has(2);                // sprawdz, czy w zestawie jest zawarty element
+mySet.delete(5);             // usuń element
+mySet.clear();               // usuń wszystko
+mySet.entries();             // tworzy pary: indeks i wartość
+
+const tablicaUnikalna = [...mySet];   // zamiana seta na teblice
 //-----------------------------------------------------------------------------
 const numbers = [1, 3, 4];
 
@@ -155,6 +204,47 @@ iterator.next(); // => { value: 2, done: false }
 iterator.next(); // => { value: 3, done: false }
 iterator.next(); // => { value: undefined, done: true }
 
+
+//-----------------------------------------------------------------------------
+// Spread 
+//rozbijanie tablicy na poszczególne liczby
+const tab = [1, 2, 3, 4];
+console.log(...tab); //1, 2, 3, 4
+
+//kopiowanie tablicy
+const tab2 = [...tab];
+
+//łączenie tablic
+const tabPart = [3, 4]
+const tabFull = [1, 2, ...tabPart, 5, 6]; //[1, 2, 3, 4, 5, 6]
+
+//rozdzielanie tekstu na poszczególne litery
+const str = "Ala ma kota";
+const tab = [...str]; //["A", "l", "a", " ", "m", "a", " ", "k", "o", "t", "a"]
+
+// zastosowanei do łaczenia obiektów:
+const ob1 =   {  a : 10,  b : 20  }
+const ob2 =   {  a : 15,  c : 30  }
+const obBig = {  ...ob1,  ...ob2, d: 40 };
+console.log(obBig); //{ a : 15, b : 20, c : 30, d : 40 }
+
+//-----------------------------------------------------------------------------
+// Rest
+// Umożliwia przekazanie wielu parametrów do funkcji:
+function myF(...param) {
+    console.log(param); //[1, 2, 3, 4, 5]
+}
+myF(1,2,3,4,5);
+
+// albo do zbierania pozostałych (musi wystepować na końcu)
+function printAbout(name = "Ala", ...other) {
+    console.log("To jest " + name);
+    if (other.length) {
+        console.log(`${name} ma zwierzaki: ${other.join()}`);
+    }
+}
+printAbout(); //To jest Ala
+printAbout("Marcin", "pies", "kot"); //To jest Marcin. Marcin ma zwierzaki: pies,kot
 
 
 /*-----------------------------------------------------------------------------
