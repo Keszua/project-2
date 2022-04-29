@@ -949,10 +949,10 @@ Instalacja linuxa
 		Nazwa domeny: (pusta)
 		
 		Administrator root
-		Hasło: Haselko123
+		Hasło: w_Notatki
 			
 		Nazwa uzytkownika: user1
-		Hasło: user1
+		Hasło: w_Notatki
 		
 		Ustawienie dysku:
 		Partitoning method: -> Maual
@@ -1206,7 +1206,7 @@ ssh-keygen -t ed25519
 //zawartość user.pub trzeba skopiować do authorized_keys  (zakładam że jestem w folderze /home/user1/.ssh)
 cat user1.pub > authorized_keys
 
-//klucz (nie publiczny) trzeba wyciągnąć i w formie pliku umieciś w projekcie windowsowym
+//klucz (nie publiczny) trzeba wyciągnąć i w formie pliku umiecić w projekcie windowsowym
 // można to zrobić przez program WinSCP, ale on nie widzi ukrytych, więc trzeba skopiować ten plik wyżej:
 cp ./.ssh/user1 user1_klucz
 // i zmienić uzytkownika i grupy dla pliku:

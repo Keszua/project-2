@@ -1,8 +1,5 @@
 
-
-
-
-Filmik z node
+//Filmik z node
 
 
 //Typy w TS:									  
@@ -54,12 +51,16 @@ type basicType = number | string | boolean;
 type extendBoolean = boolean | 'y' | 'Y' | 'n' | 'N' | 1 | 0;  
   
 // typowanie obiektów:  
-const person : { name: string, age: number, email ?:string } = {
+const person : { 
+    name: string, 
+    age: number, 
+    email ?:string 
+} = {
 	name: "Paweł",
 	age: 32
 }
   
-//przykład funkcji, która ma wysłaś maila tylko tym, którzy podali maila (mail jest podany w person)
+//przykład funkcji, która ma wysyła maila tylko tym, którzy podali maila (mail jest podany w person)
 const sendEmail = ( people: { name: string, age: number, email ?:string}[] ) => {
 	people.filter(person => person.email).forEach(person => {
 			console.log(`send email to ${person.email}`);
@@ -94,12 +95,35 @@ class User implements IUserHelloResponse {
     sayHello(anotherPerson: string) { console.log(this.name, 'say hello', anotherPerson); }
 }
 
+//-----------------------------------------------------------
+// prosta klasa
+class ProstaKlasa {   // z wielkiej litery
+    x: number;        // bez letów i constów
+    y: number;
+}
+// stworzenie instancji tej klasy przez new
+const pt = new ProstaKlasa();
+pt.x = 0;
+pt.y = 0;
+
+
+class GoodGreeter {
+    name: string;
+   
+    constructor() {
+      this.name = "hello";
+    }
+  }
+
+
+//-----------------------------------------------------------
 //dziedziczenie
 abstract class Vehicle {          //klasa abstrakcyjna, nie pozwala tworzyć obiektów z tej encji
     createAt: Date = new Date();
     showCreateDate() { this.createAt.toLocaleString() };
     run() { console.log("Brum, brum..."); }
 }
+
 class Car extends Vehicle {
     drivenKms: number = 0;
     constructor(
@@ -113,10 +137,12 @@ class Car extends Vehicle {
     get kms():number {       return this.drivenKms; }
     set kms(newKms:number) {        this.drivenKms = newKms; }
 }
+
 const myCar = new Car('Fiat', 'Tipo');
 myCar.kms = 100;        // ustawiam bez słówka "set"
 console.log(myCar.kms); // odczytuje bez słówka "get"
 
+//-----------------------------------------------------------
 //typy generyczne:
 interface ApiResponse<T> {
     httpCode: number;
@@ -130,7 +156,7 @@ const answer: ApiResponse<string> = {  //dla tego przypadku, payload ma być str
     payload: 'Bonifacy',
 };
 
- 
+//-----------------------------------------------------------
 //przykład nadawania typów:   (filmik 48 (node))
     function (a: number, b: number): number {
         return a + b;

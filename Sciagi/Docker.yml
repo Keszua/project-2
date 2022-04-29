@@ -630,7 +630,6 @@ kubectl version --client --output=yaml    #
 # tworzenie podów zdefiniowanych w folderze k8s ( trzeba być na takim poziomie, żeby po wpisaniu ls widac było folder 'k8s')
 kubectl apply -f k8s
 
-
 ╔══════════════════════════════════════════════════════════════════════════════════════════════════╗
 ║                                     Kubernetes Cluster                                           ║
 ║ ╔════════════════════╗    ╔═════════════════════════════════════════════════════╗                ║
@@ -659,7 +658,7 @@ kubectl apply -f k8s
 Control plane - przyjmuje rozkazy od użytkownika, monitoruje cały stan, reaguje na wydażenia, decyduje, gdzie kontener ma byc uruchomiony
 Worker odpowiada za uruchamianie kontenerów (tu beda dzialac nasze aplikacje)
 
-Skalowanie ze względy na dochodzcych urzytkowników odbywa się przez dodawanie/odejmowanie POD'ów
+Skalowanie ze względu na dochodzacych urzytkowników odbywa się przez dodawanie/odejmowanie POD'ów
 Gdy skończy się przepustowość, a urzytkowników nadal przybywa, skalowanie odbedzie się przez Node
 
 
@@ -674,14 +673,35 @@ kubectl get ┬ all            # pokaze pody, serwisy
             ├ rc             # replicationcontrollers
             ├ rs             # replicaSet
             ├ job            # job, to taki jednorazowy pod
-            └ cronejob
+            ├ cronejob
+            ├ secrets
+            ├ ds             # DaemonSet
+            └ endpoinds      # serwis tworzy taki endpoint przypisany do poda
 kubectl get [LISTA] -o widge # troszke wiecej informccji
 kubectl get [LISTA] -o yaml  # szczegóły
 kubectl describe [LISTA] [NAME] # szczegóły konkretnego poda/noda.  NAME - to nazwa z wyświetlonego polecenia, no get pods
 kubectl cluster-info         # informacje o klastrze
-kubectl edit pod nazwa-poda  # 
+
+kubectl edit [LISTA] nazwa-elementu
 
 watch -n 1 kubectl get pods  # stały podgląd 
+
+
+# Doinstalowanie automatycznego podpowiadania
+sudo apt update
+sudo apt install bash-completion
+# instrukcje do dalszego działania sa pod komendą:
+kubectl completion -h
+#jednorazowe podpowiadanie (na czas sesji)
+source <(kubectl completion bash)
+
+
+
+# na OVH działa usługa kubelet
+systemctl status kubelet
+
+# klucze i certyfikaty sa ukryte pod poleceniem
+sudo docker ps | grep etcd
 
 
 
@@ -691,9 +711,6 @@ apiVersion: v1  # wersja kubernetes
 kind:           # rodzaj
 metadata:
 spec:
-
-
-
 
 #--------------------------------------------------------------------------------------------------
   ####                   #
@@ -765,7 +782,7 @@ kubectl logs nazwa-poda -c nazwaKontenera   # wyswietli logi dla konkretnego kon
 #--------------------------------------------------------------------------------------------------
 Replica Set - przywraca uszkodzone kontenery. Dba o to, aby okreslona liczba podow dzialala. Rowniez pomaga w skalowaniu podow
 Replication Controller - podobne narzedzie jak Replica Set, ale już nie rekomedowany.
-ReplicaSet trzyma ostatnio działające DEPLOYMNTY przy podnoszeniu wersji za pomocą   kubectl set image deployment nazwa-deploymentu httpd=httpd:2.4 --record=true 
+ReplicaSet trzyma ostatnio działające DEPLOYMENTY przy podnoszeniu wersji za pomocą   kubectl set image deployment nazwa-deploymentu httpd=httpd:2.4 --record=true 
 ReplicaSet może istnieć (kubectl get rs) i mieć 0 uruchomionych uszkodzonych kontenerów. Po to, aby przywrócić działóajaca wersję poleceniem   kubectl rollout undo deployment nazwa-deploymentu
 
 Przykładowy plik ReplicaSet
@@ -882,15 +899,22 @@ spec:
         #- image: k8smaestro/2048
         #imagePullPolicy: Always       # polityka pobierania obazu na klaster. Always - zawsze pobiera obraz
         #name: app-2048
-        #ports:
+        #ports:                        # dodana informacja o porcie, gdy konfigurujemy Services
         #- containerPort: 80
   selector:  
     matchLabels:
       app: k8smaestro-webapp           # na podstawie tych etykiet, wiadomo ktore pody naleza do jakich deploymentow
 └───────────────────        
 
+
 # stworzenie/uruchomienie nowego deploymentu
 kubectl create -f deployment-def.yml
+
+
+# edycja działajacego deploymentu:
+kubectl set image deployment/nazwa-deploymentu ubuntu=ubuntu:20.04
+kubectl set env deployment/nazwa-deploymentu -c ubuntu SLEEP_TIME=110
+
 
 # kasowanie
 kubectl delete -f deployment-def.yml
@@ -977,9 +1001,11 @@ Services
 # My łączymy się za pomocą asrestu i portu, a Service, ten port przełaczy z IP konkretnego Poda
 
 Service Types:
-  - NodePort
-  - ClusterIP
-  - LoadBalancer
+ - ClusterIP (domyślnie) - Wystawia serwis poprzez wewnętrzny adres IP w klastrze. W ten sposób serwis jest dostępny tylko wewnątrz klastra.
+ - NodePort - Wystawia serwis na tym samym porcie na każdym z wybranych węzłów klastra przy pomocy NAT. W ten sposób serwis jest dostępny z zewnątrz klastra poprzez <NodeIP>:<NodePort>. Nadzbiór ClusterIP.
+ - LoadBalancer - Tworzy zewnętrzny load balancer u bieżącego dostawcy usług chmurowych (o ile jest taka możliwość) i przypisuje serwisowi stały, zewnętrzny adres IP. Nadzbiór NodePort.
+ - ExternalName - Przypisuje Service do externalName (np. foo.bar.example.com), zwracając rekord CNAME wraz z zawartością. W tym przypadku nie jest wykorzystywany proces przekierowania ruchu metodą proxy. Ta metoda wymaga kube-dns w wersji v1.7 lub wyższej lub CoreDNS w wersji 0.0.8 lub wyższej.
+
 
 #--------------------------------------
 NodePort
@@ -996,58 +1022,53 @@ apiVersion: v1
 kind: Service
 metadata:                   
   name: myapp-service     # dowolna nazwa
-  #labels:
-    #name:
-    #app:
+  #labels:                #─┬─ dane takie, jak w "Deployment" w metadata.labels
+    #name:                # │  żeby nasz serwis wiedział, do jakiego kontenera się przypiąć
+    #app:                 #─┘
 spec:
+  ┌─────────── #opcja 1 - ClusterIP (domyślnie)
+  type: ClusterIP
+  ports:
+  - targetPort: 80
+    port: 80
+  └───────────
+  ┌─────────── #opcja 2 - NodePort
   type: NodePort
   ports:
   - targetPort: 80
     port: 80
     nodePort: 30008
- 
-  selector:  
-    app: myapp       #─┬─ dane takie, jak w "Pod" w sekcji metadata->labels
-    type: front-end  #─┘ 
-└───────────────────
-
-#--------------------------------------
-ClusterIP  # film 40. Zastosowany gdy projekt podzielony na front, back i baza danych
-┌───────────────────
-apiVersion: v1          
-kind: Service
-metadata:                   
-  name: back-end     # dowolna nazwa
-spec:
-  type: ClusterIP
-  ports:
-  - targetPort: 80
-    port: 80
-  
-  selector:
-    app: myapp       #─┬─ dane takie, jak w "Pod" w sekcji metadata->labels
-    type: front-end  #─┘ 
-└───────────────────
-
-#--------------------------------------
-LoadBalancer # film 41. To działa tylko z usługami chmurowymi
-┌───────────────────
-apiVersion: v1          
-kind: Service
-metadata:                   
-  name: myapp-service     # dowolna nazwa
-spec:
+  └───────────
+  ┌─────────── #opcja 3 - LoadBalancer
   type: LoadBalancer
   ports:
   - targetPort: 80
     port: 80
     nodePort: 30008
+  └───────────
+  ┌─────────── #opcja 4 - przykład serwisu ze Strefy Kursów. koles nie podaje .type, tylko .protocol
+  ports:
+  - port: 80
+    protocol: TCP             # jakiego typu protokół
+  └───────────
+
+  selector:  
+    app: myapp       #─┬─ dane takie, jak w "Pod" w sekcji metadata.labels
+    type: front-end  #─┘ 
 └───────────────────
 
+#--------------------------------------
+
+
+# ustawienie portu do nasluchu:
+kubectl expose deployment strefakursow-nginx --type=NodePort --port=8080
+
+kubectl expose deployment deployment-2048 -n game
 
 #--------------------------------------
 # tworzenie servisu
 kubectl creatae -f service-definition.yml
+kubectl apply -f service-definition.yml
 
 # pobireanie informacji o uruchomionych serwisach
 kubectl get services
@@ -1057,6 +1078,13 @@ minikube service myapp-service --url
 
 # jeżeli istnieje serwis, powinno udac sie pobrac strone (nie wiem skąd ten adres)
 curl http://192.168.1.2:30008
+
+
+# W przykładzie, w Deployment, trzeba dopisać:
+spec.template.spec.containers:
+                   - name: ...
+                     ports:               # dodana informacja o porcie
+                     - containerPort: 80
 
 
 #--------------------------------------------------------------------------------------------------
@@ -1308,12 +1336,160 @@ exit
 #  █   █  █      █   █  █      █        █
 #   ███    ███    ███   █       ███      ██
 #--------------------------------------------------------------------------------------------------
-# 
+#  pody, które generują jakieś hasła
+┌───────────────────
+apiVersion: v1
+kind: Secret
+metadata:
+  name: strefa-secret                  # *1v
+data:
+  user: "cm9vdA=="
+  pass: "VGFqbmVIYXNsbw=="             # *2v
+stringData:                   # sekcja jawnych danych (nie szyfrowane)
+  jawne: "Dane nie zaszyfrowane"
+  ip: "192.168.2.1"
+└───────────────────
+
+# generowanie szyfrowanych danych w linuxie
+echo -n "root" | base64
+
+# Uruchomienie 
+kubectl apply -f nazwaPliku.yaml
+
+# podgląd
+kubectl get secrets
+
+# podgląd wszystkich
+kubectl get secrets --all-namespace
+
+# podglad naszego secret
+kubectl describe secret nazwaNaszegoSecreta
+# bedzie tu informacja podana w bajtach
 
 
+# przykładowy Pod, korzsytający z naszych secretów
+┌───────────────────
+apiVersion: v1
+kind: Pod
+metadata:
+  name: database-with-volume
+spec:
+  containers:
+  - name: strefakursow-db-vol
+    image: mysql
+    volumeMounts:
+    - name: dbconnection               # *3v
+      mountPath: "/root/secrets"
+      readOnly: true                   # ustawienie tylko odczytu
+    env:
+      - name: MYSQL_ROOT_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: strefa-secret        # *1^
+            key: pass                  # *2^
+  volumes:
+  - name: dbconnection                 # *3^
+    secret:
+      secretName: strefa-secret
+└───────────────────
 
 
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+Kopiowanie plików
+┌───────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-strefakursow
+  labels:
+    app: httpd-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: http-app
+  template:
+    metadata:
+      labels:
+        app: http-app
+    spec:
+      containers:
+      - name: http
+        image: httpd
+        ports:
+        - containerPort: 80
+└───────────────────
 
+# kopiowanie pliku:
+kubectl cp index.html http-strefakursow-745758289-59mlr:/usr/local/apache2/htdocs/
+
+# kopiowanie katalogu:
+kubectl cp ../5_7 http-strefakursow-745758289-59mlr:/usr/local/apache2/htdocs/
+
+#--------------------------------------------------------------------------------------------------
+Statyczne Pody - czyli takie, które zawsze są dostępne (zawsze wuruchominone) jak kontenery systemowe
+Filmin 6_7 Kurs Kubernetes od podstaw - zarządzanie i automatyzacja kontenerów. Statyczne Pody
+Uruchamiane przez DaemonSet
+/etc/kubernetes/manifests
+
+
+#--------------------------------------------------------------------------------------------------
+#  █████                █
+#  █                    █               █       
+#  █      █   █  ████   █  █   ███          ███ 
+#  ████   █   █  █   █  █ █   █   █    ██  █   █
+#  █      █   █  █   █  ██    █         █  █████
+#  █      █   █  █   █  █ █   █   █     █  █    
+#  █       ████  █   █  █  █   ███   █  █   ███ 
+#                                     ██        
+#--------------------------------------------------------------------------------------------------
+Funkcje
+
+Etykiety
+# nadanie etykiety
+kubectl label nazwaNoda nazwaChybaPoda test=true  
+#                                      └ nasz label, zawierajacy klucz:wartość
+#Pobranie etykiet
+kubectl get nodes --show-labels
+
+# Mozna skorzytac z etykiety:
+# W przykładzie w kind: DaemonSet
+# Automatyczne uruchamianie wszystkich podów, oznaczonych labelką. Trzeba dodać ta labelkę do:
+spec.template.spec.nodeSelector:
+                     test: "true"
+
+#--------------------------------------------------------------------------------------------------
+Init 
+# Coś, co ma się wykonać przed uruchomieniem głównego kontenera. Np: podłączenie bo bazy, ściagnij plik > rozpakuj i dopiero uruchom
+# Init dopiuje się w:
+spec.template.spec.initContainers:
+                   - name: unzip
+                     image: garthk/unzip
+                     command: [ "unzip", "/www/repo.zip", "-d", "/www/repo"]
+                     volumeMounts:
+                     - mountPath: /www
+                       name: http-content
+                   - name: clear
+                     image: ubuntu
+                     command: [ "sh", "-c", "rm -f /www/repo.zip" ]
+                     volumeMounts:
+                     - mountPath: /www
+                       name: http-content
+
+#--------------------------------------------------------------------------------------------------
+Port-forward
+
+kubectl port-forward nazwaUruchomionegoPoda 8080:80
+# W odpowiedzi dostaniemy: Forwardng from 127.0.0.1:8080 -> 80 
+# Będzie można zobaczyć wynik w przeglądarce 
+
+
+# jakieś narzędzie
+kubectl run -it --image=arunvelsriram/utils utils-container bash 
+
+# ustawienie portu do nasluchu:
+kubectl expose deployment hello-minikube --type=NodePort --port=8080
 
 
 #--------------------------------------------------------------------------------------------------
@@ -1349,7 +1525,7 @@ docker run -d --name=worker --link db:db --link redis:redis  worker
   1. voting-app
   2. result-app
 
-# sprawdzenie czy się wutworzył:
+# sprawdzenie czy się utworzył:
 kubectl get pods,svc
 
 # utworzenie tunelu, aby sprawdzić przez stronę, czy coś widać (w CMD w trybie administratora):
@@ -1407,24 +1583,24 @@ kubectl delete -f all-in-one.yml
 # zawartosc pliku:
 ---
 apiVersion: v1
-kind: Namespace
+kind: Namespace 
 metadata:
-  name: game-2048
+  name: game-2048               # *1v
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: game-2048       # musi byc jak wyzej
+  namespace: game-2048          # *1^ musi byc jak wyzej
   name: deployment-2048
 spec:
   selector:
     matchLabels:
-      name: app-2048         # jakimi podami deployment ma sie zaopiekowac (wykrywa wszystkie pody o takiej nazwie)
+      name: app-2048            # jakimi podami deployment ma sie zaopiekowac (wykrywa wszystkie pody o takiej nazwie)
   replicas: 3
   template:
     metadata:
       labels:
-        name: app-2048       # jaka jest nazwa naszych podow
+        name: app-2048          # jaka jest nazwa naszych podow
     spec:
       containers:
       - image: k8smaestro/2048  # obraz z dockerHub
@@ -1436,14 +1612,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: game-2048
+  namespace: game-2048          # *1^
   name: service-2048
 spec:
+  type: ClusterIP               # ClusterIP: udostepnij aplikacje tylko w obrebie klastra. (serwi otrzymuje unikalny IP tylko w sieci wewnetrznej )
   ports:
-    - port: 80               # jaki port ma byc wystawiony
-      targetPort: 80         # port kontenera (containerPort z Deployment, do jakiego porty ma przekierowac ruch)
-      protocol: TCP
-  type: ClusterIP            # ClusterIP: udostepnij aplikacje tylko w obrebie klastra. (serwi otrzymuje unikalny IP tylko w sieci wewnetrznej )
+  - port: 80                    # jaki port ma byc wystawiony
+    targetPort: 80              # port kontenera (containerPort z Deployment, do jakiego porty ma przekierowac ruch)
+    protocol: TCP
   selector:
     name: app-2048
 
@@ -1673,9 +1849,9 @@ minikube status
 #-------------------
 # W filmie 2, kubectl instalacja (Strefa Kursów Kurs: Kubernetes od podstaw - zarządzanie i automatyzacja kontenerów)
 # Koles instaluje kubectl poleceniem:
-curl -LO https://storage.googleapis.com/kubernetes-relase/relase/$(curl -s curl https://storage.googleapis.com/kubernetes-relase/relase/stable.txt)/bin/linux/am64/kubectl"
+curl -LO "https://storage.googleapis.com/kubernetes-relase/relase/$(curl -s curl https://storage.googleapis.com/kubernetes-relase/relase/stable.txt)/bin/linux/am64/kubectl"
 
-# następnei, trzeba nadac uprawienia
+# następnie, trzeba nadac uprawnienia
 chmod +x ./kubectl
 
 # przeneiść plik do sceizki projektu ??
@@ -1696,6 +1872,10 @@ exit
 docker ps
 docker container ls
 
+# aby śledzić jakiś pod, znajac jego adres
+watch -n 1 "curl -s 172.17.0.7"
+
+
 # aby podejżec plik konfguracyjny (w Windowsie). uruchom gitbash w trybie administratora.
 # po wspisaniu pwd, powinienem mieć ścieżkę: /c/Users/Humansoft
 # po wpisaniu ls -la  powinienem widzieć plik .kube
@@ -1712,16 +1892,20 @@ http://127.0.0.1:46257/api/v1/namespaces/kubernetes-dashboard/services/http:kube
 # Mariusz!
 # Film 3-Kubectl  (sterfa kurów) jest tam informacja, że wymagany jest plik .kube/config
 # od 4:30 minuty.
-# Tego pliku nam brakuje. On jest gdzieś indziej? Bo bez neigo, wuświetla kominikat 
+# Tego pliku nam brakuje. On jest gdzieś indziej? Bo bez niego, wuświetla kominikat 
 The connection to the server localhost:8080 was refused - did you specify the right host or port?
 # Jest to dokładnie w minucie 8:00
-# W minucie 10:30 jest, że możemy wymusić korzystanei z innego pliku konfiguracyjnego poleceniem:
+# W minucie 10:30 jest, że możemy wymusić korzystanie z innego pliku konfiguracyjnego poleceniem:
 export KUBECONFIG=~/.kube/plikKonfiguracyjny 
 
+Filmik 6_7 Statyczne Pody - 
+koles mówi coś o ścieżce /etc/kubernetes/manifest
+Na naszej maszynie nie ma takiego folderu
+Na OVH jest ten folder, ale nie moge wywołać polecenia ls -la /etc/kubernetes/manifests
+                                           
 
 
 
 
-Skończyłem na 4 
-Rolling Update / Rolling Back Deploymentu
+
 
