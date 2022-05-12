@@ -345,6 +345,7 @@ lineItems.reduce((sum, li) => sum + li.total, 0); //= 17.5   UWAGA! trzeba poda�
 	console.log(tab); //[Marcin, Ania]
 
 
+
 //.unshift(el1, el2*...) wstawia nowy element do tablicy na jej początku, po czym zwraca nową długość tablicy. Elementów wstawianych można podać kilka, albo jeden.
 const tab = ['Marcin', 'Ania', 'Agnieszka'];
 tab.unshift('Bartek');
@@ -557,14 +558,20 @@ const textBezSpacji = text.split(' ').join('');
 |                                                          |                                                           |                                                           |                                                           |
 |                                                          |                                                           |                                                           |                                                           |
 // usuwanie jednego elemntu z tablicy; modyfikuje tablicę i zwraca tablicę z usuniętymi elementami (zależnie od podanych argumentów może nawet dodawać elementy)
-| tablica.splice(indexElemntu, ileUsunac);                 |                                                           |                                                           |                                                           |
+| tablica.splice(indexElemntu, ileUsunac);                 | list.pop(indexElemntu)                                    |                                                           |                                                           |
 |                                                          |                                                           |                                                           |                                                           |
 // usuwa ostatni element i zwraca jego wartość
-| .pop()                                                   |                                                           |                                                           |                                                           |
-| var myFish = ['clown', 'mandarin', 'sturgeon'];          |                                                           |                                                           |                                                           |
+| .pop()                                                   | list.pop(-1)                                              |                                                           |                                                           |
+| var myFish = ['clown', 'mandarin', 'sturgeon'];          | myFish.remove('mandarin')                                                          |                                                           |                                                           |
 | var popped = myFish.pop();                               |                                                           |                                                           |                                                           |
 | console.log(myFish); /*['clown', 'mandarin' ]*/          |                                                           |                                                           |                                                           |
 | console.log(popped); /* 'sturgeon' */                    |                                                           |                                                           |                                                           |
+|                                                          |                                                           |                                                           |                                                           |
+// zwraca pierwszy element z tablicy
+| .at(0)    zwraca pierwszy element z tablicy              | list[0]                                                   |
+|                                                          |                                                           |                                                           |                                                           |
+// zwraca ostatni element z tablicy                         
+| .at(-1)   zwraca ostatni element z tablicy               | list[-1]                                                  |
 |                                                          |                                                           |                                                           |                                                           |
 //zamiana 'tekst&CosTam' na zabespieczony:  'tekst%20%26%20CosTam'
 | encodeURIComponent('tekst & CosTam')                     |                                                           |                                                           |                                                           |

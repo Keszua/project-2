@@ -630,30 +630,30 @@ kubectl version --client --output=yaml    #
 # tworzenie podów zdefiniowanych w folderze k8s ( trzeba być na takim poziomie, żeby po wpisaniu ls widac było folder 'k8s')
 kubectl apply -f k8s
 
-╔══════════════════════════════════════════════════════════════════════════════════════════════════╗
-║                                     Kubernetes Cluster                                           ║
-║ ╔════════════════════╗    ╔═════════════════════════════════════════════════════╗                ║
-║ ║ Control plane      ║    ║ Data plane                                          ║                ║
-║ ║ (mózg Kubernetesa) ║    ║ (worker nodes)    kubelet     Kube-proxy            ║                ║
-║ ║                    ║    ║                     Container Runtime Engine        ║                ║  
-║ ║  ┌──────────────┐  ║    ║  ┌─────────────────────────────┐    ┌─-----------┐  ║                ║ 
-║ ║  │ Master       │  ║    ║  │ Node                        │    │ Node       │  ║                ║ 
-║ ║  │──────────────│  ║    ║  │ ┌─────────────┐ ┌-----┐     │                    ║                ║ 
-║ ║  │ETCD CLUSTER  │  ║    ║  │ │    POD      │   POD       │    │            │  ║                ║ 
-║ ║  │kube-apiserver│  ║    ║  │ │┌-----------┐│ │     │     │                    ║                ║ 
-║ ║ │Kube Controller│  ║    ║  │ ││ localhost ││             │    │            │  ║                ║ 
-║ ║ │Manager        │  ║    ║  │ │ ┌─────────┐││ │     │     │                    ║                ║ 
-║ ║  │kube-scheduler│  ║    ║  │ │││Kontener │ │             │    │            │  ║                ║ 
-║ ║  └──────────────┘  ║    ║  │ │ └─────────┘││ │     │     │                    ║                ║ 
-║ ║  ┌─────────┐       ║    ║  │ ││┌─────────┐ │             │    │            │  ║                ║ 
-║ ║  │ Master  │       ║    ║  │ │ │Kontener │││ │     │     │                    ║                ║
-║ ║  └─────────┘       ║    ║  │ ││└─────────┘ │             │    │            │  ║                ║
-║ ║  ┌─────────┐       ║    ║  │ │└───────────┘│             │                    ║                ║
-║ ║  │ Master  │       ║    ║  │ └─────────────┘ └-----┘     │    │            │  ║                ║
-║ ║  └─────────┘       ║    ║  │                             │                    ║                ║
-║ ║                    ║    ║  └─────────────────────────────┘    └------------┘  ║                ║
-║ ╚════════════════════╝    ╚═════════════════════════════════════════════════════╝                ║
-╚══════════════════════════════════════════════════════════════════════════════════════════════════╝
+╔════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                       Kubernetes Cluster                                           ║
+║ ╔══════════════════════╗    ╔═════════════════════════════════════════════════════╗                ║
+║ ║ Control plane        ║    ║ Data plane                                          ║                ║
+║ ║ (mózg Kubernetesa)   ║    ║ (worker nodes)    kubelet     Kube-proxy            ║                ║
+║ ║                      ║    ║                     Container Runtime Engine        ║                ║  
+║ ║  ┌────────────────┐  ║    ║  ┌─────────────────────────────┐    ┌─-----------┐  ║                ║ 
+║ ║  │  Master        │  ║    ║  │ Node                        │    │ Node       │  ║                ║ 
+║ ║  │────────────────│  ║    ║  │ ┌─────────────┐ ┌-----┐     │                    ║                ║ 
+║ ║  │ETCD CLUSTER    │  ║    ║  │ │    POD      │   POD       │    │            │  ║                ║ 
+║ ║  │kube-apiserver  │  ║    ║  │ │┌-----------┐│ │     │     │                    ║                ║ 
+║ ║  │Kube Controller-│  ║    ║  │ ││ localhost ││             │    │            │  ║                ║ 
+║ ║  │  -Manager      │  ║    ║  │ │ ┌─────────┐││ │     │     │                    ║                ║ 
+║ ║  │Kube-scheduler  │  ║    ║  │ │││Kontener │ │             │    │            │  ║                ║ 
+║ ║  └────────────────┘  ║    ║  │ │ └─────────┘││ │     │     │                    ║                ║ 
+║ ║  ┌────────────────┐  ║    ║  │ ││┌─────────┐ │             │    │            │  ║                ║ 
+║ ║  │ Master         │  ║    ║  │ │ │Kontener │││ │     │     │                    ║                ║
+║ ║  └────────────────┘  ║    ║  │ ││└─────────┘ │             │    │            │  ║                ║
+║ ║  ┌────────────────┐  ║    ║  │ │└───────────┘│             │                    ║                ║
+║ ║  │ Master         │  ║    ║  │ └─────────────┘ └-----┘     │    │            │  ║                ║
+║ ║  └────────────────┘  ║    ║  │                             │                    ║                ║
+║ ║                      ║    ║  └─────────────────────────────┘    └------------┘  ║                ║
+║ ╚══════════════════════╝    ╚═════════════════════════════════════════════════════╝                ║
+╚════════════════════════════════════════════════════════════════════════════════════════════════════╝
 
 Control plane - przyjmuje rozkazy od użytkownika, monitoruje cały stan, reaguje na wydażenia, decyduje, gdzie kontener ma byc uruchomiony
 Worker odpowiada za uruchamianie kontenerów (tu beda dzialac nasze aplikacje)
@@ -661,8 +661,27 @@ Worker odpowiada za uruchamianie kontenerów (tu beda dzialac nasze aplikacje)
 Skalowanie ze względu na dochodzacych urzytkowników odbywa się przez dodawanie/odejmowanie POD'ów
 Gdy skończy się przepustowość, a urzytkowników nadal przybywa, skalowanie odbedzie się przez Node
 
+Kube-scheduler - on decyduje, w kórym nodzie stworzyć nową instancję poda, podczas wużego obciążenia serwera
+
+Controller manager - odzysuje uszkodzone pody
+
+ETCD -jakis mózg do zarzadzania danymi
+
+Ingress - Chyba do zarządzania kontenerami z bazą danych. Decyduje gdzie trafi Request od urzytkownika. Do którego poa z baza dancyh 
+
+         Request                     ┌─ my-app          ┌─ DB
+Ingress ─────────> my-app Service ->─┼─── DB Service ──>┤
+                                     └─ my-app          └─ DB
 
 
+
+#--------------------------------------------------------------------------------------------------
+kube-apiserver
+
+
+
+
+#--------------------------------------------------------------------------------------------------
 #            [LISTA]
 kubectl get ┬ all            # pokaze pody, serwisy 
             ├ pods           # lista podów  z -A pokazuje ukryte systemowe
@@ -721,7 +740,7 @@ spec:
   #        #   #    #    #
   #         ###      #####
 #--------------------------------------------------------------------------------------------------
-Pod
+pod-ngix.yaml
 ┌───────────────────
 apiVersion: v1                    # String
 kind: Pod                         # String
@@ -759,6 +778,7 @@ kubectl create -f pod-definition.yml        # uruchomienie imperatywne
 kubectl run nginx --image=nginx
 
 kubectl apply pod myapp-pod                 # uruchomienie deklaratywne poda (zwykle, gdy wprowadzimy zmiany w pliku .yaml)
+kubectl apply -f pod-ngix.yaml                 # uruchomienie deklaratywne poda (zwykle, gdy wprowadzimy zmiany w pliku .yaml)
 
 kubectl delete pod myapp-pod                # kasowanie poda
 
@@ -1010,10 +1030,11 @@ Service Types:
 #--------------------------------------
 NodePort
 #                                     ╔════════════════════════════════════════╗ 
-#                                     ║        192.168.1.2                     ║
+#                                     ║           192.168.1.2                  ║
 # mój laptop                          ║─────┐    ┌────────┬──┐    ┌──┬───────┐ ║
-# curl http://192.168.1.2:30008 ----> ║30008│ -->│Service │80│ -->│80│    POD│ ║
-#   Zakres: 30000 - 32767             ║─────┘    └───────────┘    │10.244.0.2│ ║
+# curl http://192.168.1.2:30008 ────> ║30008│ ──>│Service │80│ ──>│80│    POD│ ║
+#   Zakres: 30000 - 32767             ║─────┘    │        └──┤    ├──┘       │ ║
+#                                     ║          └───────────┘    │10.244.0.2│ ║
 #                                     ║ Node                      └──────────┘ ║
 #                                     ╚════════════════════════════════════════╝ 
 #                                     nodePort            port     targetPort
@@ -1113,19 +1134,41 @@ metadata:
 
 kubectl get ┬ namespaces                   # lista przestrzeni nazw
             ├ ns                           # skrócony zapis
+            ├ all -n webapp-namespace      # wszystkie elementy przypisane do danej przestrzeni nazw
             ├ pods -n webapp-namespace     # jakie pody naleza do tej przestrzeni nazw
-            └ all -n webapp-namespace      # wszystkie elementy przypisane do danej przestrzeni nazw
+            └ pods --all-namespaces        # wszsytkie pody ze wszsytkich przestrzeni
 
-
-kubectl apply -f nazwaPliku.yaml           # zwykłe uruchomienie
+kubectl apply -f nazwaPliku.yaml           # zwykłe uruchomienie dla namespace default
 kubectl apply -f nazwaPliku.yaml -n nazwaNamespace    # uruchomienie w podanej przestrzeni nazw
+
+kubectl create namespace nazwaPrzestrzeni  # ręczne tworzenie 
+
+# trwałe przełączenie się na inną przesteń nazw
+kubectl config set-context $(kubectl config current-context) --namespace=game
 
 # kasowanie namespace
 kubectl delete ns nazwaNamespace
 
+#--------------------------------------------------------------------------------------------------
+Resorce Quota - chyba taka przestrzń nazw z ograniczeniami
 
+Compute-quota.yaml
+┌───────────────────
+apiVersion: v1
+kind: ResourccQuota
+metadata:
+    name: compute-quota
+    namespace: dev
+spec:
+  hard:
+    pods: "10"
+    requests.cpu: "4"
+    requests.memory: 5Gi
+    limits.cpu: "10"
+    limits.memory: 10Gi
+└───────────────────
 
-
+>kubectl create -f compute-quota.yaml
 
 
 #--------------------------------------------------------------------------------------------------
@@ -1493,6 +1536,67 @@ kubectl expose deployment hello-minikube --type=NodePort --port=8080
 
 
 #--------------------------------------------------------------------------------------------------
+key-value store
+
+
+╔════════════╦═════════════╗
+║ Key        ║ Value       ║
+╠════════════╬═════════════╣
+│ Name       │ john Doe    │
+│ Age        │ 45          │
+│ Location   │ New York    │
+└────────────┴─────────────┘
+
+Put Name "John Doe"
+Get name             # => "John Doe"
+
+Install ETCD:
+# 1. Download Binaries
+curl -L https://github.com/etcd-io/etcd/releases/download/v3.3.11/etcd-v3.3.11-linux-amd64.tar.gz -o etcd-v3.3.11-linux-amd64.tar.gz
+# 2. Extract
+tar xzvf etcd-v3.3.11-linux-amd64.tar.gz
+# 3. Run ETCD Service
+./etcd
+
+# uruchomi się na porcie 2379. Powinno działac polecenie:
+./etcdctl
+
+# polecenie ustawienia nowego rekordu:
+./etcdctl set key1 value1 
+# odczyt
+./etcdctl get key1  # => value1
+
+# Setup - Manual
+wget -q --https-only\
+    "https://github.com/coreos/etcd/releases/download/v3.3.9/etcd-v3.3.9-linux-amd64.tar.gz"
+# podgląd ustawień:
+etcd.service
+# wejście do kontenera z ustawieniami:
+kubectl exec etcd-master -n kube-system etcdctl get / --prefix -keys-only
+
+# jakieś pytanie do ETCD
+curl -X POST /api/v1/namespaces/default/pods ...[other]
+
+# instalacja:
+  kube-apiserver" \
+  kube-controller-manager" \
+  kube-scheduler" \
+  kubectl"
+https://discuss.kubernetes.io/t/control-plane-provisioning-failed/8323
+
+# Instalacja kube-apiserver - nie do końca wiem po co to instalować?
+wget https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-apiserver
+# sprawdzenie statusu Film 15  2:50 (Certified Kubernetes Administrator (CKA) with Practice Tests)
+kube-apiserver.service
+
+
+
+# Instalacja kube-controller-manager
+wget https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-controller-manager
+kube-controller-manager.service
+
+
+#--------------------------------------------------------------------------------------------------
 #  █     █
 #  ██   ██   █                                                       █
 #  █ █ █ █        ███   █ ███   ███    ███    ███   █ ███  █     █        ███    ███    ███
@@ -1560,7 +1664,14 @@ kubectl delete -f k8s
 
 
 #--------------------------------------------------------------------------------------------------
-#--------------------------------------------------------------------------------------------------
+#                                           ███    ████       █    ███ 
+#                                          █   █  █    █     ██   █   █
+#   ████   ████   ███ ██    ███                █  █    █    █ █   █   █
+#  █   █       █  █  █  █  █   █   █████      █   █    █   █  █    ███
+#  █   █   █████  █  █  █  █████             █    █    █  ██████  █   █
+#   ████  █    █  █  █  █  █                █     █    █      █   █   █
+#      █   ███ █  █  █  █   ███            █████   ████       █    ███
+#  ████
 #--------------------------------------------------------------------------------------------------
 # Dzialajacy przyklad.
 # Zakladam, ze mam uruchomiony minikube.
@@ -1571,10 +1682,12 @@ kubectl apply -f all-in-one.yml
 kubectl proxy
 
 # Dostęp do Podów przez przeglądarkę: 
-http://localhost:8001/api/v1/namespaces/game-2048/services/http:service-2048:/proxy/
+http://localhost:8001/api/v1/namespaces/game/services/http:service-2048:/proxy/
+# dla OVH zadziałało:
+http://51.77.59.63:30008/
 
 # Aby sprawdzic wszystkie odpalone "serwisy/usługi"? zwiazane z 
-kubectl get all -n game-2048
+kubectl get all -n game
 
 # Aby usunac calosc:
 kubectl delete -f all-in-one.yml
@@ -1585,12 +1698,12 @@ kubectl delete -f all-in-one.yml
 apiVersion: v1
 kind: Namespace 
 metadata:
-  name: game-2048               # *1v
+  name: game                    # *1v
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: game-2048          # *1^ musi byc jak wyzej
+  namespace: game               # *1^ musi byc jak wyzej
   name: deployment-2048
 spec:
   selector:
@@ -1612,14 +1725,23 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: game-2048          # *1^
+  namespace: game               # *1^
   name: service-2048
 spec:
+  ┌──────────────────────────   to ustawienie działa stacjonarnie
   type: ClusterIP               # ClusterIP: udostepnij aplikacje tylko w obrebie klastra. (serwi otrzymuje unikalny IP tylko w sieci wewnetrznej )
   ports:
   - port: 80                    # jaki port ma byc wystawiony
     targetPort: 80              # port kontenera (containerPort z Deployment, do jakiego porty ma przekierowac ruch)
     protocol: TCP
+  └──────────────────────────
+  ┌──────────────────────────   to ustawienie działa na OVH (dla jednego noda)
+  type: NodePort
+  ports:
+  - port: 80               # jaki port ma byc wystawiony
+    targetPort: 80         # port kontenera (containerPort z Deployment, do jakiego portu ma przekierowac ruch)
+    nodePort: 30008
+  └──────────────────────────
   selector:
     name: app-2048
 
@@ -1904,8 +2026,11 @@ Na naszej maszynie nie ma takiego folderu
 Na OVH jest ten folder, ale nie moge wywołać polecenia ls -la /etc/kubernetes/manifests
                                            
 
-
-
+Filmik Kurs Kubernetes od podstaw - zarządzanie i automatyzacja kontenerów
+LoadBalancer
+Minuta okoł 4 - robie kropka w kropkę i u mnie nie działa... 
+Wywaliłem jedne kontener, to nie wali błedami przy starcie, ale nie przydziela zewnętrzengo IP
+Trzeba ustawić haproxy round robin
 
 
 

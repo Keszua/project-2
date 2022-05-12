@@ -14,6 +14,9 @@ Node.js  - jest to środowisko uruchomieniwe do odpalania JS bez przeglądarki. 
 node -v  	// sprawdzanie wersji. 
 npm -v 		// sprawdzanie wersji. 
 
+// jaka sinstrukcja, ajk miec kilak wersji node na jednym kopie:
+youtu.be/OOJLwK92JAI
+
 //aby sprawdzić wersję V8 z jakiego korzysta przeglądarka, trzba w pasku wpisać chrome://version
 
 //Aby z niego skorzystać ogólnie przez wiersz poleceń, w wierszu poleceń wpisać:
@@ -80,13 +83,62 @@ Przykłady:
 
 
 //-----------------------------------------------------------------------------
+//                        █
+//                        █                                 █
+//  ████    ████    ███   █  █   ████    ████   ███             ███    ███   ████
+//  █   █       █  █   █  █ █        █  █   █  █   █       ██  █      █   █  █   █
+//  █   █   █████  █      ██     █████  █   █  █████        █   ███   █   █  █   █
+//  ████   █    █  █   █  █ █   █    █   ████  █            █      █  █   █  █   █
+//  █       ███ █   ███   █  █   ███ █      █   ███   █  █  █   ███    ███   █   █
+//  █                                   ████              ██
 //-----------------------------------------------------------------------------
+package.json
+
+// Opis licencji jest na stronie https://opensource.org/licenses
+// Rozpoczynamy projektu od wywołania polecenia:
+npm init
+//gdy ściągniemy projekt z gita, trzeba wywołac instalacje:
+npm i  //lub npm install
+
+// instalujemu eslinta:
+npm install -D babel-eslint eslint eslint-config-airbnb
+// w package.json pojawi się  "devDependencies": 
+npm i --save-dev @babel/eslint-parser eslint-config-airbnb
+
+//Tworzymy plik .eslintrc i w nim umieszczamy:
+{
+	"env": {
+		"browser": true,
+		"node": true
+	},
+	"parser": "@babel/eslint-parser",
+	"extends": "airbnb",
+	
+	"parserOptions": {
+		"requireConfigFile": false
+	},
+	"rules": {
+		"quotes": ["warn", "single"], //reguła o cudzysłowie - było w materiale
+		"import/prefer-default-export": "off", //dodałem, by nie wywalało błędu o importach
+		"no-console": "off", //dodałem to by nie wywalało błędu o używaniu console.log
+		"import/extensions": [ //to dodane jest, by nie wyrzucało przy importach błędów do plików z rozszerzeniem .js
+			"error",
+			{
+				"js": "ignorePackages"
+			}
+		]
+	}
+}
+
+
+
+
+// do usuwania paczek: npm un -D nazwaPaczki 
+// po wykonaniu zmiany w package.json, trzeba wywołać instalacje
+npm i
+
+
 //-----------------------------------------------------------------------------
-
-
-//gdy ściągniemy projekt z gita, albo "przypadkiem" usuneliśmy plik node_modules, odzyskujemy wszystko poleceniem:
-npm install
-
 //Przykładowa instalacja pakietów z npm:
 npm install -g nodemon          //instalacja globalna
 npm install --save-dev nodemon  //instalacja z dopisaniem do package-lock.json i dependences (zależności)
@@ -207,12 +259,28 @@ exports.GetNum = GetNum;
 exports.GetNum2 = () => { console.log('GetNum2', counter) };
 
 
+//-----------------------------------------------
+// prosty przykład pliku z exportem i importem modułu:
+// Zawartość: calc.js
+const sum = (a, b) => a + b;
+const divide = (a, b) => a / b;
+module.exports = {
+    sum,
+    divide
+};
+// lub: module.exports.sum = sum;
 
+// Zawartość: index.js
+const math = require('.calc');
+console.log(math.sum(2, 3));
+//lub to samo, z destrukturyzacją:
+const { sum, divde } = require('.calc');
+console.log(sum(2, 3));
 
 
 //-----------------------------------------------------------------------------
 //Obiekt global  (podobnie jak window w przeglądarce)
-najważneijsze metody:
+najważniejsze metody:
 - process
 - require()
 - module
@@ -241,6 +309,7 @@ const port = process.env.PORT || 3000  // gdy chcemy wsatwić stronke na serwerz
 //   #        ###
 
 const fs = require('fs');
+//2-gi sposob, przez destruktóryzacje:  const {readFile} = require('fs');
 //-----------------------------------------------------------------------------
 fs.access('./names.txt', (err) => { //czy istnieje plik, czy mozna do niego zapisac?
     console.log(err ? "Plik nie istnieje" : "Odnaleziono plik");
@@ -279,28 +348,43 @@ fs.readdir('./', (err, files) => {
 
 fs.readFile('names.txt', (err, data) => {  // ewentualnie ściezke podawć jako: './names.txt'
     console.log(data); //pobrane dane w formie buforu, wartości w postaci HEX
-    console.log(data.toString());   //dane w postaci "string"
-})
+    console.log(data.toString());         //dane w postaci "string"
+    console.log(data.toString('utf8'));   //dane w postaci "do odczytu przez człowieka"
+});
 
-//To samo ale z kodowaniem
+// To samo ale z kodowaniem
 fs.readFile('names.txt', 'utf8', (err, file) => { 
     if(err) throw Error(err)
-     console.log(file);
-})
+        console.log(file);
+});
 
-try{
+
+try {
     const names = fs.readFileSync('names.txt', 'utf8')  //SYNCHRONICZNE wywołanie
     console.log(names);
 } catch (err) {
     console.log(err);    
 }
 
+// To samo ale z opcjami
+// Wiecej opcji na https://nodejs.org/api/fs.html#fspromisesreadfilepath-options
+try {
+    const names = fs.readFileSync('names.txt', {
+        encoding: 'utf8',
+        flag: 'r',
+    })
+    console.log(names);
+} catch (err) {
+    console.log(err);    
+}
+
+
 //-----------------------------------------------------------------------------
 //WRITEFILE - nadpisuje zawartość pliku
 
-fs.writeFile('nowyPlik.txt', "Tresc w nowym pliku", (err) => {
-    if(err) console.log(ree);
-    else console.log("Udało sie zapspiac w pliku");
+fs.writeFile('nowyPlik.txt', "Tresc w nowym pliku", 'utf-8', (err) => {
+    if(err) console.log(err);
+    else console.log("Udało sie zapisac w pliku");
 })
 
 
@@ -322,6 +406,19 @@ fs.readFile('names.txt', 'utf8', (err, data) => {
         else console.log("Udało sie zapispiac w pliku");
     })
 })
+
+const {writeFile} = require('fs').promises;
+(async () => {
+    try {
+        await writeFile('nowyPlik.txt', "Tresc w nowym pliku\n", {
+            encoding: 'utf-8',
+            flag: 'a',   // a-append(dopisz), 
+        } );
+        console.log('Zapis udany');
+    } catch(err) {
+        console.log('Ops...', err);
+    }
+})()
 
 //-----------------------------------------------------------------------------
 //APPENDFILE  - dodawanie treści do pliku
@@ -423,9 +520,68 @@ function gotujWode(clb) {
 }
 
 
+//-----------------------------------------------------------------------------
+// przykład z MegaK E2_d3
+const {readFile} = require('fs');
 
+readFile('./index.js', 'utf8', (err, data) => {
+    if (err === null) {
+        console.log(data);
+    } else {
+        console.log("Oh no1", err);
+    }
+});
 
+// przerobienie na promisify
+const {readFile} = require('fs');
+const {promisify} = require('util');
 
+const readFilePromised = promisify(readFile);
+
+(async () => {
+    try {
+        const data = await readFilePromised('./index.js', 'utf8');
+        console.log(data);
+    } catch(err) {
+        console.log("Oh no1", err);
+    }
+})();
+
+// skrócenie zapisu. Bez tworzenia linijki const readFilePromised = promisify(readFile);
+const {readFile} = require('fs');
+const {promisify} = require('util');
+
+(async () => {
+    try {
+        const data = await promisify(readFile)('./index.js', 'utf8'); // tutaj urzywam besposrednio promisify(readFile), czyli funkcję zwracającą funkcję.
+        console.log(data);
+    } catch(err) {
+        console.log("Oh no1", err);
+    }
+})();
+
+// skorzystanie z fs.promises
+const {readFile} = require('fs').promises;  // pobierz fs z promisem (inna metoda, ale o tej samej nazwie)
+
+(async () => {
+    try {
+        const data = await readFile('./index.js', 'utf8'); // to wraca do formy pierwotnej
+        console.log(data);
+    } catch(err) {
+        console.log("Oh no1", err);
+    }
+})();
+
+// przykład z dns.lookup
+const dns = require('dns').promises;
+(async () => {
+	try {
+		const data = await dns.lookup('google.com');
+		console.log(data);
+	} catch(err) {
+		console.log('Coś nie pykło', err);
+	}
+})()
 
 
 //-----------------------------------------------------------------------------
