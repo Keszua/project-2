@@ -125,7 +125,7 @@ echo $OPERATION             //= jakas tresc
 echo "Operacja $OPERATION"  //= Operacja jakas tresc
 echo 'Operacja $OPERATION'  //= Operacja $OPERATION    -nie podmienia zmiennych
 echo "Operacja \$OPERATION = $OPERATION"  //= Operacja $OPERATION = jakas tresc
-echo -e "jedn\tdwa\ttrzty"  # -e aby działay zpecjalne znaki, typu \t \n \a 
+echo -e "jedn\tdwa\ttrzty"  # -e aby działay specjalne znaki, typu \t \n \a 
 echo -n . ; echo -n . ; echo -n . ; echo . //= ....    -n nie generuj nowej linii
 echo -n . ; sleep 1 ; echo -n . ; sleep 1 ;  echo -n . ; sleep 1 ;  echo . //= .... wypisze kropki co sekunde
 echo -n '|' ; sleep 1 ; echo -ne '\b/' ; sleep 1 ;  echo -n '\b-'. ; sleep 1 ;  echo -e '\b\\' //= wypisze "wiatraczek" co sekunde
@@ -1009,11 +1009,46 @@ ip link show                           # informacje o dostepnych kartah sieciowy
 ip link set eth0 down                  # wylacz karte eth0
 ip link set eth0 up                    # wlacz karte eth0
 ip address add dev eth0 192.168.137.100/24       # dodaj nowe IP dla danej karty (do restartu karty)
+ip addr add 19.168.1.10/24 dev eth1    # przypisz adres do karty (nie trwale, do restartu karty)
 ip -s -h address show                  # statystyka z wyslanych/odebranych pakietow
 
-ip route                               #─┐
+route                                  #─┐
+ip route                               #─┤
 ip r                                   #─┼─ routing - czyli jak skonfigurowana jest brama domyślna
 ip route list                          #─┘ 
+ip route add 192.168.1.10/24 dev eth0          # A chyba przypisanie IP do karty sieciowej
+ip route add 192.168.2.0/24 via 192.168.1.1    # A chyba dodanie połaczenia z S2, przez S1
+ip route add 172.217.194.0/24 via 192.168.1.1  # A chyba ustawia połaczenie z internetem, przez R
+#            └adr. na internet  └adr. rutera, do którego podłaczony jest internet 
+ip route add default via 192.168.1.1           # A gdy mamy kilka internetów, to ustawiamy domyślny
+# wizualny opis w Film 185  Certified Kubernetes Administrator (CKA) with Practice Tests
+
+                                                             _____________
+┌────────────┐                           ┌────────────┐     /             \    ┌────────────┐                           ┌────────────┐    .
+│ A    ┌─────┴┐       ┌───────────┐     ┌┴─────┐    B │    |    INTERNET   |   │ C    ┌─────┴┐       ┌───────────┐     ┌┴─────┐    D │    .
+│      │ eth0 │-------│ S1        │-----│ eth0 │      │    | 172.217.194.0 |   │      │ eth0 │-------│ S2        │-----│ eth0 │      │    .
+│      └─────┬┘       │192.168.1.0│     └┬─────┘      │    \______________/    │      └─────┬┘       │192.168.2.0│     └┬─────┘      │    .
+│192.168.1.10│        └───────────┘      │192.168.1.11│           |            │192.168.2.10│        └───────────┘      │192.168.2.11│    .
+└────────────┘                 |         └────────────┘           |            └────────────┘           |               └────────────┘    .
+                               |                           ┌────────────┐                               |                                 .
+                               └---------------------------│ R          │-------------------------------┘                                 .
+                                        192.168.1.1        └────────────┘     192.168.2.1                                                          .
+
+# Konfiguracja sieci, aby A widział C
+                      _____________                                 _____________                          .
+┌────────────┐       /             \       ┌───────────────┐       /             \       ┌────────────┐    .
+│ A    ┌─────┴┐     |               |     ┌┴─────┐ B ┌─────┴┐     |               |     ┌┴─────┐    C │    .
+│      │ eth0 │-----| 192.168.1.0   |-----│ eth0 │   │ eth1 │-----| 192.168.2.0   |-----│ eth0 │      │    .
+│      └─────┬┘      \_____________/      └┬─────┘   └─────┬┘      \_____________/      └┬─────┘      │    .
+│192.168.1.5 │                             │               │                             │192.168.2.5 │    .
+└────────────┘                 192.168.1.6 └───────────────┘ 192.168.2.6                 └────────────┘    .
+# chce aby zadziałało połączenie A z C
+# konfiguracja A
+ping 19.168.2.5                                # teraz nie działa
+ip route add 192.168.2.0/24 via 192.168.1.6    # do 2.0 dostaniesz się przez B  
+
+                                                                                 # konfiguracja C
+                                                                                 ip route add 19.168.1.0/24 via 192.168.2.6
 
 
 nano interfaces                        # edycja ustawień sieci, gdy wczesniej wywolamy   cd etc/network/
@@ -1023,7 +1058,7 @@ nano /etc/network/interfaces           # edycja ustawień sieci
 	allow-hotplug ens18
 	iface ens18 inet static
 		address 10.10.10.182/24
-		gateway 10.10.10.252
+		gateway 10.10.10.252           # brama na swiat (którędy wyjśc na zewnatrz)
 		# dns-* options are implemented by the resolvconf package, if installed
 		dns=nameserver 1.1.1.1
 		#dns-search ihermes.humansoft.pl
@@ -1056,6 +1091,23 @@ ping wp.pl                             # pingowanie z jakas stroną:
 ping -c 5 wp.pl                        # wyslij tylko 5 razy
 
 dig www.google.com
+
+
+# DNS
+                       _____________           db              .
+┌─────────────┐       /             \       ┌─────────────┐    .
+│ A     ┌─────┴┐     |               |     ┌┴─────┐    B  │    .
+│       │ eth0 │-----| 192.168.1.0   |-----│ eth0 │       │    .
+│       └─────┬┘      \_____________/      └┬─────┘       │    .
+│192.168.1.10 │                             │192.168.1.11 │    .
+└─────────────┘                             └─────────────┘    .
+
+ping 192.168.1.11    # teraz zadziała to polecenie 
+poing db             # nie zadziała
+cat >> /etc/hosts    # do pliku dopisz: 192.168.1.11 db
+poing db             # teraz zadziała
+
+cat /etc/resolv.conf    # tu się znajduje informacja o adresie serwera DNS
 
 
 #-------------------------------------------------------------------------------------------------

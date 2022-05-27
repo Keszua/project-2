@@ -80,6 +80,23 @@ Przykłady:
 500 "Internal Server Error" - "Coś u mnie nie tak"
 
 
+//-----------------------------------------------------------------------------
+Yarn
+
+instalacja:
+npm install --global yarn
+
+yarn               // odpowiednik: npm i         lub npm install
+yarn add paczka    // odpowiednik: npm i paczka
+yarn add -D babel  // paczka tylko dla programisty
+yarn remove paczka 
+
+Yarn 2 (Yarn Modern)
+
+
+pnpm
+
+//-----------------------------------------------------------------------------
 
 
 //-----------------------------------------------------------------------------
@@ -157,6 +174,67 @@ edu
 imagesmodules
 node-exapmles
 work
+
+
+
+//-----------------------------------------------------------------------------
+// jak obserwowac pliki
+
+chokidar
+"dependencies": {
+    "chokidar": "^3.5.2"
+}
+// pamietać o wywołaniu npm i
+
+// w pliku wywołujemy:
+const {watch} = require('chokidar');
+
+watch('.', {})  //wszystko co w środku:  './**/*'   konkretny folder: '/home/gdpr-doc'    rozszeżenia:  '**/*.js'
+    .on('all', (event, path) => {
+        console.log(event, path);
+    });
+
+// wiecej poleceń na: https://www.npmjs.com/package/chokidar?activeTab=versions
+
+//przykład na wykrywanie tylko dodawanie i zmiany w plikach
+watch('.')
+  .on('add', path => console.log(`File ${path} has been added`))
+  .on('change', path => console.log(`File ${path} has been changed`));
+
+// przykład z opcjami 
+watch('.' {
+        ignoreInitial: true,     // nie informuj o ostneijących plikach
+        awaitWriteFinish: true,  // czekaj, aż plik zmieni się w całości
+    })
+    .on('change', path => console.log(`File ${path} has been changed`));
+
+//-------------------------------------
+// E2_dzien8
+// Program który śledzi wszystkie zmiany w plikach o rozszeeniu .js 
+// wyświetla wprowadzone zmiany
+// reaguje na pełen zapis
+const {watch} = require('chokidar')
+const {readFile} = require('fs').promises;
+
+async function wyswietlZawartoscPliku(path) {
+	const data = await readFile(path, 'utf8');
+	console.log(`Zawartosc pliku: \n${data}`);
+}
+
+watch('**/*.js', {
+		ignoreInitial: true,     // nie informuj o ostniejących plikach
+		awaitWriteFinish: true,  // czekaj, aż plik zmieni się w całości
+	})
+	.on('add', path =>  {
+		//const data = await readFile(path, 'utf8');
+		console.log(`File ${path} has been added`);
+		wyswietlZawartoscPliku(path);
+	})
+	.on('change', path => {
+		console.log(`File ${path} has been changed`)
+		wyswietlZawartoscPliku(path);
+	});
+//-----------------------------------------------------------------------------
 
 
 
@@ -295,7 +373,7 @@ global.process.argv                    // zwróci tablicę ze ścieżką i podan
 global.process.env                     // chyba wszystkie dane o urzytkowniku, kodowaniu, cieżki, jaki windows itp.
 const port = process.env.PORT || 3000  // gdy chcemy wsatwić stronke na serwerze
 //można wpisywać bez "global", czyli: console.log(process.env);
-
+const PATH = process.env.PATH;  //zmienne środowiskowe na naszym kompie można sprawdzić poleceniem w konsoli: printenv PATH
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -310,6 +388,7 @@ const port = process.env.PORT || 3000  // gdy chcemy wsatwić stronke na serwerz
 
 const fs = require('fs');
 //2-gi sposob, przez destruktóryzacje:  const {readFile} = require('fs');
+//3-ci sposob, wersja promises (inna obsługa): const {readFile} = require('fs').promises;
 //-----------------------------------------------------------------------------
 fs.access('./names.txt', (err) => { //czy istnieje plik, czy mozna do niego zapisac?
     console.log(err ? "Plik nie istnieje" : "Odnaleziono plik");
@@ -342,6 +421,36 @@ fs.readdir('./', (err, files) => {
     if(err) return console.log("Błąd: ", err);
     console.log("Zawartość: ", files);
 });
+//-----------------------------------------------
+//wersja .promises;
+const {readdir, readFile, stat} = require('fs').promises;
+
+async function readFilesAndDirectories() {
+    const fileNames = await readdir('.', {
+        withFileTypes: true,  // zamiast stringa, otrzymuje obiekt. (1-plik, 2-folder)
+    });
+    //console.log(fileNames); //tablica z plikami jakie są w folderze z programem
+    for(const fileName of fileNames) {
+        console.log(fileName);
+
+        const fileContent = await readFile(`./data/${fileName}`, 'utf8');
+        console.log(fileContent); // wypisz zawartość plików
+
+        const fileStat = await stat(`./data/${fileName}`);
+        console.log(fileStat.isFile());    // .isFile() - czy jest plikiem; 
+    }
+}
+
+readFilesAndDirectories();
+
+//-----------------------------------------------
+//Przykład  do rekurencyjnego przegladania plików i folderów
+async function showFilesInDirectory(path) {
+    if ('jeśli wpis jest katalogiem') {
+        await showFilesInDirectory(......)
+    }
+}
+showFilesInDirectory('.');
 
 //-----------------------------------------------------------------------------
 //READFILE
@@ -425,7 +534,7 @@ const {writeFile} = require('fs').promises;
 const names = "Jan, Jerzy"
 fs.appendFile( 'users.txt', names, (err) => {
   if(err) console.log(ree);
-  else console.log("Udało sie zapispiac w pliku");
+  else console.log("Udało sie zapisać w pliku");
 })
 
 //odczyt z jednego pliku i doklejenie treści do innego pliku
@@ -438,16 +547,98 @@ fs.readFile('names.txt', (err, data) => {       //odczyt w formacie HEX
 })
 
 //-----------------------------------------------------------------------------
+//Tworzenie folderu
+const {mkdir} = require('fs').promises;
+(async() => {
+    await mkdir('./mega k/node/filesystem', {
+        recursive: true,  // twórz podfoldery
+    });
+
+})();
+
+//-----------------------------------------------------------------------------
+//zmiana nazwy lub przenoszenie
+const {rename} = require('fs').promises;
+(async() => {
+    try {
+        await rename('./data/staraNazwa.txt', './data/nowaNazwa.txt'); //lub nowa ścieżka
+    } catch(err) {
+        if (err.code === 'ENOENT') {
+            console.log('Given file name does not exist.');
+        } else {
+            console.log('Oh no!', err);
+        }
+    }
+})();
+
+//-----------------------------------------------------------------------------
+//odczyt parametrów / argumentów z konsoli / dynamicznie wprowadzane dane
+console.log(process.argv);
+/*
+node index.js hejka
+└─   │        │   ['C:\\Program Files\\nodejs\\node.exe',          // pierwszy element - środowisko uruchomieniowe
+     └─       │    'D:\\Klamoty\\MegaK\\E2_dzien6z25\\index.js',   // drugi element - binarka programu uruchomieniowego
+              └─   'hejka' ]                                      // pierwszy argument podany przy wywoływaniu polecenia
+*/
+
+//przykład kalkulatora:
+const a = Number(process.argv[2]);
+const sign = Number(process.argv[3]);
+const b = Number(process.argv[4]);
+
+if (sign === '+') {
+    console.log(a + b);
+}
+
+//przykład programu do zmiany nazwy:
+const {rename} = require('fs').promises;
+(async() => {
+	const oldFile = process.argv[2];
+	const newFile = process.argv[3];
+	try {
+		await rename(oldFile, newFile) 
+	} catch(err) {
+		if (err.code === 'ENOENT') {
+			console.log(`${oldeFile} does not exist`);
+		} else {
+			console.log('Unknown error:', e);
+		}
+	}
+})();
+
+//-----------------------------------------------------------------------------
+//usuwanie pojedynczych plików
+const {unlink} = require('fs').promises;
+    //... otoczka jak w przykładzie wyzej
+    await unlink(oldFile);
+
+
+//-----------------------------------------------------------------------------
+//usuwanie całego folderu z zawartością:
+const {rm} = require('fs').promises;
+//... otoczka jak w przykładzie wyzej
+await rm(oldFile, { recursive: true, });
+
+
+
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 const path = require('path');  //moduł pomagający budowanie ścieżki
+// __filemane          - cała ściezka absolutna do naszego pliku .JS (razem z plikiem)
+// __dirname           - aktualny folder, w jakim znajduje się fizycznie nasz plik .JS
+// dirname(__dirname)  - folder wyżej, niż folder projektu. Taki: ../ 
+// dirname(__filename) - zwróci dokładnei to samo, co: __dirname
 
-const pathToFile = path.join(__dirname, 'indeks.js');
-const pathToFile2 =__dirname + '\\' + 'indeks.js'; //to samo co wyżej
-const pathToFile3 =__filename;                     //to samo co wyżej
-//console.log(pathToFile2);    //wyświetli całą ścieżkę gdzie jesteśmy
+const pathToFile = path.join(__dirname, 'indeks.js');  // cała ścieżka gdzie jesteśmy ┐
+const pathToFile2 =__dirname + '\\' + 'indeks.js';     // cała ścieżka gdzie jesteśmy ├ ten sam efekt
+const pathToFile3 =__filename;                         // cała ścieżka gdzie jesteśmy ┘
 
-const anotherPath = path.join('/users/pl', 'active', 'user.json') //ręczne układnaie ścieżki
+const lile1 =path.basename(__filename);                // TYLKO nazwa pliku
+const sciezkaUzytkownika = path.join(__dirname, process.argv[2]);
+const rozszerzenie = path.extname(path);               // zwróci rozszerzenie wraz z kropką
+
+const anotherPath = path.join('/users/pl', 'active', 'user.json') //ręczne układanie ścieżki
 //console.log(anotherPath);
 
 const parse = path.parse(__filename);   //ściezka w postaci obiektu z kilkoma danymi
@@ -457,6 +648,16 @@ const parse2 = path.parse(path.join(__filename, 'index.js'));
 //console.log(parse2);
 console.log(path.extname('jakisPlik.js')); //tylko rozszeżenie
 
+//bezpieczne podawanie scieżki
+//path.normalize(myPath)
+//const userPath = path.normalize(join(__dirname, process.argv[2]));
+
+function safeJoin(base, target) {
+    const targetPath = '.' + path.normalize('/'+target)
+    return path.resolve(base, targetPath);  // resolve łączy ścieżki
+}
+
+const userPath = safeJoin(__dirname, process.argv[2]);
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -569,6 +770,11 @@ const {readFile} = require('fs').promises;  // pobierz fs z promisem (inna metod
         console.log(data);
     } catch(err) {
         console.log("Oh no1", err);
+        if (err.code === 'ENOENT') {  //ENOENT - takiego pliku nie ma. EEXISTS - nie możesz zapisać
+            console.log('Filed is not valis');
+        } else {
+            console.log('Unknown error!', err);
+        }
     }
 })();
 
@@ -584,17 +790,28 @@ const dns = require('dns').promises;
 })()
 
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//    ###           #           #    
-//   #              #           #    
-//   #      ###   #####   ###   #    
-//  ####   #   #    #    #   #  #### 
-//   #     #####    #    #      #   #
-//   #     #        #    #   #  #   #
-//   #      ###      ##   ###   #   #
-//
+/*-----------------------------------------------------------------------------
+      ###               #               #         #    # 
+     #                  #               #        #      #
+     #        ###     #####     ###     #        #      #
+    ####     #   #      #      #   #    ####     #      #
+     #       #####      #      #        #   #    #      #
+     #       #          #      #   #    #   #    #      #
+     #        ###        ##     ###     #   #     #    # 
+-----------------------------------------------------------------------------*/
+// paczki nie m adomyślnie. Trzeba ją doinstalować
+npm i node-fetch
+
+const fetch = require('node-fetch');
+
+//Prosty program, do pobierania pogody
+fetch(`http://wttr.in/${cityName}`)
+	.then(r => r.text())
+	.then(data => console.log(data) );
+
+//api do pobierania pogody dla Radomia
+https://danepubliczne.imgw.pl/apiinfo
+http://wttr.in/Radom
 
 //Projekt konsolowy, ma pobrać API waluty i daty (na podstawie filmu 40, node.js)
 //Urzyjemy node-fetch  (oparty na promisach). Instalacja:   npm i node-fetch
@@ -670,10 +887,151 @@ axios.get(url)
 
 
 
+/*-------------------------------------------------------------------------------------------------
+         #           #           #
+         #       #   #           #
+   ###   #           #       #####           ####   # ###   ###    ###    ###    ###    ### 
+  #   #  ####   ##   #      #    #           #   #  ##     #   #  #   #  #   #  #      #    
+  #      #   #   #   #      #    #           #   #  #      #   #  #      #####   ###    ### 
+  #   #  #   #   #   #   #  #    #           ####   #      #   #  #   #  #          #      #
+   ###   #   #  ###   ###    #####   #####   #      #       ###    ###    ###    ###    ### 
+                                             #
+-------------------------------------------------------------------------------------------------*/
+
+child_process.exec
+child_process.execFile
+chilsd_process.fork
+child_process.spawn
+
+//------------------------------------------
+// Przykład 1, wyświetl wynik polecenia 'dir' i zareaguj na ewentualne komunikaty o błędach
+const { exec } = require('child_process');
+
+exec('dir',  (error, stdout, stderr) => {
+	if (error) {
+		console.error('Oh no!', error)
+	} else if (stderr) {
+		console.log('Error in app!', stderr);
+	} else {
+		console.log('Program has finished', stdout)
+	}
+})
+
+
+//------------------------------------------
+// Przykład 2, uruchamiam inny plik, w którym są console.log i console.error  i przechwytuje te dwa rózne zdarzenia
+// index.js
+const { exec } = require('child_process');
+
+exec('node test.js', (error, stdout, stderr) => {
+	console.log('stdout', stdout);               //=> stdout Jestem logiem
+	console.log('stderr', stderr);               //=> stderr Jestem errorem
+    console.log({error, stdout, stderr});        //=> { error: null, stdout: 'Jestem logiem\n', stderr: 'Jestem errorem\n' }
+});
+
+// test.js
+console.log("Jestem logiem");
+console.error("Jestem errorem");
+
+//------------------------------------------
+// Przykład 3, przeróbka jak fetch
+const { promisify } = require('util');
+const exec = promisify(require('child_process').exec);
+exec('dir')
+	.then( ({stdout, stderr}) => {
+		console.log(stdout);
+	});
+
+//------------------------------------------
+// Przykład 4, przeróbka na async
+const { promisify } = require('util');
+const exec = promisify(require('child_process').exec);
+(async () => {
+	try {
+        //const {stdout} = await exec(`ping 8.8.8.8`);
+        const ip = process.argv[2].replace(/[^0-9.]+/g, ''); // odbierz parametr i wywal wszystko oprucz cyfr i kropek. Więcej o wyrażeniach: https://regexlib.com
+		const {stdout} = await exec(`ping ${ip}`);
+		console.log(stdout)
+	} catch(err) {
+		console.log('Oh no', err);
+	}
+}) ()
+
+//------------------------------------------
+// Przykład 5. Odpalam program, który uruchomi inny program, przekazujac mu zmienną środowiskową. Inny program ma zadanie wyświetlić tą zmienną.
+// index.js
+const { promisify } = require('util');
+const exec = promisify(require('child_process').exec);
+(async () => {
+	try {
+		const {stdout} = await exec(`node test.js`, {
+			env: {
+				NODE_ENV: 'production',
+			}
+		});
+		console.log(stdout)
+	} catch(err) {
+		console.log('Oh no', err);
+	}
+}) ()
+
+// test.js
+console.log('NODE_ENV', process.env.NODE_ENV);
+
+//------------------------------------------
+// Przykład 6. Program, który stworzy folder na wskazanej lokalizacji (na dysku C:)
+const { promisify } = require('util');
+const exec = promisify(require('child_process').exec);
+(async () => {
+	try {
+		const {stdout} = await exec(`mkdir folderTestowy`, {
+			cwd: 'C:\\',
+		});
+		console.log(stdout)
+	} catch(err) {
+		console.log('Oh no', err);
+	}
+}) ()
 
 
 
+//------------------------------------------
+const { exec } = require('child_process');
 
+const cp = exec('dir', {               // cp to ChildProcess
+	env: {                             // zmienne środowiskowe/ Można je podejżeć poleceniem w konsoli: printenv PATH
+		PATH: 'C:\\User\\Marcin\\',    // przykładowa wartość
+	},
+	cwd: 'C:\\User\\Marcin\\',         // sterujemy, gdzie jest uruchomiony program
+	timeout: 1000,                     // po jakim czasie ma ubić proces [ms] (zabezpieczy przed zawieszeniem)
+
+});  
+
+const cp = exec('dir');                // dir | ls  wyświetl zawartość folderu
+const cp = exec('npm init -y');        // zainicjuj paczkę
+
+cp.stdout.on('data', (data) => {       // gdy pojawią sie dane na standardowym wyjściu...
+	console.log('Out>', data);
+});
+
+cp.stderr.on('data', (data) => {       // gdy pojawią sie dane na wejściu błędów...
+	console.log('Error>', data);
+});
+
+cp.on('close', () => {
+	console.log('Finished');
+});
+
+
+cp.kill(); //Win: ubić proces;  Unix: poproś o zamknięcie;   cp.kill('SIGKILL'); na Unixie ubicie procesu
+
+setTimeout( () => {                    //ubije proces po sekundzie
+	cp.kill(); 
+}, 1000);
+
+
+// Strumienie:  stdout, stdin  stderr 
+// git czy npm korzysta z stderr żeby wypisac ważny komunikat
 
 
 //-----------------------------------------------------------------------------
@@ -957,7 +1315,7 @@ app.get('/logout', (req, res) => {
     res.redirect('/');  //po wylogowaniu, przejdz na stronę główną
 });
 
-//do wygodniejszej obsługi cistek jest biblioteka cookie-parser  (npm i cookie-parser --save) filmik 73
+//do wygodniejszej obsługi ciastek jest biblioteka cookie-parser  (npm i cookie-parser --save) filmik 73
     const cookieParser = require('cookie-parser')
     app.use(cookieParser());
 
