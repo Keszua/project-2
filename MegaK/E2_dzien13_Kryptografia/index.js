@@ -40,12 +40,24 @@ pbkdf2(oryginalText, SALT, 100000, 64, 'sha512', (err, derivedKey) => {
 
 // bezpieczne hashowanie 3
 // bcrypt, nalezy zainstlawoac bcrypta  npm i bcrypt
-const {hash} = require('bcrypt');
+const {hash, compare} = require('bcrypt');
 
+let HASH = '';
+// hashowanie
 hash('tekst do zhasowania', 10, (err, hash) => {
     if (err) {
         console.log(err);
     } else {
         console.log(hash);
+        HASH = hash;
+    }
+});
+
+// porównanie, czy zgadza sie hasło
+compare('tekst do sprawdzenia', HASH, (err, res) => {
+    if (res) {
+        console.log('OK');
+    } else {
+        console.log('Nie poprawne');
     }
 });
