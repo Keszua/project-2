@@ -247,10 +247,10 @@ def wypisz(param):
 
 
 parametry = {
-    'tekst': 'Secret',
+    'tekst': 'Kryptografia',
     'spacje': 2,        # Ilość spacji pomiędzy literami
-    'komentator': '#',   # Jakim symbolem komentowac w danym programie. Zwykle '#' lub '//'.
-    'symbol': '█',      # Jakim symbolem rysować. # █  ░ ▒ ▓ ╬
+    'komentator': '',   # Jakim symbolem komentowac w danym programie. Zwykle '#' lub '//'.
+    'symbol': '#',      # Jakim symbolem rysować. # █  ░ ▒ ▓ ╬
 }
 
 wypisz(parametry)

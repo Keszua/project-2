@@ -25,3 +25,25 @@ let odczyt = false;
 		}
 	}
 })();
+
+
+//---------------------------------------
+// program do zmiany nazwy pliku.
+// przy wywoływanieu programu, podaj starą i nowa nazwę pliku
+
+const { rename } = require('fs').promises;
+
+(async() => {
+	const oldFile = process.argv[2];
+	const newFile = process.argv[3];
+
+	try {
+		await rename(oldFile, newFile) 
+	} catch(err) {
+		if (err.code === 'ENOENT') {
+			console.log(`${oldeFile} does not exist`);
+		} else {
+			console.log('Unknown error:', e);
+		}
+	}
+})();

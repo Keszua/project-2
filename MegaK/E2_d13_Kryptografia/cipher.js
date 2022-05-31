@@ -65,7 +65,7 @@ const { createCipheriv, createDecipheriv } = require('crypto');
 
 const password = 'Password used to generate key';
 
-async function ecryptText(text, password, salt) {
+async function encryptText(text, password, salt) {
 	const algorithm = 'aes-192-cbc';
 	const key = await scrypt(password, salt, 24);
 	const iv = await randomBytes(16);
@@ -93,6 +93,6 @@ async function decryptText(text, password, salt, ivHex) {
 }
 
 module.exports ={
-	ecryptText,
+	encryptText,
 	decryptText,
 }

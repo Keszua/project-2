@@ -1001,7 +1001,7 @@ cd etc/network/
 ip address                             #─┐ 
 ip a                                   #─┴─ wyświetla konfigurację kart siecowych i adresy sieci
 
-cat etc/hosts  # IP kontenera
+cat etc/hosts                          # IP kontenera
 
 etc/resolv.conf                        # informacja z adresem DNS
 

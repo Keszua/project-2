@@ -671,7 +671,7 @@ Kube-scheduler - on decyduje, w kórym nodzie stworzyć nową instancję poda, p
 
 Controller manager - odzysuje uszkodzone pody
 
-ETCD -jakis mózg do zarzadzania danymi
+ETCD -jakis mózg do zarzadzania danymi (ETDC is a distributed reliable key-value store that is Simple, Secure i Fast)
 
 Ingress - Chyba do zarządzania kontenerami z bazą danych. Decyduje gdzie trafi Request od urzytkownika. Do którego poa z baza dancyh 
 
@@ -706,7 +706,8 @@ kubectl get ┬ all            # pokaze pody, serwisy
             ├ serviceaccount #
             ├ persistentvolume
             ├ persistentvolumeclaim
-            └ configmap
+            ├ configmap
+            └ ingress
 kubectl get [LISTA] -o widge # troszke wiecej informccji
 kubectl get [LISTA] -o yaml  # szczegóły
 kubectl describe [LISTA] [NAME] # szczegóły konkretnego poda/noda.  NAME - to nazwa z wyświetlonego polecenia, no get pods
@@ -1151,6 +1152,151 @@ Kube DNS zawiera:
 # Aby się odwołać, trzeba wpisać;
 curl http://web-service.apps.svc.cluster.local
 
+
+Ingress
+
+INGRESS CONTROLLER
+
+Deployment
+┌───────────────────
+apiVersion: extensions/v1beta1
+kind: Deployment             
+metadata:                   
+  name: nginx-ingress-controller       
+  labels:                   
+    app: k8smaestro-webapp  
+spec:                       
+  replicas: 1
+  selector:  
+    matchLabels:
+      name: nginx-ingress
+  
+  template:                 
+    metadata:
+      labels:
+        name: nginx-ingress
+    spec:
+      containers:
+        - name: nginx-ingress-controller
+          image: quqy.io/kubernetes-ingress-controller/nginx-ingress-controller:0.21.0
+      args:
+        - /nginx-ingress-controller
+        - --configmap=$(POD_NAMESPACE)/nginx-configuration
+      env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+      
+      ports:
+        - name: http
+          containerPort: 80
+        - name: https
+          containerPort: 442
+
+└───────────────────
+
+ConfigMap
+┌───────────────────
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: nginx-configuration
+
+└───────────────────
+
+Service
+┌───────────────────
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ingress
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    targetPort: 443
+    protocol: TCP
+    name: https
+  selector:
+    name: nginx-ingress
+
+└───────────────────
+
+Auth
+┌───────────────────
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-ingress-serviceaccount
+└───────────────────
+
+
+#-----------------------------------------------------------
+Ingress-wear.yaml
+┌───────────────────
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:                   
+  name: ingress-wear
+spec:        
+  backend:
+    serviceName: wear-service
+    servicePort: 80
+└───────────────────
+kubectl create -f Ingress-wear.yaml 
+
+Ingress-wear-watch.yaml  # Rule 1
+┌───────────────────
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:                   
+  name: ingress-wear-watch
+spec:        
+  rules:
+  - http:
+    - path: /wear
+      backend: 
+        serviceName: wear-service
+        servicePort: 80
+    - path: /watch
+      backend: 
+        serviceName: watch-service
+        servicePort: 80
+└───────────────────
+
+
+Ingress-wear-watch.yaml  # Rule 2
+┌───────────────────
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:                   
+  name: ingress-wear-watch
+spec:        
+  rules:
+  - host: wear.my-online-store.com
+    http:
+      paths: 
+      - backend: 
+          serviceName: wear-service
+          servicePort: 80
+  - host: watch.my-online-store.com
+    http:
+      paths:
+      - backend: 
+          serviceName: watch-service
+          servicePort: 80
+
+
+└───────────────────
 
 
 
@@ -1966,8 +2112,12 @@ tar xzvf etcd-v3.3.11-linux-amd64.tar.gz
 
 # polecenie ustawienia nowego rekordu:
 ./etcdctl set key1 value1 
+etcdctl put key1 value1   # z inngo przykładu
 # odczyt
 ./etcdctl get key1  # => value1
+# odczyt tylko klucza
+etcdctl get / --prefix --keys-only
+
 
 # Setup - Manual
 wget -q --https-only\
@@ -1986,6 +2136,9 @@ curl -X POST /api/v1/namespaces/default/pods ...[other]
   kube-scheduler" \
   kubectl"
 https://discuss.kubernetes.io/t/control-plane-provisioning-failed/8323
+
+# jakas inna istalacja etcd - Film 224   Certified Kubernetes Administrator (CKA) with Practice Tests
+
 
 # Instalacja kube-apiserver - nie do końca wiem po co to instalować?
 wget https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-apiserver
@@ -2468,14 +2621,28 @@ kubectl get pods -o wide
   # mtNginx 1/1     Running   0          5m22s   172.17.0.3   minikube   <none>           <none>
 kubectl describe pod nginx   # wyświetl szczegóły konkretnego poda
 
+# wyswietlenie konkretnej wartości:
+kubectl get pods -o=jsonpath='{.items[0].spec.containers[0].image}'
 
+# wyswietlenie konkretnej wartości ze wszystkich elementów tablicy:
+kubectl get pods -o=jsonpath='{.items[*].metadata.name}'
 
+# wyswietlenie konkretnej wartości ze wszystkich elementów dwóch tablic:
+kubectl get pods -o=jsonpath='{.items[*].metadata.name}{.items[*].status.capacity.cpu}'
 
+# wyswietlenie konkretnej wartości ze wszystkich elementów dwóch tablic, rozdzielone tabem:
+kubectl get pods -o=jsonpath='{.items[*].metadata.name}{"\t"}{.items[*].status.capacity.cpu}'
 
+# Loops - range, wyświetl pary wartości obok siebie i rozdziel enterem 
+kubectl get pods -o=jsonpath='{range .items[*]} {.metadata.name}{"\t"}{.status.capacity.cpu}{"\n"}{end}'
 
+# wyświetlenie w formie kolumn
+kubectl get nodes -o=custom-columns=<COLUMN NAME>:<JSON PATH>
+kubectl get nodes -o=custom-columns=NODE:.metadata.name ,CPU:..status.capacity.cpu
 
-
-
+# sortowanie według okreslonej własciwości
+kubectl get nodes --sort-by= .metadata.name
+kubectl get nodes --sort-by= .status.capacity.cpu
 
 
 

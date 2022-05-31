@@ -1,0 +1,8 @@
+Projekt skłądajacy się z 2 plików.
+Nie ODPALAJ TUTAJ! (bo stworzysz node_module)
+
+Szyfrowanie za pomocą polecenia:
+node encrypt test.txt karolu
+
+Odszyfrowanie pliku:
+node decrypt test.txt karolu

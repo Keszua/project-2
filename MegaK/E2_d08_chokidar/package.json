@@ -1,0 +1,21 @@
+{
+  "name": "megakurs",
+  "version": "0.0.1",
+  "description": "Etap 2 dzień 2 z 25",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "MegaK"
+  ],
+  "author": "Ja",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.17.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.15.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "chokidar": "^3.5.2"
+  }
+}

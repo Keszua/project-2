@@ -1,5 +1,5 @@
 // Dzień 13 Kryptografia
-const {	ecryptText,	decryptText } = require('./cipher');
+const {	encryptText,	decryptText } = require('./cipher');
 
 const SALT = 'kadjfkjakfj@KJK#$';
 
