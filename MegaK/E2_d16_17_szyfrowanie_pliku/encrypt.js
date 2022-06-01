@@ -5,7 +5,7 @@
 // Zapisać iv w JSON
 
 const {readFile, writeFile} = require('fs').promises;
-const {encryptText,	hash} = require('./cipher');
+const {encryptBinary, encryptText,	hash} = require('./cipher');
 const {ENCRYPTION_SALT, HASH_SALT} =  require('./constants');
 
 const [,,fileName, pwd] = process.argv; // destruktyryzacja tablicy process.argv
@@ -26,3 +26,12 @@ if(!fileName || !pwd) {
 	console.log('Zaszyfrowano treść');
 
 })();
+
+
+//kodowanie plików binarnych (grafika itp.)
+// (async () => {
+// 	const content = await readFile(fileName);  // bez 'utf8'
+// 	const encrypted = await encryptBinary(content, pwd, ENCRYPTION_SALT);
+// 	await writeFile(fileName, JSON.stringify(encrypted), 'utf8');
+// 	console.log('Zaszyfrowano plik binarny');
+// })();
