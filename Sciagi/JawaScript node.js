@@ -1096,6 +1096,50 @@ compare('tekst do sprawdzenia', HASH, (err, res) => {
 });
 
 
+//-----------------------------------------------------------------------------
+// Kompresja:
+zlib.gzip(buffer)  // dla bufferów
+zlib.createGzip()  // dla streamów
+
+// Dekompresja:
+zlib.gunzip(buffer)  // dla bufferów
+zlib.createGunzip()  // dla streamów
+
+// Szyfrowanie i deszyfrowanie przy streamowaniu
+const {promisify} = require('util');
+const scrypt = promisify(require('crypto').scrypt);
+scrypt.createCipher(algirytm, pass);
+scrypt.createDecipher(algorithm, pass);
+// oba zwracają obiekt Cipher, który również jest Streamem typu Transform
+
+// Zadanie 1:
+// Zrobić program streamencrypt.js, który wywołuje się:
+node streamencrypt.js plikWejsciowy plkiWyjsciowy haslo
+// Program ma za pomocą streamów zaszyfrować plik wejściowy, nie zmieniają go, ale zapisując jego zaszyfrowaną wersję
+// Zadanie 2:
+// Program do odszysfrowania
+
+
+
+
+//Przykład:
+const {createReadStream, createWriteStream} = require('fs');
+const {pipeline} = require('stream').promises;
+const {createGzip} = require('zlib');
+
+(async () => {
+    await pipeline(
+        createReadStream('logo.webp'),
+        createGzip(),
+        createWriteStream('logo2.webp')
+    );
+    console.log('Done!');
+})
+
+
+
+// EventEmitter
+
 
 
 //-----------------------------------------------------------------------------
@@ -1575,6 +1619,7 @@ http://localhost:3000/fox?name=Karol&surname=Testowy
 //Do obsługi tego można wykorzystac:
 import { Controller, Get, Headers, Ip, Query, Req } from '@nestjs/common';
 import { Request } from 'express';
+import { pipeline } from 'stream'
 
 @Controller('fox')
 export class FoxController {
