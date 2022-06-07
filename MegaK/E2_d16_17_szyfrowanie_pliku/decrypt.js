@@ -1,4 +1,4 @@
-// projekt
+// Odszyfrowanie plików
 // program decrypt.js. Przyjmuje w linni komend informacje o nazwie pliku (tekstowego) i haśle, np:
 // node encrypt.js /home/tekst.txt mojehaslo
 // Zapisuje do niego zaszyfrowane (nie zahashowane) dane. Uzyj soli.

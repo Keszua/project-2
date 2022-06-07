@@ -660,6 +660,67 @@ function safeJoin(base, target) {
 const userPath = safeJoin(__dirname, process.argv[2]);
 
 //-----------------------------------------------------------------------------
+// Buffer - znajduje sie w całości w pamieci ram. Taka tablica reprezentujaca bezpośrednia zawartość pamięci
+const buff = Buffer.alloc(20);        // tworzenie nowego buffera, Domyslnie wypełniony zerami
+buff.write("Hejka", 'utf8');          // zapis do buffera
+console.log(buff);                    //=> <Buffer 48 65 6a 6b 61 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00>
+console.log(buff.toString('utf8'));   //=> Hejka
+
+// Stream
+// Samuraj do streamingu używa streamjar
+/*
+Writable  // - stream do którego możemy coś zapisać
+Readable  // - stream do odczytywania, np: odczyt z pliku
+Duplex    // - najcześciej do połączenia TCP/IP
+Transform // - Podobnei jak Duplex. Może zmieniać dane które przez neigo przechodzą. np do kmpresji.
+
+np: 
+- odczytujemy benzynę z baku
+- przetwarzamy ją tworząc mieszankę paliwową
+- na końcu stworzoną mieszankę przekazujemy do silnika
+
+Przykład kompresowania:
+Readable Stream (do odczytu liku) --->  Transform Stream (do kompresji danych)  ---> Writable Stream (do zapisu pliku))
+
+*/
+
+const {createReadStream, createWriteStream} = require('fs');
+const {pipeline} = require('stream').promises;
+
+(async () => {
+	// Tworze dwa streamy. Pierwszy odczytuje plik, a drugi zapsuje do innego pliku
+	const openFileStream = createReadStream('logo.png');
+	const writeFileStream = createWriteStream('logo2.png')
+	
+	// spinam te dwa streamy. Istotna kolejność
+	await pipeline(
+		openFileStream,   // zamiast tego, można po prostu wkleić:  createReadStream('logo.png');
+		writeFileStream,
+	);
+	console.log('Done');
+})();
+
+/*
+// w starszych nodach, zapis wygląda tak:
+const r = createReadStream('logo.png');
+const w = createWriteStream('logo2.png')
+r.pipe(w);                                 // połączenie strumieni
+r.on('end', () => console.log('Done!'));   // przechwycenie zakończenia strumieniowania
+*/
+
+/*
+// jeszcze starszy zapis tego samego:
+const r = createReadStream('logo.png');
+const w = createWriteStream('logo2.png')
+r.on('data', data => w.write(data));       // strumieniuj po kawałku
+r.on('end', () => {                        // przechwycenie zakończenia strumieniowania              
+	w.close();
+	console.log('Done!'));   
+});
+*/
+
+
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //  ####
@@ -1140,6 +1201,18 @@ const {createGzip} = require('zlib');
 
 // EventEmitter
 
+
+
+
+
+
+
+
+
+
+
+//Wyrażenia regularne
+https://regexlib.com/Search.aspx?k=nip
 
 
 //-----------------------------------------------------------------------------

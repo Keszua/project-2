@@ -707,7 +707,8 @@ kubectl get ┬ all            # pokaze pody, serwisy
             ├ persistentvolume
             ├ persistentvolumeclaim
             ├ configmap
-            └ ingress
+            ├ ingress
+            └ serviceaccount # jakieś automatyczne pody
 kubectl get [LISTA] -o widge # troszke wiecej informccji
 kubectl get [LISTA] -o yaml  # szczegóły
 kubectl describe [LISTA] [NAME] # szczegóły konkretnego poda/noda.  NAME - to nazwa z wyświetlonego polecenia, no get pods
@@ -810,6 +811,14 @@ spec:
     - secretRef:
         name: app-secret
 
+  - name: simple-webapp           # Przykład na sprawdzanei, czy aplikacj żyje 
+    image: simple-webapp          # Film 72 Kubernetes Certified Application Developer (CKAD) with Tests
+    ports: 
+      - containerPort:8080
+    livenessProbe:  
+
+
+
   restartPolicy: Always / Never / OnFailure  # [opcjonalnie] kiedy ma sie zretartować
   nodeName:                       # [opcjonalnie]
   tolerations:                    # [opcjonalnie] dla taint nodes, gdy urzywamy kilku nodów i chcemy zrobić filtr, gdzie moga się instalować
@@ -833,6 +842,30 @@ spec:
       
       #preferredDuringSchedulingIgnoredDuringExecution:
       #requiredDuringSchedulingRequiredDuringExecution:
+  #serviceAccountname: dashboard-sa   # wspomniane coś w Film 52  Kubernetes Certified Application Developer (CKAD) with Tests
+  
+  readinessProbe:                 # [opcja] aby status był ready, dopiero gdy wszsytko się uruchomi.
+    ┌─────────                    # Wiecej na Film 71  Kubernetes Certified Application Developer (CKAD) with Tests
+    httpGet:                      # HTTP Test - /api/ready
+      path: /api/ready
+      port: 8080
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    failureThreshold: 8           # domyślnie jest 3 sprawdzane. Możemy to przedłużyć.
+    └─────────
+    ┌─────────                    # TCP Test - 3306
+    tcpSocket:  
+      port: 3306
+    └─────────
+    ┌─────────                    # Exec Command
+    exec:  
+      command:
+      - cat
+      - /app/is_ready
+    └─────────
+
+
+
 └───────────────────
 
 # stworzenie poda:   To polecenie również aktualizuje zmiany wprowadzine w pliku .yaml
@@ -857,6 +890,12 @@ kubectl logs nazwa-poda -c nazwaKontenera   # wyswietli logi dla konkretnego kon
 
 kubectl edit pod nazwaUruchomionegoPoda     # edycja uruchomionego poda
 kubectl replace --force -f /tmp/kubectl-edit-834939467.yaml  # w przykładzie było, ze po edycji poda, trzeba było zrestartowac plik
+
+# cykl tworzenia poda:
+PodScheduled
+Initialized
+ContainersReady
+Ready
 
 
 #--------------------------------------------------------------------------------------------------
@@ -1989,6 +2028,11 @@ spec:
     secret:
       secretName: strefa-secret
 └───────────────────
+
+
+# podejżenie plików secret w podach:
+kubectl exec -it nazwaPoda ls /var/run/secrets/kubernetes.io/serviceacount
+kubectl exec -it nazwaPoda cat /var/run/secrets/kubernetes.io/serviceacount/token
 
 
 #--------------------------------------------------------------------------------------------------
