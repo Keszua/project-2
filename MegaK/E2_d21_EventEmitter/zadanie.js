@@ -3,7 +3,14 @@ const {Restaurant} = require('./restaurant');
 const megaRestaurant = new Restaurant();
 let tablesCount = 25;
 
-// Tutaj dodaj nasłuchiwanie
+
+megaRestaurant.on('open', () => { 	console.log('Otwarto restaurację'); })
+	.on('close', () => { 	console.log('Zamknięto restaurację'); })
+	.on('tableChange', (change, message) => {
+		tablesCount += change;
+		console.log(`Dostępnych stolików ${tablesCount} (${message})`);
+	} )
+
 
 megaRestaurant.open(); // "Otwarto restaurację."
 

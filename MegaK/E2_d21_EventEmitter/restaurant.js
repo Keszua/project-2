@@ -5,14 +5,14 @@ class Restaurant extends EventEmitter {
      * Otwarcie restauracji.
      */
     open() {
-        // Emit...
+        this.emit('open');
     }
 
     /**
      * Zamknięcie restauracji.
      */
     close() {
-        // Emit...
+        this.emit('close');
     }
 
     /**
@@ -20,7 +20,7 @@ class Restaurant extends EventEmitter {
      * Traktuj to jako po prostu 1 stolik mniej.
      */
     reserveTable() {
-        // Emit...
+        this.emit('tableChange', -1, 'Rezerwacja');
     }
 
     /**
@@ -28,28 +28,28 @@ class Restaurant extends EventEmitter {
      * Traktuj to jako po prostu 1 stolik więcej.
      */
     cancelTableReservation() {
-        // Emit...
+        this.emit('tableChange', 1, 'Anulowano rezerwacje');
     }
 
     /**
      * Ktoś wziął stolik bez rezerwacji.
      */
     takeTableWithoutReservation() {
-        // Emit...
+        this.emit('tableChange', -1, 'Zajęty bez rezerwacji');
     }
 
     /**
      * Stolik się popsuł, odpadła noga :/
      */
     markTableAsBroken() {
-        // Emit...
+        this.emit('tableChange', -1, 'Uszkodzenie');
     }
 
     /**
      * Ktoś skończył jeść, czyścimy stolik i wraca do użytku.
      */
     cleanupTable() {
-        // Emit...
+        this.emit('tableChange', 1, 'Czyszczenie');
     }
 }
 

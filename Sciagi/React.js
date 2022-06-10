@@ -211,7 +211,7 @@ const value = parseInt(props.number); //typowanie na Int
 
 
 	const players = ["Jacek", "Tomasz", "Jarek"]
-	//destrukturyzacja:
+	//destrukturyzacja tablicy:
 	const [user1, user2, user3] = players;  //musimy napisać nazy 
 	let [,,user3] = players;  //wyodrebnienie TYLKO trzeciego
 	//Wyodrebniam user1 i w "users" jest reszta elementów (w formie krótszej tablicy):
@@ -308,17 +308,11 @@ const UserTable = () => (
 	<div>
 		<h2>To jest komponent userTable</h2>
 		<KolejnyKomponent />
-	</div>
- )
-
-const UserTable = () => (
-	<div>
-		<h2>To jest kolejny komponent</h2>
 		<TutajJeszczeKoejnyKomponent />
 	</div>
  )
 
-//Nie wiem dla czego, ale Szczecinski zaproponował taką składnię zamiast wstawaiana komponentu:
+//Nie wiem dla czego, ale Szczecinski zaproponował taką składnię zamiast wstawiania komponentu:
 ReactDOM.render( React.createElement(Tweet, null), document.getElementById('Komponent_SFC'));
 // wynik ten sam co ten:
 ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
@@ -499,8 +493,9 @@ useLayoutEffect( () => {
 
 //------------------------------
 useRef
-	//Można używać na dwa sposoby. Po pierwsze, pozwala na bezpośredni dostęp do elementu DOM, dzięki czemu możemy nim manipulować. Po drugie, może zachować dowolną zmienną wartość w swojej właściwości .current, która nie zmienia się między renderowaniami.
-	//Zmiana wartości parametru useRef nie spowoduje ponownego renderowania komponentu.
+	// Można używać na dwa sposoby. Po pierwsze, pozwala na bezpośredni dostęp do elementu DOM, dzięki czemu możemy nim manipulować. 
+	// Po drugie, może zachować dowolną zmienną wartość w swojej właściwości .current, która nie zmienia się między renderowaniami.
+	// Zmiana wartości parametru useRef nie spowoduje ponownego renderowania komponentu.
 // troszkę więcej na ten temat: https://love-coding.pl/hooki-react-useref-tutorial/
 
 //Przykład 1:
@@ -524,8 +519,78 @@ const HookExample = () => {
     );
 }
 
-//------------------------------
+/*-------------------------------------------------------------------------------------------------
+####                           #     ###                   #                    #  
+#   #                          #    #   #                  #                    #  
+#   #   ###    ####    ###   #####  #       ###   ####   #####   ###   #   #  #####
+####   #   #       #  #   #    #    #      #   #  #   #    #    #   #   # #     #  
+# #    #####   #####  #        #    #      #   #  #   #    #    #####    #      #  
+#  #   #      #    #  #   #    #    #   #  #   #  #   #    #    #       # #     #  
+#   #   ###    ### #   ###      ##   ###    ###   #   #     ##   ###   #   #     ##
+-------------------------------------------------------------------------------------------------*/
 ReactContext // - coś w stylu globalnych zmiennych
+// film 139  React od podstaw
+
+// Korzystanie z "globalnych ustawień" bez potrzeby przekazywania ich przez props.
+// Zakładam że mam 4 pliki: 1. App.js - główny plik, gdzie owrapuje wszystkie komponenty mające dostęp do tych ustawień.
+// 2. AppContext.js - gdzie tworze Context z domyślnymi ustawieniami
+// 3. UserInfo.js - jakiś tam komponent, który pobiera Context przez useContext
+// 4. Button.js - jakiś tam komponent, któr  pobiera Context przez useContext
+// -------------- zawartość App.js
+import './App.css';    import AppProvider from './AppContext';    import {UserInfo} from './UserInfo';    import {Button} from './Button';
+const App = () => {
+  return (
+    <div>
+      <AppProvider>
+        <UserInfo />
+        <Button />
+      </AppProvider>
+    </div>
+  );
+}
+export default App;
+// -------------- zawartość AppContext.js
+import  React, { createContext, useState } from 'react';
+export const AppContext = createContext();
+const AppProvider = ({children}) => {
+	const [isUserLogged, setIsUserLogged] = useState(false);
+	const toggleLoggedState = () => setIsUserLogged( prevVal => !prevVal )
+	return (
+		<AppContext.Provider value={{ isUserLogged, toggleLoggedState }} > 
+			{children}
+		</AppContext.Provider>
+	)
+};
+export default AppProvider;
+// -------------- zawartość UserInfo.js
+import { useContext } from 'react';   import { AppContext} from './AppContext';
+export const UserInfo = () =>  {
+	const {isUserLogged} = useContext(AppContext)
+	return (
+		<div>
+			<p>Użytkownik jest {isUserLogged ? 'zalogowany' : 'niezalogowany'}</p>
+		</div>
+	);
+}
+// -------------- zawartość Button.js
+import React, { useContext } from 'react';    import {AppContext} from './AppContext';
+export const Button = () =>  {
+	const { isUserLogged, toggleLoggedState } = useContext(AppContext);
+	return (
+	  <div>
+		  <button onClick={toggleLoggedState} >
+			  { isUserLogged ? 'Wyloguj' : "Zaloguj"}
+		  </button>
+	  </div>
+	);
+}
+// -------------- 
+
+//<-- 587
+
+
+
+
 
 //------------------------------
 //Narzędzie chyba głównie do obsługi bazy danych
@@ -584,7 +649,7 @@ const Component = () => {
 		history.push(location);
 	}
 
-	const handleOnClickBack = () => history.goBack(); //metoda do powracanie do poprzedniej ścieżki
+	const handleOnClickBack = () => history.goBack(); //metoda do powracania do poprzedniej ścieżki
 
 	return (
 		<>

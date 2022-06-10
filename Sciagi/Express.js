@@ -4,7 +4,7 @@
  npm init  
 //aby pozostawić ustawienia defaultowe, naciskamy enetery.
 
-//Nastepnie instalujemy Express.js poleceniam
+//Nastepnie instalujemy Express.js poleceniem
  npm install express --save  //aby skrócic komendę, można wpisac: npm i express -S
 
 //W pliku .js  (przykładowo app.js) Tworzymy najprostrzy serwer, który nic nie robi (nie nasłuchuje, nie wysyła):
@@ -159,7 +159,7 @@ Application -> Clear storage -> Clear site data
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-//Przykład bazowy obsługi podstawowych poleeń serwera oraz podstawowych dwuch testów jednostkowych
+//Przykład bazowy obsługi podstawowych poleceń serwera oraz podstawowych dwuch testów jednostkowych
 //Materiał z filmiku 111 (Node.js, Express i MongoDB)
 //Beda 2 pliki serwerowe i jeden plik testu.
 //uruchomienie testu:

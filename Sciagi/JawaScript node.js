@@ -77,7 +77,7 @@ Przykłady:
 406 "Not Accepted"
 408 "Request timeout"
 409 "Conflict"
-500 "Internal Server Error" - "Coś u mnie nie tak"
+500 "Internal Server Error" - wewnętrzny błąd serwera. "Coś u mnie nie tak"
 
 
 //-----------------------------------------------------------------------------
@@ -177,7 +177,15 @@ work
 
 
 
-//-----------------------------------------------------------------------------
+/*-----------------------------------------------------------------------------
+         #             #               #
+         #             #      #        #
+   ###   #       ###   #  #        #####   ####   # ###
+  #   #  ####   #   #  # #   ##   #    #       #  ##   
+  #      #   #  #   #  ##     #   #    #   #####  #    
+  #   #  #   #  #   #  # #    #   #    #  #    #  #    
+   ###   #   #   ###   #  #  ###   #####   ### #  #  
+-----------------------------------------------------------------------------*/   
 // jak obserwowac pliki
 
 chokidar
@@ -238,20 +246,39 @@ watch('**/*.js', {
 
 
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+/*-----------------------------------------------------------------------------
+  #   #  #####  #####  #### 
+  #   #    #      #    #   #
+  #   #    #      #    #   #
+  #####    #      #    ####
+  #   #    #      #    #
+  #   #    #      #    #
+  #   #    #      #    #
+-----------------------------------------------------------------------------*/
+//HTTP - HyperText Transfer Protocol
+
+//PORTY  - 443 dla https   i 80 dla http
+https://nazwastrony.com:443
+http://nazwastrony.com:80
+
 //Prosty serer:
 //Tworze plik app.js (dowolna nazwa)
 //zawartość pliku:
-const http = require('http');  //import http from 'http';  (ale ta forma jest jeszcze nie obsługiwana)
+const {createServer} = require('http');  //import http from 'http';  (ale ta forma jest jeszcze nie obsługiwana)
 
-const server = http.createServer()
+const server = createServer()
 
-server.addListener('request', (request, response) => {  // addListener  zamiennie z on
-    console.log(request.url);  //podgląd, o co pyta przeglądarka, gdy do adresu dpiszemy coś, np: http://localhost:3000/mojePytanie
+server.on('request', (req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/html'})
+    res.end('<h1>Hello Node!<h1>');
+}).listen(3000, '127.0.0.1', () => console.log("Serwer wystartował"));
+
+// lub  (to samo)
+server.on('request', async (request, response) => {  // on  zamiennie z addListener
+    console.log(request.url);             // podgląd, o co pyta przeglądarka, gdy do adresu dopiszemy coś, np: http://localhost:3000/mojePytanie
+    console.log(request.headers.cookie);  // wyświetli ciasteczka
     response.writeHead(200, { 'Content-Type': 'text/html', "inny": 'cos tam' }) // 200 to zwrucenie wartosci OK   
-               //inne typy: { 'Content-Type': 'application/json' 'text/css'  'text/plain'  'text/html; charset=utf-8'   'video/mp4'   'image/png'   'image/jpeg'
+               //inne typy:  na https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types { 'Content-Type': 'application/json' 'text/css'  'text/plain'    'text/html'   'text/html; charset=utf-8'   'video/mp4'   'image/png'   'image/jpeg'
                //Samuraj cos wspomniał, że gdy urzywamy -, to rzeba klucz pisać w apostrofach
     //response.statusCode //można wprowadzić kod odpowiedzi
     //response.write( /* zawartość*/ )  //wewnętrzna metoda definiująca zawartość
@@ -289,15 +316,21 @@ DELETE - usuń
 
 //-----------------------------------------------------------------------------
 //prosty serwer z rutingiem:
-const http = require('http');
+const {createServer} = require('http');
+const {readFile} = require('fs');
 const port = process.env.PORT || 3000
-http.createServer((req, res) => {
-    if (req.url === "/") {
+const server = createServer();
+server.on('request', async (req, res) => {
+    if (req.url === "/" && req.method === 'GET') {  // domyślnie jest GET, nie trzeba tego pisać
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
         res.end(`<h1>Strona główna</h1> `)
     } else if (req.url === "/users") {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
         res.end(`<h1>Strona użytkowników</h1> `)
+    } else if (req.url === "/plik") {           // strona z pliku html
+        const html = await readFile('./index.html', 'utf8');
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(html);
     } else {
         res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' })
         res.end(` <h4>Brak strony o adresie</h4>  ${req.url} `)
@@ -306,12 +339,20 @@ http.createServer((req, res) => {
 
 
 
+//program do robienia testów
+ab -n 1000 -c 500 http://localhost:3000/
 
 
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+/*-----------------------------------------------------------------------------
+#     #                #            #
+##   ##                #            # #
+# # # #    ###     #####   #   #    ##      #    #
+#  #  #   #   #   #    #   #   #   ##       #   #
+#     #   #   #   #    #   #   #    #        # #
+#     #   #   #   #    #   #   #    #   #     #
+#     #    ###     #####    ####     ###     #
+                                            #
+-----------------------------------------------------------------------------*/
 // MODUŁY 
 // Moduły, to mini programy. Dostęp lokalny, prywatny (chyba że zdefinujemy inaczej)
 //import modułu: 

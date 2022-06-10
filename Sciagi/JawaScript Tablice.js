@@ -153,6 +153,13 @@ console.log( newTableBig2 ); //= ["Pies", "Kot", "Słoń", "Wieloryb", "Chomik n
 //------------------------------
 .map() // - metoda iterująca. Robi pętlę po tablicy i każdorazowo zwraca nowy element tablicy.
 	//W wyniku po zakończeniu całej pętli zwracana jest nowa tablica z taką samą liczbą elementów
+//składnia:
+	var new_array = arr.map(function callback(currentValue, index, array) { /* element nowej tablicy*/ }[, thisArg])
+    //                                         │             │      │                                       └ Opcjonalny. Wartość jaką użyć jako this podczas wywołania callback
+    //                                         │             │      └ Oryginalna tablica na rzecz której wywołano metodę map
+	//                                         │             └ Indeks elementu tablicy nad którym obecnie pracujemy
+	//                                         └ Element tablicy nad którym obecnie pracujemy
+
 	const tabm = ['Marcin', 'Ania', 'Agnieszka'];
 	const tabm2 = tab.map(function(el) {
 		return el

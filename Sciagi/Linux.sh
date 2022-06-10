@@ -1142,7 +1142,7 @@ systemctl disable [nazwaUslugi]        # wylaczyc automatyczne uruchamianie
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// nadanie uprawnień dla zdalego użytkownika (na oryginalmym sprzęcie przez klawieturę):
+// nadanie uprawnień dla zdalego użytkownika (na oryginalmym sprzęcie przez klawiaturę):
 app install sudo           # instalacja usługi
 usermod                    # ustawienia dotyczące uzytkownika
 usermod -a -G sudo user1   # dodaj uzytkownika do grupy sudo
@@ -1155,7 +1155,7 @@ sudo -s   # zmiana uzytkownika na root i pozostań tam gdzie jesteś
 # Edytować linijkę i wpisać:
 username ALL=(ALL) NOPASSWD:ALL
 
-# mariusz znalazł, żeby nei wołał hasła: 
+# Mariusz znalazł, żeby nie wołał hasła: 
 sudo su
 
 //-------------------------------------------------------------------------------------------------

@@ -73,10 +73,6 @@ HTML
  <li>  //list item (wypunktowane)
 <ul>
 
-<ul> 
- <li>  //list item (wypunktowane)
-<ul>
-
 <ol> 
  <li>  //list item (numerowane)
 <ol>

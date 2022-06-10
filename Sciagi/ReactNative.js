@@ -1,7 +1,7 @@
 //Kurs z filmiku na YT:
 https://www.youtube.com/watch?v=0-S5a0eXPoc
 
-//Trzeba zainstalowaæ:
+//Trzeba zainstalowaÄ‡:
 node
 Android Studio
 expo:
@@ -24,8 +24,8 @@ Pierwsze przygotowanei Android Studio:    (film https://www.youtube.com/watch?v=
 Po uruchomieniu: Projects -> More Actions -> AVD Manager
 -> Create Virtual Device...    
 Proponowany telfon Pixel 2:  5,0"  1080x1920;  420dpi
--> Next -> Download (Œci¹gn¹æ dan¹ wersjê Androida)  -> Next -> Finish
-Aby uruchomiæ symulator, naciskamy zielony znaczek Play
+-> Next -> Download (Å›ciÄ…gnÄ…Ä‡ danÄ… wersje Androida)  -> Next -> Finish
+Aby uruchomiÄ‡ symulator, naciskamy zielony znaczek Play
 
 
 
@@ -34,7 +34,7 @@ Aby uruchomiæ symulator, naciskamy zielony znaczek Play
 Film https://www.youtube.com/watch?v=0-S5a0eXPoc  35:00
 
 
-Udostêpnianie projektów testowych na zewn¹trz:
+UdostÄ™pnianie projektÃ³w testowych na zewnÄ…trz:
 expo.io/@username/app
 
 expo publish  Film  https://www.youtube.com/watch?v=0-S5a0eXPoc  42:50 
