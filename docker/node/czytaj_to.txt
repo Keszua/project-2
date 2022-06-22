@@ -1,0 +1,27 @@
+Zawartość prostego projektu z node
+
+Aby z niego skorzystać, stwórz swój folder z projektem.
+Skopiuj tam Zawartość
+Wywołaj polecenie, aby ściągnac i stworzyć node_modules: 
+npm install
+
+Jeśli wszsytko jest OK, to powinien uruchomic się serwer. Po wejściu na localchost:3000 powinien być widoczny komunikat "Hello world"
+npm run start
+
+
+#6. Musze byc na poziomie pliku Dockerfile. Tworze obraz poleceniem 
+docker build -t node-docker-tutorial .
+
+#7. Powinien stworzyć sie obraz. Bedzie widoczny po wpisaniu komendy  
+docker image ls
+
+#8. Uruchamiam kontener 
+docker run -it -p 9000:3000 node-docker-tutorial # uruchomienie na chwilę (do puki w konsoli naciśniemy Ctrl+C)
+docker run -d -p 9000:3000 node-docker-tutorial  # uruchomienie w tle 
+
+Uruchomienie z volumenem (zależnie jaki system operacyjny)
+docker run -v $(pwd):/app -d -p 9000:3000 node-app
+
+trik, aby nie przywiązywać lokalnego node_module
+docker run -v $(pwd):/app:ro -v /app/node_modules -d -p 9000:3000 node-app
+                          └ read only

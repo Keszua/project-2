@@ -67,6 +67,7 @@ os.homedir()    //ścieżka do home
 
 Przykłady:
 200 "OK"
+201 "created"
 301 "Move Permanently" trwałe przeniesienie zasobu na nowy adres url (blokuje powrót na podstronę)
 302 przekierowanie niestałe. (należy prejść na podany adres, ale to może się jeszcze zmienić)
 303 zobacz gdzie indziej - przy metodzie HTTP innej niż GET, ale ma przekierownie na GET
@@ -78,7 +79,7 @@ Przykłady:
 408 "Request timeout"
 409 "Conflict"
 500 "Internal Server Error" - wewnętrzny błąd serwera. "Coś u mnie nie tak"
-
+https://http.cat/
 
 //-----------------------------------------------------------------------------
 Yarn

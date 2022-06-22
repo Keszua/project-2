@@ -34,7 +34,7 @@ ls -l  # pełne informacje o katalogach
 ll     # to samo co ls -l  (nie dziala w Debianie)
 ls -a  # pokaz pliki i katalogi ukryte
 ls -la # pokaz pliki i katalogi ukryte w formie listy ze szczegułami
-ls -lh # ładnie poakzuje wielkość plików
+ls -lh # ładnie pokazuje wielkość plików
 ls -ld # informacje o tym katalogu (bez zawartości)
 ls -lt # posegregowane według czasu na górze najmłodsze
 ls -ltr// posegregowane według czasu (reverse) 
@@ -51,7 +51,7 @@ g - grupa
 o - pozostali
 a - wszystkie te części
 
-# opis literek przy kalatlochac/plikach:
+# opis literek przy katalogach/plikach:
 drwxrwxrwx
 │└┬┘└┬┘└─┴ inni
 │ │  └ grupa
@@ -285,7 +285,7 @@ ls -ld /etc/p* | cut -c 1-10,43- --output-delimiter $'\t' # pobierz wartosci ze 
 cut -c 1-10,43- --output-delimiter $'\t' /tmp/files       # wykonaj to samo, ale na konkretnych plikach
 
 
-wc #woru count - zlicza linijki, słowa i znaki w pliku
+wc #word count - zlicza linijki, słowa i znaki w pliku
 wc /var/log/README                               #=> 26 42 1040; 26 linijek,  42 wyrazy 1040 znaków;  można chciec tylko wybrane parametry -l linie; -w slowa; -c znaki
 wc -l /var/log/README | cut -d ' ' -f 1          #=> wyswietli TYLKO: 26 
 
@@ -329,6 +329,7 @@ ps -u root                                       # procesy pracujące na rzecz u
 ps -p 71                                         # sledz konkretny proces (numer id)
 ps -eH                                           #─┐ 
 pstree                                           #─┴─ pokaze strukture (drzewo) procesow
+ps aux                                           # pokazuje wszystkie procesy (z tego korzysta Mariusz)
 
 top                                              # procesy w systemie, taki menager zadan; q -wyjscie
 # gdy pracuje, mozna nacisnac t - do obserwacji procesora;  m- do obserwacni pamieci; k -kill; u -wybierz uzytkownika; o -filtrowanie = -wyczysc filtrowanie
@@ -619,7 +620,7 @@ blue="\033[34m"
 reset="\033[0m"
 //-------------------------------------------------------------------------------------------------
 
-source ~/skrypty/kolory.sh  # import pliku zkolorami (oczywiście musimy sobie taki napisać)
+source ~/skrypty/kolory.sh  # import pliku z kolorami (oczywiście musimy sobie taki napisać)
 if [ $# -lt 1 ] ; then //jeśli brak parametru, to wypisz ostrzeżenie  ( $# - liczba parametrów)
 if (( $# != 1 )) ; then //to samo co wyżej, tylko inny zapis
 	echo -e "${red} Składnia: $0 < nazwa użytkownika>$reset"
@@ -1122,7 +1123,7 @@ cat /etc/resolv.conf    # tu się znajduje informacja o adresie serwera DNS
 #-------------------------------------------------------------------------------------------------
 systemd
 
-systemctl                              # do zarządzania usługami
+systemctl i service                    # do zarządzania usługami
 
 systemctl list-unit-files              # lista dostepnych unitow w  /usr/lib/systemd/system
 systemctl list-unit-files --type target # wszystkie unity typu target | socet | timer | 
@@ -1137,6 +1138,8 @@ systemctl enable [nazwaUslugi]         # tworzy link symboliczny, ktory definiuj
 # pliki z linkiem symbolicznym:      /etc/systemd/system  
 systemctl enable --now [nazwaUslugi]   # polaczenie start i enble
 systemctl disable [nazwaUslugi]        # wylaczyc automatyczne uruchamianie
+
+service [nazwaUslugi] restart
 
 
 //-------------------------------------------------------------------------------------------------

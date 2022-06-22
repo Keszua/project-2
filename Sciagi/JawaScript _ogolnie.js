@@ -9,6 +9,8 @@
 
 //zbior podstawowych zadan i algorymow, np. na drzewko, kolejka, sortowanie itp : https://github.com/trekhleb/javascript-algorithms
 
+// Jakaś stronka z algorytmami znaleziona przez bartka https://algodaily.com/sections/dynamic-programming-interview-questions
+
 // NOTATKI:
 // Etap 1 Tydzień 1 cały https://www.evernote.com/shard/s669/client/snv?noteGuid=3cfd17a1-6a77-fcf7-842b-52f6977802bb&noteKey=3d7326b34b9ce73cdfb74cd630221b7c&sn=https%3A%2F%2Fwww.evernote.com%2Fshard%2Fs669%2Fsh%2F3cfd17a1-6a77-fcf7-842b-52f6977802bb%2F3d7326b34b9ce73cdfb74cd630221b7c&title=Etap%2B1%2BTydzie%25C5%2584%2B1%2Bca%25C5%2582y
 
@@ -52,7 +54,7 @@ Znaki specjalne dla printf
 '\?' - znak zapytania (pytajnik)
 '\ooo' - liczba zapisana w systemie oktalnym (ósemkowym), gdzie 'oo' należy zastąpić trzycyfrową liczbą w tym systemie
 '\xhh' - liczba zapisana w systemie heksadecymalnym (szesnastkowym), gdzie 'hh' należy zastąpić dwucyfrową liczbą w tym systemie
-'\unnnn' - uniwersalna nazwa znaku, gdzie 'nnnn' naleąy zastąpić czterocyfrowym identyfikatorem znaku w systemie szesnatkowym. 'nnnn' odpowiada d�u�szej formie w postaci '0000nnnn'
+'\unnnn' - uniwersalna nazwa znaku, gdzie 'nnnn' naleąy zastąpić czterocyfrowym identyfikatorem znaku w systemie szesnatkowym. 'nnnn' odpowiada dłuższej formie w postaci '0000nnnn'
 '\unnnnnnnn' - uniwersalna nazwa znaku, gdzie 'nnnnnnnn' należy zastąpić ośmiocyfrowym identyfikatorem znaku w systemie szesnatkowym.
 */
 

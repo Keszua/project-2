@@ -66,6 +66,8 @@ docker container run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -
 #                     └[host-port:container-port]
 
 
+docker logs                                 # informacje o uruchamianiu kontenera
+
 # kontener z centosem:
 docker run -it centos:8 bash
 # aby naprawić instalację trzeba zrobić:
@@ -205,7 +207,7 @@ docker container commit idKontenera nazwaKontaDockerHub/nazwaObrazu:zTagiem
   #####    ###    ###   #  #   ###   #       #     ###   ###    ###
 #  -------------------------------------------------------------------------------------------------
 #  Dockerfile
-#  tworzenie kontenera z wykorzystaneim pliku Dockerfile
+#  plik Dockerfile służy do tworzenia obrazów
 #  w filmie 21 koles pokazuje plik Dockerfile gdzie definiuje sie, jak przerobic i skonfigurowac obraz
 https://docs.docker.com/engine/reference/builder/
 #  trzeba bylo konsole otworzyc w folderze w ktorym jest plik Dockerfile
@@ -226,7 +228,7 @@ COPY . .   #   Kopiuj wszystko z folderu, oprucz elementów zdefiniowanych   lub
 
 EXPOSE 3000  #  port do nasłuchu, w innym przykladzie dla node byl port:  8080
 
-ENV NODE_ENV production  #   Zmienne srowowiskowe przekazane do obrazu
+ENV NODE_ENV production  #   Zmienne srodowiskowe przekazane do obrazu
 
 #   ENTRYPOINT [ "entrypoint.sh" ]  Gdy nie podamy Entrypoint, wywoła się polecenie domyślne: /bin/sh -c
 #   "entrypoint.sh" - to plik, który powninen być obok Dockerfile
@@ -236,6 +238,8 @@ CMD ["node", "app.js"]     # w innym przykladzie:  CMD [ "npm", "start" ]
 LABEL   #  - metadane do obrazu
 └───────────────────
 
+#podgląd zmiennych środowiskoych wewnatrz kontenera:
+printenv
 
 
   #     #         #
@@ -277,6 +281,14 @@ docker container run -d --mount 'src=nazwa-volumenu,dst=/appdata' -p 3000:3000 n
 docker run -v /home/mount/data:/var/lib/mysql/data
 #              |                └ sciezka do katalogu w maszynie (wnętrze kontenera)
 #              └ Host Volumes. Jezeli tego nie podam, doker wygeneruje losową nazwę: /var/lib/docker/volumes/random-hash/_data
+
+#przykład na volumen do źródeł noda
+docker run -v ${pwd}:/app:ro -v /app/node_modules --env-file ./.env -p 9000:3000 -d node-docker:v1.0.2
+#               |         |   |                     └ zmienne środowiskowe można wypisać w pliku .env w posaci: PORT=3000
+#               |         |   └ drugi volumen, to sztuczka na nie kopiowanie node_modules
+#               |         └ tylko do odczytu
+#               └ sciezka na TEN folder (z którego odpalamy): %cd% w cmd      ${pwd} w powershel    $(pwd) dla linux i mac
+
 
 # Sztuczka na kopiowanie volumenu:
 docker container run --rm -it -v staraNazwa:/from -v nowaNazwa:/to alpine ash -c "cd /from; cp -av . /to"
@@ -601,6 +613,99 @@ docker build -f Dockerfile.dev -t stylerhun/multi-server .
 # Odpalam kontener:
 docker run -it -p 4003:5000 --name=P1Back stylerhun/multi-server
 
+#--------------------------------------------------------------------------------------------------
+# Przykład 2 (DZIAŁAJĄCY)
+# Jak skonteneryzować node.js   https://www.youtube.com/watch?v=CsWoMpK3EtE
+
+# 1. Tworze nowy, pusty folder z projektem. Inicjalizuje projekt
+npm init
+# 2. Instaluje expres
+npm install --save express
+# 3. Edytuje package.json, dopisuje do "scripts": {
+  "start": "node app.js",              # lub nodemon, ale to wymaga dodania kilku linijek (patrz niżej)
+# 4. jeśli wszsytko jest OK, to powinien uruchomic się serwer. Po wejściu na localchost:3000 powinien być widoczny komunikat "Hello world"
+npm run start
+# 5. tworze plik Dockerfile  (bez rozszeżenia)
+FROM node:9-slim
+WORKDIR /app
+COPY package.json ./app
+RUN npm install
+COPY . /app
+CMD ["npm", "start"]
+# UWAGA! dla kontenera node na debianie i alpine, trzeba zmienić ścierzkę na '.':
+FROM node:18.3
+#FROM node:18.3-alpine3.15   do wyboru
+WORKDIR /app
+COPY package*.json .    # <--- tu zmiana!
+RUN npm install -g nodemon  # gdy chce korzystac z nodemona. Nie działa w wersji slim (dział w alpine)
+RUN npm install
+COPY . /app
+CMD ["npm", "start"]
+RUN apt-get update && apt-get install -y --force-yes nano  # gdy chce od razu korzystac z nano (nie działa w alpine)
+RUN apk update && apk add nano                             # to tylko w alpine
+#6. Musze byc na poziomie pliku Dockerfile. Tworze obraz poleceniem 
+docker build -t node-docker-tutorial .
+#7. Powinien stworzyć sie obraz. Bedzie widoczny po wpisaniu komendy  
+docker image ls
+#8. Uruchamiam kontener 
+docker run -it -p 9000:3000 node-docker-tutorial # uruchomienie na chwilę (do puki w konsoli naciśniemy Ctrl+C)
+docker run -d -p 9000:3000 node-docker-tutorial  # uruchomienie w tle 
+#9. Aby zrobić automatyczne przeładowywanie zawartości plików, trzeba w package.json zmienić:
+    # "start": "node app.js", na: "start": "nodemon app.js",
+    # do dependencies dodać "nodemon": "^2.0.16"
+    # UWAGA - u mnie coś nie zadziałało z tym nodemonem na slim. Ale zadziałało na wersji pełnej i alpine
+# uruchominienie z volumenem:
+docker run -v $(pwd):/app -d -p 9000:3000 node-app
+
+
+# jeśli wejde do kontenera i tam zrobie zmiany, moge podejrzeć procesy
+ps aux
+
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+  #####                 #
+   #   #                #
+   #   #   ###    ###   #  #   ###   # ###        ###   #     #   ####   # ###  ### ## 
+   #   #  #   #  #   #  # #   #   #  ##          #      #     #       #  ##     #  #  #
+   #   #  #   #  #      ##    #####  #            ###   #  #  #   #####  #      #  #  #
+   #   #  #   #  #   #  # #   #      #               #  # # # #  #    #  #      #  #  #
+  #####    ###    ###   #  #   ###   #            ###    #   #    ### #  #      #  #  #
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+Wspomniane w filmie https://www.youtube.com/watch?v=9zUHg7xjIqQ 
+Oriestracja kontenerów za pomocą docker swarm
+Informacja, czy jest uruchomiony, można sprawdzić poleceniem
+	docker info
+Jest tam wpis:
+Swarm: inactive
+
+Trzeba sprawdzić ip zdalnej maszyny eth0
+	ip addr
+Aktywacja docker swarma:
+	docker swarm init --advertise-addr ipMaszynyzeth0
+
+Komendy swarmose:
+	docker ┬ services
+		   ├ stack    // do uruchomienia kontenerów w staku (taki zbiór). Pogląd ls
+		   ├ node     
+		   ├ stack    // takie logi
+		   ├
+		   └
+
+	docker stack ls                   // podgląd staków
+	docker stack services myapp ls    // podgląd kontenerów w staku
+	docker services                   // podgląd serwisów
+	docker stack ps myapp
+
+
+Uruchomienie kontenerów oraz aktualizacja przez docker swarm (nie docker-compose)
+	docker stack deploy -c docker-compose.yaml -c docker-compose.prod.yaml mojaNazwaStaka
+
+
+
+
 
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
@@ -673,7 +778,7 @@ Controller manager - odzysuje uszkodzone pody
 
 ETCD -jakis mózg do zarzadzania danymi (ETDC is a distributed reliable key-value store that is Simple, Secure i Fast)
 
-Ingress - Chyba do zarządzania kontenerami z bazą danych. Decyduje gdzie trafi Request od urzytkownika. Do którego poa z baza dancyh 
+Ingress - Chyba do zarządzania kontenerami z bazą danych. Decyduje gdzie trafi Request od urzytkownika. Do którego poda z baza danych 
 
          Request                     ┌─ my-app          ┌─ DB
 Ingress ─────────> my-app Service ->─┼─── DB Service ──>┤
@@ -708,7 +813,8 @@ kubectl get ┬ all            # pokaze pody, serwisy
             ├ persistentvolumeclaim
             ├ configmap
             ├ ingress
-            └ serviceaccount # jakieś automatyczne pody
+            ├ serviceaccount # jakieś automatyczne pody
+            └ statefulset    # taki deployment dla baz mysql
 kubectl get [LISTA] -o widge # troszke wiecej informccji
 kubectl get [LISTA] -o yaml  # szczegóły
 kubectl describe [LISTA] [NAME] # szczegóły konkretnego poda/noda.  NAME - to nazwa z wyświetlonego polecenia, no get pods
@@ -761,8 +867,8 @@ metadata:                         #
   name: myapp-pod                 #
   labels:                         # etykiety. 
     app: myapp                    #
-    tier: frontend                # etykieta do zgrupowania 
-    #env: production
+    tier: frontend                # etykieta do zgrupowania. Można nadać wiele etykiet.
+    #env: production              # szukanie po etykiecie: kubectl get pods --selector tier=frontend
     #function: front-end
 spec:
   containers:                     # List/Array
@@ -811,15 +917,33 @@ spec:
     - secretRef:
         name: app-secret
 
-  - name: simple-webapp           # Przykład na sprawdzanei, czy aplikacj żyje 
+  - name: simple-webapp           # Przykład na sprawdzanie, czy aplikacj żyje 
     image: simple-webapp          # Film 72 Kubernetes Certified Application Developer (CKAD) with Tests
     ports: 
       - containerPort:8080
-    livenessProbe:  
+    ┌─────────
+    livenessProbe:                # HTTP Test - /api/ready
+      httpGet:
+        path: /api/healthy
+        port: 8080
+      initialDelaySeconds: 10
+      periodSeconds: 5 
+      failureThreshold: 8
+    └─────────
+    ┌─────────
+    livenessProbe:                # TCP Test - 3306
+      tcpSocket:
+        port: 3306
+    └─────────
+    ┌─────────
+    livenessProbe:                # Exec Command
+      exec:
+        command:
+          - cat
+          - /app/is_healthy  
+    └─────────
 
-
-
-  restartPolicy: Always / Never / OnFailure  # [opcjonalnie] kiedy ma sie zretartować
+  restartPolicy: Always / Never / OnFailure  # [opcjonalnie] kiedy ma sie zrestartować
   nodeName:                       # [opcjonalnie]
   tolerations:                    # [opcjonalnie] dla taint nodes, gdy urzywamy kilku nodów i chcemy zrobić filtr, gdzie moga się instalować
     - key: "app"
@@ -844,7 +968,7 @@ spec:
       #requiredDuringSchedulingRequiredDuringExecution:
   #serviceAccountname: dashboard-sa   # wspomniane coś w Film 52  Kubernetes Certified Application Developer (CKAD) with Tests
   
-  readinessProbe:                 # [opcja] aby status był ready, dopiero gdy wszsytko się uruchomi.
+  readinessProbe:                 # [opcja] aby status był ready, dopiero gdy wszystko się uruchomi.
     ┌─────────                    # Wiecej na Film 71  Kubernetes Certified Application Developer (CKAD) with Tests
     httpGet:                      # HTTP Test - /api/ready
       path: /api/ready
@@ -1124,6 +1248,10 @@ kubectl delete deployment --all
 # Rollout and Versioning
 # skalowanie
 
+# zakładam, ze zmieniam wersje kontenera, np spec.template.spec.containers.name[].image: nginx:1.7.1
+# aktualizuje kontener (deployment) poleceniem:
+kubectl apply -f deployment-definiton.yml        
+# sa 2 strategie podnoszenia wersji: Recreate (ubija wszsytkie i stawia wszystkie) i RollingUpdate (ubija i stawia po jednym, nie ma widocznej przerwy). Nie wiem jak to ustawić.
 
 
 kubectl scale deployment voting-app-deploy --replicas=2
@@ -1193,12 +1321,16 @@ curl http://web-service.apps.svc.cluster.local
 
 
 Ingress
+# Gdy chce spiąc na jednej stronie wear-service z video-service   Film 98 (Kubernetes Certified Application Developer (CKAD) with Tests)
+# ingeres definicja ścieżkię od urzytkownika, do odpowiedniego poda
+Egress - definicja ścieżki powrotu informacji
+# Przykładowo, możemy wysyłać pytania przez podrt 80 a otrzymywac odpowiedzi z portu 5000
 
 INGRESS CONTROLLER
 
 Deployment
 ┌───────────────────
-apiVersion: extensions/v1beta1
+apiVersion: extensions/v1beta1   # w innym filmie tutaj było  apps/v1
 kind: Deployment             
 metadata:                   
   name: nginx-ingress-controller       
@@ -1236,7 +1368,6 @@ spec:
           containerPort: 80
         - name: https
           containerPort: 442
-
 └───────────────────
 
 ConfigMap
@@ -1280,7 +1411,7 @@ metadata:
 
 
 #-----------------------------------------------------------
-Ingress-wear.yaml
+Ingress-wear.yaml            # gdy korzystamy tylko z jednego typu wysyłancyh danchy (tylko tekst)
 ┌───────────────────
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -1293,7 +1424,7 @@ spec:
 └───────────────────
 kubectl create -f Ingress-wear.yaml 
 
-Ingress-wear-watch.yaml  # Rule 1
+Ingress-wear-watch.yaml  # Rule 1      gdy chcemy osiągnąc www.mystore.com/WEAR i www.mystore.com/WATCH
 ┌───────────────────
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -1313,7 +1444,7 @@ spec:
 └───────────────────
 
 
-Ingress-wear-watch.yaml  # Rule 2
+Ingress-wear-watch.yaml  # Rule 2      gdy chcemy osiągnąc www.WEAR.mystore.com i www.WATCH.mystore.com
 ┌───────────────────
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -1333,10 +1464,35 @@ spec:
       - backend: 
           serviceName: watch-service
           servicePort: 80
-
-
 └───────────────────
 
+#--------------------------------------------------------------------------------------------------
+Network Policy  - zwiazane z Ingres i Egres
+# definiuje takiego firewala, okresla port wejści i port wyjscia
+# Film 105  Kubernetes Certified Application Developer (CKAD) with Tests
+
+policy-definition.yaml
+┌───────────────────
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:                   
+  name: db-policy
+spec:        
+  podSelector:
+    matchLabels:
+      role: db
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          name: api-pod
+      #  jakies wyjatki i wiecej opcji w filmie # Film 106  Kubernetes Certified Application Developer (CKAD) with Tests    
+    ports:
+    - protocol: TCP
+      port: 3306
+└───────────────────
 
 
 
@@ -1575,6 +1731,42 @@ spec:
      ###      ###     ####
 #--------------------------------------------------------------------------------------------------
 JOB - taki pod, uruchomiony raz. Nie bedzie ponownie uruchamiany.
+
+# przykład kontenera, który się odpali, policzy, zwróci 5 i (chyba) pozostanei nie aktywny
+docker run ubuntu expr 3 + 2
+
+# Prosyt job, który ma policzyć 3 +2:
+# job-math-add.yaml
+┌───────────────────
+apiVersion: batch/v1
+kind: Job
+metadata: 
+  name: math-add-job
+spec:
+  # ttlSecondsAfterFinished: 10   # [opcjonalnie*] po 10 sekundach, powinien się automatycznie usunąć
+  completion: 3                   # [opcja] ile sztuk ma sie uruchomić prawidłowo
+  parallelism: 3                  # [opcja] (chyba) uruchomi tylko 3, nawet jeśli uruchomią się błędnie
+  template:
+    spec:
+      containers:
+      - name: math-add
+        image: ubuntu
+        command: ['expr', '3', '+', '2']
+      restartPolicy: Never    
+  #  metadata:
+  #  name: odliczanie
+└───────────────────
+# uruchomienie Joba
+kubectl create -f job-math-add.yaml
+# sprawdzam jaki powstal pod  (albo get job, ale nie zobaczymy hashtagu)
+kubectl get pods
+# zobaczenie wyniku:
+kubectl logs math-add-job-hsm9h
+# usunięcie już nie potrzbengo joba
+kubectl delete job math-add-job
+
+
+
 # Prosyt job, liczący od 10 w dóły:
 ┌───────────────────
 apiVersion: batch/v1
@@ -1674,8 +1866,15 @@ metadata:
   name: strefakursow-cron
 spec:
   schedule: "*/1 * * * *"
+          #  │   │ │ │ └ day of the week (0 - 6) (Sunday to Saturday;  7 is also Sunday on some system)
+          #  │   │ │ └ month (1 - 12)
+          #  │   │ └ hour (0 - 59)
+          #  │   └ hour (0 - 59)
+          #  └ minute (0 - 59)  1 -w pierwszej minucie;  */1 -co minutę  wiecej na https://crontab.guru
   jobTemplate:
     spec:
+      completion: 3                    # [opcja] ile sztuk ma sie uruchomić prawidłowo
+      parallelism: 3                   # [opcja] (chyba) uruchomi tylko 3, nawet jeśli uruchomią się błędnie
       template:
         spec:
           restartPolicy: Never
@@ -1737,17 +1936,17 @@ spec:
 
   volumes:
   - name: data-volume
-    ┌─────────────────── # w nodzie (nie zalecane gdy korzytamy z kilku nodów)
+    ┌───────────────────          # w nodzie (nie zalecane gdy korzytamy z kilku nodów)
     hostPath:
-      path: /data        # folder w nodzie (po za kontenerem)
-      type: Directory    # Directory -musi istnieć.   DirectoryOrCreate -jeśli nie ma, to go stworzy. Więcej o typach: https://kubernetes.io/docs/concepts/storage/volumes/
+      path: /data                 # folder w nodzie (po za kontenerem)
+      type: Directory             # Directory -musi istnieć.   DirectoryOrCreate -jeśli nie ma, to go stworzy. Więcej o typach: https://kubernetes.io/docs/concepts/storage/volumes/
     └───────────────────
-    ┌─────────────────── # w zewnetrznej usłudze, na przykładzie aws
+    ┌───────────────────          # w zewnetrznej usłudze, na przykładzie aws
     aswElasticBlockStorage:
       volumeID: <volume-id>
       fsType: ext4
     └───────────────────
-    ┌─────────────────── # Persistent Volume Claim - wymaga zdefinowania PersistentVolumeClaim
+    ┌───────────────────          # PVs Persistent Volume Claim - wymaga zdefinowania PersistentVolumeClaim  Film 110 Kubernetes Certified Application Developer (CKAD) with Tests
     persistentVolumeClaim:
       claimName: myclaim
     └───────────────────
@@ -1810,7 +2009,7 @@ kubectl get persistentvolumeclaim
 
 kubectl delete persistentvolumeclaim myclaim
 
-persistentVolumeReclaimPolicy: Retain  # Retain | Delete | Recycle
+persistentVolumeReclaimPolicy: Retain  # Retain | Delete | Recycle   #okresla, czy możliwe ejst skawoanie volumenu
 
 
 #--------------------------------------------------------------------------------------------------
@@ -1888,6 +2087,40 @@ minikube ssh
 sudo mkdir -p /stv/persistent/
 # 3. wyjdz z minikube
 exit
+
+#--------------------------------------------------------------------------------------------------
+Stateful Sets 
+# Definiuje sie podobnie jak deployment
+# UWAGA! Na OVH nie zadziałało
+
+statefulset-definition.yaml
+┌───────────────────
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec: 
+      containers:
+      - name: mysql
+        image: mysql
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mysql
+  serviceName: mysql-h
+  podManagementPolicy: Parallel
+└───────────────────
+
+
+
+
 
 
 
@@ -2744,7 +2977,7 @@ curl -LO "https://storage.googleapis.com/kubernetes-relase/relase/$(curl -s curl
 # następnie, trzeba nadac uprawnienia
 chmod +x ./kubectl
 
-# przeneiść plik do sceizki projektu ??
+# przenieść plik do sciezki projektu ??
 sudo mv ./kubectl /usr/local/bin/kubectl
 
 #Sprawdzenie wersji:
@@ -2781,19 +3014,19 @@ http://127.0.0.1:46257/api/v1/namespaces/kubernetes-dashboard/services/http:kube
 
 
 #--------------------------------------------------------------------------------------------------
-#  █     █                       █
-#  ██   ██                 █     █
-#  █ █ █ █   ███   ████        █████   ███   █ ███
-#  █  █  █  █   █  █   █  ██     █    █   █  ██
-#  █     █  █   █  █   █   █     █    █   █  █
-#  █     █  █   █  █   █   █     █    █   █  █
-#  █     █   ███   █   █  ███     ██   ███   █
-#
+  #     #                       #                        #   #                           # 
+  ##   ##                 #     #                       #    #                            #
+  # # # #   ###   ####        #####   ###   # ###       #    #       ###    ####   ###    #
+  #  #  #  #   #  #   #  ##     #    #   #  ##          #    #      #   #  #   #  #       #
+  #     #  #   #  #   #   #     #    #   #  #           #    #      #   #  #   #   ###    #
+  #     #  #   #  #   #   #     #    #   #  #           #    #   #  #   #   ####      #   #
+  #     #   ###   #   #  ###     ##   ###   #            #    ###    ###       #   ###   # 
+                                                                          ####
 #--------------------------------------------------------------------------------------------------
 Przykładowe monitory: Metric server, Prometeus, Elastic Stack, DATADOG, dynatrace
 
-# uruchomienie Metric Server dla minikube:
-minikube addons enable metric-server
+# uruchomienie Metric Server dla minikube: (Film 80   Kubernetes Certified Application Developer (CKAD) with Tests)
+minikube addons enable metrics-server
 
 # uruchomienie Metric Server dla pozostałych:
 git clone https://github.com/kubernetes-incubator/metrics-serve
@@ -2801,7 +3034,7 @@ kubectl create -f deploy/1.8+/
 
 kubectl top node
 
-# jakas wymulacja logowania.  Z opcja -d będzie działał w tle
+# jakas symulacja logowania.  Z opcja -d będzie działał w tle
 docker run kodekloud/event-simulator
 
 event-simulator.yaml
@@ -2821,6 +3054,7 @@ spec:
 #odpalenie symulatora:
 kubectl create -f event-simulator.yaml
 
+# podglad logów na rzywo
 kubectl logs -f event-simulator-pod
 kubectl logs -f event-simulator-pod event-simulator # gdy mamy dwa kontenery, to trzeba sprecyzować nazwę
 
@@ -2923,14 +3157,13 @@ curl https://localhost:6443 -k
 curl https://localhost:6443 -k --key admin.key --cert admin.crt --cacert ca.crt
 
 
-
-
+#--------------------------------------------------------------------------------------------------
+kontenery do testów:
+kodekloud/random-error            # co akiś czas generuje kontener, który ma błąd
+reporting-tool 
 
 
 #--------------------------------------------------------------------------------------------------
-# Mariusz!
-# W minucie 10:30 jest, że możemy wymusić korzystanie z innego pliku konfiguracyjnego poleceniem:
-export KUBECONFIG=~/.kube/plikKonfiguracyjny 
 
                                           
 

@@ -14,23 +14,37 @@ MongoDB jest nierelacyjną bazą danych.
 2. Po ściągnięciu pliku, rozpoczynamy "standardową" instalację.
 	Proponowana wersja "Complete"
 	Scieżka z baza danych: C:\Program Files\MongoDB\Server\4.2\data\
-	Pozostawiamy zaznaczeone "Install MongoDB Compass"
+	Pozostawiamy zaznaczone "Install MongoDB Compass"
 
 //Uruchomienie. 
 1. W konsoli wchodzimy w 
-	λ C:\Program Files\MongoDB\Server\4.2\bin
+	C:\Program Files\MongoDB\Server\4.2\bin
 //Uruchamiamy program poleceniem:
-	λ mongo 
+	mongo 
 
 	
 //Korzystanie z MongoDB w node:
 1. Zainstalować
-	λ npm install mongodb --save	
+	npm install mongodb --save	
 	
 	
-	
-	
-	
+//korzystanie z MongoDB w kontenerze:
+// wejsc do kontenera 
+docker exec -it idKontenera bash
+//połaczenie sie z bazą
+mongo -u "sanjeev" -p "mypassword"	
+
+//połaczenie z bazą bez wchodzenia do kontenera
+docker exec -it idKontenera mongo -u "sanjeev" -p "mypassword"
+
+
+// polecenie db powinno zwrócić "test"
+use mydb	 //  podłączenie sie do tabeli(?)
+show dbs     // pokazuje stworzone bazy (tabele)
+db.books.insert({"name": "Hary Potter"}) // stworzeniego kolekcji i dokumentu (?)
+db.books.find()                          //	wyszukaj wszystkie dokumenty
+
+
 
 Dokument: to pojedynczy wpis (pojedyńczy rekord)
 Kolekcja: to zbiór dokumentów
@@ -38,7 +52,7 @@ Kolekcja: to zbiór dokumentów
 //WSTAWIANIE elementu "cars":
 	> db.cars.insertOne({brand: 'Daweoo', model: "Lanos'});
 //Po naciśnięciu Enter, pojawi się zwrotny obiekt z informacją
-// o przyjęciu do wiadomiści i pole Id
+// o przyjęciu do wiadomości i pole Id
 
 //wstawianie kilku elementów w formie tablicy:
 	> db.cars.insertMany([{brand: 'Polonez', model: 'Caro'}, {brand: 'Polonez', model: 'Caro Plus'}]);
@@ -85,12 +99,12 @@ Kolekcja: to zbiór dokumentów
 	> npm init
 3. Instaluje paczkę z mongo:
 	> npm install mongodb --save	
-4. Tworzymy plik index.js i tworzymy najporstszą bazę:
+4. Tworzymy plik index.js i tworzymy najporstrzą bazę:
 	const mongo = require('mongodb');
 	const client = new mongo.MongoClient('mongodb://localhost:27017', {userNewUrlParser: true});
 	client.connect(err => {
 		if(err) {
-			console.log("Błąd połącznia1", err);
+			console.log("Błąd połączenia1", err);
 		} else {
 			console.log("Połaczenie udane");
 		
