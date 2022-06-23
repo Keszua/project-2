@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: megak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name2: megak
+  template:
+    metadata:
+      labels:
+        name2: megak
+    spec:
+      containers:
+      - name: megak-e2d25
+        image: 602841356/megak:v2.25.1
+        imagePullPolicy: Always       # polityka pobierania obazu na klaster. Always - zawsze pobiera obraz
+        ports:
+        - containerPort: 3000
+        env:
+        - name: APP_COLOR
+          value: red
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: megak-srv
+spec:
+  type: NodePort
+  ports:
+  - port: 80               # jaki port ma byc wystawiony
+    targetPort: 3000       # port kontenera (containerPort z Deployment, do jakiego portu ma przekierowac ruch)
+    nodePort: 30025
+  selector:
+    name2: megak
+
+
+# tworzenie:
+# kubectl apply -f megak.yaml
+
+# zmiana przestrzeni nazw
+# kubectl config set-context $(kubectl config current-context) --namespace=udemy
+
+# kasoanie
+# kubectl delete -f megak.yaml

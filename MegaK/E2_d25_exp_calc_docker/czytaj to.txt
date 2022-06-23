@@ -1,0 +1,24 @@
+Projekt skonteneryzowany.
+
+Aby po zmianach staworzc obraz:
+	docker image build -t megak:v2.25.1 .
+	docker image build -t 60284356/megak:v2.25.1 .
+
+otagowanie obrazu, jezeli nie dodałem przedrostka 602841356
+	docker image tag megak:v2.25.1 602841356/megak:v2.25.1
+
+lokalne, reczne odpalenie na porcie 9000
+	docker run -d -p 9000:3000 --name megaKv1 megak:v2.25.1
+
+wypchniecie obrazu na zewnętrzne repo
+	docker push 602841356/megak:v2.25.1
+
+Na chmurze trzeba ubić stary servis
+/home/debian/kubernetes/megak
+kubectl delete -f megak.yaml
+
+edytować megak.yaml i ustawic mu aktualną wersję obrazu 
+    spec.containers[]image: 602841356/megak:v2.25.1
+
+uruchomić ponownie servis
+	kubectl apply -f megak.yaml

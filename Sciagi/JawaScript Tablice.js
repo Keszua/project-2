@@ -410,10 +410,10 @@ const tabsl7 = tab.slice(); // skopiuje całą tablicę
 
 // .splice  - modyfikuje tablicę i zwraca tablicę z usuniętymi elementami
 // const remove = array.splice(start, deleteCount[, item1[, item2[, ...]]]) 
-//         |                   |      |             +  Elementy dodawane do tablicy. Jeżeli nie określimy żadnych elementów, splice usunie tylko podaną liczbę elementów.
-//         |                   |      +  Liczba całkowita określająca liczbę starych elementów tablicy do usunięcia. Gdy podamy 0 - to nic nie usówamy. Gdy nie podamy, to usówamy wszsytko powyżej "start"
-//         |                   +  Indeks od którego rozpoczynamy modyfikację tablicy
-//         + zwróci tablicę z usuniętymi elementami
+//         |                   |      |             └  Elementy dodawane do tablicy. Jeżeli nie określimy żadnych elementów, splice usunie tylko podaną liczbę elementów.
+//         |                   |      └  Liczba całkowita określająca liczbę starych elementów tablicy do usunięcia. Gdy podamy 0 - to nic nie usówamy. Gdy nie podamy, to usówamy wszsytko powyżej "start"
+//         |                   └  Indeks od którego rozpoczynamy modyfikację tablicy
+//         └ zwróci tablicę z usuniętymi elementami
 myFish = ["anioł", "klaun", "mandarynka", "jesiotr"];
 console.log("myFish: " + myFish);                        //= myFish: ["anioł", "klaun", "mandarynka", "jesiotr"]
     

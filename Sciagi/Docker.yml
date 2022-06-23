@@ -181,8 +181,8 @@ docker image history nazwaObrazu   # mozna podejzec, kiedy i z jakich warstwy zo
 docker image inspect idKontenera   # wyswietla pelna konfiguracje obrazu (w formacie JSON)
 
 #  nadawanie nowego tagu
-docker image tag nazwa:zTagiem nazwaKontaDockerHub/nazwa
-#                                                   |- nazwa z ewentualnym tagiem
+docker image tag nazwa:zTagiem nazwaKontaDockerHub/nazwa:v001
+#                                                  └ nazwa z ewentualnym tagiem
 
 #  wyslanie obrazu na wlasne repozytorium:
 #  trzeba byc zalogowanym, te same dane co na https://hub.docker.com/ :
@@ -210,10 +210,7 @@ docker container commit idKontenera nazwaKontaDockerHub/nazwaObrazu:zTagiem
 #  plik Dockerfile służy do tworzenia obrazów
 #  w filmie 21 koles pokazuje plik Dockerfile gdzie definiuje sie, jak przerobic i skonfigurowac obraz
 https://docs.docker.com/engine/reference/builder/
-#  trzeba bylo konsole otworzyc w folderze w ktorym jest plik Dockerfile
-docker image build -t nowaNazwaObrazu:tag .
-#                   └ Name and optionally a tag in the 'name:tag' format
-# po zbudowaniu, mozna go uruchomic: docker container run -d -p 8080:8080 --name=nazwaKontenera nowaNazwaObrazu:tag
+
 
 #  Przykład pliku:
 ┌───────────────────
@@ -237,6 +234,11 @@ CMD ["node", "app.js"]     # w innym przykladzie:  CMD [ "npm", "start" ]
 
 LABEL   #  - metadane do obrazu
 └───────────────────
+
+# Zbudwanie obrazu (do odpalenia lokalnie)
+docker image build -t nowaNazwaObrazu:tag .
+#                   └ Name and optionally a tag in the 'name:tag' format
+# po zbudowaniu, mozna go uruchomic: docker container run -d -p 8080:8080 --name=nazwaKontenera nowaNazwaObrazu:tag
 
 #podgląd zmiennych środowiskoych wewnatrz kontenera:
 printenv
@@ -992,14 +994,14 @@ spec:
 
 └───────────────────
 
-# stworzenie poda:   To polecenie również aktualizuje zmiany wprowadzine w pliku .yaml
+# stworzenie poda:   To polecenie również aktualizuje zmiany wprowadzone w pliku .yaml
 kubectl create -f pod-definition.yml        # uruchomienie imperatywne
-
-# Tworzenie poda w konsoli, bez pliku .yaml Tutaj pod z kontenerem ngix
-kubectl run nginx --image=nginx
 
 kubectl apply pod myapp-pod                 # uruchomienie deklaratywne poda (zwykle, gdy wprowadzimy zmiany w pliku .yaml)
 kubectl apply -f pod-ngix.yaml              # uruchomienie deklaratywne poda (zwykle, gdy wprowadzimy zmiany w pliku .yaml)
+
+# Tworzenie poda w konsoli, bez pliku .yaml Tutaj pod z kontenerem ngix
+kubectl run nginx --image=nginx
 
 kubectl get pods --selector app=App1        # te selektroy sa w metadata.labels[]
 
@@ -1197,14 +1199,14 @@ metadata:
   name: deployment-moja-nazwa       
   labels:                   
     app: k8smaestro-webapp  
-spec:                       
+spec:                                  # specyfikacja dla deploymentu
   replicas: 3  
   template:                 
     metadata:
       labels:
         app: k8smaestro-webapp         # na podstawie tych etykiet, wiadomo ktore pody naleza do jakich deploymentow
         #name: app-2048
-    spec:
+    spec:                              # specyfikacja dla poda
       containers:
       - name: webapp                   # obraz bazowy
         image: k8smaestro/web-app:1.0
@@ -1218,6 +1220,8 @@ spec:
       app: k8smaestro-webapp           # na podstawie tych etykiet, wiadomo ktore pody naleza do jakich deploymentow
 └───────────────────        
 
+# Usage:
+  kubectl create deployment NAME -image=image [--dry-run] [options]
 
 # stworzenie/uruchomienie nowego deploymentu
 kubectl create -f deployment-def.yml
@@ -2945,6 +2949,13 @@ minikube stop
 minikube delete
 
 
+minikube CLI  - for start ip/deleting the cluster
+kubectl CLI   - for configuring the minikube cluster
+
+# odpalenie minikube w trybie debag
+minikube start --vm-driver=hyperkit --v=7 --alsologtostderr
+
+
 # Instalacja minikube
 1. Installation:
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
@@ -3054,7 +3065,7 @@ spec:
 #odpalenie symulatora:
 kubectl create -f event-simulator.yaml
 
-# podglad logów na rzywo
+# podglad logów na żywo
 kubectl logs -f event-simulator-pod
 kubectl logs -f event-simulator-pod event-simulator # gdy mamy dwa kontenery, to trzeba sprecyzować nazwę
 

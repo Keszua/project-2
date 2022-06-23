@@ -182,6 +182,14 @@ systemctl status sshd # sprawdz czy program jest zainstalowany i w jakim stanie
 sudo apt install g++  # instalowanie jakiś pakietów/programów
 apt install mc        # instalacj coś jak Norton Commander (Total Commander) Ctrl+O - aby przełączyć go do tła
 yum install mc        # instalacja w centos
+apt remove mc         # odinstalowanie programu
+
+FIREWALL (na Ubuntu)
+ufw enable            # Firewall is active and enable on system startup
+ufw app list          # list dostępnych programów 
+ufw status 
+ufw allow 'Nginx Full' # nadanie uprawnień 
+
 
 last                  # lista o połączeniach
 last --limit 20       # ostatnie 20 zdarzeń

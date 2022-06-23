@@ -262,12 +262,20 @@ watch('**/*.js', {
 https://nazwastrony.com:443
 http://nazwastrony.com:80
 
+//Metody:
+GET  - odczytaj ("daj mi")
+HEAD - jak GET, ale nie odsyłaj body z powrotem (sprawdz tylko czy masz zasób, ale go nie pobieraj)
+POST - stwórz  (do przesyłania danych)
+PATCH - zaktualizuj dane (częściowo)
+PUT  - aktualizuj (całkowicie zmień cały rekord)
+DELETE - usuń
+
 //Prosty serer:
 //Tworze plik app.js (dowolna nazwa)
 //zawartość pliku:
 const {createServer} = require('http');  //import http from 'http';  (ale ta forma jest jeszcze nie obsługiwana)
 
-const server = createServer()
+const server = createServer();
 
 server.on('request', (req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/html'})
@@ -307,13 +315,6 @@ http.createServer((req, res) => {
     res.end('<h1>Hello Node!<h1>') 
 }).listen(3000, '127.0.0.1');
 
-
-//Metody:
-GET  - odczytaj ("daj mi")
-HEAD - jak GET, ale nie odsyłaj body z powrotem
-POST - stwórz  (do przesyłania danych)
-PUT  - aktualizuj
-DELETE - usuń
 
 //-----------------------------------------------------------------------------
 //prosty serwer z rutingiem:
@@ -484,6 +485,30 @@ async function readFilesAndDirectories() {
 }
 
 readFilesAndDirectories();
+
+//-----------------------------------------------
+// Przykład z próbą odczytu, a jeśli się nie powiedzie (brak pliku) to stworzy plik
+const {appendFile, writeFile, readFile} = require('fs').promises;
+const FILE_NAME = './hello.txt';
+let odczyt = false;
+(async () => {
+	try {
+		const contentsFile = await readFile(FILE_NAME, 'utf8');
+		odczyt = true;
+		const newVal = Number(contentsFile.split('\n').at(-1) ) * 2 ||  1;
+		await appendFile(FILE_NAME, `\n${String(newVal)}`, 'utf8');
+		console.log('Do pliku', FILE_NAME, 'dodano:', newVal);
+	} catch {
+		console.log(`Ops, nie udany ${odczyt ? 'zapis' : 'odczyt'} pliku ${FILE_NAME}`);
+		try {
+			writeFile(FILE_NAME, '1', 'utf8');
+			console.log(`Utworzyłem plik ${FILE_NAME}`);
+		} catch(err) {
+			console.log(`Ops, nie udany zapis pliku ${FILE_NAME}`);
+		}
+	}
+})();
+
 
 //-----------------------------------------------
 //Przykład  do rekurencyjnego przegladania plików i folderów
@@ -1477,7 +1502,7 @@ app.get('/', (req, res) => {
 
     
     res.redirect('..');     // gdy mamy dłuższe ścieżki i chcemy zrobić przekierowanie na ściezkę wyżej:
-    res.redirect('back');   // powrót do poprzedneij ścieżki (domyślnie cofa nas na stronę główną)
+    res.redirect('back');   // powrót do poprzedniej ścieżki (domyślnie cofa nas na stronę główną)
     res.redirect('http://google.com', 301);  //z wymuszonym statusem twałego przekierowania
 })
 
