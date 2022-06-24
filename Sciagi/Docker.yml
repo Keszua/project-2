@@ -84,8 +84,10 @@ nmcli -h
 docker container run -it nginx bash 
 docker container start -ai idkontenera
 docker container exec -it idkontenera bash  #  odpalenie konsoli na dzialajacym kontenerze
+docker container exec -it idkontenera sh    #  odpalenie konsoli na dzialajacym kontenerze dla alpine
 docker attach  [id lub nazwa kontenera]     #  odpalenie konsoli na dzialajacym kontenerze. Przerywamy Ctrl+C (cos było że nie polecane)
 
+# aby w apline ściągnąc nano: apk update && apk add nano 
 
 docker stop idkontenera
 docker container stop idkontenera
@@ -239,6 +241,7 @@ LABEL   #  - metadane do obrazu
 docker image build -t nowaNazwaObrazu:tag .
 #                   └ Name and optionally a tag in the 'name:tag' format
 # po zbudowaniu, mozna go uruchomic: docker container run -d -p 8080:8080 --name=nazwaKontenera nowaNazwaObrazu:tag
+# można z flagą --no-cache, chyba żeby za każdym razem pobierało obraz?
 
 #podgląd zmiennych środowiskoych wewnatrz kontenera:
 printenv
@@ -1023,6 +1026,9 @@ Initialized
 ContainersReady
 Ready
 
+
+Aby stworzyć plik .yaml na podstawie istniejącego już poda
+kubectl get deployment nginx-deployment -o yaml > nginx-deployment-result.yaml
 
 #--------------------------------------------------------------------------------------------------
 Taint 

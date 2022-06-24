@@ -1686,7 +1686,7 @@ const url = `http://localhost:3000/?` + params;
 */
 
 // Kamil Myśliwiec - autor nestJS
-//instalacja:
+//instalacja:   https://docs.nestjs.com/first-steps
 $ npm i -g @nestjs/cli  //globalna instalacja paczek
 $ nest new project-name  // zakładanie proejktu
 $ nest new project-name -l JS // zakładanie proejktu w JS (nie typescript)
@@ -1695,15 +1695,13 @@ $ nest new project-name -l JS // zakładanie proejktu w JS (nie typescript)
 npx @nestjs/cli new nazwa-projektu  //za każdym razem ściąga paczki, co trwa bardzo długo
 
 //uruchamianie:
+nest start
+nest start --watch // autoprzeładowywanie po zapisaniu zmian
 npm run start 
 npm run start:dev  // 
-nest start --watch // autoprzeładowywanie po zapisaniu zmian
 npx @nestjs/cli start //dla instalaci nie globalnej
 yarn start // dla instalacji z paczkami yarn (nie npm) Najstarsza wersja
 //przerywanie procesu: Ctrl + C
-
-//zerknąć sobie na narzędzie Insomnia
-//Autośedzenie kodu: Quokka.js
 
     nest info // informacje o wersji, paczkach
     nest generate <rodzaj> <nazwa> // pozwala wygenerować elementy i umieszcza je w odpowiednie miejsca + układa kod
@@ -1714,11 +1712,14 @@ yarn start // dla instalacji z paczkami yarn (nie npm) Najstarsza wersja
                 </nazwa> //to tylko zeby dalej skladnie pliku utrzymac
 
     nest build // tworzy produkcyjną aplikację w folderze dist
-//aby uruchomić:
+//aby uruchomić wersję produkcyjną:
     node ./dist/main.js
 
     nest update  //aktualizacja nest do najnowszej wersjii
 
+
+// doinstalowanie wtyczek typescriptowych (jak npm i bcrypt)
+    npm i -D @types/bcrypt
 
 //transpilacja: zmiana TS na JS (coś jak Babel)
 // jak transpilować TS w VSC?
@@ -1733,8 +1734,23 @@ https://www.typescriptlang.org/docs/handbook/tsconfig-json.html
 //konsola do trenowania TS:
 https://www.typescriptlang.org/play/		
 									  
-									  
-
+// jak transpilować TS w VSC
+//zawartość:  .vscode/tasks.json									  
+{
+    "version": "2.0.0",
+    "tasks": [
+    {
+        "label": "typescript",
+        "type": "typescript",
+        "tsconfig": "tsconfig.json",
+        "option": "watch",
+        "auto": true,
+        "problemMatcher": [
+            "$tsc-watch"
+        ]
+    }
+    ]
+}
 
 
 //-----------------------------------------------------------------------------
@@ -1768,7 +1784,7 @@ export class FoxController {
         @Ip() ip: string,
         @Query('name') name: string,
         @Query('surname') surname: string,
-        @Req() request: Request,  //raczej nie będziemy z tego korzystać, to najniższy poziom dostępu do Request
+        @Req() request: Request,  //pobranie CAŁEGO requesta. (omówione w Film 50 NestJS)
     ): string {
         console.log('Argumenty :', name, surname);
         return `<h1> you Ip is: ${ip}</h1> <h3>hi ${name}  </h3>`;
@@ -1799,10 +1815,10 @@ http://localhost:3000/fox/Karol/Testowy
         //fajna przebudowa tego promisa, filmik 51, 4:00
 
 
-// @HttpCode(202) - zmiana kodu odpowiedzi. Bez tego domyślnie jest 200, a dla POST 201
-// @Header('X-My-Test', 'Testowy naglowek') - dodatkowy, niestandardowy nagłówek film 52, 2:00 
-// @Redirect('/test')  -przekierowanie na inną stronę, podstronę
-// @Redirect('https://wp.pl')  -przekierowanie na inną stronę
+@HttpCode(202) //- zmiana kodu odpowiedzi. Bez tego domyślnie jest 200, a dla POST 201
+@Header('X-My-Test', 'Testowy naglowek') //- dodatkowy, niestandardowy nagłówek film 52, 2:00 
+@Redirect('/test')  //-przekierowanie na inną stronę, podstronę
+@Redirect('https://wp.pl')  //-przekierowanie na inną stronę
 
 
 //Be RESTful!
@@ -1818,11 +1834,12 @@ http://localhost:3000/fox/Karol/Testowy
 	createFox(
 	    @Body() newFox //aby przyjmować konkretne dane
 	): string {
-		return '
+		return '...';
 	}
 
 
 //DTO - data transfer object, taki interface, ale w formie klasy:
+// jak mają wyglądać DANE WEJŚCIOWE
 // zalecane zrobienie oddzielnego folderu dto
 export class CreateFoxDto {
     name: string;
@@ -1852,7 +1869,7 @@ nest generate module <nazwa> // możliwoś podzielenia aplikacji ze względu na 
 //skrót: 
 nest g mo nazwa
 
-jest to zwykłą klasa, zawierajaca dekrator @Module(), a w nim:
+jest to zwykła klasa, zawierajaca dekrator @Module(), a w nim:
 * controllers - lista kontrolerów
 * providers - lista providerów z których korzystamy
 

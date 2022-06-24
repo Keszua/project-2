@@ -113,7 +113,16 @@ class GoodGreeter {
     constructor() {
       this.name = "hello";
     }
-  }
+}
+
+// to samo co wyżej, tylko inaczej, prościej zapisane
+class GoodGreeter {
+    constructor( 
+        public name: string = 'hello'
+    ) {
+    }
+}
+
 
 
 //-----------------------------------------------------------
@@ -127,8 +136,8 @@ abstract class Vehicle {          //klasa abstrakcyjna, nie pozwala tworzyć obi
 class Car extends Vehicle {
     drivenKms: number = 0;
     constructor(
-        public readonly brand: string, //readonly - nie można ponownie przypisać tej wartości
-        public readonly name: string
+        public readonly brand: string, //modyfiktor dostępudo zmiennych: public, private, protected
+        public readonly name: string   //readonly - nie można ponownie przypisać tej wartości
     ) {
         super(); //do przekazania argumentów do rodzica
     }
