@@ -1687,9 +1687,9 @@ const url = `http://localhost:3000/?` + params;
 
 // Kamil Myśliwiec - autor nestJS
 //instalacja:   https://docs.nestjs.com/first-steps
-$ npm i -g @nestjs/cli  //globalna instalacja paczek
-$ nest new project-name  // zakładanie proejktu
-$ nest new project-name -l JS // zakładanie proejktu w JS (nie typescript)
+npm i -g @nestjs/cli  //globalna instalacja paczek
+nest new project-name  // zakładanie proejktu
+nest new project-name -l JS // zakładanie proejktu w JS (nie typescript)
 
 //instalacja nie globalna:
 npx @nestjs/cli new nazwa-projektu  //za każdym razem ściąga paczki, co trwa bardzo długo
@@ -1704,10 +1704,11 @@ yarn start // dla instalacji z paczkami yarn (nie npm) Najstarsza wersja
 //przerywanie procesu: Ctrl + C
 
     nest info // informacje o wersji, paczkach
-    nest generate <rodzaj> <nazwa> // pozwala wygenerować elementy i umieszcza je w odpowiednie miejsca + układa kod
-                  module     //mo  //generuje moduł
-                  controller //co  // generuje kontroler
-                  service    //s //generuje serwis (usługę)
+                    <rodzaj> <nazwa> // pozwala wygenerować elementy i umieszcza je w odpowiednie miejsca + układa kod
+    nest generate ┬ module     //mo  //generuje moduł
+                  ├ controller //co  // generuje kontroler
+                  ├ service    //s //generuje serwis (usługę)
+                  └ resource // ?? 
 
                 </nazwa> //to tylko zeby dalej skladnie pliku utrzymac
 
@@ -1807,7 +1808,7 @@ http://localhost:3000/fox/Karol/Testowy
 
 //Mogę zwracać 
     //tekst:
-    return `<h1> you Ip is: </h1> <h3>hi  </h3>`;
+    return `<h1> You Ip is: </h1> <h3>hi  </h3>`;
 	// tablice sa przerabiane na Jsony:
     return { numberofFoxes: 100,  areFoxesHappy: true, }
     //Promisy:
@@ -1859,22 +1860,47 @@ export class CreateFoxDto {
 
 
 //-----------------------------------------------------------------------------
+UWAGA!!! Aby wszystko robiło się automatyczne, trzeba w pierw wygenerować moduł.
+
+nest generate module <nazwa> // możliwoś podzielenia aplikacji ze względu na skupienie wokół jednej funkcjonalności (domeny)
+//skrót: 
+nest g mo nazwa
+
 nest generate service nazwa
 //skrót:
 nest g s nazwa
 
 
 //-----------------------------------------------------------------------------
-nest generate module <nazwa> // możliwoś podzielenia aplikacji ze względu na skupienie wokół jednej funkcjonalności (domeny)
-//skrót: 
-nest g mo nazwa
 
-jest to zwykła klasa, zawierajaca dekrator @Module(), a w nim:
+jest to zwykła klasa, zawierajaca dekorator @Module(), a w nim:
+* imports
 * controllers - lista kontrolerów
 * providers - lista providerów z których korzystamy
+* exports
 
 
-UWAGA!!! Aby wszsytko robiło się automatyczne, trzeba w pierw wygenerować moduł.
+subdomena
+zamist 
+    http://localhost:3000  
+wpisać:  
+    http://lvh.me:3000
+subdomena:
+http://subdomena.lvh.me:3000
+
+Aby to odebrac, w xxx.controler.ts, w dekoratorze wpisać obiekt:
+@Controller({
+    path: 'shop',
+    host: 'zzz.lvh.me',  //na jaką domenę ma reagować  (Film 60 Nest)
+    //host: ':name.lvh.me',  //alternatywnie
+})
+// wewnątrz klasy, w metodzie w parametrach podaje:
+@Get('/')
+testRedirect(
+    @HostParam('name') siteName: string,
+) {
+    return `Witaj na sklepie ${siteName}`
+}
 
 //-----------------------------------------------------------------------------
 Metody startu aplikacji
@@ -1933,6 +1959,10 @@ nest g resource Auth
 Będzie pytanie, czy stworzyć REST API? -> wybrać Tak
 Następnie, w folderze auth usunąc wszystkie domyslne Dto, akcje, metody encję.
 Więcej na  film 142,
+
+Doinstalować:
+npm install --save @nestjs/jwt passport-jwt
+npm install --save-dev @types/passport-jwt
 
 Odekorowanie akcji tylko dla zalogowanego urzytkownika za pomocą @UseGuards(AuthGuard('jwt'))
 film 142, 25:00
