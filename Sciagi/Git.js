@@ -178,8 +178,8 @@ git show -5 --stat --name-only --oneline --pretty="" | sort | uniq  //pokaż w j
   #    #   #    #      #
    #####  ###   #      #
    
-git diff                     //pokazuje zmiamy zwzgledem katalogu roboczego a plikami w poczekalni
-git diff --cached            //pokazuje zmiamy zwzgledem plików w poczekalni z ostatim comitem
+git diff                     //pokazuje zmiamy wzgledem katalogu roboczego a plikami w poczekalni
+git diff --cached            //pokazuje zmiamy wzgledem plików w poczekalni z ostatim comitem
 git diff --staged            //to samo co "--cached" (dodana nazwa, która może być łatwiejsza do zapamietania)
 git diff nazwaPiku           //pokazuje zmiany względem konkretnego pliku
 git diff 852ff1d nazwaPliku  //porównanie wersji z komitów
@@ -212,8 +212,7 @@ git diff-tree [--stdin] [-m] [-s] [-v] [--no-commit-id] [--pretty]
 	      [-t] [-r] [-c | --cc] [--root] [<common diff options>]
 	      <tree-ish> [<tree-ish>] [<path>...]
 //więcej na: https://git-scm.com/docs/git-diff
-		  
-
+<p</p> // tylko dla odzyskania kolorowania
 
 
 		  
@@ -737,6 +736,12 @@ C – tutaj widać zmiany popełnione przez kogoś (remote)
 
 git commit --allow-empty -m "a1.txt"  //prawdopodobnie tworzy pusty plik tekstowy i od razy dodaje go do commita
 
+
+// ssh
+ssh-keygen -t rsa -b 4096 -C "mailNaGithuba@wp.pl"
+// sanstępnei podać nazwę klucza
+testkey        // bez rozszeżenia jest prywatny
+testkey.pub    // publiczny, do wklejenia na koncie gitHuba do "SSH and GPG keys"
 
 /****************************************************************
 *                                                               *

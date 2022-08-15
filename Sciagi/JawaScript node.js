@@ -14,10 +14,10 @@ Node.js  - jest to środowisko uruchomieniwe do odpalania JS bez przeglądarki. 
 node -v  	// sprawdzanie wersji. 
 npm -v 		// sprawdzanie wersji. 
 
-// jaka sinstrukcja, ajk miec kilak wersji node na jednym kopie:
+// jaka sinstrukcja, jak miec kilak wersji node na jednym kopie:
 youtu.be/OOJLwK92JAI
 
-//aby sprawdzić wersję V8 z jakiego korzysta przeglądarka, trzba w pasku wpisać chrome://version
+//aby sprawdzić wersję V8 z jakiego korzysta przeglądarka, trzeba w pasku wpisać chrome://version
 
 //Aby z niego skorzystać ogólnie przez wiersz poleceń, w wierszu poleceń wpisać:
 λ node 
@@ -31,11 +31,17 @@ undefined
 //Aby wyjść, trzeba dwukrotnie: Ctrl+C 
 
 
-//Aby pisać kod w pliku, trzba zrobić plik.js i w nim pisac.
-//Odpalenie skryptu: 
-//    node nazwaPliku.js
+// Uruchamianie aplikacji:
+node app.js
+npm run start                // zdefiniowane w package.json
+npm run test                 // zdefiniowane w package.json
+npm audit                    // sprawdza zanstalowane wtyczki pod względem bespieczeństwa
+npx nodemon app.js           // jakaś metoda uruchomienia nodemon bez jego instalacji
 
-//Gdy odpalimy serwer, zatrzymujemy go Ctrl+C
+
+// Aby odpalić projekt na repl, trzeba ustawic 
+app.listen(3000, '0.0.0.0');
+
 
 
 
@@ -46,6 +52,9 @@ undefined
 //Aby w konsoli wpisać instrukcje/polecenia więcej niz 1 linijkowe, trzeba wywołać:
     .editor
 //Wyjście z edytora: Ctrl+D
+
+
+
 
 //Polecenia REPL:
 const os = require('os');
@@ -163,11 +172,13 @@ npm install --save-dev nodemon  //instalacja z dopisaniem do package-lock.json i
 npm uninstall nodemon           // usuwnie modułu
 
 //gdyby Nodemon nie działał, bo: "cannot be loaded because running scripts is disab led on this system..."
-// Uruchom windows powerShell i wpisz
+// Uruchom windows powerShell w trybie admnistarotra i wpisz
 	Get-ExecutionPolicy
 //jesli jest 'Restricted', to wpisz polecenie:
 	Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
+// Marcin na live wpisał:
+    Set-ExecutionPolicy -ExecutionPolicy Unrestricted
 
 //proponowana struktura plików:
 docs
@@ -363,7 +374,7 @@ const http = require('http');
 //export modułu:
 module.exports = {};  //EXPORT === MODULE.EXPORTS === {}
 // lub:
-module.exports = "coś zwrócine z tego modułu :) ";
+module.exports = "coś zwrócone z tego modułu :) ";
 
 //przykład eksportu licznika, który inkrementuje się za kazdym wywołaniem
 	let counter = 0;
@@ -498,7 +509,7 @@ let odczyt = false;
 		const newVal = Number(contentsFile.split('\n').at(-1) ) * 2 ||  1;
 		await appendFile(FILE_NAME, `\n${String(newVal)}`, 'utf8');
 		console.log('Do pliku', FILE_NAME, 'dodano:', newVal);
-	} catch {
+	} catch (err) {
 		console.log(`Ops, nie udany ${odczyt ? 'zapis' : 'odczyt'} pliku ${FILE_NAME}`);
 		try {
 			writeFile(FILE_NAME, '1', 'utf8');
@@ -1431,9 +1442,10 @@ i pobrane zostaną brakujące pliki
 //6. W pliku app.js tworze prosty serwer:
     const express = require('express')
     const app = express();
-    app.listen(3000, () => {
-        console.log('Server is listening at http://localhost:3000');
-    });
+    app.listen(3000, '127.0.0.1', () => {  console.log('Server is listening at http://localhost:3000');  });
+//              │     │            └ 
+//              │     └ [opcjonalnie] interfejs sieciowy, który nasłuchuje. Aby aplikacja nie była widoczna na zewnątrz
+//              └ na jakim porcie   
 //7. Uruchamiamy go poleceniem:
     node nazsaPliku.js
 
@@ -1451,24 +1463,28 @@ app.get('/podstrona', (req, res) => { ...   });
 
 //inne metody:
 app.all('/', (req, res) => {  //reakcja na każde zapytanie/metodę
-    //console.log(req.method); //= GET
-    //console.log('req.url', req.url);
-    //console.log('req.originalUrl', req.originalUrl); // różni się od url gdy przekierowywujemy wizytatora
-    //console.log('req.path', req.path); //zawiera ostatnią część adresu
-    //console.log('req.protocol', req.protocol); // "zwykłe" połaczenie http  //= http
+    console.log('req.ip', req.ip); //= informacja o ip klienta
+    console.log('req.ips', req.ips); //= tablica z ip od proxyioid
+    console.log('req.method', req.method); //= GET zwroci metodę, przydatne gdy urzywamy app.all() 
+    console.log('req.url', req.url);  // zawiera aktualną ścierzkę
+    console.log('req.originalUrl', req.originalUrl); // zawiera ścierzkę pierwotną, anwt po przekierowaniu
+    console.log('req.path', req.path); //zawiera ostatnią część adresu
+    console.log('req.protocol', req.protocol); // "zwykłe" połaczenie http  //= http
 	if(req.protocol !== 'https') {console.log('Protokół niezabezpieczony')};
-    //console.log('req.secure', req.secure);  // "zabezpieczone" połaczenie  https //= false
+    console.log('req.secure', req.secure);  // "zabezpieczone" połaczenie  https //= false
     if(!req.secure) {console.log('Protokół niezabezpieczony')};
-    //console.log('req.query', req.query); //zwróci odkodowany obekt, np: { name: 'Karol', surname: 'Keszua' }  film 67
     //console.log('Hello ' + req.query.name);  //gdy spodziewamy się że przesłane będzie do nas "name"
     //console.log(req.get('Referer')); //zwróci adres poprzedniej strony (strony odsyłajacej), np: aby zobaczyć kto nas polecił, np: FaceBook
+    console.log("Korzystasz z przegladarki:", req.headers['user-agent']);
     res.write(`<h1>Witaj ${req.params.id}</h1>`);
     res.end();
     //res.send(`<h1>Witaj ${req.params.id}</h1>`);   // to samo co dwie powyższe linijki  czyli write i end  + dodaje Content-Lenght,  Content-Type
 
 });
 
-app.post('/', (req) => {        //dodawanie nowego obiektu
+app.get('/app?name=MegaK&age=13&etap=express', (req) => {     //odbiernie danych
+    console.log('req.query', req.query); //zwróci odkodowany obekt, np: { name: 'Karol', surname: 'Keszua' }  film 67
+    console.log('Etap' + req.query.etap);  //gdy spodziewamy się że przesłane będzie do nas "etap"
 });
 
 app.patch('/:id', (req) => {    //aktualizacja   :id/:id2 - zmienna, mozna je rozdzielać znakami / . - (slesz, kropka, myślnik)
@@ -1485,61 +1501,76 @@ app.delete('/1', (req) => {     //usuwanie obiektu o danym id
 // ? - zastępuje wszytkie znaki, czyli ściezka //article/123?   przechwyci:   //article/123/Tytyl
 // i stworzy sie obiekt req.params:  {id: '123',  title: 'Tytul' }
 
-//res.SEND - sam dobierze Content-Type:
+//  res.SEND - sam dobierze Content-Type:
 app.get('/:id', (req, res) => {   
-    res.send("Ala ma kota"]);  // *string - text/html
+    res.send("Ala ma kota");  // *string - text/html
     res.send( ["Ala", "ma", "kota"] );  // *array/Object - aplication/json i dane zakodowane do JSON
     res.send( {"text": "Hello", "isGood": true} );  // *array/Object - aplication/json i dane zakodowane do JSON
 	res.json( {"text": "Hello", "isGood": true} );    //zawsze wysle JSON + można go formatować
     // *Buffer - application/octet-stream dane binarne (gdy chemy przesłać plik)
-}
+})
 
 //Przekierowanie  (node.js, filmik 70 od minóty 13-tej)
 app.get('/', (req, res) => {
     res.redirect('/another/path');  //robi to samo poniższe 2 linijki:
         //res.location('http://google.com');
         //res.sendStatus(302);
-
     
     res.redirect('..');     // gdy mamy dłuższe ścieżki i chcemy zrobić przekierowanie na ściezkę wyżej:
     res.redirect('back');   // powrót do poprzedniej ścieżki (domyślnie cofa nas na stronę główną)
-    res.redirect('http://google.com', 301);  //z wymuszonym statusem twałego przekierowania
+    res.redirect(301, 'http://google.com');  //z wymuszonym statusem trwałego przekierowania
 })
 
 //wysyłanie pliku, np: obrazka na stronę  (filmik 71 )
+const {join} = require('path');
 app.get('/logo', (req, res) => {
-    res.sendFile('plik.png');   //lub ścieżkę, np: const fileName = path.join(__dirname, 'EXPRESS/plik.png');  //wymagane dodanie: const patch = require('path')
-        //jako drugi argument mogę podać: { root: patch.join(__dirname, 'static') }  w tym przypadku nie podawać całej ścieżki, tylko nazwe pliku (lub folder/plik)
-        //    { lastModified: flase }  //to wymusi, że za każdym razem jest przesyłąny nowy plik
-        //    { headers }  // mozna dodać kolejne nagłowki
-        //    { dotfiles - allow/deny/ignore }  // czy można pobierać pliki z kropką (np, gdy ktoś che pobrać .gitignore )
-        //    inne
+    res.sendFile(join(__dirname, 'plik.png'));   //trzeba podać ścierzkę absolutną
+    //lub, to samo
+    res.sendFile('plik.png', {
+        root: join(__dirname, 'files')      // pliki muszą znajdowac sie w tym folderze, lub podany w ścierzce
+        // lastModified: flase              // to wymusi, że za każdym razem jest przesyłany nowy plik
+        // headers: {'X-Info': 'MegaK'}     // mozna dodać kolejne nagłowki
+        // dotfiles - allow/deny/ignore     // tak/nie/udawajZeIchTamNieMa   - czy można pobierać pliki z kropką (np, gdy ktoś che pobrać .gitignore )
+        // inne
+    });
 	//lub wysłać plik z 'index.html'
 
     //inna metoda wysyłania pliku: 
-    res.attachment('plik.png'); //wymusi na użytkowniku pobranie pliku 
+    res.attachment('plik.png', {  // atachment tylko ustawia nagłówek i rozpoczyna strumień
+        root: join(__dirname, 'public'),
+    } ); //wymusi na użytkowniku pobranie pliku jako załącznik
+    res.pipe() //trzeba otworzyć strumień...
     res.end();
 
-    //inna metoda wyysłania pliku:
-    res.download(fileName, 'Nazwa_dla_pobierajacego.png'); //trzeba podac śceirzkę absolutną, czyli const fileName = path.join(__dirname, 'EXPRESS/plik.png');   Mozn apodac 3-ci argument z obiektem
+    //inna metoda wysłania pliku:
+    res.download(fileName, 'Nazwa_dla_pobierajacego.png'); //trzeba podac ścierzkę absolutną, czyli const fileName = path.join(__dirname, 'EXPRESS/plik.png');   Mozn apodac 3-ci argument z obiektem
 
 });
 
     //ustawianie dowolnych nagłówków:   UWAGA! W pierw trzeba wustawić nagówki, dopiero później treść odpowiedzi
     res.set( {'Content-Type': 'text/plain', 'Content-Lenght': '123'} );
-    res.headersSent  //trochę tego nie rozumiem. Gdy jest true, to znaczy że zostały już wysłane nagłówki i nie mozna już ich edytować
-
+    res.headersSent  // jest to właściwość do odczytu. Gdy jest true, to znaczy że zostały już wysłane nagłówki i nie mozna już ich edytować.
 
 
 //-----------------------------------------------------------------------------
 //COOKIE
 
     res.cookie('ad_id', '123');  //stworzenie ciasteczka 
-        // jako trzeci argument można podać:
-        // domain   - domena do której bedą wysyłąne ciastka
-        // expires  - czas do kiedy ciastko ma być zapamiętane
-        // maxAge   - zamiast expires - okresla, jak długo ciastko ma istnieć (w ms)
-        // httpOnly - sprawia, że frontend nie ma dostepu do ciastka
+        // jako trzeci argument można podać obiekt opcji: 
+        {
+            path: '/',                       // moge wybrać, na jakiej stronie/podstronie ma odsyłać ciastko (zwykle nie chcemy tak wyszczególniać) 
+            domain: 'xyz.mydomain.com' ,     // domena do której bedą wysyłąne ciastka
+            expires: new Date(2022, 11, 31), // czas do kiedy ciastko ma być zapamiętane
+            maxAge: 1000 * 60 * 60 *24 *365, // zamiast expires - okresla, jak długo ciastko ma istnieć (w ms) 
+            httpOnly: true,                  // sprawia, że frontend nie ma dostepu do ciastka
+            secure: true,
+        }
+
+app.get('/logout', (reg, rees) => {
+    res
+        .clearCookie('cookie1')
+        .send('Loged out,');
+})
 
 //przykład ustawienia cistka na 5 minut:
 app.get('/hi/:name', (req, res) => {
@@ -1547,7 +1578,7 @@ app.get('/hi/:name', (req, res) => {
 });
 
 //przykład ustawienia ciastka z imieniem na 7 dni:
-app.get('/hi/:name', (req, res) => {  //w przeglądarece:  http://localhost:3000/hi/karol
+app.get('/hi/:name', (req, res) => {  //w przeglądarce:  http://localhost:3000/hi/karol
     const { name } = req.params;
     const dt = new Date();
     dt.setDate(dt.getDate() + 7);  //aktualna data + 7 dni
@@ -1556,47 +1587,29 @@ app.get('/hi/:name', (req, res) => {  //w przeglądarece:  http://localhost:3000
 });
 
 
-    res.clearCookie()  //usówanie cistka
-app.get('/logout', (req, res) => {
-    res.clearCookie('visitor_name');
-    res.send('Wylogowano');
-    res.redirect('/');  //po wylogowaniu, przejdz na stronę główną
-});
-
-//do wygodniejszej obsługi ciastek jest biblioteka cookie-parser  (npm i cookie-parser --save) filmik 73
-    const cookieParser = require('cookie-parser')
-    app.use(cookieParser());
-
-    app.get('/hi/:name', (req, res) => {
-        res.cookie('visitor_name', req.params.name, { maxAge: 5 * 60 * 1000 });
-        res.send(`<h2>Witaj ${req.params.name} </h2>`);
-    });
-
-    app.get('/', (req, res) => {
-        const { visitor_name } = req.cookies;
-        if (visitor_name) {
-            res.send(`<h2>Cistko: ${req.cookies.visitor_name} </h2>`);
-        } else {
-            res.send('Czy my się znamy?');
-        }
-        console.log(req.cookies);
-    });
-
-    app.get('/logout', (req, res) => {
-        res.clearCookie('visitor_name');
-        res.send('Wylogowano');
-    });
-
 
 //-----------------------------------------------------------------------------
+//  #     #            #       #  #
+//  ##   ##   #        #       #  #
+//  # # # #        #####   #####  #       ###   #     #   ####   # ###   ###
+//  #  #  #  ##   #    #  #    #  #      #   #  #     #       #  ##     #   #
+//  #     #   #   #    #  #    #  #      #####  #  #  #   #####  #      #####
+//  #     #   #   #    #  #    #  #   #  #      # # # #  #    #  #      #
+//  #     #  ###   #####   #####   ###    ###    #   #    ### #  #       ###
 //MIDDLEWARE
 
 //Nalezy pamiętać, aby zastowować midleware przed naszymi ścieżkami
     app.use(jakiśMiddleware());
 
-//Mmddleware dla JSONA:
+//Middleware dla JSONA:
     app.use(express.json());
 
+//Middleware dla "tradycyjnego" formularza. Gdy korzystamy z Content-Type: application/x-www-form-urlencoded  (bez JSON)
+    app.use(express.urlencoded({
+        extended: true,
+    }));
+
+    
 //Przykład przesłania JSONA z front na back  (z filmu 73  min: 8:46)
 {
 // w pliku app.js  (plik serwera, oczywiście wyżej import i uruchomienie expresa...)
@@ -1622,37 +1635,392 @@ app.get('/logout', (req, res) => {
 
 //Przykład midleware, który automatycznie ładuje pliki z folderu:
 
-// w projekcie trzeba dodać folder 'static', w którym bedzie plik index.html i inne potrzebne pliki
-// w app.js (plik serwera) po za podstawowym importem expresa i require('path), dosajemy tylko:
+// w projekcie trzeba dodać folder 'public', w którym bedzie plik index.html i inne potrzebne pliki
+// w app.js (plik serwera) po za podstawowym importem expresa i require('path), dodajemy tylko:
 
 app.use(express.static(
-    path.join(__dirname, 'static'),
+    path.join(__dirname, 'public'),
+    {                        //opcjonalnie można dodać parametry
+        index: 'home.html',  // zmiana index.html na inny
+    }
 ));
 
 
+//do wygodniejszej obsługi ciastek jest midleware cookie-parser  (npm i cookie-parser --save) filmik 73
+const cookieParser = require('cookie-parser')
+
+app.use(cookieParser());
+
+app.get('/hi/:name', (req, res) => {
+    res.cookie('visitor_name', req.params.name, { maxAge: 5 * 60 * 1000 });
+    res.send(`<h2>Witaj ${req.params.name} </h2>`);
+});
+
+app.get('/', (req, res) => {
+    const { visitor_name } = req.cookies;
+    if (visitor_name) {
+        res.send(`<h2>Cistko: ${req.cookies.visitor_name} </h2>`);
+    } else {
+        res.send('Czy my się znamy?');
+    }
+    console.log(req.cookies);
+});
+
+app.get('/logout', (req, res) => {
+    res.clearCookie('visitor_name');
+    res.send('Wylogowano');
+    res.redirect('/');  //po wylogowaniu, przejdz na stronę główną
+});
+
+
+
+
+//-----------------------------------------------------------------------------
+//Do podziału projektu na moduły?
+
+/*
+.
+├─ data
+├─ node_modules
+├─ app.js
+├─ package.json
+├─ public
+│  ├─ index.html
+│  ├─ images
+│  ├─ javascripts
+│  └─ stylesheets
+│     └─ style.css
+└─ routes
+   ├─ index.js
+   └─ users.js
+*/
+// Plik app.js 
+const express = require('express')
+const {nameRouter} = require('./routes/name');
+const app = express();
+app.use(express.json);                 // middleware
+app.use('/name', nameRouter);              // 
+app.listen(3000, () => { console.log('Server is listening at http://localhost:3000'); });
+
+// Plik routes/name.js
+const express = require('express')
+const {readFile, writeFile} = requirq('fs').promises;
+const nameRouter = express.Router();
+const FILE_NAME = '.data/name.txt';
+
+nameRouter
+    .get('/set/:name', async (req, res) => {
+        const name = req.params.name;
+        await writeFile(FILE_NAME, name, 'utf8');
+        res.send(name);
+    })
+
+    .get('/show', async (req, res) => {
+        const name = await readFile(FILE_NAME, 'utf8');
+        res.send(name);
+    })
+
+    .get('/check', async (req, res) => {
+        try {
+            await readFile(FILE_NAME);
+            res.send('There is a name saved.');
+        } catch (err) {
+            res.send('There is no name.');
+        }
+    })
+
+    module.exports = {
+        nameRouter,
+    };
+
+
+
+
+//-----------------------------------------------------------------------------
+// Generator
+express-generator
+
+npm i express=generator -g
+//Aby utworzyć projkt podobny do proponowanego, można wykonać:
+express --no-view --git nazwa_projektu_i_folderu
+
+
+
+npm i express-rate-limit               // instalacja rate-limiter
+const rateLimit = require('express-rate-limit');
+
+const limiter = rateLimit( {
+    windowMs: 1 * 60 * 1000,           // co 1 minute
+    max: 100                           // ilość zapytań
+})
+app.use(limiter);                      // urzyj limitera w sekcji dla midleware
+
+
+pm2 - dba o to, żeby proces był cały czas uruchomiony
+// dokumentacja: https://pm2.keymetrics.io/docs/usage/quick-start/
+
+npm i pm2@latest -g                    // instalacja: 
+pm2 start app.js                       // uruchomienie
+pm2 list                               // pokazuej uruchomione procesy
+pm2 monit                              // pokazuje logi berzące
+pm2 logs                               // logi wsteczne
+pm2 scale app.js 10                    // ile uruchomić jednoczesnych aplikacji
+pm2 stop all                           // zatrzymaj wszystko
+
+
+
+//-----------------------------------------------------------------------------
+
+// Layout engines  - silniki widoków
+
+
+// imie Kuby na studiach:
+// <img src="https://a.allegroimg.com/original/1201da/b8806483460d99ec3739941289ab" onload="location.href='http://wp.pl'">
 
 
 
 
 
 //-----------------------------------------------------------------------------
-encodeURIComponent()  // do szyfrowania, zabespieczania przesyłąnych danych.
+encodeURIComponent()  // do szyfrowania, zabezpieczania przesyłanych danych.
 //KLIENT (plik script.js)
 const name = 'Jakaś osoba';
 const surName = 'Nazwisko';
 const url = `http://localhost:3000/?name=${encodeURIComponent(name)} & surname=${encodeURIComponent(surName)}`;
 
-URLSearchParams() // podobnie jak wyższe polecenie do szyfrowania
+const {URLSearchParams} = require('url'); // podobnie jak wyższe polecenie do szyfrowania
 const name = 'Jakaś osoba';
 const surName = 'Nazwisko';
 const params = new URLSearchParams({
 	name,   surName
 })
 const url = `http://localhost:3000/?` + params;
+//lub to samo
+const params = new URLSearchParams();
+params.set('name','Jakaś osoba');
+const url = `http://localhost:3000/?${params.toString()}`;
+
+//Generowanie prawidłowych ścieżek bez spacji (dorobiona funkcja parsująca,  + zamień na %20 )
+function generateQueryString(params) {
+    const qs = new URLSearchParams(params);
+    return `${gs}`.replace(/\+/g, '%20');
+}
+
+
+//-----------------------------------------------------------------------------
+//     ###     ####     #    #    ##### 
+//    #   #    #   #    #    #     #   #
+//    #        #   #    #    #     #   #
+//    #        ####     #    #     #   #
+//    #        # #      #    #     #   #
+//    #   #    #  #     #    #     #   #
+//     ###     #   #     ####     #####
+
+const express = require('express');
+const {join} = require('path');
+const {readFile, unlink, writeFile} = require('fs/promises');
+const app = express();
+const filePath = join(__dirname, 'public/file.txt');
+app.use(express.json());
+
+// CREATE
+app.post('/file', async (req, res) => {
+    try{
+        console.log(req.body.trescPliku);
+        await writeFile(filePath, req.body.trescPliku, {
+            flag: 'wx'
+        });
+        res.json({
+            ok: true,
+        })
+    } catch(err){
+        res.json({
+            error: true,
+            message: "File already exist",
+        })
+    }    
+});
+
+// READ
+app.get('/file', async (req, res) => {
+    try {
+        const content = await readFile(filePath, 'utf8');
+        res.json({content});
+    } catch(err) {
+        res.json({
+            error: true,
+            message: "File does not exist",
+        })
+    }
+});
+
+// UPDATE
+app.put('/file', async (req, res) => {
+    try{
+        console.log(req.body.trescPliku);
+        await writeFile(filePath, req.body.trescPliku, {
+            flag: 'a',
+        });
+        res.json({
+            ok: true,
+        })
+    } catch(err){
+        res.json({
+            error: true,
+            message: "File does not exist or is corrupted",
+        })
+    }    
+});
+
+// DELETE
+app.delete('/file', async (req, res) => {
+    try{
+        await unlink(filePath);
+        res.json({
+            ok: true,
+        })
+    } catch(err) {
+        res.json({
+            error: true,
+            message: "File does nto exist",
+        })
+    }
+})
+
+/* UWAGA, żeby delete działał na naszym froncie, trzeba doinstalować 
+npm i method-override
+W pliku app.js:
+    const methodOverride = require('method-override');
+    app.use(methodOverride('_method'));
+W pliku HTML
+    <form method="POST" action="/client/{{this.id}}?_method=DELETE">
+        <button type="submit">Usuń</button>
+    </form>
+*/
+
+app.listen(3000, () => console.log('Start'));
+
+
+
+// Skrócona wersja jakiegos Routera:
+const express = require('express');
+const clientRouter = express.Router();
+clientRouter
+    .get('/', (req, res) => {
+        res.send('Pobierz wszystkie');
+    })
+    .get('/:id', (req, res) => {
+        res.send('Pobierz pojedynczego');
+    })
+    .post('/', (req, res) => {
+        res.send('Dodaj');
+    })
+    .put('/:id', (req, res) => {
+        res.send('Zmodyfikuj');
+    })
+    .delete('/', (req, res) => {
+        res.send('Usuń');
+    })
+module.exports = { clientRouter,}
+
+
+//-----------------------------------------------------------------------------
+// Handlebars
+npm i express-handlebars
+// trzeba stworzyć struktórę katalogów:
+└─ views
+   ├─ home.hbs
+   └─ layouts
+      └─ main.hbs
+   └─ partials      // dodatek
+      └─ share.hbs
+
+// w liku główym app.js, kolejno:
+const hbs = require('express-handlebars');
+
+app.engine('.hbs', hbs.engine({        // na końcu midlewerów te 2 linijki
+    extname: '.hbs',
+    //helpers: handlebarsHelpers,      // [opcja], jeśli korzystamy z helperów
+}));  
+app.set('view engine', '.hbs');
+
+app.get('/hi', (req, res) => {
+    res.render('nazwa-widoku', {       // opcjonalnie obiekt z parametrami
+        firstName: "Karol",            // urzywamy, wstawiajac: {{firstName}}
+        person: {
+            name: "Franek",            // urzywamy, wstawiajac: {{person.name}}
+        },
+        dates: [1990, 1991],
+    });
+})
+
+
+{{#with person}}                       // taka destrukturyzacja obiektu person
+    <h1>Witaj {{name}}</h1>
+    {{#each @root.allAddons}} ... {{/each}}  // @root. to takie wyjście powyżej person
+{{/with}}
+
+{{#each dates}}                        // wypisanie wszsytkih elementów tablicy
+    <h1>Elementy tablicy dates: {{this}}</h1>
+{{else}} brak wynków                   // opcjonalnie elsa, gdy tablica pusta
+{{/each}}
+
+<ul>
+    {{#each dates}}                    // stworzenie lisyt z elementami tablicy
+        <li>{{this}}</li>
+    {{/each}}
+</ul>
+
+{{> share}}                            // udostępnianie z partials/share.hbs 
+
+{{!-- Komentarz --}} 
+
+{{#if warunek}}                        // tylko prosty warunek boolean
+    Tak
+{{else}}    
+{{/if}}
+
+{{#unless warunek}}
+    NIE
+{{/unless}}
+
+{{log 'firstname' firstName }}         // talko console.log() po stronie backendu
+
+
+//Kuba wspomniał coś o API + SPA Reactowe wraz z SSR
+
+
+
+//-----------------------------------------------------------------------------
+//  #####                 #                                              #  
+//   #   #                #                                              #  
+//   #   #   ###   ####   #       ###   #    #  ### ##    ###   ####   #####
+//   #   #  #   #  #   #  #      #   #  #   #   #  #  #  #   #  #   #    #  
+//   #   #  #####  #   #  #      #   #   # #    #  #  #  #####  #   #    #  
+//   #   #  #      ####   #   #  #   #    #     #  #  #  #      #   #    #  
+//  #####    ###   #       ###    ###    #      #  #  #   ###   #   #     ##
+//                 #                    #
+//-----------------------------------------------------------------------------
+https://dashboard.heroku.com
+https://www.small.pl/
+
+module.exports = {
+    db: `mongodb+srv://${process.env.MONGO_DB_USERNAME}:${process.env.MONGO_DB_PASSWORD}@cluster0.ddge33u.mongodb.net/serwer?retryWrites=true&w=majority`,
+    keySession: [`${process.env.KEY_SESSION}`],
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  };
+
+robisz sobie plik .env (i tego faktycznie nie wrzucasz na githuba) i ściągasz tą paczkę https://www.npmjs.com/package/dotenv
+heroku masz to na stronie z aplikacją = settings => config vars
 
 
 
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+Do przetestowania wproadzancyh tekstów jest:
+https://github.com/minimaxir/big-list-of-naughty-strings/blob/master/blns.txt
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -1665,7 +2033,7 @@ const url = `http://localhost:3000/?` + params;
 //  #  ##  #####   ###    #        #   ###
 //  #  ##  #          #   #        #      #
 //  #   #   ###    ###     ##  #   #   ###
-//                               ###
+//                              ###
 /*
  _   _                _       ___   _____         .
 | \ | |              | |     |_  | / ___ \        .

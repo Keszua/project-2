@@ -67,7 +67,7 @@ exit - kończy działanie konsoli
 //------------------------------------------------------------
 //------------------------------------------------------------
 //------------------------------------------------------------
-HTML
+Lista:
 
 <ul> 
  <li>  //list item (wypunktowane)
@@ -77,6 +77,16 @@ HTML
  <li>  //list item (numerowane)
 <ol>
 
+//------------------------------------------------------------
+Tabela:
+
+- table
+    - thead
+        -tr
+            -td/th
+    - tbody
+        - tr
+            -td/th
 
 //------------------------------------------------------------
 //------------------------------------------------------------
@@ -1075,53 +1085,6 @@ Frameworki Front endowe:
 
 
 
-
-//   #     #    #    ###   #   #  #       #    ####
-//  # #    ##   #   #   #  #   #  #      # #   #   #
-// #   #   # #  #  #       #   #  #     #   #  #   #
-// #####   #  # #  #  ###  #   #  #     #####  ####
-// #   #   #   ##   #   #  #   #  #     #   #  #  #
-// #   #   #    #    ###    ####  ####  #   #  #   #
-//                           
-//                          
-
-Skopiować 4 pliki konfiguracyjne
-
-//W konsoli będąc w pliku projektu, wywołać polecenie:
-? npm install
-
-
-Trzeba przygotować katalog z plikami źrudłowymi aplikacji
-//Folder o nazwie "app"
-// Tworze plik kompnentu: "app.componet.ts"
-//W pliku imporujemy klasę komponent 
-import {Component} from '@angular/core';
-//Tworze dekorator:
-@Component({
-    selector: 'my-app',
-    template: '<h2>To jest własny kompnent!</h2>'
-})
-// i klasę komponent:
-export class AppComponent {
-}
-
-// W folderze app tworze plik główny 'main.ts'
-// w którym importuje 'bootstrap' odpowiadajacy za start całej aplikacji
-import {bootstrap} from '@angular/platform-browser-dynamic';
-// Importujemy komponent 
-import {AppComponent} from './app.componet';
-//Teraz bootstrap przyjmuje za argument klasę komponentu
-bootstrap(AppComponent);
-
-//W folderze projektu wklejam plik index.html i style.css 
-
-
-
-//Kopmilowanie plikow robie w wierszu polecen za pomoca polecenia:
-> npm start
-
-//Teraz zamiast strony, trzeba załoadować: 
-http://localhost:3000
 
 
 

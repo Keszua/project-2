@@ -46,3 +46,5 @@ app.get("/", (req, res) => {
 app.listen(3000, () => {
 	console.log("Start na 3000");
 });
+
+http://51.77.59.63:30025/

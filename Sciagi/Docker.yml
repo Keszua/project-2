@@ -2226,6 +2226,9 @@ kubectl get secret nazwaNaszegoSecreta -o yaml
 kubectl describe secret nazwaNaszegoSecreta
 # bedzie tu informacja podana w bajtach
 
+# kasowanie
+kubectl delete secret nazwaNaszegoSecreta
+
 # Zastosowanie Secret w Pod:
 # Dla odczytu jednej wartości z ConfigMap:
 spec.containers[].envFrom:
@@ -2933,7 +2936,14 @@ kubectl get nodes --sort-by= .status.capacity.cpu
 
 
 
-
+#--------------------------------------------------------------------------------------------------
+#  #     #                       #              #
+#  ##   ##    #             #    #              #
+#  # # # #         ####          #  #   #   #   ####     ### 
+#  #  #  #   ##    #   #   ##    # #    #   #   #   #   #   #
+#  #     #    #    #   #    #    ##     #   #   #   #   #####
+#  #     #    #    #   #    #    # #    #   #   #   #   #    
+#  #     #   ###   #   #   ###   #  #    ####   ####     ### 
 #--------------------------------------------------------------------------------------------------
 #                          _             _
 #             _         _ ( )           ( )
@@ -2942,6 +2952,7 @@ kubectl get nodes --sort-by= .status.capacity.cpu
 # | ( ) ( ) || || ( ) || || |\`\ | (_) || |_) )(  ___/
 # (_) (_) (_)(_)(_) (_)(_)(_) (_)`\___/'(_,__/'`\____)
 #--------------------------------------------------------------------------------------------------
+
 MINIKUBE
 # Uruchomienie minikube na windowsie.
 # Trzeba odpalić CMD w trybie administratora i uruchomic polecenie: (zakładam ze mam zainstalowany hyperV)
@@ -3176,7 +3187,7 @@ curl https://localhost:6443 -k --key admin.key --cert admin.crt --cacert ca.crt
 
 #--------------------------------------------------------------------------------------------------
 kontenery do testów:
-kodekloud/random-error            # co akiś czas generuje kontener, który ma błąd
+kodekloud/random-error            # co jakiś czas generuje kontener, który ma błąd
 reporting-tool 
 
 

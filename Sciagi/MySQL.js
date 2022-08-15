@@ -37,7 +37,7 @@ soda -v
 //powiniśmy otrzymać informacje o wersji 
 
 
-// W przykładzie tworzymy pytania do quizu. takie pytani będzie skałdało się z 7 kolumn:
+// W przykładzie tworzymy pytania do quizu. takie pytania będzie skałdało się z 7 kolumn:
 // 1.id   2.treść   3.A   4.B   5.C   6.D   7.Poprawna odpowiedz
 
 //Podstawowe typy danych:
@@ -56,6 +56,11 @@ TIME - HH-MM-SS
 //Dla wszystkich Typów TEXT ustawić Metodę porównywania napisów utf8_polish_ci
 // Na dole, struktórę i sortowanie również ustawić na utf8_polish_ci
 
+cast (length AS decimal) / 60 // ┬ rzutowanie liczby int na "dziesiętną"
+length / 60.0                 // ┘ 
+round (cast(length AS decimal) / 60, 2) // zaokrąglenie
+
+
 klasa = encja      obiekt = instancja
 encja - zestaw atrybutów i metod obiektu
 instancja - jeden z reprezentantów klasy
@@ -63,30 +68,28 @@ instancja - jeden z reprezentantów klasy
 
 Jak wczytać bazę danych w konsoli, minuta 11 filmu: https://www.youtube.com/watch?v=SZD9_TtLtLE&t=193s
 
-mysql -u root -p   // logowanie się do bazy
-EXIT               // wyjście z bazy (wylogowanie)
-SHOW DATABASES;    // pokazuje dostępne biblioteki
+mysql -u root -p                   // logowanie się do bazy
+EXIT                               // wyjście z bazy (wylogowanie)
+SHOW DATABASES;                    // pokazuje dostępne biblioteki
 DROP DATABASE IF EXISTS nazwaBazy  // usuń bazę, jeśli istnieje
-DROP TABLE nazwaTabeli; // usówanie tabeli 
-CREATE DATABASE nazwaBazy // tworzenie nowej bazy
+DROP TABLE nazwaTabeli;            // usówanie tabeli 
+CREATE DATABASE nazwaBazy          // tworzenie nowej bazy
 CREATE TABLE nazwaTabeli  \n
   -> ( id_dzial INT NOT NULL PRIMARY KEY AUTO_INCREMENT
-  ->   nazwa VARCHR(30) UNIQUE   //UNIQUE zapewni, że nie może być takich samych 
+  ->   nazwa VARCHR(30) UNIQUE     //UNIQUE zapewni, że nie może być takich samych 
   -> );
-USE nazwaTabeli;          // wejście do tabeli
-SHOW TABLES;              // Pokazuej zawrtość tabeli w której jestesmy
-DESCRIBE nazwaTabeli      // wyświetli właściwości tabeli w formie tabeli   | Field | Type | Null | Key | Def |
+USE nazwaTabeli;                   // wejście do tabeli
+SHOW TABLES;                       // Pokazuej zawrtość tabeli w której jestesmy
+DESCRIBE nazwaTabeli               // wyświetli właściwości tabeli w formie tabeli   | Field | Type | Null | Key | Def |
 INSERT INTO nazwaTabeli (nazwa) VALUES ( 'bajki'), (druga_tabela)  // dodawanie nowych rekordów
-SET SESSION sql_mode='traditional';  // zabespiecza przed dodawaniem pustych pól
-DELETE FROM nazwaTabeli WHERE id_dzial=5;  //kasowanie rekordu
-ALTER TABLE nazwaTabeli ┬ ADD UNIQUE(pesel)  //nada key; UNI
+SET SESSION sql_mode='traditional';                          // zabespiecza przed dodawaniem pustych pól
+DELETE FROM nazwaTabeli WHERE id_dzial=5;                    // kasowanie rekordu
+ALTER TABLE nazwaTabeli ┬ ADD UNIQUE(pesel)                  // nada key; UNI
                         ├ CHANGE nazwaKolumny nowyTypPola
                         ├ ADD COLUMN nazwaKolumny typPola
-                        ├ RENAME TO 
+                        ├ RENAME TO nowaNazwaKolumny
                         └ DROP nazwaKolumny
 						
-ALTER TABLE staraNazwaKolumny RENAME TO nowaNazwaKolumny						
-
 
 
 // SQL = Structured Query Language (strukturalny język zapytań)
@@ -96,20 +99,12 @@ Rodzaje komend:
 - zmieniające (aktualizacja)	                UPDATE ... SET
 - usuwające   
      - kasowanie jednego lub wielu rekordów  =  DELETE FROM
-     - kasowanie wszsytkich REKORDÓW         =  TRUNCATE
+     - kasowanie wszystkich REKORDÓW         =  TRUNCATE          // szybkie polecenie, które usówa tabelę z bazy i tworzy nową, taką samą, pustą tabelę.
      - kasowanie STRUKTURY w bazie           =  DROP
 - zmieniajace strukturę tabel lub bazy
 
 //do szybkich testów, mozna skorzystać ze strony: https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_all
 
-
-Tworzenie tabel:
-//przykład pg:
-CREATE TABLE public.people (
-	id serial NOT NULL,
-	first_name varchar NOT NULL,
-	last_name varchar NOT NULL
-);
 
 
 
@@ -162,7 +157,7 @@ where
 
 			
 			
-//------------------------------------------------------------			
+//------------------------------------------------------------
 INSERT	//dodawanie nowych rekordów https://dev.mysql.com/doc/refman/8.0/en/insert.html
 	[INTO] tbl_name
 	[(col_name [, col_name] ...)]
@@ -261,23 +256,6 @@ curdate()  //tylko data
 curtime()  // tylko czas
 now() + INTERVAL 14 DAY   //wstaw datę i czas, jaka będzie dokładnie za 14 dni
 
-#----------------------------------------------------------------------------------------------
-// usuń cały wiersz z id=2
-DELETE FROM zamowienia WHERE idzamowienia=2  #UWAGA bez podania WHERE, usunięte zostaną wszystkie rekordy
-
-// to samo co wczesniej, ale mega szybko
-TRUNCATE TABLE zamowienia   #szybkie polecenie, któe nie usówa rekord po rekordzie, tylko usówa tabelę z bazy i tworzy nową, taką samą, pustą tabelę.
-
-// do DELETE najlepiej dodawać ORDER BY  oraz  LIMIT 
-
-//przykład pg:
-delete from animals where id = 5;
-
-
-drop table nazwa_tabeli; //usówa tabelę (czyli WSZYSTKO!), tabela znika!
-
-//przykład pg:
-drop table animals;
 
 #----------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------
@@ -302,3 +280,210 @@ https://www.php.net/manual/en/pdo.setattribute.php
 bit.ly/atrybutyPHP
 
 
+
+
+//-------------------------------------------------------------------------------------------------
+//  ####                      #                                   
+//  #   #                     #                                   
+//  #   #    ###     ###    #####    ####   # ###    ###     ###  
+//  ####    #   #   #         #     #   #   ##      #   #   #     
+//  #       #   #    ###      #     #   #   #       #####    ###  
+//  #       #   #       #     #      ####   #       #           # 
+//  #        ###     ###       ##       #   #        ###     ###  
+//                                  ####                          
+//-------------------------------------------------------------------------------------------------
+
+// Instalacja PostgreSQL https://www.postgresql.org/
+// mój posgres 123456
+// Pan Trevor proponuje DBeaver jako klient bazy  https://dbeaver.io/
+// Pan Rafał Mobilo proponuje pgAdmin
+
+// Kodowanie:
+// Po lewo: Servers -> PostgreSQL -> Databases -> postgres
+// Po prawo: Properties -> Definition -> Cllation -> English_United States.1252
+
+
+
+//-------------------------------------------------------------------------------------------------
+//OPERATORY pq:
+// =  <  > <=  >=   <>  !=  
+// AND  OR  NOT
+// BETWEEN           pomiedzy, np 2 BETWEEN 1 AND 3 
+// IN                zastępuje OR .. OR .. OR .. OR, np: IN ('G', 'PG', 'R')
+// NOT BETWEEN       
+// IS DISTINCT FROM 
+// IS NULL 
+
+
+// tworzenie nowej bazy
+CREATE DATABASE hotel_wawa WITH OWNER = postgres ENCODING = 'UTF8' CONNECTION LIMIT = -1;  COMMENT ON DATABASE hotel_wawa IS 'Databases for HotelApp';
+
+// Tworzenie bazy pg:
+CREATE DATABASE hotel_wawa
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    CONNECTION LIMIT = -1;
+COMMENT ON DATABASE hotel_wawa
+    IS 'Databases for HotelApp';
+
+// Tworzenie tabel pg:
+CREATE TABLE public.people (
+	listprace_id serial NOT NULL,
+	first_name varchar NOT NULL,
+	last_name varchar NOT NULL,
+	price numeric(10, 2) NOT NULL,
+	PRIMARY KEY (listprace_id)
+);
+
+CREATE TEMPORARY TABLE tymczasowa  // tabela tymczasowa, tlko na czas sesji
+(number )
+
+// tworzy nową tabelę na podstawie istniejącej
+SELECT * INTO my_actor FROM actor  
+
+// tworzy TYMCZASOWĄ nową tabelę na podstawie istniejącej
+SELECT * INTO TEMPORARY temp_actor FROM actor  
+
+// tworzy TYMCZASOWĄ nową tabelę na podstawie istniejącej 
+SELECT a.first_name, a.last_name, Count(*) INTO TEMPORARY temp_actor FROM actor AS a LEFT JOIN film_actor fa ON fa.actor_id = a.actor_id GROUP BY a.first_name, a.last_name;
+
+
+// typy danych https://www.postgresql.org/docs/14/datatype.html
+
+
+SELECT 
+*
+FROM customer AS c
+├ WHERE c.create_date >= '2006-02-14'                                // przeszukanie względem daty:
+├ WHERE c.first_name LIKE '%in%'                                     //  % zastępuje wszystkie znaki    _ wymaga jeden znak
+├ WHERE c.first_name LIKE 'J%' OR c.first_name LIKE 'R%'  
+├ WHERE c.store_id = 1 AND (c.first_name LIKE 'J%' OR c.first_name LIKE 'R%')  
+└ LIMIT 10 OFFSET 0                    
+
+
+
+DISTINCT                     // bez duplikatów        np: SELECT DISTINCT country FROM customer_list
+
+LIMIT 10 OFFSET 0            // paginacja             np: SELECT * FROM customer_list LIMIT 10 OFFSET 0
+
+ORDER BY                     // kolejnosć ASC rosnąco (domyślnie)  DESC     np: SELECT * FROM customer_list ORDER BY title DESC, city ASC
+
+// Funkcje agregujące https://www.postgresql.org/docs/current/functions-aggregate.html
+
+SELECT
+	COUNT(*) AS "Record number",
+	MIN(price) AS "Minimalna cena",
+	MAX(price) AS "Minimalna cena",
+	SUM(length) AS "Całkowity czas trwania filmów",
+	AVG(length) AS "Średni czas trwania filmu",
+	STRING_AGG(title, ';') AS "Długi napis z połaczoych tytułów, rozdzielony średnikiem"
+FROM public.film_list
+
+// grupowanie według kategorii
+SELECT
+    category ,                         // nazwa kolumny
+	COUNT(*) AS "Record number",       // przykładowea inna funkcje
+FROM public.film_list
+GROUP BY category                      // pogrupuj według czego ma pogrupować
+
+// grupowanie według kategorii i ceny + poukładaj alfabetycznie i cenowo
+SELECT
+    category,
+    price,
+	COUNT(*) AS "Record number",
+	AVG(length) AS "Średni czas trwania filmu",
+FROM public.film_list
+// WHERE category LIKE 'A%' OR category LIKE 'C%'   // opcjonalnie, wyśweitlc tylko kategorie na A lub C
+GROUP BY category, price
+HAVING AVG(length) > 110               // wyliczony średni czas ma byc większy od 110
+ORDER BY category, price               // poukładaj 
+
+
+SELECT 
+	return_date,
+	CASE
+		WHEN return_date IS NULL THEN 'Nie oddano'
+	    ELSE CAST(return_date AS CHAR(10))
+	END AS "Data zwrotu",
+	COALESCE(CAST(return_date AS CHAR(10)), 'Nie oddano') AS "Data zwrotu 2"   // COALESCE - zwraca wartość, gdy nie jest NULL, A gdy jest, to zwróci drugi argument
+FROM rental
+WHERE rental_date >= '2005-08-23 22:26:47'
+ORDER BY rental_date
+
+
+// Funkcje tekstowe  https://www.postgresql.org/docs/14/functions-string.html
+SELECT
+	LOWER (title) AS Film_title,                 // wypisze małymi literami
+	UPPER (title) AS Film_title,                 // wypisze WIELKIMI literami
+	length,
+    REPEAT('*', length / 10) AS "długość filmu", // jaki znak ma być owtarzay, ile razy
+	category,
+    CONCAT(title, ' (', category, ')') AS "Tytył i kategoria",    // łączy stringi/napisy
+	CONCAT( TRIM(title), ' (', category, ')') AS "Tytył i kategoria", // TRIM usówa niepotrzebne białe znaki
+	SUBSTRING(category FROM 1 FOR 2)             // ┬ wypisze tylko 2 pierwsze litery
+	LEFT(category, 2),                           // ┘     skopiuj 2 znaki zaczynając od lewej
+	REVERSE(category),                           // wypisze od końca
+	LENGTH(category),                            // długośc napisu
+	POSITION('Sub' IN title),                    // zwróci pozycję napisu w danym tekście
+FROM film_list
+WHERE
+	POSITION('Sub' IN title) > 0                 // wypisze tylko te rekordy, gdzie występuje fragment 'Sub'
+
+
+// Funkcje daty i czasu  https://www.postgresql.org/docs/14/functions-datetime.html
+// date                 '2001-09-28'             - tylko data
+// time                 '04:00:00'               - tylko godzina
+// timestamp            '2001-09-28 01:00'       - data i godzina
+// interval                                      - ile to trwało w dniach   
+
+SELECT 
+	NOW()                                        // ┬ "2022-08-10 17:34:35.743395+02"
+	CURRENT_TIMESTAMP,                           // ┘
+	NOW()::DATE,                                 // ┬ "2022-08-10"
+	CURRENT_DATE,                                // ┘
+	NOW()::TIME,                                 // "17:35:55.291726"
+	CURRENT_TIME,                                // "17:40:31.379694+02:00"
+	DATE_TRUNC('day', rental_date),              // zaokrąglij do: 'hour' | 'day' | 'month' | 'year'
+	DATE_TRUNC('day', rental_date),              // ┬ wyodrębnij tylko: 'hour' | 'day' | 'dow' | 'month' | 'year'
+	EXTRACT('day' FROM rental_date),             // ┘
+	rental_date + INTERVAL '3 days',             // wypisze date i godzine, 3 dni po wyporzyczeniu 
+	(rental_date + INTERVAL '3 days')::DATE,     // wypisze date, 3 dni po wyporzyczeniu 
+	AGE(return_date, rental_date),               // wypisze czas trwania wyporzyczenia
+    DATE '2030-05-01',							 // aby podać ręcznie datę
+
+
+
+SELECT 
+	c.first_name, c.last_name,
+	a.address, a.district,
+	ci.city,
+	co.country
+FROM customer AS c 
+INNER JOIN address AS a ON c.address_id = a.address_id 
+INNER JOIN city AS ci ON ci.city_id = a.city_id
+INNER JOIN country AS co ON co.country_id = ci.country_id
+WHERE c.first_name = 'Mary' AND c.last_name = 'Smith'
+
+UNION ALL                                        // łączy podzapytania
+
+// Tworzenie widoku
+CREATE VIEW custormer_address AS
+
+// dodaj rekord
+INSERT INTO actor(first_name, last_name)
+VALUES ('Amy', 'Adams'), ('Anna', 'Maj')
+RETURNING actor_id                               // zwróci ID stworzonych rekordów
+
+// dodaj rekordy z innej tabeli
+INSERT INTO actor
+SELECT * FROM film_actor
+
+
+UPDATE actor 
+	SET first_name = 'Jolie', last_name = 'Angelina'
+WHERE actor_id = 201
+
+DELETE FROM actor WHERE actor_id = 202;          // usównanie rekrdu
+
+DROP TABLE my_actor                              // usówanie całej tabeli

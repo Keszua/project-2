@@ -104,6 +104,8 @@ cp ./*1*  ..Tydzien         # kopiowanie tyko tego, co w nazwie ma jedynkę, tez
 cp * /studiuje\  IT/        # skopiuj wszystko ze studiuje do IT
 cp * /studiuje\  IT/ -R     # skopiuj wszystko ze studiuje do IT z podkatalogami
 
+pbcopy < /plik.pub          # kopiowanie zawartości pliku do showka
+
 ln źródło cel               # tworzenie linku, tak samo jak przy kopiowaniu. Zwiekszy się licznik dowiązania (linki twarde)
 ln -s /tmp/new_lindex ~my_copy.txt //link symboliczny pomiedzy dyskami (filesystemami, podgląd przez df)
 

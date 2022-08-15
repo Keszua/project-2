@@ -21,7 +21,7 @@ Object.freeze(obj); //zamrożenie, nie można zmieniać wartości we wwłaściwo
 
 
 
-Literał obiektowy:
+// Literał obiektowy:
 var obj = {
 	właściwość : wartosć,
 	właściwość : wartosć,

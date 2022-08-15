@@ -1,0 +1,52 @@
+.cookie-preview {
+    width: 601px;
+    height: 640px;   
+    /* background: url("/assets/images/chockolate.png"), url("/assets/images/empty-dark.png");  To się generuje w cookie-preview.hbs */
+}
+
+
+.error {
+    border: 1px solid red;
+    padding: 15px;
+    background-color: #fcc;
+}
+
+.success {
+    border: 1px solid green;
+    padding: 15px;
+    background-color: #beb;
+}
+
+.btn {
+    background: #b0a797;
+    color: black;
+    text-decoration: none;
+    padding: 5px;
+    border: 1px solid #463412;
+    font-weight: bold;
+    margin: 3px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.btn-small {
+    padding: 0 5px;
+    margin: 0;
+}
+
+.btn-disabled {
+    background: #585858;
+    color: white;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.btn-big {
+    font-size: 120%;
+    padding: 10px 20px;
+}
+
+.cart-img {
+    width: 32px;
+    vertical-align: middle;
+}
