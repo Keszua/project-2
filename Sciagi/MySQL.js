@@ -56,6 +56,18 @@ TIME - HH-MM-SS
 //Dla wszystkich Typów TEXT ustawić Metodę porównywania napisów utf8_polish_ci
 // Na dole, struktórę i sortowanie również ustawić na utf8_polish_ci
 
+//Kolejność wykonywania poleceń
+FROM 
+WHERE      // filtruje po wieszach
+GROUP BY
+HAVING     // filtruje po grupach wierszy, np. HAVING SUM (amount) > 200;
+SELECT
+DISTINCT
+ORDR BY 
+LIMIT
+
+
+
 cast (length AS decimal) / 60 // ┬ rzutowanie liczby int na "dziesiętną"
 length / 60.0                 // ┘ 
 round (cast(length AS decimal) / 60, 2) // zaokrąglenie
@@ -310,6 +322,8 @@ bit.ly/atrybutyPHP
 // AND  OR  NOT
 // BETWEEN           pomiedzy, np 2 BETWEEN 1 AND 3 
 // IN                zastępuje OR .. OR .. OR .. OR, np: IN ('G', 'PG', 'R')
+// ANY               zastępuje OR .. OR .. OR .. OR, np: wartosc >  ANY (21, 20, 30)
+// ALL               zastępuje AND .. AND .. AND,    np: wartosc >  ALL (21, 20, 30)
 // NOT BETWEEN       
 // IS DISTINCT FROM 
 // IS NULL 
