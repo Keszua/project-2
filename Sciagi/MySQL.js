@@ -306,48 +306,81 @@ bit.ly/atrybutyPHP
 npm i mysql2
 
 const mysql = require('mysql2/promise');
-(async() => {
-	//create the connection to database
-	const conn = await mysql.createConnection( {
-		host: 'localhost',
-		user: 'root',
-		//password: '',
-		//socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'  // Podobno tak jest w MAMP'ie.
-		database: 'test',
-		decimalNumbers: true, //liczby jako liczby, ale tracimy dokładność
-		//multipleStatments: true,
-		namePlaceholders: true, // aby działało przekazywanie argumentów z obiektu
-	});
+const {v4: uuid} = require('uuid');
+//const conn = await mysql.createConnection( { // pojedyncze połączenie
+const pool = await mysql.createPool( { // multi połączenie.
+	host: 'localhost',
+	user: 'root',
+	//password: '',
+	//socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'  // Podobno tak jest w MAMP'ie.
+	database: 'test',
+	decimalNumbers: true, //liczby jako liczby, ale tracimy dokładność albo bigNumberStrings: flase  (??chyba)
+	//multipleStatments: true,
+	namePlaceholders: true, // aby działało przekazywanie argumentów z obiektu
+});
+
+(async () => {
 
 	conn.query();   // starsza wersja do zapytań
 	conn.execute(); // nowsza wersja do zapytań (robi prepare statment)
+	pool.execute(); // dla multi połączenia
 
+	// pobieranie danych ------------------------------------------------------
 	const [results] = await conn.execute('SELECT * FROM `cars` WHERE `registrationNo` = "SJZ 44H"; ') 
-	console.log(results[0].firstRegistrationAt instanceof Date); // wyciągnięcie pola daty w formacie daty JS
+	console.log(results[0].firstRegistrationAt instanceof Date); // wyciągnięte pole daty w formacie daty JS
 
-	const regNo = 'WR 1001';
+	const regNo = 'WR 1001';  // hakowanie: do odczytu wszystkiego:  '" OR "" = ""';  '"; DROP TABLE `cars`; SELECT "';
 	const [results] = await conn.execute('SELECT * FROM `cars` WHERE `registrationNo` = ? AND `inny warunek` = ?;', [regNo, value2]); 
-	const [results] = await conn.execute('SELECT * FROM `cars` WHERE `registrationNo` = :zmiennaPierwsza AND `inny warunek` = :zmiennaKolejna AND `trzecia` = regNo;', {
+	const [results2] = await conn.execute('SELECT * FROM `cars` WHERE `registrationNo` = :zmiennaPierwsza AND `inny warunek` = :zmiennaKolejna AND `trzecia` = regNo;', {
 		zmiennaKolejna: 'jakaś warotść', 
 		zmiennaPierwsza: 'inna wartość',
 		regNo,
 	}); // wymagane namePlaceholders: true
 
-
+	// aktulizacja dancyh -----------------------------------------------------
 	const answer = await conn.execute('UPDATE `cars` SET `price` =  `price` + 100 WHERE `registrationNo` = "SJZ 44H"; ') // answer[0].affectedRows   - wyciąga ilość zmienionych
 	const {affectedRows} = (await conn.execute('UPDATE `cars` SET `price` =  `price` + 100 WHERE `registrationNo` = "SJZ 44H"; '))[0]; //destrukturyzacja która wyciąga ilość zmienionych
 	
-	const {insertId} = (await conn.execute('INSERT TO `cars` VALUES ("WRA 0001", "Mercedes", "AMG", "#e0e0c0 metalik", "2021-01-01", 200000); '))[0];
-	const {insertId} = (await conn.execute('INSERT TO `cars_place` (`carRegistronNo`, `placeId`) VALUES ("WRA 0001", "4ea23553-432e3baa2"); '))[0];
+	const {insertId}          = (await conn.execute('INSERT INTO `cars` VALUES ("WRA 0001", "Mercedes", "AMG", "#e0e0c0 metalik", "2021-01-01", 200000); '))[0];
+	const {insertId: insert2} = (await conn.execute('INSERT INTO `cars_place` (`carRegistronNo`, `placeId`) VALUES ("WRA 0001", "4ea23553-432e3baa2"); '))[0];
+	newUuId = uuid();  // wymagany import:  const {v4: uuid} = require('uuid');
+	const {insertId: insert3} = (await conn.execute('INSERT INTO `students` (`id`, `firstName`, `age`) VALUES (:id, :firstName, :age);', {
+		id: newUuId,
+		firstName: "WRA 0001",
+		age: "4ea23553-432e3baa2"
+	}))[0];
 
+
+	// usuwanie
+	const {affectedRows: deleteElement} = (await pool.execute('DELETE FROM `students` WHERE `age`< :age', {age: 18}))[0];
+
+	// dodanie wielu elementów: -----------------------------------------------
 	cosnt cars = [
 		{
-			registration
-		}
+			registrationNo: 'xxx1'
+			brans: 'xxx1'
+		},
+		{
+			registrationNo: 'xxx2'
+			brans: 'xxx2'
+		},
 	]
 
+	const statement = await conn.prepare('INSERT INTO `cars` VALUES(?, ?)');
+	try {
+		//const [results] = await statement.execute([1, 2]);
+		for (const car of cars) {
+			await await statement.execute(Object.values(car));
+		}
+	} finally {
+		statment.close();
+	}
 
-	await conn.end(); // zakończenie 
+
+
+
+
+	await conn.end(); // zakończenie, rozłączeni się z bazą  lub await pool.end();
 })();
 
 
