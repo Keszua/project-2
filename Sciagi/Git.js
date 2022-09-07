@@ -73,7 +73,8 @@ git config --list                       //wyświetli pełną konfigurację
 git remote show                         //sprawdz ścierzkę do repozytorium
 git config --get remote.origin.url      //sprawdz ścierzkę do konkretnego repozytorium
 git remote add nazwa linkDoRepo         // dodanie repozytorium
-
+git remote add origin https://github.com/Keszua/angular-recipe-book.git        // przykład
+git remote set-url origin https://github.com/Keszua/angular-recipe-book.git    // edycja url
 
 notepad .gitconfig      //aby podejżeć plik konfiguracyjny w notatniku (będąc w folderze głównym ~)
 cat .gitconfig          //aby podejżeć plik konfiguracyjny w konsoli (będąc w folderze głównym ~)

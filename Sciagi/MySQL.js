@@ -47,7 +47,7 @@ TEXT        // napis (do 65535 znaków)
 INT         // liczby całkowite (4B)
 FLOAT       // zmiennoprzecinkowe ()
 DOUBLE      // zmiennoprzecinkowe ()
-DATA        // w formacie YYYY-MM-DD
+DATE        // w formacie YYYY-MM-DD
 DATETIME    // data i godzina w formacie  YYYY-MM-DD HH:MM:SS ('Y-m-d H:i:s')
 TIMESTAMP   // automatycznie się aktualizuje po każdej zmianie rekordu (do śledzenia aktywności na koncie)
 TIME - HH-MM-SS
@@ -77,7 +77,7 @@ CREATE DATABASE nazwaBazy          // tworzenie nowej bazy
 CREATE TABLE nazwaTabeli  \n
   -> ( id_dzial INT NOT NULL PRIMARY KEY AUTO_INCREMENT
   ->   nazwa VARCHR(30) UNIQUE     //UNIQUE zapewni, że nie może być takich samych 
-  -> );
+  -> ) COLLATE='utf8mb4_unicode_ci';
 USE nazwaTabeli;                   // wejście do tabeli
 SHOW TABLES;                       // Pokazuej zawrtość tabeli w której jestesmy
 DESCRIBE nazwaTabeli               // wyświetli właściwości tabeli w formie tabeli   | Field | Type | Null | Key | Def |
@@ -279,6 +279,64 @@ Dokumentacja dla PDO:
 https://www.php.net/manual/en/pdo.setattribute.php
 bit.ly/atrybutyPHP
 
+
+
+//-------------------------------------------------------------------------------------------------
+//                                      #        ### 
+//                                      #       #   #
+//   ### ##    #    #    ###     ####   #           #
+//   #  #  #   #   #    #       #   #   #          #
+//   #  #  #    # #      ###    #   #   #         #
+//   #  #  #     #          #    ####   #   #    #
+//   #  #  #    #        ###        #    ###    #####
+//             #                    #
+
+npm i mysql2
+
+const mysql = require('mysql2/promise');
+(async() => {
+	//create the connection to database
+	const conn = await mysql.createConnection( {
+		host: 'localhost',
+		user: 'root',
+		//password: '',
+		//socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'  // Podobno tak jest w MAMP'ie.
+		database: 'test',
+		decimalNumbers: true, //liczby jako liczby, ale tracimy dokładność
+		//multipleStatments: true,
+		namePlaceholders: true, // aby działało przekazywanie argumentów z obiektu
+	});
+
+	conn.query();   // starsza wersja do zapytań
+	conn.execute(); // nowsza wersja do zapytań (robi prepare statment)
+
+	const [results] = await conn.execute('SELECT * FROM `cars` WHERE `registrationNo` = "SJZ 44H"; ') 
+	console.log(results[0].firstRegistrationAt instanceof Date); // wyciągnięcie pola daty w formacie daty JS
+
+	const regNo = 'WR 1001';
+	const [results] = await conn.execute('SELECT * FROM `cars` WHERE `registrationNo` = ? AND `inny warunek` = ?;', [regNo, value2]); 
+	const [results] = await conn.execute('SELECT * FROM `cars` WHERE `registrationNo` = :zmiennaPierwsza AND `inny warunek` = :zmiennaKolejna AND `trzecia` = regNo;', {
+		zmiennaKolejna: 'jakaś warotść', 
+		zmiennaPierwsza: 'inna wartość',
+		regNo,
+	}); // wymagane namePlaceholders: true
+
+
+	const answer = await conn.execute('UPDATE `cars` SET `price` =  `price` + 100 WHERE `registrationNo` = "SJZ 44H"; ') // answer[0].affectedRows   - wyciąga ilość zmienionych
+	const {affectedRows} = (await conn.execute('UPDATE `cars` SET `price` =  `price` + 100 WHERE `registrationNo` = "SJZ 44H"; '))[0]; //destrukturyzacja która wyciąga ilość zmienionych
+	
+	const {insertId} = (await conn.execute('INSERT TO `cars` VALUES ("WRA 0001", "Mercedes", "AMG", "#e0e0c0 metalik", "2021-01-01", 200000); '))[0];
+	const {insertId} = (await conn.execute('INSERT TO `cars_place` (`carRegistronNo`, `placeId`) VALUES ("WRA 0001", "4ea23553-432e3baa2"); '))[0];
+
+	cosnt cars = [
+		{
+			registration
+		}
+	]
+
+
+	await conn.end(); // zakończenie 
+})();
 
 
 
