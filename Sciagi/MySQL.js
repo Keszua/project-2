@@ -306,17 +306,18 @@ bit.ly/atrybutyPHP
 npm i mysql2
 
 const mysql = require('mysql2/promise');
-const {v4: uuid} = require('uuid');
+const {v4: uuid} = require('uuid');   //npm i uuid
 //const conn = await mysql.createConnection( { // pojedyncze połączenie
-const pool = await mysql.createPool( { // multi połączenie.
+const pool = mysql.createPool( { // multi połączenie.
 	host: 'localhost',
+	port: "3306",
 	user: 'root',
 	//password: '',
 	//socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'  // Podobno tak jest w MAMP'ie.
 	database: 'test',
 	decimalNumbers: true, //liczby jako liczby, ale tracimy dokładność albo bigNumberStrings: flase  (??chyba)
 	//multipleStatments: true,
-	namePlaceholders: true, // aby działało przekazywanie argumentów z obiektu
+	namedPlaceholders: true, // aby działało przekazywanie argumentów z obiektu
 });
 
 (async () => {
@@ -335,7 +336,7 @@ const pool = await mysql.createPool( { // multi połączenie.
 		zmiennaKolejna: 'jakaś warotść', 
 		zmiennaPierwsza: 'inna wartość',
 		regNo,
-	}); // wymagane namePlaceholders: true
+	}); // wymagane namedPlaceholders: true
 
 	// aktulizacja dancyh -----------------------------------------------------
 	const answer = await conn.execute('UPDATE `cars` SET `price` =  `price` + 100 WHERE `registrationNo` = "SJZ 44H"; ') // answer[0].affectedRows   - wyciąga ilość zmienionych

@@ -1,0 +1,60 @@
+//Moje ulubione ustawienie:
+{
+    "powermode.enabled": true,
+    "powermode.combo.threshold": 20,
+    "powermode.explosions.size": 16,
+    "powermode.combo.timeout": 6,
+    "powermode.combo.counterEnabled": "show",
+    "powermode.combo.timerEnabled": "show",
+    "powermode.shake.enabled": false
+}
+
+"https://i.gifer.com/XwYs.mp4"
+"powermode.explosions.customExplosions": [
+    "https://i.imgur.com/Rh9pk1e.gif",  //płomień
+    "https://i.imgur.com/CnBUEmi.gif",   // wybuchy
+    "https://i.imgur.com/f5DnYOn.gif",    //gejzer
+    "https://i.imgur.com/CY4UUfd.gif",   //popcorn
+    "https://i.imgur.com/iDcBoNm.gif",  //pikaczu
+    "https://i.gifer.com/XwYs.gif",  // smok
+    "https://media.tenor.com/images/b2a7da9dbd7861b2ddb62b8c24db46e2/tenor.gif", //fajna eksplozja
+    "https://i.pinimg.com/originals/88/9d/56/889d564456c7f1dffb2b80025410895b.gif", //kod
+    "https://i.makeagif.com/media/7-18-2017/BTy7_2.gif" //czerwony kod
+],
+
+"powermode.explosions.customCss": {
+    "left": "5px",
+    "top": "80px",
+    "z-index": 1
+},
+
+
+"powermode.explosions.customCss": {
+    "transform": "scale(1.5)",
+    "top": "-20px",
+    "z-index": 1,
+    "mix-blend-mode": "color-dodge"
+},
+
+
+// SMOK, KOD I WYBUCHY
+"powermode.enabled": true,
+"powermode.shake.enabled": false,
+"powermode.explosions.maxExplosions": 10, 
+"powermode.explosions.explosionOrder": "sequential",
+"powermode.explosions.gifMode": "continue",
+"powermode.explosions.duration": 1800,
+"powermode.explosions.frequency": 10,
+"powermode.combo.timeout": 4,
+"powermode.explosions.backgroundMode": "image",
+"powermode.explosions.customExplosions": [
+    "https://i.gifer.com/XwYs.gif",
+    "https://i.makeagif.com/media/7-18-2017/BTy7_2.gif",
+    "https://media.tenor.com/images/b2a7da9dbd7861b2ddb62b8c24db46e2/tenor.gif"
+],
+"powermode.explosions.customCss": {
+    "transform": "scale(1.8)",
+    "top": "-20px",
+    "z-index": 1,
+    "mix-blend-mode": "color-dodge"
+},
