@@ -1,0 +1,15 @@
+{
+  "name": "todo_mysql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Karol",
+  "license": "ISC",
+  "dependencies": {
+    "mysql2": "^2.3.3",
+    "uuid": "^9.0.0"
+  }
+}

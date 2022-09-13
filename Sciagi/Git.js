@@ -65,6 +65,7 @@ git config --global user.name "kmichalczyk"
 git config --global user.email "keszua@gmail.com" 
 git config --global core.editor         //pokaze ścieżkę do Visual Studio Code (lub innego edytora)
 git config --global core.editor notepad //aby przestawić domyślny edytor
+git config --global core.editor "'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"
            --local lub --system         //poziomy zmian
 git config --unset user.email           //usuwanie danych z pliku konfiguracyjnym (będąc w folderze głównym ~)
 git config --global --unset user.email  //usuwanie danych z pliku konfiguracyjnego
