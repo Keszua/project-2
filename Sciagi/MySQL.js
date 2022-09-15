@@ -593,3 +593,12 @@ WHERE actor_id = 201
 DELETE FROM actor WHERE actor_id = 202;          // usównanie rekrdu
 
 DROP TABLE my_actor                              // usówanie całej tabeli
+
+
+
+
+FUNKCJE
+CREATE OR REPLACE FUNCTION fn_name() RETURNS void AS
+'
+  -- SQL command
+' LANGUAGE SQL

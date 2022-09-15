@@ -9,7 +9,7 @@
 
 //Import pliku ze stylami:
  <link rel="stylesheet" href="style.css">
-
+//</link>
 
 //tło:
 	background-image: url('./media/img_hero.jpg');
@@ -23,7 +23,7 @@ margin:		// margines
 border:  // ramka
 padding: 0 30px 30px 0; // "otoczka" (góra, prawo, dol, lewo)
 
-
+overflow: scroll;        // belka do przesuwania (gdy okienko za małe)
 
 //Przykład, aby przycisk zmieniła sam siebie (swój wygląd):
 	const btn = document.querySelector(".button");
