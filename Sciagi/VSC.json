@@ -40,12 +40,13 @@
 // SMOK, KOD I WYBUCHY
 "powermode.enabled": true,
 "powermode.shake.enabled": false,
+"powermode.combo.threshold": 20,
+"powermode.combo.timeout": 4,
 "powermode.explosions.maxExplosions": 10, 
 "powermode.explosions.explosionOrder": "sequential",
 "powermode.explosions.gifMode": "continue",
 "powermode.explosions.duration": 1800,
 "powermode.explosions.frequency": 10,
-"powermode.combo.timeout": 4,
 "powermode.explosions.backgroundMode": "image",
 "powermode.explosions.customExplosions": [
     "https://i.gifer.com/XwYs.gif",

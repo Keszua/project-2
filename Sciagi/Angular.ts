@@ -134,8 +134,8 @@ import { FormsModule } from '@angular/forms';
 
 // Directives
 *ngIf  
-<p *ngIf="serverCreated"> Wypisz ten paragref, gdy warunek jest prawdziwy </p>
-<p *ngIf="serverCreated; else innyElement"> Wypisz ten paragref, gdy warunek jest prawdziwy </p>
+<p *ngIf="serverCreated"> Wypisz ten paragraf, gdy warunek jest prawdziwy </p>
+<p *ngIf="serverCreated; else innyElement"> Wypisz ten paragraf, gdy warunek jest prawdziwy </p>
 
 // Przypisanie klasy w elemencie, gdy spełniony jakis warunek:
 <p 
@@ -154,13 +154,13 @@ import { FormsModule } from '@angular/forms';
 </ul>
 
 
-<ng-content></ng-content>   // jakiś hook, umożliwiajacy dzeidziczenie włąśicwości z rodzica ??  (Film 77 Angular - The Complete Guide (2022 Edition)
+<ng-content></ng-content>   // jakiś hook, umożliwiajacy dziedziczenie włąściwości z rodzica ??  (Film 77 Angular - The Complete Guide (2022 Edition)
 )
 
 
 
 //Lifecycle event sequence  - https://angular.io/guide/lifecycle-hooks
-1. constructor()             // wywoął się tylko raz
+1. constructor()             // wywoła się tylko raz
 2. ngOnChanges()             // na początku z pustymi argumantami. A puźniej przy każdej zmianie
 3. ngOnInit()                // wywoła się tylko raz
 
