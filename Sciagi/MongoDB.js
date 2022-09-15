@@ -1,32 +1,38 @@
-/*
-MongoDB jest nierelacyjną bazą danych.
-
-
-*/
-
-
-
+//MongoDB jest nierelacyjną bazą danych.
 
 
 // Instalacja
 1. Wejść na stronę  https://www.mongodb.com/download-center/community
-	zakładka: "Server" i tam przycisk "Download"
+	zakładka: "MongoDB Community Server" i tam przycisk "Download"
 2. Po ściągnięciu pliku, rozpoczynamy "standardową" instalację.
+	Odznaczyć "Install MongoD as a Service" - to jest opcja: uruchomiona baza cały czas
 	Proponowana wersja "Complete"
 	Scieżka z baza danych: C:\Program Files\MongoDB\Server\4.2\data\
 	Pozostawiamy zaznaczone "Install MongoDB Compass"
 
+	Gdyby były problemy z wersją 6: https://www.youtube.com/watch?v=oC6sKlhz0OE
+
+
+
 //Uruchomienie. 
-1. W konsoli wchodzimy w 
+1. W konsoli wchodzimy lub tam odpalamy konsolę
 	C:\Program Files\MongoDB\Server\4.2\bin
 //Uruchamiamy program poleceniem:
-	mongo 
+    mongo 
+// Kuba zwraca uwagę, aby wpisać:
+    mongod
+// powinien urychomić się serwer na porcie 27017
 
-	
+
 //Korzystanie z MongoDB w node:
 1. Zainstalować
 	npm install mongodb --save	
-	
+// kuba proponuje skrypt w package.json:
+"scripts": {
+    "start-mongo": "cd /d C:/Program Files/MongoDB/Server/5.0/bin && mongod.exe"
+},
+
+// jest jakis manager do uruchamiania mongo (coś jak Xampp): https://robomongo.org/
 	
 //korzystanie z MongoDB w kontenerze:
 // wejsc do kontenera 
@@ -38,16 +44,26 @@ mongo -u "sanjeev" -p "mypassword"
 docker exec -it idKontenera mongo -u "sanjeev" -p "mypassword"
 
 
-// polecenie db powinno zwrócić "test"
-use mydb	 //  podłączenie sie do tabeli(?)
+/*
+Podstawowe pojęcia:
+    Baza danych                           (tak samo jak w SQL)
+    Kolekcja: to zbiór dokumentów         (w SQL: tabela)
+    Dokument: to pojedynczy wpis, encja   (w SQL pojedyńczy rekord, encja)
+    Pole/właściwośc                       (w SQL pole/komórka)
+*/
+
+
+db           // zwrócić "test"
+use mydb	 // podłączenie sie do tabeli. Nawet jeśli ona nie istnieje
 show dbs     // pokazuje stworzone bazy (tabele)
-db.books.insert({"name": "Hary Potter"}) // stworzeniego kolekcji i dokumentu (?)
-db.books.find()                          //	wyszukaj wszystkie dokumenty
+db.createCollection('mega')             // tworze kolekcję
+db.mega.insert({"name": "Hary Potter"}) // stworzenie dokumentu (kolekcja nie musi istnieć)
+db.mega.find()                          // wyszukaj wszystkie dokumenty
+db.mega.find({_id: ObjectId("6320d83c3a471e53a3776bd6")}); //szukaj po _id
+db.mega.find({name: 'karol'})           // wyszukaj wszystkie 
+db.mega.findOne({name: 'karol'})        // zwróci obiekt lub null
 
 
-
-Dokument: to pojedynczy wpis (pojedyńczy rekord)
-Kolekcja: to zbiór dokumentów
 
 //WSTAWIANIE elementu "cars":
 	> db.cars.insertOne({brand: 'Daweoo', model: "Lanos'});
@@ -59,19 +75,22 @@ Kolekcja: to zbiór dokumentów
 
 	
 	
-
 //odpytywanie o elementy:
 	> db.cars.find()  //zwróci wszystkie elementy
 	// { "_id" : ObjectId("5e04a518a273d3cf92ccd3fb"), "brand" : "Daewoo", "model" : "Lanos" }
 	> db.cars.find({brand: "Polonez"}) // wyszukuje tylko podane elemeny z takim kluczem
 	> db.cars.find({_id: ObjectId('5e04a518a273d3cf92ccd3fb')}) //zwróci elemnt o podanym kluczu Id
-	> db.clients.find({age: {$gt: 30}})  //$gt - większe niż
-	> db.clients.find({age: {$gte: 30}})  //$gt - większe i równe od
-	> db.clients.find({age: {$lt: 30}})  //$lt - mniejsze niż
+	> db.clients.find({age: {$eq: 30}})  //$eq - =  jest równy
+	> db.clients.find({age: {$ne: 30}})  //$ne - <> rózne od
+	> db.clients.find({age: {$gt: 30}})  //$gt - >  większe niż
+	> db.clients.find({age: {$lt: 30}})  //$lt - <  mniejsze niż
+	> db.clients.find({age: {$gte: 30}}) //$gte- >= większe lub równe od
+	> db.clients.find({age: {$lte: 30}}) //$lte- >= mniejsze lub równe od
 	> db.clients.find({age: {$in: [25, 31, 99]}})  //$in - zawiera jeden z elementów
 	> db.clients.find({age: {$nin: [25, 31, 99]}})  //$nin - elementy, któe nei zawierają żadengo z elementów
 	> db.clients.find({age: {$gt:30, $lt: 50}})  //z zakresu od, do (większe od I mniejsze niż)
-	> db.clients.find({$or: [{age: {$gt:25}}, {active: true}]})  //LUB  zawiera jeden z elementów
+	> db.clients.find({$or:  [{age: {$gt:25}}, {active: true}]})  //OR (LUB)  zawiera jeden z elementów
+	> db.clients.find({$and: [{age: {$gt:25}}, {active: true}]})  //AND (ORAZ) zawiera to i to
 	> db.clients.find({age: {$not: {$gt: 30}}})  // - nie większe niż 30
 	
 	
@@ -80,19 +99,54 @@ Kolekcja: to zbiór dokumentów
 	> db.clients.update({}, {$set: {active:true}}) 
 // pobiera wszystkie elementy i aktualizuje wszystkie pasujące (wszytkie active ustawi na true)
 	> db.clients.update({}, {$set: {active:true}}, {multi: true})
-//pobiera osoby ponizej 30 roku i każdemy z nich przypisuje active	
+//pobiera osoby ponizej 30 roku i każdemu z nich przypisuje active	
 	> db.clients.update({age: {$lt:30}}, {$set: {active:true}}, {multi: true})	
 	> db.clients.updateMany({age: {$lt:30}}, {$set: {active:true}}) //to samo co wyżej		
-	
+	> db.clients.updateOne({_id: ObjectId('5e04a518a273d3cf92ccd3fb')}, { $inc: {length: 10}} ) //zwieksz wartość o 10
+	> db.clients.updateOne({_id: ObjectId('5e04a518a273d3cf92ccd3fb')}, { $inc: {length: -10}} ) //zmniejsz wartość o 10
+//dodanie jednej właściwości
+	> db.clients.updateOne({_id: ObjectId('5e04a518a273d3cf92ccd3fb')}, {$set: {artist: "Koen"}}) 
+//usunięcie jednej właściwości
+	> db.clients.updateOne({_id: ObjectId('5e04a518a273d3cf92ccd3fb')}, {$unset: {artist: ""}}) // podajemy właściwość do usunięcia z wartością pusty string
+
+
+// ZASTĄP nowym obiektem. Usunie nie podane właściwości
+	.replaceOne(query, nowyDokument)  
+	> db.clients.replaceOne({_id: ObjectId('5e04a518a273d3cf92ccd3fb')}, {length: 320})  
+	.replaceMany(query, nowyDokument)
+	> db.clients.replaceMany(query, nowyDokument)
+
 //USUWANIE
 //usunięcie jednego wpisu o danym _id
 	> db.clients.deleteOne({_id: ObjectId('5e04a518a273d3cf92ccd3fb')}) 
 //usunięcie kilku, spełniajacych podane warunki:
 		> db.clients.deleteMany({active: false})
 	
-	
-	
-	
+//Praca z Datą i czasem. Zapisywan jest w formie ISODate() w strefie czssowej 0
+// dodaj własciwośc z aktualnym czasem
+	> db.mega.updateOne({_id: ObjectId('6320d83c3a471e53a3776bd6')}, { $set: {artist:"Koen"}, $currentDate: {updateAt: true} })	
+new Date("YYYY-MM-DD hh:mm") //wpisanie daty ręcznie
+	> db.mega.updateMany({_id: ObjectId('6320d83c3a471e53a3776bd6')}, { $set: {dataWydania: new Date('2022-09-01 11:30')} }) 
+// znajdz piosenki wydane przed datą:
+	> db.mega.find({dataWydania: {$lt: new Date('2022-09-10')} }) 
+"startedAt": { "$date": "2022-01-21T08:00:01Z" } // dodawanie daty przez kompass
+
+
+// Relacje. Coś w rodzaju JOIN:
+// zakłądam ze mam kolekcję artist
+	> db.mega.aggregate( [
+		{
+		  $lookup: {
+			  from: "artist",
+			  localField: "artistId",
+			  foreignField: "_id",
+			  as: "artist"
+			}
+	   }
+	 ] )
+
+
+
 // Zakładanie nowego projektu (baza lokalna):
 1. Tworze nowy,pusty folder.
 2. W tym folderze, w konsoli wywołuje polecenie:
@@ -101,7 +155,7 @@ Kolekcja: to zbiór dokumentów
 	> npm install mongodb --save	
 4. Tworzymy plik index.js i tworzymy najporstrzą bazę:
 	const mongo = require('mongodb');
-	const client = new mongo.MongoClient('mongodb://localhost:27017', {userNewUrlParser: true});
+	const client = new mongo.MongoClient('mongodb://localhost:27017', {useNewUrlParser: true});
 	client.connect(err => {
 		if(err) {
 			console.log("Błąd połączenia1", err);

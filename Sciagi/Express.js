@@ -98,7 +98,7 @@ http://www.phoneshop.com?product=iphone&size=32gb&color=white
 	> npm install -g express-generator
 3. Ustalamy, jaki wykorzystujemy szablon. (Zakładam że jestem w pliku nowego projektu):
 	> express --view=pug ./  // lub sama kropka
-4. Instalujemy styczki i programy, które zawarte są w pliku package.json za pomocą polecenia:
+4. Instalujemy wtyczki i programy, które zawarte są w pliku package.json za pomocą polecenia:
 	> npm install
 5. Uruchamiamy tryb DEGUG i uruchamiamy serwer 
 	> SET DEBUG=nazwaProjektu:*
@@ -106,7 +106,7 @@ http://www.phoneshop.com?product=iphone&size=32gb&color=white
 6. Na naszej preglądarce powina być dostępna strona pod adresem:
 	http://localhost:3000/
 7. Po wprowadzeniu zmian, serwer się nie restartuje. 
-	Aby zrobić auto retartowanie, można urzyć nodemona. 
+	Aby zrobić auto restartowanie, można urzyć nodemona. 
 	Należy zatrzyamć serwer (ctr+C) i wpisać:
 	> nodemon bin/www
 8. Aby wstawić projekt na Githuba, trzeba stworzyć nowy projekt na swoim koncie GitHub 
