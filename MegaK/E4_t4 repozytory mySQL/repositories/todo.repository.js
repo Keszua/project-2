@@ -46,7 +46,7 @@ class TodoRepository {
         return results.map(result => new TodoRecord(result));
     }
 
-    static async upodate(record) {
+    static async update(record) {
         TodoRepository._checkRecord(record);
 
         if (!record.id) {

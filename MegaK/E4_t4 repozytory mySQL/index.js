@@ -13,7 +13,7 @@ const { pool } = require("./utils/db");
 
     // const foundTodo = await TodoRecord.find('55c18844-e680-4ea5-b95c-1b17ddb82dc1');
     // foundTodo.title = "Zmienić treść na inną";
-    // await foundTodo.upodate()
+    // await foundTodo.update()
     // //await foundTodo.delete();
     // //console.log('foundTodo', foundTodo);
 
@@ -29,7 +29,7 @@ const { pool } = require("./utils/db");
     //const znalezione = await TodoRepository.find('przekazanypa3rametr');
     //console.log(znalezione);
     //znalezione.title = 'Nowa treść';
-    //await TodoRepository.upodate(znalezione);
+    //await TodoRepository.update(znalezione);
 
 
 

@@ -80,7 +80,7 @@ db.mega.findOne({name: 'karol'})        // zwróci obiekt lub null
 	// { "_id" : ObjectId("5e04a518a273d3cf92ccd3fb"), "brand" : "Daewoo", "model" : "Lanos" }
 	> db.cars.find({brand: "Polonez"}) // wyszukuje tylko podane elemeny z takim kluczem
 	> db.cars.find({_id: ObjectId('5e04a518a273d3cf92ccd3fb')}) //zwróci elemnt o podanym kluczu Id
-	> db.clients.find({age: {$eq: 30}})  //$eq - =  jest równy
+	> db.clients.find({age: {$eq: 30}})  //$eq - =  jest równy (dokładnie)
 	> db.clients.find({age: {$ne: 30}})  //$ne - <> rózne od
 	> db.clients.find({age: {$gt: 30}})  //$gt - >  większe niż
 	> db.clients.find({age: {$lt: 30}})  //$lt - <  mniejsze niż
@@ -189,8 +189,51 @@ new Date("YYYY-MM-DD hh:mm") //wpisanie daty ręcznie
 			client.close(); // kończenie połączenia
 		}
 	});
+//-------------------------------------------------------------------------------------------------
+4'. Podobny przykład, ale na promisach:
+const { MongoClient, ObjectId } = require('mongodb');
+const client = new MongoClient('mongodb://localhost:27017', {useNewUrlParser: true});
 
-	
+(async() => {
+    await client.connect();
+    console.log('Baza połaczona!');
+
+    const db = client.db('mega'); //wybieramy bazę
+    const artist = db.collection('artist'); // pobranie konkretnej kolekcji
+    console.log("Count of found:", await artist.countDocuments());
+    
+    const foundArtist1 = artist.find();
+    console.log("Found Artist 1:", await foundArtist1.toArray());
+
+    console.log('-'.repeat(50));
+    for await (const user of  db.collection('artist').find()) {
+        console.log(user);
+        console.log("id:", String(user._id));
+    }
+
+    console.log('.'.repeat(50));
+    const oneUser = await db.collection('artist').findOne({
+        _id: ObjectId('6322260e45563bb9b0769ba5'),
+    });
+    console.log("oneUser", oneUser);
+
+    console.log('>'.repeat(50));
+    const {modifiedCount} = await db.collection('artist').updateOne({
+        _id: ObjectId('63231422b0c3eb542d3aed40'),
+    }, {
+        $set: {
+            firstName: 'Karolina',
+            lastName: 'Gregiel',
+			startedAt: new Date(),   // aktualna data 
+        },
+    });
+    console.log("result", modifiedCount);
+
+
+    client.close(); // kończenie połączenia
+})();
+
+
 	
 // Zakładanie nowego projektu (baza w chmórze):
 1. Wchodzimy na https://www.mongodb.com/cloud/atlas i wybieramy "Start free"

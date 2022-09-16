@@ -1580,7 +1580,7 @@ app.get('/hi/:name', (req, res) => {
 //przykład ustawienia ciastka z imieniem na 7 dni:
 app.get('/hi/:name', (req, res) => {  //w przeglądarce:  http://localhost:3000/hi/karol
     const { name } = req.params;
-    const dt = new Date();
+    const dt = new Date();         // ustawienie roku: new Date().setFullYear(2023)
     dt.setDate(dt.getDate() + 7);  //aktualna data + 7 dni
     res.cookie('visitor_name', name, { expires: dt });
     res.send(`<h2>Witaj ${name} </h2>`);  //komunikat na stronie
