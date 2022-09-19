@@ -1,4 +1,19 @@
-﻿//Kurs Zelenta: https://www.youtube.com/watch?v=99JAI24Zd24&list=PLOYHgt8dIdoymv-Wzvs8M-OsKFD31VTVZ
+﻿/*********************************************
+ * kodowanie: utf8mb4_unicode_ci
+ * id: VARCHAR 36   CHAR(36) NOT NULL DEFAULT uuid(),
+  
+ CREATE TABLE `gifts` (
+	`id` VARCHAR(36) NOT NULL DEFAULT uuid(),
+	`name` VARCHAR(55) NOT NULL,
+	`count` INT(6) NOT NULL DEFAULT 0,
+	PRIMARY KEY (`id`)
+)
+COLLATE='utf8mb4_unicode_ci';
+
+ * 
+ */
+
+//Kurs Zelenta: https://www.youtube.com/watch?v=99JAI24Zd24&list=PLOYHgt8dIdoymv-Wzvs8M-OsKFD31VTVZ
 
 
 // Rekord (krotka) - def1: to pojedynczy wiersz w tabeli (np: zestaw cech danego ucznia)
