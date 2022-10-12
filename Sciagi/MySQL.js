@@ -91,7 +91,7 @@ CREATE TABLE nazwaTabeli  \n
   ->   nazwa VARCHR(30) UNIQUE     //UNIQUE zapewni, że nie może być takich samych 
   -> ) COLLATE='utf8mb4_unicode_ci';
 USE nazwaTabeli;                   // wejście do tabeli
-SHOW TABLES;                       // Pokazuej zawrtość tabeli w której jestesmy
+SHOW TABLES;                       // Pokazuje zawrtość tabeli w której jestesmy
 DESCRIBE nazwaTabeli               // wyświetli właściwości tabeli w formie tabeli   | Field | Type | Null | Key | Def |
 INSERT INTO nazwaTabeli (nazwa) VALUES ( 'bajki'), (druga_tabela)  // dodawanie nowych rekordów
 SET SESSION sql_mode='traditional';                          // zabespiecza przed dodawaniem pustych pól
@@ -550,7 +550,7 @@ SELECT
 	CURRENT_DATE,                                // ┘
 	NOW()::TIME,                                 // "17:35:55.291726"
 	CURRENT_TIME,                                // "17:40:31.379694+02:00"
-	DATE_TRUNC('day', rental_date),              // zaokrąglij do: 'hour' | 'day' | 'month' | 'year'
+	DATE_TRUNC('day', rental_date),              // zaokrąglij do: 'min' | 'hour' | 'day' | 'month' | 'year'
 	DATE_TRUNC('day', rental_date),              // ┬ wyodrębnij tylko: 'hour' | 'day' | 'dow' | 'month' | 'year'
 	EXTRACT('day' FROM rental_date),             // ┘
 	rental_date + INTERVAL '3 days',             // wypisze date i godzine, 3 dni po wyporzyczeniu 

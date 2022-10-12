@@ -37,6 +37,9 @@ npx create-react-app my-app --template typescript
 //Pomogło wywołanie polecenia: npm install -g create-react-app
 
 
+//Fajna wtyczka do efektór na napisach (najeżdzanie, pojawianie się) https://www.react-reveal.com/examples/common/zoom/
+
+
 //Pierwsza stronka zrobiona na React:
 //plik index.js 
 

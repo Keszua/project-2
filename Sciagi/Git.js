@@ -11,6 +11,9 @@ http://bitbucket.radwag.net:7990/projects/PRVNLIS/repos/pue_c32/commits?fbclid=I
 //strona do potrenowania komend
 http://onlywei.github.io/explain-git-with-d3/#branch
 
+// gra do potrenwoania gita
+https://learngitbranching.js.org/?locale=pl
+
 Aby sprawdzić, czy mamy zinstalowanego Git'a trzeba w wierszy poleceń spisać: git
 jeżeli wyświetlą sie jakies informacje inne niż błąd, to znaczy że git zainstalował sie na naszym kompie.
 
@@ -430,6 +433,7 @@ git revert -m 1 [commit-hash]       // cofnięcie "merga". Cyfra określa rodzic
 
 git mergetool                       // rozwiązywanei konfliktów gdy jest zainstalowany np: kdiff3. Gdy nie zainstlowany, to trzeba ręcznei otwierać pliki w dowolnym edytorze i szukać znaczników
 
+git reset --merged 7584u84          // Jeśli chce odłączyć gałąż (podaje id łączenia, oczywiście jeśli merdzowałem wcześniej z flagą --no-ff) 
 git reset --hard HEAD~              //Jeżeli nasza ostatnia rewizja jest mergem i chcemy wycofać nasz merge, ponieważ uznaliśmy, że coś poszło nie tak
 
 git cherry-pick 5a33dd3             //Cherry pick kopiuje tylko commit, który mu wskażemy, na początek brancha nad którym pracujemy.
