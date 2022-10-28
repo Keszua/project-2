@@ -1004,7 +1004,7 @@ for (let i=0; i<elements.length; i++) {
 	// trzeba zerknac na : https://kursjs.pl/kurs/dom/dom-tworzenie-i-usuwanie.php
 
 	//wstawienie tekstu wzgledem stworzonego obiektu:
-	onst text = document.createTextNode("Lubie placki");
+	const text = document.createTextNode("Lubie placki");
 	//div.before(text);		// przed obiektem
 	//div.after(text);		// za obiektem
 	//div.append(text);		// Na poczatku
@@ -1032,7 +1032,7 @@ for (let i=0; i<elements.length; i++) {
 	strong.remove();  //remove nie jest wspierane przez przegl�dark� IE
 
 
-//Przyk�ad:
+//Przyklad:
 //W index.html mamy:
 	<div class="div-test-remove">
 		<span>Element do usuniecia</span>
@@ -1050,7 +1050,7 @@ for (let i=0; i<elements.length; i++) {
 	});
 
 
-//Aby usun�� wszystkie dzieci danego elementu - czyli go wyczy�ci�, powinni�my wykona� p�tl� po jego dzieciach i wszystkie pousuwa�:
+//Aby usunac wszystkie dzieci danego elementu - czyli go wyczyscic, powinnismy wykonac p�tl� po jego dzieciach i wszystkie pousuwac:
 	const div = document.querySelector("#list");
 
 	while (div.firstChild) {
@@ -1134,10 +1134,10 @@ https://kursjs.pl/kurs/dom/dom-tworzenie-i-usuwanie.php#fragment
 	});
 
 //Aby wykryc czy dodatkowo zostal nacisniety jeden z funkcyjnych klawiszy mozemy skorzystac z dodatkowych wlasciwosci:
-e.altKey	Czy klawisz Alt jest nacisniety
-e.ctrlKey	Czy klawisz Ctrl jest nacisniety
-e.shiftKey	Czy klawisz Shift jest nacisniety
-e.keyCode	Zwraca kod klawisza. Przydatne przy sprawdzaniu zakresow klawiszy - np. klawisz to liczba
+e.altKey	// Czy klawisz Alt jest nacisniety
+e.ctrlKey	// Czy klawisz Ctrl jest nacisniety
+e.shiftKey	// Czy klawisz Shift jest nacisniety
+e.keyCode	// Zwraca kod klawisza. Przydatne przy sprawdzaniu zakresow klawiszy - np. klawisz to liczba
 
 //wykrycie nacisniecia klawiszSpecjalny+klawisz
 	const textarea = document.querySelector('#keyTest');
@@ -1168,13 +1168,13 @@ e.keyCode	Zwraca kod klawisza. Przydatne przy sprawdzaniu zakresow klawiszy - np
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //Myszka:
-mousedown 	- przycisk myszki zostal nacisniety
-mouseup 	- przycisk myszki zostal puszczony
-click 		- przycisk myszki zostal nacisniety i puszczony (czyli normalne klikniecie)
-dblclick 	- podwojne klikniecie
-mousemove 	- kursor porusza sie po...
-mouseover 	- kursor znalazl sie na elemencie
-mouseout 	- kursor opuscil dany element
+mousedown 	// - przycisk myszki zostal nacisniety
+mouseup 	// - przycisk myszki zostal puszczony
+click 		// - przycisk myszki zostal nacisniety i puszczony (czyli normalne klikniecie)
+dblclick 	// - podwojne klikniecie
+mousemove 	// - kursor porusza sie po...
+mouseover 	// - kursor znalazl sie na elemencie
+mouseout 	// - kursor opuscil dany element
 
 document.addEventListener("DOMContentLoaded", function() {
     element.addEventListener('mousedown', showMe);
@@ -1184,23 +1184,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 //wlaczamy mouseover - najechanie na element
-element.addEventListener('mouseover', function() {...});
+element.addEventListener('mouseover', function() {/*...*/});
 
 //mousemove - poruszanie sie po elemencie
-element.addEventListener('mousemove', function() {...});
+element.addEventListener('mousemove', function() {/*...*/});
 
 //mouseout - opuszczamy element
-element.addEventListener('mouseout', function() {...});
+element.addEventListener('mouseout', function() {/*...*/});
 
 
 //Pozycja kursora
 //Aby pobrac pozycje kursora na stronie mozemy skorzystac z 2 par wlasciwosci:
-e.pageX		Zwraca pozycje kursora od lewej krawedzi strony (wraz z przewinieciem)
-e.pageY		Zwraca pozycje kursora od gornej krawadzi strony (wraz z przewinieciem)
-e.clientX 	Zwraca pozycje kursora od gornej krawadzi widocznego obszaru strony (bez uwzglednienia pozycji przewiniecia strony)
-e.clientY	Zwraca pozycje kursora od lewej krawedzi widocznego obszaru strony (bez uwzglednienia pozycji przewiniecia strony)
-e.screenX	Zwraca pozycje kursora od lewej krawedzi ekranu
-e.screenY	Zwraca pozycje kursora od gornej krawedzi ekranu
+e.pageX		// Zwraca pozycje kursora od lewej krawedzi strony (wraz z przewinieciem)
+e.pageY		// Zwraca pozycje kursora od gornej krawadzi strony (wraz z przewinieciem)
+e.clientX 	// Zwraca pozycje kursora od gornej krawadzi widocznego obszaru strony (bez uwzglednienia pozycji przewiniecia strony)
+e.clientY	// Zwraca pozycje kursora od lewej krawedzi widocznego obszaru strony (bez uwzglednienia pozycji przewiniecia strony)
+e.screenX	// Zwraca pozycje kursora od lewej krawedzi ekranu
+e.screenY	// Zwraca pozycje kursora od gornej krawedzi ekranu
 
 
 //Wlasciwosci e.pageX i e.pageY zwracaja realna pozycje kursora od poczatku strony, 
@@ -1261,9 +1261,9 @@ div.addEventListener('click', function() {
 //Aby odczytac, ktory przycisk zostal nacisniety skorzystamy z wlasciwosci button.
 
 //Guziki myszki zostaly obdarowane odpowiednimi wartosciami:
-lewy guzik - 0
-srodkowy guzik - 1
-prawy guzik - 2
+// lewy guzik - 0
+// srodkowy guzik - 1
+// prawy guzik - 2
 
 	function buttonMouse(e) {
 		e.preventDefault();
@@ -1282,12 +1282,13 @@ prawy guzik - 2
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //Grafika
-
+/*
 width	szerokosc grafiki,
 height	wysokosc grafiki,
 alt		alternatywny opis grafiki (widoczny gdy sie nie wczyta),
 title	tekst, ktory pojawi sie po najechaniu kursorem na element,
 src		adres do grafiki
+*/
 
 <img src="./wietnam.jpg" class="img" alt="Kartofel w wietnamie" width="400" height="400" />
 

@@ -24,7 +24,7 @@ npm install -g @angular/cli
 
 
 // nowy projekt:
-npm i -g @angular/cli
+npm i -g @angular/cli // jeśli wcześniej nie został zainstalowany
 ng new my-dream-app --no-strict
 cd my-dream-app
 ng serve
@@ -104,7 +104,7 @@ export class AppComponent {
 
 //server.component.html
 <input type="text" class="from-control"
-  {input)="onUpdateServerName($event)"      // każde wpisanie czegoś, wywoła metodę
+  (input)="onUpdateServerName($event)"      // każde wpisanie czegoś, wywoła metodę
   #nowaNazwaValue                           // po tej nazwie odwołujemy się besposrednio do .value
 >
 </input>

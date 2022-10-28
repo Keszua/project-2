@@ -9,7 +9,7 @@ Do rozsyłania komunikatów: web Socket (czy jakoś tak)
 
 Piotrek poleca:  https://material-ui.com/
 
-eslint - sprawdza poprawnosc napisanego kodu, w tym sprawdza sredniki, niezadeklarowane zmienne, niedomkniete nawiasy...
+eslint - sprawdza poprawnosc napisanego kodu, w tym sprawdza sredniki, niezadeklarowane zmienne, niedomkniete nawiasy... stylowanie kodu
 
 SPA, single page application - aplikacje zbudowane z dużym naciskiem na frontend, 
 	w którym całość lub większość interakcji odbywa się tylko i wyłącznie po stronie klienta
