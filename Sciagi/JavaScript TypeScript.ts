@@ -82,6 +82,10 @@ interface ISpecialUserHelloResponse extends IUserHelloResponse {
     adminName?: string;   // dany element nie zawsze będzie dostępny (pytajnik przed dwukropkiem)
 }
 
+// nowy typ na podstawie interfejsum który wyklucza jakieś pola:
+type UserPostResponse = Omit<ISpecialUserHelloResponse, 'age' | 'isEnabled'>;
+
+
 //-----------------------------------------------------------
 //urzycie interfejsu:   (od tej pory, po Ctrl+space są podpowiedzi, co zawiera ten obiekt)
 fetch('/user-hello')

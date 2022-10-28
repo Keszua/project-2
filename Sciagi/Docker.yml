@@ -170,7 +170,7 @@ $ docker run -ti --name some-prestashop --network prestashop-net -e DB_SERVER=so
 docker run --network none nginx
 
 
-Nazwa klepu: Karol_test
+Nazwa sklepu: Karol_test
 Imie: Karol
 Nazwisko: M
 Email: k.michalczyk@humansoft.pl
@@ -190,7 +190,7 @@ docker image tag nazwa:zTagiem nazwaKontaDockerHub/nazwa:v001
 #  trzeba byc zalogowanym, te same dane co na https://hub.docker.com/ :
 docker login 
 docker image push nazwaKontaDockerHub/nazwaObrazu:zTagiem
-docker logout #  jezli chcemy sie wylogowac 
+docker logout #  jezeli chcemy sie wylogowac 
 
 #  pobranie ze swojego repo
 docker image pull nazwaKontaDockerHub/nazwaObrazu:zEwentualnymTagiem
@@ -2477,6 +2477,7 @@ spec:
 Microservices  # film 44 (Kubernetes for the Absolute Beginners - Hands-on)
 
 Tworzenie serwisu do głosowania
+https://github.com/dockersamples/example-voting-app
 
 # tworzymy kontener z redisem, port 6379 
 docker run -d --name=redis redis
@@ -2801,7 +2802,7 @@ kubectl create -f voting-app-service.yaml
     # Po kliknięciu do Endpoinds, powinno odesłać nas na stronę, gdzie będą widoczne rezultaty
 
 #--------------------------------------------------------------------------------------------------
-# Opis, jak wstawić projkt na AWS
+# Opis, jak wstawić projekt na AWS
 # Film 51 (Kubernetes for the Absolute Beginners - Hands-on)
 https://docs.aws.amazon.com/eks/latest/userguide/getting-started-console.html
 # 1. Po zalogowaniu się, przechodzimy do AWS Managment Console

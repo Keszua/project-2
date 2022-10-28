@@ -260,7 +260,6 @@ git blame <nazwa_pliku>             //Sprawdzenie, kto i kiedy wprowadził zmian
 */
 
 
-
 //KASOWANIE I PRZYWRACANIE
 git checkout -- nazwaPliku   //kopiuje pliki z przechowalni (stage) do katalogu roboczego (working directory).
 git checkout -- *.txt        //Przywróci wszytkie pliki tekstowe
@@ -304,6 +303,72 @@ git clean -nd                //polecenie testowe, pokaże, jakie pliki i foldery
 git clean -idf               //wyświetli się lista z możliwymi wyborami.
 
 
+
+git rebase --onto newPparent oldParent      // pozwala nam zmienić bieżącą gałąź rodzicielską "oldparent" na nową "newparent". 
+                                            // Nie podając trzeciego argumentu, pozostajemy na bierzącej gałęzi
+git rebase --onto newParent oldParent until // określmy, na jakiej zmianie chcemy zaończyć. until staje się naszym nowym HEAD
+git rebase master next-feature  /* przesuwa naszych zmian z gałęzi "branch" ponad zmiany z gałęzi "newparent"
+po wykonaniu komendy git rebase nasz HEAD wędruje zawsze na gałąź, która była zdefiniowana jako ostatni argument.
+otrzymamy:
+    Before                                After
+    A---B---C---F---G (HEAD master)       A---B---C---F---G (master)
+             \                                             \
+              D---E (next-feature)                          D'---E' (HEAD next-feature)            */
+
+git rebase master // Gdy jesteśmy na gałęzi, na której chcemy wykonać git rebase możemy pominąć drugi argument komendy, a efekt końcowy będzie taki sam.
+/*  Before                                After
+    A---B---C---F---G (master)            A---B---C---F---G (master)
+             \                                             \
+              D---E (HEAD next-feature)                     D'---E' (HEAD next-feature)            */
+
+git rebase --onto                 // możemy przesunąć się w dowolne miejsce gałęzi rodzicielskiej
+git rebase --onto F D             //─┐
+git rebase --onto F D my-branch   //─┴─ Przykładowo, przesuwam rozpoczęcie swojej gałęzi my-branch z C na F i usunąć zmianę D.
+/*  Before                                    After
+    A---B---C---F---G (branch)                A---B---C---F---G (branch)
+             \                                             \
+              D---E---H---I (HEAD my-branch)                E'---H'---I' (HEAD my-branch)          */
+// Przesuwamy zmiany dostępne z poziomu HEAD, czyli naszego my-branch, 
+// gdzie starą zmianą rodzicielską było D, na nową zmianę rodzicielską F. 
+// Możemy też powiedzieć, że zmieniamy rodzica zmiany E z D na F.
+// Taki sam efekt uzyskamy korzystając z polecenia:
+
+// Sytuacja wygląda inaczej, gdy zamiast HEAD, jako trzeci argument, podamy ostatnią zmianę. 
+// W naszym przypadku I. Wywołanie będzie wyglądać następująco:
+git rebase --onto F D I           //─┐
+git rebase --onto F D HEAD        //─┴─ zmieni rodzica zmiany E ze zmiany D na F. Dodatkowo przełączy nasz HEAD na zmianę I.
+/*  Before                                    After
+    A---B---C---F---G (branch)                A---B---C---F---G (branch)
+             \                                        |    \
+              D---E---H---I (HEAD my-branch)          |     E'---H'---I' (HEAD)
+                                                       \
+                                                        D---E---H---I (my-branch)                  */
+
+git rebase --onto F D H           //─┐ 
+git rebase --onto F D HEAD^       //─┼─ gdy chcemy na przełączyć HEAD na zmianę H
+git rebase --onto F D HEAD~       //─┤
+git rebase --onto F D HEAD~1      //─┘
+/*  Before                                    After
+    A---B---C---F---G (branch)                A---B---C---F---G (branch)
+             \                                        |    \
+              D---E---H---I (HEAD my-branch)          |     E'---H' (HEAD)
+                                                       \
+                                                        D---E---H---I (my-branch)                  */
+
+git rebase --onto B D             //─┐
+git rebase --onto B D my-branch   //─┴─ przenieś HEAD nad zmianę B, gdzie starą zmianą rodzicielską była zmiana D
+/*  Before                                 After
+    A---B---C---D---E---F (HEAD branch)    A---B---E'---F' (HEAD branch)                           */
+
+git rebase --onto B D E           // przenieś HEAD nad zmianę B, gdzie starą zmianą rodzicielską była zmiana D, ale tylko do zmiany E
+/* Dostaniemy wtedy nową gałąź tylko ze zmianą E wychodzącą od zmiany B:
+    Before                                 After
+    A---B---C---D---E---F (HEAD branch)    A---B---C---D---E---F (branch)
+                                                \
+                                                 E' (HEAD)                                         */
+    
+
+
 //ŁĄCZENIE COMMITÓW - w celu połaczenia cząstkowych commitów w jeden główny.
 //Opis i przykałd wzięty z: 
 // http://yarpo.pl/2015/10/12/git-rebase-scalanie-wielu-commitow-do-jednego-przed-mergem/?fbclid=IwAR34Sghb53bHCf11s3vJSmtblgVoLpP40-e2OioZKgodgdbB4pzdMk90It4
@@ -329,7 +394,10 @@ git clean -idf               //wyświetli się lista z możliwymi wyborami.
 git rebase --interactive {commit}   //pozwala wybrać commity które zostaną dołączone (lub modyfikować)
 git rebase --interactive '{hash}^'  //umożliwia edycję commitów do podanego hasha
 
-git rebase nazwaGalezi              //Prawdopodobnie zaciągnięcie zmian z "nazwaGalezi" do aktywnej gałęzi (jeszcze nie do końca rozgryzłem to polecenie)
+git rebase nazwaGalezi              // Zaciągnięcie zmian z "nazwaGalezi" do aktywnej gałęzi, bez scalania się z gałęzią (zadziałało mi trochę jak herry-pick)
+git rebase --skip                   //gdy po rozwiazaniu konfliktów, git nie widzi żadnych wprowadzonyc zmian
+//więcej o git rebase: https://womanonrails.com/pl/git-rebase</file>
+
 
 
 
@@ -431,7 +499,7 @@ git merge --continue                // po rozwiązaniu konfliktów zapisuje zmia
 git merge --revert                  // cofa wszystkie wprowadzone zmiany
 git revert -m 1 [commit-hash]       // cofnięcie "merga". Cyfra określa rodzica (1 lub 2)
 
-git mergetool                       // rozwiązywanei konfliktów gdy jest zainstalowany np: kdiff3. Gdy nie zainstlowany, to trzeba ręcznei otwierać pliki w dowolnym edytorze i szukać znaczników
+git mergetool                       // rozwiązywanie konfliktów gdy jest zainstalowany np: kdiff3. Gdy nie zainstlowany, to trzeba ręcznei otwierać pliki w dowolnym edytorze i szukać znaczników
 
 git reset --merged 7584u84          // Jeśli chce odłączyć gałąż (podaje id łączenia, oczywiście jeśli merdzowałem wcześniej z flagą --no-ff) 
 git reset --hard HEAD~              //Jeżeli nasza ostatnia rewizja jest mergem i chcemy wycofać nasz merge, ponieważ uznaliśmy, że coś poszło nie tak
