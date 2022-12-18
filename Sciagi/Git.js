@@ -19,6 +19,9 @@ jeżeli wyświetlą sie jakies informacje inne niż błąd, to znaczy że git za
 
 git --version //zwraca wersję programu
 
+//Ustawienie na CRLF (w linuksie jest tylko LF)
+git config --global core.autocrlf true
+
 W konsoli CMD albo Cmder działają polecenia windowsowe
 W konsoli Git Bash dziłaja polecenia Linuxowe
 
@@ -258,7 +261,6 @@ git blame <nazwa_pliku>             //Sprawdzenie, kto i kiedy wprowadził zmian
                      ---------------------
    
 */
-
 
 
 //KASOWANIE I PRZYWRACANIE

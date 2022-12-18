@@ -223,7 +223,7 @@ watch('.')
 
 // przykład z opcjami 
 watch('.' {
-        ignoreInitial: true,     // nie informuj o ostneijących plikach
+        ignoreInitial: true,     // nie informuj o istniejących plikach
         awaitWriteFinish: true,  // czekaj, aż plik zmieni się w całości
     })
     .on('change', path => console.log(`File ${path} has been changed`));
