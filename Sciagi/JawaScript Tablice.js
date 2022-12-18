@@ -406,6 +406,7 @@ const tabsl5 = tab.slice(-2);    //od końca  //= ['Monika', 'Magda']
 const tabsl6 = tab.slice(1, -1); //= ['Ania', 'Agnieszka', 'Monika'] czyli bez pierwszego i bez ostatniego
 //kopiowanie można zrobić za pomocą .slice:  (albo map(), patrz niżej)
 const tabsl7 = tab.slice(); // skopiuje całą tablicę
+const tabsl8 = strusturedClone(tab); // skopiuje całą głęboką strukturę
 
 
 // .splice  - modyfikuje tablicę i zwraca tablicę z usuniętymi elementami
@@ -551,6 +552,7 @@ console.log(tab); //[Marcin, Ania, Agnieszka, Piotrek]
 |                                                          |                                                           |                                                           |                                                           |
 // kopiowanie tablicy
 | const strCopy = str.split();                             |                                                           |                                                           |                                                           |
+| const strCopy = strusturedClone(orgStr);                 |                                                           |                                                           |                                                           |
 |                                                          |                                                           |                                                           |                                                           |
 // dzielenie tekstu
 const tablicaZeSlowami = "Jakiś tekst".split(" "); 

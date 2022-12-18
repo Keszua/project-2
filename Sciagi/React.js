@@ -39,6 +39,8 @@ npx create-react-app my-app --template typescript
 
 //Fajna wtyczka do efektór na napisach (najeżdzanie, pojawianie się) https://www.react-reveal.com/examples/common/zoom/
 
+// Fajną gierkę warior zrobił Wojciech Rosiński   https://warriors.networkmanager.pl/warriors/
+
 
 //Pierwsza stronka zrobiona na React:
 //plik index.js 
@@ -60,6 +62,32 @@ const footer = (
 const app = [header, main, footer]
  
 ReactDOM.render(app, document.getElementById('root'));
+
+//------------------------------------------------------------
+//------------------------------------------------------------
+//------------------------------------------------------------
+
+<p contentEditable="true"> 	Ten tekst można edytować </p>
+<p contentEditable={true}> 	Ten tekst można edytować </p>
+
+<SidebarMenu/>
+
+
+
+                                  |     const element = {
+const element = (                 |         type: 'div',
+    <div className='title'>       |         props: {
+        Cześć!                    |     	    className: 'title',
+    </div>                        |             children: 'Cześć!'
+);                                |         }
+                                  |     };
+
+
+
+
+
+
+
 
 //------------------------------------------------------------
 //------------------------------------------------------------
@@ -270,8 +298,8 @@ class Zegar extends Component {
 
 setTimeout(()=> console.log("minelo 5 sek"), 5000) //wysoła za 5 sekund
 
-const index = setInterval(() => { console.log("Hejka") }, 1000)  //wywołuje co sekundę
-clearInterval(index); //ady wyłączyć interwał
+const intervalId = setInterval(() => { console.log("Hejka") }, 1000)  //wywołuje co sekundę   lub this.intervalId = w komponencie klasowym
+clearInterval(intervalId); //ady wyłączyć interwał
 
 
 

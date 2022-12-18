@@ -1,7 +1,89 @@
 
-//Filmik z node
+// instalacja globalana TS
+npm install -g typescript
+
+//spawdzenie czy się zaistalwoał:
+tsc --version
+
+// kompilowanie .ts do .js poleceniem:
+tsc nazwapliku.ts
 
 
+// zakładanie nowego projektu
+npm init -y
+npm i express express-async-errors express-handlebars method-override mysql2 uuid
+npm i -D ts-node  ts-node-dev typescript @types/node @types/express @types/cookie-parser @types/method-override @types/uuid
+
+// plik ts confog można zrobić komenda: tsc --init
+tsconfig.json
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "preserveConstEnums": true,            // dla true: zachowuje enum jako obiekt
+        "sourceMap": true,                     // generuje mapę zależności - przydstane przy debugowaniu
+        "target": "es6",                       // możemy zdefiniować w jakiej wersji będzie plik wynikowy.
+        "downlevelIteration": true,            // 
+        "lib": ["dom", "es6", "dom.iterable"], // Tablica bibliotek.
+        "outDir": "./dist/",                   // To ścieżka w której umieszczone będę wynikowe pliki.
+        "experimentalDecorators": true,         // Gdy chcemy korzytać z dekoratorów
+        "emitDecoratorMetadata": true, 
+        "moduleResolution": "Node",            // żeby zadziałały modułu nołdowe (z niebieską ikonką)
+
+        "baseUrl": "./",                       // To ścieżka bazowa dla całej konfiguracji.
+        "removeComments": true,                // W czasie kompilacji do JavaScript usuwa komentarze.
+    },
+    "include": ["./src/**/*", "public"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
+}
+
+//-------------------------------------------------------------------------------------------------
+.vscode/tasks.json
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "typescript", 
+        "type": "typescript",
+        "tsconfig": "tsconfig.json",
+        "option": "watch",
+        "auto": true,
+        "problemMatcher": [
+            "$tsc-watch"
+        ],
+      }
+    ]
+  }
+
+
+  //zalecane zainstalowanie AutoLaunch
+
+//-------------------------------------------------------------------------------------------------
+// Aby uruchamiać w node TS, zainstalować:
+npm i -D ts-node  ts-node-dev typescript
+//Uruchomić plik główny poleceniem:
+ts-node indexedDB.ts
+
+//Można dodac skrypt:
+"scripts": {
+    "start": "ts-node index.ts",
+    "start:dev": "tsnd index.ts"
+},
+
+
+// Doinstalowanie typów dla TS:
+// Gdy na npm jest niebieks ikonka, to typy sa w zestawie
+// Gdy jest białą ikonka, to typy trzeba sobie dionstlwoać:
+// Instalacja typów przez: npm i -D @types/express  (E5 T3 D3 26:30)
+// zalecane doinstlowanie:
+npm i -D @types/node @types/express @types/cookie-parser
+
+
+
+//-------------------------------------------------------------------------------------------------
+// środowisko do testowania:
+https://www.typescriptlang.org/play
+
+//-------------------------------------------------------------------------------------------------
 //Typy w TS:									  
 boolean
 number
@@ -14,6 +96,10 @@ any - brak typowania
 void                                   // np:  function testf():void { } 
 null, undefined                        // np:  const mojaDana:  null = null;
 unknown                                // podobnie jak any, ale nie możemy puźneij tej zmiennej przypisać typu
+
+pair: [string, number] = ['Poniedziałek', 1];    //Tuple
+
+
 // rzutowanie:
   as string,   as number  itp...						  
 
@@ -66,8 +152,62 @@ const sendEmail = ( people: { name: string, age: number, email ?:string}[] ) => 
 			console.log(`send email to ${person.email}`);
 	})
 }
-  
-//-----------------------------------------------------------
+
+
+/*-----------------------------------------------------------
+   ###   ####   #   #  ### ##
+  #   #  #   #  #   #  #  #  #
+  #####  #   #  #   #  #  #  #
+  #      #   #  #   #  #  #  #
+   ###   #   #   ####  #  #  #
+*/
+
+enum Gender {
+    Woman = 1,
+    Man = 0,
+    Xyz = -1,
+}
+
+enum Gender {
+    Woman = 1,
+    Man,
+    Xyz,
+}
+console.log(Gender[Gender.Woman]);   //= "Woman"
+console.log(Gender[1]);              //= "Woman"
+
+// Pętla wypisujaca wsystkie elementy enuma (liczby i nazwy)
+for (const key in Gender) {
+    console.log(key);
+}
+
+// Pętla wypisujaca wszystkie tylko NAZWY
+for (const key in Gender) {
+    if(Number.isNaN(Number(key))) {
+        console.log(key);
+    }
+}
+
+// podobny efekt, stworzy tablicę z wsystkimi nazwami:
+const allPossibilities = Object
+    .keys(Gender)
+    .filter(key => Number.isNaN(Number(key)));
+console.log(allPossibilities);  //= ["Woman", "Man", "Xyz"]
+
+// sprawsz, czy element znajsuje sie w enumie
+
+
+
+/*-----------------------------------------------------------
+  ###           #                    ###
+   #            #                   #               #
+   #   ####   #####   ###   # ###   #      ###          ###   #    #
+   #   #   #    #    #   #  ##     ####   #   #    ##  #      #   # 
+   #   #   #    #    #####  #       #     #####     #   ###    # #
+   #   #   #    #    #      #       #     #         #      #    #
+  ###  #   #     ##   ###   #       #      ###   #  #   ###    #
+                                                  ##          #
+*/
 //Interfejsy									  
 enum UserType { admn, user, }
 interface IUserHelloResponse {
@@ -99,7 +239,25 @@ class User implements IUserHelloResponse {
     sayHello(anotherPerson: string) { console.log(this.name, 'say hello', anotherPerson); }
 }
 
-//-----------------------------------------------------------
+
+/*-----------------------------------------------------------
+*/
+Record<string, number>
+//taki typ dla obiektu, który ma klucz i wartosć, np:
+allBases: Record<string, number>
+
+//Record to typ podobny do Map (nie znam róznic)
+
+
+/*-----------------------------------------------------------
+         #
+         #
+   ###   #       ####    ###    ###
+  #   #  #           #  #      #
+  #      #       #####   ###    ###
+  #   #  #   #  #    #      #      #
+   ###    ###    ### #   ###    ###
+*/
 // prosta klasa
 class ProstaKlasa {   // z wielkiej litery
     x: number;        // bez letów i constów
@@ -229,7 +387,7 @@ console.log('Ruszam!');
 
 
 
-/*
+/*-----------------------------------------------------------
                              #             #
                       #      #             #
     ###    #     #         #####    ###    #              ###     ####     ###     ### 
@@ -249,5 +407,100 @@ console.log('Ruszam!');
 		case 'session': sessionStorage.setItem('client_panel', JSON.stringify(panel));  break;
 		default: break;
 	};
+
+
+/*-----------------------------------------------------------
+  #####          #                             #
+   #   #         #                             #
+   #   #   ###   #  #   ###   # ###   ####   #####   ###   # ###  #    #
+   #   #  #   #  # #   #   #  ##          #    #    #   #  ##     #   # 
+   #   #  #####  ##    #   #  #       #####    #    #   #  #       # #  
+   #   #  #      # #   #   #  #      #    #    #    #   #  #        #   
+  #####    ###   #  #   ###   #       ### #     ##   ###   #       #    
+                                                                  #     
+*/
+// Kuba pokazuje stosowanei dekoratorów, ale one są chyba sotępne tu: https://developapa.com/method-time-log/
+@measureTime()               // mierzy czas wykonania funkcji
+@description('array.push()') // 
+
+@allowListOnly(['Bartek', 'Kuba'])    // stosujemy w ciele klasy. Zastępuje seter. Wpisujemy argumenty, które może przyjac zmienna. Przykład w E5 T3 D4 28:00
+name: string = 'Bartek';
+
+
+// przykład tworzenia własengo dekoratora do property (wewnatrz klasy) w E5 T4 D4
+type HttpMetod = 'get' | 'post' | 'put' | 'patch' | 'delete';
+
+interface RestDecoratorInfo {
+    httpMethod: HttpMetod;
+    path: string;
+    propertyName: string;
+}
+
+export function rest(
+    httpMetod: HttpMetod, 
+    path: string,
+) {
+    return (target: MyRouter, propertyName: string): any => {  // target: na jakim obiekcie robimy ten dekorator.  propertyName - właściwość na jakiej wykonaliśmy dekorator
+        console.log("Test: dekorator dzała :)");
+
+        const ar: RestDecoratorInfo[] = Reflect.get(target, '_restApiCalls') ?? [];
+        //lub const ar = (Reflect.get(target, '_restApiCalls') ?? []) as RestDecoratorInfo[];
+        ar.push({ httpMethod, path, propertyName })
+        Reflect.set(target, '_restApiCalls', ar);   // Reflect aby ustawić pewne dane dodatkowe. W innym miejscu robi się Reflect.get(this, '_restApiCall')
+    }
+};
+
+
+
+
+/*-----------------------------------------------------------
+                                       #                                                   #  
+                                       #               #                                   #  
+   ###   #   #  ####    ###   # ###  #####                 ### ##   ####    ###   # ###  #####
+  #   #   # #   #   #  #   #  ##       #              ##   #  #  #  #   #  #   #  ##       #  
+  #####    #    #   #  #   #  #        #               #   #  #  #  #   #  #   #  #        #  
+  #       # #   ####   #   #  #        #               #   #  #  #  ####   #   #  #        #  
+   ###   #   #  #       ###   #         ##            ###  #  #  #  #       ###   #         ##
+                #                                                   #
+*/
+
+//metoda na zebranie wsytkich exportów do jednego pliku, to stworzenie w folderze types, pliku: indes.ts  (E5 T3 D3 9:00)
+// zakłądam ze mam kilka plików, a w każsym jeden export, np:   export ionterface SingleTodo ....
+// zawartość pliku index.ts
+export * from './gender';
+export * from './single-todo';
+// od tej pory, we wszytkich innych plikach moge zastowować imort:
+import {} from '.types/index';
+
+
+//czasami może być problem z impoortem niktórych paczek w zwykłych plikach, trzeba to zrobić tak:
+import * as express from 'express';
+import * as cookieParser from 'cookie-parser';
+// reszta normalnie, czyli:
+import {HomeRuter} from './router/home';
+
+// gdy korzystamy tylko z pojedynczych metod express, np express.Router(), to najlepiej zaimportować tak:
+import {Request, Response, Router} from 'express';
+// dla plików statycznych, trzeba zastowować rzutowanie nazwy:
+import {json, static as expresStatic} from 'express';
+
+
+
+
+
+
+//-----------------------------------------------------------
+// paczka, do obsługi dat
+instal date-fns
+
+import {addDays} from "date-fns";
+console.log(addDays(new Date(), 30));  // zwróci datę za 30 dni
+
+
+
+
+
+
+
 
 
