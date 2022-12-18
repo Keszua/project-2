@@ -522,6 +522,61 @@ const HookExample = () => {
     );
 }
 
+//Własny Hook
+import { useState, useEffect } from "react";
+type UseUsersReturn = [string[], (name:string) => void, boolean];
+const useUsers = (): UseUsersReturn => {
+    const [users, setUsers] = setState<string[]>([]);
+    const [isLoading, setIsLoading] = setState<boolean>(false);
+
+    const addUser = (name: string) => {
+        setIsLoading(true);
+        setTimeout( () => {
+            setUsers( prev => [...prev, name]);
+            setIsLoading(false);
+        }, 1000);
+    }
+
+    useEffect( () => {
+        setIsLoading(true);
+        setTimeout( () => {
+            setUsers(['Marcin', 'Marian', 'Mateusz', 'Monika']);
+            setIsLoading(false);
+        }, 2000);
+    }, [])
+
+    return [user, addUser, isLoading];
+}
+export { useUsers }
+
+// urzycie tego huka w komponencie:
+import React from "react";
+import { useUsers } from "./hook/setUsers" 
+const Users = () => {
+    const [users, addUser, isLoading] = useUsers();
+    const handleNewUser = () => {
+        const userName = prompt('Podaj imie');
+        if(!userName) return;
+        addUser(userName);
+    }
+    if(isLoading) return <h1>Trwa ładowanie...</h1>
+    return
+        <>
+            <h1>Userzy </h1>
+            <button onClick={handleNewUser}>Dodaj usera</button>
+            <ul>
+                {users.map( (user, index) => <li key={index}>{user}</li>)}
+            </ul>
+        </> 
+}
+export { Users }
+
+// urzywamy kompnentu standardowo, czyli:
+
+    <Users />
+
+
+
 /*-------------------------------------------------------------------------------------------------
 ####                           #     ###                   #                    #  
 #   #                          #    #   #                  #                    #  

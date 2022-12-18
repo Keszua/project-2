@@ -63,71 +63,71 @@ rwx
 │└ modyfikacja
 └ odczyt
 
-touch nowy.txt              # stworzenie nowego pliku (pustego pliku)
-chmod u g o                 # u-user g-group 0-other  a-all
-chmod a+rw nowy.txt         # nadanie uprawneiń odczytu i zapisu dla wszystkich "sekcji"
-chmod o-rw nowy.txt         # usuń uprwnienia dla pozostałych
-chmod o+r,g-rx              # mix uprawnień
-chmod 000 nowy.txt          # usuń wszystkie uprawnienia: --- --- ---
-chmod 741 nowy.txt          # nadanie: rwx r-- --x
+touch nowy.txt               # stworzenie nowego pliku (pustego pliku)
+chmod u g o                  # u-user g-group 0-other  a-all
+chmod a+rw nowy.txt          # nadanie uprawneiń odczytu i zapisu dla wszystkich "sekcji"
+chmod o-rw nowy.txt          # usuń uprwnienia dla pozostałych
+chmod o+r,g-rx               # mix uprawnień
+chmod 000 nowy.txt           # usuń wszystkie uprawnienia: --- --- ---
+chmod 741 nowy.txt           # nadanie: rwx r-- --x
 
-chown user1:group1 plik_1   # zmiana własiciela: uzytkownik który ma się stac własicielem pliku : grupa dla pliku (poprzedzic sudo)
-chgrp nazwaGrupy nazwaPliku # zmiana grupy dla pliku
-newgrp nazwaGrupy           # zmiana grupy na podstawowa (domyslna)
-umask                       # wyświetli domyślne uprawniena dla tworzonych plików, np: 0000 (uprawnienia 666, czyli rw-rw-rw), katalog domyśłnie ma 777
-umask 006                   # odejmij uprawnienia dla "inni" ( wzór:  666 -006 = 660)
+chown user1:group1 plik_1    # zmiana własiciela: uzytkownik który ma się stac własicielem pliku : grupa dla pliku (poprzedzic sudo)
+chgrp nazwaGrupy nazwaPliku  # zmiana grupy dla pliku
+newgrp nazwaGrupy            # zmiana grupy na podstawowa (domyslna)
+umask                        # wyświetli domyślne uprawniena dla tworzonych plików, np: 0000 (uprawnienia 666, czyli rw-rw-rw), katalog domyśłnie ma 777
+umask 006                    # odejmij uprawnienia dla "inni" ( wzór:  666 -006 = 660)
 
-groupadd                    # dodawanie nowej grupy (przez sudo)
-groupdel nazwagrupy         # usuwanie pustej grupy
+groupadd                     # dodawanie nowej grupy (przez sudo)
+groupdel nazwagrupy          # usuwanie pustej grupy
 
-mkdir nazwakatalogu         # zakładanie katalogu
-mkdir katalog1 katalog2     # zakałdamy dwa katalogi na raz 
-mkdir 'Nazwa ze spacjami'   # zakałdamy katalogi z nazwą ze spacją
-mkdir 'kata 1' 'kata 2'     # zakałdamy dwa katalogi na raz ze spacjami
-mkdir -m 777 NazwaKatalogu  //zakładznie katalogu + nadanie uprawnień
-mkdir $USER                 //stworzy katalog o nazwie użytkownika
-mkdir -p data/finance/2020  //tworzenie potoku katalogów (katalog w katalogu)
+mkdir nazwakatalogu          # zakładanie katalogu
+mkdir katalog1 katalog2      # zakałdamy dwa katalogi na raz 
+mkdir 'Nazwa ze spacjami'    # zakałdamy katalogi z nazwą ze spacją
+mkdir 'kata 1' 'kata 2'      # zakałdamy dwa katalogi na raz ze spacjami
+mkdir -m 777 NazwaKatalogu   # zakładznie katalogu + nadanie uprawnień
+mkdir $USER                  # stworzy katalog o nazwie użytkownika
+mkdir -p data/finance/2020   # tworzenie potoku katalogów (katalog w katalogu)
 
-rmdir pustyKatalog          # usuwanie pustego katalogu
-rm -r pełnyKatalog          # usówa katalog wraz z zawartością
-rm -ri pełnyKatalog         # usówa katalog interaktywnie, czyli pyta o każdy plik oddzielnie
-rm A*                       # usówa wszystko zaczynające sie od litery A
+rmdir pustyKatalog           # usuwanie pustego katalogu
+rm -r pełnyKatalog           # usówa katalog wraz z zawartością
+rm -ri pełnyKatalog          # usówa katalog interaktywnie, czyli pyta o każdy plik oddzielnie
+rm A*                        # usówa wszystko zaczynające sie od litery A
  
-mv nazwa NowaNazwa          # zmiana nazwy katalogu
-mv -b nazwa NowaNazwa       # zmiana nazwy katalogu z zabezpieczeniem (backup), gdyby już istniał taki plik (lub katalog)
-mv Kot/reksio.txt Pies/     # przenieś "reksia" z kota do psa
-mv Folder/* .               # kropka. oznacza "przenies do bierzączego"   */
+mv nazwa NowaNazwa           # zmiana nazwy katalogu
+mv -b nazwa NowaNazwa        # zmiana nazwy katalogu z zabezpieczeniem (backup), gdyby już istniał taki plik (lub katalog)
+mv Kot/reksio.txt Pies/      # przenieś "reksia" z kota do psa
+mv Folder/* .                # kropka. oznacza "przenies do bierzączego"   */
 
-cp file.txt copy.txt        # przygotowanie kopii pliku
-cp ./Temat*  ..Tydzien      # kopiowanie plików
-cp ./*1*  ..Tydzien         # kopiowanie tyko tego, co w nazwie ma jedynkę, tez na poczatku lub na końcu  */
-cp * /studiuje\  IT/        # skopiuj wszystko ze studiuje do IT
-cp * /studiuje\  IT/ -R     # skopiuj wszystko ze studiuje do IT z podkatalogami
+cp file.txt copy.txt         # przygotowanie kopii pliku
+cp ./Temat*  ..Tydzien       # kopiowanie plików
+cp ./*1*  ..Tydzien          # kopiowanie tyko tego, co w nazwie ma jedynkę, tez na poczatku lub na końcu  */
+cp * /studiuje\  IT/         # skopiuj wszystko ze studiuje do IT
+cp * /studiuje\  IT/ -R      # skopiuj wszystko ze studiuje do IT z podkatalogami
 
-pbcopy < /plik.pub          # kopiowanie zawartości pliku do showka
+pbcopy < /plik.pub           # kopiowanie zawartości pliku do showka
 
-ln źródło cel               # tworzenie linku, tak samo jak przy kopiowaniu. Zwiekszy się licznik dowiązania (linki twarde)
+ln źródło cel                # tworzenie linku, tak samo jak przy kopiowaniu. Zwiekszy się licznik dowiązania (linki twarde)
 ln -s /tmp/new_lindex ~my_copy.txt //link symboliczny pomiedzy dyskami (filesystemami, podgląd przez df)
 
 
-cat                         # Standardowe wejście (klawiatura) i standardowe wyjście (ekran). Aby przerwać Ctrl+d  
-cat plik.txt                # pokaż zawartość pliku tekstowego (wejście to plik a wyjscie to domślnie ekran)
-cat >> plik.txt             # po enterze, mozemy wpisywac zawartość do pliku. Aby przerwać wpisywanie Ctrl+C
+cat                          # Standardowe wejście (klawiatura) i standardowe wyjście (ekran). Aby przerwać Ctrl+d  
+cat plik.txt                 # pokaż zawartość pliku tekstowego (wejście to plik a wyjscie to domślnie ekran)
+cat >> plik.txt              # po enterze, mozemy wpisywac zawartość do pliku. Aby przerwać wpisywanie Ctrl+C
 cat /plik.txt > plikWyjsciowy.txt  # ustawienie wejścia jako plik, wyjścia jako plik. Wywołanie spowodowało skopiowanie zawartości pliku
 cat /plik.txt >> plikWyjsciowy.txt # Jeszcze raz dopisze to samo
 cat plik1 plik2 > plik_z_obiema_zawartosciami
-cat < plik.txt              # przekierowanie pliku na standardowe wyjście, czyli wyświetli zawartość pliku na ekranie
-ls /etc | cat > etc.txt     # wynik plecenia ls zostanie zapisany do pliku etc.txt
+cat < plik.txt               # przekierowanie pliku na standardowe wyjście, czyli wyświetli zawartość pliku na ekranie
+ls /etc | cat > etc.txt      # wynik plecenia ls zostanie zapisany do pliku etc.txt
 
 
-echo "tekst na ekran"       # wypisze tekst na ekranie
+echo "tekst na ekran"        # wypisze tekst na ekranie
 echo "To jest treść wiadomości" >> ./Bazy\ danych/Plik.txt  //wpisz treść do pliku 
 OPERATION='jakas tresc'
-echo $OPERATION             //= jakas tresc
-echo "Operacja $OPERATION"  //= Operacja jakas tresc
-echo 'Operacja $OPERATION'  //= Operacja $OPERATION    -nie podmienia zmiennych
-echo "Operacja \$OPERATION = $OPERATION"  //= Operacja $OPERATION = jakas tresc
-echo -e "jedn\tdwa\ttrzty"  # -e aby działay specjalne znaki, typu \t \n \a 
+echo $OPERATION              #= jakas tresc
+echo "Operacja $OPERATION"   #= Operacja jakas tresc
+echo 'Operacja $OPERATION'   #= Operacja $OPERATION    -nie podmienia zmiennych
+echo "Operacja \$OPERATION = $OPERATION"  #= Operacja $OPERATION = jakas tresc
+echo -e "jedn\tdwa\ttrzty"   # -e aby działay specjalne znaki, typu \t \n \a 
 echo -n . ; echo -n . ; echo -n . ; echo . //= ....    -n nie generuj nowej linii
 echo -n . ; sleep 1 ; echo -n . ; sleep 1 ;  echo -n . ; sleep 1 ;  echo . //= .... wypisze kropki co sekunde
 echo -n '|' ; sleep 1 ; echo -ne '\b/' ; sleep 1 ;  echo -n '\b-'. ; sleep 1 ;  echo -e '\b\\' //= wypisze "wiatraczek" co sekunde
@@ -148,97 +148,97 @@ passwd                       # ustaw nowe haslo na aktualnym koncie
 su                           # zmiana uzytkownika
 su root                      # przełącz się na administratora
 # po zalogowaniu jako admin, będzie na początku root@uzytkownik i # na końcu
-exit          # wylolgowanie się z admina
+exit                         # wylogowanie się z admina
 sudo adduser agata  //tworzenie nowego użytkownika (tylko admin może tworzyć nowych uzytkowników)
-su agata      # zaloguj sie na "agata"
-id            # wyświetla GRUPY
-whoami        # wyświetli, nazwę uzytkownika
-who           # wyświetli, kto jest zalogowany
-who --boot    # informacja, kiedy ten serwer był ostatanio restartowany
-logname       # wyświetli, nazwę uzytkownika, jak się zalogowałem (nie w momencie uruchamiania polecenia) 
-uptime        # kiedy system był ostatnio uruchomiony, jaki czas jest już online, ilu pracuje uzytkownikow, jakie obciążenie było w ciągu ostatniej minuty, pięciu i pietnastu
-groups        # do jakich grup nalezy uzytkownik
-sudo adduser agata wojtek # dodaj użytkownika do grupy "wojtek"
+su agata                     # zaloguj sie na "agata"
+id                           # wyświetla GRUPY
+whoami                       # wyświetli, nazwę uzytkownika
+who                          # wyświetli, kto jest zalogowany
+who --boot                   # informacja, kiedy ten serwer był ostatanio restartowany
+logname                      # wyświetli, nazwę uzytkownika, jak się zalogowałem (nie w momencie uruchamiania polecenia) 
+uptime                       # kiedy system był ostatnio uruchomiony, jaki czas jest już online, ilu pracuje uzytkownikow, jakie obciążenie było w ciągu ostatniej minuty, pięciu i pietnastu
+groups                       # do jakich grup nalezy uzytkownik
+sudo adduser agata wojtek    # dodaj użytkownika do grupy "wojtek"
 
-useradd       # dodawanie kont uzytkownikow
-userdel       # usuwanie kont uzytkownikow
+useradd                      # dodawanie kont uzytkownikow
+userdel                      # usuwanie kont uzytkownikow
 sudo useradd -G student student01      # utworz w gropie student, uzytkownika o nazwie "student01"
 sudo useradd candidte                  # utworz uzytkownika o nazwie "candidte", ale on nie nalezy do zadnej grupy
 sudo passwd student01                  # nadawanie hasla dla "student01"
 # informacje o uzytkownikach znadują się w pliku /etc/passwd
 # hasła znajduja się w /etc/shadow 
-users         # lista zalogowanych uzytkownikow
-uname -a      # informacje o systemie
-lshw          # szczegulowe informacje o sprzecie (trzeba doinstalowac)
-lshw -short   # szczegulowe informacje o sprzecie (skrocone)
-lscpu         # szczegulowe informacje o procesorze/procesor
+users                        # lista zalogowanych uzytkownikow
+uname -a                     # informacje o systemie
+lshw                         # szczegulowe informacje o sprzecie (trzeba doinstalowac)
+lshw -short                  # szczegulowe informacje o sprzecie (skrocone)
+lscpu                        # szczegulowe informacje o procesorze/procesor
 # wiecej o szczegulach sprzetu: https://www.tecmint.com/commands-to-collect-system-and-hardware-information-in-linux/
 
 
-ssh komput@192.168.0.140               # połączenie z innym komputerem w sieci (potwiedzić Y i podać hasło)
+ssh komput@192.168.0.140     # połączenie z innym komputerem w sieci (potwiedzić Y i podać hasło)
 
 
-sudo apt update       # odświerzenie repozytorium
-apt search openssh    # sprawdz czy istnieje dany program w repozytorium
-systemctl status sshd # sprawdz czy program jest zainstalowany i w jakim stanie
-sudo apt install g++  # instalowanie jakiś pakietów/programów
-apt install mc        # instalacj coś jak Norton Commander (Total Commander) Ctrl+O - aby przełączyć go do tła
-yum install mc        # instalacja w centos
-apt remove mc         # odinstalowanie programu
+sudo apt update              # odświerzenie repozytorium
+apt search openssh           # sprawdz czy istnieje dany program w repozytorium
+systemctl status sshd        # sprawdz czy program jest zainstalowany i w jakim stanie
+sudo apt install g++         # instalowanie jakiś pakietów/programów
+apt install mc               # instalacj coś jak Norton Commander (Total Commander) Ctrl+O - aby przełączyć go do tła
+yum install mc               # instalacja w centos
+apt remove mc                # odinstalowanie programu
 
 FIREWALL (na Ubuntu)
-ufw enable            # Firewall is active and enable on system startup
-ufw app list          # list dostępnych programów 
+ufw enable                   # Firewall is active and enable on system startup
+ufw app list                 # list dostępnych programów 
 ufw status 
-ufw allow 'Nginx Full' # nadanie uprawnień 
+ufw allow 'Nginx Full'       # nadanie uprawnień 
 
 
-last                  # lista o połączeniach
-last --limit 20       # ostatnie 20 zdarzeń
+last                         # lista o połączeniach
+last --limit 20              # ostatnie 20 zdarzeń
 last  --system --fulltimes --since 20220103120000
 //               |           +tylko te zdarzenia które były po 2022.01.03 12:00:00
 //               +pelny czas
-lastb                 # nieudane logowania 
+lastb                        # nieudane logowania 
 
-which nazwapolecenia  # pokazuje z jakiego katalogu uruchamiane jest polecenie
-set                   # lista zmiennych środowiskowych (polecane z potokiem | more)
+which nazwapolecenia         # pokazuje z jakiego katalogu uruchamiane jest polecenie
+set                          # lista zmiennych środowiskowych (polecane z potokiem | more)
 
-VARIABLE=VALUE        # definowanie zmiennych. Zmienne trwają tylko sesje
-export VARIABLE       # eksport zmiennych do innych procesów (czy jakos tak)
+VARIABLE=VALUE               # definowanie zmiennych. Zmienne trwają tylko sesje
+export VARIABLE              # eksport zmiennych do innych procesów (czy jakos tak)
 
-expr                  # taki kalkulator
+expr                         # taki kalkulator
 expr 1 + 2            //= 3
 expr 4 \> 2           //= 1 (1 to true)
 WOLNE_MIEJSCE=`expr $FREE_SPACE - $BACKUP_SIZE`   # do zmiennej przypisze wynik
 WOLNE_MIEJSCE=$(expr $FREE_SPACE - $BACKUP_SIZE)  # to samo co wyżej
 
-bc                    # taki lepszy kalkulator (w debianie nalezy go zainstalować:  sudo apt install bc)
-                      # wychodzimy Ctrl+C lub quit
-echo "1+2+3" | bc     # na ekranie wyswietli sie wynik dodawania
+bc                           # taki lepszy kalkulator (w debianie nalezy go zainstalować:  sudo apt install bc)
+                             # wychodzimy Ctrl+C lub quit
+echo "1+2+3" | bc            # na ekranie wyswietli sie wynik dodawania
 echo "$FREE_SPACE - $BACKUP_SIZE" | bc  
 WOLNE_MIEJSCE=`(echo "$FREE_SPACE - $BACKUP_SIZE" | bc)`  # przypisanie wyniku do zmiennej
 echo "sqrt(81)" | bc  //= 9
 echo "4*a(1)" | bc -l //= 3.14   4*arcus(1) -l przywołuje biblioteki matematyczne
 
-date                    # wywwietli aktualna date
+date                         # wywwietli aktualna date
 date +%Y%m%d		    //= 20220105
 date "+%Y-%m-%d %H:%M"  //= 2022-01-05 15:12
 date 010512052022.30    //reczna zmaina daty: miesiac dzien godzina minuta rok.sekundy 
-cal                     # wyświetla "kalendarz" (aktulany miesiąc)
-cal 2020                # wyśweitli cały klendarz
-cal 12 2020             # wyświetli tylko grudzien
+cal                          # wyświetla "kalendarz" (aktulany miesiąc)
+cal 2020                     # wyśweitli cały klendarz
+cal 12 2020                  # wyświetli tylko grudzien
 
-nl nazwaPliku           # wyświetla  plik z numerowaniem linii
-head nazwaPliku         # wyswietla domyślnie 10 pierwszych linijek
-head -n 20 nazwaPliku   # wyswietl pierwsze 20 linijek
-head -n -20 nazwaPliku  # pomin pierwsze 20 linijek.
-tail nazwaPliku         # wyświetli 10 ostatnich
-tail -n 20 nazwaPliku   # wyświetli 20 ostatnich
-tail -n +20 nazwaPliku  # Zacznij od 20 linijki i wyswietl wszystko az do konca pliku
+nl nazwaPliku                # wyświetla  plik z numerowaniem linii
+head nazwaPliku              # wyswietla domyślnie 10 pierwszych linijek
+head -n 20 nazwaPliku        # wyswietl pierwsze 20 linijek
+head -n -20 nazwaPliku       # pomin pierwsze 20 linijek.
+tail nazwaPliku              # wyświetli 10 ostatnich
+tail -n 20 nazwaPliku        # wyświetli 20 ostatnich
+tail -n +20 nazwaPliku       # Zacznij od 20 linijki i wyswietl wszystko az do konca pliku
 head -n 20 nazwaPliku | tail -n 10 # wyswielt od 11 do 20 linijki
 
-more nazwaPliku         # wyswietli plik strona po stronie
-less                    # wyswietli plik. f-nastepna strona b-poprzednia strona +wiele innych funkcji do nawigacji
+more nazwaPliku              # wyswietli plik strona po stronie
+less                         # wyswietli plik. f-nastepna strona b-poprzednia strona +wiele innych funkcji do nawigacji
 
 
 Film 82 (Linux - linia komend dla początkujących...)
@@ -253,12 +253,12 @@ grep -r -E ".*root" *        # E-regular Expression (wyrazenia regularne)
 grep -E -v ".*nologin$" passwd # przedzukaj plik passwd i odzukaj wpisy nie kończące się na "nologin", -v odwraca to co wyszukujemy
 
 
-cmp ./plik1 ./plik2     # porownanie plikow: dostane informacje o pierwszej różnicy w plikach. Czyli tylko mam info, że się różnią  
+cmp ./plik1 ./plik2          # porownanie plikow: dostane informacje o pierwszej różnicy w plikach. Czyli tylko mam info, że się różnią  
 
 
-diff plik1 plik2        # porownanie plikow prawie jak w gicie.  -y wyswietli w postaci dwoch okienek
-diff -y plik1 plik2     # porownanie plikow wyswietli w postaci dwoch okienek
-diff -q plik1 plik2     # porownanie plikow zwróci informacje, że się roznią, troche jak cmp
+diff plik1 plik2             # porownanie plikow prawie jak w gicie.  -y wyswietli w postaci dwoch okienek
+diff -y plik1 plik2          # porownanie plikow wyswietli w postaci dwoch okienek
+diff -q plik1 plik2          # porownanie plikow zwróci informacje, że się roznią, troche jak cmp
 
 
 Film 84 (Linux - linia komend dla początkujących...)

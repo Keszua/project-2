@@ -1,5 +1,19 @@
 Ostatnia aktualizacja 10-07-2019
 
+
+AP - acess Pin - rozsyłanie lanu 
+
+Wireguard - tworz VPN 
+Potrzebujemy udostępnić podrt UDP 
+
+
+
+next cloude - coś do zrobienia swojego servera 
+
+
+HTTPclient - dla ESP- za jej pomocą można przesłać JSON
+
+
 Piorek poleca ES6
 Potrek poleca Redux
 Zobaczyć co to: 
