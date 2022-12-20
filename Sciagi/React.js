@@ -11,10 +11,13 @@
 
 /*
 //Instaluje CRA globalnie poleceniem:
-λ npm install create-react-app --global
+    npm install create-react-app --global
+//Uwaga, jeżeli chcę korzystać z projektów TypeScriptowych, 
+//to nie zalecana jest ta instalacja, można ją odinstlawoać poleceniem:
+    npm uninstall -g create-react-app
 
 //Tworze nowy projekt poleceniem:
-λ npx create-react-app nazwa-katalogu
+    npx create-react-app nazwa-katalogu
 //Powstanie nowy katalog.
 
 //Tworzenie nowego projekty TypeScript:
@@ -40,6 +43,16 @@ npx create-react-app my-app --template typescript
 //Fajna wtyczka do efektór na napisach (najeżdzanie, pojawianie się) https://www.react-reveal.com/examples/common/zoom/
 
 // Fajną gierkę warior zrobił Wojciech Rosiński   https://warriors.networkmanager.pl/warriors/
+
+
+// najpopularniejse biblioteki do formularzy:
+// https://redux-form.com/
+// https://formik.org/
+
+// jakies stylwanie przycisków: https://chakra-ui.com/docs/components/button
+
+// jakaś biblioteka fo fetch() https://swr.vercel.app/
+
 
 
 //Pierwsza stronka zrobiona na React:
@@ -117,7 +130,7 @@ const handleClick = () => alert("klik")
 	}
 
 	handleInputChange =(e) => {
-			e.preventDefault() //zabespiecza przed przeładowaniem się strony
+			e.preventDefault() //zabezpiecza przed przeładowaniem się strony
 			this.setState({ 
 				 	inputValue: e.target.value ,
 			});
