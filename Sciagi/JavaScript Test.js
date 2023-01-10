@@ -1,3 +1,28 @@
+/*-------------------------------------------------------------------------------------------------
+  #####                  #                   #                                  #  
+    #                    #                  # #                                 #  
+    #     ###    ###   #####  #    #        # #    ###    ###    ###   # ###  #####
+    #    #   #  #        #    #   #        #   #  #      #      #   #  ##       #  
+    #    #####   ###     #     # #         #####   ###    ###   #####  #        #  
+    #    #          #    #      #          #   #      #      #  #      #        #  
+    #     ###    ###      ##   #           #   #   ###    ###    ###   #         ##
+                              #
+-------------------------------------------------------------------------------------------------*/
+Moduł Assert w node.js
+
+//Przykład:
+// testujemy prostą funkcję w ./utils/handlebars-helpers:
+const handlebarsHelpers = {
+    equals: (a, b) => a === b,
+};
+// plik testów "test.ts"
+import {strict as assert} from 'assert';
+import { handlebarsHelpers } from './utils/handlebars-helpers';
+
+assert( handlebarsHelpers.equals(2, 2));
+assert( handlebarsHelpers.equals('abc', 'abc'), "Porónanie tekstów nie działa");  // Strings comparision does not work
+assert( handlebarsHelpers.equals(false, false), "Boolean comparision does not work");
+
 
 /*-------------------------------------------------------------------------------------------------
    #####                     #                          #####   #####    ###    #####
@@ -43,7 +68,7 @@ npm run test
 
 
 
-
+844
 
 
 

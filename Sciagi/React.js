@@ -535,17 +535,57 @@ useLayoutEffect( () => {
 }, [] );
 
 
+
+//------------------------------
+useCallback
+	// memonizacja funkcji - czyli zapamietanie jakiejś funkcji
+	// referencja funkcji staje sie stabilna, żeby nie renderowała się ponownie
+
+//Przykład 1:
+	//mamy w komponencie jakąś funkcję, która wywołuje się przy każdym przebudowaniu komponentu (bo korzysta z tej funkcji jakis inny useEffect)
+const handler = () => {
+	console.log(counter);
+}
+//Aby ta funkcja była stworzona tylko raz (miałą stabilna referencję), trzeba ja opakować w useCallback:
+const handler = useCallback(() => {
+	console.log(counter);
+}, []);    //tablica zależności mówi, kiedy ponownie ma być stworzona funkcja
+
+
+
+//------------------------------
+React.memo 
+	// coś, zeby nie przebudowywać elementów listy, przy każdym renderze. Urzywany czesto razem z useCallback
+//Przykład:
+const ItemList = React.memo(({ items, onDelete}: Props) => {
+	console.log('Item is render');;
+	return <ul> {items.map( (item, index) => <li ley={item}> <button onClick={( () => onDelete(index) )}>Usuń</button> </li>)} </ul>
+});
+
+
+
+//------------------------------
+useMemo 
+	// memonizacja zmiennej (podobnie jak useCallback, ale dla zmiennej)
+	// Przeładuej się TYLKO, gdy zmieni się jego stan w tablicy zależności
+
+	const finalValue = useMemo( () => veryHardCalculation(counter), [counter])	
+
+
+
 //------------------------------
 useRef
 	// Można używać na dwa sposoby. Po pierwsze, pozwala na bezpośredni dostęp do elementu DOM, dzięki czemu możemy nim manipulować. 
+	// Czyli zamiast robienia const element = document.querySelector('input');
 	// Po drugie, może zachować dowolną zmienną wartość w swojej właściwości .current, która nie zmienia się między renderowaniami.
+	// Można wykorzystac ją, do zapamiętania poprzedniej wartości.
 	// Zmiana wartości parametru useRef nie spowoduje ponownego renderowania komponentu.
 // troszkę więcej na ten temat: https://love-coding.pl/hooki-react-useref-tutorial/
 
 //Przykład 1:
 const HookExample = () => {    
-    const inputEl = useRef(null);
-    const paragraphEl = useRef(null);
+    const inputEl = useRef<HTMLInputElement | null>(null);
+    const paragraphEl = useRef<HTMLInputElement | null>(null);
     
     console.log("component has just rendered");
 
@@ -563,6 +603,9 @@ const HookExample = () => {
     );
 }
 
+
+
+//------------------------------
 //Własny Hook
 import { useState, useEffect } from "react";
 type UseUsersReturn = [string[], (name:string) => void, boolean];
@@ -616,9 +659,130 @@ export { Users }
 
     <Users />
 
+//Własny Hook -  przykałd 2
+import { useState  } from "react";
+const App = () => {                                          | To można zastąpić własnym hookiem
+	const [toggled, setToggled] = useState<boolean>(false);  | const useToogle = (): [boolean, () => void] => {
+	                                                         |		const [toggled, setToggled] = useState<boolean>(false);
+		const toogle = () => {                               |		const toogle = () => {
+		setToggled(prev => !prev);                           |			setToggled(prev => !prev);
+    }                                                        | 		}
+	                                                         |		return [toggled, toggle]
+	const [toggled, toggle] = useToggle();					 | }
+
+	return <div>
+		<button onClick={toogle}>
+			{toggled ? 'Minimalizuj' : 'Maksymalizuj'}
+		</button>
+		<p style={{
+			height: toggled ? 'auto' : '20px',
+			overflow: "hidden"
+		}}> Jakiś długi tekst... </p>
+	</div>
+}
 
 
-/*-------------------------------------------------------------------------------------------------
+
+
+
+
+//------------------------------
+useReducer
+	// tworzenie lokalnego stanu w nieco inny sposób
+	//film 146
+
+// reducer - to funkcja która przyjmuje 2 argumenty:
+// pierwszym jest aktualny stan, drugi argument to "akcja". Akcja to obiekt
+// i zwraca NOWY stan na podstawie typu akcji
+
+interface User { name: string; lastName: string; age: nuymber; }
+const initialState: User = { name: 'Marcin', lastName: 'Grygierek', age: 28 }
+
+interface ChangeNameAction {type: 'CHANGE_NAME', payload: string }   // type - co chcemy zmienić; payload -  w jaki sposób chcemy to zmienić (na co chcemy zmienić)
+interface ChangeLastNameAction {type: 'CHANGE_LAST_NAME', payload: string }
+interface IncrementAgeAction {type: 'INCREMENT_AGE' }
+type UserAction { ChangeNameAction | ChangeLastNameAction | IncrementAgeAction }
+const userReducer = (state: User, action: UserAction) => {
+    switch (action.type) {
+        case 'CHANGE_NAME':       return { ...state, name: action.payload }; 
+        case 'CHANGE_LAST_NAME':  return { ...state, lastName: action.payload }; 
+        case 'INCREMENT_AGE':     return { ...state, age: state.age + 1 }; 
+        default:                  return state; 
+    }
+}
+
+const App = () => {
+    const [user, dispatch] = useReducer(userReducer, initialState); //dispatch - jest to metoda, która zawiera obiekt akcji, którą musimy przekazać
+
+    return (
+        <>  
+            <h1>{user.name} {user.latName}, {user.age}</h1>
+            <button onClick={ () => dispatch({type: 'CHANGE_NAME',      payload: 'Marian'})}      > Zmień Imię </button>
+            <button onClick={ () => dispatch({type: 'CHANGE_LAST_NAME', payload: 'Marianowski'})} > Zmień Nazwisko </button>
+            <button onClick={ () => dispatch({type: 'INCREMENT_AGE' })}                           > Zwiększ wiek</button>
+        </>
+    );
+}
+
+
+//------------------------------
+useHistory  //- filmik 153
+// poniższe trzy hooki wykorzystuje się do routingu
+
+const Component = () => {
+	const history = useHistory(); //aby uzyskać dostęp do historii 
+
+	const handleOnClick = () => {
+		const location = {
+			pathname: '/redux',
+			//ewentualnie inne parametry
+		};
+		history.push(location);
+	}
+
+	const handleOnClickBack = () => history.goBack(); //metoda do powracania do poprzedniej ścieżki
+
+	return (
+		<>
+			<button onClick={handleOnClick}> Idz do strony </button>
+			<button onClick={handleOnClickBack}> Powrót do poprzedniej strony </button>
+		</>
+	);
+}
+
+//------------------------------
+useLocation  // - okrojona wersja useHistory
+
+	const location = useLocation();  //domyślnie undefine
+	const isActive = Boolean(location.state && location.state.isActive);
+
+<p> Przesłana informacja: {String(isActive)} </p>
+
+//------------------------------
+useParms // - film 155
+
+//załużmy że jakiś komponent ma:
+	const[inputData, setInputData] = useState('');
+	const history = useHistory();
+
+	const handleOnClick = () => {
+		const location = { 
+			pathname: '/typeScript/${inputData}', //UWAGA, w Route będzie ścieżka: "/typeScript/:message"
+		};
+		history.push(location);
+	}
+	<button onClick={handleOnClick}> Wyślij parametr do StoryTypeScript </button>
+// dane zostana wysłane jako parametr w pasku adresu
+
+// w komponencie (zwykle w innym folderze), przechwycimy te parametry za pomocą useParams
+
+	const paramsObject = useParams();
+
+	<p> paramsObject.message </p> //tutaj zobaczymy odebrane parametry. Nazwa zależna od nazwy parametru w ścieżce
+
+
+
+	/*-------------------------------------------------------------------------------------------------
 ####                           #     ###                   #                    #  
 #   #                          #    #   #                  #                    #  
 #   #   ###    ####    ###   #####  #       ###   ####   #####   ###   #   #  #####
@@ -686,107 +850,6 @@ export const Button = () =>  {
 // -------------- 
 
 //<-- 587
-
-
-
-
-
-//------------------------------
-//Narzędzie chyba głównie do obsługi bazy danych
-useReducer
-//film 146
-
-// reducer - to funkcja która przyjmuje 2 argumenty:
-// pierwszym jest aktualny stan, drugi argument to "akcja". Akcja to obiekt
-// i zwraca NOWY stan na podstawie typu akcji
-const coursesReducer = (state, action) => {
-    console.log("wywołany", action.type);
-    switch (action.type) {
-        case 'ADD':
-            return [...state, action.course];
-        default:
-            throw new Error('Oooops something went wrong!');
-    }
-};
-
-const App = () => {
-	const [state, dispatch] = useReducer(coursesReducer, []);  //dispatch - jest to metoda, która zawiera obiekt akcji, którą musimy przekazać
-    //const [state, dispatch] = useReducer(coursesReducer, tablicaZDanymi);
-
-
-    return (
-        <>  //nie pełny przykład
-            {console.log("Hejka")}
-            <h1>Reducer</h1>
-            {cursesElements}
-            <Form addHandler={dispatch} ></Form>  
-        </>
-    );
-}
-
-
-//------------------------------
-useMemo // - służy do nie przeładowywania elmenu przy kazdym renderze.
-// Przeładuej się TYLKO, gdy zmieni się jego stan
-
-    const SecondCounterComponent = useMemo(() =>
-        <Counter counter={secondCounter} index={2} />, [secondCounter])
-
-
-//------------------------------
-useHistory  //- filmik 153
-// poniższe trzy hooki wykorzystuje się do routingu
-
-const Component = () => {
-	const history = useHistory(); //aby uzyskać dostęp do historii 
-
-	const handleOnClick = () => {
-		const location = {
-			pathname: '/redux',
-			//ewentualnie inne parametry
-		};
-		history.push(location);
-	}
-
-	const handleOnClickBack = () => history.goBack(); //metoda do powracania do poprzedniej ścieżki
-
-	return (
-		<>
-			<button onClick={handleOnClick}> Idz do strony </button>
-			<button onClick={handleOnClickBack}> Powrót do poprzedniej strony </button>
-		</>
-	);
-}
-
-//------------------------------
-useLocation  // - okrojona wersja useHistory
-
-	const location = useLocation();  //domyślnie undefine
-	const isActive = Boolean(location.state && location.state.isActive);
-
-<p> Przesłana informacja: {String(isActive)} </p>
-
-//------------------------------
-useParms // - film 155
-
-//załużmy że jakiś komponent ma:
-	const[inputData, setInputData] = useState('');
-	const history = useHistory();
-
-	const handleOnClick = () => {
-		const location = { 
-			pathname: '/typeScript/${inputData}', //UWAGA, w Route będzie ścieżka: "/typeScript/:message"
-		};
-		history.push(location);
-	}
-	<button onClick={handleOnClick}> Wyślij parametr do StoryTypeScript </button>
-// dane zostana wysłane jako parametr w pasku adresu
-
-// w komponencie (zwykle w innym folderze), przechwycimy te parametry za pomocą useParams
-
-	const paramsObject = useParams();
-
-	<p> paramsObject.message </p> //tutaj zobaczymy odebrane parametry. Nazwa zależna od nazwy parametru w ścieżce
 
 
 

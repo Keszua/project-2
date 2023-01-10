@@ -180,6 +180,9 @@ npm uninstall nodemon           // usuwnie modułu
 // Marcin na live wpisał:
     Set-ExecutionPolicy -ExecutionPolicy Unrestricted
 
+// ktoś z kursu napisał:
+    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser    
+
 //proponowana struktura plików:
 docs
 edu

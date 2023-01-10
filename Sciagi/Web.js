@@ -1,5 +1,5 @@
-Ostatnia aktualizacja 10-07-2019
 
+Testowanie responsywnosci: http://mattkersley.com/responsive/
 
 AP - acess Pin - rozsyłanie lanu 
 

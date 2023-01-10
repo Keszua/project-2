@@ -247,7 +247,7 @@ def wypisz(param):
 
 
 parametry = {
-    'tekst': 'Postgres',
+    'tekst': 'Testy Assert',
     'spacje': 2,        # Ilość spacji pomiędzy literami
     'komentator': '//',   # Jakim symbolem komentowac w danym programie. Zwykle '#' lub '//'.
     'symbol': '#',      # Jakim symbolem rysować. # █  ░ ▒ ▓ ╬
