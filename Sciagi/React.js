@@ -794,78 +794,99 @@ useParms // - film 155
 ReactContext // - coś w stylu globalnych zmiennych
 // film 139  React od podstaw
 
-// Korzystanie z "globalnych ustawień" bez potrzeby przekazywania ich przez props.
-// Zakładam że mam 4 pliki: 1. App.js - główny plik, gdzie owrapuje wszystkie komponenty mające dostęp do tych ustawień.
-// 2. AppContext.js - gdzie tworze Context z domyślnymi ustawieniami
-// 3. UserInfo.js - jakiś tam komponent, który pobiera Context przez useContext
-// 4. Button.js - jakiś tam komponent, któr  pobiera Context przez useContext
-// -------------- zawartość App.js
-import './App.css';    import AppProvider from './AppContext';    import {UserInfo} from './UserInfo';    import {Button} from './Button';
-const App = () => {
-  return (
-    <div>
-      <AppProvider>
-        <UserInfo />
-        <Button />
-      </AppProvider>
-    </div>
-  );
-}
-export default App;
-// -------------- zawartość AppContext.js
-import  React, { createContext, useState } from 'react';
-export const AppContext = createContext();
-const AppProvider = ({children}) => {
-	const [isUserLogged, setIsUserLogged] = useState(false);
-	const toggleLoggedState = () => setIsUserLogged( prevVal => !prevVal )
-	return (
-		<AppContext.Provider value={{ isUserLogged, toggleLoggedState }} > 
-			{children}
-		</AppContext.Provider>
-	)
-};
-export default AppProvider;
-// -------------- zawartość UserInfo.js
-import { useContext } from 'react';   import { AppContext} from './AppContext';
-export const UserInfo = () =>  {
-	const {isUserLogged} = useContext(AppContext)
-	return (
-		<div>
-			<p>Użytkownik jest {isUserLogged ? 'zalogowany' : 'niezalogowany'}</p>
-		</div>
-	);
-}
-// -------------- zawartość Button.js
-import React, { useContext } from 'react';    import {AppContext} from './AppContext';
-export const Button = () =>  {
-	const { isUserLogged, toggleLoggedState } = useContext(AppContext);
-	return (
-	  <div>
-		  <button onClick={toggleLoggedState} >
-			  { isUserLogged ? 'Wyloguj' : "Zaloguj"}
-		  </button>
-	  </div>
-	);
-}
-// -------------- 
+//Przykład od Gregierka, Klakulator 
+// W komponencie głównym tworzymy Context, i przekazujemy ten kontekst jako .Provider
+import { ChangeEvent, createContext, useState } from "react"
+import { CalculatorForm } from "./CalculatorForm";
 
-//<-- 587
+interface CalcualtorContextType {
+    first: number;
+    second: number;
+    result: number | string;
+    handleFirstChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleSecondChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    setOperationResult: (result: number | string) => void;
+}
+export const CalcualtorContext = createContext<CalcualtorContextType | null>(null);
+
+export const CalculatrC = () => {
+    const [first, setFirst] = useState<number>(0);
+    const [second, setSecond] = useState<number>(0);
+    const [result, setResult] = useState<number | string>(0);
+
+    const handleFirstChange = (e: ChangeEvent<HTMLInputElement>) => { setFirst(Number(e.target.value)); }
+	const handleSecondChange = (e: ChangeEvent<HTMLInputElement>) => { setSecond(Number(e.target.value)); }
+    const setOperationResult = (operationResult: number | string) => { setResult(operationResult);  }
+
+	return <div>
+		<CalcualtorContext.Provider value={{
+			first,
+			second,
+			result,
+			handleFirstChange,
+			handleSecondChange,
+			setOperationResult,
+		}}>
+			<CalculatorForm /> {/* Przykład jednego komponentu ale może być ich wiele */}
+		</CalcualtorContext.Provider>
+	</div>
+}
+
+// -------------- zawartość CalculatorForm.tsx  który korzysta z tego konteksu, za pomocą useContext
+import { useContext } from "react";
+import { CalcualtorContext } from "./Calculator";
+
+export const CalculatorForm = () => {
+    const context = useContext(CalcualtorContext);               // wyciągnięcie 
+    if(!context) return null;                                    // warunek trzeba dodać gdy przekazujemy funkcje (nie podajemy wartosci domysłnych)
+    const {first, second, handleFirstChange, handleSecondChange} = context; // najwygodniej jest zdestrukturyzować potrzebne elementy
+    return <>
+        <input type="number" value={first} onChange={handleFirstChange} />
+        <input type="number" value={second} onChange={handleSecondChange} />
+    </>
+}
 
 
 
 //------------------------------------------------------------
 //------------------------------------------------------------
 /*------------------------------------------------------------
-REDUX - //zewnętrzna biblioteka do zarządzania przesyłanymi danymi. Film 157
-// instalacja:
+  ####              #
+  #   #             #
+  #   #   ###    ####  #   #  #   #
+  ####   #   #  #   #  #   #   # # 
+  # #    #####  #   #  #   #    #
+  #  #   #      #   #  #   #   # #
+  #   #   ###    ####   ####  #   #
+
+
+zewnętrzna biblioteka do zarządzania przesyłanymi danymi. Film 157
+instalacja:
 	npm i redux
+
+Główne założenia: 
+- niemutowalność (tworzone nowe stany)
+- centralizacja stanu w STORE
+
+Przepływ danych:
+                                  ┌──────────┐
+                       ┌──────────┤  Action  ├────────┐
+                       v          └──────────┘        |
+┌──────────┐    ┌────────────┐    ┌──────────┐    ┌───┴────┐ 
+│  Action  ├───>│ Dispatcher ├───>│  Store   ├───>│  View  | 
+└──────────┘    └────────────┘    └──────────┘    └────────┘ 
+Reducer - funkcja, która mówi storowi, jak ma być przygotowany nowy stan. 
+Stor - jest dużym obiektem, zawierający podobiekty. Reducer zajmuje się zwykle jednym podobiektem
+
+
 */
-//akcja w reduksie jest obiektem, który ma obowiżakowe pole type:
+//akcja w reduksie jest obiektem, który ma obowiązkowe pole type:
 {
 	type: ADD, //obowiązkowy element
-	paylowad: { } //opcjonalny ładunek
+	payload: { } //opcjonalny ładunek (treść)
 }
 
+ReduxTank - do asynchroniczności
 
 //------------------------------------------------------------
 //------------------------------------------------------------

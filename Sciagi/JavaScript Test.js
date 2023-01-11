@@ -10,6 +10,12 @@
 -------------------------------------------------------------------------------------------------*/
 Moduł Assert w node.js
 
+// dokumentacja:
+https://nodejs.org/api/assert.html
+
+// Uruchomiłem poleceniem:
+ts-node ./utils/test.ts
+
 //Przykład:
 // testujemy prostą funkcję w ./utils/handlebars-helpers:
 const handlebarsHelpers = {
@@ -22,6 +28,17 @@ import { handlebarsHelpers } from './utils/handlebars-helpers';
 assert( handlebarsHelpers.equals(2, 2));
 assert( handlebarsHelpers.equals('abc', 'abc'), "Porónanie tekstów nie działa");  // Strings comparision does not work
 assert( handlebarsHelpers.equals(false, false), "Boolean comparision does not work");
+
+assert.deepStrictEqual(actual, expected[, message]) // czy obiekt jest taki sam... np: {name: 'Jan'} czy jest równy {name: 'Jan'}  |  [1, 2, 3], [1, 2, 3]  => True
+assert.strictEqual(actual, expected[, message])     // czy cos jest dokładnie takie jak oczekujemy - dla typów prostych            |  [1, 2, 3], [1, 2, 3]  => False
+assert.throws(fn[, error][, message])               // dla kodu synchronicznego   - sprawdza, czy wyrzuci błąd (dla podanego specjalnie błednego warunku)
+assert.rejects(asyncFn[, error][, message])         // dla kodu asynchronicznego  - sprawdza, czy wyrzuci błąd
+assert.doesNotThrow(fn[, error][, message])         //                            - dla prawidowych argumentów, ma nie wyrzucić żadnego błędu
+assert.doesNotReject(asyncFn[, error][, message])   //
+
+//przykady:
+assert.throws( () => buildPerson('', '') );         // dla tego przypadku, nasza funkcja powinna zwrócić błąd
+assert.throws( () => buildPerson('', ''), {message: 'Oczekiwana treść błędu'} );  // dla treści można podać wyrażenie regularne, np: /Oczekiwana treść/
 
 
 /*-------------------------------------------------------------------------------------------------
@@ -39,11 +56,33 @@ JEST
 
 //filmik szkoleniowy: https://www.youtube.com/watch?v=jpV3WEi3shs&t=440s
 
-//Zakladanie nowego projetu przez:
-	npm init --yes
-	npm install --save-dev jest
+// instalacja Jest dla JS:
+    npm i -D jest
+// lub:  npm install --save-dev jest
+
+// stworzyć plik konfiguracyjny dla Jest (chyba Kuba tutaj źle podał i nie trzeba tego pliku robić?)
+    npx jest --init
+    // Nie tworzyć dla TypeScriptu
+    // Wybrać node dla node albo jsdom dla Reacta
+    // Dla noda wybrać v8
 
 
+//-----------------------------------------------
+// instalacja Jest dla TS:
+    npm i -D ts-jest @types/jest
+// stworzyć plik konfiguracyjny dla Jest
+    npx ts-jest config:init
+
+
+// dodaj skrypt do package.json 
+    "test": "jest"
+
+// uruchomić za pomocą 
+    npm test
+    npx jest --watch
+
+
+// Poniżej jakies instrukcje chyba z kursu Samuraja
 //proponowane paczki do testow
 	npm install--save - dev @babel/cli @babel/core @babel/preset-env babel-jest @babel/plugin - transform - modules - commonjs
 //trzeba zrobic konfiguracje bable:
@@ -66,9 +105,6 @@ w folderze package.json trzeba dodac w: "scripts"
 //aby uruchomic testy:
 npm run test
 
-
-
-844
 
 
 
@@ -390,8 +426,9 @@ npm run test
 //-----------------------------------------------------------------------------
 //metody sprawdzające (matchers):
 // dla liczb:
-	expect( sum(1, 2) ).toBe(3);      				// == 3
-	expect( sum(1, 2) ).toEqual(4); 				// === 3 (to i powyższe, dla numberów to to samo)
+	expect( sum(1, 2) ).toBe(3);      				// === 3                   expect([1, 2, 3]).toBe([1, 2, 3]);           NIE przejdzie
+	expect( sum(1, 2) ).toEqual(3); 				// == 3                    expect([1, 2, 3]).toEqual([1, 2, 3]);        przejdzie
+	expect( sum(1, 2) ).toStrictEqual(3); 			// == 3                    expect([1, 2, 3]).toStrictEqual([1, 2, 3]);  przejdzie
 	expect( sum(0.1, 0.2) ).toBeCloseTo(0.3); 		// == 0.3 (dla float)
 	expect( sum(1, 2) ).not.toBe(3);  				// != 3
 	expect( sum(1, 2) ).toBeGreaterThan(3); 		// > 3
