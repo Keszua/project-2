@@ -2,7 +2,7 @@
 // instalacja globalana TS
 npm install -g typescript
 
-//spawdzenie czy się zaistalwoał:
+//spawdzenie czy się zaistalował:
 tsc --version
 
 // kompilowanie .ts do .js poleceniem:
@@ -14,7 +14,7 @@ npm init -y
 npm i express express-async-errors express-handlebars method-override mysql2 uuid
 npm i -D ts-node  ts-node-dev typescript @types/node @types/express @types/cookie-parser @types/method-override @types/uuid
 
-// plik ts confog można zrobić komenda: tsc --init
+// plik ts config można zrobić komenda: tsc --init
 tsconfig.json
 {
     "compilerOptions": {
@@ -52,7 +52,7 @@ tsconfig.json
         ],
       }
     ]
-  }
+}
 
 
   //zalecane zainstalowanie AutoLaunch
@@ -71,7 +71,7 @@ ts-node indexedDB.ts
 
 
 // Doinstalowanie typów dla TS:
-// Gdy na npm jest niebieks ikonka, to typy sa w zestawie
+// Gdy na npm jest niebieska ikonka, to typy sa w zestawie
 // Gdy jest białą ikonka, to typy trzeba sobie dionstlwoać:
 // Instalacja typów przez: npm i -D @types/express  (E5 T3 D3 26:30)
 // zalecane doinstlowanie:
@@ -82,6 +82,23 @@ npm i -D @types/node @types/express @types/cookie-parser
 //-------------------------------------------------------------------------------------------------
 // środowisko do testowania:
 https://www.typescriptlang.org/play
+
+
+CORS - jakaś blokada zapytań.
+// Na backendzie trzeba zainstalwoać sobie:
+npm i cors
+npm i -D @types/cors
+
+// Ustaw cors, np:
+import * as cors from 'cors';
+
+app.use(cors({
+    origin: 'http://localhost:3000',
+}));
+
+
+
+
 
 //-------------------------------------------------------------------------------------------------
 //Typy w TS:									  

@@ -53,7 +53,7 @@ npx create-react-app my-app --template typescript
 
 // jakaś biblioteka fo fetch() https://swr.vercel.app/
 
-
+// fejkowe dane urzytkowników https://randomuser.me/api/
 
 //Pierwsza stronka zrobiona na React:
 //plik index.js 
@@ -309,7 +309,7 @@ class Zegar extends Component {
     }
 }
 
-setTimeout(()=> console.log("minelo 5 sek"), 5000) //wysoła za 5 sekund
+setTimeout(()=> console.log("minelo 5 sek"), 5000) //wysyła za 5 sekund
 
 const intervalId = setInterval(() => { console.log("Hejka") }, 1000)  //wywołuje co sekundę   lub this.intervalId = w komponencie klasowym
 clearInterval(intervalId); //ady wyłączyć interwał
@@ -389,7 +389,7 @@ ReactDOM.render( <Tweet /> , document.getElementById('Komponent_SFC'));
 		render() {
 			return (
 				<div>
-					<h1>Piewszy kompinent stanowy {this.state.number}</h1>
+					<h1>Piewszy komponent stanowy {this.state.number}</h1>
 				</div>
 			)
 		}
@@ -782,7 +782,7 @@ useParms // - film 155
 
 
 
-	/*-------------------------------------------------------------------------------------------------
+/*-------------------------------------------------------------------------------------------------
 ####                           #     ###                   #                    #  
 #   #                          #    #   #                  #                    #  
 #   #   ###    ####    ###   #####  #       ###   ####   #####   ###   #   #  #####
@@ -838,7 +838,7 @@ import { CalcualtorContext } from "./Calculator";
 
 export const CalculatorForm = () => {
     const context = useContext(CalcualtorContext);               // wyciągnięcie 
-    if(!context) return null;                                    // warunek trzeba dodać gdy przekazujemy funkcje (nie podajemy wartosci domysłnych)
+    if(!context) return null;                                    // warunek trzeba dodać gdy przekazujemy funkcje (nie podajemy wartosci domyslnych)
     const {first, second, handleFirstChange, handleSecondChange} = context; // najwygodniej jest zdestrukturyzować potrzebne elementy
     return <>
         <input type="number" value={first} onChange={handleFirstChange} />
@@ -894,7 +894,7 @@ ReduxTank - do asynchroniczności
 React router
 //Filmik 102 (React od podstaw)
 //Instalujemy go poleceniem:
-	npm install react-router-dom
+	npm install react-router-dom@6
 //Po zainstalowaniu, trzeba zaimportować kilka komponentów:
 	import { BrowserRouter, Link } from 'react-router-dom';
 //Następnie w komponent BrowserRouter "owijamy" jedno dziecko (najlepiej jeden <div>)
@@ -914,6 +914,8 @@ React router
 			...
 		</div>
 	</Router> 
+
+//Kuba wspomina coś o Wuter 
 //------------------------------------------------------------
 /*
  ####                     #     #                 #                               #                          ###  ####    #  

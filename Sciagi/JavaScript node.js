@@ -233,7 +233,7 @@ watch('.' {
 
 //-------------------------------------
 // E2_dzien8
-// Program który śledzi wszystkie zmiany w plikach o rozszeeniu .js 
+// Program który śledzi wszystkie zmiany w plikach o rozszezeniu .js 
 // wyświetla wprowadzone zmiany
 // reaguje na pełen zapis
 const {watch} = require('chokidar')
@@ -941,7 +941,7 @@ const dns = require('dns').promises;
      #       #          #      #   #    #   #    #      #
      #        ###        ##     ###     #   #     #    # 
 -----------------------------------------------------------------------------*/
-// paczki nie m adomyślnie. Trzeba ją doinstalować
+// paczki nie ma domyślnie. Trzeba ją doinstalować
 npm i node-fetch
 
 const fetch = require('node-fetch');
@@ -1744,7 +1744,7 @@ nameRouter
 express-generator
 
 npm i express=generator -g
-//Aby utworzyć projkt podobny do proponowanego, można wykonać:
+//Aby utworzyć projekt podobny do proponowanego, można wykonać:
 express --no-view --git nazwa_projektu_i_folderu
 
 

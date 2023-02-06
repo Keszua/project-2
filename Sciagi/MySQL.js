@@ -2,7 +2,7 @@
  * kodowanie: utf8mb4_unicode_ci
  * id: VARCHAR 36   CHAR(36) NOT NULL DEFAULT uuid(),
   
- CREATE TABLE `gifts` (
+CREATE TABLE `gifts` (
 	`id` VARCHAR(36) NOT NULL DEFAULT uuid(),
 	`name` VARCHAR(55) NOT NULL,
 	`count` INT(6) NOT NULL DEFAULT 0,

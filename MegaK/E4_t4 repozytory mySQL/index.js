@@ -40,7 +40,7 @@ const { pool } = require("./utils/db");
 //zadanie:
 // 1. Stwórz aplikację Expressową, która ma EP zgodne z REST!
 // 2. To co zrobiliśmy na części wspólnej przepisz i dodaj do aplikacji Expressowej
-// 3. Stórez stronę główną - z listą rzeczy do zrobienia.
+// 3. Stwórz stronę główną - z listą rzeczy do zrobienia.
 // 4. Każdy element ma przycisk do usunięcia.
 // 5. Na dole znajduje sie formularz, który dodaje nową rzecz do zrobienia.
 // * kolejnośc powinna być taka, w jakiej sie dodało

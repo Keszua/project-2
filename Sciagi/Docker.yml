@@ -10,31 +10,15 @@ https://hub.docker.com/signup
 
 
 #-------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------
-# Przykladowe kontenery
-docker container run -d -p 8080:80 --name mynginx nginx:latest
-docker container run -d -e POSTGRES_USER=user1 -e POSTGRES_PASSWORD=pass123 -p 5444:5432 postgres:latest
+Instalacja na Linxa (Ubuntu)
+https://docs.docker.com/engine/install/ubuntu/
 
-
-# tworzenie sieci i uruchomienie kontenera wordpresa z mySql
-docker network create --driver=bridge skynet
-docker container run -d -p 3308:3306 --name db -e MYSQL_DATABASE=exampledb -e MYSQL_USER=exampleuser -e MYSQL_PASSWORD=12345678 -e MYSQL_RANDOM_ROOT_PASSWORD=1 --network=skynet --restart=always mysql:5:7
-#                                                 └ Jak ma sie nazywac baza                                                        └ wygeberuj automatycznei bespieczne haslo dla roota
-docker container run -d -p 8080:80 -e WORDPRESS_DB_HOST=db:3306 -e WORDPRESS_DB_USER=exampleuser -e WORDPRESS_DB_PASSWORD=12345678 -e WORDPRESS_DB_NAME=exampledb --network=skynet  --restart=always wordpress:latest
-#                                                          └ port besposredni (nie do lokalnego przekierowania)
-
-
+Po zainstalowaniu, trzeba dodać do grupy użytkowników, żeby nie trzeba było za każdym razem dodawać sudo 
+sudo usermod -aG docker $USER
 
 #-------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------
-
-
-
-
-
-
 
 
 # link do repo z kursu: 
@@ -49,35 +33,35 @@ docker            # wyswietli liste polecen
 docker image pull nazwaObrau         # sciagniecie danego obrazu, bez uruchamiania
 docker image pull nazwaObrau:mojTag  # sciagniecie danego obrazu + nadaj tag ale tez jakos koles sciagal odpowiednie wersje za pomocc tagu (film 18)
 docker run
-docker container run   # uruchomienie NOWEGO kontenera. Jezeli nie posiadamy obrazu, zostanie on sciagniety i uruchomiony
-docker container run --publish 8080:80 --detach nginx  
-#                      |       |    |    |      └ nazwa obrazu
-#                      |       |    |    └ uruchomienie kontenera w tle
-#                      |       |    └ port po stronie kontenera
-#                      |       └ port, na ktorym kontener bedzie dostepny na naszym hoscie (zwykle localhost:8080)
-#                      └ przekierowanie, -p [host-port:container-port]
+docker container run                 # uruchomienie NOWEGO kontenera. Jezeli nie posiadamy obrazu, zostanie on sciagniety i uruchomiony
+docker container run -p 8080:80 -d nginx  
+#                     | |    |   | └ nazwa obrazu
+#                     | |    |   └ detach: uruchomienie kontenera w tle
+#                     | |    └ port po stronie kontenera
+#                     | └ port, na ktorym kontener bedzie dostepny na naszym hoscie (zwykle localhost:8080)
+#                     └ publish: przekierowanie, -p [host-port:container-port]
 #  zatrzymanie kontenera przez:  Ctrl+C
 
 docker container run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -d --name=myName docker.elastic.co/elasticsearch/elasticsearch:6.5.4
-#                     |                         |                                   |           |                                             |- wersja albo tag
-#                     |                         |                                   |           |- nazwa obrazu
-#                     |                         |                                   └ nazwa kontenera
+#                     |                         |                               |   |           |                                             └ wersja albo tag
+#                     |                         |                               |   |           └ nazwa obrazu
+#                     |                         |                               |   └ nazwa kontenera
+#                     |                         |                               └ detach: Run container in background and print container ID
 #                     |                         └ przekazanie zmiennej srodowiskowej
-#                     └[host-port:container-port]
+#                     └[container-port:host-port]
 
 
-docker logs                                 # informacje o uruchamianiu kontenera
+#                          HOST
+#                           ┌─────────────┐
+#  Port 3000 ---> Port 3000 │  Container  │
+#                           └─────────────┘
+#                           ┌─────────────┐
+#  Port 3001 ---> Port 3000 │  Container  │
+#                           └─────────────┘
 
-# kontener z centosem:
-docker run -it centos:8 bash
-# aby naprawić instalację trzeba zrobić:
-cd /etc/yum.repos.d/
-sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
-sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
-yum update -y
-yum install NetworkManager
-# od teraz dzial polecenie:
-nmcli -h
+
+docker stop idkontenera
+docker container stop idkontenera
 
 
 #  uruchom w trybie interaktywnym z terminalem (wyjscie komenda exit)
@@ -89,9 +73,6 @@ docker attach  [id lub nazwa kontenera]     #  odpalenie konsoli na dzialajacym 
 
 # aby w apline ściągnąc nano: apk update && apk add nano 
 
-docker stop idkontenera
-docker container stop idkontenera
-
 docker container ls     #  wyswietli liste kontenerow URUCHOMIONYCH
 docker ps               #  po staremu 
 docker container ls -a  #  wyswietli liste wszystkich kontenerow, czyli nie uruchominych tez
@@ -102,11 +83,9 @@ docker rm idkontenera               #  usowanie kontenera
 docker system prune --all           #  usowanie WSZYSTKICH obrazów jednym poleceniem:
 
 
-docker container logs nazwaKontenera
+docker container logs nazwaKontenera    # informacje o uruchamianiu kontenera
 docker container logs nazwaKontenera -f # ciagla obserwacja (zablokuje CLI)
 
-curl localhost:8080  # zwroci kod HTML strony
-curl localhost:9200  # zwroci JSON (jezli mamy odpalony elastic)
 
 # curl - taka przegladarka z linii komend
 curl -H "Content-Type: application/json" -XPOST "http://localhost:9200/docker/image/1" -d "{ \"name\" : \"elasticsearch\"}"
@@ -197,6 +176,45 @@ docker image pull nazwaKontaDockerHub/nazwaObrazu:zEwentualnymTagiem
 
 #  tworzenie obrazu na podstawie kontenera:
 docker container commit idKontenera nazwaKontaDockerHub/nazwaObrazu:zTagiem
+
+
+  ####                         #      #                   #        
+  #   #                        #      # #                 #        
+  #   #  # ###  #####  #    #  #  #   ##      ####    #####  #    #
+  ####   ##        #   #   #   # #   ##           #  #    #  #   # 
+  #      #        #     # #    ##     #       #####  #    #   # #  
+  #      #       #       #     # #    #   #  #    #  #    #    #   
+  #      #      #####   #      #  #    ###    ### #   #####   #    
+                       #                                     #    
+
+# Przykladowe kontenery
+docker container run -d -p 8080:80 --name mynginx nginx:latest
+docker container run -d -e POSTGRES_USER=user1 -e POSTGRES_PASSWORD=pass123 -p 5444:5432 postgres:latest
+
+
+# tworzenie sieci i uruchomienie kontenera wordpresa z mySql
+docker network create --driver=bridge skynet
+docker container run -d -p 3308:3306 --name db -e MYSQL_DATABASE=exampledb -e MYSQL_USER=exampleuser -e MYSQL_PASSWORD=12345678 -e MYSQL_RANDOM_ROOT_PASSWORD=1 --network=skynet --restart=always mysql:5:7
+#                                                 └ Jak ma sie nazywac baza                                                        └ wygeberuj automatycznei bespieczne haslo dla roota
+docker container run -d -p 8080:80 -e WORDPRESS_DB_HOST=db:3306 -e WORDPRESS_DB_USER=exampleuser -e WORDPRESS_DB_PASSWORD=12345678 -e WORDPRESS_DB_NAME=exampledb --network=skynet  --restart=always wordpress:latest
+#                                                          └ port besposredni (nie do lokalnego przekierowania)
+
+
+# kontener z centosem:
+docker run -it centos:8 bash
+# aby naprawić instalację trzeba zrobić:
+cd /etc/yum.repos.d/
+sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+yum update -y
+yum install NetworkManager
+# od teraz dzial polecenie:
+nmcli -h
+
+
+# Przykład kontenera z Postgesem - z filmu TechWorld with Nana: https://www.youtube.com/watch?v=GeqaTjKMWeY
+docker run postgres:9.6
+
 
 
 

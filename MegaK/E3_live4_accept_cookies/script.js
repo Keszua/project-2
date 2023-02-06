@@ -14,7 +14,7 @@ if(displayCookie()) {
     cookieNotice.classList.remove('hidden');
 }
 
-// gdy zakceptuje oplitykę prywatnosci
+// gdy zakceptuje politykę prywatnosci
 acceptBtn.addEventListener('click', () => {
     localStorage.setItem('cookie-notice-displayed', true);
     cookieNotice.classList.add('hidden');

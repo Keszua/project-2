@@ -543,7 +543,7 @@ dog.contructor === Dog;
 
 
 
-//ob.hasOwnProperty(method) - Jeżeli chcemy sprawdzić, czy dana instancja obiektu ma konkretną właściwość lub metodę
+//ob.hasOwnProperty(method) - Jeżeli chcemy sprawdzić, czy dana instancja obiektu ma konkretną właściwość lub metodę, czy zwiera
 const ob = {
     name : "Marcin",
     print : function() {}

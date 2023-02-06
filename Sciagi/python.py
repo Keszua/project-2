@@ -371,7 +371,7 @@ while True:
 
 # Przykład stworzenia własnego iteratora:
 
-class MilonDays:
+class MilionDays:
     def __init__(self, year, month, day, maxdays):
         self.date = dt.date(year, month, day)
         self.maxdays = maxdays
@@ -390,7 +390,7 @@ class MilonDays:
     def __iter__(self):
         return self
 
-md = MilonDays(2000, 1, 1, 2500000)
+md = MilionDays(2000, 1, 1, 2500000)
 for d in md:
     pass
 print(md[0], md[1])
@@ -400,7 +400,7 @@ it = iter(md)	#ale jest to nie zabezpieczone przed wywołaniem nie istniejącego
 print(next(it))
 
 #inna (krótsza) metoda na stworzenie generatorów 
-def MilonDays2(year, month, day, maxdays):
+def MilionDays2(year, month, day, maxdays):
     date = dt.date(year, month, day)
     for i in range(maxdays):
         yield(date + dt.timedelta(days=i))  # yield zamraża wartość "i"

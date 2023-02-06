@@ -7,7 +7,7 @@ https://code.visualstudio.com/docs/cpp/config-mingw
 	-> Zaawansowane -> Zmienne środowiskowe... -> Path -> Edytuj -> Nowy ->
 C:\mingw-w64\x86_64-8.1.0-win32-seh-rt_v6-rev0\mingw64\bin
 
-Zakładanie projektu: Po prostu zakłądam sobie nowy folder i plik main.cpp  lub inny.cpp
+Zakładanie projektu: Po prostu zakładam sobie nowy folder i plik main.cpp  lub inny.cpp
 Moge go otworzyć w notatniku, ale najwygodneij w VSCode
 
 Najprostrzy kod gdzie coś widać:

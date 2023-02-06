@@ -18,6 +18,12 @@
 # Maszyna -> Tools -> Snapshots
 
 
+# jakis program do gier: Lutris, pozwala instalować stare gry z płyt
+# coś dla EpicGameStor albo dla Gog:  heroic games launcher
+
+# jakiś program do nagrywania tego co na ekranie: Kdenlive
+
+
 # -------------------------------------------------------------------------------------------------
 Struktura katalogów:
 pwd    # gdzie jeteśmy //= /home/wojtek (print work directory)
