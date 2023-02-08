@@ -1477,6 +1477,7 @@ local storage - Do zapisywania danych na nieokreslony czas (az do ich usuniecia)
 //Wyrazenia regularne
 // Strony do testowania wyrazen: https://regex101.com/
 // https://regexr.com/
+// https://ihateregex.io/expr/uuid/
 
 //Aby w Javascript korzystac z wyrazen regularnych, musimy utworzyc obiekt:
 	RegExp(wyrazenie, flaga)

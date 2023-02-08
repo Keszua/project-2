@@ -1764,13 +1764,32 @@ pm2 - dba o to, żeby proces był cały czas uruchomiony
 
 npm i pm2@latest -g                    // instalacja: 
 pm2 start app.js                       // uruchomienie
+pm2 start ./dist/index.js
 pm2 list                               // pokazuej uruchomione procesy
 pm2 monit                              // pokazuje logi berzące
 pm2 logs                               // logi wsteczne
+pm2 logs [apka]
+pm2 restart apka / all
 pm2 scale app.js 10                    // ile uruchomić jednoczesnych aplikacji
-pm2 stop all                           // zatrzymaj wszystko
+pm2 stop [apka] / all                  // zatrzymaj
+pm2 delete apka / all
 
 
+pm2 start ecosystem.config.js
+
+//zawartosc pliku ecosystem.config.js
+module.exports = {
+    apps: [
+        {
+            name: 'myapp',
+            script: './dist/index.js',
+            autorestart: true,
+            max_memory_restart: '2G',
+            exec_mode: "cluster",
+            instances: -1,
+        }
+    ],
+};
 
 //-----------------------------------------------------------------------------
 
@@ -2395,14 +2414,14 @@ item.find({
     ]
 })
 
-In() jedna wartość z kilku. Poniższy przykłąd odnajdzie 4 elementy o podanym ID (jeśli taie są)
+In() jedna wartość z kilku. Poniższy przykład odnajdzie 4 elementy o podanym ID (jeśli taie są)
 
 where: {
     id: In([1, 2, 100, 4])  //UWAGA, nie podawać pustej tablicy
 }
 
 sprawdzanie, czy pole jest nulem
-IsNull() 
+IsNull() 4
 where: {
     description: IsNull(),  //zwróci wszystkie pola, które są puste
 }
@@ -2418,3 +2437,48 @@ where: {
 }
 
 
+
+//-------------------------------------------------------------------------------------------------
+Dla potomnych:
+
+https://horizon.netscout.com/ – wizualne przedstawienie ataków DDoS dziejących się na świecie
+
+https://youtu.be/yZICgYViIEY – dodatkowy (tajny!) materiał od Kuby jak przygotować stress test z użyciem aplikacji k6.io
+
+https://owasp.org/www-community/Vulnerability_Scanning_Tools – lista darmowych skanerów podatności na ataki hakerskie
+
+https://github.com/nodesecurity/eslint-plugin-security – wtyczka do ESLinta zwracająca uwagę na potencjalne luki bezpieczeństwa w pisanym przez nas kodzie
+
+https://npmjs.com/package/helmet – middleware do Expressa (ale też do innych frameworków) ustawiający nagłówki na bezpieczniejsze
+
+https://github.com/davisjam/vuln-regex-detector – skanuje kod w poszukiwaniu podatnych regexów
+
+
+
+Artykuły źródłowe z prezentacji:
+
+https://cheatsheetseries.owasp.org – ogólne porady bezpieczeństwa
+
+https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html - wskazówki bezpieczeństwa w Node
+
+https://blog.sqreen.com/nodejs-security-best-practices – kolejny artykuł z wskazówkami bezpieczeństwa w Node
+
+https://www.youtube.com/watch?v=oOoMqgnvZaY
+
+
+
+//-------------------------------------------------------------------------------------------------
+Jak uruchomić kod na produkcji:
+1. Dodaj skrypt "build": "tsc"
+2. Upewnij się, że w tsconfig.json:
+- Masz ustawiony outDir
+- Nie masz żadnych zaleznosci DOM (np. dom.iterable)
+- Masz odpowiedni system paczek, zrozumaiły dla Twojej wersji Node, np: "module": "CommonJS",
+3. Jeżeli używasz esModuleInterop, to zmień importy w stylu "imports *as cors from 'cors'"; na "miport cors from 'cors'"
+4. Oznacz folder 'dist' jako wykluczony.
+5. Uruchamiaj skrypt build.
+
+
+Linki do konfiguracji:
+- Apache: https://www.ionos.com/digitalguide/websites/web-development/nodejs-for-a-website-with-apache-on-ubuntu/#c313777
+- nginx: https://docs.nginx.com/nginx/deployment-guides/load-balance-third-party/node-js/#configuring-basic-load-balancing

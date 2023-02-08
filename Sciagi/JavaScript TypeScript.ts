@@ -23,11 +23,14 @@ tsconfig.json
         "sourceMap": true,                     // generuje mapę zależności - przydstane przy debugowaniu
         "target": "es6",                       // możemy zdefiniować w jakiej wersji będzie plik wynikowy.
         "downlevelIteration": true,            // 
+        "module": "CommonJS",                  // chyba cos do wersji produkcyjnych
         "lib": ["dom", "es6", "dom.iterable"], // Tablica bibliotek.
+        "lib": ["es6"],                        // do wersji produkcyjnej, chyba tylko es6 ma zostać.
         "outDir": "./dist/",                   // To ścieżka w której umieszczone będę wynikowe pliki.
         "experimentalDecorators": true,         // Gdy chcemy korzytać z dekoratorów
         "emitDecoratorMetadata": true, 
         "moduleResolution": "Node",            // żeby zadziałały modułu nołdowe (z niebieską ikonką)
+        "esModuleInterrop": true
 
         "baseUrl": "./",                       // To ścieżka bazowa dla całej konfiguracji.
         "removeComments": true,                // W czasie kompilacji do JavaScript usuwa komentarze.

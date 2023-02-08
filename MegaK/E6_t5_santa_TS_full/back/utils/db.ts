@@ -1,7 +1,6 @@
-//const mysql = require('mysql2/promise');
-import * as mysql from 'mysql2/promise';
+import {createPool} from 'mysql2/promise';
 
-export const pool = mysql.createPool( { // multi połączenie.
+export const pool = createPool( { // multi połączenie.
 	host: 'localhost',
     port: 3308,
 	user: 'root',

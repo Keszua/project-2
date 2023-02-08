@@ -107,6 +107,72 @@ npm run test
 
 
 
+//-------------------------------------------------------------------------------------------------
+//metody sprawdzające (matchers):
+// dla liczb:
+expect( sum(1, 2) ).toBe(3);      				// === 3                   expect([1, 2, 3]).toBe([1, 2, 3]);           NIE przejdzie
+expect( sum(1, 2) ).toEqual(3); 				// == 3                    expect([1, 2, 3]).toEqual([1, 2, 3]);        przejdzie
+expect( sum(1, 2) ).toStrictEqual(3); 			// == 3                    expect([1, 2, 3]).toStrictEqual([1, 2, 3]);  przejdzie
+expect( sum(0.1, 0.2) ).toBeCloseTo(0.3); 		// == 0.3 (dla float)
+expect( sum(1, 2) ).not.toBe(3);  				// != 3
+expect( sum(1, 2) ).toBeGreaterThan(3); 		// > 3
+expect( sum(1, 2) ).toBeGreaterThanOrEqual(3); 	// >= 3
+expect( sum(1, 2) ).toBeLessThan(3);  			// < 3
+expect( sum(1, 2) ).toBeLessThanOrEqual(4.5);   // <= 4.5
+
+//dla true/false
+.toBeUndefined(); 	//czy zwróci undefined (ma zwrócić undefined)
+.toBeNull();  		// czy zwróci null (ma zwrócić null,  false nie przejdzie tego testu)
+.toBeTruthy(); 		// czy zwróci prawdę
+.not.toBeTruthy(); 	// czy zwróci false
+.toBeFalsy();  		// czy zwróci false (null przejdzie ten test)
+.toBeDefined();  	// czy jest zdefiniowany? Czy ma warość? 
+.toBeUndefined();  	// czy nie jest zdefiniowana? undefined
+// falsy: 0, null, undefined, NaN, ""
+
+//dla stringów:
+expect('team').not.toMatch(/I/); // nie zawiera litery
+expect('Christoph').toMatch(/stop/); // zawiera ciąg znaków
+expect('Christoph').toMatch(/stop/i); // zawiera ciąg znaków (i - nie zwracaj uwagi na wielkość liter)
+
+const linkElement = screen.getByText(/learn react/i);
+expect(linkElement).toBeInTheDocument();
+
+//dla tablic:
+expect(shoppingList).toContain('milk'); // czy tablica zawiera element?
+//dla wyjątków:
+// czy funkcja:
+// function compileAndroidCode() {  throw new Error('you are using the wrong JDK'); }
+expect(() => compileAndroidCode()).toThrow(); // zwróci wyjątek?
+
+// przykład z rzuceniem błędu:
+function sprawdzam() {
+    throw new Error("Totalny haos");
+}
+
+test("Bledy", () => {
+    expect(sprawdzam).toThrow(); //czy funkcja rzuci (czym kolwiek)
+    expect(sprawdzam).toThrow(Error); //czy funkcja rzuci błędem
+    expect(sprawdzam).toThrow("Totalny haos"); //czy funkcja rzuci błędem z konkretnym komunikatem
+    expect(sprawdzam).toThrow(/haos/i); //czy funkcja rzuci błędem zawierający słowo "haos"
+});
+
+//dla atrybutów:
+expect(element).toHaveAttribute('type', 'password');
+
+//dla wartości:
+expect(element).toHaveValue('login');
+
+//dla porównania obiektów:
+const movie = {id: 3, title: 'pierwszy film', description: 'Opis pierwszego filmu'}; // Film 31 (React - testowanie)
+expect(movieCreated.mock.calls[0][0]).toStrictEqual(movie); 
+// lub:
+expect(movieCreated).toHaveBeenCalledWith(movie);
+
+// dla funkcji asynchronicznych:
+test('funkcja asynchroniczna', async () => {
+    expect([1,2,3]).not.toContain(777);
+});
 
 
 
@@ -114,6 +180,8 @@ npm run test
 
 
 
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 Filmik 106 (Node.js, Express i MongoDB)
 
@@ -423,69 +491,6 @@ it('works', async () => {
 npm run test
 
 
-//-----------------------------------------------------------------------------
-//metody sprawdzające (matchers):
-// dla liczb:
-	expect( sum(1, 2) ).toBe(3);      				// === 3                   expect([1, 2, 3]).toBe([1, 2, 3]);           NIE przejdzie
-	expect( sum(1, 2) ).toEqual(3); 				// == 3                    expect([1, 2, 3]).toEqual([1, 2, 3]);        przejdzie
-	expect( sum(1, 2) ).toStrictEqual(3); 			// == 3                    expect([1, 2, 3]).toStrictEqual([1, 2, 3]);  przejdzie
-	expect( sum(0.1, 0.2) ).toBeCloseTo(0.3); 		// == 0.3 (dla float)
-	expect( sum(1, 2) ).not.toBe(3);  				// != 3
-	expect( sum(1, 2) ).toBeGreaterThan(3); 		// > 3
-	expect( sum(1, 2) ).toBeGreaterThanOrEqual(3); 	// >= 3
-	expect( sum(1, 2) ).toBeLessThan(3);  			// < 3
-	expect( sum(1, 2) ).toBeLessThanOrEqual(4.5);   // <= 4.5
-	
-//dla true/false
-	.toBeUndefined(); 	//czy zwróci undefined (ma zwrócić undefined)
-	.toBeNull();  		// czy zwróci null (ma zwrócić null,  false nie przejdzie tego testu)
-	.toBeTruthy(); 		// czy zwróci prawdę
-	.not.toBeTruthy(); 	// czy zwróci false
-	.toBeFalsy();  		// czy zwróci false (null przejdzie ten test)
-	.toBeDefined();  	// czy jest zdefiniowany? Czy ma warość? 
-	.toBeUndefined();  	// czy nie jest zdefiniowana? undefined
-    // falsy: 0, null, undefined, NaN, ""
-
-//dla stringów:
-	expect('team').not.toMatch(/I/); // nie zawiera litery
-	expect('Christoph').toMatch(/stop/); // zawiera ciąg znaków
-	expect('Christoph').toMatch(/stop/i); // zawiera ciąg znaków (i - nie zwracaj uwagi na wielkość liter)
-	
-	const linkElement = screen.getByText(/learn react/i);
-	expect(linkElement).toBeInTheDocument();
-	
-//dla tablic:
-	expect(shoppingList).toContain('milk'); // czy tablica zawiera element?
-//dla wyjątków:
-// czy funkcja:
-	// function compileAndroidCode() {  throw new Error('you are using the wrong JDK'); }
-	expect(() => compileAndroidCode()).toThrow(); // zwróci wyjątek?
-
-// przykład 2 z rzuceniem błędu:
-    function sprawdzam() {
-        throw new Error("Totalny haos");
-    }
-
-    test("Bledy", () => {
-        expect(sprawdzam).toThrow(); //czy funkcja rzuci (czym kolwiek)
-        expect(sprawdzam).toThrow(Error); //czy funkcja rzuci błędem
-        expect(sprawdzam).toThrow("Totalny haos"); //czy funkcja rzuci błędem z konkretnym komunikatem
-        expect(sprawdzam).toThrow(/haos/i); //czy funkcja rzuci błędem zawierający słowo "haos"
-    });
-
-//dla atrybutów:
-    expect(element).toHaveAttribute('type', 'password');
-//dla wartości:
-    expect(element).toHaveValue('login');
-//dla porównania obiektów:
-    const movie = {id: 3, title: 'pierwszy film', description: 'Opis pierwszego filmu'}; // Film 31 (React - testowanie)
-    expect(movieCreated.mock.calls[0][0]).toStrictEqual(movie); 
-// lub:
-    expect(movieCreated).toHaveBeenCalledWith(movie);
-
-
-
-
 
 
 
@@ -547,9 +552,76 @@ test('Funkcja addNumbers z numerami i stringami (ma zwrócić sumę)', () => {
 
 
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+/*-----------------------------------------------------------------------------
+  #     #   ####    ###   #   #
+  ##   ##  #    #  #   #  #  # 
+  # # # #  #    #  #      # #  
+  #  #  #  #    #  #      ##   
+  #     #  #    #  #      # #  
+  #     #  #    #  #   #  #  # 
+  #     #   ####    ###   #   #
+-----------------------------------------------------------------------------*/
+// Mock - jest to coś, co udaje jakąś część sytemu, np bazę danych, która zawsze ma te same dane.
+
+//Przykład Kuby, mock do przechwytywania 2 metody z bazy danych:
+import { ChildRecord } from "../records/child.record";
+
+let child: ChildRecord;
+beforeAll( async () => {
+    child = await ChildRecord.getOne('123-456');
+});
+
+// mock co przechwytuje wszystkie linijki typu:  const child = await ChildRecord.getOne('123');
+jest  
+    .spyOn(ChildRecord, 'getOne')  // bez .prototype dla metod ststycznych
+    .mockImplementation( async (id: string) => {
+        return new ChildRecord({
+            id,
+            name: "Testowy",
+            gift_id: '123',
+        });
+});
+
+/// mock do przechwytywania metody update
+jest  
+    .spyOn(ChildRecord.prototype, 'update')  // z .prototype dla metod "zwykłych"
+    .mockImplementation( async () => {});
+
+
+test('Test getOne', async () => {
+    console.log(child);
+    expect(child).toBeDefined();
+    expect(child?.id).toEqual('123-456');
+});
+
+test('Test update', async () => {
+    await child?.update();
+});
+
+
+
+
+
+/*-----------------------------------------------------------------------------
+  #####  #####   ##### 
+    #     #   #   #   #
+    #     #   #   #   #
+    #     #   #   #   #
+    #     #   #   #   #
+    #     #   #   #   #
+    #    #####   #####
+-----------------------------------------------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
 
 //zainstalowałem:
 yarn add -D jest-fetch-mock 
