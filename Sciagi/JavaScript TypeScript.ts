@@ -11,8 +11,8 @@ tsc nazwapliku.ts
 
 // zakładanie nowego projektu
 npm init -y
-npm i express express-async-errors express-handlebars method-override mysql2 uuid
-npm i -D ts-node  ts-node-dev typescript @types/node @types/express @types/cookie-parser @types/method-override @types/uuid
+npm i express express-async-errors express-handlebars method-override mysql2 uuid cors
+npm i -D ts-node  ts-node-dev typescript @types/node @types/express @types/cookie-parser @types/method-override @types/uuid @types/cors
 
 // plik ts config można zrobić komenda: tsc --init
 tsconfig.json
@@ -30,7 +30,7 @@ tsconfig.json
         "experimentalDecorators": true,         // Gdy chcemy korzytać z dekoratorów
         "emitDecoratorMetadata": true, 
         "moduleResolution": "Node",            // żeby zadziałały modułu nołdowe (z niebieską ikonką)
-        "esModuleInterrop": true
+        "esModuleInterop": true
 
         "baseUrl": "./",                       // To ścieżka bazowa dla całej konfiguracji.
         "removeComments": true,                // W czasie kompilacji do JavaScript usuwa komentarze.
@@ -485,7 +485,7 @@ export function rest(
 */
 
 //metoda na zebranie wsytkich exportów do jednego pliku, to stworzenie w folderze types, pliku: indes.ts  (E5 T3 D3 9:00)
-// zakłądam ze mam kilka plików, a w każsym jeden export, np:   export ionterface SingleTodo ....
+// zakładam ze mam kilka plików, a w każsym jeden export, np:   export ionterface SingleTodo ....
 // zawartość pliku index.ts
 export * from './gender';
 export * from './single-todo';

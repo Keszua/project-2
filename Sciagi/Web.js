@@ -1,6 +1,17 @@
 
 Testowanie responsywnosci: http://mattkersley.com/responsive/
 
+Projektownaie programu blkowo: https://miro.com/pl/
+
+Przy tworzeniu kodu: linter: https://github.com/airbnb/javascript
+
+
+Do autoamtycznej dokumantacji:
+https://jsdoc.app/
+https://tsdoc.org/
+
+
+
 AP - acess Pin - rozsyłanie lanu 
 
 Wireguard - tworz VPN 
@@ -1637,6 +1648,44 @@ Wyjście z procesu: Ctrl+C
 
 
 
+//------------------------------------------------------------
+Nowy projekt, lista zadań:
+Konfiguracja BE
+konfiguracja Gita
+[BE] Instalacja podstawowych rzeczy
+[BE] ustawienie routingu i podstawowych middleware-ów
+[FE] Instalacj Reacta w wersji TypeScript
+[BE] Stworzenei folderów typów
+[FE] Połączenie z typami BE
+[BE] Uruchomienie Gita 
+Utworzenie repozytorów zdalnych i dodanie ich do lokalnych
+[BE] Globalna obsługa błędów
+[BE] Stworenie bazy danych
+[BE] Stworzenie połaczenia z bazą danych
+[BE] Dodawanie rekordu
+[BE] Listowanie ogłoszeń   ┐
+[BE] Wyszujiwanie ogłoszeń ┘
+[BE] Dodawanie ogłoszeń
+[BE] Zwracanie pojedynczego ogłoszenia
+[BE] Ustawienie rate-limitera
+[BE] Przygotować w aplikacji Jesta
+
+
+//------------------------------------------------------------
+Mapa, mapy:
+
+https://www.openstreetmap.org/#map=7/52.018/19.137
+Mapa rastrowa
+Działa topornie i czasami nie działa
+
+https://docs.mapbox.com/mapbox-gl-js/example/simple-map/
+Wektorowa - płatna
+
+https://react-leaflet.js.org/docs/start-setup/
+Działa tak sobie ale działa
+Aby z niej skorzytać, zainstolawać:
+npm i leaflet react-leaflet
+npm i -D @types/leaflet
 
 
 

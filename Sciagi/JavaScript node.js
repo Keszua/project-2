@@ -2206,10 +2206,10 @@ http://localhost:3000/fox/Karol/Testowy
         //fajna przebudowa tego promisa, filmik 51, 4:00
 
 
-@HttpCode(202) //- zmiana kodu odpowiedzi. Bez tego domyślnie jest 200, a dla POST 201
+@HttpCode(202)                           //- zmiana kodu odpowiedzi. Bez tego domyślnie jest 200, a dla POST 201
 @Header('X-My-Test', 'Testowy naglowek') //- dodatkowy, niestandardowy nagłówek film 52, 2:00 
-@Redirect('/test')  //-przekierowanie na inną stronę, podstronę
-@Redirect('https://wp.pl')  //-przekierowanie na inną stronę
+@Redirect('/test')                       //-przekierowanie na inną stronę, podstronę
+@Redirect('https://wp.pl')               //-przekierowanie na inną stronę
 
 
 //Be RESTful!
@@ -2365,13 +2365,13 @@ Po stworzeniu user, podpinanie go do controlerów innych modułów: film 85, 6:0
 
 ORM - Object-Relational Mapping (Mapowanie Obiektowo-Relacyjne) zerknąłem na: https://fsgeek.pl/post/typeorm-pierwsze-kroki/
 
-//AND 
+//AND
 item.find({
     description: 'ogórki',  //and
     price: 9.99,
 })
 
-//OR  
+//OR
 item.find({
     where: [
         { description: 'ogórki' }, //lub
@@ -2379,7 +2379,7 @@ item.find({
     ]
 })
 
-//OR  i AND
+//OR i AND
 item.find({
     where: [
         { description: 'ogórki' }, //lub

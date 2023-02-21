@@ -820,6 +820,28 @@ ssh-keygen -t rsa -b 4096 -C "mailNaGithuba@wp.pl"
 testkey        // bez rozszeżenia jest prywatny
 testkey.pub    // publiczny, do wklejenia na koncie gitHuba do "SSH and GPG keys"
 
+
+               #           ###  #
+         #     #          #     #
+  ####       #####        #     #       ###   #     #
+ #   #  ##     #         ####   #      #   #  #     #
+ #   #   #     #          #     #      #   #  #  #  #
+  ####   #     #          #     #   #  #   #  # # # #
+     #  ###     ##        #      ###    ###    #   # 
+ ####
+
+//Instalacja git flow
+git flow init 
+
+// tworzy domyslną struktórę 
+git reflog                   // coś jak git log --oneline
+
+git flow feature start nazwaNowegoZadania        //tworze nowa galaz
+git flow feature finish nazwaNowegoZadania
+
+git flow release start wersjaApki
+git flow release finish wersjaApki               //zrobi merg do mastera/maina oraz develop i przeniesie nas na gałąź develop
+
 /****************************************************************
 *                                                               *
 *                       STOPKA v1                               *
