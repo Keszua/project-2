@@ -274,7 +274,7 @@ https://boxy-svg.com/app
         <rect class="clips" x="150" y="250" width="100" height="20" fill="white" stroke="red" stroke-width="8" />
         <!-- Domyslnie jedneostki sa w px. Pozycja x i y domyslnie jest 0 0. 
 			Stroke to obramowanie. 
-			stroke-linecap: 'butt' | 'round' | 'square'   zakończenei linii
+			stroke-linecap: 'butt' | 'round' | 'square'   zakończenie linii
 			stroke-linejoin   polaczenia linii  -->
 		
         <circle cx="200" cy="200" r="20" fill="#333" stroke="black" stroke-width="8" />

@@ -753,7 +753,7 @@ console.log(buff.toString('utf8'));   //=> Hejka
 Writable  // - stream do którego możemy coś zapisać
 Readable  // - stream do odczytywania, np: odczyt z pliku
 Duplex    // - najcześciej do połączenia TCP/IP
-Transform // - Podobnei jak Duplex. Może zmieniać dane które przez neigo przechodzą. np do kmpresji.
+Transform // - Podobnie jak Duplex. Może zmieniać dane które przez niego przechodzą. np do kmpresji.
 
 np: 
 - odczytujemy benzynę z baku
@@ -761,7 +761,7 @@ np:
 - na końcu stworzoną mieszankę przekazujemy do silnika
 
 Przykład kompresowania:
-Readable Stream (do odczytu liku) --->  Transform Stream (do kompresji danych)  ---> Writable Stream (do zapisu pliku))
+Readable Stream (do odczytu linku) --->  Transform Stream (do kompresji danych)  ---> Writable Stream (do zapisu pliku))
 
 */
 

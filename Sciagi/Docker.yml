@@ -187,6 +187,11 @@ docker container commit idKontenera nazwaKontaDockerHub/nazwaObrazu:zTagiem
   #      #      #####   #      #  #    ###    ### #   #####   #    
                        #                                     #    
 
+# Alpine
+docker container run --name Franek -it alpine:3.17 /bin/sh
+docker container start -ai haszKontenera
+# aby w apline ściągnąc nano: apk update && apk add nano 
+
 # Przykladowe kontenery
 docker container run -d -p 8080:80 --name mynginx nginx:latest
 docker container run -d -e POSTGRES_USER=user1 -e POSTGRES_PASSWORD=pass123 -p 5444:5432 postgres:latest
@@ -194,10 +199,16 @@ docker container run -d -e POSTGRES_USER=user1 -e POSTGRES_PASSWORD=pass123 -p 5
 
 # tworzenie sieci i uruchomienie kontenera wordpresa z mySql
 docker network create --driver=bridge skynet
-docker container run -d -p 3308:3306 --name db -e MYSQL_DATABASE=exampledb -e MYSQL_USER=exampleuser -e MYSQL_PASSWORD=12345678 -e MYSQL_RANDOM_ROOT_PASSWORD=1 --network=skynet --restart=always mysql:5:7
-#                                                 └ Jak ma sie nazywac baza                                                        └ wygeberuj automatycznei bespieczne haslo dla roota
+docker container run -d -p 3308:3306 --name db -e MYSQL_DATABASE=exampledb -e MYSQL_USER=exampleuser -e MYSQL_PASSWORD=12345678 -e MYSQL_RANDOM_ROOT_PASSWORD=1 --network=skynet --restart=always mysql:5:7 !!UWAGA - nie zadziałało
+#                                                 └ Jak ma sie nazywac baza                                                        └ wygeneruj automatycznie bespieczne haslo dla roota
 docker container run -d -p 8080:80 -e WORDPRESS_DB_HOST=db:3306 -e WORDPRESS_DB_USER=exampleuser -e WORDPRESS_DB_PASSWORD=12345678 -e WORDPRESS_DB_NAME=exampledb --network=skynet  --restart=always wordpress:latest
 #                                                          └ port besposredni (nie do lokalnego przekierowania)
+
+# kontener z sql (działa)
+docker container run -d -p 3310:3306 --name black-box -e MYSQL_DATABASE=black_box -e MYSQL_ROOT_PASSWORD=admin -e -d mysql:5.7
+
+# kontener dla mapy z MegaK (działa)
+docker container run -d -p 3309:3306 --name mapaMegaK -e MYSQL_DATABASE=megak_ads -e MYSQL_PASSWORD=pass -e MYSQL_ROOT_PASSWORD=pass -e MYSQL_USER=karol -d mysql:5.7
 
 
 # kontener z centosem:
@@ -559,7 +570,7 @@ npx create-react-app forntend
 # Robie drugi folder backend (na tym poziomie co cały React). 
 # Wchodze do tego folderu, tam wywołuje 
 npm init
-# powatanie plik package.json, do kturego dopisuje zalezności (stare scripts usunąć):
+# powstanie plik package.json, do kturego dopisuje zalezności (stare scripts usunąć):
 {
   ...
   "dependencies": {

@@ -1647,7 +1647,6 @@ Wyjście z procesu: Ctrl+C
 
 
 
-
 //------------------------------------------------------------
 Nowy projekt, lista zadań:
 Konfiguracja BE
@@ -1669,6 +1668,7 @@ Utworzenie repozytorów zdalnych i dodanie ich do lokalnych
 [BE] Zwracanie pojedynczego ogłoszenia
 [BE] Ustawienie rate-limitera
 [BE] Przygotować w aplikacji Jesta
+[BE] Dodanie endpiontów
 
 
 //------------------------------------------------------------

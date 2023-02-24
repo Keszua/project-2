@@ -27,7 +27,7 @@ tsconfig.json
         "lib": ["dom", "es6", "dom.iterable"], // Tablica bibliotek.
         "lib": ["es6"],                        // do wersji produkcyjnej, chyba tylko es6 ma zostać.
         "outDir": "./dist/",                   // To ścieżka w której umieszczone będę wynikowe pliki.
-        "experimentalDecorators": true,         // Gdy chcemy korzytać z dekoratorów
+        "experimentalDecorators": true,        // Gdy chcemy korzytać z dekoratorów
         "emitDecoratorMetadata": true, 
         "moduleResolution": "Node",            // żeby zadziałały modułu nołdowe (z niebieską ikonką)
         "esModuleInterop": true
@@ -79,6 +79,60 @@ ts-node indexedDB.ts
 // Instalacja typów przez: npm i -D @types/express  (E5 T3 D3 26:30)
 // zalecane doinstlowanie:
 npm i -D @types/node @types/express @types/cookie-parser
+
+
+//-------------------------------------------------------------------------------------------------
+//Wspólne typy dla fronu i backendu
+// 1. modyfikacja tsconfig.json na froncie, dodać linijkę (jako pierwsza):
+    "extends": "./tsconfig.paths.json",
+
+// 2. Na froncie dodać plik "tsconfig.paths.json" z zawarością:
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "types": [
+                "../back/types"
+            ]
+        }
+    }
+}
+
+// 3. Dionstalować moduły (na froncie)
+npm i -D customize-cra react-app-rewire-alias
+
+// 4. Dodaj plik "config-overrides.js" z zawartością:
+const {override} = require('customize-cra');
+const {aliasDangerous, configPaths} = require('react-app-rewire-alias/lib/aliasDangerous');
+
+module.exports = {
+    webpack: override(
+        aliasDangerous(configPaths('./tsconfig.paths.json'))
+    ),
+};
+
+// 5. W pliku  "package.json" (front) zmienić zawartość "scripts": {  na:
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
+
+// 6. Zrestartować projekt z frontem
+
+// 7. W backendzie powinien być złaożony folder "types"
+// a wnim plik "index.ts" z zawartością:
+    export * from './gift';
+    export * from './adcParams';  // to oczywiście przykład nazwy
+// folder i plik /gift/index.ts  z zawartością:
+    export * from './gift.entity';
+// oraz foldery i plik z typami, np /gift/gift.entity.ts
+    export interface GiftEntity {
+        id?: string;
+        name: string;
+    }
+
+// 8. Od tej pory we froncie, można urzywać takich importów:
+import { ChildEntity, CreateChildReq, GiftEntity } from 'types';
 
 
 
@@ -208,13 +262,13 @@ for (const key in Gender) {
     }
 }
 
-// podobny efekt, stworzy tablicę z wsystkimi nazwami:
+// podobny efekt, stworzy tablicę z wszystkimi nazwami:
 const allPossibilities = Object
     .keys(Gender)
     .filter(key => Number.isNaN(Number(key)));
 console.log(allPossibilities);  //= ["Woman", "Man", "Xyz"]
 
-// sprawsz, czy element znajsuje sie w enumie
+// sprawdz, czy element znajduje sie w enumie
 
 
 

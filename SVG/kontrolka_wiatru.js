@@ -725,7 +725,7 @@ const Wind = (props) => {
 
                 </g> */}
 
-                {/* Strzeałka */}
+                {/* Strzałka */}
                 <g style={{ stroke: '#007000', fill: "url(#linearGradient13798)", strokeWidth: 0.5,  strokeOpacity: 1,  fillOpacity: 1  }}>
                     <path d={dCalc1} />
 

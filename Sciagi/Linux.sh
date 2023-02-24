@@ -146,7 +146,7 @@ write mariusz                # wejdzie w tryb konwersacji z mariuszem   Ctrl+d  
 who -T                       # wypisze, kto hce otrzymywać komunikaty
 wall "Komunikat do wszystkich" # gdy dodamy sudo, to na pewno poleci do wszystkich (nie trzeb podawać cudzysłowiów)
 
-
+export PATH=$PATH:/place/with/the/file # dopisanie komendy do zmiennej środowiskowej
 
 sudo                         # komendy administratora
 sudo passwd root             # zmiana chasła dla administratora
@@ -499,7 +499,7 @@ bash -x ./skrypt1.sh      # uruchomienie skryptu + podgląd tego skryptu (z plus
 bash -v ./skrypt1.sh      # uruchomienie skryptu + podgląd tego skryptu (bez plusów)
 
 ./skrypt1.sh           # uruchomienie skryptu gdy nadamy mu wcześniej uprawnienia chmod +x skrypt1.sh
-./skrypt1.sh parametr  # uruchom skrypt z parametrem (uruchamainiae bez przedrostka ./ gdy jestesmy w innym katalogu)
+./skrypt1.sh parametr  # uruchom skrypt z parametrem (uruchamianie bez przedrostka ./ gdy jestesmy w innym katalogu)
 echo $?  # wyświetli informację, co zwróćił skrypt
 
 //-------------------------------------------------------------------------------------------------
@@ -636,9 +636,9 @@ blue="\033[34m"
 reset="\033[0m"
 //-------------------------------------------------------------------------------------------------
 
-source ~/skrypty/kolory.sh  # import pliku z kolorami (oczywiście musimy sobie taki napisać)
-if [ $# -lt 1 ] ; then //jeśli brak parametru, to wypisz ostrzeżenie  ( $# - liczba parametrów)
-if (( $# != 1 )) ; then //to samo co wyżej, tylko inny zapis
+source ~/skrypty/kolory.sh        # import pliku z kolorami (oczywiście musimy sobie taki napisać)
+if [ $# -lt 1 ] ; then            # jeśli brak parametru, to wypisz ostrzeżenie  ( $# - liczba parametrów)
+if (( $# != 1 )) ; then           # to samo co wyżej, tylko inny zapis
 	echo -e "${red} Składnia: $0 < nazwa użytkownika>$reset"
 	exit 1
 fi
@@ -650,7 +650,7 @@ exit 0
 //parametr skryptu określa nazwę pliku
 // -a AND
 // -o OR
-if [ -e $1 -a -x $1 ] ; then //czy ten plik istnienie i czy ma uprwnienia?
+if [ -e $1 -a -x $1 ] ; then      # czy ten plik istnienie i czy ma uprwnienia?
 	echo "Plik istnieje i ma uprawnienia do uruchomienia"
 else 
 	echo "Plik onazsie: $1 nie istnieje lub nie ma uprawnień do uruchomienia"
@@ -658,8 +658,8 @@ fi
 
 
 $plik=$1
-if [ -f "$plik" -a -r "$plik" ] && cat "$plik" //czy ten plik jest plikiem i czy jest do odczytu? i go wypisz jeśli spełnione warunki
-if [[ -f $plik && -r $plik ]] && cat "$plik" //ten samo zapis co wyżej
+if [ -f "$plik" -a -r "$plik" ] && cat "$plik"   # czy ten plik jest plikiem i czy jest do odczytu? i go wypisz jeśli spełnione warunki
+if [[ -f $plik && -r $plik ]] && cat "$plik"     # ten samo zapis co wyżej
 
 
 //dodawanie
@@ -701,7 +701,7 @@ echo "a=$a"  //= a=2
 echo "a=$a"  //= a=3
 
 
-//Pętle
+# Pętle
 for x in plik1.txt plik2.txt; do ; tpuch $x; chmod 777 $x; done 
 
 
@@ -717,22 +717,22 @@ done
 
 
 plik="text.txt"
-for x in $(cat $plik) //do pętli zaimportuj plik
+for x in $(cat $plik)        # do pętli zaimportuj plik
 do
-	echo $x  //wypisze każde słowo w innej linijce
+	echo $x                  # wypisze każde słowo w innej linijce
 done
 
 
 
 plik="text.txt"
-IFS=$'\n'  //separatorem ma być enter
-for x in $(cat $plik) //do pętli zaimportuj plik
+IFS=$'\n'                    # separatorem ma być enter
+for x in $(cat $plik)        # do pętli zaimportuj plik
 do
-	echo $x  //wypisze każdą LINIJKĘ w innej linijce (czyli po prostu wypisze zawartość linijka po linijce)
+	echo $x                  # wypisze każdą LINIJKĘ w innej linijce (czyli po prostu wypisze zawartość linijka po linijce)
 done
 
 
-for x in *  //odczytaj wszystko z bierzącego katalogu i wypisze czy jest to plik czy katalog
+for x in *                   # odczytaj wszystko z bierzącego katalogu i wypisze czy jest to plik czy katalog
 do
 	if [ -d "$x" ]
 	then
@@ -744,21 +744,21 @@ do
 done	
 
 
-//inny zapis fora:
+# inny zapis fora:
 for (( i=1;i<=10;i++ ))
 do
 	echo "Wartość zamiennej i=$i"
 done
 
 
-//pętla while
+# pętla while
 licznik=10
 while(( licznik>=0 ))
 do
 	echo "Wartosć licznika = $licznik"
 	(( licznik-- ))
 done
-echo //wolna linia
+echo               # wolna linia
 
 
 //funkcje
@@ -788,7 +788,7 @@ funkcjaA ()
 {
 	if [ -e ~/Praca ] ; then       
 		echo -e komunikat1             #  -e dodaje kolor
-	else                               #jeśli go nie ma, to go tworzymy
+	else                               # jeśli go nie ma, to go tworzymy
 		mkdir ~/Praca
 		echo -e "${zielony}Katalog został pomyślnie stworzony!$reset"
 	fi
@@ -799,14 +799,14 @@ funkcjaB ()
 {
 	if [ -e ~/Praca ] ; then       
 		if [ -e ~/Praca/Poniedziałek ] ; then       
-			echo -e "${czerwony}Podkataloogi zostąły już stworzone!$reset" 
-		else                           #jeśli go nie ma, to go tworzymy
+			echo -e "${czerwony}Podkataloogi zostały już stworzone!$reset" 
+		else                           # jeśli go nie ma, to go tworzymy
 			cd ~/Praca
 			mkdir ${tydzien[*]}
 			cd ~
 			echo -e "${zielony}Podkatalog zostały pomyślnie stworzone!$reset"
 		fi
-	else                               #jeśłi go nie ma, to go tworzymy
+	else                               # jeśli go nie ma, to go tworzymy
 		echo -e "${czerwony}Katalog Praca nie istnieje, wykonaj polecenia a)$reset"
 	fi
 	
@@ -877,14 +877,14 @@ funkcjaE ()
 	fi
 }
 
-//skrypt korzytający z poprzednego pliku:
+# skrypt korzytający z poprzednego pliku:
 #!/bin/bash
 source funkcje.sh
 
 while true
 do
 	clear
-	nasze_menu  # tu wyświetli całą zawartość funkcji
+	nasze_menu               # tu wyświetli całą zawartość funkcji
 	read -sn1 zmienna 
 	
 	case $zmienna in 
@@ -896,12 +896,17 @@ do
 		k) clear; exit 0; 
 	esac
 
-	echo                               #pusta linia
+	echo                     # pusta linia
 	read -sn1 -p "Naciśnij jakiś klawisz"
 
 	
 done
 
+
+
+// Przykład, uruchominie procesu w nowej konsoli:
+#!/bin/bash
+gnome-terminal --command="bash -c 'cd /home/karol/Projekty/aku_v2/program_odczyt_po_RS_full/front; sleep 5; ls; npm run start; $SHELL'"
 
 
 
@@ -1139,21 +1144,21 @@ cat /etc/resolv.conf    # tu się znajduje informacja o adresie serwera DNS
 #-------------------------------------------------------------------------------------------------
 systemd
 
-systemctl i service                    # do zarządzania usługami
+systemctl i service                         # do zarządzania usługami
 
-systemctl list-unit-files              # lista dostepnych unitow w  /usr/lib/systemd/system
-systemctl list-unit-files --type target # wszystkie unity typu target | socet | timer | 
-systemctl -t help                      # wypisze dostepne typy unitow
+systemctl list-unit-files                   # lista dostepnych unitow w  /usr/lib/systemd/system
+systemctl list-unit-files --type target     # wszystkie unity typu target | socet | timer | 
+systemctl -t help                           # wypisze dostepne typy unitow
 
 systemctl start [nazwaUslugi]
 systemctl status [nazwaUslugi]
-systemctl stop [nazwaUslugi]           # zatrzymanie uslugi w tej sesji (do nastepnego restartu)
+systemctl stop [nazwaUslugi]                # zatrzymanie uslugi w tej sesji (do nastepnego restartu)
 systemctl edit [nazwaUslugi]  
-systemctl enable [nazwaUslugi]         # tworzy link symboliczny, ktory definiuje, jakie uslugi maja sie uruchomic przy starcie w /etc/systemd/system
+systemctl enable [nazwaUslugi]              # tworzy link symboliczny, ktory definiuje, jakie uslugi maja sie uruchomic przy starcie w /etc/systemd/system
 # lista uslug znajduje sie w:    /usr/lib/systemd/system
 # pliki z linkiem symbolicznym:      /etc/systemd/system  
-systemctl enable --now [nazwaUslugi]   # polaczenie start i enble
-systemctl disable [nazwaUslugi]        # wylaczyc automatyczne uruchamianie
+systemctl enable --now [nazwaUslugi]        # polaczenie start i enble
+systemctl disable [nazwaUslugi]             # wylaczyc automatyczne uruchamianie
 
 service [nazwaUslugi] restart
 

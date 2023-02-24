@@ -97,18 +97,19 @@ Jak wczytać bazę danych w konsoli, minuta 11 filmu: https://www.youtube.com/wa
 
 mysql -u root -p                   // logowanie się do bazy
 EXIT                               // wyjście z bazy (wylogowanie)
+
 SHOW DATABASES;                    // pokazuje dostępne biblioteki
-DROP DATABASE IF EXISTS nazwaBazy  // usuń bazę, jeśli istnieje
-DROP TABLE nazwaTabeli;            // usówanie tabeli 
-CREATE DATABASE nazwaBazy          // tworzenie nowej bazy
+USE nazwaTabeli;                   // wejście do tabeli
+SHOW TABLES;                       // pokazuje dostępne tabele  w wybranej bibliotece
+
+CREATE DATABASE nazwaBazy;         // tworzenie nowej bazy
 CREATE TABLE nazwaTabeli  \n
   -> ( id_dzial INT NOT NULL PRIMARY KEY AUTO_INCREMENT
   ->   nazwa VARCHR(30) UNIQUE     //UNIQUE zapewni, że nie może być takich samych 
   -> ) COLLATE='utf8mb4_unicode_ci';
-USE nazwaTabeli;                   // wejście do tabeli
 SHOW TABLES;                       // Pokazuje zawrtość tabeli w której jestesmy
-DESCRIBE nazwaTabeli               // wyświetli właściwości tabeli w formie tabeli   | Field | Type | Null | Key | Def |
-INSERT INTO nazwaTabeli (nazwa) VALUES ( 'bajki'), (druga_tabela)  // dodawanie nowych rekordów
+DESCRIBE nazwaTabeli;              // wyświetli właściwości tabeli w formie tabeli   | Field | Type | Null | Key | Def |
+INSERT INTO nazwaTabeli (nazwa) VALUES ( 'bajki'), (druga_tabela); // dodawanie nowych rekordów
 SET SESSION sql_mode='traditional';                          // zabespiecza przed dodawaniem pustych pól
 DELETE FROM nazwaTabeli WHERE id_dzial=5;                    // kasowanie rekordu
 ALTER TABLE nazwaTabeli ┬ ADD UNIQUE(pesel)                  // nada key; UNI
@@ -117,7 +118,9 @@ ALTER TABLE nazwaTabeli ┬ ADD UNIQUE(pesel)                  // nada key; UNI
                         ├ RENAME TO nowaNazwaKolumny
                         └ DROP nazwaKolumny
 						
-
+DROP TABLE nazwaTabeli;            // usówanie tabeli 
+DROP DATABASE IF EXISTS nazwaBazy  // usuń bazę, jeśli istnieje
+                        
 
 // SQL = Structured Query Language (strukturalny język zapytań)
 Rodzaje komend:
@@ -617,3 +620,20 @@ CREATE OR REPLACE FUNCTION fn_name() RETURNS void AS
 '
   -- SQL command
 ' LANGUAGE SQL
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------
+//MegaK - mapa 
+CREATE TABLE megak_ads.ads (
+	id varchar(36) NOT NULL,
+	name varchar(100) NULL,
+	description varchar(1000) NULL,
+	price DECIMAL(9,2) NULL,
+	url varchar(100) NULL,
+	lat DECIMAL(10,7) NULL,
+	lon DECIMAL(10,7) NULL
+)
+COLLATE=utf8mb4_unicode_ci;
