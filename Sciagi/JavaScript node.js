@@ -2094,13 +2094,12 @@ yarn start // dla instalacji z paczkami yarn (nie npm) Najstarsza wersja
 //przerywanie procesu: Ctrl + C
 
     nest info // informacje o wersji, paczkach
-                    <rodzaj> <nazwa> // pozwala wygenerować elementy i umieszcza je w odpowiednie miejsca + układa kod
-    nest generate ┬ module     //mo  //generuje moduł
-                  ├ controller //co  // generuje kontroler
-                  ├ service    //s //generuje serwis (usługę)
-                  └ resource // ?? 
+                    RODZAJ NAZWA // pozwala wygenerować elementy i umieszcza je w odpowiednie miejsca + układa kod
+    nest generate ┬ module       //mo  //generuje moduł
+                  ├ controller   //co  // generuje kontroler
+                  ├ service      //s   //generuje serwis (usługę)
+                  └ resource     // ?? 
 
-                </nazwa> //to tylko zeby dalej skladnie pliku utrzymac
 
     nest build // tworzy produkcyjną aplikację w folderze dist
 //aby uruchomić wersję produkcyjną:
@@ -2142,6 +2141,20 @@ https://www.typescriptlang.org/play/
     }
     ]
 }
+
+//-----------------------------------------------------------------------------
+// uruchamianie "starszych" projektów według szablonu Jakubay Króla
+1. Zainstaluj yarn, jeżeli jeszcze go nie masz.
+
+2. Sklonuj gotowy szablon, który dla Ciebie przygotowałem z Gita.
+
+Repozytorium z szablonem znajdziecie tu:
+https://github.com/Ami777/Kurs-NestJS-starter
+
+Polecenie Git:
+git clone https://github.com/Ami777/Kurs-NestJS-starter.git
+
+3. Wykonaj polecenie "yarn".
 
 
 //-----------------------------------------------------------------------------

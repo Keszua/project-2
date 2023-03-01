@@ -10,6 +10,8 @@ Do autoamtycznej dokumantacji:
 https://jsdoc.app/
 https://tsdoc.org/
 
+Ranking narzędzi ( w tym wykresy)
+https://2022.stateofjs.com/en-US/o
 
 
 AP - acess Pin - rozsyłanie lanu 
@@ -1689,6 +1691,30 @@ npm i -D @types/leaflet
 
 
 
+//------------------------------------------------------------
+/*
+Plik .htaccess  umieszcza sie go w na serwerze w public_html
+
+<IfModule mod_rewrite.c>
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !^/(api)/
+RewriteRule . index.html [L]
+</IfModule>
+
+
+Plik .htaccess od Mariusza na stronie atlas mrowek, i jest wsadzoen do public_html/folderProjektu
+Options -MultiViews
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.html [QSA,L]
+*/
+
+//------------------------------------------------------------
+Daniel S :
+w pliku ../lib/node_modules/mysql2/index.d.ts w wierszu 86 usunąłem Connection i apka buduje się bez błędów
 //------------------------------------------------------------
 //------------------------------------------------------------
 //------------------------------------------------------------
