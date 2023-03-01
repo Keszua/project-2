@@ -1,0 +1,97 @@
+Zakład poogrzebowy
+
+╔════════════╦═════════════════════════╦════════════════════════════════╗
+║            ║ ┌─────────────────┬───┐ ║ ┌───────┐  ┌───────┐ ┌───────┐ ║
+║ Game over  ║ │ Szukaj          │   │ ║ │Kontakt│  │Koszyk │ │Zaloguj│ ║
+║            ║ └─────────────────┴───┘ ║ │       │  │       │ │       │ ║
+║            ║                         ║ └───────┘  └───────┘ └───────┘ ║
+╠════════════╩═════════════════════════╩════════════════════════════════╣
+║ ┌──────────┐  ┌────────┐ ┌──────────┐ ┌──────────────┐                ║
+║ │ Produkty │  │ Usługi │ │ Promocje │ | Kod rabatowy |                ║
+║ └──────────┘  └────────┘ └──────────┘ └──────────────┘                ║
+║───────────────────────────────────────────────────────────────────────║
+║                    ┌─────────┐  ┌─────────┐ ┌─────────┐               ║
+║                    │Slider   │  │         │ │         │               ║
+║                    │Promocji │  │         │ │         │               ║
+║                    └─────────┘  └─────────┘ └─────────┘               ║
+║                    ┌─────────┐  ┌─────────┐ ┌─────────┐               ║
+║                    │Slider   │  │         │ │         │               ║
+║                    │Usług    │  │         │ │         │               ║
+║                    └─────────┘  └─────────┘ └─────────┘               ║
+║                    ┌─────────┐  ┌─────────┐ ┌─────────┐               ║
+║                    │Slider   │  │         │ │         │               ║
+║                    │produktów│  │         │ │         │               ║
+║                    └─────────┘  └─────────┘ └─────────┘               ║
+║  Zaufali nam: ...                                                     ║
+║                                                                       ║
+║                                                      Cookies - zgoda  ║
+╚═══════════════════════════════════════════════════════════════════════╝
+
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+Backend:
+
+Bazy:
+Obrazki w base64 w finerider
+
+* Klienci
+
+
+
+//-------------------------------------------------------------------------------------------------
+* Usługi/oferty/Produkty
+
+- kopanie grobu: wykopiemy za ciebie, samemu kopartką, samemu łopatą (), samemu łuzeczką (Ucieczka z Alca tras),  
+- trumny: dębowa, bukowa, sosnowa, karton, 
+- urny: marmurowa, plastikowa, katon,
+- wieńce: duży, średni, mały, do samodzielnego montarzu (sucha gałązka, igły klej),
+- usługi: płaczki, żałobnicy
+- produkty: łopta grobokop
+
+//-------------------------------------------------------------------------------------------------
+* basket (Koszyk)
+id
+idUslugi
+idProduktu
+
+//-------------------------------------------------------------------------------------------------
+* Nowości/promocje
+- honorujemu kartę dużej rodziny (zbiorowe pochówki)
+- Zaplanuj swój pogrzeb: rezerwacja miesiąc wcześniej = rabat
+
+
+
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
+
+
+
+
+Nie było zwrotów ani zażaleń.
+Pomocja Lidlowa -typu 2 pogrzeby 3-ci 50% taniej
+Honorujenmy katy dożej rodziny
+Piosenka "Shaza Doprowadzasz mnie do cmentaża"
+Odnowa blogiczna w cenie
+
+Pakie stansrd + teściowa gratis
+Gwarancja że teściwoa pochowamy przed tobą
+gwarancja że teściwoa będzie 100 metrów
+Zabierz swoja ukochaną tesciową do grobu (pakiet mamusia i ja)
+
+Wystawienie zwłok co rok 
+
+Bądz na czasie: abonament na Ulotki reklamowe
+
+Płyta grobowa z solarem i dostępem do internetu
+
+Dieta pudełkowa
+Jakie robaki do grobu - a może zjedzenie przez lugożerców
+
+
+
+Cookies - zgoda
+
+Paginacja (przez funkcje scroll)

@@ -1310,6 +1310,7 @@ API - tu podegrać 3 pliki: HermesApi32, HermesApi64 i hermesdll.dll
 Hermes - pobrać z J:\ServerCI_Rozw i zainstalować na maszynie z "hermes"
 
 ┌ └ ├  ┘ ┼ ┬ ┤ ┴
-
+╠ ═ ╬ ╩ ╦ ═ ╣ ║ ╗ ╝
+▀▁▔▏▕▂▃▄▅ ▆▇█▉▊▋▍▎▌ ▐░▒▓▖▗▘▙▚ ▛▜▝▞▟▲▶▼◀ ◈◉✖✜✣✱✲✳✿❖❶
 
 

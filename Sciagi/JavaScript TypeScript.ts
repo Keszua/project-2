@@ -98,7 +98,7 @@ npm i -D @types/node @types/express @types/cookie-parser
     }
 }
 
-// 3. Dionstalować moduły (na froncie)
+// 3. Doinstalować moduły (na froncie)
 npm i -D customize-cra react-app-rewire-alias
 
 // 4. Dodaj plik "config-overrides.js" z zawartością:
