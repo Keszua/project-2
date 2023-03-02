@@ -357,7 +357,7 @@ const pool = mysql.createPool( { // multi połączenie.
 	}); // wymagane namedPlaceholders: true
 
 	// aktulizacja dancyh -----------------------------------------------------
-	const answer = await conn.execute('UPDATE `cars` SET `price` =  `price` + 100 WHERE `registrationNo` = "SJZ 44H"; ') // answer[0].affectedRows   - wyciąga ilość zmienionych
+	const answer =          await conn.execute('UPDATE `cars` SET `price` =  `price` + 100 WHERE `registrationNo` = "SJZ 44H"; ') // answer[0].affectedRows   - wyciąga ilość zmienionych
 	const {affectedRows} = (await conn.execute('UPDATE `cars` SET `price` =  `price` + 100 WHERE `registrationNo` = "SJZ 44H"; '))[0]; //destrukturyzacja która wyciąga ilość zmienionych
 	
 	const {insertId}          = (await conn.execute('INSERT INTO `cars` VALUES ("WRA 0001", "Mercedes", "AMG", "#e0e0c0 metalik", "2021-01-01", 200000); '))[0];
@@ -399,7 +399,7 @@ const pool = mysql.createPool( { // multi połączenie.
 
 
 
-	await conn.end(); // zakończenie, rozłączeni się z bazą  lub await pool.end();
+	await conn.end(); // zakończenie, rozłączenie się z bazą lub await pool.end();
 })();
 
 
