@@ -14,6 +14,17 @@ Ranking narzędzi ( w tym wykresy)
 https://2022.stateofjs.com/en-US/o
 
 
+// Do wykresów:
+https://www.chartjs.org/
+
+// Wskaźnik napiecia
+https://www.highcharts.com/demo/gauge-vu-meter
+
+//Do rysowania tabel:
+https://2022.stateofjs.com/en-US/o
+
+
+
 AP - acess Pin - rozsyłanie lanu 
 
 Wireguard - tworz VPN 
@@ -223,7 +234,7 @@ var stop = new Date();
 var roznica_czasow = stop.getTime() - start.getTime(); // czas w milisekundach
 
 
-console.log('Witaj'); // wyswietla komunikat w knsoli w przegladarce
+console.log('Witaj'); // wyswietla komunikat w konsoli w przegladarce
 
 Nadpisanie tresci do dokumentu:
 document.write('<h1>Nowa teść</h1>');

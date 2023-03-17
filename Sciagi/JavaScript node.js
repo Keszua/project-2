@@ -422,7 +422,7 @@ najważniejsze metody:
 - exports
 - consol (m. in. consloe.log())
 - class Buffer
-- setTimeout() / setInterval() / clearinterval()  //setTimeout( () => { console.log("Wykonalo sie!"); }, 1000 )
+- setTimeout() / setInterval() / clearInterval()  //setTimeout( () => { console.log("Wykonalo sie!"); }, 1000 )
 - __dirname / __filename
 
 //Obiekt global.proces 

@@ -1698,12 +1698,88 @@ export const miejsca = (N, S) => {
 
 //-----------------------------------------------------------------------------
 
+new Date(2017, 3, 22, 5, 23, 50)
+// Year: 2017,
+// Month: April(Kiecien) (because month is zero-indexed)
+// Day: 22
+// Hours: 05
+// Minutes: 23
+// Seconds: 50
 
+new Date('2019-06-11')       // ZLE! Tue Jun 11 2019 02:00:00 GMT+0200 (czas środkowoeuropejski letni)
+new Date('2019-06-11T00:00') // OK   Tue Jun 11 2019 00:00:00 GMT+0200 (czas środkowoeuropejski letni)
+
+//przykład ustawienia ciastka z imieniem na 7 dni:
+const dt = new Date();         
+dt.setDate(dt.getDate() + 7);    //aktualna data + 7 dni
+dt.setHours(dt.getHours() + 7);  //aktualna data + 7 godzin
+// setFullYear; setMonth; setDate; setHours; setMinutes; setSeconds; setMilliseconds;
+
+new Date().setFullYear(2023) // ustawienie roku: 2023
+// getFullYear: Gets 4-digit year according to local time
+// getMonth: Gets month of the year (0-11) according to local time.
+// getDate: Gets day of the month (1-31) according to local time.
+// getHours: Gets hours (0-23) according to local time.
+// getMinutes: Gets minutes (0-59) according to local time.
+// getSeconds: Gets seconds (0-59) according to local time.
+// getMilliseconds: Gets milliseconds (0-999) according to local time.
+
+
+const now = new Date();
+now.getTimezoneOffset(); róznica czasowa pomiędzy moja trefa a numwersalną (w minutach)
+console.log('now1', now.getTimezoneOffset());  // -60
 
 
 //-----------------------------------------------------------------------------
+// czas trwania pomiaru1:
+const start = new Date();
+zrobCosPrzezDlugiCzas(); // zdarzenie, dla którego chciałbyś zmierzyć czas trwania
+const stop = new Date();
+const roznica_czasow = stop.getTime() - start.getTime(); // czas w milisekundach
+
+// czas trwania pomiaru2:
+const start = new Date(record.startDate);
+const stop = new Date(record.stopDate);
+const differentTime = stop.getTime() - start.getTime();
+console.log(differentTime. ); //
 
 
+
+const age: number = 40; //Twój wiek: 
+console.log(`Urodziles sie w: ${new Date().getFullYear() - age}`); //= Urodziles sie w: 1983
+
+
+
+const d = new Date(2019, 0, 23)
+const year = d.getFullYear() // 2019
+const date = d.getDate() // 23
+const days = [ 'Niedz', 'Pon', 'Wto', 'Śro', 'Czwa', 'Piat', 'Sobota' ]
+const dayName = days[d.getDay()] // Wto
+
+//-----------------------------------------------------------------------------
+//Porównywanie czasu
+const a = new Date(2019, 0, 26)
+const b = new Date(2019, 0, 26)
+
+console.log(a == b) // false
+console.log(a === b) // false
+
+const isSameTime = (a: Date, b: Date) => {
+    return a.getTime() === b.getTime()
+}
+console.log(isSameTime(a, b)) // true
+
+
+//sprawdz, czy stało sie to tego samego dnia
+const isSameDay = (a, b) => {
+    return a.getFullYear() === b.getFullYear() &&
+      a.getMonth() === b.getMonth() &&
+      a.getDate()=== b.getDate()
+}
+  
+const a = new Date(2019, 0, 26, 10) // 26 Jan 2019, 10am
+const b = new Date(2019, 0, 26, 12) // 26 Jan 2019, 12pm
+console.log(isSameDay(a, b)) // true
 
 
 //-----------------------------------------------------------------------------

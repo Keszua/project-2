@@ -2160,39 +2160,8 @@ Redux MIDDLEWARES - takie wstrzyknięcie pomiędzy wykonanie akcji a reduserem,
 
 
 //------------------------------------------------------------
-Wspólne typy
-
-Na froncie, doinstlaować:
-npm i -D customize-cra react-app-rewire-alias react-app-rewired
-
-Na froncie, stworyzć plik
-tsconfig.paths.json
-{
-    "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "types": [
-                "../back/types"
-            ]
-        }
-    }
-}
-
-config-overrides.js
-const {override} = require('customize-cra');
-const {aliasDangerous, configPaths} = require('react-app-rewire-alias/lib/aliasDangerous');
-
-module.exports = {
-    webpack: override(
-        aliasDangerous(configPaths('./tsconfig.paths.json'))
-    ),
-};
-
-Na froncie, w "tsconfig.json" dodajemy:
 
 
-Jeżlei coś nie śmiga ze wspólnymi typami, trzeba dionstalwoać
-npm react-app-rewired
 
 //------------------------------------------------------------
 

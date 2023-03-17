@@ -155,7 +155,7 @@ su                           # zmiana uzytkownika
 su root                      # przełącz się na administratora
 # po zalogowaniu jako admin, będzie na początku root@uzytkownik i # na końcu
 exit                         # wylogowanie się z admina
-sudo adduser agata  //tworzenie nowego użytkownika (tylko admin może tworzyć nowych uzytkowników)
+sudo adduser agata           # tworzenie nowego użytkownika (tylko admin może tworzyć nowych uzytkowników)
 su agata                     # zaloguj sie na "agata"
 id                           # wyświetla GRUPY
 whoami                       # wyświetli, nazwę uzytkownika
@@ -202,8 +202,8 @@ ufw allow 'Nginx Full'       # nadanie uprawnień
 last                         # lista o połączeniach
 last --limit 20              # ostatnie 20 zdarzeń
 last  --system --fulltimes --since 20220103120000
-//               |           +tylko te zdarzenia które były po 2022.01.03 12:00:00
-//               +pelny czas
+#                |           +tylko te zdarzenia które były po 2022.01.03 12:00:00
+#                └pelny czas
 lastb                        # nieudane logowania 
 
 which nazwapolecenia         # pokazuje z jakiego katalogu uruchamiane jest polecenie
@@ -444,7 +444,7 @@ u                # cofnij (taki Ctrl+Z)
  
 :w         # zapisz plik
 :w nazwaPliku.txt                 # zapisz plik jako
-:w $HOME/Skrypty/nowyKatalog.sh   //zapisz w konkretnym pliku
+:w $HOME/Skrypty/nowyKatalog.sh   # zapisz w konkretnym pliku
 :wq        # zapisz i wyjdz
 :q         # wyjdz z pliku
 :q!        # wyjdz z pliku bez zapisywania

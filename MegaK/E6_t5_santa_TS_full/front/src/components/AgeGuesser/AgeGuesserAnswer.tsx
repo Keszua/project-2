@@ -35,6 +35,6 @@ export const AgeGuesserAnswer = (props: Props) => {
 
     return <>
         <p>Twój wiek: {age}</p>
-        <p>Twója data urodzenia: {new Date().getFullYear() - age}</p>
+        <p>Twoja data urodzenia: {new Date().getFullYear() - age}</p>
     </>
 };

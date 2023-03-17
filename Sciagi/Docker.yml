@@ -2806,7 +2806,7 @@ spec:
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
-# Opis, jak wstawić projkt na google cloud
+# Opis, jak wstawić projekt na google cloud
 # Film 49 (Kubernetes for the Absolute Beginners - Hands-on)
 https://cloud.google.com/free/docs/gcp-free-tier
 
@@ -3222,8 +3222,56 @@ reporting-tool
 
 
 #--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
 
-                                          
+Dckerization NestJS
+Filmik https://www.youtube.com/watch?v=ra_kJFIpU4A
+
+Działający Dockerfile
+
+┌───────────────────
+ARG IMAGE=node:15.4
+
+#COMMON
+FROM $IMAGE as build
+
+WORKDIR /app
+COPY package*.json .
+RUN npm i
+COPY . .
+RUN npm run build
+
+
+#PRODUCTION
+FROM $IMAGE
+WORKDIR /app
+COPY package.json .
+RUN npm install --only=production
+
+COPY --from=build /app/dist ./dist
+CMD npm run start:prod
+
+└───────────────────
+# stworzenie obrazu:
+# docker build -t app .
+
+# testowe uruchomienie kontenera
+# docker run -p 8888:80 app
+
+
+Kontener odpalam na AWS w usłudze EKS
+
+Storzyłem klaser keszua
+Gdy się stworzy, w "Compute" dodaje node "Add node group"
+
+Typ instancji
+t3.medium
+vCPU: 2 vCPUs
+Memory: 4 GiB
+Network: Up to 5 Gigabit
+Max ENI: 3
+Max IPs: 18
+
 
 
 

@@ -122,7 +122,7 @@ db.mega.findOne({name: 'karol'})        // zwróci obiekt lub null
 //usunięcie kilku, spełniajacych podane warunki:
 		> db.clients.deleteMany({active: false})
 	
-//Praca z Datą i czasem. Zapisywan jest w formie ISODate() w strefie czssowej 0
+//Praca z Datą i czasem. Zapisywan jest w formie ISODate() w strefie czasowej 0
 // dodaj własciwośc z aktualnym czasem
 	> db.mega.updateOne({_id: ObjectId('6320d83c3a471e53a3776bd6')}, { $set: {artist:"Koen"}, $currentDate: {updateAt: true} })	
 new Date("YYYY-MM-DD hh:mm") //wpisanie daty ręcznie
@@ -133,7 +133,7 @@ new Date("YYYY-MM-DD hh:mm") //wpisanie daty ręcznie
 
 
 // Relacje. Coś w rodzaju JOIN:
-// zakłądam ze mam kolekcję artist
+// zakładam ze mam kolekcję artist
 	> db.mega.aggregate( [
 		{
 		  $lookup: {

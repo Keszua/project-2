@@ -62,7 +62,7 @@ tsconfig.json
 
 //-------------------------------------------------------------------------------------------------
 // Aby uruchamiać w node TS, zainstalować:
-npm i -D ts-node  ts-node-dev typescript
+npm i -D ts-node ts-node-dev typescript
 //Uruchomić plik główny poleceniem:
 ts-node indexedDB.ts
 
@@ -268,9 +268,21 @@ const allPossibilities = Object
     .filter(key => Number.isNaN(Number(key)));
 console.log(allPossibilities);  //= ["Woman", "Man", "Xyz"]
 
+console.log(Object.values(Gender)); // wypisze liczby (albo teksty gdy się je zdefiniuje)
+
 // sprawdz, czy element znajduje sie w enumie
 
 
+// Przykałd na wypisanie wszystich wartości
+enum HardwareDeviceEnum {
+    NieWybrany = 'Nie wybrany',
+    PZEM = 'PZEM',
+    SmartShunt500A = 'SmartShunt500A',
+}
+const devices: string[] = Object.values(HardwareDeviceEnum);
+devices.map( (device) => (  //= Nie wybrany, PZEM, SmartShunt500A
+        {device}
+)) 
 
 /*-----------------------------------------------------------
   ###           #                    ###
