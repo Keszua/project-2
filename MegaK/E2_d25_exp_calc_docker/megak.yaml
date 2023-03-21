@@ -42,5 +42,5 @@ spec:
 # zmiana przestrzeni nazw
 # kubectl config set-context $(kubectl config current-context) --namespace=udemy
 
-# kasoanie
+# kasowanie
 # kubectl delete -f megak.yaml

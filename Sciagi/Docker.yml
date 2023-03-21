@@ -164,6 +164,8 @@ docker image inspect idKontenera   # wyswietla pelna konfiguracje obrazu (w form
 #  nadawanie nowego tagu
 docker image tag nazwa:zTagiem nazwaKontaDockerHub/nazwa:v001
 #                                                  └ nazwa z ewentualnym tagiem
+docker image tag nazwa:nazwa:v001 nazwaKontaDockerHub/nazwa:v001
+
 
 #  wyslanie obrazu na wlasne repozytorium:
 #  trzeba byc zalogowanym, te same dane co na https://hub.docker.com/ :
@@ -722,11 +724,11 @@ Aktywacja docker swarma:
 
 Komendy swarmose:
 	docker ┬ services
-		   ├ stack    // do uruchomienia kontenerów w staku (taki zbiór). Pogląd ls
-		   ├ node     
-		   ├ stack    // takie logi
-		   ├
-		   └
+  		   ├ stack    // do uruchomienia kontenerów w staku (taki zbiór). Pogląd ls
+  		   ├ node     
+  		   ├ stack    // takie logi
+  		   ├
+  		   └
 
 	docker stack ls                   // podgląd staków
 	docker stack services myapp ls    // podgląd kontenerów w staku
@@ -1039,9 +1041,10 @@ kubectl get pods --selector app=App1        # te selektroy sa w metadata.labels[
 
 kubectl delete pod myapp-pod                # kasowanie poda
 
-kubectl exec -it nazwa-poda bash            # jak wejść do środka kontenera w podzie
-kubectl exec -c nginx -it nazwa-poda bash   # gdy mamy kilka kontenerów
-kubectl exec nazwaPoda -- cat /log/app.log  # jednorazowe wyświetlenie zawartości pliku z kontenera
+kubectl exec -it nazwa-poda bash                    # ─┬─ jak wejść do środka kontenera w podzie
+kubectl exec --stdin --tty nazwa-poda -- /bin/bash  # ─┘
+kubectl exec -c nginx -it nazwa-poda bash           # gdy mamy kilka kontenerów
+kubectl exec nazwaPoda -- cat /log/app.log          # jednorazowe wyświetlenie zawartości pliku z kontenera
 
 kubectl logs nazwa-poda                     # wyswietli logi   -f automatyczne odświerzanie
 kubectl logs nazwa-poda -c nazwaKontenera   # wyswietli logi dla konkretnego kontenera
@@ -2019,7 +2022,9 @@ spec:
     fsType: ext4  
   └───────────────────
 
+#  persistentVolumeReclaimPolicy: Retain  # Retain | Delete | Recycle   #okresla, czy możliwe jest skasowanie volumenu
 └───────────────────
+
 kubectl create -f pv-definition.yaml
 
 kubectl get persistentvolume
@@ -2043,12 +2048,12 @@ spec:
     requests:
       storage: 500Mi
 └───────────────────
+
 kubectl create -f pvc-definition.yaml
 kubectl get persistentvolumeclaim
 
 kubectl delete persistentvolumeclaim myclaim
 
-persistentVolumeReclaimPolicy: Retain  # Retain | Delete | Recycle   #okresla, czy możliwe ejst skawoanie volumenu
 
 
 #--------------------------------------------------------------------------------------------------
@@ -2149,7 +2154,7 @@ spec:
       containers:
       - name: mysql
         image: mysql
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: mysql
@@ -2225,6 +2230,8 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: strefa-secret                  # *1v
+#type: kubernetes.io/basic-auth # wymusi dwa pola username i password
+#type: Opaque
 data:
   user: "cm9vdA=="            # echo -n "root" | base64
   pass: "VGFqbmVIYXNsbw=="             # *2v
@@ -2580,7 +2587,7 @@ docker run ubuntu-sleeper 10
 FROM Ubuntu
 ENTRYPOINT ["sleep"]
 CMD ["5"]
-# stworzenie wartości domylsnej, której nie trzeba podawac przy wywoąłniu polecenia
+# stworzenie wartości domylsnej, której nie trzeba podawac przy wywołaniu polecenia
 docker run ubuntu-sleeper
 
 # gdy chce dodać niezdefiniowany entrypoint podczas komendy:
@@ -3227,6 +3234,23 @@ reporting-tool
 Dckerization NestJS
 Filmik https://www.youtube.com/watch?v=ra_kJFIpU4A
 
+Pirewsza ianstalcja aws CLI
+https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+
+aws configure set region eu-central-1 --profile keszua
+aws configure set cli_pager "" --profile keszua
+aws configure get region --profile keszua
+
+Gdy miałem problem z komuniakte:
+e connection to the server localhost:8080 was refused - did you specify the right host or port?
+W konsoli na stronie, wpisałem:
+aws eks --region eu-central-1 update-kubeconfig --name keszua
+
+
+Instalowanie pakietów w AWS CloudShell:
+sudo yum install mc
+
+
 Działający Dockerfile
 
 ┌───────────────────
@@ -3274,5 +3298,10 @@ Max IPs: 18
 
 
 
+AWS CloudShell
+# Pobranie pliku z chmury:
+# sprawdzic swoją ścierzkę
+pwd
+# Actions -> Download file -> wkleić ścierzkę ome/cloudshell-user/plik
 
 
