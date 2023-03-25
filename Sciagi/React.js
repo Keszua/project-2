@@ -21,7 +21,7 @@
 //Powstanie nowy katalog.
 
 //Tworzenie nowego projekty TypeScript:
-npx create-react-app my-app --template typescript
+npx create-react-app front --template typescript
 // więcej na https://create-react-app.dev/docs/adding-typescript/
 
 //Po pomyslnej instalacji można ten projekt uruchomić poleceniem:

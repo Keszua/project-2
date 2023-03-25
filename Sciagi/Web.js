@@ -27,6 +27,9 @@ https://2022.stateofjs.com/en-US/o
 https://swiperjs.com/
 
 
+// jak Ubuntu przerobić na wyglad MacOS
+https://www.youtube.com/watch?v=Y6k7THQ3x6U
+
 AP - acess Pin - rozsyłanie lanu 
 
 Wireguard - tworz VPN 

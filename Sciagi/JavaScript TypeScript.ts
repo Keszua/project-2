@@ -101,7 +101,7 @@ npm i -D @types/node @types/express @types/cookie-parser
 // 3. Doinstalować moduły (na froncie)
 npm i -D customize-cra react-app-rewire-alias
 
-// 4. Dodaj plik "config-overrides.js" z zawartością:
+// 4. Dodaj plik "config-overrides.js" z zawartością:  (na froncie)
 const {override} = require('customize-cra');
 const {aliasDangerous, configPaths} = require('react-app-rewire-alias/lib/aliasDangerous');
 

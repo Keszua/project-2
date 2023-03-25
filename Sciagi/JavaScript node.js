@@ -2283,7 +2283,7 @@ jest to zwykła klasa, zawierajaca dekorator @Module(), a w nim:
 * exports
 
 
-subdomena
+subdomena (film 60 Opanuj NestJS i zostań profesjonalnym programistą Node.js)
 zamist 
     http://localhost:3000  
 wpisać:  
