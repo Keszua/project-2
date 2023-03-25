@@ -271,6 +271,9 @@ LABEL   #  - metadane do obrazu
 # Zbudwanie obrazu (do odpalenia lokalnie)
 docker image build -t nowaNazwaObrazu:tag .
 #                   └ Name and optionally a tag in the 'name:tag' format
+docker image build -t nowaNazwaObrazu:tag --progress=plain . # hyba robi symulacje budowania
+
+
 # po zbudowaniu, mozna go uruchomic: docker container run -d -p 8080:8080 --name=nazwaKontenera nowaNazwaObrazu:tag
 # można z flagą --no-cache, chyba żeby za każdym razem pobierało obraz?
 
@@ -1774,7 +1777,7 @@ spec:
 #--------------------------------------------------------------------------------------------------
 JOB - taki pod, uruchomiony raz. Nie bedzie ponownie uruchamiany.
 
-# przykład kontenera, który się odpali, policzy, zwróci 5 i (chyba) pozostanei nie aktywny
+# przykład kontenera, który się odpali, policzy, zwróci 5 i (chyba) pozostanie nie aktywny
 docker run ubuntu expr 3 + 2
 
 # Prosyt job, który ma policzyć 3 +2:
@@ -3234,33 +3237,29 @@ reporting-tool
 Dckerization NestJS
 Filmik https://www.youtube.com/watch?v=ra_kJFIpU4A
 
-Pirewsza ianstalcja aws CLI
+Pirewsza instalacja aws CLI
 https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 
-aws configure set region eu-central-1 --profile keszua
-aws configure set cli_pager "" --profile keszua
-aws configure get region --profile keszua
-
-Gdy miałem problem z komuniakte:
+Gdy miałem problem z komunikatem:
 e connection to the server localhost:8080 was refused - did you specify the right host or port?
 W konsoli na stronie, wpisałem:
 aws eks --region eu-central-1 update-kubeconfig --name keszua
 
 
 Instalowanie pakietów w AWS CloudShell:
-sudo yum install mc
+sudo yum install mc -y
 
 
 Działający Dockerfile
 
 ┌───────────────────
-ARG IMAGE=node:15.4
+ARG IMAGE=node:16.13-alpine
 
 #COMMON
 FROM $IMAGE as build
 
 WORKDIR /app
-COPY package*.json .
+COPY ./package*.json .
 RUN npm i
 COPY . .
 RUN npm run build
@@ -3269,10 +3268,10 @@ RUN npm run build
 #PRODUCTION
 FROM $IMAGE
 WORKDIR /app
-COPY package.json .
+COPY ./package.json .
 RUN npm install --only=production
 
-COPY --from=build /app/dist ./dist
+COPY --from=build ./app/dist ./dist
 CMD npm run start:prod
 
 └───────────────────
@@ -3304,4 +3303,10 @@ AWS CloudShell
 pwd
 # Actions -> Download file -> wkleić ścierzkę ome/cloudshell-user/plik
 
+
+# Polecenia do serwisowania:
+# volumen:
+kubectl describe pvc mysql-pv-claim
+# baza
+kubectl describe deployment mysql
 

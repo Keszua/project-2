@@ -76,7 +76,7 @@ Honorujenmy katy dożej rodziny
 Piosenka "Shaza Doprowadzasz mnie do cmentaża"
 Odnowa blogiczna w cenie
 
-Pakie standard + teściowa gratis
+Pakiet standard + teściowa gratis
 Gwarancja że teściową pochowamy przed tobą
 Gwarancja że teściowa będzie 100 metrów dalej
 Zabierz swoja ukochaną tesciową do grobu (pakiet mamusia i ja)
@@ -95,7 +95,6 @@ Jakie robaki do grobu - a może zjedzenie przez lugożerców
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 
-Do readme dodać instrukcję o pliku config.example.ts
 
 Cookies - zgoda
 

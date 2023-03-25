@@ -1,17 +1,17 @@
 
 Testowanie responsywnosci: http://mattkersley.com/responsive/
 
-Projektownaie programu blkowo: https://miro.com/pl/
+Projektowanie programu blokowo: https://miro.com/pl/
 
 Przy tworzeniu kodu: linter: https://github.com/airbnb/javascript
 
 
-Do autoamtycznej dokumantacji:
+Do autoamtycznej dokumentacji:
 https://jsdoc.app/
 https://tsdoc.org/
 
 Ranking narzędzi ( w tym wykresy)
-https://2022.stateofjs.com/en-US/o
+https://2022.stateofjs.com/en-US/
 
 
 // Do wykresów:
@@ -23,6 +23,8 @@ https://www.highcharts.com/demo/gauge-vu-meter
 //Do rysowania tabel:
 https://2022.stateofjs.com/en-US/o
 
+//Slider od Kamila 
+https://swiperjs.com/
 
 
 AP - acess Pin - rozsyłanie lanu 
