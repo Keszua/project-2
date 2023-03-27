@@ -250,7 +250,7 @@ enum Gender {
 console.log(Gender[Gender.Woman]);   //= "Woman"
 console.log(Gender[1]);              //= "Woman"
 
-// Pętla wypisujaca wsystkie elementy enuma (liczby i nazwy)
+// Pętla wypisujaca wszystkie elementy enuma (liczby i nazwy)
 for (const key in Gender) {
     console.log(key);
 }
