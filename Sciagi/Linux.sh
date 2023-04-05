@@ -227,9 +227,9 @@ echo "sqrt(81)" | bc  //= 9
 echo "4*a(1)" | bc -l //= 3.14   4*arcus(1) -l przywołuje biblioteki matematyczne
 
 date                         # wywwietli aktualna date
-date +%Y%m%d		    //= 20220105
-date "+%Y-%m-%d %H:%M"  //= 2022-01-05 15:12
-date 010512052022.30    //reczna zmaina daty: miesiac dzien godzina minuta rok.sekundy 
+date +%Y%m%d		     #= 20220105
+date "+%Y-%m-%d %H:%M"       #= 2022-01-05 15:12
+date 010512052022.30         #= reczna zmaina daty: miesiac dzien godzina minuta rok.sekundy 
 cal                          # wyświetla "kalendarz" (aktulany miesiąc)
 cal 2020                     # wyśweitli cały klendarz
 cal 12 2020                  # wyświetli tylko grudzien

@@ -978,6 +978,24 @@ fetch(`http://numbersapi.com/${number}/year?json`)
 
 
 
+const response = await fetch(url, {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: "follow", // manual, *follow, error
+    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data), // body data type must match "Content-Type" header
+});
+//fajny opis:
+https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+
+
+
 
 //                                               #
 //                                               #
@@ -1562,7 +1580,7 @@ app.get('/logo', (req, res) => {
         // jako trzeci argument można podać obiekt opcji: 
         {
             path: '/',                       // moge wybrać, na jakiej stronie/podstronie ma odsyłać ciastko (zwykle nie chcemy tak wyszczególniać) 
-            domain: 'xyz.mydomain.com' ,     // domena do której bedą wysyłąne ciastka
+            domain: 'xyz.mydomain.com' ,     // domena do której bedą wysyłane ciastka
             expires: new Date(2022, 11, 31), // czas do kiedy ciastko ma być zapamiętane
             maxAge: 1000 * 60 * 60 *24 *365, // zamiast expires - okresla, jak długo ciastko ma istnieć (w ms) 
             httpOnly: true,                  // sprawia, że frontend nie ma dostepu do ciastka
@@ -2094,11 +2112,13 @@ yarn start // dla instalacji z paczkami yarn (nie npm) Najstarsza wersja
 //przerywanie procesu: Ctrl + C
 
     nest info // informacje o wersji, paczkach
+
                     RODZAJ NAZWA // pozwala wygenerować elementy i umieszcza je w odpowiednie miejsca + układa kod
     nest generate ┬ module       //mo  //generuje moduł
                   ├ controller   //co  // generuje kontroler
                   ├ service      //s   //generuje serwis (usługę)
-                  └ resource     // ?? 
+                  └ resource     // generuje CRUD, opis tego narzędzia w filmie 120
+    //Aby wszystko robiło się automatyczne, trzeba w pierw wygenerować moduł.
 
 
     nest build // tworzy produkcyjną aplikację w folderze dist
@@ -2260,18 +2280,6 @@ export class CreateFoxDto {
     }
 
 //Do przesyłania danych z frontu do back, zalecany format JSON. Do plików: Multipart FormData (film 53, 6:19)
-
-
-//-----------------------------------------------------------------------------
-UWAGA!!! Aby wszystko robiło się automatyczne, trzeba w pierw wygenerować moduł.
-
-nest generate module <nazwa> // możliwoś podzielenia aplikacji ze względu na skupienie wokół jednej funkcjonalności (domeny)
-//skrót: 
-nest g mo nazwa
-
-nest generate service nazwa
-//skrót:
-nest g s nazwa
 
 
 //-----------------------------------------------------------------------------
@@ -2449,6 +2457,74 @@ where: {
     description: Raw(''),  //zwróci wszystkie pola, które są puste
 }
 
+
+// kontrola przpływu (film Kuby 61)
+
+onModuleInit() - apka włąsnie powstaje
+onApplicationBootstrap() - wysztko się załadowało
+
+
+onModuleDestroy() - wywołano zamykanie aplikacji
+onApplicationShutdown() - wszystko zamknięte, zaraz apka zostanie zniszczona
+
+
+// aby dla kazdego zapytania tworzył sie nowy obiekt  (film Kuby 61)
+@Controller({
+    path: 'shop',
+    scope: Scope.REQUEST ,
+})
+
+
+//Przesyłanie plików
+
+nagłówek: Content-type: multipart/from-data.
+
+W Insomni, Body trzeba przełaczyć na Multipart
+
+
+//Przesyłanie plików z Frontu
+const formData = new FormData(document.querySelector('form'));
+fetch('...', {
+    body: formData,
+});
+
+
+//Jeśli mam jakieś pole drag and drop z plikami, to:
+const formData = new FormData();
+formData.append('nazwaPola', fileObject);
+fetch('...', {
+    body: formData,
+});
+
+
+//Odbieranie plikmów (na backendzie)
+@UseInterceptors(
+    FileFieldsInterceptor([
+        {
+            name: 'NAZWA_POLA_Z_PLIKIEM', maxCount: 1,
+        },
+    ], {dest: 'SCIEZKA_ABSOLUTNA_DO_KATALOGU_GDZIE_PRZESLAC'},
+    )
+)
+
+
+//w src/utils/storage.ts  tworze funckję p[omocniczą:
+export function storageDir() {
+    return path.join(__dirname, 'storage');
+}
+//Następnie uzuwamy jej np. tak dla folderu ze zdjecami:
+path.join(storageDir(), 'photos');
+
+interface MulterDiskUploadedFiles {
+    [fieldname: string]: {
+        filename: string;
+        size: number;
+        mimetype: string;
+        originalname: string;
+        fieldname: string;
+        encoding: string;
+    }[] | undefined;
+}
 
 
 //-------------------------------------------------------------------------------------------------
