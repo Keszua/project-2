@@ -1,0 +1,106 @@
+Pivot point (punkt ciężkości):
+	1. Zaznacyć krawędz (lub punkt)
+	2. Shift+S  (Mesh -> Snap -> Cursor to... )
+	3. Cursor to Selected (aby ustawić kursor)
+	4. object -> Set origin -> origin to 3D Cursor (Aby przenieść punt ciężkości)
+
+Aplikacja Skali:
+	Ctrl+A -> Scale
+
+Autoamtyczne kasowanie niepotrzebnych Vertexów (skrót M):
+	Vertex -> Merge vertex -> By Distance
+
+Normale (w która strone jest skierowana sciana):
+	W trybie edycji - Mesh -> Normals -> Recalculate Outside	
+
+
+Zapamiętywanie zaznaczonych grup:
+	Po prawo, ikonka z zielonym trujkontem i tam "+" dodaje się Vertex Groups
+
+Snapowanie (łaczenie):
+	1. Zaznaczyć aktywną ikonkę magnesu i obok ustawić Vertex
+
+Łączenie obiektów:
+	1. Zanzaczam pierwszy
+	2. Modufikatory (niebieski klucz) -> Add modifier -> Boolean -> pipetą wybieramy drugi obiekt -> Union -> Aplpay
+
+Łączenie obiektów do jednego obiektu:
+	1. Zanzaczyć wszystkie		Ctrl+J
+	2. PM -> Object -> Join
+
+Rozłaczenie (zrobić oddzielny obiekt):
+	1. Zaznaczyć sciany
+	2. Mesh -> Separate -> Selection
+
+Przecięcie nożem:
+	Aby przeszło na wylot, trzeba w tyn narzedziu uruchomić "C" (Cut through), A- pod kątem (np, równolegle)
+
+
+Wycinanie otworu:
+	1. Wstawiamy obiekt który będzie "wiertłem"
+	2. Zaznaczamy obiekt z którego będziemy wycinać.
+	3. Modufikatory (niebieski klucz) -> Add modifier -> Boolean -> pipetą wybieramy drugi obiekt -> Diference -> Aplpay
+	4. Usunąć "wiertło"
+	
+
+Nakładanie struktury na powierzchnię: modyfikator Subdivision + modyfikator Displace + tekstura
+	Tworzenie własnych tekstur, program photopea.com
+	Stworzona teksturę wczytać przez Teksturę -> Type -> Image or move -> Open -> Wybrać zdjęcie
+
+Zaokrąglanie krawędzi (Bewelowanie):
+	1. Zaznaczyć krawędz, która ma być zeszlifowana
+	2. W Transform -> Edge Data -> Bevel Weight -> Ustawić na 1
+	3. Dodać modyfikator Bevel
+		Widtch Type na Offset i wpisać promień i dokładnosć ścięcia	
+	(Ctrl+B)
+
+
+Duplikowanie 		Klonowanie :
+	Shift+D 			Alt+D
+
+
+Dodawanie napisów:
+	1. Doaj punkt Empty (Shift+A -> Empty)
+	2. dodaj tekst (Shift+A -> Text)
+
+
+Zamiana Bezjera na punkty:
+	PM -> Convert To -> Mesh
+
+Nadawanie grubości:
+	Add Modifier -> Solidify
+
+
+Modele 3D do pobrania:
+	https://free3d.com
+	.obj - siatka kształtów JEDNEJ bryły (same kształty bez tekstur)
+	.fbx - podział na części (oddzielne obiekty) Ale bez tekstur
+
+
+----------------------------------------------------------------
+Ustawienia blendera:
+Edit -> Preferences ->
+Dla pracy z myszką:
+* Orbit Around Selection - aby obracać względem zaznaczonego obiektu
+* Zoom to Mouse Position - aby przybliżac i oddalać w miejscy ustawionego kursoru
+
+
+Aby nie przełączała się perspektywa:
+Edit -> Preferences -> Navigation -> Orbit&Pan -> Auto _ perspective
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

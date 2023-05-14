@@ -81,6 +81,7 @@ Przykłady:
 302 przekierowanie niestałe. (należy prejść na podany adres, ale to może się jeszcze zmienić)
 303 zobacz gdzie indziej - przy metodzie HTTP innej niż GET, ale ma przekierownie na GET
 307 przekierowanie tymczasowe - przy metodzie HTTP innej niż GET
+401 "Unauthorized"
 403 "Forbidden" - "ja wiem, że chcesz, ale nie mamsz dostępu"
 404 "Not Found" - odebrałem Twoje zapytanie ale nie ma zasobu dla Twojego URL
 405 "Method Not Allowed"
