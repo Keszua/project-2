@@ -1017,6 +1017,9 @@ Instalacja Windowsa:
   #   #   ###   #   #   #     ###      # #      ###   ###   ###    ###   ###
                                    ####                                       
 #--------------------------------------------------------------------------------------------------
+# Programik do skanowania sieci:
+# angryIpScan ze strony https://angryip.org/download/#linux
+
 # Konfiguracja sieci:
 # trzeba być w katalogu głównym
 cd etc/network/
@@ -1242,7 +1245,9 @@ Uruchomić plik:
 
 //aby sprawdzić, na jakich portach aktualnie działamy:
 	netstat -tulpn
-	
+
+// żeby zabić port
+sudo lsof -t -i tcp:portNumber | xargs kill -9	
 
 //-------------------------------------------------------------------------------------------------
 
@@ -1309,7 +1314,7 @@ API - tu podegrać 3 pliki: HermesApi32, HermesApi64 i hermesdll.dll
 
 Hermes - pobrać z J:\ServerCI_Rozw i zainstalować na maszynie z "hermes"
 
-┌ └ ├  ┘ ┼ ┬ ┤ ┴ ─
+┌ └ ├  ┘ ┼ ┬ ┤ ┴ ─  ┐
 ╠ ═ ╬ ╩ ╦ ═ ╣ ║ ╗ ╝
 ▀▁▔▏▕▂▃▄▅ ▆▇█▉▊▋▍▎▌ ▐░▒▓▖▗▘▙▚ ▛▜▝▞▟▲▶▼◀ ◈◉✖✜✣✱✲✳✿❖❶
 

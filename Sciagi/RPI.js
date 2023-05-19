@@ -8,7 +8,8 @@ raspi-config
 
 sudo apt update
 
-
+// uruchomienie środowiska graficznego:
+startx
 
 
 
@@ -30,7 +31,8 @@ sudo mysql -u root -p
 // Nadanie uprawnień do bazy
 GRANT ALL PRIVILEGES ON black_box.* TO 'pi'@'localhost' IDENTIFIED BY '<haslo>' WITH GRANT OPTION;
 
-
+//dla staconarki:
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY 'root' WITH GRANT OPTION;
 
 
 
@@ -49,7 +51,7 @@ sudo systemctl start nginx
 
 // pobranie lokalnego adresu maliny
 hostname -I
-// po wejsciu prez przgladarkę na ten adres (bez posrtu) powinna się pokazać strona startowa
+// po wejsciu prez przgladarkę na ten adres (bez portu) powinna się pokazać strona startowa
 
 // konfiguracja nginxa jest w:        /etc/nginx/sites-enabled/default
 // ręczne uruchomienie nginx: ┬       sudo /etc/init.d/nginx start

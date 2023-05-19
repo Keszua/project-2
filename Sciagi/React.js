@@ -2160,14 +2160,34 @@ Redux MIDDLEWARES - takie wstrzyknięcie pomiędzy wykonanie akcji a reduserem,
 
 
 //------------------------------------------------------------
-
-
-
+//   #     #           #          
+//   #     #    #      #          
+//   #     #         #####    ### 
+//   #     #   ##      #     #   #
+//    #   #     #      #     #####
+//     # #      #      #     #    
+//      #      ###      ##    ### 
 //------------------------------------------------------------
 
+npm create vite@latest ./ -- --template react
+
+// uruchamiamy poleceniem:
+
+npm run dev
+
+// instalacja tailwinda:
+npm install -D tailwindcss
+npm install -D tailwindcss postcss autoprefixer
+//stworzenie pliku konfoguracyjnego dla tailwind
+npm install --legacy-peer-deps -D tailwindcss postcss autoprefixer
 
 
+// stworzenie pliku konfiguracyjnego
+npx tailwindcss init
+
+npm install --legacy-peer-deps @react-three/fiber @react-three/drei maath react-tilt react-vertical-timeline-component @emailjs/browser framer-motion react-router-dom
 
 
+Logo można wygenerować na stronie logo.com
 
 //------------------------------------------------------------

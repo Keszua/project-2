@@ -35,6 +35,35 @@ AP - acess Pin - rozsyłanie lanu
 Wireguard - tworz VPN 
 Potrzebujemy udostępnić podrt UDP 
 
+// Do projektu zbiorowego, Przekol pytał o:
+https://www.npmjs.com/package/husky
+Prettier
+Eslint
+React Router 6   https://reactrouter.com/en/main
+React Query
+React Hook Forms  https://react-hook-form.com/
+
+Frameworki:
+React
+React Hook Forms
+Vanilla JS
+
+Stylowanie 
+Module CSS
+Styles Components
+Material UI
+Chakra UI
+Tailwind CSS
+
+
+
+
+
+
+
+
+
+
 
 
 next cloude - coś do zrobienia swojego servera 

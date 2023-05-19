@@ -116,20 +116,20 @@ Janek.showDegrees(); //= Student Adam na stopnie: 2,3,4,5,2,3 i zaliczył już 4
 
 //Przykład:
 	const dog = {
-		name: 'rozcky',
+		name: 'Rocky',
 		showName() {
 			console.log(`Imie psa to ${this.name}`);
 		}
 	}
 
-	dog.showName(); //= Imie psa to rozcky
+	dog.showName(); //= Imie psa to Rocky
 
 	//const dogName = dog.showName;
 	//dogName(); //= TypeError: this is undefined
 
 //Aby to naprawić:
 	const dogName = dog.showName.bind(dog);
-	dogName(); //= Imie psa to rozcky
+	dogName(); //= Imie psa to Rocky
 
 
 //Przykład 2:
