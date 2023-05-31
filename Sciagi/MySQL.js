@@ -109,7 +109,7 @@ CREATE TABLE nazwaTabeli  \n
   -> ) COLLATE='utf8mb4_unicode_ci';
 SHOW TABLES;                       // Pokazuje zawrtość tabeli w której jestesmy
 DESCRIBE nazwaTabeli;              // wyświetli właściwości tabeli w formie tabeli   | Field | Type | Null | Key | Def |
-INSERT INTO nazwaTabeli (nazwa) VALUES ( 'bajki'), (druga_tabela); // dodawanie nowych rekordów
+INSERT INTO nazwaTabeli (nazwa) VALUES ('bajki'), (druga_tabela); // dodawanie nowych rekordów
 SET SESSION sql_mode='traditional';                          // zabespiecza przed dodawaniem pustych pól
 DELETE FROM nazwaTabeli WHERE id_dzial=5;                    // kasowanie rekordu
 ALTER TABLE nazwaTabeli ┬ ADD UNIQUE(pesel)                  // nada key; UNI
