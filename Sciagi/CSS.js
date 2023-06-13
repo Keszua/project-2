@@ -23,7 +23,17 @@ margin:		// margines
 border:  // ramka
 padding: 0 30px 30px 0; // "otoczka" (góra, prawo, dol, lewo)
 
-overflow: scroll;        // belka do przesuwania (gdy okienko za małe)
+overflow: scroll;        // belka do przesuwania (gdy okienko za małe) suwak
+
+Overflow przyjmuje wartości takie jak:
+visible	zawartość po przepełnieniu elementu będzie cała widoczna nakładając się na pozostałe elementy umieszczone na strony.
+hidden	ukrywa zawartość wychodzącą poza obszar obiektu. Pasek jak przewijania jest wyłączony i nie mamy dostępu do niewidocznej części tekstu
+scroll	wielkość elementu zawierającego nie ulega zmianie, ale zostają dodane paski przewijania w celu umożliwienia użytkownikowi przewinięcia zawartość.
+auto	efekt jest podobny, jak w przypadku scroll, ale pasek pojawi się dopiero w momencie gdy obiekt zostanie przepełniony. Przy ustawieniu auto nie posiadamy dolnego paska przewijania.
+
+
+
+
 
 //Przykład, aby przycisk zmieniła sam siebie (swój wygląd):
 	const btn = document.querySelector(".button");

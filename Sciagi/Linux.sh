@@ -23,6 +23,7 @@
 
 # jakiś program do nagrywania tego co na ekranie: Kdenlive
 
+# balenaEther - porogram do robienia obrazów instalacyjnych na pendrive. https://etcher.balena.io/
 
 # -------------------------------------------------------------------------------------------------
 Struktura katalogów:
