@@ -25,6 +25,8 @@
 
 # balenaEther - porogram do robienia obrazów instalacyjnych na pendrive. https://etcher.balena.io/
 
+# instalacja sterowników do NVIDIA:  https://linuxhint.com/install-nvidia-drivers-debian-11/
+
 # -------------------------------------------------------------------------------------------------
 Struktura katalogów:
 pwd    # gdzie jeteśmy //= /home/wojtek (print work directory)
