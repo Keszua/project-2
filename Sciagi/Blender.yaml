@@ -71,6 +71,29 @@ Nadawanie grubości:
 	Add Modifier -> Solidify
 
 
+BONE:
+Shift+A -> Armature
+Żeby była widoczna kość: Ikona ludzika (Object Data Properties) -> Viewport Display -> In Front
+
+Ustawianie główek, najlepiej w trybie edycji i korzystać z metod Shift+S
+Dodawać kolejne kości, w trybie edycji kalwiszem E
+
+Obracanie kości: (tryb edycji), zaznaczyć kość, PM -> Switch Direction
+
+Łączenie kości: (tryb edycji) zaznaczyć główną kość, z sziftem zaznaczyć drugą -> Ctrl+P -> Connected
+
+Łączenie kosći z elementem: (object mode) zaznacz element i (z sziftem) kość.
+	Przejść do trybu Pose mode -> zaznacz konkretną -> Ctrl+P -> Bone
+	Klawiszem R można sprawdzić, czy się połaczyło.
+
+Odczepianie kości: (tryb edycji) Atl+P -> Clear Parent
+
+Tworzenie zależności między kośćmi: (tryb Pose Mode) Ikona niebieskiej kości (Bone Constraint Properties)
+	-> Addd Bone Constraint -> Części obrotowe to Inverse Kinematic
+	* Target -> wybrać Armature
+	* Bone -> Wybrać z którą kością ma być zależność 
+
+----------------------------------------------------------------
 Modele 3D do pobrania:
 	https://free3d.com
 	.obj - siatka kształtów JEDNEJ bryły (same kształty bez tekstur)
