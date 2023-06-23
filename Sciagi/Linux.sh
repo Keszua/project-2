@@ -1,5 +1,5 @@
 
-# VirtualBox 6.1 ze srtony:
+# VirtualBox 6.1 ze strony:
 # https://www.virtualbox.org/wiki/Downloads
 
 # W przykladzie instalujemy Ubuntu Desktop
@@ -12,7 +12,7 @@
 # Wybieramy dysk, rzez "dodaj" i odszukujemy obraz (nazwa ubuntu-data-desktop-amd64.iso). 
 # Po otworzeniu wybieramy "Choose".
 
-# Prełączanie na pełny ekran: Prawy Ctrl+F
+# Przełączanie na pełny ekran: Prawy Ctrl+F
 
 # Robienie kopii zapasowej:
 # Maszyna -> Tools -> Snapshots
@@ -1033,7 +1033,7 @@ cat etc/hosts                          # IP kontenera
 
 etc/resolv.conf                        # informacja z adresem DNS
 
-ip link show                           # informacje o dostepnych kartah sieciowych
+ip link show                           # informacje o dostepnych kartach sieciowych
 ip link set eth0 down                  # wylacz karte eth0
 ip link set eth0 up                    # wlacz karte eth0
 ip address add dev eth0 192.168.137.100/24       # dodaj nowe IP dla danej karty (do restartu karty)
