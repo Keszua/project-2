@@ -42,6 +42,10 @@ Wycinanie otworu:
 	3. Modufikatory (niebieski klucz) -> Add modifier -> Boolean -> pipetą wybieramy drugi obiekt -> Diference -> Aplpay
 	4. Usunąć "wiertło"
 	
+Rotate:
+	Dla rysowanie rur. F3 i wpiyswać Shear
+	Mesh -> Transform -> Shear
+
 
 Nakładanie struktury na powierzchnię: modyfikator Subdivision + modyfikator Displace + tekstura
 	Tworzenie własnych tekstur, program photopea.com
@@ -53,6 +57,10 @@ Zaokrąglanie krawędzi (Bewelowanie):
 	3. Dodać modyfikator Bevel
 		Widtch Type na Offset i wpisać promień i dokładnosć ścięcia	
 	(Ctrl+B)
+
+Bewelowanei punktu: 
+  1. Zaznaczyć pnkt
+	2. Skrót Ctr+Shift+B
 
 
 Duplikowanie 		Klonowanie :
@@ -70,7 +78,7 @@ Zamiana Bezjera na punkty:
 Nadawanie grubości:
 	Add Modifier -> Solidify
 
-
+----------------------------------------------------------------
 BONE:
 Shift+A -> Armature
 Żeby była widoczna kość: Ikona ludzika (Object Data Properties) -> Viewport Display -> In Front
@@ -78,20 +86,33 @@ Shift+A -> Armature
 Ustawianie główek, najlepiej w trybie edycji i korzystać z metod Shift+S
 Dodawać kolejne kości, w trybie edycji kalwiszem E
 
+Zmiana nazwy kości: Bone Properties [zielona ikona kości] i tam wpisac nową nazwę
+
 Obracanie kości: (tryb edycji), zaznaczyć kość, PM -> Switch Direction
 
 Łączenie kości: (tryb edycji) zaznaczyć główną kość, z sziftem zaznaczyć drugą -> Ctrl+P -> Connected
 
-Łączenie kosći z elementem: (object mode) zaznacz element i (z sziftem) kość.
+Łączenie kości z elementem: (object mode) zaznacz element i (z sziftem) kość.
 	Przejść do trybu Pose mode -> zaznacz konkretną -> Ctrl+P -> Bone
 	Klawiszem R można sprawdzić, czy się połaczyło.
 
 Odczepianie kości: (tryb edycji) Atl+P -> Clear Parent
 
-Tworzenie zależności między kośćmi: (tryb Pose Mode) Ikona niebieskiej kości (Bone Constraint Properties)
+Tworzenie zależności między kośćmi: (tryb Pose Mode) [Ikona niebieskiej kości] (Bone Constraint Properties)
 	-> Addd Bone Constraint -> Części obrotowe to Inverse Kinematic
 	* Target -> wybrać Armature
 	* Bone -> Wybrać z którą kością ma być zależność 
+
+----------------------------------------------------------------
+ANIMACJA:
+1. Ustaw pierwszą pozycję figur. 
+2. Na dole, na pasku ustaw, w której sekundzie ma byc ta pozycja
+3. Zaznacz jakiś element (elementy dla których ma być animacja) i literą "I" dodaj klatkę (np. Location&Rotation)
+4. Przesuń oś czasu.
+4. Zmień ustawienie elementów
+5. Zaznacz ponownie element animowany i dodaj klatkę (literą I)
+
+Przywrócenie pozycji startowych: Zaznaczyć elementy. Klawisz F3 i wpisać - clear pose transform
 
 ----------------------------------------------------------------
 Modele 3D do pobrania:

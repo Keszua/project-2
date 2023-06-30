@@ -27,7 +27,20 @@
 
 # instalacja sterowników do NVIDIA:  https://linuxhint.com/install-nvidia-drivers-debian-11/
 
-# -------------------------------------------------------------------------------------------------
+# odpalenie grafiki na druim monitorze:
+sudo nano /etc/modprobe.d/nvidia-installer-disable-nouveau.conf
+sudo update-initramfs -u
+
+#uruchomienie w trybie konsoli:
+sudo systemctl set-default multi-user.target
+sudo reboot 0
+
+#uruchomienie w trybie graficznym:
+sudo systemctl set-default graphical.target
+sudo reboot 0
+
+
+-------------------------------------------------------------------------------------------------
 Struktura katalogów:
 pwd    # gdzie jeteśmy //= /home/wojtek (print work directory)
 ~$     # katalog domowy, katalog uzytkownika, czyli:  /home/wojtek
