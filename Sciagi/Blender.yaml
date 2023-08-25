@@ -58,7 +58,7 @@ Zaokrąglanie krawędzi (Bewelowanie):
 		Widtch Type na Offset i wpisać promień i dokładnosć ścięcia	
 	(Ctrl+B)
 
-Bewelowanei punktu: 
+Bewelowanie punktu: 
   1. Zaznaczyć pnkt
 	2. Skrót Ctr+Shift+B
 
@@ -69,7 +69,7 @@ Duplikowanie 		Klonowanie :
 
 Dodawanie napisów:
 	1. Doaj punkt Empty (Shift+A -> Empty)
-	2. dodaj tekst (Shift+A -> Text)
+	2. Dodaj tekst (Shift+A -> Text)
 
 
 Zamiana Bezjera na punkty:
@@ -137,14 +137,20 @@ Edit -> Preferences -> Navigation -> Orbit&Pan -> Auto _ perspective
 
 
 
+Kreator postaci 3D: https://readyplayer.me/pl
+film: https://www.youtube.com/watch?v=pGMKIyALcK0
+Wkleić na stronie do public/models 
+wywołac polecenie: npx gltfjsx public/models/avatar.glb
+(treba doinstalować yarn add gltfjsx)
+lub ze wskazaniem gdzie ma stworzyć plik: npx gltfjsx -o src/components/Avatar.jsx public/models/avatar.glb
+Zmienić nazwę Model na swoją
+dopisac ścierzkę do linijeki:
+const { nodes, materials } = useGLTF('models/avatar.glb')
+useGLTF.preload('models/avatar.glb')
 
 
+Animacje ruchu: https://www.mixamo.com/
+Trzeba zapisać sobie w formacie .fbx
+Zaznaczamy Without Skin
 
-
-
-
-
-
-
-
-
+tekstury można pobać z https://polyhaven.com/textures

@@ -7,6 +7,8 @@
 //   #   #  #   #  #   #
 //    ###    ###    ###  
 
+// kamil poleca stylowanie: https://semantic-ui.com/
+
 //Import pliku ze stylami:
  <link rel="stylesheet" href="style.css">
 //</link>
@@ -206,7 +208,7 @@ http://domanart.pl/dema/super-szamson/super-szamson.html
         {
             "format": "expanded",		// rodzaj kompresji: nested, expanded, compact, compressed
             "extensionName": ".css",	// do wyboru: .css or .min.css
-            "savePath": "~/../css/"		//okresla się ścieżkę z plikiem wynikowym (domyślenie null)
+            "savePath": "~/../css/"		// okresla się ścieżkę z plikiem wynikowym (domyślenie null)
         }
     ]
 

@@ -5,6 +5,18 @@ Projektowanie programu blokowo: https://miro.com/pl/
 
 Przy tworzeniu kodu: linter: https://github.com/airbnb/javascript
 
+Na jakich stronach internetowych poszukujesz pracy? 
+Justjoin.it
+Solid.jobs
+Glassdoor
+Rocketjobs
+LinkedIN
+Jobgether
+No Fluff Jobs
+Indeed
+Pracuj.pl
+
+
 
 Do autoamtycznej dokumentacji:
 https://jsdoc.app/

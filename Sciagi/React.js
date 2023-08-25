@@ -33,6 +33,47 @@ npx create-react-app front --template typescript
 λ npm run build
 */
 
+VITE
+/*
+Tworzenie nowego projektu React TypeScript Vite
+npm create vite --template-swc-ts
+npm i
+
+
+downgrade 18 to 17.0.2
+npm uninstall react react-dom
+npm install react@17.0.2 react-dom@17.0.2
+
+Change main.ts:
+// react 17.0.2
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App.tsx'
+import './index.css'
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+)
+
+
+
+npm i react-chat-widget
+npm i openai
+
+
+npm i --legacy-peer-deps @react-three/fiber @react-three/drei maath react-tilt react-vertical-timeline-component @emailjs/browser framer-motion react-router-dom
+*/
+
+
+THREE
+npx create-react-app . --template minimal
+npm i @react-three/fiber @react-three/drei @react-three/postprocessing
+
+dokumentacja do react three:
+https://docs.pmnd.rs/react-three-fiber/tutorials/events-and-interaction
 
 
 //Miałem sytuację, ze po wywołaniu npx create-react-app nazwa-katalogu, projekt zawierał tylko: node_modules, package.json, package-lock.json
@@ -44,6 +85,7 @@ npx create-react-app front --template typescript
 
 // Fajną gierkę warior zrobił Wojciech Rosiński   https://warriors.networkmanager.pl/warriors/
 
+// biblioteka do Float, czyli "chmurek" z opisami elemntu lub pływającego elemtu 3D. https://floating-ui.com/docs/useListNavigation
 
 // najpopularniejse biblioteki do formularzy:
 // https://redux-form.com/

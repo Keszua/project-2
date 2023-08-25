@@ -528,7 +528,48 @@ border:0 solid red;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+.glTF
 
+/*
+W blenderze projekt exportować jako: glTF
+Format glTF Embeded (.gltf)
+ > Data - zaznaczyć Compression
+ > Data > Material > Images > None
+
+ w projekcie (VSC) w konsoli wywołać polecenie:
+ npx gltfjsx public/models/aku-test.gltf
+( trzeba doinstalwoać npm i gltfjsx)
+film 21min https://www.youtube.com/watch?v=YkHqpqJgLKw
+
+
+dokumentacja do react three:
+https://docs.pmnd.rs/react-three-fiber/tutorials/events-and-interaction
+
+
+Świetny efekt oświetlenia obiektu jak na scenie:
+https://codesandbox.io/s/tx1pq?file=/src/App.js
+
+
+tekstury można pobać z https://polyhaven.com/textures
+
+
+*/
+
+glb
+/*
+filmik 1:50 https://www.youtube.com/watch?v=_QmhpmZVZIU
+Zapisać .glb,
+zaznaczyć:
+Include > Cameras
+Include > Punctla Lights
+
+wejść na stronę:
+https://threejs.org/editor/
+File > Import
+
+Exportować jako Export GLTF
+
+*/
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
