@@ -31,6 +31,7 @@ Snapowanie (łaczenie):
 Rozłaczenie (zrobić oddzielny obiekt):
 	1. Zaznaczyć sciany
 	2. Mesh -> Separate -> Selection
+lub: P  (samo P)
 
 Przecięcie nożem:
 	Aby przeszło na wylot, trzeba w tyn narzedziu uruchomić "C" (Cut through), A- pod kątem (np, równolegle)
@@ -79,7 +80,14 @@ Nadawanie grubości:
 	Add Modifier -> Solidify
 
 ----------------------------------------------------------------
-Nadawanie zależnosci:
+Nadawanie zależności:
+
+Rodzic <-> dziecko:
+Ctr + P
+
+Rozwiązanie zależnosci:
+Alt + P
+
 
 
 ----------------------------------------------------------------
