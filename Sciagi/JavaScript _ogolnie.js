@@ -139,7 +139,7 @@ let numer2 = parseInt('4', 10);  //drugi parametr to "radix", określa podstawę
 
         
 //-----------------------------------------------------------------------------
-// Map  - takie prote obiekty, zawierające klucz i wartość
+// Map  - takie proste obiekty, zawierające klucz i wartość
 const map = new Map();
 map.set('name', 'Eric');
 map.set('address', 'South Park');
@@ -224,7 +224,7 @@ const tabFull = [1, 2, ...tabPart, 5, 6]; //[1, 2, 3, 4, 5, 6]
 const str = "Ala ma kota";
 const tab = [...str]; //["A", "l", "a", " ", "m", "a", " ", "k", "o", "t", "a"]
 
-// zastosowanei do łaczenia obiektów:
+// zastosowanie do łaczenia obiektów:
 const ob1 =   {  a : 10,  b : 20  }
 const ob2 =   {  a : 15,  c : 30  }
 const obBig = {  ...ob1,  ...ob2, d: 40 };

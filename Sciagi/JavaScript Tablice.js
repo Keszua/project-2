@@ -118,7 +118,7 @@ console.log(ourTable.join(" <--> ")); //wypisze się "Marcin <--> Ania <--> Agni
 
 
 
-.concat() // - łączy tablicę z innymi elementami lub tabliczmi i zwraca nową tablicę
+.concat() // - łączy tablicę z innymi elementami lub tablicami i zwraca nową tablicę
 	const users = ["adam", "bogdan", "czarek", "darek"];
 	const newUser = "edyta";
 	const allUsers = users.concat(newUser);

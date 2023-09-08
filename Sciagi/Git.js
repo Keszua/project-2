@@ -14,7 +14,7 @@ http://onlywei.github.io/explain-git-with-d3/#branch
 // gra do potrenwoania gita
 https://learngitbranching.js.org/?locale=pl
 
-Aby sprawdzić, czy mamy zinstalowanego Git'a trzeba w wierszy poleceń spisać: git
+Aby sprawdzić, czy mamy zinstalowanego Git'a trzeba w wierszu poleceń spisać: git
 jeżeli wyświetlą sie jakies informacje inne niż błąd, to znaczy że git zainstalował sie na naszym kompie.
 
 git --version //zwraca wersję programu
@@ -406,7 +406,7 @@ git rebase --skip                   //gdy po rozwiazaniu konfliktów, git nie wi
 
 // KLONOWANIE
 git clone folderDoSklonowania NowyFolder	//klonowanie folderów na naszym kompie
-git clone https://github.com/Codeinwp/Ideal-Image-Slider-JS.git  	//robienie kolnu/kopi z repozytorium
+git clone https://github.com/Codeinwp/Ideal-Image-Slider-JS.git  	  //robienie klonu/kopi z repozytorium
 git clone https://github.com/Codeinwp/Ideal-Image-Slider-JS.git . 	//(z kropką) robienie klonu/kopi w folderze w którym jestesmy
 
 

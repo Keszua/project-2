@@ -168,8 +168,8 @@ object
 function
 any - brak typowania
 void                                   // np:  function testf():void { } 
-null, undefined                        // np:  const mojaDana:  null = null;
-unknown                                // podobnie jak any, ale nie możemy puźneij tej zmiennej przypisać typu
+null, undefined                        // np:  const mojaDana: null = null;
+unknown                                // podobnie jak any, ale nie możemy puźniej tej zmiennej przypisać typu
 
 pair: [string, number] = ['Poniedziałek', 1];    //Tuple
 

@@ -79,6 +79,10 @@ Nadawanie grubości:
 	Add Modifier -> Solidify
 
 ----------------------------------------------------------------
+Nadawanie zależnosci:
+
+
+----------------------------------------------------------------
 BONE:
 Shift+A -> Armature
 Żeby była widoczna kość: Ikona ludzika (Object Data Properties) -> Viewport Display -> In Front
@@ -134,9 +138,7 @@ Edit -> Preferences -> Navigation -> Orbit&Pan -> Auto _ perspective
 
 
 
-
-
-
+----------------------------------------------------------------
 Kreator postaci 3D: https://readyplayer.me/pl
 film: https://www.youtube.com/watch?v=pGMKIyALcK0
 Wkleić na stronie do public/models 

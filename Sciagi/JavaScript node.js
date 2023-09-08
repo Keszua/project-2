@@ -33,11 +33,11 @@ undefined
 
 // Uruchamianie aplikacji:
 node app.js
-npm run start                // zdefiniowane w package.json
-npm run test                 // zdefiniowane w package.json
-npm audit                    // sprawdza zanstalowane wtyczki pod względem bespieczeństwa
-npx nodemon app.js           // jakaś metoda uruchomienia nodemon bez jego instalacji
-
+npm run start                   // zdefiniowane w package.json
+npm run test                    // zdefiniowane w package.json
+npm audit                       // sprawdza zanstalowane wtyczki pod względem bespieczeństwa
+npx nodemon app.js              // jakaś metoda uruchomienia nodemon bez jego instalacji
+npm --prefix ./back run start   // uruchomienie z innej ścierzki
 
 // Aby odpalić projekt na repl, trzeba ustawic 
 app.listen(3000, '0.0.0.0');

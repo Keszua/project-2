@@ -8,6 +8,7 @@ raspi-config
 
 sudo apt update
 
+
 // uruchomienie środowiska graficznego:
 startx
 
@@ -15,6 +16,16 @@ startx
 
 // instlacja bazy na malinie
 https://linuxhint.com/setup-mysql-raspberry-pi/
+
+//według filmu https://www.youtube.com/watch?v=302fkHC94bc
+// przed instalcją zrobić:
+sudo apt update
+apt upgrade -y
+apt install -y software-properties-common
+apt-key adv --fetch-keys 'https//mariadb.org/mariadb_relase_signing_key.asc'
+apt update && sudo apt install -y mariadb-server mariadb-client
+
+
 
 sudo apt install mariadb-server
 
@@ -31,8 +42,13 @@ sudo mysql -u root -p
 // Nadanie uprawnień do bazy
 GRANT ALL PRIVILEGES ON black_box.* TO 'pi'@'localhost' IDENTIFIED BY '<haslo>' WITH GRANT OPTION;
 
-//dla staconarki:
+//dla stacjonarki:
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY 'root' WITH GRANT OPTION;
+
+
+// Testing MariaDB
+mariadb --version
+sudo systemctl status mariadb
 
 
 
