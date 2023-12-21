@@ -2242,3 +2242,27 @@ npm install --legacy-peer-deps @react-three/fiber @react-three/drei maath react-
 Logo można wygenerować na stronie logo.com
 
 //------------------------------------------------------------
+//   #   #                     #  
+//   ##  #                     #
+//   ##  #    ###    #   #   #####
+//   # # #   #   #    # #      #
+//   #  ##   #####     #       #
+//   #  ##   #        # #      #
+//   #   #    ###    #   #      ##
+//------------------------------------------------------------
+
+// Tworzenie projektu
+npx create-next-app nazwaProjektu
+
+
+
+
+
+
+
+
+
+
+
+
+//------------------------------------------------------------

@@ -423,8 +423,10 @@ git rm --cached nazwaPliku        //Jeżeli jakiś plik jest śledzony i chcemy 
 git rm -r --cached nazwaPliku     //Jeżeli jakiś plik jest śledzony i chcemy go przestać śledzić
 
 // Jeśli chcemy ignorowac pliki tylko lokalnie, trzeba dodac te pliki do .git/info/exclude
-git update-index –assume-unchanged NazwaPliku       // pozwala na nie śledzenie pliku bez wykonywania komita.
-
+git update-index -assume-unchanged NazwaPliku       // pozwala na nie śledzenie pliku bez wykonywania komita.
+// Aby cofnać –assume-unchanged (żeby znów śledzić), użyj komendy:
+git update-index --no-assume-unchanged NazwaPliku
+//Aby ignorowac cały folder, trzeba to zrobić z użyciem pliku .git/info/exclude
 
 //na https://porady-it.pl/programowanie/git-jak-wstrzymac-sledzenie-zmian-w-pliku-np-konfiguracyjnym/
 //znalazłem inny sposób na "nie śledzenie" pliku:
@@ -456,7 +458,7 @@ git config --global alias.ignored '!git ls-files -v | grep "^[[:lower:]]"'  //pr
 //        ^
 //        origin/master in your repository
 
-//branch - to wskaźnik na odpowiedni commit (nie tworzy jakiś kopii...) 
+//branch - to wskaźnik na odpowiedni commit (nie tworzy kopii...) 
 //HEAD - pokazuje, na którym jestesmy branchu, czyli na którym wskaźniku
 //stosuje się zwykle: master -jako główny, stabilny program;  develop -jako kopia; feature;  feature_user1; 
 git branch                          //pokazuje, na jakiej jesteśmy gałęzi i lista wszystkich branchów. Domyslnie jest "master"

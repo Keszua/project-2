@@ -8,8 +8,8 @@ PSR-12  -styl formatowania tekstu (taki "czysty kod")
 reCAPTHA
 https://codelabs.developers.google.com/codelabs/reCAPTCHA/index.html#5
 
-Kurs PHP od Mariusza:
-http://pl.phptherightway.com/
+Kurs PHP od Mariusza Z: http://pl.phptherightway.com/
+Kurs PHP od Kamila P: https://www.youtube.com/watch?v=zZ6vybT1HQs&t=3467s
 
 /*
 Sugerowana wtyczka: PHP IntelliSense
@@ -17,6 +17,20 @@ Ta wtyczka wymaga wyłączenia "azowych sugestii"
 You need at least PHP 7 installed for the extension to work. You can either add it to your PATH or set the php.executablePath setting.
 I recommend to disable VS Code's built-in PHP IntelliSense by setting php.suggest.basic to false to avoid duplicate suggestions.
 */
+
+
+//--------------------------------------------------------------------------------------
+XAMP
+
+Nowy projekt: stworzyć nowy folder w c:/xamp/htdocs/nazwa_projektu
+w VSC w ustaweiniach doiać ścierzkę: "php.validate.executablePath": "C:/xampp/php/php.exe"
+w VSC zainstalować wtyczki: PHP Intelephense, Live Server oraz PHP Server
+W hrome zainstalować rozserzenie Live Server Web Extension
+Uruchomić to rozszerzenie, wpisać:
+Actual Server Address: http://localhost/nazwa_projektu/
+Live Server Address: w VSC kliknac na dole "Go Live" i sprawdzić pod jakim adresem się odpali: http://127.0.0.1:5501/
+Otworzyć stronę w nowej zakładce: http://localhost/nazwa_projektu/
+
 
 W Xampie należy skonfigurować "Configure Virtual Hosts". Wchodzi sie w niego przez wpisanie w okno przeglądarki adresu:
 http://localhost/dashboard/docs/configure-vhosts.html
@@ -59,7 +73,7 @@ Jeżeli nie mam kontenera, tworze go za pomocą komendy:
 docker run -d -it -p 8084:8084 debian
 docker run -d -it -p 8084:8084 --name=debain_PHP debian
 
-Kontenetrpo winien się odpalić, jeśli nie to:
+Kontener powinien się odpalić, jeśli nie to:
 docker container start -ai idkontenera 
 
 W konsoli, przy pierwszym uruchomieniu, zaktualizować repozytorium 
@@ -137,6 +151,17 @@ header('Location: index.php'); // przekierowanie na stronę
 	define('NAZWA', 10);
 	const LICZNA_PI = 3.14
 
+//zmienne globalne
+    $_GET[]
+    $_POST[]
+    $rasius = $_POST["radius"] ;
+    $_SESSION["username"];
+
+    foreach ($_SERVER as $key => $value) {
+        echo"{$key} {$value} <br>";
+    };
+    $_SERVER["PHP_SELF"];
+
 //sprawdzanie typu zmiennej
 	var_dump($zmiennaTekstowa);  //= string(5) "tekst"
 	var_dump($zmiennaLiczbowa);  //= int(23) 
@@ -146,9 +171,9 @@ header('Location: index.php'); // przekierowanie na stronę
 	//przykład:
 	$action = $this->action() . 'Action';
 	if(!method_exists($this, $action)) {
-            $action = self::DEFAULT_ACTION . 'Action';
-        }
-
+        $action = self::DEFAULT_ACTION . 'Action';
+    }
+    
 
 
      ####                                       #
@@ -249,6 +274,16 @@ $hello = array_map(
     $users
 );
 print_r($hello);   //= Array ( [4] => Hello Ala [6] => Hello Ola [7] => Hello Elo ) 
+
+$capitals = array(  "USA"   => "Washington D.C.",
+                    "India" => "New Delhi" );
+foreach($capitals as $key => $value) {
+echo"{$key} = {$value} <br>";
+}
+
+$capitals = array_flip($capitals);     // zamienia klucze z wartosciami
+$capitals = array_reverse($capitals);  // Odwróci kolejność
+count($capitals);                      // ilosc elemtów
 
 
   ###               #                #                                                             #
@@ -384,6 +419,40 @@ foreach($movieDetalis as $key => $value) {
     #        #####   #   #   #   #    ###    #   #    ###
                                               ###
 
+abs($x);              // wartosc bezwzględna
+round($x);            // zaokrągla do najblizszej  3.9 -> 4
+round($x, 2);         // zaokrągla do 2 miejsc     3.1415 -> 3.14
+floor($x);            // zaokragla w dół           3.9 -> 3
+ceil($x);             // zaokragla w dół           3.1 -> 4
+pow($a, $b);          // a do potręgi b
+sqpt($a);             // pierwiastek
+max($a, $b, $c);
+min($a, $b, $c);
+pi();                 // 3.1415...
+rand(min, max);       //losuje
+
+date("1");            //= Monday
+
+isset();              // sprawdza, czy zmienna jest ustawiona. null zwraca fałsz. Wszytko inne (ustwione) prawdę
+empty();              // zwraca TRUE, gdy zmienna NIE istnieje lub jest nulem, falsem, pustym stringiem
+
+strtolower($tekst);   // zamiana na małe litery
+strtoupper($tekst);   // zamiana na wielkie litery
+strrev($tekst);       // zamiana na wielkie na małe, a małe na wielkie
+trim($tekst);         // usówa spacje
+
+str_pad("tekst", 20, ".");             // do 20-go znaku uzupełnij kropkami
+str_replace("-", "", $phone);          // zamiana znaków
+strcmo("takst1", "tekst2");            // porównuje dwa stringi
+strpos(" bla bla", " ");               // na której pozycji znajduje sie spacja?
+$newtab = substr("napis", 0, 3);       // od kąd do kąd ma wyciąć napis. Albo tylko jeden argunet: od kąd do końca
+$newtab = explode(" ", "hokus pokus"); // stwórz tablicę na postawie tekstu. Spacje rozdzielaja 
+$text = implode(" ", ["Jakiś", "tekst"]); // strwórz string na podstawie tablicy
+
+$age = filter_input(INPUT_POST, "age", FILTER_SANITIZE_NUMBER_INT); // wytnie znaki, zostawi tylko cyfry
+$age = filter_input(INPUT_POST, "age", FILTER_VALIDATE_INT);        // zwraca liczbę albo null
+
+
 Nie można przeciążać funkcji
 function nazwaFunkcji(argumenty): typWartościZwracanej
 {
@@ -475,15 +544,28 @@ echo $result;   //=40
 											
 											
 											
-											
-											
+                         #
+                         #      #        
+     ###    ###    ###   #  #        ### 
+    #   #  #   #  #   #  # #   ##   #   #
+    #      #   #  #   #  ##     #   #####
+    #   #  #   #  #   #  # #    #   #    
+     ###    ###    ###   #  #  ###   ### 											
 
- 
+setcookie("nazwa_ciastka", "wartosc", time() + (60 * 60 * 24), "/"); // ciastko ustawione na dobę
 
+foreach($_COOKIE as $key => $value) {
+    echo"{$key} = {$value} <br>";
+}
 	
-	
-	
-	
+if(isset($_COOKIE["fav_food"])) {
+    echo"Ulubione jedzenie to {$_COOKIE["fav_food"]}";
+}	
+
+
+
+
+
      ###    #
     #   #   #
     #       #        ####     ###     ###
@@ -784,6 +866,217 @@ http://localhost/project_yii/web/
 	
 	
 	
-	
+####                         #      #                  #            
+#   #                        #      # #                #            
+#   #  # ###  #####  #    #  #  #   ##      ####    ####  #    #    
+####   ##        #   #   #   # #   ##           #  #   #  #   #     
+#      #        #     # #    ##     #       #####  #   #   # #      
+#      #       #       #     # #    #   #  #    #  #   #    #       
+#      #      #####   #      #  #    ###    ### #   ####   #        
+                     #                                    #         
 
-skończyłem oglądać na 45:43	
+<body>
+    <form action="index.php" method="post">
+        <label>user name:</label><br>
+        <input type="text" name="username"><br>
+        <label>password:</label><br>
+        <input type="password" name="password"><br>
+        <input type="submit" name="login" value="Login"><br>
+    </form> <br>
+</body>
+</html>
+<?php
+    if ( isset($_POST["login"])) {  // wykryj kliknięcie na przycisk
+        echo "You tried to login<br>";
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+
+        if(empty($username)) {
+            echo"Username is missing";
+        } elseif(empty($password)) {
+            echo"Password is missing";
+        } else {
+            echo"Hello {$username}";
+        }
+    } else {
+        echo "NIE ustawiona";
+    };
+?>
+
+//to co wyżej, ale z walidacją
+<body>
+    <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
+        <label>user name:</label><br>
+        <input type="text" name="username"><br>
+        <label>password:</label><br>
+        <input type="password" name="password"><br>
+        <label>email:</label><br>
+        <input type="email" name="email"><br>
+        <label>age:</label><br>
+        <input type="text" name="age"><br>
+        <input type="submit" name="login" value="Log in"><br>
+    </form> <br>
+</body>
+</html>
+<?php
+    if ( isset($_POST["login"])) {  // wykryj kliknięcie na przycisk
+  //if ($_SERVER["REQUEST_METHOD"] == "POST") {  // inna metoda wykrywania zalogowania
+        echo "You tried to login<br>";
+        $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
+        $password = $_POST["password"];
+        $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
+        $age = filter_input(INPUT_POST, "age", FILTER_SANITIZE_NUMBER_INT); // wytnie znaki, zostawi tylko cyfry
+        $age = filter_input(INPUT_POST, "age", FILTER_VALIDATE_INT);        // zwraca liczbę albo null
+
+        if (empty($username)) {
+            echo"Username is missing<br>";
+        } elseif (empty($password)) {
+            echo"Password is missing<br>";
+        } else {
+            echo"Hello {$username}<br>";
+        }
+
+        if (empty($age)) {
+            echo "That number wasn't valid<br>";
+        } else {
+            echo "You are $age years old<br>";
+        }
+
+    } else {
+        echo "NIE ustawiona";
+    };
+?>
+
+
+$password = "pizza123";
+$hash = password_hash($password, PASSWORD_DEFAULT);
+if (password_verify("pizza123", $hash)) {
+    echo"Yopu are logged in!";
+} else {
+    echo"sorki, nie udało się";
+}
+
+
+     
+// pole wyboru. wspólna nazwa definuje grupę
+<body>
+    <form action="index.php" method="post">
+        <input type="radio" name="credit_card" value="Visa"> Visa<br>
+        <input type="radio" name="credit_card" value="Mastercard"> Master Card<br>
+        <input type="submit" name="confirm" value="confirm"><br>
+    </form> <br>
+</body>
+</html>
+<?php
+    if(isset($_POST['confirm'])) {
+        if(isset($_POST['credit_card'])){
+            $credit_card = $_POST["credit_card"];
+            echo $credit_card;
+        } else {
+            echo"Please make a selection";
+        }
+    }
+?>
+
+
+<body>
+    <form action="index.php" method="post">
+        <input type="checkbox" name="foods[]" value="Pizza"> Pizza<br>
+        <input type="checkbox" name="foods[]" value="Hamburger"> Hamburger<br>
+        <input type="checkbox" name="foods[]" value="Hotdog"> Hotdog<br>
+        <input type="submit" name="submit" ><br>
+    </form> <br>
+</body>
+</html>
+<?php
+    if (isset($_POST["submit"])) {
+        $foods = $_POST["foods"] ?? [];
+        foreach($foods as $food){
+            echo "{$food}<br>";
+        }
+        // if (isset($_POST['pizza'])){
+        //     echo "Youy like pizza!<br>";
+        // }
+        // if (isset($_POST['hamburger'])){
+        //     echo "Youy like hamburger!<br>";
+        // }
+        // if (isset($_POST['hotdog'])){
+        //     echo "Youy like hotdog!<br>";
+        // }
+        // if (empty($_POST['pizza'])){
+        //     echo "Youy DON'T like pizza!<br>";
+        // }
+        // if (empty($_POST['hamburger'])){
+        //     echo "Youy DON'T like hamburger!<br>";
+        // }
+        // if (empty($_POST['hotdog'])){
+        //     echo "Youy DON'T like hotdog!<br>";
+        // }
+    }
+?>
+
+database.php
+<?php
+    $db_server = "localhost";
+    $dob_user = "root";
+    $db_pass = "";
+    $db_name = "businessdb";
+    $conn = "";    
+
+    try {
+        $conn = mysqli_connect($db_server, $dob_user, $db_pass, $db_name);
+    } catch(mysqli_sql_exception $err){
+        echo"Could not connect!";
+    }
+
+    if ($conn) {
+        echo"You are connect!";
+    }
+?>
+
+index.php
+<?php
+    include("database.php");
+    include("header.html");
+    session_start();
+
+    // $username = "Squidward2";
+    // $password = "321";
+    // $hash = password_hash($password, PASSWORD_DEFAULT);
+
+    // $sql = "INSERT INTO users (user, password) VALUES ('$username', '$hash')";
+
+    // try {
+    //     mysqli_query($conn, $sql);
+    //     echo"User is now register";
+    // } catch (mysqli_sql_exception $err) {
+    //     echo"Could not register user <br>";
+    // }
+
+    $sql = "SELECT * FROM users WHERE user = 'Karol2'";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        echo $row["id"] . "<br>";
+        echo $row["user"] . "<br>";
+        echo $row["reg_date"] . "<br>";
+    } else {
+        echo"No user found";
+    }
+
+
+    $sql = "SELECT * FROM users";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        while($row = mysqli_fetch_assoc($result)) {
+            echo $row["id"] . "<br>";
+            echo $row["user"] . "<br>";
+            echo $row["reg_date"] . "<br>";
+        }
+    } else {
+        echo"No user found";
+    }
+
+
+    mysqli_close($conn);
+?>

@@ -23,7 +23,7 @@ const exec = promisify(require('child_process').exec);
 // }) ()
 
 // Zadanie 2. 
-// Pryjmuje argument ze scieżką
+// Przyjmuje argument ze scieżką
 // Ma wyświetlic zawartość podanej ścieżki
 // Brakuje mi zabezpieczenia do "bezpiecznej ścieżki"
 function safeJoin(base, target) {

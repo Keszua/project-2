@@ -184,7 +184,7 @@ sudo adduser agata wojtek    # dodaj użytkownika do grupy "wojtek"
 
 useradd                      # dodawanie kont uzytkownikow
 userdel                      # usuwanie kont uzytkownikow
-sudo useradd -G student student01      # utworz w gropie student, uzytkownika o nazwie "student01"
+sudo useradd -G student student01      # utworz w grupie student, uzytkownika o nazwie "student01"
 sudo useradd candidte                  # utworz uzytkownika o nazwie "candidte", ale on nie nalezy do zadnej grupy
 sudo passwd student01                  # nadawanie hasla dla "student01"
 # informacje o uzytkownikach znadują się w pliku /etc/passwd
@@ -243,16 +243,16 @@ echo "sqrt(81)" | bc  //= 9
 echo "4*a(1)" | bc -l //= 3.14   4*arcus(1) -l przywołuje biblioteki matematyczne
 
 date                         # wywwietli aktualna date
-date +%Y%m%d		     #= 20220105
+date +%Y%m%d                 #= 20220105
 date "+%Y-%m-%d %H:%M"       #= 2022-01-05 15:12
 date 010512052022.30         #= reczna zmaina daty: miesiac dzien godzina minuta rok.sekundy 
 cal                          # wyświetla "kalendarz" (aktulany miesiąc)
-cal 2020                     # wyśweitli cały klendarz
+cal 2020                     # wyświetli cały klendarz
 cal 12 2020                  # wyświetli tylko grudzien
 
 nl nazwaPliku                # wyświetla  plik z numerowaniem linii
-head nazwaPliku              # wyswietla domyślnie 10 pierwszych linijek
-head -n 20 nazwaPliku        # wyswietl pierwsze 20 linijek
+head nazwaPliku              # wyświetla domyślnie 10 pierwszych linijek
+head -n 20 nazwaPliku        # wyświetl pierwsze 20 linijek
 head -n -20 nazwaPliku       # pomin pierwsze 20 linijek.
 tail nazwaPliku              # wyświetli 10 ostatnich
 tail -n 20 nazwaPliku        # wyświetli 20 ostatnich
@@ -274,6 +274,7 @@ grep -r -n root *            # przeszukaj pliki i podkatalogi i w jakiej linijce
 grep -r -E ".*root" *        # E-regular Expression (wyrazenia regularne)
 grep -E -v ".*nologin$" passwd # przedzukaj plik passwd i odzukaj wpisy nie kończące się na "nologin", -v odwraca to co wyszukujemy
 
+ag                           # jakaś wersja grep na sterydach
 
 cmp ./plik1 ./plik2          # porownanie plikow: dostane informacje o pierwszej różnicy w plikach. Czyli tylko mam info, że się różnią  
 
@@ -1329,6 +1330,33 @@ B2B na linuksie, wystarczy ustwić adres w postbuild
 API - tu podegrać 3 pliki: HermesApi32, HermesApi64 i hermesdll.dll
 
 Hermes - pobrać z J:\ServerCI_Rozw i zainstalować na maszynie z "hermes"
+
+
+WSL
+Aby sprawdzić wersję Windowsa, w Run wpisać polecenie:
+winver
+Należy włączyć witrualizację przez program 'Włącz lub wyłącz funkcje systemu' (Turn Windows Featrue)
+Zaznaaczyć:
+- 'Platforma maszyny wirtualnej' (Virtual Machine Platform)
+- 'Podsystem Windows dla systemu Linux' (Windows Subsystem for Linux)
+Restart kompa
+W sklepie Microsoft store, wpisujemy LINUX. Ja mam Ubuntu 22.04.2 LTS
+
+Aby sprawdzić czy korzystamyu z WSL 1 czy WSL 2, w PowerShel, wpisz polecenie:
+wsl -l -v
+Jeśli mamy 1 i chemy 2, to trzeba zainstalwoac sobie apkę ze strony:
+https://learn.microsoft.com/en-us/windows/wsl/install-manual
+Aby przekonwertować dany pprogram, wpisz w PowerShel:
+wsl -l -v
+aby upewnić sie o dokładna nazwę, później polecenie (przykładowo dla Ubuntu):
+wsl --set-version Ubuntu 2
+
+Sby domyślnie wszytko instlaowało się na versji 2, wpisz w PowerShel polecenie:
+wsl --set-default-version 2
+
+Wiecej na: https://www.youtube.com/watch?v=4emmQuY25aY
+
+
 
 ┌ └ ├  ┘ ┼ ┬ ┤ ┴ ─  ┐
 ╠ ═ ╬ ╩ ╦ ═ ╣ ║ ╗ ╝

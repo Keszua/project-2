@@ -69,6 +69,9 @@ ng g c nazwaKomponentu                   //opcjonalnie  --skip-tests
 
 
 
+
+
+
 // komponent w pliku app.component.ts
 import { Component } from '@angular/core';
 @Component({
@@ -131,11 +134,11 @@ onUpdateServerName(event: Event) {
 import { FormsModule } from '@angular/forms'; 
   // w pliku app.components, w dekoratorze @NgModule, w impoirts dodać: FormsModule
   // w klasie stworzyć zmienną:
-  serverName = 'Tekst domysłmny';
+  serverName = 'Tekst domyślny';
 
 
 // Directives
-// tworzymyu poleceniem: pamietaj, aby prejśc so odpowiedniego folderu
+// tworzymyu poleceniem: pamietaj, aby przejśc do odpowiedniego folderu
 ng g d nazwaDyrektywy
 *ngIf  
 <p *ngIf="serverCreated"> Wypisz ten paragraf, gdy warunek jest prawdziwy </p>

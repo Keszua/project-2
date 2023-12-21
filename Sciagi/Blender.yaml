@@ -1,3 +1,7 @@
+Zaznaczanie:
+B: kwadratowy obszar 
+C: okrągły obszar 
+
 Pivot point (punkt ciężkości):
 	1. Zaznacyć krawędz (lub punkt)
 	2. Shift+S  (Mesh -> Snap -> Cursor to... )
@@ -145,13 +149,21 @@ Aby nie przełączała się perspektywa:
 Edit -> Preferences -> Navigation -> Orbit&Pan -> Auto _ perspective
 
 
+WTYCZKI (Add-ons)
+Rigging Rigify: coś do szkieletu
+Interface Copy Attributes Menu: wygodne kopiowanie właściwości
+Node Wrangler: ułatwia pracę w edytorze materiałów  Aktywacja CTRL+T
+loopTools: wtyczka do modelowania
+F2: wtyczka do modelowania
+Edit Mesh Tools: wtyczka do modelowania
+
 
 ----------------------------------------------------------------
 Kreator postaci 3D: https://readyplayer.me/pl
 film: https://www.youtube.com/watch?v=pGMKIyALcK0
 Wkleić na stronie do public/models 
 wywołac polecenie: npx gltfjsx public/models/avatar.glb
-(treba doinstalować yarn add gltfjsx)
+(trzeba doinstalować yarn add gltfjsx)
 lub ze wskazaniem gdzie ma stworzyć plik: npx gltfjsx -o src/components/Avatar.jsx public/models/avatar.glb
 Zmienić nazwę Model na swoją
 dopisac ścierzkę do linijeki:
@@ -164,3 +176,29 @@ Trzeba zapisać sobie w formacie .fbx
 Zaznaczamy Without Skin
 
 tekstury można pobać z https://polyhaven.com/textures
+
+
+----------------------------------------------------------------
+Rozbiajnie sie elementu na kawałki:
+Włączyć dodatek: Cell Fracture, do dzielenia obiektu na kawałki
+
+Zaznaczyć cały obiekt, nadać mu Psychic Properties -> Rigid Body
+Zalecane dodanie Sensitivity -> Collision margin na 0.001
+Skopiować ustawienia do reszty za pomocą Obiect -> Rigid Body -> Copy fro Active
+U góry "Transform Pivot Poin" zmienić na Indywidual Origins i delikatnie zeskalowac obiekty na troszkę mniejsze. Przywrócić "Median ppoint"
+s
+Dodac podłoże (Plane). Nadać mu fizykę: Ridig Body.  Ale na Type Pasive
+
+----------------------------------------------------------------
+Łaczenie rór:
+
+#     |   |
+#     |   |
+#-----+---+-----
+#     | . |
+#-----+---+-----
+#     |   |
+#     |   |
+
+Po skopiowaniu fragmentu ruru, obrucic ja w okreslonym kierunku.
+Ta dodana cześ musi być zaznacona. -> Face -> Intersect (Boolean) [Bolean > Union ]

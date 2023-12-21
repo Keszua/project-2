@@ -535,16 +535,16 @@ console.log(tab); //[Marcin, Ania, Agnieszka, Piotrek]
 ╚══════════════════════════════════════════════════════════╩═══════════════════════════════════════════════════════════╩═══════════════════════════════════════════════════════════╩═══════════════════════════════════════════════════════════╩═════════════════════════════════════════════════╝
 │                                                          │                                                           |                                                           │                                                           │
 //deklaracja tablicy
-│ const tab = ["Marcin", "Ania", "Agnieszka"];             │                                                           | var tab [5]int                                            |          
+│ const tab = ["Marcin", "Ania", "Agnieszka"];             │                                                           | var tab [5]int                                            |  $tab = [];        
 │                                                          │                                                           | tab := [5]int {1, 2, 5, 6, 7}                             |                                                           |
 │                                                          │                                                           | tab := []int {2, 5, 6}                                    |                                                           |
 // dodanie nowego elemntu do tablicy
-| tab.push("Piotrek"); /* zwroci dlugosc tab */            |                                                           | tab = append(tab, 13)                                     |                                                           |
+| tab.push("Piotrek"); /* zwroci dlugosc tab */            |                                                           | tab = append(tab, 13)                                     | $tab[] = "Piotrek";                                       |
 | tab[4] = "Krysia";                                       |                                                           |                                                           |                                                           |
 | tab[tab.length] = "Marek";                               |                                                           |                                                           |                                                           |
 |                                                          |                                                           |                                                           |                                                           |
 // dlugos tablicy
-| let len = array.length;                                  |                                                           |                                                           |                                                           |
+| let len = array.length;                                  |                                                           |                                                           | count($tab);   strlen("napis");                           |
 |                                                          |                                                           |                                                           |                                                           |
 |                                                          |                                                           |                                                           |                                                           |
 // nowa tablica z wybranymi elementami           
@@ -552,17 +552,19 @@ console.log(tab); //[Marcin, Ania, Agnieszka, Piotrek]
 |                                                          |                                                           |                                                           |                                                           |
 // kopiowanie tablicy
 | const strCopy = str.split();                             |                                                           |                                                           |                                                           |
-| const strCopy = strusturedClone(orgStr);                 |                                                           |                                                           |                                                           |
+| const strCopy = structuredClone(orgStr);                 |                                                           |                                                           |                                                           |
 |                                                          |                                                           |                                                           |                                                           |
 // dzielenie tekstu
-const tablicaZeSlowami = "Jakiś tekst".split(" "); 
+const tablicaZeSlowami = "Jakiś tekst".split(" ");         |                                                           |                                                           | $tablicaZeSlowami = explode(" ", "hokus pokus");          |
 |                                                          |                                                           |                                                           |                                                           |
 // zamiana stringa na tablicę ze znakami
-const tablicaZeZnakami = "Jakiś tekst".split(); 
+const tablicaZeZnakami = "Jakiś tekst".split();            |                                                           |                                                           | $tablicaZeSlowami = explode(" ", "hokus pokus");          |
 |                                                          |                                                           |                                                           |                                                           |
+// zamiana tablicy na string 
+| const text = ["Jakiś", "tekst"].join('');                |                                                           |                                                           | $text = implode(" ", ["Jakiś", "tekst"]);                 |
 //usuwanie spacji:
-const text = "Jakiś tek     st";
-const textBezSpacji = text.split(' ').join('');
+| const text = "Jakiś tek     st";
+| const textBezSpacji = text.split(' ').join('');          |                                                           |                                                           |                                                           |
 |                                                          |                                                           |                                                           |                                                           |
 |                                                          |                                                           |                                                           |                                                           |
 |                                                          |                                                           |                                                           |                                                           |
@@ -571,7 +573,7 @@ const textBezSpacji = text.split(' ').join('');
 |                                                          |                                                           |                                                           |                                                           |
 // usuwa ostatni element i zwraca jego wartość
 | .pop()                                                   | list.pop(-1)                                              |                                                           |                                                           |
-| var myFish = ['clown', 'mandarin', 'sturgeon'];          | myFish.remove('mandarin')                                                          |                                                           |                                                           |
+| var myFish = ['clown', 'mandarin', 'sturgeon'];          | myFish.remove('mandarin')                                 |                                                           |                                                           |
 | var popped = myFish.pop();                               |                                                           |                                                           |                                                           |
 | console.log(myFish); /*['clown', 'mandarin' ]*/          |                                                           |                                                           |                                                           |
 | console.log(popped); /* 'sturgeon' */                    |                                                           |                                                           |                                                           |
@@ -605,7 +607,7 @@ const textBezSpacji = text.split(' ').join('');
 |                                                          |                                                           |                                                           |                                                           |
 |                                                          |                                                           |                                                           |                                                           |
 // usuwa białe znaki na końcu
-| .trim()                                                  | strip()                                                   |                                                           |                                                           |
+| .trim()                                                  | strip()                                                   |                                                           | $textBezSpacji = trim($tab);                              |
 | const value = input.value.trim();                        |                                                           |                                                           |                                                           |
 |                                                          |                                                           |                                                           |                                                           |
 |                                                          |                                                           |                                                           |                                                           |

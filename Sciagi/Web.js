@@ -5,6 +5,12 @@ Projektowanie programu blokowo: https://miro.com/pl/
 
 Przy tworzeniu kodu: linter: https://github.com/airbnb/javascript
 
+api do memów: https://api.imgflip.com/get_memes
+
+SuperHero API https://superheroapi.com/index.html
+
+
+
 Na jakich stronach internetowych poszukujesz pracy? 
 Justjoin.it
 Solid.jobs
@@ -84,10 +90,6 @@ next cloude - coś do zrobienia swojego servera
 HTTPclient - dla ESP- za jej pomocą można przesłać JSON
 
 
-Piorek poleca ES6
-Potrek poleca Redux
-Zobaczyć co to: 
-- Redux Thunk
 
 Do rozsyłania komunikatów: web Socket (czy jakoś tak)
 
@@ -220,6 +222,18 @@ console.log(string); //= Header
 console.log(string.padStart(10, 'X')); //= XXXXHeader  uzupełnia strong do 10 znaków
 console.log(string.padEnd(10, 'X')); //= HeaderXXXX
 
+
+//------------------------------------------------------------
+Zakodowanie HTML:
+decodeURIComponent(tab(ideaToPass))
+
+Rozkodowanie
+base64(encodeURL(message.content))
+
+
+// kopiowanie zawartości okienka do schowka
+cosnt htmlToCopy = "jakiś tekst do showka"
+navigator.clipboard.writeText(htmlToCopy);
 
 
 
