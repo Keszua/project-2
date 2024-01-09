@@ -35,7 +35,7 @@ Stosować zasady SOLID oraz wzorce projektowe, aby napisać bardziej modularny, 
 
 /*
 Aby zbudował stronę na podstawi obrazka:
-Napisz HTML i CSS, które jak najdokłądniej wykonają stronę internetową z obrazu. Kod ma być RWD.
+Napisz HTML i CSS, które jak najdokładniej wykonają stronę internetową z obrazu. Kod ma być RWD.
 */
 
 
@@ -96,7 +96,7 @@ https://codesnippets.ai/free-tools
 // narzędzie, które "atakuje" nasza strone i wykrywa luki bezpieczeństwa
 https://www.zaproxy.org/
 
-// jakaś strona z artykułąmi o bespieczeństwie
+// jakaś strona z artykułami o bezpieczeństwie
 https://cheatsheetseries.owasp.org/
 https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html
 
@@ -209,3 +209,70 @@ oto wytyczne do kodu JavaScript = `
 `
 
 */
+
+
+
+Grafika 
+
+Midjourney 
+przykąłdowy prompt na kanale Midjourney Bot:
+/imagine prompt photorealistic 3d stone with moss on it, stylized, concepr art, artstation --v 6
+
+
+Krea
+Moduł 4 film 7
+https://www.krea.ai/home
+Rysuje tylko kształty, a AI za mnie robi grafikę.
+Do kodów QR
+
+
+Leonardo AI
+Bazuje na Stable Diffusion
+Moduł 4 film 8
+https://app.leonardo.ai/auth/login
+
+
+
+
+Do generwoana video:
+Pika Labs oraz Runway ML
+
+Pika Labs:
+Jako bot na Discord
+https://pika.art/login
+Do generowania rysunków. Bardzo się gubi przy realistycznych obrazach.
+Doibry do zrobienia podstawiania że ktos coś mówi.
+
+
+Runway ML
+Do realistycznych ujęć.
+https://app.runwayml.com/login
+
+
+
+Modele 3D
+
+CSM
+https://3d.csm.ai/
+Moduł 4 film 13 i 14
+1. Generowanie obrazka (płaskiego) w Midjourney na Discord
+2. Obrazek wrzócić do CSM 
+3. Po wygenerowaniu, pobrać jako OBJ
+
+Modyfikacja modelu https://stephaneginier.com/
+    https://stephaneginier.com/sculptgl/
+Modyfikacja tekstur https://app.leonardo.ai/texture-generation
+Dodawanie animacji https://www.mixamo.com/#/
+Dla Unity pobrać format FBX, With Skin
+
+
+threestudio
+https://github.com/threestudio-project/threestudio
+
+
+Audio:
+Moduł 4 film 15
+https://elevenlabs.io/
+Voicify
+Heygen
+RVC  https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI
