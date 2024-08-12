@@ -83,6 +83,13 @@ Zamiana Bezjera na punkty:
 Nadawanie grubości:
 	Add Modifier -> Solidify
 
+Łącenie punktów:
+  1. Zaznaczyć punkty (w trybie edycji)
+  2. Alt+M -> By Distance
+  lub F3 -> Merge Vertices -> By Distance
+
+  Aby łączyły sie automatycznie, w prawym górnym rogu -> Options -> Auto Merge
+
 ----------------------------------------------------------------
 Nadawanie zależności:
 
@@ -93,8 +100,39 @@ Rozwiązanie zależnosci:
 Alt + P
 
 
-
 ----------------------------------------------------------------
+Ustawienia blendera:
+Edit -> Preferences -> Navigation ->
+Dla pracy z myszką:
+* Orbit Around Selection - aby obracać względem zaznaczonego obiektu
+* Zoom to Mouse Position - aby przybliżac i oddalać w miejscy ustawionego kursoru
+
+Zmiana jednostek:
+W prawym panelu, ikona ze stożkiem i kólą -> Units -> Length -> Milimeters
+
+
+Aby nie przełączała się perspektywa:
+Edit -> Preferences -> Navigation -> Orbit&Pan -> Auto _ perspective
+
+
+WTYCZKI (Add-ons)
+Rigging Rigify: coś do szkieletu
+Interface Copy Attributes Menu: wygodne kopiowanie właściwości
+Node Wrangler: ułatwia pracę w edytorze materiałów  Aktywacja CTRL+T
+loopTools: wtyczka do modelowania
+F2: wtyczka do modelowania
+Edit Mesh Tools: wtyczka do modelowania
+
+
+
+   ####
+   #   #
+   #   #   ###   ####    ###
+   ####   #   #  #   #  #   #
+   #   #  #   #  #   #  #####
+   #   #  #   #  #   #  #
+   ####    ###   #   #   ###
+#----------------------------------------------------------------
 BONE:
 Shift+A -> Armature
 Żeby była widoczna kość: Ikona ludzika (Object Data Properties) -> Viewport Display -> In Front
@@ -119,7 +157,16 @@ Tworzenie zależności między kośćmi: (tryb Pose Mode) [Ikona niebieskiej ko�
 	* Target -> wybrać Armature
 	* Bone -> Wybrać z którą kością ma być zależność 
 
-----------------------------------------------------------------
+
+     #
+    # #           #                              #
+    # #   ####        ### ##    ####    ###          ####
+   #   #  #   #  ##   #  #  #       #  #   #    ##       #
+   #####  #   #   #   #  #  #   #####  #         #   #####
+   #   #  #   #   #   #  #  #  #    #  #   #     #  #    #
+   #   #  #   #  ###  #  #  #   ### #   ###   #  #   ### #
+                                               ##
+  #----------------------------------------------------------------
 ANIMACJA:
 1. Ustaw pierwszą pozycję figur. 
 2. Na dole, na pasku ustaw, w której sekundzie ma byc ta pozycja
@@ -137,25 +184,6 @@ Modele 3D do pobrania:
 	.fbx - podział na części (oddzielne obiekty) Ale bez tekstur
 
 
-----------------------------------------------------------------
-Ustawienia blendera:
-Edit -> Preferences -> Navigation ->
-Dla pracy z myszką:
-* Orbit Around Selection - aby obracać względem zaznaczonego obiektu
-* Zoom to Mouse Position - aby przybliżac i oddalać w miejscy ustawionego kursoru
-
-
-Aby nie przełączała się perspektywa:
-Edit -> Preferences -> Navigation -> Orbit&Pan -> Auto _ perspective
-
-
-WTYCZKI (Add-ons)
-Rigging Rigify: coś do szkieletu
-Interface Copy Attributes Menu: wygodne kopiowanie właściwości
-Node Wrangler: ułatwia pracę w edytorze materiałów  Aktywacja CTRL+T
-loopTools: wtyczka do modelowania
-F2: wtyczka do modelowania
-Edit Mesh Tools: wtyczka do modelowania
 
 
 ----------------------------------------------------------------
@@ -185,7 +213,7 @@ Włączyć dodatek: Cell Fracture, do dzielenia obiektu na kawałki
 Zaznaczyć cały obiekt, nadać mu Psychic Properties -> Rigid Body
 Zalecane dodanie Sensitivity -> Collision margin na 0.001
 Skopiować ustawienia do reszty za pomocą Obiect -> Rigid Body -> Copy fro Active
-U góry "Transform Pivot Poin" zmienić na Indywidual Origins i delikatnie zeskalowac obiekty na troszkę mniejsze. Przywrócić "Median ppoint"
+U góry "Transform Pivot Poin" zmienić na Indywidual Origins i delikatnie zeskalowac obiekty na troszkę mniejsze. Przywrócić "Median point"
 s
 Dodac podłoże (Plane). Nadać mu fizykę: Ridig Body.  Ale na Type Pasive
 
@@ -202,3 +230,73 @@ Dodac podłoże (Plane). Nadać mu fizykę: Ridig Body.  Ale na Type Pasive
 
 Po skopiowaniu fragmentu ruru, obrucic ja w okreslonym kierunku.
 Ta dodana cześ musi być zaznacona. -> Face -> Intersect (Boolean) [Bolean > Union ]
+
+
+
+
+
+   #     #              #                #          #####  ##### 
+   #     #              #                #             #    #   #
+   #     #  #    #   ####  # ###  #   #  #  #         #     #   #
+   #     #  #   #   #   #  ##     #   #  # #         ###    #   #
+   #  #  #   # #    #   #  #      #   #  ##             #   #   #
+   # # # #    #     #   #  #      #   #  # #        #   #   #   #
+    #   #    #       ####  #       ####  #  #        ###   ##### 
+            #
+#----------------------------------------------------------------
+1. Sprawdzenie watertightness (hermetyczności):
+Model musi być "wodoszczelny", czyli nie powinien mieć żadnych dziur ani otwartych krawędzi. Upewnij się, że wszystkie wierzchołki, krawędzie i ściany są poprawnie połączone.
+
+2. Normalne wektory:
+Sprawdź, czy wszystkie normalne wektory (normals) są skierowane na zewnątrz. W Blenderze możesz to zrobić, wybierając siatkę i przechodząc do trybu edycji, a następnie włączając wyświetlanie normalnych w panelu właściwości siatki.
+
+3. Naprawa błędów geometrii:
+Użyj narzędzi do naprawy siatki, takich jak "Remove Doubles" (w Blenderze 2.79) lub "Merge by Distance" (w nowszych wersjach), aby usunąć zduplikowane wierzchołki oraz "Recalculate Normals" (Ctrl+N) w trybie edycji.
+
+4. Triangulacja:
+Przed eksportem warto triangulować model, aby uniknąć problemów z wypukłymi płaszczyznami. W Blenderze możesz to zrobić, wybierając całą siatkę w trybie edycji (A), a następnie wybierając Ctrl+T (Triangulate Faces).
+
+
+
+STL: Najczęściej używany format do druku 3D, szczególnie dla modeli, które są już triangulowane. Jest prosty i powszechnie obsługiwany.
+OBJ: Może przechowywać więcej informacji, takich jak tekstury i materiały. Przydatny, jeśli potrzebujesz bardziej zaawansowanych funkcji.
+STEP/STP: Te formaty są bardziej zaawansowane i mogą przechowywać dane CAD. Są przydatne, jeśli potrzebujesz precyzyjnych wymiarów i geometrii.
+
+Eksportowanie do STL w Blenderze:
+Wybierz swój model w trybie obiektowym.
+Przejdź do File -> Export -> Stl.
+W oknie eksportu upewnij się, że masz zaznaczone opcje takie jak "Selection Only" (jeśli chcesz eksportować tylko wybrany model) oraz "Apply Modifiers".
+Kliknij Export STL.
+
+
+
+Blender posiada dodatek, który może pomóc w przygotowaniu modeli do druku 3D. Możesz go włączyć w Edit -> Preferences -> Add-ons i wyszukać 3D Print Toolbox.
+
+
+### Przygotowanie modelu:
+1. Sprawdź skalę modelu:
+  - Sprawdź jednostki miary (obrazkowe menu po prawo ->`Scene` -> `Units`).
+      Unit System: `Metric`.
+      Unit Scale: `1000`.
+      Length: `Millimeters`.  
+  - Zastosuj skalę (`Ctrl+A` -> `Scale`).
+2. Sprawdź i napraw geometrię:
+  - Usuń niepotrzebne wewnetrzne ściany
+      W trybie edycji użyj narzędzia Select -> Select All by Trait -> Interior Faces.      Usuń je (X -> Faces).
+   - Sprawdź normalne (`Shift+N`).
+      W trybie edycji wybierz wszystkie wierzchołki (A), a następnie naciśnij Shift+N (lub wejdź do menu Mesh -> Normals -> Recalculate Outside).
+   - Znajdź n-gony (`Ctrl+T` / `Ctrl+F` -> `Tris to Quads`).
+   - Znajdź dziury (`Mesh` -> `Clean up` -> `Fill Holes` / `Limited Dissolve`).
+      W trybie edycji wybierz wszystkie wierzchołki (A), a następnie Mesh -> Clean up -> Fill Holes lub Mesh -> Clean up -> Limited Dissolve.
+   - Usuń luźne elementy 'Mesh' -> 'Clean up' -> 'Delete Loose'.
+   - Zredukuj niepotrzebną geometrię. 'Mesh' -> 'Clean up' -> 'Limited Dissolve'.
+3. Usuń niepotrzebne punkty (`M` -> `By Distance`).
+4. Upewnij się, że model jest "manifold" (dodatek `3D Print Toolbox`).
+
+### Eksportowanie do STL:
+1. Przejdź do trybu obiektowego (`Tab`).
+2. Zaznacz model.
+3. Przejdź do menu eksportu (`File` -> `Export` -> `Stl (.stl)`).
+4. Ustawienia eksportu (`Selection Only`, poprawne jednostki miary).
+5. Eksportuj plik (`Export STL`).
+

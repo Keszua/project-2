@@ -21,7 +21,7 @@
 # jakis program do gier: Lutris, pozwala instalować stare gry z płyt
 # coś dla EpicGameStor albo dla Gog:  heroic games launcher
 
-# jakiś program do nagrywania tego co na ekranie: Kdenlive
+# jakiś program do nagrywania tego co na ekranie: Kdenlive. Ziemniak urzywa OBS Studio
 
 # balenaEther - porogram do robienia obrazów instalacyjnych na pendrive. https://etcher.balena.io/
 
@@ -165,15 +165,16 @@ wall "Komunikat do wszystkich" # gdy dodamy sudo, to na pewno poleci do wszystki
 export PATH=$PATH:/place/with/the/file # dopisanie komendy do zmiennej środowiskowej
 
 sudo                         # komendy administratora
-sudo passwd root             # zmiana chasła dla administratora
+sudo passwd root             # zmiana hasła dla administratora
 passwd                       # ustaw nowe haslo na aktualnym koncie  
 su                           # zmiana uzytkownika
 su root                      # przełącz się na administratora
+su karol                     # przełącz się na użytkownika karol
 # po zalogowaniu jako admin, będzie na początku root@uzytkownik i # na końcu
 exit                         # wylogowanie się z admina
 sudo adduser agata           # tworzenie nowego użytkownika (tylko admin może tworzyć nowych uzytkowników)
 su agata                     # zaloguj sie na "agata"
-id                           # wyświetla GRUPY
+id                           # wyświetla GRUPY oraz uid, gid
 whoami                       # wyświetli, nazwę uzytkownika
 who                          # wyświetli, kto jest zalogowany
 who --boot                   # informacja, kiedy ten serwer był ostatanio restartowany
@@ -189,6 +190,13 @@ sudo useradd candidte                  # utworz uzytkownika o nazwie "candidte",
 sudo passwd student01                  # nadawanie hasla dla "student01"
 # informacje o uzytkownikach znadują się w pliku /etc/passwd
 # hasła znajduja się w /etc/shadow 
+passwd                       # do zmiany haseł
+chage                        # do edycji haseł   film około 17min https://www.youtube.com/watch?v=4IFEOOqhF9o&t=1617s
+chage -l bolek               # wyświetla informacje o urzytkowniku
+chage -d 0 bolek             # wymuś zmianę chasła przy następnym logowaniu
+chage -E 2025-05-01 -M 30 -W 5 bolek  # konto zostanie zablokowane 2025-05-01, maksymalny czas bez zmiany hasła to 30 dni, a 5 dni przed zablokowaniem dostanie powiadomienie
+
+
 users                        # lista zalogowanych uzytkownikow
 uname -a                     # informacje o systemie
 lshw                         # szczegulowe informacje o sprzecie (trzeba doinstalowac)
@@ -197,10 +205,18 @@ lscpu                        # szczegulowe informacje o procesorze/procesor
 # wiecej o szczegulach sprzetu: https://www.tecmint.com/commands-to-collect-system-and-hardware-information-in-linux/
 
 
+cat /etc/*release*           # informacje o systemie
+
 ssh komput@192.168.0.140     # połączenie z innym komputerem w sieci (potwiedzić Y i podać hasło)
+ssh komput@192.168.0.140 -p 22 # zwykle port to 22
+# aby umożliwić dostep do rut przez ssh, trzeba w pliku /etc/ssh/sshd_config odkomentować linię: PermitRootLogin yes
+# następnie zrestartować serwer ssh: sudo systemctl restart sshd
 
 
 sudo apt update              # odświerzenie repozytorium
+sudo apt upgrade             # aktualizacja systemu 
+apt update && apt upgrade    # odświerzenie repozytorium i aktualizacja systemu
+apt list --installed         # lista zainstalowanych pakietów
 apt search openssh           # sprawdz czy istnieje dany program w repozytorium
 systemctl status sshd        # sprawdz czy program jest zainstalowany i w jakim stanie
 sudo apt install g++         # instalowanie jakiś pakietów/programów
@@ -246,6 +262,7 @@ date                         # wywwietli aktualna date
 date +%Y%m%d                 #= 20220105
 date "+%Y-%m-%d %H:%M"       #= 2022-01-05 15:12
 date 010512052022.30         #= reczna zmaina daty: miesiac dzien godzina minuta rok.sekundy 
+sudo hwclock -s              # synchronizacja zegara systemowego z zegarem sprzetowym
 cal                          # wyświetla "kalendarz" (aktulany miesiąc)
 cal 2020                     # wyświetli cały klendarz
 cal 12 2020                  # wyświetli tylko grudzien
@@ -364,9 +381,12 @@ ps -eH                                           #─┐
 pstree                                           #─┴─ pokaze strukture (drzewo) procesow
 ps aux                                           # pokazuje wszystkie procesy (z tego korzysta Mariusz)
 
+
 top                                              # procesy w systemie, taki menager zadan; q -wyjscie
 # gdy pracuje, mozna nacisnac t - do obserwacji procesora;  m- do obserwacni pamieci; k -kill; u -wybierz uzytkownika; o -filtrowanie = -wyczysc filtrowanie
 # sortowanie: M -wedlug zuzycia pamieci; P -wedlug zuzycia procesora; N -PIN; T -time; R -odwraca kolejnosc ostatnio wybranego sortowania; c -pelne sciezki
+
+htop                                            # taki top na sterydach
 
 kill 4284                                        # zabiajnie watku (numer z PID)
 ps -u stasiek | grep vim                         #─┐ 
@@ -383,6 +403,19 @@ ls --help | more        //wyświetlanie helpa strona po stronie
 	Wyjście: q
 
 
+
+
+# -------------------------------------------------------------------------------------------------
+       #                 #        
+       #                 #      # 
+    ####  #    #   ###   #  #     
+   #   #  #   #   #      # #   ## 
+   #   #   # #     ###   ##     # 
+   #   #    #         #  # #    # 
+    ####   #       ###   #  #  ###
+          #
+# -------------------------------------------------------------------------------------------------
+
 df                      # Filesystem - informacja o dyskach
 df -h                   # Fajniej przeliczone wartosci bajtów
 df -h .                 # informacja o dysku, na którym aktulanie się znajduje
@@ -392,37 +425,78 @@ du -sh .                # disk used - ile miejsca zajmuja pliki
 du -sh . 2>/dev/null    # disk used - informacje o błędach wyślij do "czarnej dziury"  0-standard input  1-standard output  2-standard error output
 du -ha --exclude="*.journal" # wypisz szczegoły plików bez rozszezenia .journal
 
-
-tar  # arhiwizacja plików (takie pakowanie bez kompresji)
-tar -cvf log.tar log    # c-create - stwórz arhiwum, v-gadatliwe f-okresli nazwe pliku, natepnie nazwa pliku jaki powstanie, nastepnie katalog do spakowania
-tar -xvf log.tar log    # x-wypakuj
-tar -cvzf log.tgz log   # utwórz SPAKOWANE arhiwum
-tar -xvzf log.tgz log   # x-wypakuj i ROZKOMPRESUJ
-tar -xvzf log.tgz log plik  # x-wypakuj i ROZKOMPRESUJ tylko jeden plik
-tar -tzf log.tgz        # tylko podglad zawartosci
-
-gzip log.tar            # podstawoe polecenie do kompresji (UWAGA! usuwa oryginalny plik)
-gunzip log.tar.gz       # rozkompresowanie 
-
-zip README.zip README   # skompresuj plik README
-zip -r log.zip log      # skompresuj rekurencyjnie katalog "log" wraz z podkatalogami i plikami
-zip log.zip -u log/README # aktualizuj (u-update) w arhiwum jeden zmieniony plik 
-zip log.zip -d log/README # usuń z arhiwum jeden, niepotrzebny plik
-unzip README.zip          # rozkompresuj plik README
-unzip -l log.zip          # rozkompresuj cały folder i wylistuj co robisz
-unzip log.zip log/README  # rozpakuj tylko jeden plik 
-unzip -t log.zip          # przeczytaj i skontroluj arhiwum (bez rozpakowywania)
+dmesg                                            # informacje o urzadzeniach
+dmesg | grep -i usb                              # wyszukaj informacje o urzadzeniach USB
+dmesg | grep sd                                  # wyszukaj informacje o dyskach
 
 
+tar                               # arhiwizacja plików (takie pakowanie bez kompresji)
+tar -cvf log.tar log              # c-create - stwórz arhiwum, v-gadatliwe f-okresli nazwe pliku, natepnie nazwa pliku jaki powstanie, nastepnie katalog do spakowania
+tar -xvf log.tar log              # x-wypakuj
+tar -cvzf log.tgz log             # utwórz SPAKOWANE arhiwum
+tar -xvzf log.tgz log             # x-wypakuj i ROZKOMPRESUJ
+tar -xvzf log.tgz log plik        # x-wypakuj i ROZKOMPRESUJ tylko jeden plik
+tar -tzf log.tgz                  # tylko podglad zawartosci
+
+gzip log.tar                      # podstawoe polecenie do kompresji (UWAGA! usuwa oryginalny plik)
+gunzip log.tar.gz                 # rozkompresowanie 
+
+zip README.zip README             # skompresuj plik README
+zip -r log.zip log                # skompresuj rekurencyjnie katalog "log" wraz z podkatalogami i plikami
+zip log.zip -u log/README         # aktualizuj (u-update) w arhiwum jeden zmieniony plik 
+zip log.zip -d log/README         # usuń z arhiwum jeden, niepotrzebny plik
+unzip README.zip                  # rozkompresuj plik README
+unzip -l log.zip                  # rozkompresuj cały folder i wylistuj co robisz
+unzip log.zip log/README          # rozpakuj tylko jeden plik 
+unzip -t log.zip                  # przeczytaj i skontroluj arhiwum (bez rozpakowywania)
+
+gdisk /dev/sda                    # narzędzie do partycjonowania dysków  Film  00:04:00 https://www.youtube.com/watch?v=Vbtu-d3Gnqw
+# ext4, xfs, btrfs - systemy plików w linuxie gdzie ext4 jest najbardziej popularny, xfs jest szybszy, btrfs jest najnowszy i ma najwięcej funkcji
+# dla Ubuntu, najczeście stosuje się ext4
+mkfs.ext4 /dev/sdb1               # formatowanie dysku
+# następnie trzeba zapontować dysk w systemie plików
+mkdir /mnt/dysk1                  # stworzenie katalogu, gdzie zamontujemy dysk
+mount /dev/sdb1 /mnt/dysk1        # zamontowanie dysku
+umount /mnt/dysk1                 # odmontowanie dysku
+
+lvm                               # narzędzie do zarządzania partycjami Film (około 12min) https://www.youtube.com/watch?v=Vbtu-d3Gnqw
+pvcreate /dev/sdb1                # stworzenie fizycznego wolumenu (nie działa na zamoontowanych dyskach)
+pvcreate /dev/sdb1 /dev/sdc1      # stworzenie fizycznego wolumenu z dwóch dysków
 
 
+samba                             # narzędzie do udostępniania plików w sieci
+lvcreate --name samba --size 12g gr1 # stworzenie logicznego wolumenu który może być wiekszy niż jedn cały dysk (oczywiśce gdy stworzyliśmy fizyczny wolumen skłądajacy się z 2 dysków)
+lvs                               # wyświetlenie wszystkich wolumenów
+ls -l /dev/mapper/                # wyświetlenie wszystkich partycji i do ajkich wolumenów są przypisane
+# puźniej trzeba sformatować i zamontować dysk Film 00:15:30 https://www.youtube.com/watch?v=Vbtu-d3Gnqw
+lvextend --size +2g --resizefs /dev/gr1/samba # rozszerzenie wolumenu (powiększenie pamięci)
+# Aby zmiany działały po restarcie systemu, trzeba zmodyfimować plik /etc/fstab
+blkid /dev/sdb1                   # wyświetlenie identyfikatora dysku
 
 
+#--------------------------------------------------------------------------------------------------
+                           #
+                           #
+    ###    ####   ### ##   ####    #### 
+   #           #  #  #  #  #   #       #
+    ###    #####  #  #  #  #   #   #####
+       #  #    #  #  #  #  #   #  #    #
+    ###    ### #  #  #  #  ####    ### #
+#--------------------------------------------------------------------------------------------------
+# Film 20:00  https://www.youtube.com/watch?v=Vbtu-d3Gnqw
+# Samba to serwer plikowy więcej na https://wiki.samba.org/index.php/Main_Page
+apt install samba                 # instalacja samba
+# pliki do konfiguracji samba znajdują się w /etc/samba/smb.conf
+# aby zobaczyć dostępne udziały, trzeba wpisać: smbclient -L localhost
+
+# alternatywa dla samba to NFS (Network File System) - protokół do udostępniania plików w sieci
+# film 26:30 https://www.youtube.com/watch?v=Vbtu-d3Gnqw
+apt install nfs-kernel-server     # instalacja nfs
+# konfiguracja nfs znajduje się w /etc/exports
 
 
-
-
-
+# gdy są problemy z odpaleniem jakeijś usługi, można sprawdzić logi
+cat /var/log/syslog               # logi systemowe
 
 
 
@@ -439,7 +513,21 @@ unzip -t log.zip          # przeczytaj i skontroluj arhiwum (bez rozpakowywania)
 VIM
 vim        # edytor  (instalacja: sudo install vim)
 Esc        # przejdz do trybu komend
-hjkl       # Poruszanie się 
+# Poruszanie się 
+    ┌───┐           ┌───┐
+    | ^ |           | K |
+┌───┼───┼───┐   ┌───┼───┼───┐
+| < | v | > |   | H | J | L |
+└───┴───┴───┘   └───┴───┴───┘
+Delete:         X         dd
+Copy & paste:   yy        p
+Scroll Up/Down: Ctrl +u   Ctrl +du 
+Command         :
+Save            :w        :w nazwaPliku
+Quit (Discard)  :q        :q!
+Save & Quit     :wq
+find            /szukanyTekst  n
+
 i Insert   # pisz tekst w miejscu kursora
 a          # append - dopisz 
 x          # kasuj jeden znak
@@ -448,9 +536,9 @@ d d        # kasuj cała linijkę
 v          # zacznij kopiowanie (teraz zaznacz co kopiować)
 y          # zakończ kopiowanie 
 p          # wklej zawarość schowka
-:r nazwaPliku    //wklej całą zawartość pliku
+:r nazwaPliku    # wklej całą zawartość pliku
  
-/szukany tekst   //szukanie tekstu i Enter żeby przejść do pierwszego znalezionego
+/szukany tekst   # szukanie tekstu i Enter żeby przejść do pierwszego znalezionego
 n                # przejdz na kolejne znalezione
 N                # przejdz na poprzednie znalezione
 :s/txt1/txt2     # odszukaj i zmaień zamiana jednego tekst
@@ -470,9 +558,34 @@ u                # cofnij (taki Ctrl+Z)
 
 
 
+curl http://www.some-site.com/some-file.txt -O  # pobierz plik z internetu
+wget http://www.some-site.com/some-file.txt -O moja-nazwa.txt     # pobierz plik z internetu
 
 
 
+
+#-------------------------------------------------------------------------------------------------
+   #####                              #             ###    #
+     #     #                          #       #    #       #
+     #         ### ##    ###    ###   #            #     #####
+     #    ##   #  #  #  #   #  #      ####   ##   ####     #
+     #     #   #  #  #  #####   ###   #   #   #    #       #
+     #     #   #  #  #  #          #  #   #   #    #       #
+     #    ###  #  #  #   ###    ###   #   #  ###   #        ##
+#-------------------------------------------------------------------------------------------------
+
+add-apt-repository -y ppa:teejee2008/ppa
+apt-get update
+apt install timeshift
+
+timeshift-gtk                # uruchomienie programu
+timeshift --create           # utworzenie kopi zapasowej (w konsoli.)
+
+# Aby uruchomić wersje graficzną, na lokalnej maszynie uruchom w jednym okienkui:
+startx
+# w drugim okienku połączyć się z maszyną:
+ssh -X user@192.168.0.X
+sudo timeshift-gtk
 
 
 
@@ -1038,8 +1151,9 @@ Instalacja Windowsa:
 # angryIpScan ze strony https://angryip.org/download/#linux
 
 # Konfiguracja sieci:
-# trzeba być w katalogu głównym
-cd etc/network/
+cd etc/network/interfaces              # w starszych wersjach, ponizej 18
+cd etc/netplan/50-cloud-init.yaml      # w nowszych wersjach
+netplan apply                          # zastosowanie zmian (po edycji pliku /etc/netplan/50-cloud-init.yaml)
 ip address                             #─┐ 
 ip a                                   #─┴─ wyświetla konfigurację kart siecowych i adresy sieci
 
@@ -1050,8 +1164,9 @@ etc/resolv.conf                        # informacja z adresem DNS
 ip link show                           # informacje o dostepnych kartach sieciowych
 ip link set eth0 down                  # wylacz karte eth0
 ip link set eth0 up                    # wlacz karte eth0
-ip address add dev eth0 192.168.137.100/24       # dodaj nowe IP dla danej karty (do restartu karty)
+ip address add dev eth0 192.168.137.100/24  # dodaj nowe IP dla danej karty (do restartu karty, zmiany na stałe, trzeba zrobić w /etc/netplan/50-cloud-init.yaml)
 ip addr add 19.168.1.10/24 dev eth1    # przypisz adres do karty (nie trwale, do restartu karty)
+ip l set eth1 up                       # po nadaniu IP, wlacz karte
 ip -s -h address show                  # statystyka z wyslanych/odebranych pakietow
 
 route                                  #─┐
@@ -1152,6 +1267,9 @@ poing db             # teraz zadziała
 cat /etc/resolv.conf    # tu się znajduje informacja o adresie serwera DNS
 
 
+# dodawanie certyfikatu do jakiegoś menegera w Windowsie
+Film 27:30 https://www.youtube.com/watch?v=6jCs1Z8od5k
+
 #-------------------------------------------------------------------------------------------------
                               #                                 #     #    
                               #                                 #     #    
@@ -1190,6 +1308,7 @@ service [nazwaUslugi] restart
 app install sudo           # instalacja usługi
 usermod                    # ustawienia dotyczące uzytkownika
 usermod -a -G sudo user1   # dodaj uzytkownika do grupy sudo
+sudo usermod -aG docker $USER   # dodać swojego użytkownika do grupy docker
 
 // przy połaczeniu przez SSH:
 sudo -i   # zmiana uzytkownika na root i przejdz do katalogu root/
@@ -1201,8 +1320,12 @@ username ALL=(ALL) NOPASSWD:ALL
 
 # Mariusz znalazł, żeby nie wołał hasła: 
 sudo su
+# aby dodać urzytkownika do "suderów", trzeba być na koncie kto już jest suderem,
+# uruchomić poecenie nano /etc/group
+# w pliku znaleźć grupę sudo: i po przecinku, bez spacji, dopisać nowego użytkownika
+# lub poleceniem: usermod -G sudo -a karol2
 
-//-------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
 // Kompilacja pliku wynikowego dla linuxa:
 // stworzyć link build_linux.bat
 // Zawartość pliku:
@@ -1212,7 +1335,7 @@ sudo su
 	.\build_linux.bat
 	
 	
-//-------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
 // Przesłanie pliku do zdalnej maszyny:
 // Przez program WinSCP
 
@@ -1226,14 +1349,14 @@ Nadać uprawnienia do uruchomienia:
 Uruchomić plik:
 	./ihermesTest
 
-//-------------------------------------------------------------------------------------------------
-//Aby serwer uruchamiał się sam po restarcie, należy:
+#--------------------------------------------------------------------------------------------------
+# Aby serwer uruchamiał się sam po restarcie, należy:
 
-// Zakładam że mam plik który będe uruchamiał w katalogu:  /opt/ihermes-test/ihermesTest
+# Zakładam że mam plik który będe uruchamiał w katalogu:  /opt/ihermes-test/ihermesTest
 
-//W katalogu
+# W katalogu
 	/etc/systemd/system
-//zakładam plik:
+# zakładam plik:
 	ihermes.service
 
 	//zawartość pliku dystrlicdev.service
@@ -1249,7 +1372,7 @@ Uruchomić plik:
 		WantedBy=multi-user.target
 
 
-//W katalogu  /etc/systemd/system  wywołuje polecenia:
+# W katalogu  /etc/systemd/system  wywołuje polecenia:
 	systemctl enable ihermes.service  
 	systemctl start ihermes
 	
@@ -1258,73 +1381,73 @@ Uruchomić plik:
 	
 	
 
-//po uruchomieniu usługi, po wpisaniu do przeglądarki http://10.10.10.182:8000/ powiniśmy widzieć odpowiedz serwera
+# po uruchomieniu usługi, po wpisaniu do przeglądarki http://10.10.10.182:8000/ powiniśmy widzieć odpowiedz serwera
 
-//aby sprawdzić, na jakich portach aktualnie działamy:
+# aby sprawdzić, na jakich portach aktualnie działamy:
 	netstat -tulpn
 
-// żeby zabić port
+# żeby zabić port
 sudo lsof -t -i tcp:portNumber | xargs kill -9	
 
-//-------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
 
 
 b2b: 10.10.10.181  -> root  -> Ha...
 iHermes: 10.10.10.182  -> user1  -> user1
 
 
-//mapowanie dysku, wpisać \\ad.humansoft.pl\s
-// Moja baza jest ustawiona na 
+# mapowanie dysku, wpisać \\ad.humansoft.pl\s
+# Moja baza jest ustawiona na 
 port: 2150
-// Port bazy ustawia sie w SQL Server Configurator ->  SQL Sever Network Configutraotr -> Protocol for SQL2017 -> TCP/IP -> PM -> Właściwości -> IP Addresses -> TCP Port
+# Port bazy ustawia sie w SQL Server Configurator ->  SQL Sever Network Configutraotr -> Protocol for SQL2017 -> TCP/IP -> PM -> Właściwości -> IP Addresses -> TCP Port
 
-//Kopia bazy:
-// W programie Microsoft SQL Server manager
-// Rozwinąć 10.10.10.10.218,2150 -> Databases -> konkretna baza -> PM -> Tasks -> Back Up...
-// W Source będzie domyślnie wybrana baza z której klikneliśmy. Wskazuemy miejsce, gdzie ma się wykonać i OK
+# Kopia bazy:
+# W programie Microsoft SQL Server manager
+# Rozwinąć 10.10.10.10.218,2150 -> Databases -> konkretna baza -> PM -> Tasks -> Back Up...
+# W Source będzie domyślnie wybrana baza z której klikneliśmy. Wskazuemy miejsce, gdzie ma się wykonać i OK
 
-// Załadownie bazy z kopii:
-// Rozwinąć 10.10.10.10.218,2150 -> Databases -> PM -> Restore Databases...
-// Wybrac Device i wskazać plik
+# Załadownie bazy z kopii:
+# Rozwinąć 10.10.10.10.218,2150 -> Databases -> PM -> Restore Databases...
+# Wybrac Device i wskazać plik
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// Generowanie klucza 
-// W pliku:  /etc/ssh/sshd_config
-// Odkomentować linijkę     AuthorizedkeysFile  ..ssh/authorized_keys  ..ssh/authorized_keys2
-// zrestarować usługe:
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+# Generowanie klucza 
+# W pliku:  /etc/ssh/sshd_config
+# Odkomentować linijkę     AuthorizedkeysFile  ..ssh/authorized_keys  ..ssh/authorized_keys2
+# zrestarować usługe:
 service sshd restart
 
-// generownaie klucza:  -t wersja kodowania, obenie chyba ed25519 jest najnowszy. 
-// gdy poprosi o hasło, dać puste, wskazać ścieżkę dla uzytkownika, czyli: /home/user1/.ssh
+# generownaie klucza:  -t wersja kodowania, obenie chyba ed25519 jest najnowszy. 
+# gdy poprosi o hasło, dać puste, wskazać ścieżkę dla uzytkownika, czyli: /home/user1/.ssh
 ssh-keygen -t ed25519 
-// stworzy dwa pliki: user1  i  user.pub
+# stworzy dwa pliki: user1  i  user.pub
 
-//zawartość user.pub trzeba skopiować do authorized_keys  (zakładam że jestem w folderze /home/user1/.ssh)
+# zawartość user.pub trzeba skopiować do authorized_keys  (zakładam że jestem w folderze /home/user1/.ssh)
 cat user1.pub > authorized_keys
 
-//klucz (nie publiczny) trzeba wyciągnąć i w formie pliku umiecić w projekcie windowsowym
-// można to zrobić przez program WinSCP, ale on nie widzi ukrytych, więc trzeba skopiować ten plik wyżej:
+# klucz (nie publiczny) trzeba wyciągnąć i w formie pliku umiecić w projekcie windowsowym
+# można to zrobić przez program WinSCP, ale on nie widzi ukrytych, więc trzeba skopiować ten plik wyżej:
 cp ./.ssh/user1 user1_klucz
-// i zmienić uzytkownika i grupy dla pliku:
+# i zmienić uzytkownika i grupy dla pliku:
 chown user1:user1 user1_klucz
 
 
-// zmiana uzytkownika (przelogowanie)
+# zmiana uzytkownika (przelogowanie)
 su user1
-// przelogowanie na roota:
+# przelogowanie na roota:
 su -
 
-//zmiana ustawień uzytkownika i grupy dla pliku:
+# zmiana ustawień uzytkownika i grupy dla pliku:
 chown user1:user1 .ssh
 
 
 
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
 B2B na linuksie, wystarczy ustwić adres w postbuild
 
 API - tu podegrać 3 pliki: HermesApi32, HermesApi64 i hermesdll.dll
@@ -1357,9 +1480,17 @@ wsl --set-default-version 2
 Wiecej na: https://www.youtube.com/watch?v=4emmQuY25aY
 
 
+Przerobienie filmu mp4 na gif:
+ffmpeg -i input.mp4 -vf "fps=10,scale=320:-1:flags=lanczos" -c:v gif output.gif
+
 
 ┌ └ ├  ┘ ┼ ┬ ┤ ┴ ─  ┐
 ╠ ═ ╬ ╩ ╦ ═ ╣ ║ ╗ ╝
 ▀▁▔▏▕▂▃▄▅ ▆▇█▉▊▋▍▎▌ ▐░▒▓▖▗▘▙▚ ▛▜▝▞▟▲▶▼◀ ◈◉✖✜✣✱✲✳✿❖❶
 
 
+    ┌───┐
+    | ^ |
+┌───┼───┼───┐
+| < | v | > |
+└───┴───┴───┘

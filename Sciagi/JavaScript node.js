@@ -14,9 +14,6 @@ Node.js  - jest to środowisko uruchomieniwe do odpalania JS bez przeglądarki. 
 node -v  	// sprawdzanie wersji. 
 npm -v 		// sprawdzanie wersji. 
 
-// jaka sinstrukcja, jak miec kilak wersji node na jednym kopie:
-youtu.be/OOJLwK92JAI
-
 //aby sprawdzić wersję V8 z jakiego korzysta przeglądarka, trzeba w pasku wpisać chrome://version
 
 //Aby z niego skorzystać ogólnie przez wiersz poleceń, w wierszu poleceń wpisać:
@@ -43,7 +40,14 @@ npm --prefix ./back run start   // uruchomienie z innej ścierzki
 app.listen(3000, '0.0.0.0');
 
 
+// jakas instrukcja, jak miec kilka wersji node na jednym kopie:
+youtu.be/OOJLwK92JAI
 
+vnm                         // version node manager
+nvm --version               // sprawdzenie wersji
+nvm ls                      // sprawdzenie dostępnych wersji node
+nvm use 20.10.0             // zmiana wersji node
+nvm alias default 20.10.0   // ustawienie domyślnej wersji node
 
 
 //Po wpisaniu polecenia:
@@ -2459,9 +2463,9 @@ where: {
 }
 
 
-// kontrola przpływu (film Kuby 61)
+// kontrola przepływu (film Kuby 61)
 
-onModuleInit() - apka włąsnie powstaje
+onModuleInit() - apka własnie powstaje
 onApplicationBootstrap() - wysztko się załadowało
 
 
@@ -2509,7 +2513,7 @@ fetch('...', {
 )
 
 
-//w src/utils/storage.ts  tworze funckję p[omocniczą:
+//w src/utils/storage.ts  tworze funckję pomocniczą:
 export function storageDir() {
     return path.join(__dirname, 'storage');
 }

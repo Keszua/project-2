@@ -30,7 +30,7 @@ tsconfig.json
         "experimentalDecorators": true,        // Gdy chcemy korzytać z dekoratorów
         "emitDecoratorMetadata": true, 
         "moduleResolution": "Node",            // żeby zadziałały modułu nołdowe (z niebieską ikonką)
-        "esModuleInterop": true
+        "esModuleInterop": true,
 
         "baseUrl": "./",                       // To ścieżka bazowa dla całej konfiguracji.
         "removeComments": true,                // W czasie kompilacji do JavaScript usuwa komentarze.

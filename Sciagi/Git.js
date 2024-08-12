@@ -14,6 +14,11 @@ http://onlywei.github.io/explain-git-with-d3/#branch
 // gra do potrenwoania gita
 https://learngitbranching.js.org/?locale=pl
 
+
+ściągawka w wersji PDF:
+https://www.atlassian.com/git/tutorials/atlassian-git-cheatsheet
+
+
 Aby sprawdzić, czy mamy zinstalowanego Git'a trzeba w wierszu poleceń spisać: git
 jeżeli wyświetlą sie jakies informacje inne niż błąd, to znaczy że git zainstalował sie na naszym kompie.
 
@@ -67,7 +72,7 @@ git init                //będac w wybranym folderze, tworzymy repozytorium
 git init d:/apps/go     //tworzenie repozytorium w podanej ścieżce
 git status              //pokazuje jakie pliki są śledzone, dodane lub nie dodane do repozytorium
 //Konfiguracja gita: (bez wartości w cudzysłowiu - oznacza tylko odczyt)
-git config --global user.name "kmichalczyk" 
+git config --global user.name "Karol Michalczyk" 
 git config --global user.email "keszua@gmail.com" 
 git config --global core.editor         //pokaze ścieżkę do Visual Studio Code (lub innego edytora)
 git config --global core.editor notepad //aby przestawić domyślny edytor
@@ -100,6 +105,37 @@ git commit -m "Opis zmiany" //zrobienie komitu (snapshota) bez otwierania edytor
 git commit -a    -m "Opis zmiany"  //zrobienie add i od razu komitu (snapshota) 
 git commit --all -m "Opis zmiany"  //zrobienie add i od razu komitu (snapshota) 
 git commit nazwaPliku  	    //komitowanie tylko jednego pliku
+
+
+
+ ###    ###   #   #
+#   #  #   #  #   #
+#      #      #   #
+ ###    ###   #####
+    #      #  #   #
+#   #  #   #  #   #
+ ###    ###   #   #
+
+Instrukcja jak zakładać klucz:
+https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+
+Jak ustawic SSH z gitlabem na windows:
+1. Uruchamiam PowerShel w trybie administartora
+2. Uruchom komendę (podaj swojegomaila)
+ssh-keygen -t ed25519 -C "your_email@example.com"
+Jeśli jest to pierwszy klucz, to reszta tylko entery
+3. Uruchom agenta w PS, za pomkocą komendy:
+Get-Service -Name ssh-agent | Set-Service -StartupType Manual
+Start-Service ssh-agent
+4. Dodać klucz prywatny (który przed chwilą utworzyliśmy), poleceniem (oczywiście podmień użytkownika):
+ssh-add c:\Users\YOU\.ssh\id_ed25519
+5. Zalogować się na swoje konto github.
+6. Naciśnij na swój awatar -> Settings -> SSH and GPG keys -> New
+7. Wkleić klucz publiczny.
+    Można go pobrać poleceniem cat C:\Users\YOU\.ssh\id_ed25519.pub
+8. Potwierdzić hasłem logowania
+
+
 
 
 
@@ -283,6 +319,8 @@ git revert --continue        //kontynuuj po rozwiązaniu konfliktów
 git revert --skip            //chyba kontynuowanie bez rozwiązywania konflików?
 git revert --quit            //przerywa i przywraca stan do poprzedniego (gdy wystapią konflikty)
 git revert --abort           //cofnięcie ostatniego reverta (nie wiem czy jest zaleznosc z konfliktami?)
+git revert HEAD~0            //Odwrócenie zmian spowodowanych przez ostatni commit
+
 
 git restore nazwaPliku       //cofnięcie zmina (Gdy zrobie jakieś zmiany i che wrocic do czystego comita )
 rm nazwaPliku                //usuwanie pliku (tylko z katalogu roboczego)
@@ -290,6 +328,8 @@ git rm nazwaPliku            //usuwanie pliku z indeksu (staging) i z katalogu r
 git rm --cached nazwaPliku   //przestań śledzić plik (usunięcie pliku z poczekalni, uzyskuje status: nieśledzony). Plik bedzie cały czas na dysku w flderze roboczym. 
 git reset                    //kopiuje pliki z ostatniego commita do przechowalni (stage), nadpisując jej stan
 git reset HEAD               //aby upewnić się do jakiego stanu wrócić (do ostatniego commitu)
+git reset HEAD~1             //Wycofanie ostatniego lokalnego commita i przeniesienie zmian do obszaru roboczego
+git reset --hard HEAD~1      //Usunięcie ostatniego lokalnego commita wraz z usunięciem lokalnych zmian
 git reset -- plik            // usuwa pliki z przechowalni (stage); oznacza to, że komenda ta kopiuje pliki z ostatniego commita do przechowalni (stage), nadpisując jej stan.
 git reset HEAD plik          //aby usunąć konkretny plik z poczekalni
 //UWAGA poniższymi poleceniami reset usuwamy trwale najmłodsze gałęzie
@@ -420,7 +460,7 @@ plik1.txt
 # wszystko z tym znaczkiem to komentarz
 //Do listy .gitignore, można dodac TYLKO pliki i foldery nie śledzone. 
 git rm --cached nazwaPliku        //Jeżeli jakiś plik jest śledzony i chcemy go przestać śledzić
-git rm -r --cached nazwaPliku     //Jeżeli jakiś plik jest śledzony i chcemy go przestać śledzić
+git rm -r --cached nazwaPliku     //Jeżeli jakieś pliki chcemy przestać śledzić -r rekursywnie
 
 // Jeśli chcemy ignorowac pliki tylko lokalnie, trzeba dodac te pliki do .git/info/exclude
 git update-index -assume-unchanged NazwaPliku       // pozwala na nie śledzenie pliku bez wykonywania komita.
@@ -428,7 +468,6 @@ git update-index -assume-unchanged NazwaPliku       // pozwala na nie śledzenie
 git update-index --no-assume-unchanged NazwaPliku
 //Aby ignorowac cały folder, trzeba to zrobić z użyciem pliku .git/info/exclude
 
-//na https://porady-it.pl/programowanie/git-jak-wstrzymac-sledzenie-zmian-w-pliku-np-konfiguracyjnym/
 //znalazłem inny sposób na "nie śledzenie" pliku:
 git update-index --assume-unchanged nazwa_pliku     // wstrzyma śledzenie zmian w pliku
 git update-index --no-assume-unchanged nazwa_pliku  // wstrzymanie wstrzymania :)
@@ -486,7 +525,8 @@ git checkout main^^                 //przełaczenie się na dziadka, commita mai
 git checkout main~2                 //to co wyżej. Można podac dowolną liczbę
 git checkout HEAD^                  //przełaczenie się o jeden commit wyżej
 git checkout -b nowyBrancha         //tworzy nowy branch i przełącza sie na niego
-git checkout user -- User.cs        // jesteśmy na gałęzi 'master' i chcemy z innej gałęzi 'user' zaktualizować TYLKO JEDN PLIK o nazwie "User.cs"
+git checkout user -- User.cs        // jesteśmy na gałęzi 'master' i chcemy z innej gałęzi 'user' zaktualizować TYLKO JEDEN PLIK o nazwie "User.cs"
+git checkout .                      //przywraca wszystkie pliki do stanu z ostatniego commita
 git switch istniejącyBrancha        //przełaczenie się na inną gałąź
 git switch -c "nowyBrancha"         //tworzy nowy branch i przełącza sie na niego
 
@@ -621,7 +661,7 @@ git remote show             //wyswietli dostępne repozytoria
 git remote show origin      //pokazuje informacje o gałęziach oraz która gałąź jest podpięta pod "pull"
 git remote rename pb paul   //zmiana nazwy pb na paul
 git remote rm paul          //usuwanie odnośnika
-git push                    //kolejne wypchnięcia projektu an serwer
+git push                    //kolejne wypchnięcia projektu na serwer
 
 git fetch                   //pobieramy informacje ze zdalnego repozytorium
 //w lokalnym repozytorium pojawi się informacja o nowym commicie
@@ -635,12 +675,21 @@ git pull origin nazwaGalezi //UWAGA pobranie danych na aktywną gałąź (na kt�
 git fetch [nazwa-zdalengo-repozytorium]	//aby uzyskać dane ze zdalnego projektu
 
 //ZAKŁADANIE ZDALNEGO REPO NA SWOIM KOMPIE:
-1. Ma być w katalogu, w którym chce ząłoyć repozytorium "zdalne"
+1. Ma być w katalogu, w którym chce założyć repozytorium "zdalne"
 git init --bare  // Ten parametr powoduje że repozytorium nie będzie miało katalogu roboczego
 // Otrzymam komunikat w stylu: Initialized empty Git repository in C:/Users/t_kowalski/ProjektZdalny/
-git remote add origin C:/Users/t_kowalski/ProjektZdalny  // podłacam się pod to repozytorium
+git remote add origin C:/Users/t_kowalski/ProjektZdalny  // podłaczam się pod to repozytorium
 git push origin master  // powinno już działać wypychanie
 
+
+  #
+  #
+#####   ####    ###
+  #         #  #   #
+  #     #####  #   #
+  #    #    #   ####
+   ##   ### #      #
+               ####
 
 // ETYKIETOWANIE
 git tag                     //wyświetla listę dostępnych etykiet
@@ -660,6 +709,8 @@ git push origin -d v1.0.0   //usuwanie tagów z repozytorium
 
 git describe <ref>          // zwróci info o najbliższym tagu.    <ref>-gdy pusty, to HEAD, można wpisac co kolwiek (hasz, gałąź)
                             // zwróci: <tag>_<numCommits>_g<hash> gdzie: <tag> jest znacznikiem najbliższego przodka w historii, <numCommits> jest liczbą commitów od tego znacznika, a <hash> jest haszem opisywanego commitu.
+
+git describe --tags --abbrev=0  //sprawdz ostatni tag w repozytorium
 
 //ALIASY 
 //Aliasy - czyli definiowanie skrótów
@@ -818,7 +869,7 @@ git commit --allow-empty -m "a1.txt"  //prawdopodobnie tworzy pusty plik tekstow
 
 // ssh
 ssh-keygen -t rsa -b 4096 -C "mailNaGithuba@wp.pl"
-// sanstępnei podać nazwę klucza
+// sanstępnie podać nazwę klucza
 testkey        // bez rozszeżenia jest prywatny
 testkey.pub    // publiczny, do wklejenia na koncie gitHuba do "SSH and GPG keys"
 
@@ -843,6 +894,30 @@ git flow feature finish nazwaNowegoZadania
 
 git flow release start wersjaApki
 git flow release finish wersjaApki               //zrobi merg do mastera/maina oraz develop i przeniesie nas na gałąź develop
+
+
+Jakaś alternatywa dla git flow:
+trunk-base-git-flow
+https://www.toptal.com/software/trunk-based-development-git-flow
+
+
+
+#####                #   
+#                    #
+#       ###   # ###  #  #
+####   #   #  ##     # #
+#      #   #  #      ##
+#      #   #  #      # #
+#       ###   #      #  #
+
+Discord, film 4
+git remote add upstream ORIGINAL_REPO
+git fetch upstream
+git checkout main
+git merge upstream/main
+
+
+
 
 /****************************************************************
 *                                                               *

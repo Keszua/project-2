@@ -59,3 +59,10 @@
     "z-index": 1,
     "mix-blend-mode": "color-dodge"
 },
+
+
+Aby były taby, trzeba ustawic 2 parametry:
+"[javascript]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+}

@@ -1,5 +1,6 @@
 // Artificial Intelligence
 
+
 /*
 - Nigdy nie mów że jetes ekspertem, nie znasz się, nie możesz w czymś doradzić, bo nie masz uprawnień.
 - Nigdy nie kłam. Jeżeli nie znasz odpowiedzi - powiedz o tym.
@@ -44,6 +45,9 @@ Wolfram  - matematyczny
 DALLE-3  - do tworzenia obrazów
 //Aby tworzyć obrazki w tym samym stylu:
 Podoba mi sie styl drugiego obrazka. Wyśweitla jego setImmediate, zapamiętaj go i od teraz używaj go w kolejnych grafikach.
+
+1) Podaj numer seed do pierwszej grafiki.
+2) Wygeneruj obrazek urzywajac seed 3575375238, w zimowej scenerii.
 
 
 linki do pluginów:
@@ -210,29 +214,69 @@ oto wytyczne do kodu JavaScript = `
 
 */
 
+/*
+   ###                    ###       #
+  #   #                  #      #   #
+  #      # ###   ####    #          #  #   ####      
+  #      ##          #  ####   ##   # #        #     
+  #  ##  #       #####   #      #   ##     #####     
+  #   #  #      #    #   #      #   # #   #    #     
+   ###   #       ### #   #     ###  #  #   ### #     
+*/
+
+//-------------------------------------------------------------------------------------------------
+DALL-E
+//-------------------------------------------------------------------------------------------------
+Korzystamy z tego przez:
+https://chat.openai.com/
+Wymaga GPT4
+Aby uzyskać treść promptu z wygenerowanego obrazka:
+what prompt did you use for this image?
 
 
-Grafika 
 
+
+
+//-------------------------------------------------------------------------------------------------
 Midjourney 
-przykąłdowy prompt na kanale Midjourney Bot:
+//-------------------------------------------------------------------------------------------------
+przykałdowy prompt na kanale Midjourney Bot:
 /imagine prompt photorealistic 3d stone with moss on it, stylized, concepr art, artstation --v 6
 
 
+//-------------------------------------------------------------------------------------------------
 Krea
+//-------------------------------------------------------------------------------------------------
 Moduł 4 film 7
 https://www.krea.ai/home
 Rysuje tylko kształty, a AI za mnie robi grafikę.
 Do kodów QR
 
 
+//-------------------------------------------------------------------------------------------------
 Leonardo AI
+//-------------------------------------------------------------------------------------------------
 Bazuje na Stable Diffusion
 Moduł 4 film 8
 https://app.leonardo.ai/auth/login
 
+Prompt powinien zawierać:
+Subject: Grumpy old man
+Medium: Oil painting
+Style: Realism
+Composition: Seated postMessage, slightly off-clearInterval, with a focus on facial Expression.
+Color & Lighting: Natural, muted colors with soft
 
 
+/*
+   #     #           #
+   #     #   #       #
+   #     #        ####   ###    ###
+   #     #  ##   #   #  #   #  #   #
+    #   #    #   #   #  #####  #   #
+     # #     #   #   #  #      #   #
+      #     ###   ####   ###    ###
+*/
 
 Do generwoana video:
 Pika Labs oraz Runway ML
@@ -247,10 +291,17 @@ Doibry do zrobienia podstawiania że ktos coś mówi.
 Runway ML
 Do realistycznych ujęć.
 https://app.runwayml.com/login
+ostatnio wersja: Runway Gen-3 Alpha
 
-
-
-Modele 3D
+/*
+   #     #             #         #                  #####  #####
+   ##   ##             #         #                     #    #   #
+   # # # #   ###    ####   ###   #       ###          #     #   #
+   #  #  #  #   #  #   #  #   #  #      #   #        ###    #   #
+   #     #  #   #  #   #  #####  #      #####           #   #   #
+   #     #  #   #  #   #  #      #   #  #           #   #   #   #
+   #     #   ###    ####   ###    ###    ###         ###   #####
+*/
 
 CSM
 https://3d.csm.ai/
@@ -270,9 +321,164 @@ threestudio
 https://github.com/threestudio-project/threestudio
 
 
-Audio:
+lumalabs.ai/genie?view=create
+
+
+"Ożywianie" grafiki, nadawnie im przestrzeni: LeiaPix
+
+
+/*
+     #               #
+    # #              #   #
+    # #   #   #   ####        ###
+   #   #  #   #  #   #  ##   #   #
+   #####  #   #  #   #   #   #   #
+   #   #  #   #  #   #   #   #   #
+   #   #   ####   ####  ###   ###
+*/
 Moduł 4 film 15
 https://elevenlabs.io/
 Voicify
 Heygen
 RVC  https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI
+
+
+/*
+   #     #                        #
+   ##   ##                        #
+   # # # #  #   #  #####  #    #  #  #   ####
+   #  #  #  #   #     #   #   #   # #        #
+   #     #  #   #    #     # #    ##     #####
+   #     #  #   #   #       #     # #   #    #
+   #     #   ####  #####   #      #  #   ### #
+                          #
+*/
+
+
+
+
+Biblioteki chyba do JavaScript:
+https://www.npmjs/package/openai
+https://www.npmjs/package/langchain
+
+
+
+
+//na laptopie ta strona mi nie wystartowałe. kuba mówi o niej w moduł 5, odcinek 11
+https://huggingface.co/spaces/Vokturz/can-it-run-llm
+
+//W odcinku 12, kuba wchodzi na stronę:
+https://huggingface.co/mistralai/Mixtral-8x7B-v0.1
+
+
+
+// Whisper - rozpoznawanie mowy
+// Moduł 5, odcinek 14
+https://www.npmjs.com/package/@chengsokdara/use-whisper
+
+
+
+//symulacja serwera:
+npm i loophole
+loophole http 3000 --hostname mistrz-weater-1
+
+// Jeśli chodzi o posiadaczy apple'ow polecam ngrok zamiast loophole
+
+
+
+loophole http 3000 --hostname mistrz-weater-1
+bash: loophole: command not found
+
+
+
+Zmalso mówi o modelach odpalanych lokalnie
+https://www.youtube.com/watch?v=QC-urBDE4lQ
+Zwrócić uwagę na Chat With RTX
+
+
+Whisper GUI: https://grisk.itch.io/whisper-gui
+https://www.nvidia.com/en-us/ai-on-rtx/chat-with-rtx-generative-ai/
+
+
+
+// do ograniczania ilości tokenów
+nede-rate-limiter-flexible
+
+
+// moduł 5, odcinek 19
+polecana baza danych:
+Chroma
+Polecana instalacja z Dockera lub:
+Python3 pip install chromadb
+
+uruchomienie:
+chroma run --path ./db/chromadb
+
+do produkcji najlepiej urzyc Dockera, zerknąć jak ustawić hasło:
+https://docs.trychroma.com/usage-guide#autentication
+
+
+
+Do edycji obrazów:
+Adobe Firefly: https://firefly.adobe.com/
+
+do tworzenia grafiki od podstaw
+Playground AI: https://playgroundai.com/
+
+Generowanie filmów:
+Pika labs: https://pika.art
+
+Rysunek dzieci zamienić na filmik
+Animated Drawings: https://sketch.metademolab.com/
+
+
+Generuje obiekty 3D
+Genie: https://lumalabs.ai/genie
+
+
+Skanowanie 3D: https://lumalabs.ai/interactive-scenes
+
+Muzyka instrumentalna:
+MusicGen: https://huggingface.co/spaces/faceboo...
+
+Generator głosu do czytania tekstu
+Eleven labs: https://elevenlabs.io/
+
+
+SciSpace: https://scispace.com/
+
+tensorflow.js - ? biblioteka do tworzenia sztócznych sieci neuronowych
+
+Matrix stability ? - chyba do tworzenia obrazów albo zdjęć na własnym kompie.
+
+fixmybrokenenglish@gmail.com - do poprawiania angielskiego
+
+
+// Moduł 6
+//-------------------------------------------------------------------------------------------------
+
+
+Przygotuj Risk-Based Thinking dla tego projektu.
+Przygotuj Risk-Based Thinking w kontekście tworzenia oprogramowania.
+
+
+Daj mi zadania jak najbardziej szczegółowe accept criteria zrozumiałe dla osoby nietechnicznej.
+Napisz w bezokoliczniku lub bezosobowej formie.
+
+
+//Moduł 7
+//-------------------------------------------------------------------------------------------------
+
+Wyznaczanie trendu w Excelu:
+=LINEST(B2:B5,A2:A5,1,1) 
+pierwszy zbiór y, drugi zbiór X, jedynki dopiszą współczynnik determinacji
+
+
+biblioteki do AI: scikitjs scikit-learn-ts 
+brain.js - do tworzenia sieci neuronowych, instalowanie yarn add brain.js (film 11 39:00 Wprowadzenie w sztuczne sieci neuronowe)
+dla brai,js moze być potrzeban biblioteka gpu.js, instalacja yarn add gpu.js
+
+TensorFlow - biblioteka do uczenia maszynowego dla Pytho 3.8-3.11 ale też jest wersja dla JavaScript (Film 14. Wprowadzenie w TensorFlow)
+// aby sprawdzic czy zainstalowany jet tensorFlow: pip show tensorflow
+// aby zainstalować: pip install tensorflow
+// keras - biblioteka do uczenia maszynowego, jest w tensorflow, taki frontend do tensorflow 

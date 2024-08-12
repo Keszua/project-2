@@ -37,6 +37,11 @@ chmod 777 xamp.run
 // W zakładce "Bazy danych" możemy stworzyć nowa bazę. Zalecane kodowanie utf8_polish_ci.
 // Po naciśnięciu Utwórz, pojawia się po lewo nowa gałąź 
 
+// Utworzenie konta użytkownika, któy ma dostęp do bazy danych ze zdalnego/dowolnego komputera:
+mysql  // uruchamia konsolę mysql
+grant all privileges on *.* to 'szefu'@'%' identified by 'twojeHaslo';
+
+
 
 //SODA - Program do migracji danych:
 //Film: Building Modern Web Applications with Go (Golang)  odcinek 88  5:30

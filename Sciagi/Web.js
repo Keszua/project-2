@@ -1,6 +1,4 @@
 
-Testowanie responsywnosci: http://mattkersley.com/responsive/
-
 Projektowanie programu blokowo: https://miro.com/pl/
 
 Przy tworzeniu kodu: linter: https://github.com/airbnb/javascript

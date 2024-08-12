@@ -70,6 +70,11 @@ docker container start -ai idkontenera
 docker container exec -it idkontenera bash  #  odpalenie konsoli na dzialajacym kontenerze
 docker container exec -it idkontenera sh    #  odpalenie konsoli na dzialajacym kontenerze dla alpine
 docker attach  [id lub nazwa kontenera]     #  odpalenie konsoli na dzialajacym kontenerze. Przerywamy Ctrl+C (cos było że nie polecane)
+# czat zaproponował takie polecenie żeby wejść so środka kontenera:
+docker exec -it my-nginx /bin/bash          # gdzie my-nginx to nazwa kontenera
+Przejdź do katalogu z plikami Nginx:
+cd /usr/share/nginx/html
+
 
 # aby w apline ściągnąc nano: apk update && apk add nano 
 
@@ -761,7 +766,7 @@ Uruchomienie kontenerów oraz aktualizacja przez docker swarm (nie docker-compos
 #--------------------------------------------------------------------------------------------------
 KUBERNEST
 
-# Proponowana wtyczk: YAML Language Support by Red Hat, with built-in Kubernetes syntax support 
+# Proponowana wtyczka: YAML Language Support by Red Hat, with built-in Kubernetes syntax support 
 # Następnie trzeba wejsc do ustawien tej wtyczki, znaleźć "Yaml:Schemas" -> Edit in settings.json
 # dopisać:
     "yaml.schemas": {
@@ -774,8 +779,9 @@ https://cloud.google.com/free/docs/gcp-free-tier
 
 komendy na: https://kubernetes.io/docs/reference/kubectl/
 
-kubectl version  # sprawdzenie, czy jest zainstalowany kubernetes i w jakiej wersjii
-kubectl version --client --output=yaml    # 
+kubectl version  # sprawdzenie, czy jest zainstalowany kubernetes i w jakiej wersji
+kubectl version --client --output=yaml    # ┐
+kubectl version --client -o yaml          # ┴ w formacie yaml
 
 # tworzenie podów zdefiniowanych w folderze k8s ( trzeba być na takim poziomie, żeby po wpisaniu ls widac było folder 'k8s')
 kubectl apply -f k8s
@@ -811,7 +817,7 @@ Worker odpowiada za uruchamianie kontenerów (tu beda dzialac nasze aplikacje)
 Skalowanie ze względu na dochodzacych urzytkowników odbywa się przez dodawanie/odejmowanie POD'ów
 Gdy skończy się przepustowość, a urzytkowników nadal przybywa, skalowanie odbedzie się przez Node
 
-Kube-scheduler - on decyduje, w kórym nodzie stworzyć nową instancję poda, podczas wużego obciążenia serwera
+Kube-scheduler - on decyduje, w kórym nodzie stworzyć nową instancję poda, podczas dużego obciążenia serwera
 
 Controller manager - odzysuje uszkodzone pody
 
@@ -1336,7 +1342,7 @@ Networking
 CNI Container Networking Interface
 # film 37 (Kubernetes for the Absolute Beginners - Hands-on)
 # Kazdy pod otrzymuje swój adres IP: 10.244.0.2, 10.244.0.3 itd
-# Wszsytkie pody na naszym lokalnym kompie, widziane są przez chmórę: 10.244.0.0
+# Wszystkie pody na naszym lokalnym kompie, widziane są przez chmórę: 10.244.0.0
 
 # Narzędzia do konfiguracji sieci:
 Cisco, cilium, flannel Vilmer, vmware NSX, Psyllium, Big Cloud fabric, Kalikow
@@ -1455,6 +1461,23 @@ metadata:
 └───────────────────
 
 
+   ###
+    #
+    #   ####    ####  # ###   ###    ###    ### 
+    #   #   #  #   #  ##     #   #  #      #    
+    #   #   #  #   #  #      #####   ###    ### 
+    #   #   #   ####  #      #          #      #
+   ###  #   #      #  #       ###    ###    ### 
+               ####
+Aby zrobić prekierownie  alokalnym kompie:
+W pliku:
+C:\Windows\System32\drivers\etc\hosts
+Dodaj linię:
+192.168.0.101 michalczyk
+
+# Jeśli napotkasz problemy, sprawdź logi dla zasobu Ingress Controller w MicroK8s:
+microk8s kubectl logs -n ingress <nazwa_poda_ingress_controller>
+
 #-----------------------------------------------------------
 Ingress-wear.yaml            # gdy korzystamy tylko z jednego typu wysyłancyh danchy (tylko tekst)
 ┌───────────────────
@@ -1539,6 +1562,8 @@ spec:
       port: 3306
 └───────────────────
 
+# Sprawdzenie Statusu
+microk8s kubectl get ingress
 
 
 #--------------------------------------------------------------------------------------------------
@@ -2921,7 +2946,7 @@ kubectl cluster-info
 
 
 
-4. Zakładam przykładowa aplikację:
+4. Zakładam przykładową aplikację:
 kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.4
 Ustawiam dostęp:
 kubectl expose deployment hello-minikube --type=NodePort --port=8080
@@ -3078,6 +3103,202 @@ nano .kube/config
 minikube dashboard
 # powinno nam się udac wejsc na stroę:
 http://127.0.0.1:46257/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/
+
+
+
+
+#--------------------------------------------------------------------------------------------------
+   #     #                            #   #   ###
+   ##   ##   #                        #  #   #   #
+   # # # #        ###   # ###   ###   # #    #   #   ###
+   #  #  #  ##   #   #  ##     #   #  ##      ###   #
+   #     #   #   #      #      #   #  # #    #   #   ###
+   #     #   #   #   #  #      #   #  #  #   #   #      #
+   #     #  ###   ###   #       ###   #   #   ###    ###
+#--------------------------------------------------------------------------------------------------
+
+Instalacja MicroK8s i konfiguracja:
+sudo snap install microk8s --classic        # Instalacja microk8s
+sudo usermod -a -G microk8s $USER           # Dodanie użytkownika do grupy microk8s
+sudo chown -f -R $USER ~/.kube
+newgrp microk8s                             # Restart sesji, aby zmiany w grupach zadziałały
+microk8s status --wait-ready                # Sprawdzenie statusu microk8s
+microk8s enable dns dashboard  registry ingress  # Włączenie dodatków
+
+Utworzenie aliasu dla microk8s kubectl:
+echo "alias mku='microk8s kubectl'" >> ~/.bashrc
+source ~/.bashrc                            # przeładuj plik
+
+
+Uruchomienie Nginx:
+# Stwórz plik YAML dla pierwszego kontenera Nginx
+touch nginx-deployment1.yaml
+#zawartość:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx1
+  template:
+    metadata:
+      labels:
+        app: nginx1
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service1
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30001
+  selector:
+    app: nginx1
+
+
+microk8s kubectl apply -f nginx-deployment1.yaml  # uruchomienie
+ 
+microk8s kubectl get pods                   # Sprawdzanie zasobów
+microk8s kubectl get services
+
+Aby wejść do poda:
+microk8s kubectl exec -it nginx-deployment1-<unikalny-id> -- /bin/bash   # nazwę można znaleźć pod poleceniem: microk8s kubectl get pods
+apt-get update; apt-get install -y nano     # Zainstaluj edytor tekstu nano w kontenerze Nginx:
+nano /usr/share/nginx/html/index.html       # Edytuj plik index.html w kontenerze Nginx
+
+
+Zamknięcie kontenera:
+microk8s kubectl delete -f nginx-deployment1.yaml 
+# Alternatywnie, jeśli nie masz już pliku nginx-deployment1.yaml' możesz usunąć go za pomocą:
+microk8s kubectl delete deployment nginx-deployment1
+microk8s kubectl delete service nginx-service1
+
+
+#--------------------------------------------------------------------------------------------------
+Zbudowanie bardzo prostej strony internetowej i wysłanie do serwera:
+# Na LOKALNEJ maszynie:
+# Stwórz plik index.html z zawartością:
+<html>
+  <body>
+    <h1>Hello World!</h1>
+  </body>
+</html>
+
+# Stwórz plik Dockerfile z zawartością:
+FROM nginx:alpine
+COPY index.html /usr/share/nginx/html/index.html
+
+    # Za pierwswzym razem trzeba właczyć i skonfigurować Docker Desktop:
+    docker buildx create --name mybuilder --use
+    docker buildx inspect --bootstrap
+
+# Zbuduj obraz Docker w konsoli:
+docker buildx build -t my-nginx-image --load .
+
+  # Sprawdź, czy obraz został zbudowany:
+  docker images ls
+  # opcjonalnie, można uruchomić kontener i sprawdzić czy obraz działa:
+  docker run -d -p 8080:80 my-nginx-image
+  # Otwórz przeglądarkę i przejdź do http://localhost:8080, aby zobaczyć stronę internetową.
+  docker stop <container-id>  # żeby usunąć kontener:
+
+# Zapisz obraz Docker do pliku tar:
+docker save -o my-nginx-image.tar my-nginx-image
+
+# Prześlij obraz na serwer przez SSH:
+scp my-nginx-image.tar uzytkownik@adres_serwera:/home/server/projekt
+
+# Można również przesłać plik .yaml
+scp simple-webpage-deployment.yaml uzytkownik@adres_serwera:/home/server/projekt
+
+
+# simple-webpage-deployment.yaml:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-webpage-deployment      # Nazwa Deploymentu. Może być dowolna, ale powinna być unikalna w ramach tego samego namespace.
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-webpage              # ───┐  Etykieta używana do selekcji podów należących do tego Deploymentu. Musi być zgodna z etykietą w sekcji template.metadata.labels.
+  template:                            #    |
+    metadata:                          #    |
+      labels:                          #    |
+        app: simple-webpage            # ───┤  Etykieta przypisana do podów tworzonych przez ten Deployment. Musi być zgodna z etykietą w spec.selector.matchLabels.
+    spec:                              #    |
+      containers:                      #    |
+      - name: simple-webpage           #    |  Nazwa kontenera. Może być dowolna, ale powinna być unikalna w ramach tego samego podu.
+        image: localhost:5000/simple-webpage:latest #|  Obraz Dockera do użycia. Musi być dostępny w rejestrze Dockera używanym przez Kubernetes.
+        ports:                         #    |
+        - containerPort: 80            # ─┐ |  Port, na którym kontener będzie nasłuchiwać. Musi być zgodny z portem w sekcji service.spec.ports.targetPort.
+---                                    #  | |
+apiVersion: v1                         #  | |
+kind: Service                          #  | | 
+metadata:                              #  | |
+  name: simple-webpage-service         #  | | Nazwa Service. Może być dowolna, ale powinna być unikalna w ramach tego samego namespace.
+spec:                                  #  | |
+  type: NodePort                       #  | |  Typ Service. NodePort oznacza, że Service będzie dostępny na każdym węźle klastra.
+  ports:                               #  | |
+  - port: 80                           # ─┤ |  Port, na którym Service będzie nasłuchiwać. Może być dowolny, ale musi być zgodny z targetPort.
+    targetPort: 80                     # ─┘ |  Port, na którym kontener będzie nasłuchiwać. Musi być zgodny z containerPort w spec.template.spec.containers.ports.
+    nodePort: 30003                    #    |  Port na węźle, na którym Service będzie dostępny. Może być dowolny w zakresie 30000-32767, pod warunkiem, że nie jest zajęty.
+  selector:                            #    |
+    app: simple-webpage                # ───┘ Etykieta używana do selekcji podów należących do tego Service. Musi być zgodna z etykietą w spec.template.metadata.labels.
+
+
+
+# Na SERWERZE, po zalogowaniu się na serwer przez SSH:
+docker load -i my-nginx-image.tar      # załaduj obraz Dockera z pliku tar:
+docker images ls                       # Sprawdź, czy obraz został załadowany
+
+  # za pierwszym razem uruchom lokalny rejest Dockera:
+  docker run -d -p 5000:5000 --name registry registry:2
+  # Taguj obraz, aby był dostępny w lokalnym rejestrze:
+  docker tag my-nginx-image localhost:5000/my-nginx-image
+  docker tag test-image1:latest localhost:5000/test-image1:latest
+
+    aby wyłaczyć tagowanie na serwerze, trzeba edytować plik:
+    sudo nano /var/snap/microk8s/current/args/containerd-template.toml
+    Dodaj wpis dla Twojego lokalnego rejestru:
+    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:5000"]
+      endpoint = ["http://localhost:5000"]
+    Zapisz i zamknij plik, a następnie zrestartuj MicroK8s:
+    sudo microk8s stop
+    sudo microk8s start
+
+
+# Wypchnij obraz do lokalnego rejestru:
+docker push localhost:5000/my-nginx-image
+
+  # po wypchnięciu obrazu do lokalnego rejestru, będą dwa wpisy, Aby widzieć tylko jeden, można usunąć obraz:
+  docker rmi my-nginx-image
+
+# Nazwe obrazu wkleić do Deployment->spec.template.spec.containers.image
+microk8s kubectl apply -f /home/użytkownik/simple-webpage-deployment.yaml  # uruchomić Deployment
+microk8s kubectl get deployments       # Sprawdź, czy Deployment działa
+microk8s kubectl get pods              # Sprawdź, czy Pod działa
+microk8s kubectl get services          # Sprawdź, czy Service działa
+
+# W przeglądarce internetowej na lokalnym komputerze wpisz adres IP serwera oraz port NodePort:,
+http://adres_serwera:30002
+
+
+# Aby wyłączyć cały obraz:
+microk8s kubectl delete -f /home/użytkownik/simple-webpage-deployment.yaml
+
 
 
 
@@ -3309,4 +3530,40 @@ pwd
 kubectl describe pvc mysql-pv-claim
 # baza
 kubectl describe deployment mysql
+
+
+
+
+#--------------------------------------------------------------------------------------------------
+Szybki start z Dockerem na własnym serwerze.
+Trzeba zainstalować Dockera, Kubernetes, microk8s
+
+sudo systemctl status docker           # Sprawdzenie instalacji Docker
+sudo systemctl start docker            # Jeśli usługa Docker nie działa, uruchom ją
+sudo systemctl enable docker           # Aby usługa Docker uruchamiała się automatycznie przy starcie systemu:
+
+kubectl version --client               # Sprawdzenie instalacji Kubernetes
+sudo apt update                        # Jeśli to polecenie nie działa, musisz zainstalować kubectl
+sudo apt install -y kubectl
+
+# Instalacje microk8s opisałem wyżej
+
+# dla testu dockera, ściagniemy gotowy prosty kontener z Nginx
+docker pull nginx                      # Pobierz gotowy obraz Nginx z Docker Hub:
+docker run --name my-nginx -d -p 80:80 nginx # Uruchom kontener Nginx na porcie 80:
+docker ps                              # Sprawdź, czy kontener działa
+# Na przegądarce trzeba wpisać seoje IP serwera:80, aby zobaczyć stronę Nginx
+# aby wejść do kontenera:
+docker exec -it my-nginx bash          # Wejdź do kontenera Nginx. Przez nazwę kontenera lub ID kontenera
+cd /usr/share/nginx/html               # Przejdź do katalogu z plikami Nginx (zakłądając że udało się wejść do kontenera)
+# pewnie nie będzie nano ani vim
+apt-get update; apt-get install -y nano # Zainstaluj edytor tekstu nano w kontenerze Nginx:
+nano index.html                        # lub nano /usr/share/nginx/html/index.html 
+
+# uruchomienie drugiego kontenera
+docker run --name my-nginx2 -d -p 81:80 nginx # Uruchom drugi kontener Nginx na porcie :81
+
+# uruchomienie kontenerów na k8s, opisałem wyżej
+
+
 

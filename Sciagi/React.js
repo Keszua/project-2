@@ -193,6 +193,13 @@ const handleClick = () => alert("klik")
 	}
 
 
+/* Marcin zwrócił uwagę na skałdnie labela przywiazengo do inputa: */
+<>
+    <label htmlFor='login'>Login</label>
+    <input id='login' type='text' name='login' />
+</>
+
+
 /*  ┌─────────────────┐
     | textarea        |
     |                 |
@@ -323,6 +330,14 @@ const value = parseInt(props.number); //typowanie na Int
 <time>{(new Date()).toString()}</time>
 const date = new Date();  //w date jest: Tue Jul 27 2021 08:26:28 GMT+0200 (czas środkowoeuropejski letni) {}
 date.toDateString()             //=  "Tue Jul 27 2021"
+
+// Wtyczka do formatowania daty:
+date-fns
+
+// aby z niej skorzystać, trzeba ja zainstalwoać yarn add date-fns
+import { format } from 'date-fns';
+console.log(format(new Date(), 'dd/MM/yyyy'));  //2021-07-27
+
 
 
 
@@ -2221,10 +2236,15 @@ Redux MIDDLEWARES - takie wstrzyknięcie pomiędzy wykonanie akcji a reduserem,
 //------------------------------------------------------------
 
 npm create vite@latest ./ -- --template react
+wersja 2 z TypeScript:
+yarn create vite my-vite-app --template react-ts
+
 
 // uruchamiamy poleceniem:
 
 npm run dev
+//lub 
+yarn dev
 
 // instalacja tailwinda:
 npm install -D tailwindcss
@@ -2239,7 +2259,33 @@ npx tailwindcss init
 npm install --legacy-peer-deps @react-three/fiber @react-three/drei maath react-tilt react-vertical-timeline-component @emailjs/browser framer-motion react-router-dom
 
 
-Logo można wygenerować na stronie logo.com
+//do debagowania doinstalować w przegladarce wtyczkę React Develope tools
+
+
+//przykładowa konfiguracja vite.config.ts
+export default defineConfig({
+    plugins: [react()],
+    server: {
+      port: 3000,
+      host: '0.0.0.0'
+    },
+    build: {
+      outDir: 'build'
+    },
+    css: {
+      devSourcemap: true
+    }
+})
+
+
+// dodanie kolejnego środowiska (oprócz development i production)
+vite build --mode staging
+// przykładowo do rozgraniczenia zmiennych środowiskowych: .env, np .env.production, .env.staging, .env.development
+// odwoływac sie do nich można tak:
+VITE_API_URL=https://api.example.com
+
+
+
 
 //------------------------------------------------------------
 //   #   #                     #  

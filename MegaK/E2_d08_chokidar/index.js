@@ -1,4 +1,4 @@
-// Program który śledzi wszystkie zmiany w plikach o rozszeeniu .js 
+// Program który śledzi wszystkie zmiany w plikach o rozszeżeniu .js 
 // wyświetla wprowadzone zmiany
 // reaguje na pełen zapis
 const {watch} = require('chokidar')
