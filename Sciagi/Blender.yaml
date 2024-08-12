@@ -90,6 +90,25 @@ Nadawanie grubości:
 
   Aby łączyły sie automatycznie, w prawym górnym rogu -> Options -> Auto Merge
 
+
+Zaznaczenie danego obiektu:  L
+Spłaszczanie płaszcyzny: F3 -> Flatten
+
+Dodawanie krawędzi i dzielenie faces: J
+Automatycznei podzieli ścianę na trujkąty: Ctr+T
+
+Uzupełnianie brakujacych scian: Zaznacz wszystko (A) -> F
+
+Odwracanie wybrnych normali: zaznacz ścianę -> F3 -> 'Flip normals'
+
+Połączenie 2 niezależnych elementów koejnym elementem: Zaznaczam 2 ścainy -> F3 -> 'Bridge Edge Loops'
+
+Narzedzie do łączenia elementów zachowując odpowiednie sciany: 'Bool Tool'
+Wycinanie: W pierw zaznaczyć wiertło, anstępnie obiekt -> Ctrl+Shift++
+
+
+
+
 ----------------------------------------------------------------
 Nadawanie zależności:
 
@@ -120,9 +139,10 @@ Rigging Rigify: coś do szkieletu
 Interface Copy Attributes Menu: wygodne kopiowanie właściwości
 Node Wrangler: ułatwia pracę w edytorze materiałów  Aktywacja CTRL+T
 loopTools: wtyczka do modelowania
-F2: wtyczka do modelowania
+F2: Narzędzie do automatycznego dorabiania ścian za pomocą klawisza F
 Edit Mesh Tools: wtyczka do modelowania
-
+Bool Tool: Narzedzie do łączenia elementów zahowując odpowiednie ściany
+   Wycinanie: W pierw zaznaczyć wiertło, anstępnie obiekt -> Ctrl+Shift++
 
 
    ####
