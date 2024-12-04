@@ -9,7 +9,7 @@
   "author": "Karol",
   "license": "ISC",
   "dependencies": {
-    "mysql2": "^2.3.3",
+    "mysql2": "^3.9.7",
     "uuid": "^9.0.0"
   }
 }
